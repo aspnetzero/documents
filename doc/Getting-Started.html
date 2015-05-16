@@ -10,34 +10,96 @@
 <body>
 
 <ul>
-	<li><a href="#DocIntro">Introduction</a></li>
+	<li><a href="#DocLogin">Login</a></li>
+	<li><a href="#DocCreateProject">Create a project</a></li>
+	<li><a href="#DocConfigureProject">Configure the project</a><ul>
+		<li><a href="#DocConfigureDbConn">Database connection</a></li>
+		<li><a href="#DocConfigureMigrations">Database migration</a></li>
+		<li><a href="#DocConfigureMultiTenancy">Multi-tenancy</a></li>
+	</ul>
+	</li>
+	<li><a href="#DocRunProject">Run the project</a></li>
+	<li><a href="#DocMore">More</a></li>
 </ul>
-<h3 id="DocIntro">Introduction</h3>
-<p>This document is aimed to create and run an ASP.NET Zero based project in 
-just 5 minutes.</p>
-<p>We assume that you already purchased and created your ASP.NET Zero account.</p>
-<h3>Login to the system</h3>
-<p><a href="/Account/Login">Login</a> to the system with your user name and 
-password. Then you will see Download link on the main menu.</p>
 
-<h3>Create project</h3>
+<p>This document is aimed to create and run an ASP.NET Zero based project in 
+just 5 minutes. It's assumed that you already <a href="/Prices">purchased</a> and created your ASP.NET Zero account.</p>
+
+<h3 id="DocLogin">Login</h3>
+
+<p><a href="/Account/Login">Login</a> to this web site with your user name and 
+password. Then you will see <a href="/Download">Download</a> link on the main menu.</p>
+
+<h3 id="DocCreateProject">Create a project</h3>
+
 <p>Go to the <a href="/Download">download</a> page. You will see a form as shown 
 below:</p>
 <p>
-<img alt="Create new ASP.NET Zero project" height="352" longdesc="Create new ASP.NET Zero project" src="images/create-new-project.png" width="574" /></p>
+<img class="img-thumbnail" alt="Create new ASP.NET Zero project" height="352" src="images/create-new-project.png" width="574" /></p>
 <p>Enter your <strong>company</strong> and <strong>project</strong> name and
 <strong>download</strong> your project (company name is optional). Your project 
 will be ready in one minute. After extacting the downloaded zip file, you will 
-see project folders:</p>
+see project folders like below:</p>
 <p>
-<img alt="ASP.NET Zero project folders" height="220" src="images/project-folders.png" width="222" /></p>
-<p>Your NLayered solution is ready!</p>
-<p>Configure project</p>
-<p>TODO:...</p>
-<p>Run the project</p>
-<p>TODO:...</p>
+<img class="img-thumbnail" alt="ASP.NET Zero project folders" height="220" src="images/project-folders.png" width="222" /></p>
 
-See <a href="Solution-Structure.html">solution structure</a> document for more.
+<h3 id="DocConfigureProject">Configure the project</h3>
+
+<p>Open your solution in Visual Studio 2013 or a newer version. Right click the 
+<strong>.Web</strong> project and select "<strong>Set as StartUp project</strong>": Then <strong>
+build</strong> the solution. It will take longer time in first build since all
+<strong>nuget </strong>packages will be restored.</p>
+
+<h4 id="DocConfigureDbConn">Database connection</h4>
+
+<p>Open web.config file in the .Web project and change the <strong>Default</strong> connection string if 
+you need:</p>
+<pre lang="xml">&lt;add name=&quot;Default&quot; connectionString=&quot;Server=localhost; Database=PhoneBook; Trusted_Connection=True;&quot; providerName=&quot;System.Data.SqlClient&quot; /&gt;</pre>
+
+<h4 id="DocConfigureMigrations">Database migration</h4>
+
+<p>Open <strong>Package Console Manager</strong> (Under Tools\Nuget Package 
+Manager in the main menu), Select <strong>.EntityFramework</strong> project as <strong>Default 
+project</strong> and run <strong>Update-Database</strong> command. </p>
+<p>
+<img class="img-thumbnail" alt="Package manager console Entity framework update-database command" height="89" src="images/update-database-command.png" width="598" /></p>
+<p>This command will create your database and fill initial data. You can open 
+SQL Server Management Studio to check if database is created:</p>
+<p>
+<img class="img-thumbnail" alt="Database tables" height="281" src="images/created-database-tables.png" width="200" /></p>
+
+<h4 id="DocConfigureMultiTenancy">Multi-tenancy</h4>
+
+<p>ASP.NET Zero supports multi-tenant and single-tenant applications. If you 
+don't have idea about multi-tenancy, skip this section. If you 
+want a multi-tenant application, enable it in ProjectName<strong>CoreModule</strong> 
+class in <strong>.Core</strong> project:</p>
+<pre lang="cs">//Enable this line to create a multi-tenant application.
+Configuration.MultiTenancy.IsEnabled = true;</pre>
+
+<h3 id="DocRunProject">Run the project</h3>
+
+<p>All ready.. just run your solution. It will open home page of your web site. 
+You can click login link at top right corner to <strong>login</strong> to the 
+application:</p>
+<p>
+<img class="img-thumbnail" alt="ASP.NET Zero Login page" height="414" src="images/login-screen.png" width="431" /></p>
+<p>Enter <strong>default</strong> as tenancy name (this field is shown if multi-tenancy is enabled),
+<strong>admin</strong> as user name and <strong>123qwe</strong> as password. You 
+should change password at first login. After login to the application, you will 
+see sample dashboard screen:</p>
+<p>
+<img class="img-thumbnail" alt="ASP.NET Zero Sample Dashboard" height="484" src="images/default-dashboard.png" width="800" /></p>
+<p>If your application is multi-tenant, then you can leave tenancy name as empty 
+in login screen and use admin as user name and 123qwe as password to login as 
+host admin.</p>
+
+<h3 id="DocMore">More</h3>
+
+<p>Your solution is up and working.
+See
+<a href="Solution-Structure.html">solution structure</a> document for more 
+information.</p>
 
 </body>
 
