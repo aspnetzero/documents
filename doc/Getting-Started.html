@@ -70,9 +70,11 @@ SQL Server Management Studio to check if database is created:</p>
 
 <h4 id="DocConfigureMultiTenancy">Multi-tenancy</h4>
 
-<p>ASP.NET Zero supports multi-tenant and single-tenant applications. If you 
-don't have idea about multi-tenancy, skip this section. If you 
-want a multi-tenant application, enable it in ProjectName<strong>CoreModule</strong> 
+<p>ASP.NET Zero supports multi-tenant and single-tenant applications. 
+Multi-tenancy is <strong>enabled by default</strong>. If you don't have idea 
+about multi-tenancy or don't want to create a multi-tenant application, you can
+<strong>disable</strong> it. If you 
+want a multi-tenant application, leave it <strong>enabled</strong> in ProjectName<strong>CoreModule</strong> 
 class in <strong>.Core</strong> project:</p>
 <pre lang="cs">//Enable this line to create a multi-tenant application.
 Configuration.MultiTenancy.IsEnabled = true;</pre>
