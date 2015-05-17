@@ -9,11 +9,166 @@
 
 <body>
 
+<p><strong>IMPORTANT: THIS DOCUMENT IS BEING WRITTEN AND NOT COMPLETED YET.</strong></p>
+
 <ul>
-	<li><a href="#DocIntro">Introduction</a></li>
+	<li>Introduction</li>
+	<li>Overall solution structure</li>
+	<li>Domain (business) layer<ul>
+		<li>Multi tenancy</li>
+		<li>Roles</li>
+		<li>Users</li>
+		<li>Authorization</li>
+		<li>Settings</li>
+		<li>Emailing</li>
+		<li>Base classes</li>
+		<li>Versioning</li>
+	</ul>
+	</li>
+	<li>Entity framework infrastructure</li>
+	<li>Application layer</li>
+	<li>Web API layer</li>
+	<li>Web layer<ul>
+		<li>MVC application</li>
+		<li>Login &amp; register pages</li>
+		<li>Angular application</li>
+	</ul>
+	</li>
 </ul>
-<h3 id="DocIntro">Introduction</h3>
-<p>This document is being prepared.</p>
+<h3>Introduction</h3>
+<p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
+"<strong>Acme.PhoneBook</strong>". In this document, we will explain solution structure of the 
+project. This document is also a reference while developing your projects.</p>
+<p>Before reading this document, we advice you to run the application explore 
+user interface. This will help you to understand concepts defined here.</p>
+<p>Since ASP.NET Zero is built on
+<a href="http://www.aspnetboilerplate.com/" target="_blank">ASP.NET Boilerplate</a> 
+application framework, this document highly refers it's documentation. Also, 
+many classes in the solution extends it's base classes.</p>
+<h3>Overall solution structure</h3>
+<p>When you create and <a href="/Download">download</a> your project, there will be a solution structure 
+as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="ASP.NET Zero solution structure" height="166" src="images/solution-structure/solution-overall.png" width="249" /></p>
+<p>There are 6 projects in the solution:</p>
+<ul>
+	<li><strong>Core</strong> project contains domain layer classes (like
+	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entities</a> 
+	and
+	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Domain-Services">
+	domain services</a>).</li>
+	<li><strong>Application</strong> project contains application logic (<a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">application 
+	services</a>). </li>
+	<li><strong>EntityFramework</strong> project contains your DbContext,
+	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Repositories">
+	repository</a> implementations, database migrations and other 
+	EntityFramework specific concepts. </li>
+	<li><strong>WebApi</strong> project contains Web API Controllers. </li>
+	<li><strong>Web</strong> project contains the presentation layer 
+	(javascripts, styles and views). </li>
+	<li><strong>Tests </strong>project contains unit and integration tests.</li>
+</ul>
+
+<h3>Domain (business layer)</h3>
+<p><strong>PhoneBookCoreModule</strong> (YourProjectCoreModule for your project) 
+class contains some configurations. We can enable or disable <strong>
+multi-tenancy</strong> here. <strong>Email sending</strong> is disabled in DEBUG 
+mode. Because, development environment may not be configured properly to send 
+emails. You can enable it if you want.</p>
+<h4>Multi tenancy</h4>
+<p>ASP.NET Zero's all code-base is designed to be multi-tenant. But, it can be 
+disabled with a single line of configuration if we're developing single-tenant 
+application. If you are not developing a multi-tenant application, you can 
+<a href="Getting-Started#DocConfigureMultiTenancy">disable</a> it and skip this 
+section.</p>
+<p>Multi-tenancy is used to build <strong>SaaS</strong> (Software as a Service) 
+applications easily. Wtih this technique, we can deploy <strong>single 
+application</strong> and <strong>single database</strong> to server <strong>
+multiple customers</strong>.</p>
+<p><strong>Tenant</strong> class represents a tenant (customer). <strong>
+TenantManager</strong> is used to perform domain logic for tenants.</p>
+<p>ASP.NET Zero uses ABP's (ASP.NET Boilerplate)
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
+filters</a>. So, it automatically filters tenant datas.</p>
+
+<h4>Roles</h4>
+
+<p>A role is represented by <strong>Role</strong> class. Roles are used to <strong>group permissions</strong>. When a user has a role, 
+then he/she will have all permissions of that role. Roles can be 
+dynamic or static:</p>
+
+<ul>
+	<li><strong>Static role</strong>: A static role has a known <strong>name
+	</strong>(like 'admin') and can not change this name (we can change <strong>
+	display name</strong>). It's exists on the system startup and can not be 
+	deleted. Thus, we can write codes based on a static role name.</li>
+	<li><strong>Dynamic role</strong>: We can create a dynamic role 
+	after deployment. Then we can grant permissions for that role, we can assign 
+	the role to some users and we can delete it. We can not know names of 
+	dynamic roles in development time.</li>
+</ul>
+
+<p>One or more roles can be set as <strong>default</strong>. Default roles are 
+assigned to new added/registered users as default. This is not a development 
+time property and can be set or changed after deployment.</p>
+
+<p>In startup project, we have static <strong>admin </strong>role for host (for 
+multi-tenant apps). Also, we have static <strong>admin </strong>and <strong>user </strong>
+roles for tenants. <strong>Admin </strong>roles have all permissions granted by 
+default. <strong>User </strong>role is the <strong>default</strong> role for new users and has no 
+permission by default. These can be changed easily. See <strong>StaticRoleNames</strong> class for 
+all static roles and <strong>AppRoleConfig</strong> for adding static roles to 
+the system.</p>
+<p><strong>RoleManager</strong> class is used to perform domain logic for roles.</p>
+<h4>Users</h4>
+<p><strong>User</strong> class represents a user. <strong>UserManager</strong> 
+is used to perform domain logic for users.</p>
+
+<p>Users are people who can <strong>login </strong>to the application and 
+perform some operations based on their <strong>permissions</strong>.</p>
+<p>A user can have zero or more <strong>roles</strong>. A user inherits union of 
+permissions of his all roles. Also, we can set <strong>user-specific permission</strong>. 
+A user specific permission setting overrides role settings for this permission.</p>
+<h4>Authorization</h4>
+<p>ABP's authorization system is based on permissions. <strong>
+AppAuthorizationProvider</strong> class defines all permissions in the system.</p>
+<h4>Settings</h4>
+<p>ABP's
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Setting-Management">
+setting system</a> is used to store and get application settings. Settings and 
+default values are defined in <strong>AppSettingProvider</strong> class.</p>
+<h4>Emailing</h4>
+<p>ASP.NET Zero sends emails to users in some cases (like forgot password and 
+email confirmation). Email template is defined in <strong>Emailing</strong> 
+namespace.</p>
+<h4>Localization</h4>
+<p>ASP.NET Zero UI is completely
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization">
+localized</a>. Localization is implemented using XML files. English and Turkish 
+localization is ready. You can add more XML files by copying one XML file and 
+translate to desired language. </p>
+<h4>Base classes</h4>
+<p>There are some useful base classes thos can be inherited to make things 
+easier:</p>
+<ul>
+	<li>PhoneBook<strong>DomainServiceBase</strong> can be used as a base class 
+	for domain services.</li>
+	<li>PhoneBook<strong>ServiceBase</strong> can be used as a base class for 
+	other service-like classes.</li>
+</ul>
+<h4>Versioning</h4>
+<p><strong>AppVersionHelper</strong> class is used to define version of the 
+application in single place. When you change <strong>Version</strong> here, all 
+projects in the application will be verisoned. Also, version and release date 
+automatically shown on UI.</p>
+<h3>Entity framework infrastructure</h3>
+<p>ASP.NET Zero template uses EntityFramework code-first and migrations.</p>
+<p>PhoneBoo<strong>kDbContext</strong> (YourProjectDbContext for your project) 
+defines the DbContext class. Migrations folder contains EF migrations. </p>
+<p>PhoneBook<strong>RepositoryBase</strong> class is the base class for your
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration#DocCustomRepositoryMethods">
+custom repositories</a>.</p>
+<p>&nbsp;</p>
 
 </body>
 
