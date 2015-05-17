@@ -37,8 +37,7 @@
 </ul>
 <h3>Introduction</h3>
 <p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
-"<strong>Acme.PhoneBook</strong>". In this document, we will explain solution structure of the 
-project. This document is also a reference while developing your projects.</p>
+"<strong>Acme.PhoneBook</strong>". This document is a guide while developing your projects.</p>
 <p>Before reading this document, we advice you to run the application explore 
 user interface. This will help you to understand concepts defined here.</p>
 <p>Since ASP.NET Zero is built on
@@ -70,7 +69,7 @@ as shown below:</p>
 </ul>
 
 <h3>Domain (business layer)</h3>
-<p><strong>PhoneBookCoreModule</strong> (YourProjectCoreModule for your project) 
+<p>PhoneBook<strong>CoreModule</strong> (YourProjectCoreModule for your project) 
 class contains some configurations. We can enable or disable <strong>
 multi-tenancy</strong> here. <strong>Email sending</strong> is disabled in DEBUG 
 mode. Because, development environment may not be configured properly to send 
@@ -78,7 +77,7 @@ emails. You can enable it if you want.</p>
 <h4>Multi tenancy</h4>
 <p>ASP.NET Zero's all code-base is designed to be multi-tenant. But, it can be 
 disabled with a single line of configuration if we're developing single-tenant 
-application. If you are not developing a multi-tenant application, you can 
+application. You can 
 <a href="Getting-Started#DocConfigureMultiTenancy">disable</a> it and skip this 
 section.</p>
 <p>Multi-tenancy is used to build <strong>SaaS</strong> (Software as a Service) 
@@ -89,7 +88,8 @@ multiple customers</strong>.</p>
 TenantManager</strong> is used to perform domain logic for tenants.</p>
 <p>ASP.NET Zero uses ABP's (ASP.NET Boilerplate)
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
-filters</a>. So, it automatically filters tenant datas.</p>
+filters</a>. So, it automatically filters tenant datas if you properly use 
+filter interfaces.</p>
 
 <h4>Roles</h4>
 
@@ -129,9 +129,6 @@ perform some operations based on their <strong>permissions</strong>.</p>
 <p>A user can have zero or more <strong>roles</strong>. A user inherits union of 
 permissions of his all roles. Also, we can set <strong>user-specific permission</strong>. 
 A user specific permission setting overrides role settings for this permission.</p>
-<h4>Authorization</h4>
-<p>ABP's authorization system is based on permissions. <strong>
-AppAuthorizationProvider</strong> class defines all permissions in the system.</p>
 <h4>Settings</h4>
 <p>ABP's
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Setting-Management">
@@ -163,12 +160,105 @@ projects in the application will be verisoned. Also, version and release date
 automatically shown on UI.</p>
 <h3>Entity framework infrastructure</h3>
 <p>ASP.NET Zero template uses EntityFramework code-first and migrations.</p>
-<p>PhoneBoo<strong>kDbContext</strong> (YourProjectDbContext for your project) 
+<p>PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
 defines the DbContext class. Migrations folder contains EF migrations. </p>
 <p>PhoneBook<strong>RepositoryBase</strong> class is the base class for your
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration#DocCustomRepositoryMethods">
 custom repositories</a>.</p>
-<p>&nbsp;</p>
+<h3>Application layer</h3>
+<p>Application Layer contains 
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">application services</a> 
+those are used by the Presentation Layer. 
+An application service method receives a DTO (Data Transfer Object) as input, 
+uses this input to perform some specific business operation, and may return another DTO, if needed.</p>
+<h4>Authorization</h4>
+<p>ABP's authorization system is based on permissions. <strong>
+AppAuthorizationProvider</strong> class defines all permissions in the system.</p>
+<h4>Application services</h4>
+<p>Application layer has following application services:</p>
+<ul>
+	<li><strong>TenantAppService</strong>: Contains service methods for tenant 
+	management page.</li>
+	<li><strong>UserAppService</strong>: Contains service methods for user 
+	management page.</li>
+	<li><strong>RoleAppService</strong>: Contains service methods for role 
+	management page.</li>
+	<li><strong>SessionAppService</strong>: Contains service method to get 
+	current session informations.</li>
+	<li><strong>TenantSettingsAppService</strong>: Contains service methods for 
+	tenant settings page.</li>
+	<li><strong>HostSettingsAppService</strong>: Contains service methods for 
+	host settings page.</li>
+	<li><strong>ProfileAppService</strong>: Used to get/change user profile 
+	informations and password.</li>
+	<li><strong>TenantDashboardAppService</strong>: Example application service 
+	for dashboard.</li>
+</ul>
+<p>Every application service defines an interface (like IUserAppService) and an 
+implementation (like UserAppService class). DTOs are defined in Dto namespaces.</p>
+<h3>Web API layer</h3>
+<p>Since application is built on AngularJs and it's a Single-Page Application 
+(SPA), application services are used via AJAX. So, it's needed to create web API 
+controllers as adapter. ABP framework automatically creates
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+dynamic web API layer</a> using application service interface definitions. So, 
+there is no web API Controller actually. We build dynamic web api controllers in 
+PhoneBook<strong>WebApiModule</strong> class.</p>
+<h3>Web layer</h3>
+<h4>Folder structure</h4>
+<ul>
+	<li><strong>Abp</strong>: ASP.NET Boilerplate's script files. Comes with
+	<a href="http://www.nuget.org/packages/Abp.Web.Resources">Abp.Web.Resources</a> 
+	nuget package.</li>
+	<li><strong>App</strong>: Contains the AngularJs backend application files.</li>
+	<li><strong>App_Start</strong>: Contains web module definition, Owin startup 
+	file, bundling, navigation and routing configurations.</li>
+	<li><strong>Bundles</strong>: ASP.NET bundling fails to find some resources. 
+	They are located here.</li>
+	<li><strong>Common</strong>: Contains core script and style files can be 
+	used by all pages.</li>
+	<li><strong>Content</strong>: Contains files come with some nuget packages.</li>
+	<li><strong>Controllers</strong>: Contains ASP.NET MVC Controllers.</li>
+	<li><strong>fonts</strong>: Contains some fonts used in application.</li>
+	<li><strong>libs</strong>: Contains javascript &amp; css libraries thos are not 
+	installed by Nuget.</li>
+	<li><strong>metronic</strong>: Contains metronic resources. Since total size 
+	of all metronic files are too big, this folder contains needed resources for 
+	the application. You can add other resources if you need later.</li>
+	<li><strong>Models</strong>: Contains MVC Model classes.</li>
+	<li><strong>Scripts</strong>: Contains script files of Nuget packages.</li>
+	<li><strong>Views</strong>: Contains razor views.</li>
+</ul>
+<h4>Used libraries</h4>
+<p>There are many javascript libraries used in the web application. Most of them 
+are located in <strong>libs</strong> folder. Some of them are installed using 
+Nuget and located in <strong>Scripts</strong> folder. Also, <strong>Abp</strong> 
+foler contains ASP.NET Boilerplate's script files.</p>
+<h4>Bundling &amp; Minifying</h4>
+<p>ASP.NET Zero uses
+<a href="https://www.nuget.org/packages/Microsoft.AspNet.Web.Optimization" target="_blank">
+ASP.NET Optimization</a> for bundling &amp; minifying script and style files. All 
+bundles are defined in <strong>BundleConfig</strong> class.</p>
+<h4>Logger configuration</h4>
+<p>ASP.NET Zero uses Log4Net for
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Logging">logging</a> 
+as default. Configuration is defined in log4net.config file. It writes all logs 
+into <strong>Logs</strong> folder of web site as default. When you publish your 
+project, remember to configure write permission to Logs folder.</p>
+<h4>MVC application</h4>
+<p>ASP.NET Zero contains front-end pages that can be a starting point for your 
+public web site. It has only <strong>Home</strong> and <strong>About</strong> 
+pages but you can dd as many pages as you need.</p>
+<p>HomeController, AboutController and LayoutController controllers are related 
+to front-end MVC pages. Views/Layout folder contains front-end layout views.</p>
+<h4>Login &amp; register pages</h4>
+<p>s</p>
+<h4>Base controller</h4>
+<p>All MVC Controllers in the application are derived from PhoneBook<strong>ControllerBase</strong> 
+class. You can add common methods here.</p>
+<h4>Base view</h4>
+<p>All MVC Views in the application are derived from PhoneBook<strong>WebViewPageBase</strong> 
+class. You can add common methods here.</p>
 
 </body>
 
