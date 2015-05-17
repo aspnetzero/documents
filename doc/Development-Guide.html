@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
-<title>Solution structure</title>
+<title>Development Guide</title>
 </head>
 
 <body>
@@ -31,15 +31,15 @@
 	<li>Web layer<ul>
 		<li>MVC application</li>
 		<li>Login &amp; register pages</li>
-		<li>Angular application</li>
+		<li>Backend Angular application</li>
 	</ul>
 	</li>
 </ul>
 <h3>Introduction</h3>
 <p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
 "<strong>Acme.PhoneBook</strong>". This document is a guide while developing your projects.</p>
-<p>Before reading this document, we advice you to run the application explore 
-user interface. This will help you to understand concepts defined here.</p>
+<p>Before reading this document, it's adviced to run the application and explore 
+user interface. This will definetely help you to understand concepts defined here.</p>
 <p>Since ASP.NET Zero is built on
 <a href="http://www.aspnetboilerplate.com/" target="_blank">ASP.NET Boilerplate</a> 
 application framework, this document highly refers it's documentation. Also, 
@@ -48,7 +48,7 @@ many classes in the solution extends it's base classes.</p>
 <p>When you create and <a href="/Download">download</a> your project, there will be a solution structure 
 as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="ASP.NET Zero solution structure" height="166" src="images/solution-structure/solution-overall.png" width="249" /></p>
+<img class="img-thumbnail" alt="ASP.NET Zero solution structure" height="166" src="images/solution-overall.png" width="249" /></p>
 <p>There are 6 projects in the solution:</p>
 <ul>
 	<li><strong>Core</strong> project contains domain layer classes (like
@@ -68,32 +68,37 @@ as shown below:</p>
 	<li><strong>Tests </strong>project contains unit and integration tests.</li>
 </ul>
 
-<h3>Domain (business layer)</h3>
+<h3>Domain (business) layer</h3>
 <p>PhoneBook<strong>CoreModule</strong> (YourProjectCoreModule for your project) 
-class contains some configurations. We can enable or disable <strong>
+class defines the core
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Module-System">module</a> 
+and contains some configurations. We can enable or disable <strong>
 multi-tenancy</strong> here. <strong>Email sending</strong> is disabled in DEBUG 
 mode. Because, development environment may not be configured properly to send 
 emails. You can enable it if you want.</p>
 <h4>Multi tenancy</h4>
-<p>ASP.NET Zero's all code-base is designed to be multi-tenant. But, it can be 
+<p>ASP.NET Zero's all code-base is developed to be multi-tenant. But, it can be 
 disabled with a single line of configuration if we're developing single-tenant 
 application. You can 
 <a href="Getting-Started#DocConfigureMultiTenancy">disable</a> it and skip this 
 section.</p>
 <p>Multi-tenancy is used to build <strong>SaaS</strong> (Software as a Service) 
 applications easily. Wtih this technique, we can deploy <strong>single 
-application</strong> and <strong>single database</strong> to server <strong>
+application</strong> and <strong>single database</strong> to serve to <strong>
 multiple customers</strong>.</p>
 <p><strong>Tenant</strong> class represents a tenant (customer). <strong>
-TenantManager</strong> is used to perform domain logic for tenants.</p>
+TenantManager</strong> is used to perform domain logic for tenants. Each Tenant 
+has it's own <strong>roles</strong>, <strong>users</strong> and <strong>settings</strong>.</p>
 <p>ASP.NET Zero uses ABP's (ASP.NET Boilerplate)
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
 filters</a>. So, it automatically filters tenant datas if you properly use 
-filter interfaces.</p>
+filter interfaces. Read data filters
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">
+documentation</a> carefully if you are building multi-tenant applications.</p>
 
 <h4>Roles</h4>
 
-<p>A role is represented by <strong>Role</strong> class. Roles are used to <strong>group permissions</strong>. When a user has a role, 
+<p>A role is represented by the <strong>Role</strong> class. Roles are used to <strong>group permissions</strong>. When a user has a role, 
 then he/she will have all permissions of that role. Roles can be 
 dynamic or static:</p>
 
@@ -252,7 +257,30 @@ pages but you can dd as many pages as you need.</p>
 <p>HomeController, AboutController and LayoutController controllers are related 
 to front-end MVC pages. Views/Layout folder contains front-end layout views.</p>
 <h4>Login &amp; register pages</h4>
-<p>s</p>
+<p><strong>AccountController</strong> is the main MVC controller class that is 
+used by login, register, forgot password and email activation pages. It has own
+<strong>layout</strong>. All views are located in Views/Account folder.</p>
+<h4>Backend Angular application</h4>
+<p>Users must login in order to enter application pages. Root controller is the
+<strong>ApplicationController</strong> class here. It gets application's <strong>
+layout</strong> page to start the system.</p>
+<p>All view, script and styles files are located in <strong>App</strong> folder:</p>
+<p>
+<img class="img-thumbnail" alt="Angular App folder structure" height="413" src="images/app-folders.png" width="152" /></p>
+<p>There are three main folders here:</p>
+<ul>
+	<li><strong>common</strong>: Contains common resources used by both host and 
+	tenants.</li>
+	<li><strong>host</strong>: Contains host-specific resources.</li>
+	<li><strong>tenant</strong>: Contains tenant-specific resources.</li>
+</ul>
+<p>So, if we have a view, directive, service, image... used by both tenants and 
+host, we should place it under common folder as shown above. While currently 
+there are just views in host and tenant folders, we should place tenant or host 
+specific directives, services.. under it's own folder, no to common.</p>
+<p><strong>app.js</strong> is entrance point of the application. We define 
+module and routes here. All scripts and styles in App folder is automatically 
+bundled and added to the layout.</p>
 <h4>Base controller</h4>
 <p>All MVC Controllers in the application are derived from PhoneBook<strong>ControllerBase</strong> 
 class. You can add common methods here.</p>
