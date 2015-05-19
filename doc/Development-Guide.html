@@ -73,6 +73,7 @@
 		<li>Setting Provider</li>
 		<li>Navigation Provider</li>
 		<li>Logging</li>
+		<li>DTO Mappings</li>
 		<li>Sending Emails</li>
 		<li>BinaryObjectManager</li>
 		<li>Soft Deletes</li>
@@ -446,12 +447,14 @@ controllers as adapter. ABP framework automatically creates
 dynamic web API layer</a> using application service interface definitions. So, 
 there is no web API Controller actually. We build dynamic web api controllers in 
 PhoneBook<strong>WebApiModule</strong> class.</p>
+<p>TODO</p>
 <h4>Localization</h4>
 <p>ASP.NET Zero UI is completely
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization">
 localized</a>. Localization is implemented using XML files. English and Turkish 
 localization is ready. You can add more XML files by copying one XML file and 
 translate to desired language. </p>
+<p>TODO</p>
 <h4>EntityFramework Integration</h4>
 <p>ASP.NET Zero template uses EntityFramework code-first and migrations.</p>
 <p>PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
@@ -459,55 +462,119 @@ defines the DbContext class. Migrations folder contains EF migrations. </p>
 <p>PhoneBook<strong>RepositoryBase</strong> class is the base class for your
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration#DocCustomRepositoryMethods">
 custom repositories</a>.</p>
+<p>TODO</p>
 <h4>Authorization Provider</h4>
 <p>ABP's authorization system is based on permissions. <strong>
 AppAuthorizationProvider</strong> class defines all permissions in the system.</p>
+<p>TODO</p>
 <h4>Setting Provider</h4>
 <p>ABP's
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Setting-Management">
 setting system</a> is used to store and get application settings. Settings and 
 default values are defined in <strong>AppSettingProvider</strong> class.</p>
+<p>TODO</p>
 <h4>Navigation Provider</h4>
+<p>TODO</p>
 <h4>Logging</h4>
 <p>ASP.NET Zero uses Log4Net for
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Logging">logging</a> 
-as default. Configuration is defined in <strong>log4net.config</strong> file. It writes all logs 
+as default. Configuration is defined in <strong>log4net.config</strong> file in 
+the .Web project. It writes all logs 
 into <strong>Logs</strong> folder of web site as default. When you publish your 
 project, remember to configure <strong>write permission</strong> to Logs folder.</p>
+<p>You can inject and use ILogger to write logs. Base classes has already Logger 
+property that you can directly write logs (see Base Classes section).</p>
+<p>Check <a href="http://www.aspnetboilerplate.com/Pages/Documents/Logging">
+logging documentation</a> for more.</p>
+<h4>DTO Mappings</h4>
+<p>ASP.NET Zero uses <a href="http://automapper.org/" target="_blank">AutoMapper</a> 
+for DTO to Entity mappings (and other types of object-to-object mappings). We 
+use Abp.AutoMapper library that makes usage of AutoMapper simpler and 
+declarative.</p>
+<p>See the DTO class that is used to transfer a tenant editing information:</p>
+<pre lang="cs">[AutoMap(typeof (Tenant))]
+public class TenantEditDto : EntityDto, IDoubleWayDto
+{
+    [Required]
+    [StringLength(Tenant.MaxTenancyNameLength)]
+    public string TenancyName { get; set; }
+
+    [Required]
+    [StringLength(Tenant.MaxNameLength)]
+    public string Name { get; set; }
+
+    public bool IsActive { get; set; }
+}</pre>
+<p>Here, <strong>AutoMap</strong> attribute automatically creates mapping between 
+<strong>TenantEditDto</strong> 
+and <strong>Tenant</strong> classes. Then we can automatically convert a Tenant object to 
+TenantEditDto object as shown below:</p>
+<pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
+public async Task&lt;TenantEditDto&gt; GetTenantForEdit(EntityRequestInput input)
+{
+    return (await TenantManager.GetByIdAsync(input.Id)).<strong>MapTo</strong>&lt;TenantEditDto&gt;();
+}</pre>
+<p>MapTo method does mapping. See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
+Data Transfer Objects documentation</a> for more information on DTOs.</p>
 <h4>Sending Emails</h4>
 <p>ASP.NET Zero sends emails to users in some cases (like forgot password and 
-email confirmation). Email template is defined in <strong>Emailing</strong> 
-namespace.</p>
+email confirmation). Email template is defined in <strong>EmailTemplates</strong> 
+folder of .Application project (<strong>default.html</strong>). You can send 
+email tamplete here.</p>
 <p> <strong>Email sending</strong> is disabled in DEBUG 
 mode. Because, development environment may not be configured properly to send 
-emails. You can enable it if you want.</p>
+emails. You can enable it if you want. It's enabled in RELEASE mode.</p>
 <h4>BinaryObjectManager</h4>
+<p>User <strong>profile pictures</strong> are stored in database, instead of 
+file system. But it's not stored in Users table for performance reasons (Users 
+are frequently retrieved from database, but profile pictures are rarely needed).</p>
+<p>A general-purpose binary saving mechanism built in ASP.NET Zero. <strong>
+BinaryObject</strong> entity can be used to save any type of binary objects 
+(byte arrays). Since a profile picture can be converted to a byte array, user 
+profile pictures are saved here.</p>
+<p><strong>IBinaryObjectManager</strong> interface defines methods to save, get 
+and delete binary objects. <strong>DbBinaryObjectManager</strong> implementes it 
+to save binary object in database. For example, <strong>ProfileController</strong> 
+uses IBinaryObjectManager to get current user's profile picture from database.</p>
 <h4>Soft Deletes</h4>
+<p>It's common to use the <strong>soft-delete</strong> pattern which is used to not delete an entity from database but only mark it as 'deleted'.
+So, if an entity is soft-deleted, it should not be accidently retrieved into the application.&nbsp;ABP's
+<strong>data filters</strong> make this automatically.</p>
+<p>In ASP.NET Zero, Tenants, Users and Roles are soft-deleted. See ABP's
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
+filter documentation</a> for more information about this topic.</p>
 <h4>Bundling &amp; Minifying</h4>
 <p>ASP.NET Zero uses
 <a href="https://www.nuget.org/packages/Microsoft.AspNet.Web.Optimization" target="_blank">
 ASP.NET Optimization</a> for bundling &amp; minifying script and style files. All 
-bundles are defined in <strong>BundleConfig</strong> class.</p>
+bundles are defined in <strong>BundleConfig</strong> class. Also, see <strong>
+ScriptPaths</strong> and <strong>StylePaths</strong> classes. They contains 
+constants for locations of js and css files.</p>
 <h4>Base Classes</h4>
-<p>There are some useful base classes those can be inherited to make things 
-easier:</p>
+<p>There are some useful base classes used in the application:</p>
 <ul>
 	<li>PhoneBook<strong>AppServiceBase</strong> can be used as a base class for 
-	all application services.</li>
+	all <strong>application services</strong>.</li>
 	<li>PhoneBook<strong>DomainServiceBase</strong> can be used as a base class 
-	for domain services.</li>
+	for <strong>domain services</strong>.</li>
 	<li>PhoneBook<strong>ControllerBase</strong> 
-	can be used as a base class for ASP.NET MVC Controllers.</li>
+	can be used as a base class for ASP.NET <strong>MVC Controllers</strong>.</li>
 	<li>PhoneBook<strong>WebViewPageBase</strong> 
-	can be used as a base class for ASP.NET MVC Views.</li>
+	can be used as a base class for ASP.NET <strong>MVC Views</strong>. 
+	Actually, all views are automatically inherit this since it's defined in 
+	web.config files. So, you can add some common properties/methods here to use 
+	in all views.</li>
 	<li>PhoneBook<strong>ServiceBase</strong> can be used as a base class for 
-	other service-like classes.</li>
+	other service-like classes. UserEmailer class inherits it, for instance.</li>
 </ul>
+<p>It's strongly recommended to inherit one of these classes upon your needs 
+since they really make Logging, Localization, Authorization... easier.</p>
 <h4>Versioning</h4>
-<p><strong>AppVersionHelper</strong> class is used to define version of the 
+<p><strong>AppVersionHelper</strong> class is used to define <strong>current version</strong> of the 
 application in single place. When you change <strong>Version</strong> here, all 
 projects in the application will be verisoned. Also, version and release date 
-automatically shown on UI.</p>
+automatically shown bottom left corner in the application pages. This helps us 
+to see running application version always.</p>
 <h3>Unit testing</h3>
 <p>ASP.NET Zero startup project contains <strong>unit</strong> and <strong>integration</strong> tests. Tests are developed using following tools:</p>
 <ul>
@@ -525,15 +592,15 @@ layers of the project. Open Test Explorer (Test\Windows\Test Explorer in VS main
 menu) to run unit tests:</p>
 <p>
 <img class="img-thumbnail" alt="Some unit tests" height="244" src="images/unit-tests.png" width="555" /></p>
-<p>This unit tests will be a guide to understand the code. Also, they can be a 
+<p>These unit tests will be a guide to understand the code. Also, they can be a 
 model while writing your own unit tests for your application's functionalities.</p>
-<p>All unit test classes (actually they are integration tests since they run 
+<p>All unit test classes (actually they are integration tests since they work 
 integrated to ABP, EntityFramework, AutoMapper and other libraries used up to 
-application layer) are derived from <strong>AppTestBase</strong>. It runs ABP 
+application layer) are derived from <strong>AppTestBase</strong>. It initializes ABP 
 system, mocks database using Effort, creates initial test data and logins to the 
-application for each tests. Also, provides some useful common methods for all 
+application for each tests. It also provides some useful common methods for all 
 tests.</p>
-<p>Here, there is a sample unit test in the application:</p>
+<p>Here, a sample unit test in the application:</p>
 <pre lang="cs">public class UserAppService_Delete_Tests : UserAppServiceTestBase
 {
     [Fact]
@@ -553,10 +620,15 @@ tests.</p>
         user.IsDeleted.ShouldBe(true);
     }
 }</pre>
-<p>It creates some users to test and verifies there is a user named "artdent". 
-Then calls DeleteUser method of the user application service (which is being 
-tested). Finally, checks if user is deleted. Here, User is a Soft Delete entity, 
-so it's IsDeleted property must be true if it's deleted.</p>
+<p>It creates some users to test and then verifies there is a user named 
+"artdent". Then it calls <strong>DeleteUser</strong> method of the <strong>user 
+application service</strong> (which is being tested). Finally, checks if user is 
+deleted. Here, User is a Soft Delete entity, so it's <strong>IsDeleted</strong>  
+property must be true if it's deleted.</p>
+
+<p>You can read
+<a href="http://www.codeproject.com/Articles/871786/Unit-testing-in-Csharp-using-xUnit-Entity-Framewor">
+this article</a> to understand unit testing better.</p>
 
 </body>
 
