@@ -509,7 +509,54 @@ application in single place. When you change <strong>Version</strong> here, all
 projects in the application will be verisoned. Also, version and release date 
 automatically shown on UI.</p>
 <h3>Unit testing</h3>
-<p>TODO</p>
+<p>ASP.NET Zero startup project contains <strong>unit</strong> and <strong>integration</strong> tests. Tests are developed using following tools:</p>
+<ul>
+	<li><a href="http://xunit.github.io/" target="_blank">xUnit</a> as testing 
+	framework.</li>
+	<li><a href="https://github.com/shouldly/shouldly" target="_blank">Shouldly</a> 
+	as assertion library.</li>
+	<li><a href="https://github.com/tamasflamich/effort" target="_blank">Effort</a> 
+	for mocking entity framework and database.</li>
+	<li><a href="http://www.nuget.org/packages/Abp.TestBase">Abp.TestBase</a> to 
+	simplify integration testing for ABP based applications.</li>
+</ul>
+<p>Tests cover <strong>Domain </strong>(core) and <strong>Application</strong> 
+layers of the project. Open Test Explorer (Test\Windows\Test Explorer in VS main 
+menu) to run unit tests:</p>
+<p>
+<img class="img-thumbnail" alt="Some unit tests" height="244" src="images/unit-tests.png" width="555" /></p>
+<p>This unit tests will be a guide to understand the code. Also, they can be a 
+model while writing your own unit tests for your application's functionalities.</p>
+<p>All unit test classes (actually they are integration tests since they run 
+integrated to ABP, EntityFramework, AutoMapper and other libraries used up to 
+application layer) are derived from <strong>AppTestBase</strong>. It runs ABP 
+system, mocks database using Effort, creates initial test data and logins to the 
+application for each tests. Also, provides some useful common methods for all 
+tests.</p>
+<p>Here, there is a sample unit test in the application:</p>
+<pre lang="cs">public class UserAppService_Delete_Tests : UserAppServiceTestBase
+{
+    [Fact]
+    public async Task Should_Delete_User()
+    {
+        //Arrange
+        CreateTestUsers();
+
+        var user = await GetUserByUserNameOrNullAsync(&quot;artdent&quot;);
+        user.ShouldNotBe(null);
+
+        //Act
+        await UserAppService.DeleteUser(new IdInput&lt;long&gt;(user.Id));
+
+        //Assert
+        user = await GetUserByUserNameOrNullAsync(&quot;artdent&quot;);
+        user.IsDeleted.ShouldBe(true);
+    }
+}</pre>
+<p>It creates some users to test and verifies there is a user named "artdent". 
+Then calls DeleteUser method of the user application service (which is being 
+tested). Finally, checks if user is deleted. Here, User is a Soft Delete entity, 
+so it's IsDeleted property must be true if it's deleted.</p>
 
 </body>
 
