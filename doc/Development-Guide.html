@@ -12,39 +12,86 @@
 <p><strong>IMPORTANT: THIS DOCUMENT IS BEING WRITTEN AND NOT COMPLETED YET.</strong></p>
 
 <ul>
-	<li>Introduction</li>
-	<li>Overall solution structure</li>
-	<li>Domain (business) layer<ul>
-		<li>Multi tenancy</li>
-		<li>Roles</li>
-		<li>Users</li>
-		<li>Authorization</li>
-		<li>Settings</li>
-		<li>Emailing</li>
-		<li>Base classes</li>
+	<li>Introduction<ul>
+		<li>Solution Structure (Layers)</li>
+		<li>Multi Tenancy</li>
+	</ul>
+	</li>
+	<li>Basic concepts..?<ul>
+		<li>Dependency Injectiong</li>
+		<li>NLayer Architecture &amp; Domain Driven Design</li>
+	</ul>
+	</li>
+	<li>Library and Frameworks<ul>
+		<li>Fundamental Libraries</li>
+		<li>Others</li>
+	</ul>
+	</li>
+	<li>MVC Application<ul>
+		<li>Layout</li>
+	</ul>
+	</li>
+	<li>Account Controller<ul>
+		<li>Layout</li>
+		<li>Login</li>
+		<li>Register</li>
+		<li>Email Activation</li>
+		<li>Forgot Password</li>
+	</ul>
+	</li>
+	<li>AngularJs Application<ul>
+		<li>Application Folders</li>
+		<li>Main menu</li>
+		<li>Routes</li>
+		<li>Layout</li>
+		<li>Tenant Management<ul>
+			<li>Using Tenancy Name As Subdomain</li>
+		</ul>
+		</li>
+		<li>Role Management<ul>
+			<li>Role Permissions</li>
+		</ul>
+		</li>
+		<li>User Management</li>
+		<li>Host Settings</li>
+		<li>Tenant Settings</li>
+		<li>Tenant Dashboard</li>
+		<li>User Menu<ul>
+			<li>Profile Settings</li>
+			<li>Change Picture</li>
+			<li>Change Password</li>
+			<li>Logout</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+	<li>Infrastructure<ul>
+		<li>Dynamic Web API Layer</li>
+		<li>Localization</li>
+		<li>EntityFramework Integration</li>
+		<li>Authorization Provider</li>
+		<li>Setting Provider</li>
+		<li>Navigation Provider</li>
+		<li>Logging</li>
+		<li>Sending Emails</li>
+		<li>BinaryObjectManager</li>
+		<li>Soft Deletes</li>
+		<li>Base Classes</li>
 		<li>Versioning</li>
 	</ul>
 	</li>
-	<li>Entity framework infrastructure</li>
-	<li>Application layer</li>
-	<li>Web API layer</li>
-	<li>Web layer<ul>
-		<li>MVC application</li>
-		<li>Login &amp; register pages</li>
-		<li>Backend Angular application</li>
-	</ul>
-	</li>
+	<li>Unit testing</li>
 </ul>
 <h3>Introduction</h3>
 <p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
-"<strong>Acme.PhoneBook</strong>". This document is a guide while developing your projects.</p>
-<p>Before reading this document, it's adviced to run the application and explore 
-user interface. This will definetely help you to understand concepts defined here.</p>
-<p>Since ASP.NET Zero is built on
+"<strong>Acme.PhoneBook</strong>". This document is a guide while developing your projects. 
+We definitely suggest to ready this document carefully before starting 
+development. Since ASP.NET Zero is built on
 <a href="http://www.aspnetboilerplate.com/" target="_blank">ASP.NET Boilerplate</a> 
-application framework, this document highly refers it's documentation. Also, 
-many classes in the solution extends it's base classes.</p>
-<h3>Overall solution structure</h3>
+application framework, this document highly refers it's documentation.</p>
+<p>Before reading this document, it's adviced to run the application and explore 
+user interface. This will help you to better understand concepts defined here.</p>
+<h4>Solution Structure</h4>
 <p>When you create and <a href="/Download">download</a> your project, there will be a solution structure 
 as shown below:</p>
 <p>
@@ -56,50 +103,225 @@ as shown below:</p>
 	and
 	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Domain-Services">
 	domain services</a>).</li>
-	<li><strong>Application</strong> project contains application logic (<a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">application 
-	services</a>). </li>
+	<li><strong>Application</strong> project contains application logic (like <a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">application 
+	services</a> and
+	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
+	DTO</a>s). </li>
 	<li><strong>EntityFramework</strong> project contains your DbContext,
 	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Repositories">
 	repository</a> implementations, database migrations and other 
 	EntityFramework specific concepts. </li>
-	<li><strong>WebApi</strong> project contains Web API Controllers. </li>
+	<li><strong>WebApi</strong> project contains Web API Controllers.</li>
 	<li><strong>Web</strong> project contains the presentation layer 
 	(javascripts, styles and views). </li>
 	<li><strong>Tests </strong>project contains unit and integration tests.</li>
 </ul>
 
-<h3>Domain (business) layer</h3>
-<p>PhoneBook<strong>CoreModule</strong> (YourProjectCoreModule for your project) 
-class defines the core
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Module-System">module</a> 
-and contains some configurations. We can enable or disable <strong>
-multi-tenancy</strong> here. <strong>Email sending</strong> is disabled in DEBUG 
-mode. Because, development environment may not be configured properly to send 
-emails. You can enable it if you want.</p>
+<p>ASP.NET Zero solution contains two applications:</p>
+<ul>
+	<li>A <strong>Multi-Page MVC</strong> application. This can be used to 
+	create a public web site or a landing page for your application.</li>
+	<li>A <strong>Single-Page AngularJs</strong> application. This is the actual 
+	application which is entered by username and password.</li>
+</ul>
 <h4>Multi tenancy</h4>
-<p>ASP.NET Zero's all code-base is developed to be multi-tenant. But, it can be 
-disabled with a single line of configuration if we're developing single-tenant 
-application. You can 
-<a href="Getting-Started#DocConfigureMultiTenancy">disable</a> it and skip this 
-section.</p>
 <p>Multi-tenancy is used to build <strong>SaaS</strong> (Software as a Service) 
 applications easily. Wtih this technique, we can deploy <strong>single 
 application</strong> and <strong>single database</strong> to serve to <strong>
-multiple customers</strong>.</p>
-<p><strong>Tenant</strong> class represents a tenant (customer). <strong>
-TenantManager</strong> is used to perform domain logic for tenants. Each Tenant 
-has it's own <strong>roles</strong>, <strong>users</strong> and <strong>settings</strong>.</p>
+multiple customers</strong>. Each Tenant 
+will have it's own <strong>roles</strong>, <strong>users</strong> and <strong>settings</strong>.</p>
+<p>ASP.NET Zero's all code-base is developed to be multi-tenant. But, it 
+<a href="Getting-Started#DocConfigureMultiTenancy">can be 
+disabled</a> with a single line of configuration if we're developing 
+single-tenant application. When you disable it, all multi-tenancy stuff will be 
+hidden and not available. If multi-tenancy is disabled, there will be a single 
+tenant named <strong>Default</strong>.&nbsp;</p>
+<p>There are two types of perspective in multi-tenant applications:</p>
+<ul>
+	<li><strong>Host</strong>: Manages tenants and system.</li>
+	<li><strong>Tenant</strong>: Uses the application features.</li>
+</ul>
 <p>ASP.NET Zero uses ABP's (ASP.NET Boilerplate)
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
-filters</a>. So, it automatically filters tenant datas if you properly use 
+<strong>data 
+filters</strong>. So, it automatically filters tenant datas if you properly use 
 filter interfaces. Read data filters
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">
 documentation</a> carefully if you are building multi-tenant applications.</p>
+<h3>Basic Concepts</h3>
+<p>TODO</p>
+<h3>Used Library &amp; Frameworks</h3>
+<h4>Fundamentals</h4>
+<p>TODO</p>
+<h4>Others</h4>
+<p>TODO</p>
 
-<h4>Roles</h4>
+<h3>MVC application</h3>
+<p>ASP.NET Zero contains front-end pages that can be a starting point for your 
+public web site or a landing page for the application. When you first run the 
+project, you will see the Home Page as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Frontend home page" height="496" src="images/frontend-homepage.jpg" width="500" /></p>
+<p>There are two pages here: <strong>Home Page</strong> and <strong>About</strong>. 
+Contents of these pages are just placeholders and for demo purposes. You can 
+completely remove content and build your page as your needs. Also, you should 
+change the <strong>logo</strong> with your Company's logo.</p>
+<p>See
+<a href="http://www.keenthemes.com/preview/metronic/theme/templates/frontend/" target="_blank">
+metronic front-end theme </a>for all possibilities and components to build a 
+richer web site.</p>
+<p>Menus 
+are defined in <strong>AppNavigationProvider</strong> class. When you add a new 
+menu item here, it will be automatically shown in the menu. There is a <strong>Login</strong> 
+link at the top right corner. This link takes us to the Login page to enter the 
+AngularJs application.</p>
+<h4>Layout</h4>
+<p>Layout of front-end pages are located under <strong>Views/Layout</strong> folder of the 
+<strong>.Web</strong> project:</p>
+<p>
+<img class="img-thumbnail" alt="Layout views" height="234" src="images/frontend-layout-views.png" width="168" /></p>
+<p><strong>_Layout</strong> is the main layout file that includes scripts and 
+styles. Language flags and the menu is rendered in <strong>_Header</strong> 
+file. _PreFooter is not used but you can add it to the _Layout if you want.</p>
+<h3>Account Controller</h3>
+<p><strong>AccountController</strong> provides <strong>login</strong>, <strong>register</strong>,
+<strong>forgot password </strong>and <strong>email activation</strong> pages.</p>
+<h4>Layout</h4>
+<p>Account management pages have a seperated <strong>_Layout</strong> view under 
+Views/Account folder:</p>
+<p>
+<img class="img-thumbnail" alt="Account Controller Views" height="324" src="images/account-views.png" width="214" /></p>
+<h4>Login</h4>
+<p>Main view for AccountController is the Login page:</p>
+<p>
+<img class="img-thumbnail" alt="Login page" height="414" src="images/login-screen.png" width="431" /></p>
+<p>The first input is <strong>tenancy name</strong> which is shown only in a 
+multi-tenant application if "subdomain tenancy name detection" is not possible 
+(See host settings section). There is a single tenant named <strong>Default</strong> 
+in the initial database (See Entity framework section for initial seed 
+data).&nbsp;Leave tenancy name input as blank to login as <strong>host</strong>.</p>
+<p>We can use <strong>admin</strong> user name and <strong>123qwe</strong> 
+password in first run the application. At first login, we should change admin 
+password since 123qwe is not very secure:</p>
+<p>
+<img class="img-thumbnail" alt="Change password" height="304" src="images/account-change-password.png" width="422" /></p>
+<p>
+After changing password we are redirected to the Angular application.</p>
+<h4>Register</h4>
+<p>When we click the "<strong>Create Account</strong>" link in the login page, a 
+registration form is shown:</p>
+<p>
+<img class="img-thumbnail" alt="Registration form" height="488" src="images/registration-form-small.png" width="250" /></p>
+<p>A user can be register for a tenant, not for host if this is a multi-tenant 
+application. If it's single-teant, there will be no tenancy name input here.</p>
+<h4>Email Activation</h4>
+<p>When a user registers as shown above, an email confirmation code is sent to 
+his email address. If user did not receive this email for some reason, he can 
+click Email activation and re-send the confirmation code.</p>
+<p>
+<img class="img-thumbnail" alt="Email activation screen" height="363" src="images/email-activation.png" width="417" /></p>
+<p>Again, Tenancy name input is not shown for a single-tenant application or 
+tenant name is known via subdomain (like tenancyname.mydomain.com).</p>
+<h4>Forgot Password</h4>
+<p>If a user forgots his password, he can click the "Forgot Password" link to 
+get an email to reset the password.</p>
+<p>
+<img class="img-thumbnail" alt="Forgot password" height="359" src="images/forgot-password.png" width="421" /></p>
+<h3>Angular Application</h3>
+<p>The main application in ASP.NET Zero is a <strong>Single-Page AngularJs 
+Application</strong>. When you login, you are redirected to the <strong>
+ApplicationController</strong>. It returns the layout view of the application.</p>
+<h4>Application Folders</h4>
+<p>All view, script and styles files are located in <strong>App</strong> folder:</p>
+<p>
+<img class="img-thumbnail" alt="Angular App folder structure" height="413" src="images/app-folders.png" width="152" /></p>
+<p>There are three main folders here:</p>
+<ul>
+	<li><strong>common</strong>: Contains common resources used by both host and 
+	tenants.</li>
+	<li><strong>host</strong>: Contains host-specific resources.</li>
+	<li><strong>tenant</strong>: Contains tenant-specific resources.</li>
+</ul>
+<p>So, if we have a view, directive, service, image... used by both tenants and 
+host, we should place it under <strong>common</strong> folder as shown above. We should place tenant or host 
+specific directives, services.. under it's own folder, no to common. If you're 
+developing a single-tenant application, you can place your files under tenant.</p>
+<h4>Main Menu</h4>
+<p>Application's main menu is defined in <strong>AppNavigationProvider</strong> 
+class. See ABP's
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">navigation 
+documentation</a> to have a deep understanding on creating menus.</p>
+<h4>Routes</h4>
+<p><strong>app.js</strong> is entrance point of the application. We define 
+the <strong>app</strong> angular module and angular <strong>routes</strong> in 
+this file. Angular <strong>ui-router</strong> is used for routing. Routes (states in ui-router) is dynamically defined based on current user's 
+permissions (see authorization section). Example:</p>
+<pre lang="js">if (abp.auth.hasPermission(&#39;Pages.Administration.Tenant.Settings&#39;)) {
+    $stateProvider.state(&#39;tenant.settings&#39;, {
+        url: &#39;/settings&#39;,
+        templateUrl: &#39;~/App/tenant/views/settings/index.cshtml&#39;,
+        menu: &#39;Administration.Settings.Tenant&#39;
+    });
+}</pre>
+<p>Conditional routing definition prevents user to enter an unauthorized page by 
+just entering a URL to browser's address bar. <strong>Menu</strong> definition 
+helps us to highlight given menu when this route is activated.</p>
+<p>As you see, <strong>.cshtml</strong> files are used as views. While simply
+<strong>.html</strong> files can be used, using .cshtml files allows us to take 
+advantage of razor's power while creating views. Note that this is not same as 
+MVC's view, since this is a Angular SPA (Single-Page Application).</p>
+<h4>Layout</h4>
+<p>Layout of the application is located under common/views/<strong>layout</strong> 
+folder. All scripts and styles in App folder is automatically 
+<strong>bundled</strong> (See BundleConfig.cs) and added to the layout.</p>
+<p><img class="img-thumbnail" alt="App layout" height="216" src="images/app-layout.png" width="154" /></p>
+<p>Layout consists of different parts as shown above. Main menu is rendered in
+<strong>sidebar</strong>.</p>
+<h4>Tenant Management</h4>
+<p>If you're not developing a multi-tenant application, you can skip this 
+section.</p>
+<p>If this is a multi-tenant application and you logged in as a host user, then 
+tenants page is shown:</p>
+<p>
+<img class="img-thumbnail" alt="Tenant management" height="387" src="images/tenant-management.png" width="720" /></p>
+<p>A tenant is represented by <strong>Tenant</strong> class. There is a single tenant, named <strong>Default</strong> as initial.<strong> Tenancy Name</strong> (code name) is the <strong>unique</strong> name 
+of a tenant. A&nbsp;tenant can be <strong>active</strong> of <strong>passive</strong>. 
+If it's passive, no user of this tenant can login to the application.</p>
+<p>When we 
+click the "Create new Tenant" button, a dialog is shown:</p>
+<p>
+<img class="img-thumbnail" alt="Create tenant" height="521" src="images/create-tenant.png" width="620" /></p>
+<p><strong>Tenancy name</strong> should be unique and not contain spaces or 
+other special chars since it may be used as subdomain name (like 
+tenancyname.mydomain.com, see the section below). <strong>Name</strong> can be anything. <strong>Admin email</strong> 
+is used as email address of the admin user of new tenant. Admin user is 
+automatically created with the tenant. We can set a random password for admin and send activation email. When user 
+first login, he should change the password. We can uncheck this to enter a known 
+password.</p>
+<p>Also, we can create or edit a tenant. All tenant actions are handled by <strong>TenantAppService</strong> class and 
+<strong>authorized</strong>. Example:</p>
+<pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenants_Delete)]
+public async Task DeleteTenant(EntityRequestInput input)
+{
+    var tenant = await TenantManager.GetByIdAsync(input.Id);
+    CheckErrors(await TenantManager.DeleteAsync(tenant));
+}</pre>
+<p>TenantAppService mostly uses <strong>TenantManager</strong> domain service 
+for tenant operations..</p>
+<h5>Using Tenancy Name As Subdomain</h5>
+<p>Multi-tenant application generally uses subdomain to identify current tenant.
+<strong>tenant1</strong>.mydomain.com, <strong>tenant2</strong>.mydomain.com and 
+so on. ASP.NET Zero automatically identify and get tenant name from subdomain 
+(See host settings).</p>
+<h4>Role Management</h4>
 
-<p>A role is represented by the <strong>Role</strong> class. Roles are used to <strong>group permissions</strong>. When a user has a role, 
-then he/she will have all permissions of that role. Roles can be 
+<p>When we click Administrator/Roles menu, we enter to the role management page:</p>
+<p>
+<img class="img-thumbnail" alt="Role management" height="446" src="images/role-management.png" width="718" /></p>
+<p>&nbsp;Roles are used to <strong>group permissions</strong>. When a user has a 
+role, then he/she will have all permissions of that role.</p>
+<p>A role is represented by the <strong>Role</strong> class. <strong>RoleManager</strong> performs domain logic, <strong>RoleAppService</strong> 
+performs application logic for roles.</p>
+<p>&nbsp;Roles can be 
 dynamic or static:</p>
 
 <ul>
@@ -122,39 +344,162 @@ multi-tenant apps). Also, we have static <strong>admin </strong>and <strong>user
 roles for tenants. <strong>Admin </strong>roles have all permissions granted by 
 default. <strong>User </strong>role is the <strong>default</strong> role for new users and has no 
 permission by default. These can be changed easily. See <strong>StaticRoleNames</strong> class for 
-all static roles and <strong>AppRoleConfig</strong> for adding static roles to 
-the system.</p>
-<p><strong>RoleManager</strong> class is used to perform domain logic for roles.</p>
-<h4>Users</h4>
-<p><strong>User</strong> class represents a user. <strong>UserManager</strong> 
-is used to perform domain logic for users.</p>
+all static roles and <strong>AppRoleConfig</strong> for changing static roles.</p>
+<h5>Role Permissions</h5>
+<p>Since roles are used to group permissions, we can set permissions of a role 
+while creating or editing as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Role permissions" height="554" src="images/role-permissions.png" width="618" /></p>
+<p>Note: Every tenant has it's own roles and any change in roles for a tenant does not effect other 
+tenants. Also, host has also own isolated roles.</p>
+<h4>User Management</h4>
 
-<p>Users are people who can <strong>login </strong>to the application and 
+<p>When we click Administrator/Users menu, we enter to the user management page:</p>
+<p>
+<img class="img-thumbnail" alt="User Management" height="315" src="images/user-management.png" width="720" /></p>
+
+<p><strong>Users</strong> are people who can <strong>login </strong>to the application and 
 perform some operations based on their <strong>permissions</strong>.</p>
-<p>A user can have zero or more <strong>roles</strong>. A user inherits union of 
-permissions of his all roles. Also, we can set <strong>user-specific permission</strong>. 
-A user specific permission setting overrides role settings for this permission.</p>
-<h4>Settings</h4>
-<p>ABP's
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Setting-Management">
-setting system</a> is used to store and get application settings. Settings and 
-default values are defined in <strong>AppSettingProvider</strong> class.</p>
-<h4>Emailing</h4>
-<p>ASP.NET Zero sends emails to users in some cases (like forgot password and 
-email confirmation). Email template is defined in <strong>Emailing</strong> 
-namespace.</p>
+<p><strong>User</strong> class represents a user. <strong>UserManager</strong> 
+is used to perform domain logic, <strong>UserAppService</strong> is used to 
+perform application logic for users.</p>
+
+<p>A user can have zero or more <strong>roles</strong>. If a user has more than 
+one role, he inherits union of 
+permissions of all these roles. Also, we can set <strong>user-specific permission</strong>. 
+A user specific permission setting overrides role settings for this permission. 
+A screenshot of user permission dialog:</p>
+<p>
+<img class="img-thumbnail" alt="User Permissions" height="481" src="images/user-permissions.png" width="620" /></p>
+<p>A dialog is used to create/edit a user:</p>
+<p>
+<img class="img-thumbnail" alt="Editing User" height="534" src="images/edit-user.png" width="400" /></p>
+<p>We can change user's <strong>password</strong>, make him <strong>
+active/passive</strong> and so on... A user can have a <strong>profile picture</strong>. 
+It can be changed by the user (See User Menu section). <strong>Admin</strong> 
+user can not be deleted as a business rule. If you don't want to use admin, you 
+can make it passive.</p>
+<h4>Host Settings</h4>
+<p>Host settings page is used to configure some system settings:</p>
+<p>
+<img class="img-thumbnail" alt="General Host Settings" height="256" src="images/host-settings-general.png" width="663" /></p>
+<p>Web site root address is important, especially in production. {TENANCY_NAME} 
+is a placeholder for subdomains. It's <strong>optional</strong> (both for multi 
+and single tenant applications). If supplied, current tenant name 
+is automatically detected.</p>
+<p>To make tenancy name subdomains properly work, we should make two 
+configuration beside the application:</p>
+<ol>
+	<li>We should configure DNS to redirect all subdomains to a static IP 
+	address. To declare 'all subdomains', we can use wildcard like 
+	'*.mydomain.com'.</li>
+	<li>We should configure IIS to bind this static IP to our application.</li>
+</ol>
+<p>There may be other ways of doing it but this is the most simple way.</p>
+<p>In host settings page, there are also other settings. SAVE ALL button saves 
+all settings in one click. HostSettingAppService is used to retrieve and save 
+settings (See setting provider section for more information).</p>
+
+<h4>Tenant Settings</h4>
+<p>In a multi-tenant application, tenant settings are shown as below:</p>
+<p>
+<img class="img-thumbnail" alt="Tenant settings" height="382" src="images/tenant-settings.png" width="695" /></p>
+<p>If we disable multi-tenancy, some host settings are shown in this page (since 
+there is no host setting page):</p>
+<p>
+<img class="img-thumbnail" alt="Tenant settings extended" height="717" src="images/tenant-settings-2.png" width="689" /></p>
+<p>TenantSettingAppService is used to get/set tenant settings.&nbsp;</p>
+
+<h4>Tenant Dashboard</h4>
+<p>ASP.NET Zero startup project also includes a <strong>sample</strong> 
+dashboard. It's just for demo purposes, you can make it as a start point for 
+your actual dashboard:</p>
+<p>
+<img class="img-thumbnail" alt="Dashboard sample" height="484" src="images/default-dashboard.png" width="800" /></p>
+<p>Here, only Member Activity graph data is retrieved from server (from 
+TenantDashboardAppService). You can click refresh button to generate random 
+data.</p>
+<h4>User Menu</h4>
+<p>A user can click his name at top right corner to open user menu:</p>
+<p><img class="img-thumbnail" alt="User menu" height="247" src="images/user-menu.png" width="221" /></p>
+<h5>Profile Settings</h5>
+<p>My settings is used to change user profile settings:</p>
+<p>
+<img class="img-thumbnail" alt="User settings" height="435" src="images/user-settings.png" width="615" /></p>
+<p>As shown here, <strong>admin</strong> user name can not be changed. It's 
+considered a special user name since it's used in database migration seed. Other 
+users can change their usernames. <strong>ProfileAppService</strong> is used to 
+get/change settings.</p>
+<h5>Change Picture</h5>
+<p>A user can change own profile picture. <strong>ProfileController</strong> is 
+used to upload and get user profile pictures.</p>
+<h5>Change Password</h5>
+<p><strong>ProfileAppService</strong> is used to change password.</p>
+<h5>Logout</h5>
+<p><strong>AccountController</strong> is used to logout the user.</p>
+<h3>Infrastructure</h3>
+<h4>Dynamic Web API Layer</h4>
+<p>Since application is built on AngularJs and it's a Single-Page Application 
+(SPA), application services are used via AJAX. So, it's needed to create web API 
+controllers as adapter. ABP framework automatically creates
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+dynamic web API layer</a> using application service interface definitions. So, 
+there is no web API Controller actually. We build dynamic web api controllers in 
+PhoneBook<strong>WebApiModule</strong> class.</p>
 <h4>Localization</h4>
 <p>ASP.NET Zero UI is completely
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization">
 localized</a>. Localization is implemented using XML files. English and Turkish 
 localization is ready. You can add more XML files by copying one XML file and 
 translate to desired language. </p>
-<h4>Base classes</h4>
-<p>There are some useful base classes thos can be inherited to make things 
+<h4>EntityFramework Integration</h4>
+<p>ASP.NET Zero template uses EntityFramework code-first and migrations.</p>
+<p>PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
+defines the DbContext class. Migrations folder contains EF migrations. </p>
+<p>PhoneBook<strong>RepositoryBase</strong> class is the base class for your
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration#DocCustomRepositoryMethods">
+custom repositories</a>.</p>
+<h4>Authorization Provider</h4>
+<p>ABP's authorization system is based on permissions. <strong>
+AppAuthorizationProvider</strong> class defines all permissions in the system.</p>
+<h4>Setting Provider</h4>
+<p>ABP's
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Setting-Management">
+setting system</a> is used to store and get application settings. Settings and 
+default values are defined in <strong>AppSettingProvider</strong> class.</p>
+<h4>Navigation Provider</h4>
+<h4>Logging</h4>
+<p>ASP.NET Zero uses Log4Net for
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Logging">logging</a> 
+as default. Configuration is defined in <strong>log4net.config</strong> file. It writes all logs 
+into <strong>Logs</strong> folder of web site as default. When you publish your 
+project, remember to configure <strong>write permission</strong> to Logs folder.</p>
+<h4>Sending Emails</h4>
+<p>ASP.NET Zero sends emails to users in some cases (like forgot password and 
+email confirmation). Email template is defined in <strong>Emailing</strong> 
+namespace.</p>
+<p> <strong>Email sending</strong> is disabled in DEBUG 
+mode. Because, development environment may not be configured properly to send 
+emails. You can enable it if you want.</p>
+<h4>BinaryObjectManager</h4>
+<h4>Soft Deletes</h4>
+<h4>Bundling &amp; Minifying</h4>
+<p>ASP.NET Zero uses
+<a href="https://www.nuget.org/packages/Microsoft.AspNet.Web.Optimization" target="_blank">
+ASP.NET Optimization</a> for bundling &amp; minifying script and style files. All 
+bundles are defined in <strong>BundleConfig</strong> class.</p>
+<h4>Base Classes</h4>
+<p>There are some useful base classes those can be inherited to make things 
 easier:</p>
 <ul>
+	<li>PhoneBook<strong>AppServiceBase</strong> can be used as a base class for 
+	all application services.</li>
 	<li>PhoneBook<strong>DomainServiceBase</strong> can be used as a base class 
 	for domain services.</li>
+	<li>PhoneBook<strong>ControllerBase</strong> 
+	can be used as a base class for ASP.NET MVC Controllers.</li>
+	<li>PhoneBook<strong>WebViewPageBase</strong> 
+	can be used as a base class for ASP.NET MVC Views.</li>
 	<li>PhoneBook<strong>ServiceBase</strong> can be used as a base class for 
 	other service-like classes.</li>
 </ul>
@@ -163,130 +508,8 @@ easier:</p>
 application in single place. When you change <strong>Version</strong> here, all 
 projects in the application will be verisoned. Also, version and release date 
 automatically shown on UI.</p>
-<h3>Entity framework infrastructure</h3>
-<p>ASP.NET Zero template uses EntityFramework code-first and migrations.</p>
-<p>PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
-defines the DbContext class. Migrations folder contains EF migrations. </p>
-<p>PhoneBook<strong>RepositoryBase</strong> class is the base class for your
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration#DocCustomRepositoryMethods">
-custom repositories</a>.</p>
-<h3>Application layer</h3>
-<p>Application Layer contains 
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">application services</a> 
-those are used by the Presentation Layer. 
-An application service method receives a DTO (Data Transfer Object) as input, 
-uses this input to perform some specific business operation, and may return another DTO, if needed.</p>
-<h4>Authorization</h4>
-<p>ABP's authorization system is based on permissions. <strong>
-AppAuthorizationProvider</strong> class defines all permissions in the system.</p>
-<h4>Application services</h4>
-<p>Application layer has following application services:</p>
-<ul>
-	<li><strong>TenantAppService</strong>: Contains service methods for tenant 
-	management page.</li>
-	<li><strong>UserAppService</strong>: Contains service methods for user 
-	management page.</li>
-	<li><strong>RoleAppService</strong>: Contains service methods for role 
-	management page.</li>
-	<li><strong>SessionAppService</strong>: Contains service method to get 
-	current session informations.</li>
-	<li><strong>TenantSettingsAppService</strong>: Contains service methods for 
-	tenant settings page.</li>
-	<li><strong>HostSettingsAppService</strong>: Contains service methods for 
-	host settings page.</li>
-	<li><strong>ProfileAppService</strong>: Used to get/change user profile 
-	informations and password.</li>
-	<li><strong>TenantDashboardAppService</strong>: Example application service 
-	for dashboard.</li>
-</ul>
-<p>Every application service defines an interface (like IUserAppService) and an 
-implementation (like UserAppService class). DTOs are defined in Dto namespaces.</p>
-<h3>Web API layer</h3>
-<p>Since application is built on AngularJs and it's a Single-Page Application 
-(SPA), application services are used via AJAX. So, it's needed to create web API 
-controllers as adapter. ABP framework automatically creates
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
-dynamic web API layer</a> using application service interface definitions. So, 
-there is no web API Controller actually. We build dynamic web api controllers in 
-PhoneBook<strong>WebApiModule</strong> class.</p>
-<h3>Web layer</h3>
-<h4>Folder structure</h4>
-<ul>
-	<li><strong>Abp</strong>: ASP.NET Boilerplate's script files. Comes with
-	<a href="http://www.nuget.org/packages/Abp.Web.Resources">Abp.Web.Resources</a> 
-	nuget package.</li>
-	<li><strong>App</strong>: Contains the AngularJs backend application files.</li>
-	<li><strong>App_Start</strong>: Contains web module definition, Owin startup 
-	file, bundling, navigation and routing configurations.</li>
-	<li><strong>Bundles</strong>: ASP.NET bundling fails to find some resources. 
-	They are located here.</li>
-	<li><strong>Common</strong>: Contains core script and style files can be 
-	used by all pages.</li>
-	<li><strong>Content</strong>: Contains files come with some nuget packages.</li>
-	<li><strong>Controllers</strong>: Contains ASP.NET MVC Controllers.</li>
-	<li><strong>fonts</strong>: Contains some fonts used in application.</li>
-	<li><strong>libs</strong>: Contains javascript &amp; css libraries thos are not 
-	installed by Nuget.</li>
-	<li><strong>metronic</strong>: Contains metronic resources. Since total size 
-	of all metronic files are too big, this folder contains needed resources for 
-	the application. You can add other resources if you need later.</li>
-	<li><strong>Models</strong>: Contains MVC Model classes.</li>
-	<li><strong>Scripts</strong>: Contains script files of Nuget packages.</li>
-	<li><strong>Views</strong>: Contains razor views.</li>
-</ul>
-<h4>Used libraries</h4>
-<p>There are many javascript libraries used in the web application. Most of them 
-are located in <strong>libs</strong> folder. Some of them are installed using 
-Nuget and located in <strong>Scripts</strong> folder. Also, <strong>Abp</strong> 
-foler contains ASP.NET Boilerplate's script files.</p>
-<h4>Bundling &amp; Minifying</h4>
-<p>ASP.NET Zero uses
-<a href="https://www.nuget.org/packages/Microsoft.AspNet.Web.Optimization" target="_blank">
-ASP.NET Optimization</a> for bundling &amp; minifying script and style files. All 
-bundles are defined in <strong>BundleConfig</strong> class.</p>
-<h4>Logger configuration</h4>
-<p>ASP.NET Zero uses Log4Net for
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Logging">logging</a> 
-as default. Configuration is defined in log4net.config file. It writes all logs 
-into <strong>Logs</strong> folder of web site as default. When you publish your 
-project, remember to configure write permission to Logs folder.</p>
-<h4>MVC application</h4>
-<p>ASP.NET Zero contains front-end pages that can be a starting point for your 
-public web site. It has only <strong>Home</strong> and <strong>About</strong> 
-pages but you can dd as many pages as you need.</p>
-<p>HomeController, AboutController and LayoutController controllers are related 
-to front-end MVC pages. Views/Layout folder contains front-end layout views.</p>
-<h4>Login &amp; register pages</h4>
-<p><strong>AccountController</strong> is the main MVC controller class that is 
-used by login, register, forgot password and email activation pages. It has own
-<strong>layout</strong>. All views are located in Views/Account folder.</p>
-<h4>Backend Angular application</h4>
-<p>Users must login in order to enter application pages. Root controller is the
-<strong>ApplicationController</strong> class here. It gets application's <strong>
-layout</strong> page to start the system.</p>
-<p>All view, script and styles files are located in <strong>App</strong> folder:</p>
-<p>
-<img class="img-thumbnail" alt="Angular App folder structure" height="413" src="images/app-folders.png" width="152" /></p>
-<p>There are three main folders here:</p>
-<ul>
-	<li><strong>common</strong>: Contains common resources used by both host and 
-	tenants.</li>
-	<li><strong>host</strong>: Contains host-specific resources.</li>
-	<li><strong>tenant</strong>: Contains tenant-specific resources.</li>
-</ul>
-<p>So, if we have a view, directive, service, image... used by both tenants and 
-host, we should place it under common folder as shown above. While currently 
-there are just views in host and tenant folders, we should place tenant or host 
-specific directives, services.. under it's own folder, no to common.</p>
-<p><strong>app.js</strong> is entrance point of the application. We define 
-module and routes here. All scripts and styles in App folder is automatically 
-bundled and added to the layout.</p>
-<h4>Base controller</h4>
-<p>All MVC Controllers in the application are derived from PhoneBook<strong>ControllerBase</strong> 
-class. You can add common methods here.</p>
-<h4>Base view</h4>
-<p>All MVC Views in the application are derived from PhoneBook<strong>WebViewPageBase</strong> 
-class. You can add common methods here.</p>
+<h3>Unit testing</h3>
+<p>TODO</p>
 
 </body>
 
