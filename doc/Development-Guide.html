@@ -89,7 +89,8 @@
 We definitely suggest to ready this document carefully before starting 
 development. Since ASP.NET Zero is built on
 <a href="http://www.aspnetboilerplate.com/" target="_blank">ASP.NET Boilerplate</a> 
-application framework, this document highly refers it's documentation.</p>
+application framework, this document highly refers it's 
+<a href="http://www.aspnetboilerplate.com/Pages/Documents">documentation</a>.</p>
 <p>Before reading this document, it's adviced to run the application and explore 
 user interface. This will help you to better understand concepts defined here.</p>
 <h4>Solution Structure</h4>
@@ -433,59 +434,80 @@ users can change their usernames. <strong>ProfileAppService</strong> is used to
 get/change settings.</p>
 <h5>Change Picture</h5>
 <p>A user can change own profile picture. <strong>ProfileController</strong> is 
-used to upload and get user profile pictures.</p>
+used to upload and get user profile pictures.
+<a href="https://github.com/nervgh/angular-file-upload" target="_blank">Angular 
+file upload</a> module used to select and upload profile picture to the server. 
+Currently, only jpg/jpeg files are supported, you can extend it.</p>
 <h5>Change Password</h5>
 <p><strong>ProfileAppService</strong> is used to change password.</p>
 <h5>Logout</h5>
-<p><strong>AccountController</strong> is used to logout the user.</p>
+<p><strong>AccountController</strong> is used to logout the user and redirect to 
+Login page.</p>
 <h3>Infrastructure</h3>
 <h4>Dynamic Web API Layer</h4>
 <p>Since application is built on AngularJs and it's a Single-Page Application 
 (SPA), application services are used via AJAX. So, it's needed to create web API 
-controllers as adapter. ABP framework automatically creates
+controllers as adapter (A Client calls Web API Controller action via AJAX, then 
+it calls application service method).</p>
+<p>ABP framework automatically creates
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
 dynamic web API layer</a> using application service interface definitions. So, 
 there is no web API Controller actually. We build dynamic web api controllers in 
-PhoneBook<strong>WebApiModule</strong> class.</p>
-<p>TODO</p>
+PhoneBook<strong>WebApiModule</strong> class in .WebApi project.</p>
+<p>While ABP dynamically create Web API Controllers, we can also create regular 
+Web API Controllers as we always do.</p>
+<p>See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+dynamic Web API layer documentation</a> for more.</p>
 <h4>Localization</h4>
-<p>ASP.NET Zero UI is completely
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization">
-localized</a>. Localization is implemented using XML files. English and Turkish 
-localization is ready. You can add more XML files by copying one XML file and 
-translate to desired language. </p>
-<p>TODO</p>
+<p>ASP.NET Zero <strong>UI</strong> is completely
+localized. Localization is implemented using XML files shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Localization files" height="130" src="images/localization-files.png" width="179" /></p>
+<p>PhoneBook will be your ProjectName. <strong>English</strong> and <strong>Turkish</strong> 
+localization is ready here. You can add more XML files by copying one XML file and 
+translate to desired language. Notice that these XML files should be <strong>
+embedded resource</strong>. See
+<a href="http://www.csharp-examples.net/culture-names/" target="_blank">valid 
+culture codes</a>.</p>
+<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization">
+localization documentation</a> for more.</p>
 <h4>EntityFramework Integration</h4>
-<p>ASP.NET Zero template uses EntityFramework code-first and migrations.</p>
-<p>PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
-defines the DbContext class. Migrations folder contains EF migrations. </p>
+<p>ASP.NET Zero template uses EntityFramework <strong>code-first</strong> and 
+<strong>migrations</strong>. PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
+defines the DbContext class. <strong>Migrations</strong> folder contains EF migrations. </p>
 <p>PhoneBook<strong>RepositoryBase</strong> class is the base class for your
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration#DocCustomRepositoryMethods">
-custom repositories</a>.</p>
-<p>TODO</p>
+custom repositories. See entity
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration">
+framework integration</a> documentation for more.</p>
 <h4>Authorization Provider</h4>
-<p>ABP's authorization system is based on permissions. <strong>
-AppAuthorizationProvider</strong> class defines all permissions in the system.</p>
-<p>TODO</p>
+<p>Authorization system is based on permissions. <strong>AppPermissions </strong>
+contains constants for permission names and <strong>
+AppAuthorizationProvider</strong> class defines all permissions in the system. 
+We should define a permission here before using it in application layer.</p>
+<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization">
+authorization documentation</a> to learn how to configure permissions.</p>
 <h4>Setting Provider</h4>
-<p>ABP's
+<p>Every setting has a unique name. Setting names are defined in <strong>
+AppSettings</strong> class as constants. All settings and their default values are defined in <strong>AppSettingProvider</strong> class.</p>
+<p>See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Setting-Management">
-setting system</a> is used to store and get application settings. Settings and 
-default values are defined in <strong>AppSettingProvider</strong> class.</p>
-<p>TODO</p>
+setting documentation</a> to learn how to create and use settings.</p>
 <h4>Navigation Provider</h4>
-<p>TODO</p>
+<p>Menus are dynamically generated using definitions in <strong>
+AppNavigationProvider</strong> class. We have two menus: <strong>Main</strong> 
+(the main menu in Angular application) and <strong>FrontEnd</strong> (Main menu 
+in front-end web site).</p>
+<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
+navigation documentation</a> for more information.</p>
 <h4>Logging</h4>
-<p>ASP.NET Zero uses Log4Net for
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Logging">logging</a> 
+<p>ASP.NET Zero uses <strong>Log4Net</strong> for logging 
 as default. Configuration is defined in <strong>log4net.config</strong> file in 
 the .Web project. It writes all logs 
 into <strong>Logs</strong> folder of web site as default. When you publish your 
 project, remember to configure <strong>write permission</strong> to Logs folder.</p>
-<p>You can inject and use ILogger to write logs. Base classes has already Logger 
-property that you can directly write logs (see Base Classes section).</p>
 <p>Check <a href="http://www.aspnetboilerplate.com/Pages/Documents/Logging">
-logging documentation</a> for more.</p>
+logging documentation</a> to see how to inject ILogger and write logs.</p>
 <h4>DTO Mappings</h4>
 <p>ASP.NET Zero uses <a href="http://automapper.org/" target="_blank">AutoMapper</a> 
 for DTO to Entity mappings (and other types of object-to-object mappings). We 
@@ -566,6 +588,10 @@ constants for locations of js and css files.</p>
 	in all views.</li>
 	<li>PhoneBook<strong>ServiceBase</strong> can be used as a base class for 
 	other service-like classes. UserEmailer class inherits it, for instance.</li>
+	<li>PhoneBook<strong>RepositoryBase</strong> can be used as a base class for 
+	repository implementations.</li>
+	<li>PhoneBook<strong>ApiControllerBase</strong> can be used as a base class 
+	for regular Web API Controllers.</li>
 </ul>
 <p>It's strongly recommended to inherit one of these classes upon your needs 
 since they really make Logging, Localization, Authorization... easier.</p>
