@@ -1,0 +1,469 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
+<title>Developing an Application Step By Step</title>
+</head>
+
+<body>
+
+<h3>Introduction</h3>
+
+<p>In this document, we will create a sample <strong>phonebook application</strong> 
+based on ASP.NET Zero step by step. After all steps, we will have a 
+multi-tenant, localized, authorized, configurable, testable... appliaction.</p>
+<h3>Creating The Project</h3>
+<p>We're creating and downloading the solution named "<strong>Acme.PhoneBook</strong>" as described in
+<a href="Getting-Started.html">Getting Started</a> document. After opening 
+solution in Visual Studio, we see an NLayered solution that consists of six projects:</p>
+<p>
+
+<img class="img-thumbnail" alt="Solution Overall" height="166" src="images/solution-overall.png" width="249" /></p>
+<p>
+
+Also, run database migrations, create the database and login to the application 
+as described in <a href="Getting-Started.html">getting started</a> document. 
+After all completed and logged in to the application, we see a dashboard as 
+shown below:</p>
+<p>
+
+<img alt="Dashboard" height="484" src="images/default-dashboard.png" width="800" /></p>
+<p>
+
+We will make our application <strong>single-tenant</strong> (we will convert it 
+to multi-tenant later). So, we 
+open <strong>PhoneBookCoreModule</strong> class and disable multi-tenancy as 
+shown below:</p>
+<pre lang="cs">[DependsOn(typeof(AbpZeroCoreModule))]
+public class PhoneBookCoreModule : AbpModule
+{
+    public override void PreInitialize()
+    {
+        //Enable this line to create a multi-tenant application.
+        //Configuration.MultiTenancy.IsEnabled = true;
+    }
+}</pre>
+
+<h3>Adding a New Page</h3>
+<p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
+<h4>Defining a menu item</h4>
+<p><strong>AppNavProvider</strong> class defines menus in the application. When 
+we change this class, menus are automatically changed. Open this class and 
+create new menu item as shown below.</p>
+<pre lang="cs">new MenuItemDefinition(
+    PageNames.App.Tenant.PhoneBook,
+    L("PhoneBook"),
+    url: "tenant.phonebook",
+    icon: "glyphicon glyphicon-book"
+)</pre>
+<p>Every menu item must have a <strong>unique name</strong> 
+to identify this menu item. Menu names are defined in PageNames class as 
+constants. We add a new constant: "<strong>PhoneBook</strong>".</p>
+<h4>Localizing Menu Item Display Name</h4>
+<p>A menu item should also have a <strong>localizable shown name</strong>. It's 
+used to display menu item on the page. <strong>L("People")</strong> is localized name of 
+our new menu. <strong>L</strong> method is a helper method gets a localization 
+key and simply returns a <strong>LocalizableString</strong> object (see 
+AppNavigationProvider class).</p>
+<p>Localization strings are defined in <strong>XML</strong> files in <strong>
+.Core</strong> 
+project as shown below:</p>
+<p>
+<img alt="Localization files" height="130" src="images/localization-files.png" width="179" /></p>
+<p>Open PhoneBook.xml (the <strong>default</strong>, <strong>English</strong> 
+localization dictionary) ad add the following line:</p>
+<pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Phone book&quot; /&gt;</pre>
+<p>If we don't define "PhoneBook"s value for other localization dictionaries, 
+default value is shown in all languages. We can define it also for Turkish in 
+PhoneBook-tr.xml file:</p>
+<pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Telefon rehberi&quot; /&gt;</pre>
+<h4>Other menu item properties</h4>
+<p><strong>url</strong> can a a URL or <strong>AngularJs route</strong> (state 
+in angular <strong>ui-router</strong> used in ASP.NET Zero) that will be 
+activated when we click the menu item. We will define this route below.</p>
+<p>Lastly, <strong>icon</strong> is the shown menu icon for new menu item. It 
+can be a <strong>css</strong> class. We can use Glyphicon, Font-Awesome or 
+another css font library here.</p>
+<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
+navigation document</a> for more information on menu definitions.</p>
+<h3>Creating AngularJs Route</h3>
+<p>Angular routes are defined in <strong>app.js</strong>. We're adding a new 
+route definition as shown below:</p>
+<pre lang="js">$stateProvider.state(&#39;tenant.phonebook&#39;, {
+    url: &#39;/phonebook&#39;,
+    templateUrl: &#39;~/App/tenant/views/phonebook/index.cshtml&#39;,
+    menu: &#39;PhoneBook&#39;
+});</pre>
+<p>'<strong>tenant.phonebook</strong>' is the <strong>unique</strong> name of 
+this state (route). <strong>url</strong> is the mapped URL to this route.
+<strong>templateUrl</strong> is the view path for this route and <strong>menu</strong> 
+is a reference to the <strong>menu item name</strong> defined before. Menu 
+reference ensures highlighting related menu item on the main menu when we enter 
+this page (activate the route).</p>
+<h3>Creating AngularJs View and Controller</h3>
+<p>The last step to see our new page is to create an Angularjs view and 
+controller for it:</p>
+<p>
+<img alt="Phonebook AngularJs controller and view" height="198" src="images/phonebook-controller-views-files.png" width="171" /></p>
+<h4>Controller</h4>
+<p>Creating an empty Controller file, <strong>index.js</strong> under <strong>App/tenant/views/phonebook</strong> 
+folder:</p>
+<pre lang="js">(function() {
+    appModule.controller(&#39;tenant.views.phonebook.index&#39;, [
+        &#39;$scope&#39;,
+        function ($scope) {
+            var vm = this;
+
+            $scope.$on(&#39;$viewContentLoaded&#39;, function () {
+                Metronic.initAjax();
+            });
+
+            //...
+        }
+    ]);
+})();</pre>
+<p>This is the minimum controller definition that creates a controller named '<strong>tenant.views.phonebook.index</strong>' 
+and triggers Metronic's init method for this page. Controller name is completely 
+arbitrary. You can set any string. We use these naming <strong>as convention</strong> 
+and it's adviced to follow this convention when developing applications based on 
+ASP.NET Zero.</p>
+<h4>View</h4>
+<p>Creating an empty view, <strong>index.cshtml</strong> under <strong>App/tenant/views/phonebook</strong> 
+folder:</p>
+<pre lang="xml">&lt;div ng-controller=&quot;<strong>tenant.views.phonebook.index as vm</strong>&quot;&gt;
+    &lt;div class=&quot;row margin-bottom-5&quot;&gt;
+        &lt;div class=&quot;col-xs-12&quot;&gt;
+            &lt;div class=&quot;page-head&quot;&gt;
+                &lt;div class=&quot;page-title&quot;&gt;
+                    &lt;h1&gt;
+                        &lt;span&gt;<strong>@L(&quot;PhoneBook&quot;)</strong>&lt;/span&gt;
+                    &lt;/h1&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;portlet light&quot;&gt;
+        &lt;div class=&quot;portlet-body&quot;&gt;
+
+            &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
+
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+<p>We can use <strong>.cshtml (razor)</strong> files as views (thanks to ABP 
+framework). That makes easy localization<strong>,</strong> conditionally 
+creating some part of the view (based on some user permissions for example) and 
+so on. Don't confuse about all these html structure. You can copy it from 
+another page and clear contents to prepare an empty view.</p>
+<p>Now, it's time to run application and see the new phone book page:</p>
+<p>
+<img alt="Empty page" height="195" src="images/phonebook-page-empty.png" width="720" /></p>
+<p>Menu item display name and page title are localized. Try to change UI 
+language to see difference.</p>
+<h3>Creating Person Entity</h3>
+<p>We define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
+table in database) to represents a person in phone book:</p>
+<pre lang="cs">[Table(&quot;PbPersons&quot;)]
+public class Person : FullAuditedEntity
+{
+    [Required]
+    [MaxLength(32)]
+    public virtual string Name { get; set; }
+
+    [Required]
+    [MaxLength(32)]
+    public virtual string Surname { get; set; }
+
+    public virtual string EmailAddress { get; set; }
+}</pre>
+<p>Person's <strong>primary key</strong> 
+type is <strong>int </strong>(as default). It inherits <strong>FullAuditedEntity</strong> that 
+contains <strong>creation</strong>, <strong>modification </strong>and <strong>
+deletion </strong>audit properties. It's also <strong>soft-delete</strong>. When 
+we delete a person, it's not deleted by database but marked as deteled. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entity</a> 
+and <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
+filters</a> documentations for more informations.</p>
+<p>We add a DbSet property for Person entity to <strong>PhoneBookDbContext</strong> 
+class defined in <strong>.EntityFramework</strong> project.</p>
+
+<pre lang="cs">public class PhoneBookDbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
+{
+<strong>    public virtual IDbSet&lt;Person&gt; Persons { get; set; }
+</strong>        
+    //...other entities
+
+    public PhoneBookDbContext()
+        : base(&quot;Default&quot;)
+    {
+
+    }
+    
+    //...other codes
+}</pre>
+
+<h3>Database Migrations</h3>
+<p>We use <strong>EntityFramework Code-First migrations</strong> to migrate 
+database schema. Since we added <strong>Person entitiy</strong>, our DbContext 
+model is changed. So, we 
+should create a <strong>new migration</strong> to create needed table in the 
+database.</p>
+<p>After opening <strong>Package Manager Console</strong> and selecting <strong>
+.EntityFramework</strong> as <strong>default project</strong>, we write the 
+following command:</p>
+<p>
+<img alt="Entity Framework Code First Migration" height="68" src="images/phonebook-migrations-1.png" width="609" /></p>
+<p>This command will add a <strong>migration class</strong> named "<strong>Added_Persons_Table</strong>" as shown below:</p>
+
+<pre lang="cs">public partial class Added_Persons_Table : DbMigration
+{
+    public override void Up()
+    {
+        CreateTable(
+            &quot;dbo.PbPersons&quot;,
+            c =&gt; new
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    Name = c.String(nullable: false, maxLength: 32),
+                    Surname = c.String(nullable: false, maxLength: 32),
+                    EmailAddress = c.String(),
+                    IsDeleted = c.Boolean(nullable: false),
+                    DeleterUserId = c.Long(),
+                    DeletionTime = c.DateTime(),
+                    LastModificationTime = c.DateTime(),
+                    LastModifierUserId = c.Long(),
+                    CreationTime = c.DateTime(nullable: false),
+                    CreatorUserId = c.Long(),
+                },
+            annotations: new Dictionary&lt;string, object&gt;
+            {
+                { &quot;DynamicFilter_Person_SoftDelete&quot;, &quot;EntityFramework.DynamicFilters.DynamicFilterDefinition&quot; },
+            })
+            .PrimaryKey(t =&gt; t.Id);
+            
+    }
+        
+    public override void Down()
+    {
+        DropTable(&quot;dbo.PbPersons&quot;,
+            removedAnnotations: new Dictionary&lt;string, object&gt;
+            {
+                { &quot;DynamicFilter_Person_SoftDelete&quot;, &quot;EntityFramework.DynamicFilters.DynamicFilterDefinition&quot; },
+            });
+    }
+}</pre>
+<p>We don't have to know so much about format and rules of this file. But, it's 
+suggested to have a basic understanding of migrations. In the same Package 
+Manager Console, we write "<strong>Update-Database</strong>" command in order to 
+apply the new migration to database. After updating, we can see that <strong>PbPersons 
+table</strong> is added to database.</p>
+<p>
+<img alt="PhoneBook tables" height="302" src="images/phonebook-tables.png" width="190" /></p>
+<p>But this new table is empty. We can use EntityFramework's <strong>Seed</strong> 
+method to add some initial data to database. In ASP.NET Zero, there are some 
+classes to fill initial data for users and settings:</p>
+<p>
+<img alt="Entity Framework seed data" height="119" src="images/phonebook-seed-files.png" width="283" /></p>
+<p>So, we can add a seperated class to fill some people to database 
+as shown below:</p>
+<pre lang="cs">public class InitialPeopleCreator
+{
+    private readonly PhoneBookDbContext _context;
+
+    public InitialPeopleAndPhoneCreator(PhoneBookDbContext context)
+    {
+        _context = context;
+    }
+
+    public void Create()
+    {
+        var douglas = _context.Persons.FirstOrDefault(p =&gt; p.EmailAddress == &quot;douglas.adams@fortytwo.net&quot;);
+        if (douglas == null)
+        {
+            _context.Persons.Add(
+                new Person
+                {
+                    Name = &quot;Douglas&quot;,
+                    Surname = &quot;Adams&quot;,
+                    EmailAddress = &quot;douglas.adams@fortytwo.com&quot;
+                });
+        }
+
+        var asimov = _context.Persons.FirstOrDefault(p =&gt; p.EmailAddress == &quot;isaac.asimov@foundation.org&quot;);
+        if (asimov == null)
+        {
+            _context.Persons.Add(
+                new Person
+                {
+                    Name = &quot;Isaac&quot;,
+                    Surname = &quot;Asimov&quot;,
+                    EmailAddress = &quot;isaac.asimov@foundation.org&quot;
+                });
+        }
+    }
+}</pre>
+<p>These type of default data is good since we can also use these data in 
+<strong>unit 
+tests</strong>. Surely, we should be careful about seed data since this code will always 
+be executed after each <strong>Update-Database</strong> command (See EntityFramework 
+documentations to know more about seed data). This class is created and called 
+in <strong>InitialDbBuilder</strong> class, and it's called from 
+EntityFramework's <strong>Configuration</strong> class. This is not so 
+important, just for a good code organization (see source codes).</p>
+
+<p>We execute <strong>Update-Database</strong> command again. This command runs 
+seed and it adds two people to PbPersons table:</p>
+<p>
+<img alt="Persons initial data" height="50" src="images/phonebook-persons-table-initial-data.png" width="720" /></p>
+<h3>Creating Person Application Service</h3>
+<p>An Application Service is used from client (presentation layer) to perform 
+operations (use cases) in the application.</p>
+<p>Application services are located in
+<strong>.Application</strong> project. We create first application service to 
+get people from server. We're creating an <strong>interface</strong> to define 
+the person application service:</p>
+<pre lang="cs">public interface IPersonAppService : IApplicationService
+{
+    ListResultOutput&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
+}</pre>
+<p>An application service method gets/returns <strong>DTO</strong>s. <strong>ListResultOutput</strong> is a 
+pre-build helper DTO to return a list of another DTO. <strong>GetPeopleInput</strong> is a DTO to pass 
+request parameters to <strong>GetPeople</strong> method. So, GetPeopleIntput and PersonListDto 
+are defined as shown below:</p>
+
+<pre lang="cs">public class GetPeopleInput : IInputDto
+{
+    public string Filter { get; set; }
+}
+
+[AutoMapFrom(typeof(Person))]
+public class PersonListDto : FullAuditedEntityDto
+{
+    public virtual string Name { get; set; }
+
+    public virtual string Surname { get; set; }
+
+    public virtual string EmailAddress { get; set; }
+}</pre>
+<p>Implementing <strong>IInputDto</strong> interface is a convention in ABP for 
+input DTOs. It provides automatic 
+validation (as we will use later). <strong>AutoMapFrom</strong> is used to configure 
+<strong>AutoMapper</strong> to create mapping from 
+<strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> used to inherit audit properties 
+automatically. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">
+application service</a> and
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
+DTO</a> documentations for more informations.</p>
+<p>After defining interface, we can implement it as shown below:</p>
+<pre lang="cs">public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
+{
+    private readonly IRepository&lt;Person&gt; _personRepository;
+
+    public PersonAppService(IRepository&lt;Person&gt; personRepository)
+    {
+        _personRepository = personRepository;
+    }
+
+    public ListResultOutput&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
+    {
+        var persons = _personRepository
+            .GetAll()
+            .<strong>WhereIf</strong>(
+                !input.Filter.IsNullOrEmpty(),
+                p =&gt; p.Name.Contains(input.Filter) ||
+                        p.Surname.Contains(input.Filter) ||
+                        p.EmailAddress.Contains(input.Filter)
+            )
+            .OrderBy(p =&gt; p.Name)
+            .ThenBy(p =&gt; p.Surname)
+            .ToList();
+
+        return new ListResultOutput&lt;PersonListDto&gt;(persons.<strong>MapTo</strong>&lt;List&lt;PersonListDto&gt;&gt;());
+    }
+}</pre>
+<p>We're injecting <strong>person repository</strong> (it's automatically created by ABP) and 
+using it to filter and get peoples from database. <strong>WhereIf</strong> is an extension method 
+here. It performs Where only if filter is not null or empty (ABP has similar 
+shortcut extension methods). <strong>MapTo</strong> method automatically 
+converts list of Person entities to list of PersonListDto entities using AutoMapper library.</p>
+
+<h3>Creating Unit Tests For PersonAppService</h3>
+<p>You can skip this section if you don't interest in <strong>automated testing</strong>.</p>
+<p>By writing unit test, we can test <strong>PersonAppService.GetPeople</strong> 
+method without creating a user interface that calls it and shows people on the 
+screen.</p>
+<p>We write unit test in .<strong>Tests</strong> project in the solution. Let's 
+create first test to verify getting people without any filter:</p>
+<pre lang="cs">public class PeopleAppService_Tests : AppTestBase
+{
+    private readonly IPersonAppService _personAppService;
+
+    public PeopleAppService_Tests()
+    {
+        _personAppService = Resolve&lt;IPersonAppService&gt;();
+    }
+
+    [Fact]
+    public void Should_Get_All_People_Without_Any_Filter()
+    {
+        //Act
+        var persons = _personAppService.GetPeople(new GetPeopleInput());
+            
+        //Assert
+        persons.Items.Count.ShouldBe(2);
+    }
+}</pre>
+<p>We derived test class from <strong>AppTestBase</strong>. AppTestBase class 
+initializes all system, creates an in-memory fake database, seeds initial data 
+(that we created before) to database and logins to system as admin. So, this is 
+actually an <strong>integration test</strong> since it tests all server-side 
+codes from entitiy framework mapping to application services, validation and 
+authorization.</p>
+
+<p>In constructor, we get (resolve) an <strong>IPersonAppService</strong> from
+<strong>dependency injection</strong> container. So, it creates the <strong>
+PersonAppService</strong> class with all dependencies. Then we can use it in 
+test methods.</p>
+<p>Since we're using <a href="http://xunit.github.io/" target="_blank">xUnit</a>, 
+we add <strong>Fact</strong> attribute to each test method. In the test method, 
+we called <strong>GetPeople</strong> method and checked if there are <strong>two 
+people</strong> in the returned list as we know that there were 2 people in
+<strong>initial</strong> database.</p>
+<p>Let's run the <strong>all unit tests</strong> in Test Explorer and see if it 
+works:</p>
+<p>
+<img alt="xUnit unit test success" height="40" src="images/phone-book-unit-test-success-1.png" width="750" /></p>
+<p>As you see, it worked <strong>successfully</strong>. Now, we know that 
+PersonAppService works properly without any filter. Let's add a new unit test to 
+get filtered people:</p>
+<pre lang="cs">[Fact]
+public void Should_Get_People_With_Filter()
+{
+    //Act
+    var persons = _personAppService.GetPeople(
+        new GetPeopleInput
+        {
+            Filter = &quot;adams&quot;
+        });
+
+    //Assert
+    persons.Items.Count.ShouldBe(1);
+    persons.Items[0].Name.ShouldBe(&quot;Douglas&quot;);
+    persons.Items[0].Surname.ShouldBe(&quot;Adams&quot;);
+}</pre>
+<p>Again, since we know initial database, we can check returned results easily. 
+Here, initial test data is important. When we change initial data, our test may 
+fail even if our services are correct. So, it's better to write unit tests 
+independed of initial data as much as possible. We could check incoming data to 
+see if every people contains "adams" in his/her name, surname or email. Thus, if 
+we add new people to initial data, our tests remain working.</p>
+<p>There are many techniques on unit testing, I kept it simple here. But ASP.NET 
+Zero template makes very easy to write unit and integration tests by base 
+classes and pre-build test codes.</p>
+
+</body>
+
+</html>
