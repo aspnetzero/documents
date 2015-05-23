@@ -942,6 +942,28 @@ public async Task DeletePerson(IdInput input)
     await _personRepository.DeleteAsync(input.Id);
 }</pre>
 <p>We also <strong>authorized</strong> deleting a person as did before for creating a person.</p>
+<h3>Filtering people</h3>
+<p>Now, we will implement <strong>search</strong> functionality of <strong>
+GetPeople</strong> method. UI is shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Searching people" height="328" src="images/search-people.png" width="770" /></p>
+<p>We added a search input to filter people:</p>
+<pre lang="xml">&lt;input <strong>ng-model=&quot;vm.filterText&quot; auto-focus</strong> class=&quot;form-control&quot; placeholder=&quot;@L(&quot;SearchWithThreeDot&quot;)&quot; type=&quot;text&quot;&gt;
+&lt;span class=&quot;input-group-btn&quot;&gt;
+    &lt;button <strong>ng-click=&quot;vm.getPeople()&quot;</strong> class=&quot;btn btn-default&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;icon-magnifier&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+&lt;/span&gt;</pre>
+<p>and changed title to show people count:</p>
+<pre lang="xml">&lt;h3&gt;@L(&quot;AllPeople&quot;) (<strong>{{vm.persons.length}}</strong>)&lt;/h3&gt;</pre>
+<p>Lastly, changed <strong>getPeople</strong> function in controller, to send 
+<strong>vm.filterText</strong> to server:</p>
+<pre lang="js">vm.getPeople = function() {
+    personService.getPeople({
+<strong>        filter: vm.filterText
+</strong>    }).success(function (result) {
+        vm.persons = result.items;
+    });
+};</pre>
+<p>That's all. We already have implemented filtering on server.</p>
 <p>&nbsp;</p>
 
 <p><strong>TODO: THIS DOCUMENT IS NOT COMPLETED YET!</strong></p>
