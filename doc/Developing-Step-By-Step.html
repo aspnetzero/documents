@@ -491,7 +491,7 @@ call application services from console to debug or see returned JSON structure.<
 <p>We can also check Audit Logs to see the request. Open <strong>AbpAuditLogs</strong> 
 table in PhoneBook database to see the call information:</p>
 <p>
-<img alt="Audit Logs table" height="71" src="images/audit-log-table-getpeople.png" width="921" /></p>
+<img class="img-thumbnail" alt="Audit Logs table" height="71" src="images/audit-log-table-getpeople.png" width="921" /></p>
 <p>There are some other fields not shown here. So, we see that User with Id=2 
 called GetPeople method of the PersonAppService in recorded time with the shown 
 parameters and it' executed in 134 ms.</p>
@@ -540,7 +540,7 @@ create a <strong>success</strong> handler to get <strong>result</strong> of the
 <p>We used <strong>ng-repeat</strong> directive of Angularjs to render the array of 
 people (vm.persons). See the result:</p>
 <p>
-<img alt="Phonebook peoples" height="285" src="images/phonebook-people-view-1.png" width="790" /></p>
+<img class="img-thumbnail" alt="Phonebook peoples" height="285" src="images/phonebook-people-view-1.png" width="790" /></p>
 <p>We successfully retrieved list of people from database to the page.</p>
 <h3>Creating a new people</h3>
 <p>Next step is to create a modal to add a new item to phone book.</p>
@@ -634,7 +634,7 @@ invalid arguments and asserts that it thows AbpValidationException.</p>
 <a href="https://angular-ui.github.io/bootstrap/#/modal" target="_blank">Angular 
 Bootstrap Ui-Modal</a> to create a new person as shown below:</p>
 <p>
-<img alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
+<img class="img-thumbnail" alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
 <p>View code is shown below:&nbsp;</p>
 <pre lang="xml">@using Acme.PhoneBook.People
 &lt;div&gt;
@@ -776,7 +776,7 @@ class, we can declare a class level attribute as shown below:</p>
 }</pre>
 <p>Now, let's try to enter Phone Book page by clicking the menu item:</p>
 <p>
-<img alt="Permission (Authorization) Error" height="461" src="images/permission-error.png" width="971" /></p>
+<img class="img-thumbnail" alt="Permission (Authorization) Error" height="461" src="images/permission-error.png" width="971" /></p>
 <p>We get an error message. This exception is thrown when any method of 
 PersonAppService is called without needed permission.</p>
 <h5>Hide Unauthorized Menu Item</h5>
@@ -810,7 +810,7 @@ default route by Angularjs.</p>
 <p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
 page and edit <strong>admin</strong> role:</p>
 <p>
-<img alt="Role permissions" height="574" src="images/role-permissions-with-phonebook.png" width="617" /></p>
+<img class="img-thumbnail" alt="Role permissions" height="574" src="images/role-permissions-with-phonebook.png" width="617" /></p>
 <p>We see that a <strong>new permission</strong> named "<strong>Phone book</strong>" 
 added to <strong>permissions</strong> tab. So, we can check it and save the 
 role. After saving, we need to <strong>refresh </strong>the whole page to 
@@ -863,7 +863,7 @@ First, we declare a variable in Angularjs controller:</p>
 <p>To see the button again, we can go to role or user manager and grant related 
 permission as shown below:</p>
 <p>
-<img alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
+<img class="img-thumbnail" alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
 <p>As shown above, <strong>Create new person</strong> permission is a child 
 permission of the <strong>Phone book</strong>.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization">
@@ -871,7 +871,7 @@ authorization documentation</a> for more information on authorization.</p>
 <h3>Deleting a Person</h3>
 <p>Let's add a delete button in people list as shown below:</p>
 <p>
-<img alt="Delete person" height="409" src="images/phonebook-people-delete-button.png" width="768" /></p>
+<img class="img-thumbnail" alt="Delete person" height="409" src="images/phonebook-people-delete-button.png" width="768" /></p>
 <p>
 We're starting from UI in this case.</p>
 <h4>View</h4>
@@ -922,7 +922,7 @@ view above):</p>
 };</pre>
 <p>It first shows a confirmation message when we click the delete button:</p>
 <p>
-<img alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
+<img class="img-thumbnail" alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
 <p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
 <strong>PersonAppService</strong> and shows a 
 notification if operation succeed.</p>
