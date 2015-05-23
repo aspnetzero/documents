@@ -868,7 +868,80 @@ permission as shown below:</p>
 permission of the <strong>Phone book</strong>.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization">
 authorization documentation</a> for more information on authorization.</p>
-<h3>Deleting a person</h3>
+<h3>Deleting a Person</h3>
+<p>Let's add a delete button in people list as shown below:</p>
+<p>
+<img alt="Delete person" height="409" src="images/phonebook-people-delete-button.png" width="768" /></p>
+<p>
+We're starting from UI in this case.</p>
+<h4>View</h4>
+<p>We're changing index.cshtml view to add a button (related part is shown 
+here):</p>
+<pre lang="xml">&lt;div id=&quot;AllPeopleList&quot; class=&quot;list-group&quot;&gt;
+    &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; ng-repeat=&quot;person in vm.persons&quot;&gt;
+        &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
+            {{person.name}} {{person.surname}}
+<strong>            &lt;button ng-if="vm.permissions.deletePerson" ng-click=&quot;vm.deletePerson(person)&quot; title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red delete-person&quot; href=&quot;javascript:;&quot;&gt;
+                &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+            &lt;/button&gt;
+</strong>        &lt;/h4&gt;
+        &lt;p class=&quot;list-group-item-text&quot;&gt;
+            {{person.emailAddress}}
+        &lt;/p&gt;
+    &lt;/a&gt;
+&lt;/div&gt;</pre>
+<h4>Style</h4>
+<p>We're using a <strong>LESS</strong> style here to take button right. Created 
+a file named index.less and added following lines:</p>
+<pre lang="css">#AllPeopleList {
+    .list-group-item-heading {
+        button.delete-person {
+            float: right;
+        }
+    }
+}
+</pre>
+<p>Pre-built bundling configuration automatically includes styles to layout.</p>
+<h4>Controller</h4>
+<p>Now, creating a <strong>deletePerson</strong> function in Angularjs controller (that was called from 
+view above):</p>
+<pre lang="js">vm.deletePerson = function (person) {
+    abp.message.confirm(
+        app.localize(&#39;AreYouSureToDeletePerson&#39;, person.name),
+        function (isConfirmed) {
+            if (isConfirmed) {
+                personService.deletePerson({
+                    id: person.id
+                }).success(function () {
+                    abp.notify.success(app.localize(&#39;SuccessfullyDeleted&#39;));
+                    getPeople();
+                });
+            }
+        }
+    );
+};</pre>
+<p>It first shows a confirmation message when we click the delete button:</p>
+<p>
+<img alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
+<p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
+<strong>PersonAppService</strong> and shows a 
+notification if operation succeed.</p>
+<p>Localization string "<strong>AreYouSureToDeletePerson</strong>" was defined 
+like that:</p>
+<pre lang="xml">&lt;text name=&quot;AreYouSureToDeletePerson&quot; value=&quot;Are you sure to delete person named {0}?&quot; /&gt;</pre>
+<p>So, we can pass a name into localize method. This is similar to C#'s 
+string.Format method.</p>
+<h4>Application Service</h4>
+<p>First, adding a new method definition to <strong>IPersonAppService</strong> interface as always:</p>
+<pre lang="cs">Task DeletePerson(IdInput input);</pre>
+<p><strong>IdInput</strong> is a shortcut of ABP if we only get an id value. Implementation (in 
+<strong>PersonAppService</strong>) is very simple:</p>
+<pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson)]
+public async Task DeletePerson(IdInput input)
+{
+    await _personRepository.DeleteAsync(input.Id);
+}</pre>
+<p>We also <strong>authorized</strong> deleting a person as did before for creating a person.</p>
 <p>&nbsp;</p>
 
 <p><strong>TODO: THIS DOCUMENT IS NOT COMPLETED YET!</strong></p>
