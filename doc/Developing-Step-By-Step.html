@@ -1009,7 +1009,7 @@ public class Person : FullAuditedEntity
 <h3>Adding Database Migration</h3>
 <p>Our entity model has changed, so we need to add a new migration:</p>
 <p>
-<img alt="Entity Framework Migration" height="81" src="images/phonebook-migrations-2.png" width="598" /></p>
+<img class="img-thumbnail" alt="Entity Framework Migration" height="81" src="images/phonebook-migrations-2.png" width="598" /></p>
 <p>This will create a new code based migration file to create <strong>PbPhones</strong> 
 table:</p>
 <pre lang="cs">public partial class Added_Phone : DbMigration
@@ -1114,8 +1114,7 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto
 
     public string Number { get; set; }
 </strong>}</pre>
-<p>So, added also a DTO to transfer phone numbers and mapped from Phone entity.</p>
-<p>Now, we can change GetPeople method to get Phones from database:</p>
+<p>So, added also a DTO to transfer phone numbers and mapped from Phone entity. Now, we can change GetPeople method to get Phones from database:</p>
 <pre lang="cs">public ListResultOutput&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
 {
     var persons = _personRepository
@@ -1136,10 +1135,179 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto
 <p>We only added <strong>Include</strong> extension method to the query. Rest of 
 the codes remains same. Furthermore, it would work without adding this, but much 
 slower (since it will lazy load phone numbers for every person seperately).</p>
-<h3>Adding Edit Mode To People List</h3>
-<p>&nbsp;</p>
+<h3>AddPhone and DeletePhone Methods</h3>
+<p>We are adding two more methods to IPersonAppService interface as shown below:</p>
+<pre lang="cs">Task DeletePhone(IdInput&lt;long&gt; input);
+Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input);</pre>
+<p>We could create a new, seperated IPhoneAppService. It's your choice. But, we 
+can consider Person as an aggregate and add phone related methods here. AddPhoneInput 
+DTO is shown below:</p>
+<pre lang="cs">[AutoMapTo(typeof(Phone))]
+public class AddPhoneInput : IInputDto
+{
+    [Range(1, int.MaxValue)]
+    public int PersonId { get; set; }
 
-<p><strong>TODO: THIS DOCUMENT IS NOT COMPLETED YET...</strong></p>
+    [Required]
+    public PhoneType Type { get; set; }
+
+    [Required]
+    [MaxLength(Phone.MaxNumberLength)]
+    public string Number { get; set; }
+}</pre>
+<p>Now, we can implement these methods:</p>
+<pre lang="cs">public async Task DeletePhone(IdInput&lt;long&gt; input)
+{
+    await _phoneRepository.DeleteAsync(input.Id);
+}
+
+public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
+{
+    var person = _personRepository.Get(input.PersonId);
+
+    var phone = input.MapTo&lt;Phone&gt;();
+    person.Phones.Add(phone);
+            
+    await CurrentUnitOfWork.SaveChangesAsync();
+
+    return phone.MapTo&lt;PhoneInPersonListDto&gt;();
+}</pre>
+<p><strong>DeletePhone</strong> method is simple. It only deletes phone with 
+given id.</p>
+<p><strong>AddPhone</strong> method <strong>gets </strong>the person from 
+database and add new phone to person.Phones collection. Then is <strong>save 
+changes</strong>. Saving changes causes inserting new added phone to database 
+and get it's <strong>Id</strong>. Because, we are returning a DTO that contains 
+newly created phone informations including Id. So, it should be assigned before 
+mapping in the last line.</p>
+<p>There may be different approaches for AddPhone method. You can directly work 
+with a <strong>phone repository</strong> to insert new phone. They all have 
+different pros and cons. It's your choice.</p>
+<h3>Edit Mode For People List</h3>
+<p>Final UI is shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Phone book edit mode" height="642" src="images/phone-book-edit-mode.png" width="762" /></p>
+<p>When we click the <strong>green edit icon</strong> for a person, it's row is 
+expanded and all phone numbers are shown. Then we can delete any number by 
+clicking the icon at left. We can add a new phone from the inputs at last line.</p>
+<h4>View</h4>
+<p>Changes in view are shown below:</p>
+<pre lang="xml">&lt;div id=&quot;AllPeopleList&quot; class=&quot;list-group&quot;&gt;
+    &lt;div class=&quot;list-group-item&quot; ng-repeat=&quot;person in vm.persons&quot; ng-class=&quot;{&#39;person-editing&#39;:person==vm.editingPerson}&quot;&gt;
+        &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
+            {{person.name}} {{person.surname}}
+            &lt;span class=&quot;person-buttons&quot;&gt;
+<strong>                &lt;button ng-click=&quot;vm.editPerson(person)&quot; title=&quot;@L(&quot;Edit&quot;)&quot; class=&quot;btn btn-circle btn-icon-only green&quot;&gt;
+                    &lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;
+                &lt;/button&gt;
+</strong>                &lt;button ng-if=&quot;vm.permissions.deletePerson&quot; ng-click=&quot;vm.deletePerson(person)&quot; title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red&quot;&gt;
+                    &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+                &lt;/button&gt;
+            &lt;/span&gt;
+        &lt;/h4&gt;
+        &lt;p class=&quot;list-group-item-text&quot;&gt;
+            {{person.emailAddress}}
+        &lt;/p&gt;
+<strong>        &lt;div class=&quot;table-scrollable&quot; ng-if=&quot;person==vm.editingPerson&quot;&gt;
+            &lt;table class=&quot;table table-hover&quot;&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th style=&quot;width:10%&quot;&gt;&lt;/th&gt;
+                        &lt;th style=&quot;width:15%&quot;&gt;@L(&quot;Type&quot;)&lt;/th&gt;
+                        &lt;th style=&quot;width:75%&quot;&gt;@L(&quot;PhoneNumber&quot;)&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    &lt;tr ng-repeat=&quot;phone in person.phones&quot;&gt;
+                        &lt;td&gt;
+                            &lt;button ng-click=&quot;vm.deletePhone(phone, person)&quot; class=&quot;btn btn-sm btn-default&quot;&gt;
+                                &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+                            &lt;/button&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;{{vm.getPhoneTypeAsString(phone.type)}}&lt;/td&gt;
+                        &lt;td&gt;{{phone.number}}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;
+                            &lt;button ng-click=&quot;vm.addPhone(person.newPhone, person)&quot; class=&quot;btn btn-sm green&quot;&gt;
+                                &lt;i class=&quot;fa fa-floppy-o&quot;&gt;&lt;/i&gt;
+                            &lt;/button&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;
+                            &lt;select name=&quot;Type&quot; ng-model=&quot;person.newPhone.type&quot;&gt;
+                                &lt;option value=&quot;0&quot;&gt;@L(&quot;PhoneType_Mobile&quot;)&lt;/option&gt;
+                                &lt;option value=&quot;1&quot;&gt;@L(&quot;PhoneType_Home&quot;)&lt;/option&gt;
+                                &lt;option value=&quot;2&quot;&gt;@L(&quot;PhoneType_Business&quot;)&lt;/option&gt;
+                            &lt;/select&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;Number&quot; ng-model=&quot;person.newPhone.number&quot; /&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+</strong>    &lt;/div&gt;
+&lt;/div&gt;</pre>
+<p>We added an edit button for each person. Then added a table (shown if this 
+person is being edited) for each person that shows phones of the related person 
+and allows adding a new phone.</p>
+<h4>Controller</h4>
+
+<p>Added following codes into the Angularjs controller:</p>
+<pre lang="js">vm.editingPerson = null;
+
+vm.editPerson = function(person) {
+    if (person == vm.editingPerson) {
+        vm.editingPerson = null;
+    } else {
+        vm.editingPerson = person;
+    }
+};
+
+vm.getPhoneTypeAsString = function(typeAsNumber) {
+    switch (typeAsNumber) {
+    case 0:
+        return app.localize(&#39;PhoneType_Mobile&#39;);
+    case 1:
+        return app.localize(&#39;PhoneType_Home&#39;);
+    case 2:
+        return app.localize(&#39;PhoneType_Business&#39;);
+    default:
+        return &#39;?&#39;;
+    }
+};
+
+vm.deletePhone = function(phone, person) {
+    personService.deletePhone({
+        id: phone.id
+    }).success(function() {
+        abp.notify.success(app.localize(&#39;SuccessfullyDeleted&#39;));
+        person.phones = _.without(person.phones, phone);
+    });
+};
+
+vm.addPhone = function(phone, person) {
+    if (!phone || !phone.type || !phone.number) {
+        abp.message.warn(&#39;Please select a phone type and enter a number!&#39;);
+        return;
+    }
+
+    phone.personId = person.id;
+
+    personService.addPhone(phone)
+        .success(function(result) {
+            abp.notify.success(app.localize(&#39;SavedSuccessfully&#39;));
+            person.phones.push(result);
+            phone.number = &#39;&#39;;
+        });
+};</pre>
+<h3>Conclusion</h3>
+<p>In this document, we built a complete example that covers most parts of the 
+ASP.NET Zero system. We hope that it will help you to build your own 
+application.</p>
+<p>You should <a href="/Prices">purchase</a> ASP.NET Zero in order to get
+<strong>source codes</strong>. Then you can download the sample application from
+<a href="/Download">download page</a> (should <a href="/Account/Login">login</a> 
+to see download link in the main menu).</p>
 
 </body>
 
