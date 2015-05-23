@@ -29,7 +29,7 @@ After all completed and logged in to the application, we see a dashboard as
 shown below:</p>
 <p>
 
-<img alt="Dashboard" height="484" src="images/default-dashboard.png" width="800" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="484" src="images/default-dashboard.png" width="800" /></p>
 <p>
 
 We will make our application <strong>single-tenant</strong> (we will convert it 
@@ -71,7 +71,7 @@ AppNavigationProvider class).</p>
 .Core</strong> 
 project as shown below:</p>
 <p>
-<img alt="Localization files" height="130" src="images/localization-files.png" width="179" /></p>
+<img class="img-thumbnail" alt="Localization files" height="130" src="images/localization-files.png" width="179" /></p>
 <p>Open PhoneBook.xml (the <strong>default</strong>, <strong>English</strong> 
 localization dictionary) ad add the following line:</p>
 <pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Phone book&quot; /&gt;</pre>
@@ -106,7 +106,7 @@ this page (activate the route).</p>
 <p>The last step to see our new page is to create an Angularjs view and 
 controller for it:</p>
 <p>
-<img alt="Phonebook AngularJs controller and view" height="198" src="images/phonebook-controller-views-files.png" width="171" /></p>
+<img class="img-thumbnail" alt="Phonebook AngularJs controller and view" height="198" src="images/phonebook-controller-views-files.png" width="171" /></p>
 <h4>Controller</h4>
 <p>Creating an empty Controller file, <strong>index.js</strong> under <strong>App/tenant/views/phonebook</strong> 
 folder:</p>
@@ -159,7 +159,7 @@ so on. Don't confuse about all these html structure. You can copy it from
 another page and clear contents to prepare an empty view.</p>
 <p>Now, it's time to run application and see the new phone book page:</p>
 <p>
-<img alt="Empty page" height="195" src="images/phonebook-page-empty.png" width="720" /></p>
+<img class="img-thumbnail" alt="Empty page" height="195" src="images/phonebook-page-empty.png" width="720" /></p>
 <p>Menu item display name and page title are localized. Try to change UI 
 language to see difference.</p>
 <h3>Creating Person Entity</h3>
@@ -214,7 +214,7 @@ database.</p>
 .EntityFramework</strong> as <strong>default project</strong>, we write the 
 following command:</p>
 <p>
-<img alt="Entity Framework Code First Migration" height="68" src="images/phonebook-migrations-1.png" width="609" /></p>
+<img class="img-thumbnail" alt="Entity Framework Code First Migration" height="68" src="images/phonebook-migrations-1.png" width="609" /></p>
 <p>This command will add a <strong>migration class</strong> named "<strong>Added_Persons_Table</strong>" as shown below:</p>
 
 <pre lang="cs">public partial class Added_Persons_Table : DbMigration
@@ -260,12 +260,12 @@ Manager Console, we write "<strong>Update-Database</strong>" command in order to
 apply the new migration to database. After updating, we can see that <strong>PbPersons 
 table</strong> is added to database.</p>
 <p>
-<img alt="PhoneBook tables" height="302" src="images/phonebook-tables.png" width="190" /></p>
+<img class="img-thumbnail" alt="PhoneBook tables" height="302" src="images/phonebook-tables.png" width="190" /></p>
 <p>But this new table is empty. We can use EntityFramework's <strong>Seed</strong> 
 method to add some initial data to database. In ASP.NET Zero, there are some 
 classes to fill initial data for users and settings:</p>
 <p>
-<img alt="Entity Framework seed data" height="119" src="images/phonebook-seed-files.png" width="283" /></p>
+<img class="img-thumbnail" alt="Entity Framework seed data" height="119" src="images/phonebook-seed-files.png" width="283" /></p>
 <p>So, we can add a seperated class to fill some people to database 
 as shown below:</p>
 <pre lang="cs">public class InitialPeopleCreator
@@ -316,7 +316,7 @@ important, just for a good code organization (see source codes).</p>
 <p>We execute <strong>Update-Database</strong> command again. This command runs 
 seed and it adds two people to PbPersons table:</p>
 <p>
-<img alt="Persons initial data" height="50" src="images/phonebook-persons-table-initial-data.png" width="720" /></p>
+<img class="img-thumbnail" alt="Persons initial data" height="50" src="images/phonebook-persons-table-initial-data.png" width="720" /></p>
 <h3>Creating Person Application Service</h3>
 <p>An Application Service is used from client (presentation layer) to perform 
 operations (use cases) in the application.</p>
@@ -341,11 +341,11 @@ are defined as shown below:</p>
 [AutoMapFrom(typeof(Person))]
 public class PersonListDto : FullAuditedEntityDto
 {
-    public virtual string Name { get; set; }
+    public string Name { get; set; }
 
-    public virtual string Surname { get; set; }
+    public string Surname { get; set; }
 
-    public virtual string EmailAddress { get; set; }
+    public string EmailAddress { get; set; }
 }</pre>
 <p>Implementing <strong>IInputDto</strong> interface is a convention in ABP for 
 input DTOs. It provides automatic 
@@ -397,7 +397,7 @@ method without creating a user interface that calls it and shows people on the
 screen.</p>
 <p>We write unit test in .<strong>Tests</strong> project in the solution. Let's 
 create first test to verify getting people without any filter:</p>
-<pre lang="cs">public class PeopleAppService_Tests : AppTestBase
+<pre lang="cs">public class PersonAppService_Tests : AppTestBase
 {
     private readonly IPersonAppService _personAppService;
 
@@ -435,7 +435,7 @@ people</strong> in the returned list as we know that there were 2 people in
 <p>Let's run the <strong>all unit tests</strong> in Test Explorer and see if it 
 works:</p>
 <p>
-<img alt="xUnit unit test success" height="40" src="images/phone-book-unit-test-success-1.png" width="750" /></p>
+<img class="img-thumbnail" alt="xUnit unit test success" height="40" src="images/phone-book-unit-test-success-1.png" width="750" /></p>
 <p>As you see, it worked <strong>successfully</strong>. Now, we know that 
 PersonAppService works properly without any filter. Let's add a new unit test to 
 get filtered people:</p>
@@ -463,6 +463,165 @@ we add new people to initial data, our tests remain working.</p>
 <p>There are many techniques on unit testing, I kept it simple here. But ASP.NET 
 Zero template makes very easy to write unit and integration tests by base 
 classes and pre-build test codes.</p>
+<h3>Testing PersonAppService From Browser Console</h3>
+<p>Now, lets run and <strong>login</strong> to the application again, open 
+Chrome Developer Console (or similar tools in other browsers) and write the 
+following command:</p>
+<p>
+<img class="img-thumbnail" alt="Google Chrome Console AJAX" height="104" src="images/chrome-console-get-people.png" width="497" /></p>
+<p>This command performs an <strong>AJAX</strong> call to PersonAppService.<strong>GetPeople</strong> 
+method. We can see the request if we open <strong>Network</strong> tab:</p>
+<p>
+<img class="img-thumbnail" alt="Google Chrome Console Get People" height="148" src="images/chrome-console-get-people-network.png" width="720" /></p>
+<p>As we see, an AJAX request made and people are got successfully.</p>
+<p>So, how this happen? How we could call to a C# class method (notice that it's 
+not an MVC Controller or Web API Controller, just a plain C# class) from 
+javascript like calling a javascript method? This is provided by ASP.NET 
+Boilerplate. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+dynamic web api layer</a> documentation for more information. You can always 
+call application services from console to debug or see returned JSON structure.</p>
+<p>We can also check Audit Logs to see the request. Open <strong>AbpAuditLogs</strong> 
+table in PhoneBook database to see the call information:</p>
+<p>
+<img alt="Audit Logs table" height="71" src="images/audit-log-table-getpeople.png" width="921" /></p>
+<p>There are some other fields not shown here. So, we see that User with Id=2 
+called GetPeople method of the PersonAppService in recorded time with the shown 
+parameters and it' executed in 134 ms.</p>
+<h3>Calling GetPeople Method From Angularjs Controller</h3>
+<p>It's time to open phonebook Angularjs <strong>controller</strong> and get people to show on the 
+view.</p>
+<pre lang="js">(function() {
+    appModule.controller(&#39;tenant.views.phonebook.index&#39;, [
+        &#39;$scope&#39;, &#39;<strong>abp.services.app.person</strong>&#39;,
+        function($scope, <strong>personService</strong>) {
+            var vm = this;
+
+            vm.persons = [];
+
+<strong>            personService.getPeople({}).success(function(result) {
+                vm.persons = result.items;
+            });
+</strong>        }
+    ]);
+})();</pre>
+<p>We inject '<strong>abp.services.app.person</strong>' as <strong>personService</strong> 
+parameter (See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+dynamic web api layer</a> documentation to know how this service is 
+automatically created). Then we call <strong>getPeople</strong> method and 
+create a <strong>success</strong> handler to get <strong>result</strong> of the
+<strong>AJAX</strong> request. That's all!</p>
+<h3>Rendering People In Angular View</h3>
+<p>We show people on the page is most basic form. See the changed view below:</p>
+<pre lang="xml">&lt;div ng-controller=&quot;tenant.views.phonebook.index as vm&quot;&gt;
+...            
+            &lt;h3&gt;<strong>@L(&quot;AllPeople&quot;)</strong>&lt;/h3&gt;
+
+            &lt;div class=&quot;list-group&quot;&gt;
+                &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; <strong>ng-repeat=&quot;person in vm.persons&quot;</strong>&gt;
+                    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
+                        <strong>{{person.name}} {{person.surname}}
+</strong>                    &lt;/h4&gt;
+                    &lt;p class=&quot;list-group-item-text&quot;&gt;
+                        <strong>{{person.emailAddress}}
+</strong>                    &lt;/p&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+...
+&lt;/div&gt;</pre>
+<p>We used <strong>ng-repeat</strong> directive of Angularjs to render the array of 
+people (vm.persons). See the result:</p>
+<p>
+<img alt="Phonebook peoples" height="285" src="images/phonebook-people-view-1.png" width="790" /></p>
+<p>We successfully retrieved list of people from database to the page.</p>
+<h3>Creating a new people</h3>
+<p>Next step is to create a modal to add a new item to phone book.</p>
+<h4>Add a CreatePerson Method to PersonAppService</h4>
+<p>We first define <strong>CreatePerson</strong> method in <strong>IPersonAppService</strong> interface:</p>
+<pre lang="cs">Task CreatePerson(CreatePersonInput input);</pre>
+<p>Then we create <strong>CreatePersonInput</strong> DTO that defines parameters of the method:</p>
+<pre lang="cs">[AutoMapTo(typeof(Person))]
+public class CreatePersonInput : IInputDto
+{
+    [Required]
+    [MaxLength(Person.MaxNameLength)]
+    public string Name { get; set; }
+
+    [Required]
+    [MaxLength(Person.MaxSurnameLength)]
+    public string Surname { get; set; }
+
+    [EmailAddress]
+    [MaxLength(Person.MaxEmailAddressLength)]
+    public string EmailAddress { get; set; }
+}</pre>
+<p><strong>CreatePersonInput</strong> is mapped to <strong>Person</strong> 
+entity (we will use mapping below). All properties are decorated by <strong>data 
+annotation attributes</strong> to provide automatic <strong>validation</strong>.</p>
+<p>Here, the implementation of CreatePerson method:</p>
+<pre lang="cs">public async Task CreatePerson(CreatePersonInput input)
+{
+    var person = input.MapTo&lt;Person&gt;();
+    await _personRepository.InsertAsync(person);
+}</pre>
+<p>A Person entity is created by mapping given input, then inserted to database. 
+We used <strong>async/await</strong> pattern here. All methods in 
+ASP.NET Zero startup project is <strong>async</strong>. It's adviced to use 
+async/await wherever possible.</p>
+<h4>Test CreatePerson Method</h4>
+<p>You can skip this section if you don't interest in <strong>automated testing</strong>.</p>
+<p>We can create a unit test method to test CreatePerson method as shown below:</p>
+<pre lang="cs">[Fact]
+public async Task Should_Create_Person_With_Valid_Arguments()
+{
+    //Act
+    await _personAppService.CreatePerson(
+        new CreatePersonInput
+        {
+            Name = &quot;John&quot;,
+            Surname = &quot;Nash&quot;,
+            EmailAddress = &quot;john.nash@abeautifulmind.com&quot;
+        });
+
+    //Assert
+    UsingDbContext(
+        context =&gt;
+        {
+            var john = context.Persons.FirstOrDefault(p =&gt; p.EmailAddress == &quot;john.nash@abeautifulmind.com&quot;);
+            john.ShouldNotBe(null);
+            john.Name.ShouldBe(&quot;John&quot;);
+        });
+}</pre>
+<p>Test method also written using <strong>async/await</strong> pattern since 
+calling method is async. We called CreatePerson method, then checked if given 
+person is in the database. <strong>UsingDbContext</strong> method is a helper 
+method of <strong>AppTestBase</strong> class (which we inherited this unit test 
+class from). It's used to easily get a reference to DbContext and use it 
+directly to perform database operations.</p>
+<p>This method successfully works since all required fields are supplied. Let's 
+try to create a test for <strong>invalid arguments</strong>:</p>
+<pre lang="cs">[Fact]
+public async Task Should_Not_Create_Person_With_Invalid_Arguments()
+{
+    //Act and Assert
+    await Assert.ThrowsAsync&lt;AbpValidationException&gt;(
+        async () =&gt;
+                {
+                    await _personAppService.CreatePerson(
+                        new CreatePersonInput
+                        {
+                            Name = &quot;John&quot;
+                        });
+                });
+}</pre>
+<p>We did not set <strong>Surname</strong> property of CreatePersonInput despite 
+of it's <strong>required</strong>. So, it throws <strong>AbpValidationException</strong> 
+automatically. Also, we can not send null to CreatePerson method since 
+validation system also checks it. This test calls CreatePerson with 
+invalid arguments and asserts that it thows AbpValidationException.</p>
+<h4>Creating a Modal</h4>
+<p>We're using a modal dialog to create new person.</p>
 
 <p><strong>TODO: THIS DOCUMENT IS NOT COMPLETED YET!</strong></p>
 
