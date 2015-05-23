@@ -630,7 +630,246 @@ automatically. Also, we can not send null to CreatePerson method since
 validation system also checks it. This test calls CreatePerson with 
 invalid arguments and asserts that it thows AbpValidationException.</p>
 <h4>Creating a Modal</h4>
-<p>We're using a modal dialog to create new person.</p>
+<p>We will create a 
+<a href="https://angular-ui.github.io/bootstrap/#/modal" target="_blank">Angular 
+Bootstrap Ui-Modal</a> to create a new person as shown below:</p>
+<p>
+<img alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
+<p>View code is shown below:&nbsp;</p>
+<pre lang="xml">@using Acme.PhoneBook.People
+&lt;div&gt;
+    &lt;form name=&quot;createPersonForm&quot; role=&quot;form&quot; novalidate class=&quot;form-validation&quot;&gt;
+        &lt;div class=&quot;modal-header&quot;&gt;
+            &lt;h4 class=&quot;modal-title&quot;&gt;
+                &lt;span&gt;@L(&quot;CreateNewPerson&quot;)&lt;/span&gt;
+            &lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;modal-body&quot;&gt;
+            
+            &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
+                &lt;input class=&quot;form-control&quot; type=&quot;text&quot; name=&quot;Name&quot; <strong>ng-model=&quot;vm.person.name&quot;</strong> required maxlength=&quot;@Person.MaxNameLength&quot;&gt;
+                &lt;label&gt;@L(&quot;Name&quot;)&lt;/label&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
+                &lt;input type=&quot;text&quot; name=&quot;Surname&quot; class=&quot;form-control&quot; <strong>ng-model=&quot;vm.person.surname&quot;</strong> required maxlength=&quot;@Person.MaxSurnameLength&quot;&gt;
+                &lt;label&gt;@L(&quot;Surname&quot;)&lt;/label&gt;
+            &lt;/div&gt;
+            
+            &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
+                &lt;input type=&quot;email&quot; name=&quot;EmailAddress&quot; class=&quot;form-control&quot; <strong>ng-model=&quot;vm.person.emailAddress&quot;</strong> maxlength=&quot;@Person.MaxEmailAddressLength&quot;&gt;
+                &lt;label&gt;@L(&quot;EmailAddress&quot;)&lt;/label&gt;
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+        &lt;div class=&quot;modal-footer&quot;&gt;
+            &lt;button ng-disabled=&quot;vm.saving&quot; type=&quot;button&quot; class=&quot;btn btn-default&quot; <strong>ng-click=&quot;vm.cancel()&quot;</strong>&gt;@L(&quot;Cancel&quot;)&lt;/button&gt;
+            &lt;button type=&quot;submit&quot; <strong>button-busy=&quot;vm.saving&quot;</strong> busy-text=&quot;@L(&quot;SavingWithThreeDot&quot;)&quot; class=&quot;btn btn-primary blue&quot; <strong>ng-click=&quot;vm.save()&quot; ng-disabled=&quot;createPersonForm.$invalid&quot;</strong>&gt;&lt;i class=&quot;fa fa-save&quot;&gt;&lt;/i&gt; &lt;span&gt;@L(&quot;Save&quot;)&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;</pre>
+<p>We have a form with three input (name, surname and email address) <strong>
+validated</strong> using Angularjs. We're using <strong>Person</strong> entity's 
+const values in view to set same <strong>maxlength</strong> to input controls.</p>
+<p><strong>Save</strong> button is <strong>disabled</strong> if the form is
+<strong>invalid</strong>. <strong>button-busy</strong> directive makes buttons 
+disable and animates it while submitting form:</p>
+<p>
+<img class="img-thumbnail" alt="Modal button busy animation" height="59" src="images/modal-buttons-busy.png" width="208" /></p>
+<p>Angularjs <strong>controller</strong> of this view is shown below:</p>
+<pre lang="cs">(function () {
+    appModule.controller(&#39;tenant.views.phonebook.createPersonModal&#39;, [
+        &#39;$scope&#39;, &#39;$modalInstance&#39;, &#39;abp.services.app.person&#39;,
+        function ($scope, $modalInstance, personService) {
+            var vm = this;
+            
+            vm.saving = false;
+            vm.person = {};
+
+            vm.save = function () {
+                vm.saving = true;
+<strong>                personService.createPerson(vm.person).success(function () {
+                    abp.notify.info(app.localize(&#39;SavedSuccessfully&#39;));
+                    $modalInstance.close();
+                }).finally(function () {
+                    vm.saving = false;
+                });
+</strong>            };
+
+            vm.cancel = function () {
+                $modalInstance.dismiss();
+            };
+        }
+    ]);
+})();</pre>
+<p>Controller is simple. It calls <strong>createPerson</strong> method of
+<strong>PersonAppService</strong> when we click the <strong>Save</strong> 
+button. <strong>vm.saving</strong> flag is <strong>true</strong> 
+during AJAX operation. This value is used on view to disable and make buttons 
+animated. If createPerson success, modal is <strong>closed</strong>.</p>
+<h4>Opening the Modal</h4>
+<p>We return to phone book view and add a <strong>button</strong> to open this modal:</p>
+<pre lang="xml">&lt;button class=&quot;btn btn-primary blue&quot; <strong>ng-click=&quot;vm.openCreatePersonModal()&quot;</strong>&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;</pre>
+<p><strong>vm.openCreatePersonModal</strong> method is called when we click this button:</p>
+<pre lang="js">(function() {
+    appModule.controller(&#39;tenant.views.phonebook.index&#39;, [
+        &#39;$scope&#39;, &#39;<strong>$modal</strong>&#39;, &#39;abp.services.app.person&#39;,
+        function ($scope, <strong>$modal</strong>, personService) {
+            var vm = this;
+
+            vm.persons = [];
+
+            function getPeople() {
+                personService.getPeople({}).success(function (result) {
+                    vm.persons = result.items;
+                });
+            }
+            
+<strong>            vm.openCreatePersonModal = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: &#39;~/App/tenant/views/phonebook/createPersonModal.cshtml&#39;,
+                    controller: &#39;tenant.views.phonebook.createPersonModal as vm&#39;,
+                    backdrop: &#39;static&#39;
+                });
+
+                modalInstance.result.then(function () {
+                    getPeople();
+                });
+            };</strong>
+
+            getPeople();
+        }
+    ]);
+})();</pre>
+<p>We open modal using $modal service by providing view and controller. We 
+re-load person list (by calling getPeople function) after modal closed.</p>
+<h3>Authorization For Phone Book</h3>
+<p>At this point, anyone can enter phone book page since no authorization 
+defined. We will define two permission:</p>
+<ul>
+	<li>A permission to <strong>enter phone book page</strong>.</li>
+	<li>A permission to <strong>create new person</strong> (which is a child 
+	permission of first one, as naturally).</li>
+</ul>
+<h4>Permission for Entering Phone Book Page</h4>
+<h5>Define the permission</h5>
+<p>Go to <strong>AppAuthorizationProvider</strong> class and add a new permission as shown below:</p>
+<pre lang="cs">pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);</pre>
+<p>A permission should have a unique name. We define permission names as 
+constant strings in <strong>AppPermissions</strong> class. It's a simple constant string:</p>
+<pre lang="cs">public const string Pages_Tenant_PhoneBook = &quot;<strong>Pages.Tenant.PhoneBook</strong>&quot;;</pre>
+<p>Unique name of this permission is "<strong>Pages.Tenant.PhoneBook</strong>". 
+While you can set any string (as long as it's unique), it's suggested this 
+convention. A permission can have a localizable display name: "<strong>PhoneBook</strong>" 
+here. (see "Adding a New Page" section for more about localization, since it's 
+very similar). Lastly, we set that this is a <strong>tenant</strong> level 
+permission.</p>
+<h5>Add AbpAuthorize attribute</h5>
+<p><strong>AbpAuthorize</strong> attribute can be used as <strong>class level</strong> 
+or <strong>method level</strong> to protect an application service or service method from 
+unauthorized users. Since all server side code is located in PersonAppService 
+class, we can declare a class level attribute as shown below:</p>
+<pre lang="cs"><strong>[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
+</strong>public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
+{
+    //...
+}</pre>
+<p>Now, let's try to enter Phone Book page by clicking the menu item:</p>
+<p>
+<img alt="Permission (Authorization) Error" height="461" src="images/permission-error.png" width="971" /></p>
+<p>We get an error message. This exception is thrown when any method of 
+PersonAppService is called without needed permission.</p>
+<h5>Hide Unauthorized Menu Item</h5>
+<p>This secures the service, but we should also <strong>hide</strong> the Phone book 
+<strong>menu item</strong>. It's 
+easy, open AppNavigationProvider and add requiredPermissionName as shown below:</p>
+<pre lang="cs">new MenuItemDefinition(
+    PageNames.App.Tenant.PhoneBook,
+    L(&quot;PhoneBook&quot;),
+    url: &quot;tenant.phonebook&quot;,
+    icon: &quot;glyphicon glyphicon-book&quot;,
+    <strong>requiredPermissionName: AppPermissions.Pages_Tenant_PhoneBook
+</strong>)</pre>
+<h5>Disable Angular Route</h5>
+<p>While hiding menu item prevents used to enter the page by clicking it, he can 
+still enter the page by entering the following URL directly to address bar of browsers:</p>
+<pre>http://localhost:6234/Application#/tenant/phonebook</pre>
+<p>We should also conditionally define angular routes. Thus, if user has no 
+permission to enter this page, he can not activate the route:</p>
+<pre lang="js">if (abp.auth.hasPermission(&#39;Pages.Tenant.PhoneBook&#39;)) {
+    $stateProvider.state(&#39;tenant.phonebook&#39;, {
+        url: &#39;/phonebook&#39;,
+        templateUrl: &#39;~/App/tenant/views/phonebook/index.cshtml&#39;,
+        menu: &#39;PhoneBook&#39;
+    });
+}</pre>
+<p>We wrapper route definition by an if block that checks related permission. 
+Now, user can not open the page without the permission. He is redirected to 
+default route by Angularjs.</p>
+<h5>Grant permission</h5>
+<p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
+page and edit <strong>admin</strong> role:</p>
+<p>
+<img alt="Role permissions" height="574" src="images/role-permissions-with-phonebook.png" width="617" /></p>
+<p>We see that a <strong>new permission</strong> named "<strong>Phone book</strong>" 
+added to <strong>permissions</strong> tab. So, we can check it and save the 
+role. After saving, we need to <strong>refresh </strong>the whole page to 
+refresh permissions for the current user. We could also grant this permission 
+for a specific user (see <a href="Development-Guide.html">development guide 
+document</a> for details about roles and users).</p>
+<p>Now, we can enter the Phone book page again.</p>
+<h4>Permission for Create New Person</h4>
+<p>While a permission for a page is useful and probably needed always, we may 
+need to define additional permissions to perform some <strong>specific actions</strong> 
+on a page, like creating a new person. </p>
+<h5>Define the permission</h5>
+<p>Defining a permission is similar:</p>
+<pre lang="cs">var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);
+<strong>phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L(&quot;CreateNewPerson&quot;), multiTenancySides: MultiTenancySides.Tenant);</strong></pre>
+<p>First permission was defined before. In the second line, we are creating a 
+child permission of first one.</p>
+<h5>Add AbpAuthorize attribute</h5>
+<p>This time, we're declaring <strong>AbpAuthorize</strong> attribute just for 
+<strong>CreatePerson</strong> 
+method:</p>
+<pre lang="cs"><strong>[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
+</strong>public async Task CreatePerson(CreatePersonInput input)
+{
+    //...
+}
+</pre>
+<h5>Hide Unauthorized Button</h5>
+<p>If we run the application and try to create a person, we get an authorization 
+error after clicking the save button. But, it's good to <strong>completely hide 
+Create New Person button</strong> if we don't have the permission. There are a 
+few ways of doing it.</p>
+<p>We can implement it in <strong>index.cshtml</strong> razor view on <strong>server side</strong> using
+<strong>IsGranted</strong> 
+method:</p>
+<pre lang="xml">@if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson))
+{
+    &lt;button class=&quot;btn btn-primary blue&quot; ng-click=&quot;vm.openCreatePersonModal()&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;
+}</pre>
+<p>In this way, the Create New Person does not rendered in server and user can 
+not see this button.</p>
+<p>As an alternative, we can check permission on <strong>client side</strong>. 
+First, we declare a variable in Angularjs controller:</p>
+<pre lang="js">vm.permissions = {
+    createPerson: abp.auth.hasPermission(&#39;Pages.Tenant.PhoneBook.CreatePerson&#39;)
+};</pre>
+<p>And then use it in a <strong>ng-if</strong> directive in view to conditionally render the button:</p>
+<pre lang="xml">&lt;button <strong>ng-if=&quot;vm.permissions.createPerson&quot;</strong> class=&quot;btn btn-primary blue&quot; ng-click=&quot;vm.openCreatePersonModal()&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;</pre>
+<h5>Grant permission</h5>
+<p>To see the button again, we can go to role or user manager and grant related 
+permission as shown below:</p>
+<p>
+<img alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
+<p>As shown above, <strong>Create new person</strong> permission is a child 
+permission of the <strong>Phone book</strong>.</p>
+<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization">
+authorization documentation</a> for more information on authorization.</p>
+<h3>Deleting a person</h3>
+<p>&nbsp;</p>
 
 <p><strong>TODO: THIS DOCUMENT IS NOT COMPLETED YET!</strong></p>
 
