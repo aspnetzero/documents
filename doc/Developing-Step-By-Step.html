@@ -168,24 +168,31 @@ table in database) to represents a person in phone book:</p>
 <pre lang="cs">[Table(&quot;PbPersons&quot;)]
 public class Person : FullAuditedEntity
 {
+    public const int MaxNameLength = 32;
+    public const int MaxSurnameLength = 32;
+    public const int MaxEmailAddressLength = 255;
+
     [Required]
-    [MaxLength(32)]
+    [MaxLength(MaxNameLength)]
     public virtual string Name { get; set; }
 
     [Required]
-    [MaxLength(32)]
+    [MaxLength(MaxSurnameLength)]
     public virtual string Surname { get; set; }
 
+    [MaxLength(MaxEmailAddressLength)]
     public virtual string EmailAddress { get; set; }
 }</pre>
 <p>Person's <strong>primary key</strong> 
 type is <strong>int </strong>(as default). It inherits <strong>FullAuditedEntity</strong> that 
 contains <strong>creation</strong>, <strong>modification </strong>and <strong>
 deletion </strong>audit properties. It's also <strong>soft-delete</strong>. When 
-we delete a person, it's not deleted by database but marked as deteled. See
+we delete a person, it's not deleted by database but marked as deteled (see
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entity</a> 
 and <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
-filters</a> documentations for more informations.</p>
+filters</a> documentations for more informations). We created consts for <strong>
+MaxLength</strong> properties. This is a good practice since we will use same 
+values later.</p>
 <p>We add a DbSet property for Person entity to <strong>PhoneBookDbContext</strong> 
 class defined in <strong>.EntityFramework</strong> project.</p>
 
@@ -228,7 +235,7 @@ following command:</p>
                     Id = c.Int(nullable: false, identity: true),
                     Name = c.String(nullable: false, maxLength: 32),
                     Surname = c.String(nullable: false, maxLength: 32),
-                    EmailAddress = c.String(),
+                    EmailAddress = c.String(maxLength: 255),
                     IsDeleted = c.Boolean(nullable: false),
                     DeleterUserId = c.Long(),
                     DeletionTime = c.DateTime(),
@@ -558,7 +565,9 @@ public class CreatePersonInput : IInputDto
 }</pre>
 <p><strong>CreatePersonInput</strong> is mapped to <strong>Person</strong> 
 entity (we will use mapping below). All properties are decorated by <strong>data 
-annotation attributes</strong> to provide automatic <strong>validation</strong>.</p>
+annotation attributes</strong> to provide automatic <strong>validation</strong>. 
+Notice that we use same consts defined in Person entity for <strong>MaxLength</strong> 
+properties.</p>
 <p>Here, the implementation of CreatePerson method:</p>
 <pre lang="cs">public async Task CreatePerson(CreatePersonInput input)
 {
