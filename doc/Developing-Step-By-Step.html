@@ -80,7 +80,7 @@ default value is shown in all languages. We can define it also for Turkish in
 PhoneBook-tr.xml file:</p>
 <pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Telefon rehberi&quot; /&gt;</pre>
 <h4>Other menu item properties</h4>
-<p><strong>url</strong> can a a URL or <strong>AngularJs route</strong> (state 
+<p><strong>url</strong> can be a URL or <strong>AngularJs route</strong> (state 
 in angular <strong>ui-router</strong> used in ASP.NET Zero) that will be 
 activated when we click the menu item. We will define this route below.</p>
 <p>Lastly, <strong>icon</strong> is the shown menu icon for new menu item. It 
@@ -107,6 +107,9 @@ this page (activate the route).</p>
 controller for it:</p>
 <p>
 <img class="img-thumbnail" alt="Phonebook AngularJs controller and view" height="198" src="images/phonebook-controller-views-files.png" width="171" /></p>
+<p>
+We can use <strong>empty</strong> controller and view located under <strong>
+common/views/_empty</strong> folder to simplify creating a new view.</p>
 <h4>Controller</h4>
 <p>Creating an empty Controller file, <strong>index.js</strong> under <strong>App/tenant/views/phonebook</strong> 
 folder:</p>
@@ -126,7 +129,7 @@ folder:</p>
 })();</pre>
 <p>This is the minimum controller definition that creates a controller named '<strong>tenant.views.phonebook.index</strong>' 
 and triggers Metronic's init method for this page. Controller name is completely 
-arbitrary. You can set any string. We use these naming <strong>as convention</strong> 
+arbitrary. You can set any string. We use this naming <strong>as convention</strong> 
 and it's adviced to follow this convention when developing applications based on 
 ASP.NET Zero.</p>
 <h4>View</h4>
