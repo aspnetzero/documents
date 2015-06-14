@@ -100,6 +100,7 @@ project. Here, a list of all libraries.</p>
 		<li>Angular-UI-Utils</li>
 		<li>Angular-UI-Grid</li>
 		<li>Angular File Upload</li>
+		<li>Angular Date Range Picker</li>
 		<li>Angular ocLazyLoad</li>
 		<li>jQuery</li>
 		<li>jQuery-BlockUI</li>
@@ -109,7 +110,8 @@ project. Here, a list of all libraries.</p>
 		<li>jQuery-Uniform</li>
 		<li>jQuery-Validation</li>
 		<li>Twitter Bootstrap</li>
-		<li>Bootstrap-Hover-Dropdown</li>
+		<li>Bootstrap Hover Dropdown</li>
+		<li>Bootstrap Date Range Picker</li>
 		<li>Modernizr</li>
 		<li>Moment.js</li>
 		<li>Underscore.js</li>
@@ -350,6 +352,19 @@ active/passive</strong> and so on... A user can have a <strong>profile picture</
 It can be changed by the user (See User Menu section). <strong>Admin</strong> 
 user can not be deleted as a business rule. If you don't want to use admin, you 
 can make it passive.</p>
+<h4>Audit Logs</h4>
+<p>In audit logs page, we can see all user interactions with the application:</p>
+<p>
+<img class="img-thumbnail" alt="Auidt Logs Page" height="499" src="images/audit-logs.png" width="800" /></p>
+<p>All application service methods are automatically logged and can be viewed 
+here. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Audit-Logging">audit 
+logs documentation</a> to learn how to configure it. When we click the magnifier 
+icon, we can see all details an audit log:</p>
+<p>
+<img class="img-thumbnail" alt="Audit Log" height="827" src="images/audit-logs-detail.png" width="620" /></p>
+<p>
+Audit log report are provided by <strong>AuditLogAppService</strong> class.</p>
 <h4>Host Settings</h4>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
