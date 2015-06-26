@@ -356,7 +356,7 @@ can make it passive.</p>
 <p>In audit logs page, we can see all user interactions with the application:</p>
 <p>
 <img class="img-thumbnail" alt="Auidt Logs Page" height="499" src="images/audit-logs.png" width="800" /></p>
-<p>All application service methods are automatically logged and can be viewed 
+<p>All application service methods and MVC controller actions are automatically logged and can be viewed 
 here. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Audit-Logging">audit 
 logs documentation</a> to learn how to configure it. When we click the magnifier 
@@ -389,12 +389,26 @@ settings (See setting provider section for more information).</p>
 <h4>Tenant Settings</h4>
 <p>In a multi-tenant application, tenant settings are shown as below:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant settings" height="382" src="images/tenant-settings.png" width="695" /></p>
+<img class="img-thumbnail" alt="Tenant settings" height="390" src="images/tenant-settings2.png" width="765" /></p>
 <p>If we disable multi-tenancy, some host settings are shown in this page (since 
 there is no host setting page):</p>
 <p>
 <img class="img-thumbnail" alt="Tenant settings extended" height="717" src="images/tenant-settings-2.png" width="689" /></p>
-<p>TenantSettingAppService is used to get/set tenant settings.&nbsp;</p>
+<p>TenantSettingAppService is used to get/set tenant settings.</p>
+<h5>Enabling LDAP (Active Directory) Authentication</h5>
+<p>LDAP (Active Directory) Authentication is disabled by default. To make it 
+work, we should disable multi-tenancy since LDAP auth is not used in a 
+multi-tenant system normally. In CoreModule class in .Core project, we should 
+enable the following line:</p>
+<pre lang="cs">Configuration.Modules.ZeroLdap().Enable(typeof(AppLdapAuthenticationSource));</pre>
+<p>Then, we can see <strong>LDAP settings</strong> section in settings page:</p>
+<p>
+<img alt="LDAP Settings" height="569" src="images/tenant-settings-ldap.png" width="764" /></p>
+<p>We can check "<strong>Enable LDAP Authentication</strong>" to enable it. If 
+the server works in domain and application runs with a domain user or local 
+system, then generally even no need to set Domain name, user and password. You 
+can logout and then login with your <strong>domain user name and password</strong>. 
+If not, you should set these informations also.</p>
 
 <h4>Tenant Dashboard</h4>
 <p>ASP.NET Zero startup project also includes a <strong>sample</strong> 
