@@ -73,7 +73,7 @@ project as shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Localization files" height="130" src="images/localization-files.png" width="179" /></p>
 <p>Open PhoneBook.xml (the <strong>default</strong>, <strong>English</strong> 
-localization dictionary) ad add the following line:</p>
+localization dictionary) and add the following line:</p>
 <pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Phone book&quot; /&gt;</pre>
 <p>If we don't define "PhoneBook"s value for other localization dictionaries, 
 default value is shown in all languages. We can define it also for Turkish in 
@@ -102,6 +102,10 @@ this state (route). <strong>url</strong> is the mapped URL to this route.
 is a reference to the <strong>menu item name</strong> defined before. Menu 
 reference ensures highlighting related menu item on the main menu when we enter 
 this page (activate the route).</p>
+<p>Note that 'tenant.phonebook' is a <strong>second level state</strong> (child 
+of 'tenant' abstract state). See Angular-UI's route document for more 
+information on defining states. But, in most cases, you can define it easily by 
+taking existing routes as reference.</p>
 <h3>Creating AngularJs View and Controller</h3>
 <p>The last step to see our new page is to create an Angularjs view and 
 controller for it:</p>
@@ -114,7 +118,7 @@ common/views/_empty</strong> folder to simplify creating a new view.</p>
 <p>Creating an empty Controller file, <strong>index.js</strong> under <strong>App/tenant/views/phonebook</strong> 
 folder:</p>
 <pre lang="js">(function() {
-    appModule.controller(&#39;tenant.views.phonebook.index&#39;, [
+    appModule.controller(&#39;<strong>tenant.views.phonebook.index</strong>&#39;, [
         &#39;$scope&#39;,
         function ($scope) {
             var vm = this;
@@ -158,16 +162,17 @@ folder:</p>
 <p>We can use <strong>.cshtml (razor)</strong> files as views (thanks to ABP 
 framework). That makes easy localization<strong>,</strong> conditionally 
 creating some part of the view (based on some user permissions for example) and 
-so on. Don't confuse about all these html structure. You can copy it from 
-another page and clear contents to prepare an empty view.</p>
+so on. Don't confuse about all these html structure. You can simple copy empty 
+view from<strong>
+common/views/_empty</strong> folder .</p>
 <p>Now, it's time to run application and see the new phone book page:</p>
 <p>
 <img class="img-thumbnail" alt="Empty page" height="195" src="images/phonebook-page-empty.png" width="720" /></p>
 <p>Menu item display name and page title are localized. Try to change UI 
 language to see difference.</p>
 <h3>Creating Person Entity</h3>
-<p>We define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
-table in database) to represents a person in phone book:</p>
+<p>We define entities in <strong>.Core</strong> (domain) project. We can define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
+table in database) to represents a person in phone book as shown below:</p>
 <pre lang="cs">[Table(&quot;PbPersons&quot;)]
 public class Person : FullAuditedEntity
 {
@@ -190,7 +195,7 @@ public class Person : FullAuditedEntity
 type is <strong>int </strong>(as default). It inherits <strong>FullAuditedEntity</strong> that 
 contains <strong>creation</strong>, <strong>modification </strong>and <strong>
 deletion </strong>audit properties. It's also <strong>soft-delete</strong>. When 
-we delete a person, it's not deleted by database but marked as deteled (see
+we delete a person, it's not deleted by database but marked as deleted (see
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entity</a> 
 and <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
 filters</a> documentations for more informations). We created consts for <strong>
@@ -218,7 +223,7 @@ class defined in <strong>.EntityFramework</strong> project.</p>
 <p>We use <strong>EntityFramework Code-First migrations</strong> to migrate 
 database schema. Since we added <strong>Person entitiy</strong>, our DbContext 
 model is changed. So, we 
-should create a <strong>new migration</strong> to create needed table in the 
+should create a <strong>new migration</strong> to create the new table in the 
 database.</p>
 <p>After opening <strong>Package Manager Console</strong> and selecting <strong>
 .EntityFramework</strong> as <strong>default project</strong>, we write the 
@@ -227,12 +232,12 @@ following command:</p>
 <img class="img-thumbnail" alt="Entity Framework Code First Migration" height="68" src="images/phonebook-migrations-1.png" width="609" /></p>
 <p>This command will add a <strong>migration class</strong> named "<strong>Added_Persons_Table</strong>" as shown below:</p>
 
-<pre lang="cs">public partial class Added_Persons_Table : DbMigration
+<pre lang="cs">public partial class <strong>Added_Persons_Table</strong> : DbMigration
 {
     public override void Up()
     {
         CreateTable(
-            &quot;dbo.PbPersons&quot;,
+            &quot;dbo.<strong>PbPersons</strong>&quot;,
             c =&gt; new
                 {
                     Id = c.Int(nullable: false, identity: true),
@@ -324,7 +329,7 @@ EntityFramework's <strong>Configuration</strong> class. This is not so
 important, just for a good code organization (see source codes).</p>
 
 <p>We execute <strong>Update-Database</strong> command again. This command runs 
-seed and it adds two people to PbPersons table:</p>
+seed and adds two people to PbPersons table:</p>
 <p>
 <img class="img-thumbnail" alt="Persons initial data" height="50" src="images/phonebook-persons-table-initial-data.png" width="720" /></p>
 <h3>Creating Person Application Service</h3>
@@ -343,13 +348,13 @@ pre-build helper DTO to return a list of another DTO. <strong>GetPeopleInput</st
 request parameters to <strong>GetPeople</strong> method. So, GetPeopleIntput and PersonListDto 
 are defined as shown below:</p>
 
-<pre lang="cs">public class GetPeopleInput : IInputDto
+<pre lang="cs">public class GetPeopleInput : <strong>IInputDto</strong>
 {
     public string Filter { get; set; }
 }
 
-[AutoMapFrom(typeof(Person))]
-public class PersonListDto : FullAuditedEntityDto
+[<strong>AutoMapFrom(typeof(Person))</strong>]
+public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 {
     public string Name { get; set; }
 
@@ -359,7 +364,7 @@ public class PersonListDto : FullAuditedEntityDto
 }</pre>
 <p>Implementing <strong>IInputDto</strong> interface is a convention in ABP for 
 input DTOs. It provides automatic 
-validation (as we will use later). <strong>AutoMapFrom</strong> is used to configure 
+validation (as we will use later). <strong>AutoMapFrom</strong> attribute is used to configure 
 <strong>AutoMapper</strong> to create mapping from 
 <strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> used to inherit audit properties 
 automatically. See
@@ -396,7 +401,8 @@ DTO</a> documentations for more informations.</p>
 }</pre>
 <p>We're injecting <strong>person repository</strong> (it's automatically created by ABP) and 
 using it to filter and get peoples from database. <strong>WhereIf</strong> is an extension method 
-here. It performs Where only if filter is not null or empty (ABP has similar 
+here (defined in Abp.Linq.Extensions namespace). It performs Where condition, only if filter is not null or empty (ABP has 
+many similar 
 shortcut extension methods). <strong>MapTo</strong> method automatically 
 converts list of Person entities to list of PersonListDto entities using AutoMapper library.</p>
 
