@@ -186,6 +186,11 @@ registration form is shown:</p>
 <img class="img-thumbnail" alt="Registration form" height="488" src="images/registration-form-small.png" width="250" /></p>
 <p>A user can be register for a tenant, not for host if this is a multi-tenant 
 application. If it's single-teant, there will be no tenancy name input here.</p>
+<p>Recaptcha (security question) is optional. It uses Google's recaptcha 
+service. Recaptcha service works per domain. So, to make it properly work, you 
+should create your own private and public keys for your domain on
+<a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> 
+and replace keys in <strong>web.config</strong> file.</p>
 <h4>Email Activation</h4>
 <p>When a user registers as shown above, an email confirmation code is sent to 
 his email address. If user did not receive this email for some reason, he can 
