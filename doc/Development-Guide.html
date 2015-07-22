@@ -83,7 +83,7 @@ project. Here, a list of all libraries.</p>
 		<li>ASP.NET MVC</li>
 		<li>ASP.NET Web API</li>
 		<li>ASP.NET Boilerplate &amp; Module-Zero</li>
-		<li>ASP.NET Identity Framework</li>
+		<li>ASP.NET Identity Framework (and social login extensions)</li>
 		<li>ASP.NET Web Optimization Framework</li>
 		<li>EntityFramework</li>
 		<li>EntityFramework.DynamicFilters</li>
@@ -168,8 +168,8 @@ Views/Account folder:</p>
 <p>
 <img class="img-thumbnail" alt="Login page" height="414" src="images/login-screen.png" width="431" /></p>
 <p>The first input is <strong>tenancy name</strong> which is shown only in a 
-multi-tenant application if "subdomain tenancy name detection" is not possible 
-(See host settings section). There is a single tenant named <strong>Default</strong> 
+<strong>multi-tenant</strong> application if "subdomain tenancy name detection" is 
+<strong>not possible </strong>(See host settings section). There is a single tenant named <strong>Default</strong> 
 in the initial database (See Entity framework section for initial seed 
 data).&nbsp;Leave tenancy name input as blank to login as <strong>host</strong>.</p>
 <p>We can use <strong>admin</strong> user name and <strong>123qwe</strong> 
@@ -179,6 +179,36 @@ password since 123qwe is not very secure:</p>
 <img class="img-thumbnail" alt="Change password" height="304" src="images/account-change-password.png" width="422" /></p>
 <p>
 After changing password we are redirected to the Angular application.</p>
+<h4>
+Social Logins</h4>
+<p>
+ASP.NET Zero supports social media logins. To enable it, we should change 
+the following settings in <strong>web.config</strong> file.</p>
+<pre lang="xml">&lt;add key=&quot;ExternalAuth.Facebook.IsEnabled&quot; value=&quot;false&quot; /&gt;
+&lt;add key=&quot;ExternalAuth.Facebook.AppId&quot; value=&quot;&quot; /&gt;
+&lt;add key=&quot;ExternalAuth.Facebook.AppSecret&quot; value=&quot;&quot; /&gt;
+    
+&lt;add key=&quot;ExternalAuth.Twitter.IsEnabled&quot; value=&quot;false&quot; /&gt;
+&lt;add key=&quot;ExternalAuth.Twitter.ConsumerKey&quot; value=&quot;&quot; /&gt;
+&lt;add key=&quot;ExternalAuth.Twitter.ConsumerSecret&quot; value=&quot;&quot; /&gt;
+
+&lt;add key=&quot;ExternalAuth.Google.IsEnabled&quot; value=&quot;false&quot; /&gt;
+&lt;add key=&quot;ExternalAuth.Google.ClientId&quot; value=&quot;&quot; /&gt;
+&lt;add key=&quot;ExternalAuth.Google.ClientSecret&quot; value=&quot;&quot; /&gt;</pre>
+<p>
+We can seperately enable and configure each social media. To learn 'how to 
+obtain social media API keys for your application', you can check
+<a href="http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on" target="_blank">
+this document</a> or search web for it. There are many resources on the web. So, 
+we will not go to details of creating apps on social medias. Once you get your 
+keys, you can write them into web.config. When you enable it, social media logos 
+are shown on the login page:</p>
+<p>
+<img class="img-thumbnail" alt="Social login" height="464" src="images/social-login-logos.png" width="415" /></p>
+<p>
+Then we can click social media icons to login with our existing accounts. Check
+<strong>Startup</strong> class to see where these configuration is used. You can 
+add more social media easily.&nbsp;</p>
 <h4>Register</h4>
 <p>When we click the "<strong>Create Account</strong>" link in the login page, a 
 registration form is shown:</p>
@@ -467,8 +497,7 @@ dynamic Web API layer documentation</a> for more.</p>
 localized. Localization is implemented using XML files shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Localization files" height="130" src="images/localization-files.png" width="179" /></p>
-<p>PhoneBook will be your ProjectName. <strong>English</strong> and <strong>Turkish</strong> 
-localization is ready here. You can add more XML files by copying one XML file and 
+<p>PhoneBook will be your ProjectName. There are some language files here. You can add more XML files by copying one XML file and 
 translate to desired language. Notice that these XML files should be <strong>
 embedded resource</strong>. See
 <a href="http://www.csharp-examples.net/culture-names/" target="_blank">valid 
