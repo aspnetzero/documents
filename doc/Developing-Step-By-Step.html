@@ -49,14 +49,15 @@ public class PhoneBookCoreModule : AbpModule
 <h3>Adding a New Page</h3>
 <p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
 <h4>Defining a menu item</h4>
-<p><strong>AppNavProvider</strong> class defines menus in the application. When 
+<p><strong>AppNavigationProvider</strong> class defines menus in the application. When 
 we change this class, menus are automatically changed. Open this class and 
 create new menu item as shown below.</p>
-<pre lang="cs">new MenuItemDefinition(
+<pre lang="cs">.AddItem(new MenuItemDefinition(
     PageNames.App.Tenant.PhoneBook,
     L("PhoneBook"),
     url: "tenant.phonebook",
     icon: "glyphicon glyphicon-book"
+    )
 )</pre>
 <p>Every menu item must have a <strong>unique name</strong> 
 to identify this menu item. Menu names are defined in PageNames class as 
