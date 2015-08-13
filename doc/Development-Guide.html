@@ -12,12 +12,12 @@
 <h3>Introduction</h3>
 <p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
 "<strong>Acme.PhoneBook</strong>". This document is a guide while developing your projects. 
-We definitely suggest to ready this document carefully before starting 
+We definitely suggest to ready this document before starting 
 development. Since ASP.NET Zero is built on
 <a href="http://www.aspnetboilerplate.com/" target="_blank">ASP.NET Boilerplate</a> 
 application framework, this document highly refers it's 
 <a href="http://www.aspnetboilerplate.com/Pages/Documents">documentation</a>.</p>
-<p>Before reading this document, it's adviced to run the application and explore 
+<p>Before reading this document, it's suggested to run the application and explore 
 user interface. This will help you to better understand concepts defined here.</p>
 <h4>Solution Structure (Layers)</h4>
 <p>When you create and <a href="/Download">download</a> your project, there will be a solution structure 
@@ -45,13 +45,21 @@ as shown below:</p>
 	<li><strong>Tests </strong>project contains unit and integration tests.</li>
 </ul>
 
-<p>ASP.NET Zero solution contains two applications:</p>
+<h4>Applications</h4>
+<p>ASP.NET Zero solution contains <strong>three</strong> applications:</p>
 <ul>
-	<li>A <strong>Multi-Page MVC</strong> application. This can be used to 
+	<li><strong>Front End MVC Application</strong>: This can be used to 
 	create a public web site or a landing page for your application.</li>
-	<li>A <strong>Single-Page AngularJs</strong> application. This is the actual 
-	application which is entered by username and password.</li>
+	<li><strong>Angular Back End Single-Page </strong>
+	<strong>Application</strong>. This is the application which is entered by username and password. 
+	It's built as a SPA with AngularJs.</li>
+	<li><strong>MVC Back End Multi-Page Application</strong>: This has identical 
+	functionallity with the Angular application but built using MVC and jQuery 
+	(no AngularJs).</li>
 </ul>
+<p>So, back-end application is built in two different architectures (SPA and 
+MPA). You can choice the one you are comfortable. If you just want to build a 
+SPA, you can safely remove MPA files from your project, or vice versa.</p>
 <h4>Multi tenancy</h4>
 <p>Multi-tenancy is used to build <strong>SaaS</strong> (Software as a Service) 
 applications easily. Wtih this technique, we can deploy <strong>single 
@@ -75,60 +83,8 @@ filters</strong>. So, it automatically filters tenant datas if you properly use
 filter interfaces. Read data filters
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">
 documentation</a> carefully if you are building multi-tenant applications.</p>
-<h3>Used Library &amp; Frameworks</h3>
-<p>Many open source frameworks and libraries are used to build ASP.NET Zero 
-project. Here, a list of all libraries.</p>
-<ul>
-	<li>Server side<ul>
-		<li>ASP.NET MVC</li>
-		<li>ASP.NET Web API</li>
-		<li>ASP.NET Boilerplate &amp; Module-Zero</li>
-		<li>ASP.NET Identity Framework (and social login extensions)</li>
-		<li>ASP.NET Web Optimization Framework</li>
-		<li>EntityFramework</li>
-		<li>EntityFramework.DynamicFilters</li>
-		<li>Castle Windsor</li>
-		<li>AutoMapper</li>
-		<li>Log4Net</li>
-		<li>RecaptchaNet</li>
-	</ul>
-	</li>
-	<li>Client side<ul>
-		<li>AngularJs</li>
-		<li>Angular-UI-Bootstrap</li>
-		<li>Angular-UI-Router</li>
-		<li>Angular-UI-Utils</li>
-		<li>Angular-UI-Grid</li>
-		<li>Angular File Upload</li>
-		<li>Angular Date Range Picker</li>
-		<li>Angular ocLazyLoad</li>
-		<li>jQuery</li>
-		<li>jQuery-BlockUI</li>
-		<li>jQuery-Cookie</li>
-		<li>jQuery-Slimscroll</li>
-		<li>jQuery-Sparkline</li>
-		<li>jQuery-Uniform</li>
-		<li>jQuery-Validation</li>
-		<li>Twitter Bootstrap</li>
-		<li>Bootstrap Hover Dropdown</li>
-		<li>Bootstrap Date Range Picker</li>
-		<li>Modernizr</li>
-		<li>Moment.js</li>
-		<li>Underscore.js</li>
-		<li>JsTree</li>
-		<li>Morris</li>
-		<li>Respondjs</li>
-		<li>Font-Awesome</li>
-		<li>Simple Line Icons</li>
-		<li>SpinJs</li>
-		<li>SweetAlert</li>
-		<li>Toastr</li>
-		<li>And Metronic Theme</li>
-	</ul>
-	</li>
-</ul>
 
-<h3>MVC application</h3>
+<h3>Front End MVC Application</h3>
 <p>ASP.NET Zero contains front-end pages that can be a starting point for your 
 public web site or a landing page for the application. When you first run the 
 project, you will see the Home Page as shown below:</p>
@@ -139,14 +95,14 @@ Contents of these pages are just placeholders and for demo purposes. You can
 completely remove content and build your page as your needs. Also, you should 
 change the <strong>logo</strong> with your Company's logo.</p>
 <p>See
-<a href="http://www.keenthemes.com/preview/metronic/theme/templates/frontend/" target="_blank">
-metronic front-end theme </a>for all possibilities and components to build a 
+<a href="http://keenthemes.com/freebie-corporate-frontend-theme/" target="_blank">metronic front-end theme 
+</a>for all possibilities and components to build a 
 richer web site.</p>
 <p>Menus 
-are defined in <strong>AppNavigationProvider</strong> class. When you add a new 
+are defined in <strong>FrontEndNavigationProvider</strong> class. When you add a new 
 menu item here, it will be automatically shown in the menu. There is a <strong>Login</strong> 
-link at the top right corner. This link takes us to the Login page to enter the 
-AngularJs application.</p>
+link at the top right corner. This link takes us to the <strong>Login page
+</strong>to enter to the <strong>backend</strong> application.</p>
 <h4>Layout</h4>
 <p>Layout of front-end pages are located under <strong>Views/Layout</strong> folder of the 
 <strong>.Web</strong> project:</p>
@@ -208,7 +164,7 @@ are shown on the login page:</p>
 <p>
 Then we can click social media icons to login with our existing accounts. Check
 <strong>Startup</strong> class to see where these configuration is used. You can 
-add more social media easily.&nbsp;</p>
+add more social medias yourself.&nbsp;</p>
 <h4>Register</h4>
 <p>When we click the "<strong>Create Account</strong>" link in the login page, a 
 registration form is shown:</p>
@@ -216,7 +172,7 @@ registration form is shown:</p>
 <img class="img-thumbnail" alt="Registration form" height="488" src="images/registration-form-small.png" width="250" /></p>
 <p>A user can be register for a tenant, not for host if this is a multi-tenant 
 application. If it's single-teant, there will be no tenancy name input here.</p>
-<p>Recaptcha (security question) is optional. It uses Google's recaptcha 
+<p><strong>Recaptcha</strong> (security question) is optional. It uses Google's recaptcha 
 service. Recaptcha service works per domain. So, to make it properly work, you 
 should create your own private and public keys for your domain on
 <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> 
@@ -234,10 +190,17 @@ tenant name is known via subdomain (like tenancyname.mydomain.com).</p>
 get an email to reset the password.</p>
 <p>
 <img class="img-thumbnail" alt="Forgot password" height="359" src="images/forgot-password.png" width="421" /></p>
-<h3>Angular Application</h3>
-<p>The main application in ASP.NET Zero is a <strong>Single-Page AngularJs 
+<h3>Angular Back End Single-Page Application</h3>
+<p>The backend in ASP.NET Zero is a <strong>Single-Page AngularJs 
 Application</strong>. When you login, you are redirected to the <strong>
 ApplicationController</strong>. It returns the layout view of the application.</p>
+
+<div class="note note-info">
+<strong>Note</strong>: There is also a Multi-Page version of the same 
+application built with ASP.NET MVC and jQuery (see the related section in this 
+document).
+</div>
+
 <h4>Application Folders</h4>
 <p>All view, script and styles files are located in <strong>App</strong> folder:</p>
 <p>
@@ -275,24 +238,30 @@ just entering a URL to browser's address bar. <strong>Menu</strong> definition
 helps us to highlight given menu when this route is activated.</p>
 <p>As you see, <strong>.cshtml</strong> files are used as views. While simply
 <strong>.html</strong> files can be used, using .cshtml files allows us to take 
-advantage of razor's power while creating views. Note that this is not same as 
-MVC's view, since this is a Angular SPA (Single-Page Application).</p>
+advantage of Razor's power while creating views.</p>
 <h4>Layout</h4>
 <p>Layout of the application is located under common/views/<strong>layout</strong> 
-folder. All scripts and styles in App folder is automatically 
-<strong>bundled</strong> (See BundleConfig.cs) and added to the layout.</p>
+folder. All scripts and styles in App folder (and subfolders) are <strong>bundled</strong> (See 
+AppBundleConfig class). So, just add your scripts and styles under App folder, 
+they will be automatically added to the layout.</p>
 <p><img class="img-thumbnail" alt="App layout" height="216" src="images/app-layout.png" width="154" /></p>
 <p>Layout consists of different parts as shown above. Main menu is rendered in
 <strong>sidebar</strong>.</p>
+
 <h4>Tenant Management</h4>
+
+<div class="note note-info">
 <p>If you're not developing a multi-tenant application, you can skip this 
 section.</p>
+</div>
+
 <p>If this is a multi-tenant application and you logged in as a host user, then 
 tenants page is shown:</p>
 <p>
 <img class="img-thumbnail" alt="Tenant management" height="387" src="images/tenant-management.png" width="720" /></p>
-<p>A tenant is represented by <strong>Tenant</strong> class. There is a single tenant, named <strong>Default</strong> as initial.<strong> Tenancy Name</strong> (code name) is the <strong>unique</strong> name 
-of a tenant. A&nbsp;tenant can be <strong>active</strong> of <strong>passive</strong>. 
+<p>A tenant is represented by <strong>Tenant</strong> class. There is an only 
+one tenant, named <strong>Default</strong> as initial.<strong> Tenancy Name</strong> (code name) is the <strong>unique</strong> name 
+of a tenant. A&nbsp;tenant can be <strong>active</strong> or <strong>passive</strong>. 
 If it's passive, no user of this tenant can login to the application.</p>
 <p>When we 
 click the "Create new Tenant" button, a dialog is shown:</p>
@@ -300,13 +269,13 @@ click the "Create new Tenant" button, a dialog is shown:</p>
 <img class="img-thumbnail" alt="Create tenant" height="521" src="images/create-tenant.png" width="620" /></p>
 <p><strong>Tenancy name</strong> should be unique and not contain spaces or 
 other special chars since it may be used as subdomain name (like 
-tenancyname.mydomain.com, see the section below). <strong>Name</strong> can be anything. <strong>Admin email</strong> 
+tenancyname.mydomain.com. See the section below). <strong>Name</strong> can be anything. <strong>Admin email</strong> 
 is used as email address of the admin user of new tenant. Admin user is 
 automatically created with the tenant. We can set a random password for admin and send activation email. When user 
-first login, he should change the password. We can uncheck this to enter a known 
+first logins, he/she should change the password. We can uncheck this to enter a known 
 password.</p>
-<p>Also, we can create or edit a tenant. All tenant actions are handled by <strong>TenantAppService</strong> class and 
-<strong>authorized</strong>. Example:</p>
+<p>Also, we can create or edit a tenant. All tenant actions are handled by <strong>TenantAppService</strong> 
+class. Example (deleting a tenant):</p>
 <pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenants_Delete)]
 public async Task DeleteTenant(EntityRequestInput input)
 {
@@ -316,7 +285,7 @@ public async Task DeleteTenant(EntityRequestInput input)
 <p>TenantAppService mostly uses <strong>TenantManager</strong> domain service 
 for tenant operations..</p>
 <h5>Using Tenancy Name As Subdomain</h5>
-<p>Multi-tenant application generally uses subdomain to identify current tenant.
+<p>A multi-tenant application generally uses subdomain to identify current tenant.
 <strong>tenant1</strong>.mydomain.com, <strong>tenant2</strong>.mydomain.com and 
 so on. ASP.NET Zero automatically identify and get tenant name from subdomain 
 (See host settings).</p>
@@ -325,11 +294,11 @@ so on. ASP.NET Zero automatically identify and get tenant name from subdomain
 <p>When we click Administrator/Roles menu, we enter to the role management page:</p>
 <p>
 <img class="img-thumbnail" alt="Role management" height="446" src="images/role-management.png" width="718" /></p>
-<p>&nbsp;Roles are used to <strong>group permissions</strong>. When a user has a 
+<p>Roles are used to <strong>group permissions</strong>. When a user has a 
 role, then he/she will have all permissions of that role.</p>
 <p>A role is represented by the <strong>Role</strong> class. <strong>RoleManager</strong> performs domain logic, <strong>RoleAppService</strong> 
 performs application logic for roles.</p>
-<p>&nbsp;Roles can be 
+<p>Roles can be 
 dynamic or static:</p>
 
 <ul>
@@ -412,8 +381,7 @@ is automatically detected.</p>
 configuration beside the application:</p>
 <ol>
 	<li>We should configure DNS to redirect all subdomains to a static IP 
-	address. To declare 'all subdomains', we can use wildcard like 
-	'*.mydomain.com'.</li>
+	address. To declare 'all subdomains', we can use wildcard like <strong>*.mydomain.com</strong>.</li>
 	<li>We should configure IIS to bind this static IP to our application.</li>
 </ol>
 <p>There may be other ways of doing it but this is the most simple way.</p>
@@ -441,7 +409,7 @@ enable the following line:</p>
 <img class="img-thumbnail" alt="LDAP Settings" height="569" src="images/tenant-settings-ldap.png" width="764" /></p>
 <p>We can check "<strong>Enable LDAP Authentication</strong>" to enable it. If 
 the server works in domain and application runs with a domain user or local 
-system, then generally even no need to set Domain name, user and password. You 
+system, then generally even <strong>no need</strong> to set Domain name, user and password. You 
 can logout and then login with your <strong>domain user name and password</strong>. 
 If not, you should set these informations also.</p>
 
@@ -452,8 +420,8 @@ your actual dashboard:</p>
 <p>
 <img class="img-thumbnail" alt="Dashboard sample" height="484" src="images/default-dashboard.png" width="800" /></p>
 <p>Here, only Member Activity graph data is retrieved from server (from 
-TenantDashboardAppService). You can click refresh button to generate random 
-data.</p>
+TenantDashboardAppService). You can click the refresh button to generate random 
+graphs.</p>
 <h4>User Menu</h4>
 <p>A user can click his name at top right corner to open user menu:</p>
 <p><img class="img-thumbnail" alt="User menu" height="247" src="images/user-menu.png" width="221" /></p>
@@ -476,27 +444,56 @@ Currently, only jpg/jpeg files are supported, you can extend it.</p>
 <h5>Logout</h5>
 <p><strong>AccountController</strong> is used to logout the user and redirect to 
 Login page.</p>
+<h3>MVC Back End Multi Page Application</h3>
+<p>Same backend application is also available as a <strong>MPA</strong> using 
+ASP.NET <strong>MVC</strong>, <strong>Web API</strong> and <strong>jQuery</strong>. 
+All functionallity is identical with SPA Angular application. It uses same 
+application services to perform actions. This is a screenshot from the 
+application:</p>
+<p>
+<img class="img-thumbnail" alt="Multi Page Application Screenshot" height="805" src="images/mpa-screenshot.png" width="1056" /></p>
+<p>
+Since all functionallity is identical, you can read the SPA section above to 
+understand the application. Here, only differences will be explained.</p>
+<h4>
+Application Folders</h4>
+<p>This application 
+is included in the .<strong>Web</strong> project as a seperated <strong>Area</strong> 
+as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="MVC MPA Area" height="299" src="images/mpa-solution-files.png" width="217" /></p>
+<p>
+This is a classic MVC folder structure with Controllers, Models and Views. </p>
+<h4>
+Main Menu</h4>
+<p>Application's main menu is defined in <strong>MpaNavigationProvider</strong> class.
+See ABP's <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">navigation documentation</a> to have a deep understanding on creating menus.</p>
+<h4>Layout</h4>
+<p>Layout of the application is located under Views/<strong>Layout</strong> 
+folder.</p>
+<p>
+<img class="img-thumbnail" alt="MPA layout files" height="245" src="images/mpa-layout-files.png" width="162" /></p>
+<p>Header, footer and siderbar is developed as partial views.</p>
 <h3>Infrastructure</h3>
 <h4>Dynamic Web API Layer</h4>
-<p>Since application is built on AngularJs and it's a Single-Page Application 
-(SPA), application services are used via AJAX. So, it's needed to create web API 
+<p>Both SPA and MPA applicationg highly use AJAX to provide a better user 
+experience. They calls application service methods via AJAX. So, it's needed to create web API 
 controllers as adapter (A Client calls Web API Controller action via AJAX, then 
 it calls application service method).</p>
 <p>ABP framework automatically creates
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
 dynamic web API layer</a> using application service interface definitions. So, 
 there is no web API Controller actually. We build dynamic web api controllers in 
-PhoneBook<strong>WebApiModule</strong> class in .WebApi project.</p>
-<p>While ABP dynamically create Web API Controllers, we can also create regular 
-Web API Controllers as we always do.</p>
-<p>See
+PhoneBook<strong>WebApiModule</strong> class in .WebApi project. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
 dynamic Web API layer documentation</a> for more.</p>
+<p>While ABP dynamically create Web API Controllers, we can also create regular 
+Web API Controllers as we always do.&nbsp;</p>
 <h4>Localization</h4>
 <p>ASP.NET Zero <strong>UI</strong> is completely
 localized. Localization is implemented using XML files shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Localization files" height="130" src="images/localization-files.png" width="179" /></p>
+<img class="img-thumbnail" alt="Localization files" height="151" src="images/localization-files-2.png" width="202" /></p>
 <p>PhoneBook will be your ProjectName. There are some language files here. You can add more XML files by copying one XML file and 
 translate to desired language. Notice that these XML files should be <strong>
 embedded resource</strong>. See
@@ -600,9 +597,15 @@ filter documentation</a> for more information about this topic.</p>
 <h4>Bundling &amp; Minifying</h4>
 <p>ASP.NET Zero uses
 <a href="https://www.nuget.org/packages/Microsoft.AspNet.Web.Optimization" target="_blank">
-ASP.NET Optimization</a> for bundling &amp; minifying script and style files. All 
-bundles are defined in <strong>BundleConfig</strong> class. Also, see <strong>
-ScriptPaths</strong> and <strong>StylePaths</strong> classes. They contains 
+ASP.NET Optimization</a> for bundling &amp; minifying script and style files. Bundles are defined in 
+different files:</p>
+<ul>
+	<li><strong>AppBundleConfig</strong>: For SPA bundles.</li>
+	<li><strong>MpaBundleConfig</strong>: For MPA bundles.</li>
+	<li><strong>FrontEndBundleConfig</strong>: For the front end application.</li>
+	<li><strong>CommonBundleConfig</strong>: For some common resources.</li>
+</ul>
+<p>Also, see <strong>ScriptPaths</strong> and <strong>StylePaths</strong> classes. They contains 
 constants for locations of js and css files.</p>
 <h4>Base Classes</h4>
 <p>There are some useful base classes used in the application:</p>
@@ -687,6 +690,63 @@ property must be true if it's deleted.</p>
 <p>You can read
 <a href="http://www.codeproject.com/Articles/871786/Unit-testing-in-Csharp-using-xUnit-Entity-Framewor">
 this article</a> to understand unit testing better.</p>
+
+<h3>Used Library &amp; Frameworks</h3>
+<p>Many open source frameworks and libraries are used to build ASP.NET Zero 
+project. Here, a list of all libraries.</p>
+<ul>
+	<li>Server side<ul>
+		<li>ASP.NET MVC</li>
+		<li>ASP.NET Web API</li>
+		<li>ASP.NET Boilerplate &amp; Module-Zero</li>
+		<li>ASP.NET Identity Framework (and social login extensions)</li>
+		<li>ASP.NET Web Optimization Framework</li>
+		<li>EntityFramework</li>
+		<li>EntityFramework.DynamicFilters</li>
+		<li>Castle Windsor</li>
+		<li>AutoMapper</li>
+		<li>Log4Net</li>
+		<li>RecaptchaNet</li>
+	</ul>
+	</li>
+	<li>Client side<ul>
+		<li>AngularJs</li>
+		<li>Angular UI-Bootstrap</li>
+		<li>Angular UI-Router</li>
+		<li>Angular UI-Utils</li>
+		<li>Angular UI-Grid</li>
+		<li>Angular File Upload</li>
+		<li>Angular Date Range Picker</li>
+		<li>Angular ocLazyLoad</li>
+		<li>jQuery</li>
+		<li>jQuery UI</li>
+		<li>jQuery BlockUI</li>
+		<li>jQuery Cookie</li>
+		<li>jQuery Slimscroll</li>
+		<li>jQuery Sparkline</li>
+		<li>jQuery Uniform</li>
+		<li>jQuery Validation</li>
+		<li>jQuery jTable</li>
+		<li>jQuery Ajax Forms</li>
+		<li>Twitter Bootstrap</li>
+		<li>Bootstrap Hover Dropdown</li>
+		<li>Bootstrap Date Range Picker</li>
+		<li>Bootstrap Switch</li>
+		<li>Modernizr</li>
+		<li>Moment.js</li>
+		<li>Underscore.js</li>
+		<li>JsTree</li>
+		<li>Morris</li>
+		<li>Respondjs</li>
+		<li>Font-Awesome</li>
+		<li>Simple Line Icons</li>
+		<li>SpinJs</li>
+		<li>SweetAlert</li>
+		<li>Toastr</li>
+		<li>And Metronic Theme</li>
+	</ul>
+	</li>
+</ul>
 
 </body>
 
