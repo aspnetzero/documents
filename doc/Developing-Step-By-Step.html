@@ -1118,7 +1118,7 @@ public class PersonListDto : FullAuditedEntityDto
 </strong>}
 
 <strong>[AutoMapFrom(typeof(Phone))]
-public class PhoneInPersonListDto : CreationAuditedEntityDto
+public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
 </strong>{<strong>
     public PhoneType Type { get; set; }
 
