@@ -247,6 +247,27 @@ they will be automatically added to the layout.</p>
 <p><img class="img-thumbnail" alt="App layout" height="216" src="images/app-layout.png" width="154" /></p>
 <p>Layout consists of different parts as shown above. Main menu is rendered in
 <strong>sidebar</strong>.</p>
+<h4>Edition Management</h4>
+<p>If you're not developing a multi-tenant application, you can skip this 
+section.</p>
+<p>Most <strong>SaaS</strong> (multi-tenant) applications have <strong>editions</strong> (packages) those have different 
+<strong>features</strong>. Thus, they can provide different <strong>price and feature options</strong> to thier tenants (customers).&nbsp;<strong>Editions 
+page</strong> (available in host login)<strong> </strong>is used to manage 
+application's editions:</p>
+<p>
+<img class="img-thumbnail" alt="Editions Page" height="476" src="images/editions-page.png" width="826" /></p>
+<p>Editions are used to group feature values and assign to tenants. When we 
+click Actions/Edit for an edition, we can see features:</p>
+<p>
+<img alt="Edition feature editing" height="317" src="images/edition-feature-editing.png" width="613" /></p>
+<p>AspNet Zero startup template includes these 3 sample features. You can delete 
+all and create your own features. All features are defined in <strong>
+AppFeatureProvider</strong> class. Feature values are stored in <strong>
+AbpFeatures</strong> table. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Feature-Management">
+feature management</a> and
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management">
+edition management</a> documents for more information.</p>
 
 <h4>Tenant Management</h4>
 
@@ -258,7 +279,7 @@ section.</p>
 <p>If this is a multi-tenant application and you logged in as a host user, then 
 tenants page is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant management" height="387" src="images/tenant-management.png" width="720" /></p>
+<img class="img-thumbnail" alt="Tenant Management" height="524" src="images/tenant-management-2.png" width="1016" /></p>
 <p>A tenant is represented by <strong>Tenant</strong> class. There is an only 
 one tenant, named <strong>Default</strong> as initial.<strong> Tenancy Name</strong> (code name) is the <strong>unique</strong> name 
 of a tenant. A&nbsp;tenant can be <strong>active</strong> or <strong>passive</strong>. 
@@ -266,7 +287,7 @@ If it's passive, no user of this tenant can login to the application.</p>
 <p>When we 
 click the "Create new Tenant" button, a dialog is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Create tenant" height="521" src="images/create-tenant.png" width="620" /></p>
+<img class="img-thumbnail" alt="Creating tenant" height="587" src="images/create-tenant-3.png" width="616" /></p>
 <p><strong>Tenancy name</strong> should be unique and not contain spaces or 
 other special chars since it may be used as subdomain name (like 
 tenancyname.mydomain.com. See the section below). <strong>Name</strong> can be anything. <strong>Admin email</strong> 
@@ -274,7 +295,7 @@ is used as email address of the admin user of new tenant. Admin user is
 automatically created with the tenant. We can set a random password for admin and send activation email. When user 
 first logins, he/she should change the password. We can uncheck this to enter a known 
 password.</p>
-<p>Also, we can create or edit a tenant. All tenant actions are handled by <strong>TenantAppService</strong> 
+<p>All tenant actions are handled by <strong>TenantAppService</strong> 
 class. Example (deleting a tenant):</p>
 <pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenants_Delete)]
 public async Task DeleteTenant(EntityRequestInput input)
@@ -284,6 +305,14 @@ public async Task DeleteTenant(EntityRequestInput input)
 }</pre>
 <p>TenantAppService mostly uses <strong>TenantManager</strong> domain service 
 for tenant operations..</p>
+<h5>Tenant edition and features</h5>
+<p>An <strong>edition</strong> can be <strong>assigned</strong> to a tenant 
+(while creating or editing). Tenant will inherit all features of the assigned 
+edition. But we can also override features and values for a tenant. Click
+<strong>actions/change features</strong> for a tenant to <strong>customize</strong> 
+it's features:</p>
+<p>
+<img class="img-thumbnail" alt="Tenant features" height="245" src="images/tenant-features.png" width="613" /></p>
 <h5>Using Tenancy Name As Subdomain</h5>
 <p>A multi-tenant application generally uses subdomain to identify current tenant.
 <strong>tenant1</strong>.mydomain.com, <strong>tenant2</strong>.mydomain.com and 
