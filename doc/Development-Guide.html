@@ -673,6 +673,42 @@ application in single place. When you change <strong>Version</strong> here, all
 projects in the application will be verisoned. Also, version and release date 
 automatically shown bottom left corner in the application pages. This helps us 
 to see running application version always.</p>
+<h3>Token Based Authentication</h3>
+<p>AspNet Zero uses cookie based authentication for browsers. However, if you 
+want to consume Web APIs or application services (those are exposed via dynamic 
+web api) from a mobile application, you probably want a token based 
+authentication mechanism. AspNet Zero includes bearer token authentication 
+infrastructure. <strong>AccountController</strong> in <strong>.WebApi</strong> 
+project contains <strong>Authenticate</strong> action to get the token. Then we 
+can use the token for next requests.</p>
+<p>Here, <strong>Postman</strong> (chrome extension) will be used to demonstrate 
+requests and responses.</p>
+<h4>Authentication</h4>
+<p>Just send a <strong>POST</strong> request to <strong>
+http://localhost:6234/api/Account/Authenticate</strong> with <strong>
+Context-Type="application/json"</strong> as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Token Authentication" height="689" src="images/postman-authenticate.png" width="691" /></p>
+<p>We sent a <strong>JSON request body</strong> includes <strong>tenancyName</strong>,
+<strong>userNameOrEmailAddress </strong>and <strong>password</strong>. 
+tenancyName is not used to authenticate as a <strong>host</strong> user. As seed 
+above, <strong>result</strong> property of returning JSON contains the token. We 
+can save it and use for next requests.</p>
+<h4>Use API</h4>
+<p>After authenticate and get the token, we can use it to call any <strong>authorized</strong> 
+actions. All <strong>application services </strong>are available to be used remotely. For 
+example, we can use the <strong>User service</strong> to get a <strong>list of 
+users</strong>:</p>
+<p>
+<img alt="Using postman to get users" height="889" src="images/postman-getusers.png" width="688" /></p>
+<p>Just made a <strong>POST</strong> request to <strong>
+http://localhost:6234/api/services/app/user/GetUsers</strong> with <strong>
+Content-Type="application/json"</strong> and <strong>Authorization="Bearer <em>
+your-</em></strong><em><strong>auth-token</strong></em><strong>"</strong>. 
+Request body was just empty <strong>{}</strong>. Surely, request and response 
+body will be different for different APIs.</p>
+<p>Almost all operations available on UI also available as Web API (since UI 
+uses the same Web API) and can be consumed easily.</p>
 <h3>Unit testing</h3>
 <p>ASP.NET Zero startup project contains <strong>unit</strong> and <strong>integration</strong> tests. Tests are developed using following tools:</p>
 <ul>
