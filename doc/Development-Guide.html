@@ -280,7 +280,8 @@ section.</p>
 tenants page is shown:</p>
 <p>
 <img class="img-thumbnail" alt="Tenant Management" height="524" src="images/tenant-management-2.png" width="1016" /></p>
-<p>A tenant is represented by <strong>Tenant</strong> class. There is an only 
+<p>A tenant is represented by <strong>Tenant</strong> class. Tenant class can be 
+extended by adding new properties. There is an only 
 one tenant, named <strong>Default</strong> as initial.<strong> Tenancy Name</strong> (code name) is the <strong>unique</strong> name 
 of a tenant. A&nbsp;tenant can be <strong>active</strong> or <strong>passive</strong>. 
 If it's passive, no user of this tenant can login to the application.</p>
@@ -325,7 +326,9 @@ so on. ASP.NET Zero automatically identify and get tenant name from subdomain
 <img class="img-thumbnail" alt="Role management" height="446" src="images/role-management.png" width="718" /></p>
 <p>Roles are used to <strong>group permissions</strong>. When a user has a 
 role, then he/she will have all permissions of that role.</p>
-<p>A role is represented by the <strong>Role</strong> class. <strong>RoleManager</strong> performs domain logic, <strong>RoleAppService</strong> 
+<p>A role is represented by the <strong>Role</strong> class. Role class can be 
+extended by adding new properties.</p>
+<p>&nbsp;<strong>RoleManager</strong> performs domain logic, <strong>RoleAppService</strong> 
 performs application logic for roles.</p>
 <p>Roles can be 
 dynamic or static:</p>
@@ -356,7 +359,8 @@ all static roles and <strong>AppRoleConfig</strong> for changing static roles.</
 while creating or editing as shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Role permissions" height="554" src="images/role-permissions.png" width="618" /></p>
-<p>Note: Every tenant has it's own roles and any change in roles for a tenant does not effect other 
+<p>(not all permissions shown in the figure above)</p>
+<p>Every tenant has it's own roles and any change in roles for a tenant does not effect other 
 tenants. Also, host has also own isolated roles.</p>
 <h4>User Management</h4>
 
@@ -366,7 +370,9 @@ tenants. Also, host has also own isolated roles.</p>
 
 <p><strong>Users</strong> are people who can <strong>login </strong>to the application and 
 perform some operations based on their <strong>permissions</strong>.</p>
-<p><strong>User</strong> class represents a user. <strong>UserManager</strong> 
+<p><strong>User</strong> class represents a user. User class can be extended by 
+adding new properties.</p>
+<p>&nbsp;<strong>UserManager</strong> 
 is used to perform domain logic, <strong>UserAppService</strong> is used to 
 perform application logic for users.</p>
 
@@ -377,6 +383,7 @@ A user specific permission setting overrides role settings for this permission.
 A screenshot of user permission dialog:</p>
 <p>
 <img class="img-thumbnail" alt="User Permissions" height="481" src="images/user-permissions.png" width="620" /></p>
+<p>(not all permissions shown in the figure above)</p>
 <p>A dialog is used to create/edit a user:</p>
 <p>
 <img class="img-thumbnail" alt="Editing User" height="534" src="images/edit-user.png" width="400" /></p>
@@ -385,6 +392,34 @@ active/passive</strong> and so on... A user can have a <strong>profile picture</
 It can be changed by the user (See User Menu section). <strong>Admin</strong> 
 user can not be deleted as a business rule. If you don't want to use admin, you 
 can make it passive.</p>
+<h4>Language Management</h4>
+<p>Language management page is used to manage (add/edit/delete) <strong>application 
+languages</strong> and change <strong>localized texts</strong>:</p>
+<p>
+<img class="img-thumbnail" alt="Language list page" height="558" src="images/language-list.png" width="770" /></p>
+<p>We can create new language, edit/delete an existing language and <strong>set a 
+language as default</strong>. When we click to <strong>Change text</strong> for any language, we are 
+redirected to a new view to edit language texts:</p>
+<p>
+<img class="img-thumbnail" alt="View to change texts of a language" height="594" src="images/language-change-texts-list.png" width="728" /></p>
+<p>We can select any language as a <strong>base</strong> (reference) and change 
+<strong>target</strong> language's 
+texts. Since there maybe different
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization#DocLocalizationSources">
+localization sources</a>, we select the source to translate. When we click the 
+edit icon, we can see the edit modal for the selected text:</p>
+<p>
+<img class="img-thumbnail" alt="Language text edit modal" height="498" src="images/language-change-text-modal.png" width="614" /></p>
+<p><strong>Host</strong> users (if allowed) can edit languages and localized 
+texts. These will be default for all tenants for a multi-tenant application.
+<strong>Tenants</strong> inherits languages and localized texts and can <strong>
+override</strong> localized texts or can add new languages.</p>
+<p>Both pages use <strong>LanguageAppService</strong> class as application 
+service. It has methods to manage languages and localized texts. <strong>
+IApplicationLanguageManager</strong> and <strong>IApplicationLanguageTextManager</strong> 
+interfaces are used to perform domain logic (as used by LanguageAppService).</p>
+<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Language-Management">
+language management documentation</a> for more information.</p>
 <h4>Audit Logs</h4>
 <p>In audit logs page, we can see all user interactions with the application:</p>
 <p>
@@ -397,7 +432,7 @@ icon, we can see all details an audit log:</p>
 <p>
 <img class="img-thumbnail" alt="Audit Log" height="827" src="images/audit-logs-detail.png" width="620" /></p>
 <p>
-Audit log report are provided by <strong>AuditLogAppService</strong> class.</p>
+Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
 <h4>Host Settings</h4>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
@@ -789,6 +824,8 @@ project. Here, a list of all libraries.</p>
 		<li><a target="_blank" href="https://github.com/CWSpear/bootstrap-hover-dropdown">Bootstrap Hover Dropdown</a></li>
 		<li><a target="_blank" href="https://github.com/dangrossman/bootstrap-daterangepicker">Bootstrap Date Range Picker</a></li>
 		<li><a target="_blank" href="http://www.bootstrap-switch.org/">Bootstrap Switch</a></li>
+		<li><a href="http://silviomoreto.github.io/bootstrap-select">Bootstrap 
+		Select</a></li>
 		<li><a target="_blank" href="https://angularjs.org/">AngularJs</a></li>
 		<li><a target="_blank" href="https://angular-ui.github.io/bootstrap/">Angular UI-Bootstrap</a></li>
 		<li><a target="_blank" href="http://angular-ui.github.io/ui-router/site/">Angular UI-Router</a></li>
