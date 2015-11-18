@@ -14,6 +14,16 @@
 <p>In this document, we will create a sample <strong>phonebook application</strong> 
 based on ASP.NET Zero step by step. After all steps, we will have a 
 multi-tenant, localized, authorized, configurable, testable... appliaction.</p>
+
+<div class="bs-callout bs-callout-warning">
+	<h4>MPA vs SPA..?</h4>
+	<p>There are two versions of this tutorial. This one is for <strong>MPA</strong> 
+	(Multi-Page Application) with ASP.NET <strong>MVC</strong>, ASP.NET <strong>
+	Web API</strong> and <strong>jQuery.</strong><br />
+	<a href="Developing-Step-By-Step.html">Click here</a> to read the SPA 
+	(Single-Page Application) version with Angularjs and ASP.NET Web API.</p>
+</div>
+
 <h3>Creating The Project</h3>
 <p>We're creating and downloading the solution named "<strong>Acme.PhoneBook</strong>" as described in
 <a href="Getting-Started.html">Getting Started</a> document. After opening 
@@ -23,14 +33,15 @@ solution in Visual Studio, we see an NLayered solution that consists of six proj
 <img class="img-thumbnail" alt="Solution Overall" height="166" src="images/solution-overall.png" width="249" /></p>
 <p>
 
-Also, run database migrations, create the database and login to the application 
-as described in <a href="Getting-Started.html">getting started</a> document. 
-After all completed and logged in to the application, we see a dashboard as 
+Also, run database migrations, create the database, switch to MPA version and login to the application 
+as described in <a href="Getting-Started.html">Getting Started</a> document. After all completed and logged in to the application, we see a dashboard as 
 shown below:</p>
 <p>
 
-<img class="img-thumbnail" alt="Dashboard" height="484" src="images/default-dashboard.png" width="800" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard2.png" width="800" /></p>
 <p>
+
+Logout from the application for now.
 
 We will make our application <strong>single-tenant</strong> (we will convert it 
 to multi-tenant later). So, we 
@@ -46,16 +57,23 @@ public class PhoneBookCoreModule : AbpModule
     }
 }</pre>
 
+<div class="bs-callout bs-callout-warning">
+	<h4>Switch to MPA</h4>
+	<p>Do not skip to switch default application to the MPA version 
+	(described in <a href="Getting-Started.html">Getting Started</a> document).</p>
+</div>
+
 <h3>Adding a New Page</h3>
 <p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
 <h4>Defining a menu item</h4>
-<p><strong>AppNavigationProvider</strong> class defines menus in the application. When 
+<p><strong>MpaNavigationProvider</strong> class defines menus in the application. When 
 we change this class, menus are automatically changed. Open this class and 
-create new menu item as shown below.</p>
+create new menu item as shown below (You can add it right after the dashboard 
+menu item).</p>
 <pre lang="cs">.AddItem(new MenuItemDefinition(
     PageNames.App.Tenant.PhoneBook,
     L("PhoneBook"),
-    url: "tenant.phonebook",
+    url: "Mpa/PhoneBook",
     icon: "glyphicon glyphicon-book"
     )
 )</pre>
@@ -67,7 +85,7 @@ constants. We add a new constant: "<strong>PhoneBook</strong>".</p>
 used to display menu item on the page. <strong>L("PhoneBook")</strong> is localized name of 
 our new menu. <strong>L</strong> method is a helper method gets a localization 
 key and simply returns a <strong>LocalizableString</strong> object (see 
-AppNavigationProvider class).</p>
+MpaNavigationProvider class).</p>
 <p>Localization strings are defined in <strong>XML</strong> files in <strong>
 .Core</strong> 
 project as shown below:</p>
@@ -81,94 +99,63 @@ default value is shown in all languages. We can define it also for Turkish in
 PhoneBook-tr.xml file:</p>
 <pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Telefon rehberi&quot; /&gt;</pre>
 <h4>Other menu item properties</h4>
-<p><strong>url</strong> can be a URL or <strong>AngularJs route</strong> (state 
-in angular <strong>ui-router</strong> used in ASP.NET Zero) that will be 
-activated when we click the menu item. We will define this route below.</p>
+<p><strong>url</strong> can be a URL (it's URL of an <strong>MVC Action</strong> 
+here) that will be 
+redirected when we click the menu item.</p>
 <p>Lastly, <strong>icon</strong> is the shown menu icon for new menu item. It 
 can be a <strong>css</strong> class. We can use Glyphicon, Font-Awesome or 
 another css font library here.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
 navigation document</a> for more information on menu definitions.</p>
-<h3>Creating AngularJs Route</h3>
-<p>Angular routes are defined in <strong>app.js</strong>. We're adding a new 
-route definition as shown below:</p>
-<pre lang="js">$stateProvider.state(&#39;tenant.phonebook&#39;, {
-    url: &#39;/phonebook&#39;,
-    templateUrl: &#39;~/App/tenant/views/phonebook/index.cshtml&#39;,
-    menu: &#39;PhoneBook&#39;
-});</pre>
-<p>'<strong>tenant.phonebook</strong>' is the <strong>unique</strong> name of 
-this state (route). <strong>url</strong> is the mapped URL to this route.
-<strong>templateUrl</strong> is the view path for this route and <strong>menu</strong> 
-is a reference to the <strong>menu item name</strong> defined before. Menu 
-reference ensures highlighting related menu item on the main menu when we enter 
-this page (activate the route).</p>
-<p>Note that 'tenant.phonebook' is a <strong>second level state</strong> (child 
-of 'tenant' abstract state). See Angular-UI's route document for more 
-information on defining states. But, in most cases, you can define it easily by 
-taking existing routes as reference.</p>
-<h3>Creating AngularJs View and Controller</h3>
-<p>The last step to see our new page is to create an Angularjs view and 
-controller for it:</p>
-<p>
-<img class="img-thumbnail" alt="Phonebook AngularJs controller and view" height="198" src="images/phonebook-controller-views-files.png" width="171" /></p>
-<p>
-We can use <strong>empty</strong> controller and view located under <strong>
-common/views/_empty</strong> folder to simplify creating a new view.</p>
+<h3>Creating the Page</h3>
+<p>After creating the menu item, we can create an empty page.</p>
 <h4>Controller</h4>
-<p>Creating an empty Controller file, <strong>index.js</strong> under <strong>App/tenant/views/phonebook</strong> 
-folder:</p>
-<pre lang="js">(function() {
-    appModule.controller(&#39;<strong>tenant.views.phonebook.index</strong>&#39;, [
-        &#39;$scope&#39;,
-        function ($scope) {
-            var vm = this;
-
-            $scope.$on(&#39;$viewContentLoaded&#39;, function () {
-                Metronic.initAjax();
-            });
-
-            //...
-        }
-    ]);
-})();</pre>
-<p>This is the minimum controller definition that creates a controller named '<strong>tenant.views.phonebook.index</strong>' 
-and triggers Metronic's init method for this page. Controller name is completely 
-arbitrary. You can set any string. We use this naming <strong>as convention</strong> 
-and it's adviced to follow this convention when developing applications based on 
-ASP.NET Zero.</p>
+<p>Creating the <strong>PhoneBookController</strong> under <strong>
+Areas/Mpa/Controllers</strong> folder in the Web project:</p>
+<pre lang="cs">public class PhoneBookController : PhoneBookControllerBase
+{
+    public ActionResult Index()
+    {
+        return View();
+    }
+}</pre>
+<p>We inherited from <strong>PhoneBookControllerBase</strong> (will be <em>
+YourProjectName</em>ControllerBase for your projects) instead of MVC's standard 
+Controller class. While it will work if we derive from the standard Controller, PhoneBookControllerBase 
+provides very useful base properties and methods. So, always inherit from this 
+class unless it has a disadvantage for your case.</p>
 <h4>View</h4>
-<p>Creating an empty view, <strong>index.cshtml</strong> under <strong>App/tenant/views/phonebook</strong> 
+<p>Creating an empty view, <strong>Index.cshtml</strong> under <strong>Areas/Mpa/Views/PhoneBook</strong> 
 folder:</p>
-<pre lang="xml">&lt;div ng-controller=&quot;<strong>tenant.views.phonebook.index as vm</strong>&quot;&gt;
-    &lt;div class=&quot;row margin-bottom-5&quot;&gt;
-        &lt;div class=&quot;col-xs-12&quot;&gt;
-            &lt;div class=&quot;page-head&quot;&gt;
-                &lt;div class=&quot;page-title&quot;&gt;
-                    &lt;h1&gt;
-                        &lt;span&gt;<strong>@L(&quot;PhoneBook&quot;)</strong>&lt;/span&gt;
-                    &lt;/h1&gt;
-                &lt;/div&gt;
+<pre lang="xml">@using Acme.PhoneBook.Web.Navigation
+
+@{
+    ViewBag.CurrentPageName = PageNames.App.Tenant.PhoneBook;
+}
+
+&lt;div class=&quot;row margin-bottom-5&quot;&gt;
+    &lt;div class=&quot;col-xs-12&quot;&gt;
+        &lt;div class=&quot;page-head&quot;&gt;
+            &lt;div class=&quot;page-title&quot;&gt;
+                &lt;h1&gt;
+                    &lt;span&gt;@L(&quot;PhoneBook&quot;)&lt;/span&gt;
+                &lt;/h1&gt;
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;portlet light&quot;&gt;
-        &lt;div class=&quot;portlet-body&quot;&gt;
+&lt;/div&gt;
 
-            &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
+&lt;div class=&quot;portlet light&quot;&gt;
+    &lt;div class=&quot;portlet-body&quot;&gt;
 
-        &lt;/div&gt;
+        &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
+
     &lt;/div&gt;
 &lt;/div&gt;</pre>
-<p>We can use <strong>.cshtml (razor)</strong> files as views (thanks to ABP 
-framework). That makes easy localization<strong>,</strong> conditionally 
-creating some part of the view (based on some user permissions for example) and 
-so on. Don't confuse about all these html structure. You can simple copy empty 
-view from<strong>
-common/views/_empty</strong> folder .</p>
-<p>Now, it's time to run application and see the new phone book page:</p>
+<p>We set ViewBag.CurrentPageName to the current page's name to automatically 
+highlight the related menu item when this page is active. Now, it's time to run application and see the new phone book page:</p>
 <p>
-<img class="img-thumbnail" alt="Empty page" height="195" src="images/phonebook-page-empty.png" width="720" /></p>
+<img class="img-thumbnail" alt="Phone book empty screen" height="255" src="images/phonebook-empty-mpa.png" width="974" /></p>
 <p>Menu item display name and page title are localized. Try to change UI 
 language to see difference.</p>
 <h3>Creating Person Entity</h3>
@@ -276,7 +263,7 @@ Manager Console, we write "<strong>Update-Database</strong>" command in order to
 apply the new migration to database. After updating, we can see that <strong>PbPersons 
 table</strong> is added to database.</p>
 <p>
-<img class="img-thumbnail" alt="PhoneBook tables" height="302" src="images/phonebook-tables.png" width="190" /></p>
+<img class="img-thumbnail" alt="Phonebook tables" height="370" src="images/phonebook-tables-mpa.png" width="192" /></p>
 <p>But this new table is empty. We can use EntityFramework's <strong>Seed</strong> 
 method to add some initial data to database. In ASP.NET Zero, there are some 
 classes to fill initial data for users and settings:</p>
@@ -401,7 +388,7 @@ DTO</a> documentations for more informations.</p>
     }
 }</pre>
 <p>We're injecting <strong>person repository</strong> (it's automatically created by ABP) and 
-using it to filter and get peoples from database. </p>
+using it to filter and get peoples from database.</p>
 <p><strong>WhereIf</strong> is an extension method 
 here (defined in Abp.Linq.Extensions namespace). It performs Where condition, only if filter is not null or empty.
 <strong>IsNullOrEmpty</strong> is also an extension method (defined in 
