@@ -482,9 +482,9 @@ If not, you should set these informations also.</p>
 dashboard. It's just for demo purposes, you can make it as a start point for 
 your actual dashboard:</p>
 <p>
-<img class="img-thumbnail" alt="Dashboard sample" height="484" src="images/default-dashboard.png" width="800" /></p>
-<p>Here, only Member Activity graph data is retrieved from server (from 
-TenantDashboardAppService). You can click the refresh button to generate random 
+<img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard2.png" width="800" /></p>
+<p>Here, only <strong>Member Activity</strong> graph data is retrieved from server (from 
+<strong>TenantDashboardAppService</strong>). You can click the refresh button to generate random 
 graphs.</p>
 <h4>User Menu</h4>
 <p>A user can click his name at top right corner to open user menu:</p>
@@ -554,8 +554,10 @@ dynamic Web API layer documentation</a> for more.</p>
 <p>While ABP dynamically create Web API Controllers, we can also create regular 
 Web API Controllers as we always do.&nbsp;</p>
 <h4>Localization</h4>
-<p>ASP.NET Zero <strong>UI</strong> is completely
-localized. Localization is implemented using XML files shown below:</p>
+<p>ASP.NET Zero <strong>User Interface</strong> is completely
+localized. AspNet Zero uses <strong>dynamic, database based, per-tenant</strong> 
+localization (See the related section above).</p>
+<p>XML files are used as base translation for desired languages:</p>
 <p>
 <img class="img-thumbnail" alt="Localization files" height="151" src="images/localization-files-2.png" width="202" /></p>
 <p>PhoneBook will be your ProjectName. There are some language files here. You can add more XML files by copying one XML file and 
@@ -563,8 +565,19 @@ translate to desired language. Notice that these XML files should be <strong>
 embedded resource</strong>. See
 <a href="http://www.csharp-examples.net/culture-names/" target="_blank">valid 
 culture codes</a>.</p>
+<p>When you are adding a new localizable text, add it to the XML file of the 
+default language then use in your application (Also, add translated values to 
+corresponding XML files). No need to add it to database migration code since 
+value in the XML file will be used as default.</p>
+<p><strong>Application languages</strong> are defined in <strong>
+DefaultLanguagesCreator</strong> class. This is used as a <strong>seed data</strong> 
+in Entity Framework Migration. So, if you want to <strong>add a new language</strong>, 
+just add it into DefaultLanguagesCreator class. Also, you can add a 
+corresponding XML file as described above as default translation.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization">
-localization documentation</a> for more.</p>
+localization</a> and
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Language-Management">
+language management</a> documentations for more information.</p>
 <h4>EntityFramework Integration</h4>
 <p>ASP.NET Zero template uses EntityFramework <strong>code-first</strong> and 
 <strong>migrations</strong>. PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
