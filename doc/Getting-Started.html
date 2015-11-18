@@ -66,6 +66,21 @@ class in <strong>.Core</strong> project:</p>
 <pre lang="cs">//Enable this line to create a multi-tenant application.
 Configuration.MultiTenancy.IsEnabled = true;</pre>
 
+<h4>SPA or MPA..?</h4>
+<p>In AspNet Zero template, <strong>default UI</strong> is <strong>SPA</strong> 
+(Single-Page Application with AngularJs and Web API). If you want to develop a
+<strong>MPA</strong> (Multi-Page Application with ASP.NET MVC and jQuery), you 
+can easily redirect your application to home page of the MPA.</p>
+<p>As an easy way, go to ApplicationController and write this redirect code as 
+Index action:</p>
+<pre lang="cs">public ActionResult Index()
+{
+    return <strong>RedirectToAction(&quot;Index&quot;, &quot;Home&quot;, new {area = &quot;Mpa&quot;});</strong>
+}</pre>
+<p>As an <strong>alternative</strong>, you can open AccountController under the 
+Web project and replace all redirections to the Application/Index with 
+redirections to the Mpa/Home/Index.</p>
+
 <h3 id="DocRunProject">Run the project</h3>
 
 <p>All ready.. just run your solution. It will open home page of your web site. 
