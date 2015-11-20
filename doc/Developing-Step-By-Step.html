@@ -578,7 +578,8 @@ public class CreatePersonInput : IInputDto
 }</pre>
 <p><strong>CreatePersonInput</strong> is mapped to <strong>Person</strong> 
 entity (we will use mapping below). All properties are decorated by <strong>data 
-annotation attributes</strong> to provide automatic <strong>validation</strong>. 
+annotation attributes</strong> to provide automatic <strong>
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">validation</a></strong>. 
 Notice that we use same consts defined in Person entity for <strong>MaxLength</strong> 
 properties.</p>
 <p>Here, the implementation of CreatePerson method:</p>
@@ -641,7 +642,9 @@ public async Task Should_Not_Create_Person_With_Invalid_Arguments()
 of it's <strong>required</strong>. So, it throws <strong>AbpValidationException</strong> 
 automatically. Also, we can not send null to CreatePerson method since 
 validation system also checks it. This test calls CreatePerson with 
-invalid arguments and asserts that it thows AbpValidationException.</p>
+invalid arguments and asserts that it thows AbpValidationException. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">
+validation document</a> for more information.</p>
 <h4>Creating a Modal</h4>
 <p>We will create a 
 <a href="https://angular-ui.github.io/bootstrap/#/modal" target="_blank">Angular 
