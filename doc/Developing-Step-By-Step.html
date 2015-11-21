@@ -1004,7 +1004,7 @@ GetPeople</strong> method. UI is shown below:</p>
 <p>That's all. It works since we already have implemented filtering on server.</p>
 <h3>Extending the Application: Adding Phone Numbers</h3>
 <p>Until now, we did not even mention about phone numbers. It's time to extend 
-our domain to support <strong>multiple phone number</strong> for a person.</p>
+our domain to support <strong>multiple phone numbers</strong> for a person.</p>
 <h3>Creating Phone Entity</h3>
 <p>Let's start by creating a new Entity, <strong>Phone</strong> in <strong>.Core</strong> 
 project:</p>
@@ -1024,7 +1024,7 @@ public class Phone : CreationAuditedEntity&lt;long&gt;
     [MaxLength(MaxNumberLength)]
     public virtual string Number { get; set; }
 }</pre>
-<p>Phone entities are stored in PbPhones table. It's primary key is <strong>long</strong> 
+<p>Phone entities are stored in <strong>PbPhones</strong> table. It's primary key is <strong>long</strong> 
 and inherits creation auditing properties. It has a reference to <strong>Person</strong> entity which owns the phone 
 number.</p>
 <p>We added a <strong>Phones</strong> collection to the People:</p>
@@ -1217,7 +1217,12 @@ database and add new phone to person.Phones collection. Then is <strong>save
 changes</strong>. Saving changes causes inserting new added phone to database 
 and get it's <strong>Id</strong>. Because, we are returning a DTO that contains 
 newly created phone informations including Id. So, it should be assigned before 
-mapping in the last line.</p>
+mapping in the last line. (Notice that; normally it's not needed to call 
+CurrentUnitOfWork.SaveChangesAsync. It's automatically called at the end of the 
+method. We called it in the method since we need to save entity and get it's Id 
+immediately. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Unit-Of-Work#DocAutoSaveChanges">
+UOW document</a> for more.)</p>
 <p>There may be different approaches for AddPhone method. You can directly work 
 with a <strong>phone repository</strong> to insert new phone. They all have 
 different pros and cons. It's your choice.</p>
