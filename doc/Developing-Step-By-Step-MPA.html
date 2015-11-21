@@ -160,7 +160,7 @@ highlight the related menu item when this page is active. Now, it's time to run 
 language to see difference.</p>
 <h3>Creating Person Entity</h3>
 <p>We define entities in <strong>.Core</strong> (domain) project. We can define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
-table in database) to represents a person in phone book as shown below:</p>
+table in database) to represent a person in phone book as shown below:</p>
 <pre lang="cs">[Table(&quot;PbPersons&quot;)]
 public class Person : FullAuditedEntity
 {
@@ -186,7 +186,7 @@ deletion </strong>audit properties. It's also <strong>soft-delete</strong>. When
 we delete a person, it's not deleted by database but marked as deleted (see
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entity</a> 
 and <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
-filters</a> documentations for more informations). We created consts for <strong>
+filters</a> documentations for more information). We created consts for <strong>
 MaxLength</strong> properties. This is a good practice since we will use same 
 values later.</p>
 <p>We add a DbSet property for Person entity to <strong>PhoneBookDbContext</strong> 
@@ -359,7 +359,7 @@ automatically. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">
 application service</a> and
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
-DTO</a> documentations for more informations.</p>
+DTO</a> documentations for more information.</p>
 <p>After defining interface, we can implement it as shown below:</p>
 <pre lang="cs">public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
 {
@@ -388,7 +388,7 @@ DTO</a> documentations for more informations.</p>
     }
 }</pre>
 <p>We're injecting <strong>person repository</strong> (it's automatically created by ABP) and 
-using it to filter and get peoples from database.</p>
+using it to filter and get people from database.</p>
 <p><strong>WhereIf</strong> is an extension method 
 here (defined in Abp.Linq.Extensions namespace). It performs Where condition, only if filter is not null or empty.
 <strong>IsNullOrEmpty</strong> is also an extension method (defined in 
@@ -402,7 +402,7 @@ manually. It's automatically done with ABP framework's Unit Of Work system. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Unit-Of-Work">UOW 
 documentation</a> for more.</p>
 <h4>Exception Handling</h4>
-<p>We don't handle exceptions manually (using a try-cache block). Because ABP 
+<p>We don't handle exceptions manually (using a try-catch block). Because ABP 
 framework automatically handles all exceptions on the web layer and returns 
 appropriate error messages to the client. It then handles errors on the client 
 and shows needed error information to the user. See
@@ -443,7 +443,7 @@ codes from entitiy framework mapping to application services, validation and
 authorization.</p>
 
 <p>In constructor, we get (resolve) an <strong>IPersonAppService</strong> from
-<strong>dependency injection</strong> container. So, it creates the <strong>
+<strong>dependency injection</strong> container. It creates the <strong>
 PersonAppService</strong> class with all dependencies. Then we can use it in 
 test methods.</p>
 <p>Since we're using <a href="http://xunit.github.io/" target="_blank">xUnit</a>, 
@@ -549,9 +549,10 @@ AutoMapFrom attribute to be able to make mapping.</p>
 	<strong>Repository</strong> directly from Controller and completely discard 
 	the application service. AspNet Zero does not enforce any architecture here. 
 	In AspNet Zero, we use the application layer (application services and DTOs) 
-	both from <strong>SPA</strong> and <strong>MPA</strong>. Thus, we 
+	both from <strong>SPA</strong> and <strong>MPA</strong>. Therefore, we 
 	implemented it <strong>independent</strong> 
-	from ASP.NET MVC. But it you will only develop ASP.NET MVC, you can 
+	from ASP.NET MVC. This makes application layer re-usable from different 
+	presentation layers. But if you will only develop ASP.NET MVC, you can 
 	implement application logic inside controllers and access to the 
 	repositories from controllers. This may simplify your architecture and 
 	development model.</p>
@@ -765,8 +766,7 @@ some javascript code to open the modal when clicked to the button.</p>
 </strong>{<strong>
     @Html.IncludeScript(&quot;~/Areas/Mpa/Views/PhoneBook/_CreatePersonModal.js&quot;)
     @Html.IncludeScript(&quot;~/Areas/Mpa/Views/PhoneBook/Index.js&quot;)
-</strong>}<strong>
-</strong>
+}</strong>
 &lt;div class=&quot;row margin-bottom-5&quot;&gt;
     &lt;div class=&quot;col-xs-6&quot;&gt;
         &lt;div class=&quot;page-head&quot;&gt;
@@ -789,7 +789,7 @@ some javascript code to open the modal when clicked to the button.</p>
         var _createPersonModal = new app.<strong>ModalManager</strong>({
             viewUrl: abp.appPath + '<strong>Mpa/PhoneBook/CreatePersonModal</strong>',
             scriptUrl: abp.appPath + '<strong>Areas/Mpa/Views/PhoneBook/_CreatePersonModal.js</strong>',
-            modalClass: '<strong>CreatePersonModal'</strong>
+            modalClass: '<strong>CreatePersonModal</strong>'
         });
 
         $('#CreateNewPersonButton').click(function(e) {
@@ -950,8 +950,8 @@ simple:</p>
 <p>Open the <strong>index.cshtml</strong> razor view and use
 <strong>IsGranted</strong> 
 method:</p>
-<pre lang="xml">@if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson))
-{
+<pre lang="xml"><strong>@if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson))
+</strong>{
     &lt;button id=&quot;CreateNewPersonButton&quot; class=&quot;btn btn-primary blue&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;
 }
 </pre>
@@ -994,9 +994,9 @@ here):</p>
         &lt;/a&gt;
     }
 &lt;/div&gt;</pre>
-<p>Surely, we defined 'delete person' permission.</p>
+<p>Surely, we defined 'delete person' permission as like before.</p>
 <h4>Style</h4>
-<p>We're using a <strong>LESS</strong> style here to take button right. Created 
+<p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to take button right. Created 
 a file named <strong>index.less</strong> and added following lines:</p>
 <pre lang="css">#AllPeopleList {
     .list-group-item-heading {
@@ -1006,13 +1006,13 @@ a file named <strong>index.less</strong> and added following lines:</p>
     }
 }
 </pre>
-<p>And add the sytle to your Index.cshtml page (we added built and minified 
+<p>And add the sytle to your Index.cshtml page (we added compiled and minified 
 version to the page):</p>
 <pre lang="xml">@section Styles
 {
     @Html.IncludeStyle(&quot;~/Areas/Mpa/Views/PhoneBook/Index.min.css&quot;)
 }</pre>
-<h4>Javascriot</h4>
+<h4>Javascript</h4>
 <p>Now, adding code to delete person (to Index.js):</p>
 <pre lang="js">var _personService = <strong>abp.services.app.person</strong>;
 
@@ -1020,7 +1020,7 @@ $(&#39;#AllPeopleList button.delete-person&#39;).click(function (e) {
     e.preventDefault();
     
     var $listItem = <strong>$(this).closest(&#39;.list-group-item&#39;);</strong>
-    var personId = $listItem.attr(&#39;data-person-id&#39;);
+    var personId = $listItem.attr(&#39;<strong>data-person-id</strong>&#39;);
 
     abp.message.confirm(
         app.localize(&#39;AreYouSureToDeleteThePerson&#39;),
@@ -1041,7 +1041,10 @@ $(&#39;#AllPeopleList button.delete-person&#39;).click(function (e) {
 <img class="img-thumbnail" alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
 <p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
 <strong>PersonAppService</strong> and shows a 
-notification if operation succeed.&nbsp;</p>
+<strong>
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Javascript-API/Notification">notification</a></strong> if operation succeed.&nbsp;Also, 
+removes the person from the page using jQuery's <strong>remove</strong> 
+function.</p>
 <h4>Application Service</h4>
 <p>First, adding a new method definition to <strong>IPersonAppService</strong> interface as always:</p>
 <pre lang="cs">Task DeletePerson(IdInput input);</pre>
