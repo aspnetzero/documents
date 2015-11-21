@@ -1316,6 +1316,8 @@ public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
 
     return phone.MapTo&lt;PhoneInPersonListDto&gt;();
 }</pre>
+<p>(Note: We injected <strong>IRepository&lt;Phone, long&gt;</strong> in the 
+constructor and set to _personRepository field)</p>
 <p><strong>DeletePhone</strong> method is simple. It only deletes phone with 
 given id.</p>
 <p><strong>AddPhone</strong> method <strong>gets </strong>the person from 
@@ -1337,113 +1339,204 @@ clicking the icon at left. We can add a new phone from the inputs at last line.<
 <h4>View</h4>
 <p>Changes in view are shown below:</p>
 <pre lang="xml">&lt;div id=&quot;AllPeopleList&quot; class=&quot;list-group&quot;&gt;
-    &lt;div class=&quot;list-group-item&quot; ng-repeat=&quot;person in vm.persons&quot; ng-class=&quot;{&#39;person-editing&#39;:person==vm.editingPerson}&quot;&gt;
-        &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
-            {{person.name}} {{person.surname}}
-            &lt;span class=&quot;person-buttons&quot;&gt;
-<strong>                &lt;button ng-click=&quot;vm.editPerson(person)&quot; title=&quot;@L(&quot;Edit&quot;)&quot; class=&quot;btn btn-circle btn-icon-only green&quot;&gt;
-                    &lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;
-                &lt;/button&gt;
-</strong>                &lt;button ng-if=&quot;vm.permissions.deletePerson&quot; ng-click=&quot;vm.deletePerson(person)&quot; title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red&quot;&gt;
-                    &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
-                &lt;/button&gt;
-            &lt;/span&gt;
-        &lt;/h4&gt;
-        &lt;p class=&quot;list-group-item-text&quot;&gt;
-            {{person.emailAddress}}
-        &lt;/p&gt;
-<strong>        &lt;div class=&quot;table-scrollable&quot; ng-if=&quot;person==vm.editingPerson&quot;&gt;
-            &lt;table class=&quot;table table-hover&quot;&gt;
-                &lt;thead&gt;
-                    &lt;tr&gt;
-                        &lt;th style=&quot;width:10%&quot;&gt;&lt;/th&gt;
-                        &lt;th style=&quot;width:15%&quot;&gt;@L(&quot;Type&quot;)&lt;/th&gt;
-                        &lt;th style=&quot;width:75%&quot;&gt;@L(&quot;PhoneNumber&quot;)&lt;/th&gt;
-                    &lt;/tr&gt;
-                &lt;/thead&gt;
-                &lt;tbody&gt;
-                    &lt;tr ng-repeat=&quot;phone in person.phones&quot;&gt;
-                        &lt;td&gt;
-                            &lt;button ng-click=&quot;vm.deletePhone(phone, person)&quot; class=&quot;btn btn-sm btn-default&quot;&gt;
-                                &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
-                            &lt;/button&gt;
-                        &lt;/td&gt;
-                        &lt;td&gt;{{vm.getPhoneTypeAsString(phone.type)}}&lt;/td&gt;
-                        &lt;td&gt;{{phone.number}}&lt;/td&gt;
-                    &lt;/tr&gt;
-                    &lt;tr&gt;
-                        &lt;td&gt;
-                            &lt;button ng-click=&quot;vm.addPhone(person.newPhone, person)&quot; class=&quot;btn btn-sm green&quot;&gt;
-                                &lt;i class=&quot;fa fa-floppy-o&quot;&gt;&lt;/i&gt;
-                            &lt;/button&gt;
-                        &lt;/td&gt;
-                        &lt;td&gt;
-                            &lt;select name=&quot;Type&quot; ng-model=&quot;person.newPhone.type&quot;&gt;
-                                &lt;option value=&quot;0&quot;&gt;@L(&quot;PhoneType_Mobile&quot;)&lt;/option&gt;
-                                &lt;option value=&quot;1&quot;&gt;@L(&quot;PhoneType_Home&quot;)&lt;/option&gt;
-                                &lt;option value=&quot;2&quot;&gt;@L(&quot;PhoneType_Business&quot;)&lt;/option&gt;
-                            &lt;/select&gt;
-                        &lt;/td&gt;
-                        &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;Number&quot; ng-model=&quot;person.newPhone.number&quot; /&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-                &lt;/tbody&gt;
-            &lt;/table&gt;
-        &lt;/div&gt;
-</strong>    &lt;/div&gt;
+    @foreach (var person in Model.Items)
+    {
+        &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; data-person-id=&quot;@person.Id&quot;&gt;
+            &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
+                @person.Name @person.Surname
+
+                &lt;span class=&quot;person-buttons&quot;&gt;
+<strong>                    &lt;button title=&quot;@L(&quot;Edit&quot;)&quot; class=&quot;btn btn-circle btn-icon-only green edit-person&quot;&gt;
+                        &lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;
+                    &lt;/button&gt;
+</strong>                    @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
+                    {
+                        &lt;button title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red delete-person&quot; href=&quot;javascript:;&quot;&gt;
+                            &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                    }
+                &lt;/span&gt;
+            &lt;/h4&gt;
+            &lt;p class=&quot;list-group-item-text&quot;&gt;
+                @person.EmailAddress
+            &lt;/p&gt;
+<strong>            &lt;div class=&quot;table-scrollable table-phones&quot;&gt;
+                &lt;table class=&quot;table table-hover&quot;&gt;
+                    &lt;thead&gt;
+                        &lt;tr&gt;
+                            &lt;th style=&quot;width:10%&quot;&gt;&lt;/th&gt;
+                            &lt;th style=&quot;width:15%&quot;&gt;@L(&quot;Type&quot;)&lt;/th&gt;
+                            &lt;th style=&quot;width:75%&quot;&gt;@L(&quot;PhoneNumber&quot;)&lt;/th&gt;
+                        &lt;/tr&gt;
+                    &lt;/thead&gt;
+                    &lt;tbody&gt;
+                        @foreach (var phone in person.Phones)
+                        {
+                            @Html.Partial(&quot;_PhoneRowInPersonList&quot;, new PhoneRowInPersonListViewModel(phone))
+                        }
+                        &lt;tr&gt;
+                            &lt;td&gt;
+                                &lt;button class=&quot;btn btn-sm green button-save-phone&quot;&gt;
+                                    &lt;i class=&quot;fa fa-floppy-o&quot;&gt;&lt;/i&gt;
+                                &lt;/button&gt;
+                            &lt;/td&gt;
+                            &lt;td&gt;
+                                &lt;select name=&quot;Type&quot;&gt;
+                                    &lt;option value=&quot;0&quot;&gt;@L(&quot;PhoneType_Mobile&quot;)&lt;/option&gt;
+                                    &lt;option value=&quot;1&quot;&gt;@L(&quot;PhoneType_Home&quot;)&lt;/option&gt;
+                                    &lt;option value=&quot;2&quot;&gt;@L(&quot;PhoneType_Business&quot;)&lt;/option&gt;
+                                &lt;/select&gt;
+                            &lt;/td&gt;
+                            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;Number&quot; /&gt;&lt;/td&gt;
+                        &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                &lt;/table&gt;
+            &lt;/div&gt;
+</strong>        &lt;/a&gt;
+    }
 &lt;/div&gt;</pre>
-<p>We added an edit button for each person. Then added a table (shown if this 
-person is being edited) for each person that shows phones of the related person 
-and allows adding a new phone.</p>
-<h4>Controller</h4>
+<p>We added an edit button for each person. Then added a table for each person that shows phones of the related person 
+and allows adding a new phone. Phones table is only shown if we click the edit 
+button. This is implemented using a bit CSS and javascript (we will see in next 
+sections).</p>
+<p>One important think here is we rendered phone rows in a <strong>partial view</strong>. 
+This is done to make this part re-usable. Because we will use the same partial 
+view when we create a new phone. The
+<strong>            _PhoneRowInPersonList
+</strong>        partial view is here:</p>
+<pre lang="xml">@model Acme.PhoneBook.Web.Areas.Mpa.Models.PhoneBook.PhoneRowInPersonListViewModel
+&lt;tr data-phone-id=&quot;@Model.Phone.Id&quot;&gt;
+    &lt;td&gt;
+        &lt;button class=&quot;btn btn-sm default button-delete-phone&quot;&gt;
+            &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/td&gt;
+    &lt;td&gt;@Model.GetPhoneTypeAsString()&lt;/td&gt;
+    &lt;td&gt;@Model.Phone.Number&lt;/td&gt;
+&lt;/tr&gt;</pre>
+<p>And the <strong>PhoneRowInPersonListViewModel</strong> is here:</p>
+<pre lang="cs">public class PhoneRowInPersonListViewModel
+{
+    public PhoneInPersonListDto Phone { get; set; }
 
-<p>Added following codes into the Angularjs controller:</p>
-<pre lang="js">vm.editingPerson = null;
-
-vm.editPerson = function(person) {
-    if (person == vm.editingPerson) {
-        vm.editingPerson = null;
-    } else {
-        vm.editingPerson = person;
+    public PhoneRowInPersonListViewModel(PhoneInPersonListDto phone)
+    {
+        Phone = phone;
     }
-};
 
-vm.getPhoneTypeAsString = function(typeAsNumber) {
-    switch (typeAsNumber) {
-    case 0:
-        return app.localize(&#39;PhoneType_Mobile&#39;);
-    case 1:
-        return app.localize(&#39;PhoneType_Home&#39;);
-    case 2:
-        return app.localize(&#39;PhoneType_Business&#39;);
-    default:
-        return &#39;?&#39;;
+    public string GetPhoneTypeAsString()
+    {
+        return LocalizationHelper.GetString(PhoneBookConsts.LocalizationSourceName, &quot;PhoneType_&quot; + Phone.Type);
     }
-};
+}</pre>
+<h4>Styles</h4>
+<p>Changed <strong>Index.less</strong> a bit to adapt to the changed view:</p>
+<pre>#AllPeopleList {
+    .list-group-item-heading {
+<strong>        span.person-buttons {
+            float: right;
+        }
+</strong>    }
 
-vm.deletePhone = function(phone, person) {
-    personService.deletePhone({
-        id: phone.id
-    }).success(function() {
+<strong>    .table-phones {
+        display: none;
+    }
+</strong>
+    .person-editing {
+        background-color: #ccffcc;
+
+        h4 {
+            font-weight: bold;
+        }
+
+<strong>        .table-phones {
+            display: table;
+        }
+</strong>    }
+}
+</pre>
+<h4>Scripts</h4>
+
+<p>Added following codes into <strong>Index.js</strong>:</p>
+<pre lang="js">//Edit person button
+$(&#39;#AllPeopleList button.edit-person&#39;).click(function (e) {
+    e.preventDefault();
+
+    var $listItem = $(this).closest(&#39;.list-group-item&#39;);
+
+    $listItem
+        .toggleClass(&#39;person-editing&#39;)
+        .siblings().removeClass(&#39;person-editing&#39;);
+});
+
+//Save phone button
+$(&#39;#AllPeopleList .button-save-phone&#39;).click(function (e) {
+    e.preventDefault();
+            
+    var $phoneEditorRow = $(this).closest(&#39;tr&#39;);
+
+<strong>    abp.ajax({
+        url: abp.appPath + &#39;Mpa/PhoneBook/AddPhone&#39;,
+        dataType: &#39;html&#39;,
+        data: JSON.stringify({
+            personId: $phoneEditorRow.closest(&#39;.list-group-item&#39;).attr(&#39;data-person-id&#39;),
+            Type: $phoneEditorRow.find(&#39;select[name=Type]&#39;).val(),
+            Number: $phoneEditorRow.find(&#39;input[name=Number]&#39;).val()
+        })
+    }).done(function (result) {
+        $(result).insertBefore($phoneEditorRow);
+    });</strong>
+});
+
+//Delete phone button
+$(&#39;#AllPeopleList&#39;).on(&#39;click&#39;, &#39;.button-delete-phone&#39;, function (e) {
+    e.preventDefault();
+
+    var $phoneRow = $(this).closest(&#39;tr&#39;);
+    var phoneId = $phoneRow.attr(&#39;data-phone-id&#39;);
+
+<strong>    _personService.deletePhone({
+        id: phoneId
+    }).done(function () {
         abp.notify.success(app.localize(&#39;SuccessfullyDeleted&#39;));
-        person.phones = _.without(person.phones, phone);
-    });
-};
+        $phoneRow.remove();
+    });</strong>
+});</pre>
+<p>When click to '<strong>edit person</strong>' button, we simple open/close (<strong>toggle</strong>) 
+the phones table of related person by using <strong>css</strong> classes.</p>
+<p>In the '<strong>save phone</strong>' button's click, we make an <strong>AJAX</strong> request 
+to PhoneBookController's <strong>AddPhone</strong> action. Server returns an 
+HTML which is then inserted to the table. That's why we did this part partial 
+(We will see PhoneBookController.AddPhone action in the next section).</p>
+<p>Lastly, we deleting the phone when clicking to the '<strong>delete phone</strong>' 
+button and remove the related phone row (tr) from DOM. Notice the event 
+registration here. We used <strong>on</strong> function of jQuery. Thus, the 
+selector becomes <strong>live</strong>. That means, if we add new elements to 
+the page and any element matches to the selector, it's click event is 
+automatically binded.</p>
+<h4>AddPhone Action</h4>
+<p>We added AddPhone action to the PhoneController as shown below:</p>
+<pre lang="cs">[HttpPost]
+public async Task&lt;PartialViewResult&gt; AddPhone(AddPhoneInput input)
+{
+    PhoneInPersonListDto phoneInPersonList = await _personAppService.AddPhone(input);
+    var model = new PhoneRowInPersonListViewModel(phoneInPersonList);
 
-vm.addPhone = function(phone, person) {
-    if (!phone || !phone.type || !phone.number) {
-        abp.message.warn(&#39;Please select a phone type and enter a number!&#39;);
-        return;
-    }
-
-    phone.personId = person.id;
-
-    personService.addPhone(phone)
-        .success(function(result) {
-            abp.notify.success(app.localize(&#39;SavedSuccessfully&#39;));
-            person.phones.push(result);
-            phone.number = &#39;&#39;;
-        });
-};</pre>
+    return PartialView(&quot;_PhoneRowInPersonList&quot;, model);
+}</pre>
+<p>It simply uses PersonAppService.AddPhone and returns <strong>_PhoneRowInPersonList</strong> 
+partial view as response. Thus, we directly insert returning value to the table. 
+A sample return value is shown below:</p>
+<pre lang="xml">&lt;tr data-phone-id=&quot;19&quot;&gt;
+    &lt;td&gt;
+        &lt;button class=&quot;btn btn-sm default button-delete-phone&quot;&gt;
+            &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/td&gt;
+    &lt;td&gt;Mobile&lt;/td&gt;
+    &lt;td&gt;129838172&lt;/td&gt;
+&lt;/tr&gt;</pre>
+<p>As you see, this can be directly inserted to the table, as we already do.</p>
 <h3>Multi Tenancy</h3>
 <p>We have built a fully functional application until here. Now, we will see how 
 to convert it to a multi-tenant application easily.</p>
@@ -1475,8 +1568,10 @@ what it is since it's done automatically. And also it adds a TenantId column to
 PbPersons table as shown below:</p>
 <pre lang="cs">AddColumn(&quot;dbo.PbPersons&quot;, &quot;TenantId&quot;, c =&gt; c.Int(nullable: false, <strong>defaultValue: 1</strong>));</pre>
 <p>I added <strong>defaultValue as 1</strong> to AddColumn options. Thus, 
-current People are automatically assigned to <strong>default tenant</strong> 
+current people are automatically assigned to <strong>default tenant</strong> 
 (default tenant's id is 1).</p>
+<p>Now, we can update the database again:</p>
+<pre>Update-Database</pre>
 <h4>Run The Multi Tenant Application</h4>
 <p><strong>It's finished</strong>! We can test the application. Run the project, <strong>login</strong> as 
 <strong>host</strong> 
