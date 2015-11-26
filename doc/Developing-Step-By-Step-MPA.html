@@ -964,6 +964,28 @@ permission as shown below:</p>
 <img class="img-thumbnail" alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
 <p>As shown above, <strong>Create new person</strong> permission is a child 
 permission of the <strong>Phone book</strong>.</p>
+<h4>Authorization for MVC Controllers</h4>
+<p>We added Authorize attrbiutes to PersonAppService. This prevents unauthorized 
+calls to this service. But unauthorized clients <strong>still can call </strong>actions of 
+PhoneBookController actions. Since PhoneBookController uses PersonAppService, they will 
+get authorization exception and can not use the service. But we can also secure MVC Controllers. 
+This is suggested since some MVC actions may not use application services. Also, 
+it's better to prevent unauthorized attemps at the very beginning.</p>
+<p>We use <strong>AbpMvcAuthorize</strong> attribute for MVC Controllers as 
+shown below:</p>
+<pre lang="cs"><strong>[AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
+</strong>public class PhoneBookController : PhoneBookControllerBase
+{
+    ...
+    
+    <strong>[AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
+</strong>    public PartialViewResult CreatePersonModal()
+    {
+        ...
+    }
+    
+    ...
+}</pre>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization">
 authorization documentation</a> for more information on authorization.</p>
 <h3>Deleting a Person</h3>
@@ -1608,6 +1630,16 @@ login as trio <strong>tenant admin</strong>:</p>
 add people here, logout and login as different teants (you can login as default 
 tenant for example). You will see that each tenant 
 has an isolated phone book and can not see other's people.</p>
+<h3>Delete the SPA</h3>
+<p>If you develop MPA, then you will want to delete SPA related files from the 
+project. It's easy: In the .Web project, delete the following files and folders:</p>
+<ul>
+	<li>Delete <strong>App</strong> folder which contains the Angularjs SPA.</li>
+	<li>Delete <strong>AppBundleConfig</strong> and <strong>
+	AppNavigationProvider</strong> classes and usages.</li>
+	<li>Also, optionally, you can delete ApplicationController class and change 
+	redirections from AccountController to HomeController of Mpa.</li>
+</ul>
 <h3>Conclusion</h3>
 <p>In this document, we built a complete example that covers most parts of the 
 ASP.NET Zero system. We hope that it will help you to build your own 
