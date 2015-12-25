@@ -66,10 +66,10 @@ applications easily. Wtih this technique, we can deploy <strong>single
 application</strong> and <strong>single database</strong> to serve to <strong>
 multiple customers</strong>. Each Tenant 
 will have it's own <strong>roles</strong>, <strong>users</strong> and <strong>settings</strong>.</p>
-<p>ASP.NET Zero's all code-base is developed to be multi-tenant. But, it 
-<a href="Getting-Started#DocConfigureMultiTenancy">can be 
-disabled</a> with a single line of configuration if we're developing 
-single-tenant application. When you disable it, all multi-tenancy stuff will be 
+<p>ASP.NET Zero's all code-base is developed to be <strong>multi-tenant</strong>. But, it 
+<a href="Getting-Started#DocConfigureMultiTenancy"><strong>can be 
+disabled</strong></a> with a single line of configuration if we're developing 
+<strong>single-tenant</strong> application. When you disable it, all multi-tenancy stuff will be 
 hidden and not available. If multi-tenancy is disabled, there will be a single 
 tenant named <strong>Default</strong>.&nbsp;</p>
 <p>There are two types of perspective in multi-tenant applications:</p>
@@ -202,7 +202,8 @@ document).
 </div>
 
 <h4>Application Folders</h4>
-<p>All view, script and styles files are located in <strong>App</strong> folder:</p>
+<p>All view, script and styles files are located in <strong>App</strong> folder 
+(all folders/files are not shown here):</p>
 <p>
 <img class="img-thumbnail" alt="Angular App folder structure" height="413" src="images/app-folders.png" width="152" /></p>
 <p>There are three main folders here:</p>
@@ -248,8 +249,8 @@ they will be automatically added to the layout.</p>
 <p>Layout consists of different parts as shown above. Main menu is rendered in
 <strong>sidebar</strong>.</p>
 <h4>Edition Management</h4>
-<p>If you're not developing a multi-tenant application, you can skip this 
-section.</p>
+<p><em>If you're not developing a multi-tenant application, you can skip this 
+section.</em></p>
 <p>Most <strong>SaaS</strong> (multi-tenant) applications have <strong>editions</strong> (packages) those have different 
 <strong>features</strong>. Thus, they can provide different <strong>price and feature options</strong> to thier tenants (customers).&nbsp;<strong>Editions 
 page</strong> (available in host login)<strong> </strong>is used to manage 
@@ -272,8 +273,8 @@ edition management</a> documents for more information.</p>
 <h4>Tenant Management</h4>
 
 <div class="note note-info">
-<p>If you're not developing a multi-tenant application, you can skip this 
-section.</p>
+<p><em>If you're not developing a multi-tenant application, you can skip this 
+section.</em></p>
 </div>
 
 <p>If this is a multi-tenant application and you logged in as a host user, then 
@@ -306,7 +307,7 @@ public async Task DeleteTenant(EntityRequestInput input)
 }</pre>
 <p>TenantAppService mostly uses <strong>TenantManager</strong> domain service 
 for tenant operations..</p>
-<h5>Tenant edition and features</h5>
+<h5>Tenant Edition and Features</h5>
 <p>An <strong>edition</strong> can be <strong>assigned</strong> to a tenant 
 (while creating or editing). Tenant will inherit all features of the assigned 
 edition. But we can also override features and values for a tenant. Click
@@ -318,17 +319,43 @@ it's features:</p>
 <p>A multi-tenant application generally uses subdomain to identify current tenant.
 <strong>tenant1</strong>.mydomain.com, <strong>tenant2</strong>.mydomain.com and 
 so on. ASP.NET Zero automatically identify and get tenant name from subdomain 
-(See host settings).</p>
+(See host settings section).</p>
+<h4>Organization Units</h4>
+<p>Organization units (OU) are used to hierarchically group user and entities. 
+Then you can get user or entities based on their OUs. When we click 
+Administration/Organization units, we enter the related page:</p>
+<p>
+<img class="img-thumbnail" alt="Organization Units Page" height="535" src="images/organization-units-page.png" width="1194" /></p>
+<p>Here, we can manage OUs (create, edit, delele, move) and members 
+(add/remove).</p>
+<p><strong>OrganizationUnitManager</strong> is used to manage OUs, <strong>
+UserManager</strong> is used to manage OU members in the code. <strong>
+OrganizationUnitAppService</strong> performs the application logic.</p>
+<p>In the left OU tree, we can <strong>right click</strong> to an OU (or left click to
+<strong>arrow</strong> at the right) to open <strong>context menu</strong> for OU operations. When we try to 
+<strong>add a 
+member</strong>, a modal is shown to select the user:</p>
+<p>
+<img class="img-thumbnail" alt="Select a user" height="595" src="images/select-user-lookup.png" width="614" /></p>
+<p>This is actually a <strong>generic lookup modal</strong> and can be used to 
+select any type of entity (see App/common/views/common/lookup.js and 
+corresponding view). To select the users, we created <strong>FindUsers</strong> 
+method in <strong>CommonLookupAppService</strong> then configured the modal to 
+work with this method (see organizationUnits/index.js file for usage of 
+lookupModal.open).</p>
+<p>See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Organization-Units">
+organization unit management document</a> for more information.</p>
 <h4>Role Management</h4>
 
-<p>When we click Administrator/Roles menu, we enter to the role management page:</p>
+<p>When we click Administration/Roles menu, we enter to the role management page:</p>
 <p>
 <img class="img-thumbnail" alt="Role management" height="446" src="images/role-management.png" width="718" /></p>
 <p>Roles are used to <strong>group permissions</strong>. When a user has a 
 role, then he/she will have all permissions of that role.</p>
 <p>A role is represented by the <strong>Role</strong> class. Role class can be 
 extended by adding new properties.</p>
-<p>&nbsp;<strong>RoleManager</strong> performs domain logic, <strong>RoleAppService</strong> 
+<p><strong>RoleManager</strong> performs domain logic, <strong>RoleAppService</strong> 
 performs application logic for roles.</p>
 <p>Roles can be 
 dynamic or static:</p>
@@ -364,7 +391,7 @@ while creating or editing as shown below:</p>
 tenants. Also, host has also own isolated roles.</p>
 <h4>User Management</h4>
 
-<p>When we click Administrator/Users menu, we enter to the user management page:</p>
+<p>When we click Administration/Users menu, we enter to the user management page:</p>
 <p>
 <img class="img-thumbnail" alt="User Management" height="315" src="images/user-management.png" width="720" /></p>
 
@@ -372,7 +399,7 @@ tenants. Also, host has also own isolated roles.</p>
 perform some operations based on their <strong>permissions</strong>.</p>
 <p><strong>User</strong> class represents a user. User class can be extended by 
 adding new properties.</p>
-<p>&nbsp;<strong>UserManager</strong> 
+<p><strong>UserManager</strong> 
 is used to perform domain logic, <strong>UserAppService</strong> is used to 
 perform application logic for users.</p>
 
@@ -832,7 +859,7 @@ project. Here, a list of all libraries.</p>
 	</ul>
 	</li>
 	<li>Client side<ul>
-		<li><a target="_blank" href="http://keenthemes.com/metronic/">Metronic Theme</a></li>
+		<li><a href="http://keenthemes.com/metronic-theme/" target="_blank">Metronic Theme</a></li>
 		<li><a target="_blank" href="http://getbootstrap.com/">Twitter Bootstrap</a></li>
 		<li><a target="_blank" href="https://github.com/CWSpear/bootstrap-hover-dropdown">Bootstrap Hover Dropdown</a></li>
 		<li><a target="_blank" href="https://github.com/dangrossman/bootstrap-daterangepicker">Bootstrap Date Range Picker</a></li>
