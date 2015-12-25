@@ -315,6 +315,16 @@ edition. But we can also override features and values for a tenant. Click
 it's features:</p>
 <p>
 <img class="img-thumbnail" alt="Tenant features" height="245" src="images/tenant-features.png" width="613" /></p>
+<h5>Tenant User Impersonation</h5>
+<p>As a host user, we may want to perform operations in behalf of a tenant. In 
+this case, we can click the Actions button of a tenant and select "<strong>Login 
+as this tenant</strong>" option:</p>
+<p>
+<img alt="Login as tenant option" height="169" src="images/login-as-tenant-action.png" width="185" /></p>
+<p>When we click it, we see <strong>a modal to select a user</strong> of the 
+tenant. We can select any user and perform operations allowed that user. See
+<strong>User Impersonation</strong> section in this document for more 
+information.</p>
 <h5>Using Tenancy Name As Subdomain</h5>
 <p>A multi-tenant application generally uses subdomain to identify current tenant.
 <strong>tenant1</strong>.mydomain.com, <strong>tenant2</strong>.mydomain.com and 
@@ -383,7 +393,7 @@ permission by default. These can be changed easily. See <strong>StaticRoleNames<
 all static roles and <strong>AppRoleConfig</strong> for changing static roles.</p>
 <h5>Role Permissions</h5>
 <p>Since roles are used to group permissions, we can set permissions of a role 
-while creating or editing as shown below:</p>
+while creating or editing as shown below (all permissions are not shown here):</p>
 <p>
 <img class="img-thumbnail" alt="Role permissions" height="554" src="images/role-permissions.png" width="618" /></p>
 <p>(not all permissions shown in the figure above)</p>
@@ -407,7 +417,7 @@ perform application logic for users.</p>
 one role, he inherits union of 
 permissions of all these roles. Also, we can set <strong>user-specific permission</strong>. 
 A user specific permission setting overrides role settings for this permission. 
-A screenshot of user permission dialog:</p>
+A screenshot of user permission dialog (all permissions are not shown here):</p>
 <p>
 <img class="img-thumbnail" alt="User Permissions" height="481" src="images/user-permissions.png" width="620" /></p>
 <p>(not all permissions shown in the figure above)</p>
@@ -419,6 +429,25 @@ active/passive</strong> and so on... A user can have a <strong>profile picture</
 It can be changed by the user (See User Menu section). <strong>Admin</strong> 
 user can not be deleted as a business rule. If you don't want to use admin, you 
 can make it passive.</p>
+<h5>User Impersonation</h5>
+<p>As admin (or any allowed user), we may want to login as a user and perform 
+operations in behalf of that user, without knowing his password. Click actions 
+of a user and select "<strong>Login as this user</strong>":</p>
+<p>
+<img class="img-thumbnail" alt="User actions" height="169" src="images/user-actions.png" width="280" /></p>
+<p>When we click it, we are automatically redirected and logged in as this user. 
+This is called as "<strong>user impersonation</strong>". When we impersonate a user, a "<strong>back to 
+my account</strong>" option is added to the user profile menu:</p>
+<p>
+<img class="img-thumbnail" alt="Back to my account link" height="300" src="images/back-to-my-account-link.png" width="277" /></p>
+<p>In an impersonated account, we can only perform operations allowed to that 
+user. That means, everything <strong>exactly</strong> works as same as this user 
+logged in himself. The only difference is shown in audit logs which indicates 
+that operations are performed by somebody else. Notice that; Also a <strong>red 
+'back' icon</strong> shown near to the user name to indicate that you are in an 
+impersonated account.</p>
+<p>Impersonation is done in <strong>AccountController</strong> of the Web 
+project.</p>
 <h4>Language Management</h4>
 <p>Language management page is used to manage (add/edit/delete) <strong>application 
 languages</strong> and change <strong>localized texts</strong>:</p>
