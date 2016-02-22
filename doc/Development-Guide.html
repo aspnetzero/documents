@@ -542,9 +542,51 @@ your actual dashboard:</p>
 <p>Here, only <strong>Member Activity</strong> graph data is retrieved from server (from 
 <strong>TenantDashboardAppService</strong>). You can click the refresh button to generate random 
 graphs.</p>
+<h4>Notifications</h4>
+<p>Notification icon is located next to the language selection button. The number in the red circle shows unread notification count.</p>
+<p><img alt="notifications" src="images/notifications-icon.png" width="189" class="img-thumbnail"/></p>
+<p>User can see 3 recent notifications by clicking this icon. </p>
+<p><img alt="notifications" src="images/recent-notifications.png" width="320" class="img-thumbnail" style="height: 424px"/></p>
+<p>User can marks all notifications as read by clicking the "Set all as read" link or can mark a single notification by clicking the "set as read" link next to each notification.</p>
+<h5>Notification Settings</h5>
+<p>"Settings" link opens notification settings dialog.</p>
+<p><img alt="notifications" src="images/notification-settings.png" width="601" class="img-thumbnail" style="height: 311px"/></p>
+<p>In this dialog there is a global setting for user to enable/disable receiving notifications. If this setting is enabled, then user can enable/disable each notification individually.</p>
+<p>You can also define your custom notifications in <strong>AppNotificationProvider</strong> 
+class. New user registration notification is defined in the <strong>AppNotificationProvider</strong> as below.</p>
+<pre lang="cs">context.Manager.Add(
+     new NotificationDefinition(
+        AppNotificationNames.NewUserRegistered,
+        displayName: L("NewUserRegisteredNotificationDefinition"),
+        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Users)
+    )
+);
+</pre>
+<p>See <a href="http://aspnetboilerplate.com/Pages/Documents/Notification-System#notification-definitions">notification definitions</a> 
+section for detailed information.</p>
+<p><strong>AppNotifier</strong> class is used to publish notifications. 
+<strong>NotificationAppService</strong> class is used to manage application logic for notifications. 
+See <a href="http://aspnetboilerplate.com/Pages/Documents/Notification-System">notifications documentation</a> for detailed information.</p>
+<h5>Notification List</h5>
+<p>All notifications of user are listed in this page.</p>
+<p>
+<img alt="notification list" height="600" src="images/notifications-list.png" class="img-thumbnail" width="1075" style="height: 541px"/></p>
+
 <h4>User Menu</h4>
 <p>A user can click his name at top right corner to open user menu:</p>
-<p><img class="img-thumbnail" alt="User menu" height="247" src="images/user-menu.png" width="221" /></p>
+<p>
+<img class="img-thumbnail" alt="User menu" src="images/user-menu-2.png" width="403" style="height: 281px"/></p>
+<h5>Linked Accounts</h5>
+<p>Linked accounts are used to link multiple accounts to each other. In this 
+way, a user can easily navigate through his/her accounts using this feature.</p>
+<p>User can link new accounts or delete already linked accounts by clicking the 
+"Manage accounts" link.</p>
+<p><img class="img-thumbnail" alt="User menu" src="images/linked-accounts.png"/></p>
+<p>
+In order to link a new account, user must enter login credentials of related account.</p>
+<p><img class="img-thumbnail" alt="link new account" height="353" src="images/link-new-account.png" width="599"/></p>
+<p><strong>UserLinkAppService</strong> class is used to manage application logic for account linking, 
+<strong>UserLinkManager</strong> class is used to manage domain logic for account linking. </p>
 <h5>Profile Settings</h5>
 <p>My settings is used to change user profile settings:</p>
 <p>
