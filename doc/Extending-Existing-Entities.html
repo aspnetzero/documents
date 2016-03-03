@@ -72,7 +72,7 @@ public class UserListDto : EntityDto&lt;long&gt;, IPassivable, IHasCreationTime
 }</pre>
 
 <p>Since UserListDto <strong>auto maps</strong> from User entity, no need to 
-change <strong>UserAppService.GetUsers</strong> method. No, we can go to UI side 
+change <strong>UserAppService.GetUsers</strong> method. Now, we can go to UI side 
 to add Address property to the <strong>users table</strong>. Open 
 .Web\App\common\views\users\<strong>index.js</strong> and add Address column right after Surname 
 column:</p>
@@ -124,7 +124,7 @@ for SPA. For MPA, it will be similar in .Web\Areas\Mpa\Views\Users\<strong>creat
 file. You can take existing Surname property as example. After adding, new 
 Address field is shown on the create/edit form as shown below:</p>
 <p>
-<img alt="Address on user edit form" height="906" src="images/extend-entities-user-address-in-edit-form.png" width="614" /></p>
+<img class="img-thumbnail" alt="Address on user edit form" height="906" src="images/extend-entities-user-address-in-edit-form.png" width="614" /></p>
 <p>Note: Since we haven't localized "Address" text, it's shown like [Address]. 
 To fix it, you can open localization file under 
 .Core\Localization\ExtendEntitiesDemo and add Address text as like others.</p>
@@ -139,12 +139,200 @@ commit</a> for all changes applied.</p>
 direcly add new properties to the Edition class. Instead, we should OOP patterns 
 like <strong>inheritance</strong> or <strong>composition</strong>. Since 
 inheritance will be simpler, we can create a new class deriving from Edition 
-entity:</p>
+entity, say <strong>MyEdition</strong> (We add this class into Editions folder 
+under the .Core project):</p>
+<pre lang="cs">public class MyEdition : Edition
+{
+    public virtual int Price { get; set; }
+}</pre>
+<h4>Add Migration</h4>
+<p>Since we added a new entity class, our database schema is changed. Whever we change 
+our entities, we should add a new database migration. Open Console 
+Package Manager and write new migration code:</p>
+<pre>Add-Migration "Added_MyEdition_Entity"</pre>
+<p>This will create a new Entity Framework migration class as shown below:</p>
+<pre lang="cs">public partial class Added_MyEdition_Entity : DbMigration
+{
+    public override void Up()
+    {
+        AlterTableAnnotations(
+            &quot;dbo.AbpEditions&quot;,
+            c =&gt; new
+            {
+                Id = c.Int(nullable: false, identity: true),
+                Name = c.String(nullable: false, maxLength: 32),
+                DisplayName = c.String(nullable: false, maxLength: 64),
+                IsDeleted = c.Boolean(nullable: false),
+                DeleterUserId = c.Long(),
+                DeletionTime = c.DateTime(),
+                LastModificationTime = c.DateTime(),
+                LastModifierUserId = c.Long(),
+                CreationTime = c.DateTime(nullable: false),
+                CreatorUserId = c.Long(),
+                Price = c.Int(),
+                Discriminator = c.String(nullable: false, maxLength: 128),
+            },
+            annotations: new Dictionary&lt;string, AnnotationValues&gt;
+            {
+                {
+                    &quot;DynamicFilter_MyEdition_SoftDelete&quot;,
+                    new AnnotationValues(oldValue: null, newValue: &quot;EntityFramework.DynamicFilters.DynamicFilterDefinition&quot;)
+                },
+            });
+
+<strong>        AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Price&quot;, c =&gt; c.Int(nullable: false, defaultValue: 0));
+        AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Discriminator&quot;, c =&gt; c.String(nullable: false, maxLength: 128, defaultValue: &quot;MyEdition&quot;));
+</strong>    }
+
+    public override void Down()
+    {
+        //...other code
+    }
+}</pre>
+<p>Basically, this migration adds a two new columns to <strong>AbpEditions</strong> 
+table:</p>
+<ul>
+	<li><strong>Price</strong>: Since we added it to MyEdition.</li>
+	<li><strong>Discriminator</strong>: Entity Framework's own field to 
+	distinguish Edition and MyEdition entities.</li>
+</ul>
+<p>We <strong>changed</strong> default migration code from</p>
+<pre lang="cs">AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Price&quot;, c =&gt; c.Int());
+AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Discriminator&quot;, c =&gt; c.String(nullable: false, maxLength: 128));</pre>
+<p>to</p>
+<pre lang="cs">AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Price&quot;, c =&gt; c.Int(<strong>nullable: false, defaultValue: 0</strong>));
+AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Discriminator&quot;, c =&gt; c.String(nullable: false, maxLength: 128<strong>, defaultValue: &quot;MyEdition&quot;</strong>));
+</pre>
+<p>We did it since we want to replace <strong>Edition</strong> entities by
+<strong>MyEdition</strong>. Now, we can update our database with this command:</p>
+<pre lang="cs">Update-Database</pre>
+<p>When we check <strong>AbpEditions</strong> table in the database, we can see the 
+new fields:</p>
+<p>
+<img class="img-thumbnail" alt="Editions table" height="98" src="images/extend-entities-editions-db-table.png" width="578" /></p>
+<p>As you see, existing 'Standard Edition' entry changed to MyEdition with Price 
+= 0.</p>
+<p>One last thing about migration is the database <strong>Seed code</strong>. Seed code currently creates 
+the 'Standard edition'. We should go to .EntityFramework\Migrations\Seed\<strong>DefaultEditionCreator.cs</strong> 
+class and change Edition creation code from:</p>
+<pre lang="cs">defaultEdition = new <strong>Edition</strong> { Name = EditionManager.DefaultEditionName, DisplayName = EditionManager.DefaultEditionName };</pre>
+<p>to:</p>
+<pre lang="cs">defaultEdition = new <strong>MyEdition</strong> { Name = EditionManager.DefaultEditionName, DisplayName = EditionManager.DefaultEditionName };</pre>
+<p>Thus, it creates MyEdition entity if we create database from scratch.</p>
+<h4>
+Show Price On The UI</h4>
+<p>Editions\<strong>EditionAppService.cs</strong> (in .Application 
+project) is used to get list of editions by clients. It returns a list of
+<strong>EditionListDto</strong> (we always use
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects" target="_blank">
+DTOs</a> for client communication). So, we should add the Price property to 
+EditionListDto too:</p>
+<pre lang="cs">[AutoMapFrom(typeof(Edition)<strong>, typeof(MyEdition)</strong>)]
+public class EditionListDto : EntityDto, IHasCreationTime
+{
+    //...existing code
+
+    <strong>public int Price { get; set; }</strong>
+}</pre>
+
+<p>We added <strong>auto mapping from MyEdition</strong>. No need to 
+change <strong>EditionAppService.GetEditions</strong> method by the help of auto 
+mapping. Now, we can go to UI side 
+to add Price property to the <strong>editions table</strong>. Open 
+.Web\App\host\views\editions\<strong>index.js</strong> and add Price column right after 
+EditionName column:</p>
+<pre lang="js">{
+    name: app.localize(&#39;EditionName&#39;),
+    field: &#39;displayName&#39;
+},
+<strong>{
+    name: app.localize(&#39;Price&#39;),
+    field: &#39;price&#39;
+},
+</strong>{
+    name: app.localize(&#39;CreationTime&#39;),
+    field: &#39;creationTime&#39;,
+    cellFilter: &#39;momentFormat: \&#39;L\&#39;&#39;
+}</pre>
+<p>New added code is highlighted. That's all. Let's run the application and open 
+the <strong>editions page</strong> (editions page is only available for host 
+users, not tenant users):</p>
+<p>
+<img class="img-thumbnail" alt="UI table for editions" height="174" src="images/extend-entities-editions-ui-table.png" width="810" /></p>
+<p>This was for SPA (Single Page Application with Angularjs). It's similar for 
+MPA side. Just open .Web\Areas\Mpa\Views\Editions\<strong>index.js</strong> and 
+add Price field to the table.</p>
+<h4>Add Price On Edition Create/Update</h4>
+<p>We may want to add Price field to edition create/update form. Create/Update 
+logic is implemented in <strong>EditionAppService</strong> class. <strong>
+GetEditionForEdit</strong> method is called by clients to fill the create/edit 
+form. This method returns a GetEditionForEditOutput which contains <strong>
+EditionEditDto</strong> to transfer edition properties. So, we should add Price 
+property to EditionEditDto class:</p>
+<pre lang="cs">[AutoMap(typeof(Edition)<strong>, typeof(MyEdition)</strong>)]
+public class EditionEditDto
+{
+    //...existing code
+
+    <strong>public int Price { get; set; }</strong>
+}</pre>
+<p>We also added <strong>auto mapping</strong> for <strong>MyEdition</strong> entity. We could 
+directly replace Edition by MyEdition if we will never use the Edition class. We 
+left it like that to show different usages.</p>
+<p>Since AspNet Zero does not use auto mapping for creating (in CreateEditionAsync method) 
+and updating (in UpdateEditionAsync method) editions, we should change these code too:</p>
+<pre lang="cs">///...
+
+[AbpAuthorize(AppPermissions.Pages_Editions_Create)]
+protected virtual async Task CreateEditionAsync(CreateOrUpdateEditionDto input)
+{
+    <strong>var edition = new MyEdition { DisplayName = input.Edition.DisplayName, Price = input.Edition.Price };</strong>
+
+    await _editionManager.CreateAsync(edition);
+    await CurrentUnitOfWork.SaveChangesAsync(); //It&#39;s done to get Id of the edition.
+
+    await SetFeatureValues(edition, input.FeatureValues);
+}
+
+[AbpAuthorize(AppPermissions.Pages_Editions_Edit)]
+protected virtual async Task UpdateEditionAsync(CreateOrUpdateEditionDto input)
+{
+    Debug.Assert(input.Edition.Id != null, &quot;input.Edition.Id should be set.&quot;);
+
+    var edition = <strong>(MyEdition)</strong>await _editionManager.GetByIdAsync(input.Edition.Id.Value);
+    edition.DisplayName = input.Edition.DisplayName;
+    <strong>edition.Price = input.Edition.Price;</strong>
+
+    await SetFeatureValues(edition, input.FeatureValues);
+}
+
+//...</pre>
+<p>Notice the highlighted areas. First, we should create <strong>MyEdition</strong>, 
+instead of <strong>Edition</strong> and set also <strong>Price</strong> 
+property. In the update part, we used
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management" target="_blank">
+edition manager</a> to get the edition. Edition manager normally works for the
+<strong>Edition</strong> entity. So, we should <strong>cast </strong>it to
+<strong>MyEdition</strong> in order to reach to the <strong>Price</strong> 
+attribute.</p>
+<p>Now, we can go the the UI part. Open 
+.Web\App\host\views\editions\<strong>createOrEditModal.cshtml</strong> and add the following form 
+field after the EditionName field:</p>
+<pre lang="xml">&lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
+    &lt;input class=&quot;form-control edited&quot; type=&quot;number&quot; name=&quot;EditionPrice&quot; ng-model=&quot;<strong>vm.edition.price</strong>&quot;&gt;
+    &lt;label&gt;<strong>@L(&quot;Price&quot;)</strong>&lt;/label&gt;
+&lt;/div&gt;</pre>
+<p>It's similar for MVC side. In this case, you need to edit 
+.Web\Areas\Mpa\Views\Editions\<strong>_CreateOrEditModal.cshtml</strong>. Now, 
+we can edit an edition with entering the price:</p>
+<p>
+<img alt="Edit edition with price" height="411" src="images/extend-entities-editions-ui-edit.png" width="392" /></p>
+<p>You can see this Github
+<a href="https://github.com/aspnetzero/aspnet-zero-samples/commit/ecf25b60bda72166d41ad7605000d7dc7556e8bf" target="_blank">commit</a> for all changes applied.</p>
 <h3>Source Code</h3>
 <p>You can get the full source code of this sample from the Github repository: </p>
 <p>
 <a href="https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ExtendEntitiesDemo" target="_blank">https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ExtendEntitiesDemo</a></p>
-<p>....</p>
 
 </body>
 
