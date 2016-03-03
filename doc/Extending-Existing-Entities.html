@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
+<title>DOCUMENTS</title>
+</head>
+
+<body>
+
+<h3 id="DocIntro">Introduction</h3>
+<p>This tutorial is a step by step guide to learn <strong>how to add new 
+properties to existing entities</strong>, from database layer to UI layer.</p>
+<p>In AspNet Zero, <strong>Tenant</strong>, <strong>User</strong> and <strong>
+Role</strong> entities are <strong>abstract</strong> in the framework, others are not. There are 
+some differences between them. So, we seperated it into two sections.</p>
+<p><em>Note: We assume that you created your project as described in the
+<a href="Getting-Started.html">Getting Started</a> document.</em></p>
+<h3>Extending Abstract Entities</h3>
+<p>As a sample, we will work on <strong>User</strong> entity. We want to add 
+an <strong>Address</strong> property to the User.</p>
+<h4>Add New Property To User</h4>
+<p>Open Authorization\Users\<strong>User.cs</strong> (in .Core project) and add the new property:</p>
+<pre lang="cs">public class User : AbpUser&lt;Tenant, User&gt;
+{
+    //...existing code
+
+    <strong>public virtual string Address { get; set; }</strong>
+}</pre>
+<p>Here, we hided existing code in the User class to show it simpler. You can 
+add Address property after existing properties.</p>
+<h4>Add Migration</h4>
+<p>Since we added new property, our database schema is changed. Whever we change 
+our entities, we should add a new database migration. Open Console 
+Package Manager and write new migration code:</p>
+<pre>Add-Migration "Added_Address_To_User"</pre>
+<p>This will create a new Entity Framework migration class:</p>
+<pre lang="cs">public partial class Added_Address_To_User : DbMigration
+{
+    public override void Up()
+    {
+        <strong>AddColumn(&quot;dbo.AbpUsers&quot;, &quot;Address&quot;, c =&gt; c.String());</strong>
+    }
+        
+    public override void Down()
+    {
+        DropColumn(&quot;dbo.AbpUsers&quot;, &quot;Address&quot;);
+    }
+}</pre>
+<p>Since it's automatically created, we don't have to know what it does for most 
+cases. Now, we can update our database with this command:</p>
+<pre lang="cs">Update-Database</pre>
+<p>When we check <strong>AbpUsers</strong> table in the database, we can see the 
+new <strong>Address</strong> field:</p>
+<p>
+<img class="img-thumbnail" alt="Address for Users" height="102" src="images/extend-entities-user-address.png" width="505" /></p>
+<p>For test purposes, we entered some data for existing users by hand.</p>
+<h4>Show Address On The UI</h4>
+<p>Authorization\Users\<strong>UserAppService.cs</strong> (in .Application 
+project) is used to get list of users by clients. It returns a list of <strong>
+UserListDto</strong> (we always use
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects" target="_blank">
+DTOs</a> for client communication). So, we should add the Address property to 
+UserListDto too:</p>
+<pre lang="cs">[AutoMapFrom(typeof(User))]
+public class UserListDto : EntityDto&lt;long&gt;, IPassivable, IHasCreationTime
+{
+    //...existing code
+
+    <strong>public string Address { get; set; }</strong>
+}</pre>
+
+<p>Since UserListDto <strong>auto maps</strong> from User entity, no need to 
+change <strong>UserAppService.GetUsers</strong> method. No, we can go to UI side 
+to add Address property to the <strong>users table</strong>. Open 
+.Web\App\common\views\users\<strong>index.js</strong> and add Address column right after Surname 
+column:</p>
+<pre lang="js">{
+    name: app.localize(&#39;Surname&#39;),
+    field: &#39;surname&#39;,
+    minWidth: 120
+},
+<strong>{
+    name: app.localize(&#39;Address&#39;),
+    field: &#39;address&#39;,
+    minWidth: 140
+},</strong>
+{
+    name: app.localize(&#39;Roles&#39;),
+    field: &#39;getRoleNames()&#39;,
+    enableSorting: false,
+    minWidth: 160
+},</pre>
+<p>New added code is highlighted. That's all. Let's run the application and open 
+the <strong>users page</strong>:</p>
+<p>
+<img class="img-thumbnail" alt="Address in table" height="527" src="images/extend-entities-user-address-in-table.png" width="802" /></p>
+<p>This was for SPA (Single Page Application with Angularjs). It's similar for 
+MPA side. Just open .Web\Areas\Mpa\Views\Users\index.js and add Address field to 
+the table as like Surname.</p>
+<h4>Add Address On User Create/Edit</h4>
+<p>We may want to set Address while <strong>creating/editing</strong> a User.</p>
+<p>Clients use UserAppService.<strong>GetUserForEdit</strong> method to show 
+user information on edit form. It returns <strong>GetUserForEditOutput</strong> 
+object which contains a <strong>UserEditDto</strong> object that includes user 
+properties. So, we should add Address to UserEditDto to allow clients to change 
+Address property on create/update:</p>
+<pre lang="cs">public class UserEditDto : IValidate, IPassivable
+{
+    //...existing code
+
+    public string Address { get; set; }
+}</pre>
+<p>Since <strong>UserAppService</strong> use <strong>auto mapping</strong>, no 
+need to manually map Address to the User entity. So, server side code is just 
+that. We can go to UI side to add an Address field to the form:</p>
+<pre lang="xml">&lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;Address&quot; class=&quot;form-control&quot; ng-class=&quot;{&#39;edited&#39;:vm.user.address}&quot; ng-model=&quot;vm.user.address&quot;&gt;
+    &lt;label&gt;@L(&quot;Address&quot;)&lt;/label&gt;
+&lt;/div&gt;</pre>
+<p>This code is written to .Web\App\common\views\users\<strong>createOrEditModal.cshtml</strong> 
+for SPA. For MPA, it will be similar in .Web\Areas\Mpa\Views\Users\<strong>createOrEditModal.cshtml</strong> 
+file. You can take existing Surname property as example. After adding, new 
+Address field is shown on the create/edit form as shown below:</p>
+<p>
+<img alt="Address on user edit form" height="906" src="images/extend-entities-user-address-in-edit-form.png" width="614" /></p>
+<p>Note: Since we haven't localized "Address" text, it's shown like [Address]. 
+To fix it, you can open localization file under 
+.Core\Localization\ExtendEntitiesDemo and add Address text as like others.</p>
+<p>You can see this Github
+<a href="https://github.com/aspnetzero/aspnet-zero-samples/commit/b7fd57eb3e20cf3b96e9358bc3c4d92f81404f5a" target="_blank">
+commit</a> for all changes applied.</p>
+
+<h3>Extending Non-Abstract Entities</h3>
+<p>As a sample, we will work on <strong>Edition</strong> entity.</p>
+<h4>Derive From Edition Entity</h4>
+<p>Since Edition is <strong>not abstract</strong> in the framework, we can not 
+direcly add new properties to the Edition class. Instead, we should OOP patterns 
+like <strong>inheritance</strong> or <strong>composition</strong>. Since 
+inheritance will be simpler, we can create a new class deriving from Edition 
+entity:</p>
+<h3>Source Code</h3>
+<p>You can get the full source code of this sample from the Github repository: </p>
+<p>
+<a href="https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ExtendEntitiesDemo" target="_blank">https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ExtendEntitiesDemo</a></p>
+<p>....</p>
+
+</body>
+
+</html>
