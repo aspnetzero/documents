@@ -110,14 +110,14 @@ Address property on create/update:</p>
 {
     //...existing code
 
-    public string Address { get; set; }
+    <strong>public string Address { get; set; }</strong>
 }</pre>
 <p>Since <strong>UserAppService</strong> use <strong>auto mapping</strong>, no 
 need to manually map Address to the User entity. So, server side code is just 
 that. We can go to UI side to add an Address field to the form:</p>
 <pre lang="xml">&lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
-    &lt;input type=&quot;text&quot; name=&quot;Address&quot; class=&quot;form-control&quot; ng-class=&quot;{&#39;edited&#39;:vm.user.address}&quot; ng-model=&quot;vm.user.address&quot;&gt;
-    &lt;label&gt;@L(&quot;Address&quot;)&lt;/label&gt;
+    &lt;input type=&quot;text&quot; name=&quot;<strong>Address</strong>&quot; class=&quot;form-control&quot; ng-class=&quot;{&#39;edited&#39;:<strong>vm.user.address</strong>}&quot; ng-model=&quot;<strong>vm.user.address</strong>&quot;&gt;
+    &lt;label&gt;<strong>@L(&quot;Address&quot;)</strong>&lt;/label&gt;
 &lt;/div&gt;</pre>
 <p>This code is written to .Web\App\common\views\users\<strong>createOrEditModal.cshtml</strong> 
 for SPA. For MPA, it will be similar in .Web\Areas\Mpa\Views\Users\<strong>createOrEditModal.cshtml</strong> 
@@ -136,7 +136,7 @@ commit</a> for all changes applied.</p>
 <p>As a sample, we will work on <strong>Edition</strong> entity.</p>
 <h4>Derive From Edition Entity</h4>
 <p>Since Edition is <strong>not abstract</strong> in the framework, we can not 
-direcly add new properties to the Edition class. Instead, we should OOP patterns 
+direcly add new properties to the Edition class. Instead, we should use OOP patterns 
 like <strong>inheritance</strong> or <strong>composition</strong>. Since 
 inheritance will be simpler, we can create a new class deriving from Edition 
 entity, say <strong>MyEdition</strong> (We add this class into Editions folder 
@@ -189,21 +189,22 @@ Package Manager and write new migration code:</p>
         //...other code
     }
 }</pre>
-<p>Basically, this migration adds a two new columns to <strong>AbpEditions</strong> 
+<p>Basically, this migration adds two new columns to <strong>AbpEditions</strong> 
 table:</p>
 <ul>
-	<li><strong>Price</strong>: Since we added it to MyEdition.</li>
+	<li><strong>Price</strong>: The Price field we added to the MyEdition.</li>
 	<li><strong>Discriminator</strong>: Entity Framework's own field to 
-	distinguish Edition and MyEdition entities.</li>
+	distinguish Edition and MyEdition entities (automatically created for 
+	inheritance).</li>
 </ul>
-<p>We <strong>changed</strong> default migration code from</p>
+<p>Before applying changes to the database, we <strong>changed</strong> default migration code from:</p>
 <pre lang="cs">AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Price&quot;, c =&gt; c.Int());
 AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Discriminator&quot;, c =&gt; c.String(nullable: false, maxLength: 128));</pre>
-<p>to</p>
+<p>to:</p>
 <pre lang="cs">AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Price&quot;, c =&gt; c.Int(<strong>nullable: false, defaultValue: 0</strong>));
 AddColumn(&quot;dbo.AbpEditions&quot;, &quot;Discriminator&quot;, c =&gt; c.String(nullable: false, maxLength: 128<strong>, defaultValue: &quot;MyEdition&quot;</strong>));
 </pre>
-<p>We did it since we want to replace <strong>Edition</strong> entities by
+<p>We did it since we want to replace existing <strong>Edition</strong> entities by
 <strong>MyEdition</strong>. Now, we can update our database with this command:</p>
 <pre lang="cs">Update-Database</pre>
 <p>When we check <strong>AbpEditions</strong> table in the database, we can see the 
@@ -218,7 +219,7 @@ class and change Edition creation code from:</p>
 <pre lang="cs">defaultEdition = new <strong>Edition</strong> { Name = EditionManager.DefaultEditionName, DisplayName = EditionManager.DefaultEditionName };</pre>
 <p>to:</p>
 <pre lang="cs">defaultEdition = new <strong>MyEdition</strong> { Name = EditionManager.DefaultEditionName, DisplayName = EditionManager.DefaultEditionName };</pre>
-<p>Thus, it creates MyEdition entity if we create database from scratch.</p>
+<p>Thus, it creates MyEdition entity when we create database from scratch.</p>
 <h4>
 Show Price On The UI</h4>
 <p>Editions\<strong>EditionAppService.cs</strong> (in .Application 
@@ -279,7 +280,7 @@ public class EditionEditDto
 <p>We also added <strong>auto mapping</strong> for <strong>MyEdition</strong> entity. We could 
 directly replace Edition by MyEdition if we will never use the Edition class. We 
 left it like that to show different usages.</p>
-<p>Since AspNet Zero does not use auto mapping for creating (in CreateEditionAsync method) 
+<p>Since AspNet Zero <strong>does not</strong> use auto mapping for creating (in CreateEditionAsync method) 
 and updating (in UpdateEditionAsync method) editions, we should change these code too:</p>
 <pre lang="cs">///...
 
@@ -314,12 +315,12 @@ property. In the update part, we used
 edition manager</a> to get the edition. Edition manager normally works for the
 <strong>Edition</strong> entity. So, we should <strong>cast </strong>it to
 <strong>MyEdition</strong> in order to reach to the <strong>Price</strong> 
-attribute.</p>
+property.</p>
 <p>Now, we can go the the UI part. Open 
 .Web\App\host\views\editions\<strong>createOrEditModal.cshtml</strong> and add the following form 
 field after the EditionName field:</p>
 <pre lang="xml">&lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
-    &lt;input class=&quot;form-control edited&quot; type=&quot;number&quot; name=&quot;EditionPrice&quot; ng-model=&quot;<strong>vm.edition.price</strong>&quot;&gt;
+    &lt;input class=&quot;form-control edited&quot; type=&quot;number&quot; name=&quot;<strong>EditionPrice</strong>&quot; ng-model=&quot;<strong>vm.edition.price</strong>&quot;&gt;
     &lt;label&gt;<strong>@L(&quot;Price&quot;)</strong>&lt;/label&gt;
 &lt;/div&gt;</pre>
 <p>It's similar for MVC side. In this case, you need to edit 
