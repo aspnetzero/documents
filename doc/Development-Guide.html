@@ -712,6 +712,41 @@ AppNavigationProvider</strong> class. We have two menus: <strong>Main</strong>
 in front-end web site).</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
 navigation documentation</a> for more information.</p>
+<h4>Caching And Redis Cache</h4>
+<p>ASP.NET Zero uses <strong>in-memory</strong> caching but it's ready to use
+<strong>Redis</strong> as cache server. If you want to enable it, 
+just uncomment the following line in your <strong>WebModule</strong> (in App_Start folder in your 
+.Web project):</p>
+<pre lang="cs">Configuration.Caching.UseRedis<strong>()</strong>;</pre>
+<p>Redis server should be running to using it. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Caching">caching 
+documentation</a> for more information.</p>
+<h4>Background Jobs And HangFire</h4>
+<p>ABP framework contains a <strong>background job system</strong> with a 
+<strong>default</strong> background job 
+manager. If you want to use <a href="http://hangfire.io/" target="_blank">Hangfire</a> as your background job manager, you can 
+easily enable it.</p>
+<p>First, uncomment these lines in <strong>WebModule</strong> (in App_Start folder in your .Web 
+project):</p>
+<pre lang="cs">Configuration.BackgroundJobs.UseHangfire(configuration =&gt;
+{
+    configuration.GlobalConfiguration.UseSqlServerStorage(&quot;Default&quot;);
+});</pre>
+<p>If you want to enable Hangfire dashboard, you can uncomment the following 
+line in <strong>Startup.cs</strong> (in App_Start folder in your .Web project):</p>
+<pre lang="cs">app.UseHangfireDashboard();</pre>
+<p><strong>Note</strong>: Hangfire creates it's <strong>own tables</strong> in 
+the database. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Background-Jobs-And-Workers">
+background job</a> and
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Hangfire-Integration">
+hangfire intergation</a> documents for more information.</p>
+<h4>SignalR Integration</h4>
+<p>SignalR is properly configured and integrated to the startup template. Real 
+time notification system uses it. You can direcly use SignalR in your 
+applications. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/SignalR-Integration">
+SignalR integration</a> document for more information.</p>
 <h4>Logging</h4>
 <p>ASP.NET Zero uses <strong>Log4Net</strong> for logging 
 as default. Configuration is defined in <strong>log4net.config</strong> file in 
@@ -742,7 +777,7 @@ public class TenantEditDto : EntityDto, IDoubleWayDto
 <p>Here, <strong>AutoMap</strong> attribute automatically creates mapping between 
 <strong>TenantEditDto</strong> 
 and <strong>Tenant</strong> classes. Then we can automatically convert a Tenant object to 
-TenantEditDto object as shown below:</p>
+TenantEditDto (and vice verse) object as shown below:</p>
 <pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
 public async Task&lt;TenantEditDto&gt; GetTenantForEdit(EntityRequestInput input)
 {
