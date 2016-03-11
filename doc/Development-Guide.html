@@ -111,6 +111,14 @@ link at the top right corner. This link takes us to the <strong>Login page
 <p><strong>_Layout</strong> is the main layout file that includes scripts and 
 styles. Language flags and the menu is rendered in <strong>_Header</strong> 
 file. _PreFooter is not used but you can add it to the _Layout if you want.</p>
+<h4>Tenant Sign Up</h4>
+<p>When you click the "New tenant" link in the front end application, you can 
+sign up to become a new tenant:</p>
+<p>
+<img class="img-thumbnail" alt="Tenant Signup" height="545" src="images/tenant-signup.png" width="418" /></p>
+<p>Here, you can create a new tenant. <strong>TenantRegistration</strong>Controller 
+is used to register a new tenant. Tenant registration can be enabled/disabled 
+and settings can be changed in the settings page of the backend application.</p>
 <h3>Account Controller</h3>
 <p><strong>AccountController</strong> provides <strong>login</strong>, <strong>register</strong>,
 <strong>forgot password </strong>and <strong>email activation</strong> pages.</p>
@@ -532,6 +540,20 @@ the server works in domain and application runs with a domain user or local
 system, then generally even <strong>no need</strong> to set Domain name, user and password. You 
 can logout and then login with your <strong>domain user name and password</strong>. 
 If not, you should set these informations also.</p>
+<h4>Maintenance</h4>
+<p>Maintenance page is only available to <strong>host</strong> and shown as 
+below:</p>
+<p>
+<img class="img-thumbnail" alt="Maintenance cache" height="525" src="images/maintenance-cache.png" width="729" /></p>
+<p>In the <strong>Caches</strong> tab, we can clear some or all caches. Clearing 
+caches may be needed if you manually change database and want to refresh 
+application cache. <strong>CachingAppService</strong> is used to clear caches in 
+the server side.</p>
+<p>&nbsp;<strong>Website Logs</strong> tab is used to see and download 
+logs: </p>
+<p>
+<img class="img-thumbnail" alt="Maintenance logs" height="561" src="images/maintenance-logs.png" width="727" /></p>
+<p><strong>WebLogAppService</strong> is used to get logs from server.</p>
 
 <h4>Tenant Dashboard</h4>
 <p>ASP.NET Zero startup project also includes a <strong>sample</strong> 
@@ -575,7 +597,7 @@ See <a href="http://aspnetboilerplate.com/Pages/Documents/Notification-System">n
 <h4>User Menu</h4>
 <p>A user can click his name at top right corner to open user menu:</p>
 <p>
-<img class="img-thumbnail" alt="User menu" src="images/user-menu-2.png" width="403" style="height: 281px"/></p>
+<img class="img-thumbnail" alt="User menu" height="307" src="images/user-menu-3.png" width="382" /></p>
 <h5>Linked Accounts</h5>
 <p>Linked accounts are used to link multiple accounts to each other. In this 
 way, a user can easily navigate through his/her accounts using this feature.</p>
@@ -595,6 +617,12 @@ In order to link a new account, user must enter login credentials of related acc
 considered a special user name since it's used in database migration seed. Other 
 users can change their usernames. <strong>ProfileAppService</strong> is used to 
 get/change settings.</p>
+<h5>Login Attempts</h5>
+<p>All login attempts (success of failed) are logged in the application. A user 
+can see last login attempts for his/her account. <strong>UserLoginAppService</strong> 
+is used to get login attempts from server.</p>
+<p>
+<img class="img-thumbnail" alt="Login attempts" height="538" src="images/login-attempts.png" width="611" /></p>
 <h5>Change Picture</h5>
 <p>A user can change own profile picture. <strong>ProfileController</strong> is 
 used to upload and get user profile pictures.
