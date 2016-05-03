@@ -103,15 +103,11 @@ navigation document</a> for more information on menu definitions.</p>
 route definition as shown below:</p>
 <pre lang="js">$stateProvider.state(&#39;tenant.phonebook&#39;, {
     url: &#39;/phonebook&#39;,
-    templateUrl: &#39;~/App/tenant/views/phonebook/index.cshtml&#39;,
-    menu: &#39;PhoneBook&#39;
+    templateUrl: &#39;~/App/tenant/views/phonebook/index.cshtml&#39;
 });</pre>
 <p>'<strong>tenant.phonebook</strong>' is the <strong>unique</strong> name of 
-this state (route). <strong>url</strong> is the mapped URL to this route.
-<strong>templateUrl</strong> is the view path for this route and <strong>menu</strong> 
-is a reference to the <strong>menu item name</strong> defined before. Menu 
-reference ensures highlighting related menu item on the main menu when we enter 
-this page (activate the route).</p>
+this state (route). <strong>url</strong> is the mapped URL to this route and
+<strong>templateUrl</strong> is the view path for this route.</p>
 <p>Note that 'tenant.phonebook' is a <strong>second level state</strong> (child 
 of 'tenant' abstract state). See Angular-UI's route document for more 
 information on defining states. But, in most cases, you can define it easily by 
