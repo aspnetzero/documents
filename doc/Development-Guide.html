@@ -5,6 +5,11 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
 <title>Development Guide</title>
+<style type="text/css">
+.auto-style2 {
+	font-weight: normal;
+}
+</style>
 </head>
 
 <body>
@@ -23,7 +28,7 @@ user interface. This will help you to better understand concepts defined here.</
 <p>When you create and <a href="/Download">download</a> your project, there will be a solution structure 
 as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="ASP.NET Zero solution structure" height="166" src="images/solution-overall.png" width="249" /></p>
+<img class="img-thumbnail" alt="ASP.NET Zero solution structure" height="219" src="images/solution-overall-2.png" width="242" /></p>
 <p>There are 6 projects in the solution:</p>
 <ul>
 	<li><strong>Core</strong> project contains domain layer classes (like
@@ -42,11 +47,13 @@ as shown below:</p>
 	<li><strong>WebApi</strong> project contains Web API Controllers.</li>
 	<li><strong>Web</strong> project contains the presentation layer 
 	(javascripts, styles and views). </li>
+	<li><strong>Migrator</strong> project is a console application that runs 
+	database migrations.</li>
 	<li><strong>Tests </strong>project contains unit and integration tests.</li>
 </ul>
 
 <h4>Applications</h4>
-<p>ASP.NET Zero solution contains <strong>three</strong> applications:</p>
+<p>ASP.NET Zero solution contains <strong>four</strong> applications:</p>
 <ul>
 	<li><strong>Front End MVC Application</strong>: This can be used to 
 	create a public web site or a landing page for your application.</li>
@@ -56,6 +63,8 @@ as shown below:</p>
 	<li><strong>MVC Back End Multi-Page Application</strong>: This has identical 
 	functionallity with the Angular application but built using MVC and jQuery 
 	(no AngularJs).</li>
+	<li><strong>Migrator</strong>: Console application that runs database 
+	migrations.</li>
 </ul>
 <p>So, back-end application is built in two different architectures (SPA and 
 MPA). You can choice the one you are comfortable. If you just want to build a 
@@ -677,6 +686,23 @@ folder.</p>
 <p>
 <img class="img-thumbnail" alt="MPA layout files" height="245" src="images/mpa-layout-files.png" width="162" /></p>
 <p>Header, footer and siderbar is developed as partial views.</p>
+<h3>Migrator Console Application</h3>
+<p>AspNet Zero includes a tool, Migrator.exe, to easily migrate your databases. 
+You can run this application to create/migrate host and tenant databases.</p>
+<p>
+<img class="img-thumbnail" alt="Database Migrator" height="230" src="images/database-migrator.png" width="659" /></p>
+<p>This application gets host connection string from it's <strong>own .config 
+file</strong>. It will be same in the web.config at the beggining. Be sure that 
+the connection string in config file is the database you want. After getting
+<strong class="auto-style2">host </strong><strong>connection sring</strong>, it 
+first creates the host database or apply migrations if it does already exists. 
+Then it gets connection strings of tenant databases and runs migrations for 
+those databases. It skips a tenant if it has not a dedicated database or it's 
+database is already migrated for another tenant (for shared databases between 
+multiple tenants).</p>
+<p>You can use this tool on development or on product environment to migrate 
+databases on deployment, instead of EntityFramework's own Migrate.exe (which 
+requires some configuration and can work for single database in one run).</p>
 <h3>Infrastructure</h3>
 <h4>Dynamic Web API Layer</h4>
 <p>Both SPA and MPA applicationg highly use AJAX to provide a better user 
