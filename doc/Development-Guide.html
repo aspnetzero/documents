@@ -295,9 +295,9 @@ one tenant, named <strong>Default</strong> as initial.<strong> Tenancy Name</str
 of a tenant. A&nbsp;tenant can be <strong>active</strong> or <strong>passive</strong>. 
 If it's passive, no user of this tenant can login to the application.</p>
 <p>When we 
-click the "Create new Tenant" button, a dialog is shown:</p>
+click the "<strong>Create new Tenant</strong>" button, a dialog is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Creating tenant" height="587" src="images/create-tenant-3.png" width="616" /></p>
+<img class="img-thumbnail" alt="Creating tenant" height="667" src="images/create-tenant-4.png" width="615" /></p>
 <p><strong>Tenancy name</strong> should be unique and not contain spaces or 
 other special chars since it may be used as subdomain name (like 
 tenancyname.mydomain.com. See the section below). <strong>Name</strong> can be anything. <strong>Admin email</strong> 
@@ -305,6 +305,14 @@ is used as email address of the admin user of new tenant. Admin user is
 automatically created with the tenant. We can set a random password for admin and send activation email. When user 
 first logins, he/she should change the password. We can uncheck this to enter a known 
 password.</p>
+<p>When we create a new tenant, we should select/create a database to store new 
+tenant's data. We can select '<strong>Use host database</strong>' to store 
+tenant data in host database (can be used for single database approach) or we 
+can specify a connection string to create/use a <strong>dedicated database
+</strong>for new tenant. AspNet Zero supports <strong>hybrid </strong>approach. 
+That means you can use host database for some tenants and create dedicated 
+databases for some other tenants. Even you can <strong>group </strong>some 
+tenants in a separated database.</p>
 <p>All tenant actions are handled by <strong>TenantAppService</strong> 
 class. Example (deleting a tenant):</p>
 <pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenants_Delete)]
@@ -447,7 +455,7 @@ of a user and select "<strong>Login as this user</strong>":</p>
 This is called as "<strong>user impersonation</strong>". When we impersonate a user, a "<strong>back to 
 my account</strong>" option is added to the user profile menu:</p>
 <p>
-<img class="img-thumbnail" alt="Back to my account link" height="300" src="images/back-to-my-account-link.png" width="277" /></p>
+<img class="img-thumbnail" alt="Back to my account link" height="368" src="images/back-to-my-account-link-2.png" width="211" /></p>
 <p>In an impersonated account, we can only perform operations allowed to that 
 user. That means, everything <strong>exactly</strong> works as same as this user 
 logged in himself. The only difference is shown in audit logs which indicates 
@@ -475,8 +483,8 @@ edit icon, we can see the edit modal for the selected text:</p>
 <p>
 <img class="img-thumbnail" alt="Language text edit modal" height="498" src="images/language-change-text-modal.png" width="614" /></p>
 <p><strong>Host</strong> users (if allowed) can edit languages and localized 
-texts. These will be default for all tenants for a multi-tenant application.
-<strong>Tenants</strong> inherits languages and localized texts and can <strong>
+texts. These languages will be default for all tenants for a multi-tenant application.
+<strong>Tenants</strong> inherit languages and localized texts and can <strong>
 override</strong> localized texts or can add new languages.</p>
 <p>Both pages use <strong>LanguageAppService</strong> class as application 
 service. It has methods to manage languages and localized texts. <strong>
@@ -500,8 +508,8 @@ Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
 <h4>Host Settings</h4>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
-<img class="img-thumbnail" alt="General Host Settings" height="256" src="images/host-settings-general.png" width="663" /></p>
-<p>Web site root address is important, especially in production. {TENANCY_NAME} 
+<img class="img-thumbnail" alt="General Host Settings" height="342" src="images/host-settings-general-2.png" width="683" /></p>
+<p><strong>Web site root address</strong> is important, especially in production. {TENANCY_NAME} 
 is a placeholder for subdomains. It's <strong>optional</strong> (both for multi 
 and single tenant applications). If supplied, current tenant name 
 is automatically detected.</p>
@@ -513,6 +521,11 @@ configuration beside the application:</p>
 	<li>We should configure IIS to bind this static IP to our application.</li>
 </ol>
 <p>There may be other ways of doing it but this is the most simple way.</p>
+<p><strong>Timezone</strong> is another critical setting in this page. AspNet 
+Zero can work in multiple zones. All DateTimes are stored as UTC as default, but 
+each user can see dates and times in his own time zone. Timezone setting in this 
+page allows you to set default time zone for the application including all 
+tenants and users. Tenants and users can change time zone in their own settings.</p>
 <p>In host settings page, there are also other settings. SAVE ALL button saves 
 all settings in one click. HostSettingAppService is used to retrieve and save 
 settings (See setting provider section for more information).</p>
@@ -549,7 +562,7 @@ below:</p>
 caches may be needed if you manually change database and want to refresh 
 application cache. <strong>CachingAppService</strong> is used to clear caches in 
 the server side.</p>
-<p>&nbsp;<strong>Website Logs</strong> tab is used to see and download 
+<p><strong>Website Logs</strong> tab is used to see and download 
 logs: </p>
 <p>
 <img class="img-thumbnail" alt="Maintenance logs" height="561" src="images/maintenance-logs.png" width="727" /></p>
@@ -612,7 +625,7 @@ In order to link a new account, user must enter login credentials of related acc
 <h5>Profile Settings</h5>
 <p>My settings is used to change user profile settings:</p>
 <p>
-<img class="img-thumbnail" alt="User settings" height="435" src="images/user-settings.png" width="615" /></p>
+<img class="img-thumbnail" alt="User settings" height="557" src="images/user-settings-2.png" width="614" /></p>
 <p>As shown here, <strong>admin</strong> user name can not be changed. It's 
 considered a special user name since it's used in database migration seed. Other 
 users can change their usernames. <strong>ProfileAppService</strong> is used to 
@@ -1036,6 +1049,8 @@ project. Here, a list of all libraries.</p>
 		<li><a target="_blank" href="http://malsup.com/jquery/form/">jQuery Ajax Forms</a></li>
 		<li><a target="_blank" href="http://modernizr.com/">Modernizr</a></li>
 		<li><a target="_blank" href="http://momentjs.com/">Moment.js</a></li>
+		<li><a href="http://momentjs.com/timezone/" target="_blank">Moment.js 
+		Timezone</a></li>
 		<li><a target="_blank" href="http://underscorejs.org/">Underscore.js</a></li>
 		<li><a target="_blank" href="https://www.jstree.com/">JsTree</a></li>
 		<li><a target="_blank" href="http://morrisjs.github.io/morris.js/">Morris</a></li>
