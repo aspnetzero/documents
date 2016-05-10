@@ -17,7 +17,7 @@ just 5 minutes. It's assumed that you already <a href="/Prices">purchased</a> an
 <p><a href="/Account/Login">Login</a> to this web site with your user name and 
 password. Then you will see <a href="/Download">Download</a> link on the main menu.</p>
 
-<h3 id="DocCreateProject">Create a project</h3>
+<h3 id="DocCreateProject">Create A Project</h3>
 
 <p>Go to the <a href="/Download">download</a> page. You will see a form as shown 
 below:</p>
@@ -28,24 +28,32 @@ below:</p>
 will be ready in one minute. After extacting the downloaded zip file, you will 
 see project folders like below:</p>
 <p>
-<img class="img-thumbnail" alt="ASP.NET Zero project folders" height="220" src="images/project-folders.png" width="222" /></p>
+<img class="img-thumbnail" alt="ASP.NET Zero project folders" height="239" src="images/project-folders-2.png" width="218" /></p>
 
-<h3 id="DocConfigureProject">Configure the project</h3>
+<h3 id="DocConfigureProject">Configure The Project</h3>
 
 <p>Open your solution in Visual Studio 2013 or a newer version. Right click the 
 <strong>.Web</strong> project and select "<strong>Set as StartUp project</strong>": Then <strong>
 build</strong> the solution. It will take longer time in first build since all
 <strong>nuget </strong>packages will be restored.</p>
 
-<h4 id="DocConfigureDbConn">Database connection</h4>
+<h4 id="DocConfigureDbConn">Database Connection</h4>
 
 <p>Open web.config file in the .Web project and change the <strong>Default</strong> connection string if 
 you need:</p>
 <pre lang="xml">&lt;add name=&quot;Default&quot; connectionString=&quot;Server=localhost; Database=PhoneBook; Trusted_Connection=True;&quot; providerName=&quot;System.Data.SqlClient&quot; /&gt;</pre>
 
-<h4 id="DocConfigureMigrations">Database migration</h4>
+<h4 id="DocConfigureMigrations">Database Migrations</h4>
+<p>We have two options to create and migrate database to the latest version.</p>
+<h5>Migrator Console Application</h5>
+<p>AspNet Zero solution includes a <strong>.Migrator.exe</strong> (like 
+Acme.PhoneBook.Migrator.exe) under <strong>Tools</strong> folder. You can run 
+this tool for database migrations on development and production (see
+<a href="Development-Guide.html">development guide</a> for more information).</p>
+<h5>Package Manager Console</h5>
 
-<p>Open <strong>Package Console Manager</strong> (Under Tools\Nuget Package 
+<p>You can also use Entity Framework's built-in commands for migrations. Open <strong>Package Manager 
+Console </strong>(Under Tools\Nuget Package 
 Manager in the main menu), Select <strong>.EntityFramework</strong> project as <strong>Default 
 project</strong> and run <strong>Update-Database</strong> command. </p>
 <p>
@@ -54,8 +62,11 @@ project</strong> and run <strong>Update-Database</strong> command. </p>
 SQL Server Management Studio to check if database is created:</p>
 <p>
 <img alt="Database tables" height="310" src="images/created-database-tables2.png" width="199" /></p>
+<p>
+You can use package manager console for development and Migrator.exe for 
+production.</p>
 
-<h4 id="DocConfigureMultiTenancy">Multi-tenancy</h4>
+<h4 id="DocConfigureMultiTenancy">Multi-Tenancy</h4>
 
 <p>ASP.NET Zero supports multi-tenant and single-tenant applications. 
 Multi-tenancy is <strong>enabled by default</strong>. If you don't have idea 
@@ -81,7 +92,7 @@ Index action:</p>
 Web project and replace all redirections to the Application/Index with 
 redirections to the Mpa/Home/Index.</p>
 
-<h3 id="DocRunProject">Run the project</h3>
+<h3 id="DocRunProject">Run The Project</h3>
 
 <p>All ready.. just run your solution. It will open home page of your web site. 
 You can click login link at top right corner to <strong>login</strong> to the 
@@ -94,7 +105,8 @@ should change password at first login. After login to the application, you will
 see sample dashboard screen:</p>
 <p>
 <img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard2.png" width="800" /></p>
-<p>If your application is multi-tenant, then you can leave tenancy name as empty 
+<p>If your application is multi-tenant, then you can leave tenancy name as 
+<strong>empty</strong> 
 in login screen and use <strong>admin</strong> as user name and <strong>123qwe</strong> as password to login as 
 <strong>host admin</strong>.</p>
 
