@@ -712,8 +712,8 @@ disable and animates it while submitting form:</p>
 <p>Angularjs <strong>controller</strong> of this view is shown below:</p>
 <pre lang="cs">(function () {
     appModule.controller(&#39;tenant.views.phonebook.createPersonModal&#39;, [
-        &#39;$scope&#39;, &#39;$modalInstance&#39;, &#39;abp.services.app.person&#39;,
-        function ($scope, $modalInstance, personService) {
+        &#39;$scope&#39;, &#39;$uibModalInstance&#39;, &#39;abp.services.app.person&#39;,
+        function ($scope, $uibModalInstance, personService) {
             var vm = this;
             
             vm.saving = false;
@@ -723,14 +723,14 @@ disable and animates it while submitting form:</p>
                 vm.saving = true;
 <strong>                personService.createPerson(vm.person).success(function () {
                     abp.notify.info(app.localize(&#39;SavedSuccessfully&#39;));
-                    $modalInstance.close();
+                    $uibModalInstance.close();
                 }).finally(function () {
                     vm.saving = false;
                 });
 </strong>            };
 
             vm.cancel = function () {
-                $modalInstance.dismiss();
+                $uibModalInstance.dismiss();
             };
         }
     ]);
@@ -746,8 +746,8 @@ animated. If createPerson success, modal is <strong>closed</strong>.</p>
 <p><strong>vm.openCreatePersonModal</strong> method is called when we click this button:</p>
 <pre lang="js">(function() {
     appModule.controller(&#39;tenant.views.phonebook.index&#39;, [
-        &#39;$scope&#39;, &#39;<strong>$modal</strong>&#39;, &#39;abp.services.app.person&#39;,
-        function ($scope, <strong>$modal</strong>, personService) {
+        &#39;$scope&#39;, &#39;<strong>$uibModal</strong>&#39;, &#39;abp.services.app.person&#39;,
+        function ($scope, <strong>$uibModal</strong>, personService) {
             var vm = this;
 
             vm.persons = [];
@@ -759,7 +759,7 @@ animated. If createPerson success, modal is <strong>closed</strong>.</p>
             }
             
 <strong>            vm.openCreatePersonModal = function () {
-                var modalInstance = $modal.open({
+                var modalInstance = $uibModal.open({
                     templateUrl: &#39;~/App/tenant/views/phonebook/createPersonModal.cshtml&#39;,
                     controller: &#39;tenant.views.phonebook.createPersonModal as vm&#39;,
                     backdrop: &#39;static&#39;
@@ -774,7 +774,7 @@ animated. If createPerson success, modal is <strong>closed</strong>.</p>
         }
     ]);
 })();</pre>
-<p>We open modal using $modal service by providing view and controller. We 
+<p>We open modal using $uibModal service by providing view and controller. We 
 re-load person list (by calling getPeople function) after modal closed.</p>
 <h3>Authorization For Phone Book</h3>
 <p>At this point, anyone can enter phone book page since no authorization 
