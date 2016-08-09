@@ -517,7 +517,7 @@ Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
 <h4>Host Settings</h4>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
-<img class="img-thumbnail" alt="General Host Settings" height="342" src="images/host-settings-general-2.png" width="683" /></p>
+<img class="img-thumbnail" alt="General Host Settings" src="images/host-settings-general-3.png" /></p>
 <p><strong>Web site root address</strong> is important, especially in production. {TENANCY_NAME} 
 is a placeholder for subdomains. It's <strong>optional</strong> (both for multi 
 and single tenant applications). If supplied, current tenant name 
@@ -538,7 +538,9 @@ tenants and users. Tenants and users can change time zone in their own settings.
 <p>In host settings page, there are also other settings. SAVE ALL button saves 
 all settings in one click. HostSettingAppService is used to retrieve and save 
 settings (See setting provider section for more information).</p>
-
+<p><strong>Security</strong> tab in host settings page contains password complexity settings. Host can define system wide password complexity settings in this tab. Each tenant can override this setting in tenant settings page. <strong>PasswordComplexityChecker</strong> 
+class is responsible for checking if a password satisfies the password complexity settings.</p>
+<img class="img-thumbnail" alt="Tenant settings" src="images/host-settings-security.png" />
 <h4>Tenant Settings</h4>
 <p>In a multi-tenant application, tenant settings are shown as below:</p>
 <p>
@@ -547,6 +549,7 @@ settings (See setting provider section for more information).</p>
 there is no host setting page):</p>
 <p>
 <img class="img-thumbnail" alt="Tenant settings extended" height="717" src="images/tenant-settings-2.png" width="689" /></p>
+<p>Tenants can also define password complexity settings for their users or they can use password complexity settings defined by host user.</p>
 <p>TenantSettingAppService is used to get/set tenant settings.</p>
 <h5>Enabling LDAP (Active Directory) Authentication</h5>
 <p>LDAP (Active Directory) Authentication is disabled by default. To make it 
@@ -616,6 +619,27 @@ See <a href="http://aspnetboilerplate.com/Pages/Documents/Notification-System">n
 <p>
 <img alt="notification list" height="600" src="images/notifications-list.png" class="img-thumbnail" width="1075" style="height: 541px"/></p>
 
+<h4>Chat</h4>
+<p>Chat icon is located next to user's profile image on top right corner of the page.  The number in the red circle shows total unread chat message count.</p>
+<img class="img-thumbnail" alt="User menu" src="images/chat-icon.png" />
+<p>When user clicks this icon, chat panel appears on the right of page. This panel contains friends of user and list of blocked users.</p>
+<img class="img-thumbnail" alt="User menu" src="images/chat-friends.png" />
+<p>User can add new friends by writing the username into username textbox above friend list. If "Chat with other tenants" feature is enabled for tenant, users of other tenants can be added as a friend by writing [tenancy name]\[user name] (ex: Default\admin). If "Chat with host users" feature is enabled, host users can be added as friend by writing .\[user name] in the same textbox.</p>
+<p>While online friends/users have a green circle on their profile image, offline friends/users 
+have a gray circle.</p>
+<p>User can pin or unpin the chat panel by clicking the pin icon on top right corner of the chat panel. Application tries to remember last state of chat panel and restores it when user login to application.</p>
+<p>When a friend/user is selected, conversation panel is opened.</p>
+<img class="img-thumbnail" alt="User menu" src="images/chat-conversation.png" />
+<p>User can block or unblock friend/user in this area. There is a wrench icon right of the selected user's username. This icon opens an action menu and this menu contains block user or unblock user actions according to user's block status.</p>
+<p>Chat messages are distrubited over <strong>ChatHub </strong>signalR hub class which uses <strong>ChatMessageManager</strong> domain class. </p>
+<p><strong>ChatUserStateWatcher</strong> class is responsible for watching online/offline state changes of chat users. When a user becomes online or offline, this class catches the state change and notifies friends of related user.</p>
+<p><strong>FriendshipAppService</strong> and <strong>FriendshipManager</strong> classes are responsible for managing friendship requests. Chat messages from blocked users are not delivered to target users.</p>
+<p>Since chat is a real time operation, application caches friends of online users and unread message count from each friend. <strong>UserFriendsCache</strong> 
+class manages these caching operations. </p>
+<p><strong>UserFriendCacheSyncronizer</strong> class is responsible for keeping user friends cache up to date. In order to do that, it watches some events of Friendship and ChatMessage entities.</p>
+<h5>Chat Features</h5>
+<img class="img-thumbnail" alt="User menu" src="images/chat-features.png" />
+<p>There are three chat features in the system. These are "Chat", "Chat with host", "Chat with other tenants". These features can be enabled/disabled for editions. By using these features host can enabled/disabled users chat with other tenant's users or host users.</p>
 <h4>User Menu</h4>
 <p>A user can click his name at top right corner to open user menu:</p>
 <p>
