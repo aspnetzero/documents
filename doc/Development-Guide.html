@@ -152,8 +152,7 @@ password since 123qwe is not very secure:</p>
 <img class="img-thumbnail" alt="Change password" height="304" src="images/account-change-password.png" width="422" /></p>
 <p>
 After changing password we are redirected to the Angular application.</p>
-<h4>
-Social Logins</h4>
+<h4>Social Logins</h4>
 <p>
 ASP.NET Zero supports social media logins. To enable it, we should change 
 the following settings in <strong>web.config</strong> file.</p>
@@ -176,6 +175,12 @@ this document</a> or search web for it. There are many resources on the web. So,
 we will not go to details of creating apps on social medias. Once you get your 
 keys, you can write them into web.config. When you enable it, social media logos 
 are shown on the login page:</p>
+<h4>Active Directory Federation Service (ADFS) Login</h4>
+<p>ADFS is just another external login like social logins. In order to configure ADFS login, you just need to configure following settings in <strong>web.config</strong> file.</p>
+<pre lang="xml">&lt;add key=&quot;ExternalAuth.WsFederation.IsEnabled&quot; value=&quot;false&quot; /&gt;
+&lt;add key=&quot;ExternalAuth.WsFederation.MetaDataAddress&quot; value=&quot;&quot; /&gt;
+&lt;add key=&quot;ExternalAuth.WsFederation.Wtrealm&quot; value=&quot;&quot; /&gt;
+</pre>
 <p>
 <img class="img-thumbnail" alt="Social login" height="464" src="images/social-login-logos.png" width="415" /></p>
 <p>
@@ -939,6 +944,8 @@ constants for locations of js and css files.</p>
 </ul>
 <p>It's strongly recommended to inherit one of these classes upon your needs 
 since they really make Logging, Localization, Authorization... easier.</p>
+<h4>CSRF/XSRF Protection</h4>
+<p>ABP framework simplifies and automates CSRF protection as much as possible. AspNet Zero template comes with pre-configured and working out of the box. For more information please see ABP's <a href="http://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protectionhttp://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection">XSRF-CSRF-Protection documentation</a></p>
 <h4>Versioning</h4>
 <p><strong>AppVersionHelper</strong> class is used to define <strong>current version</strong> of the 
 application in single place. When you change <strong>Version</strong> here, all 
