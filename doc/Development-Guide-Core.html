@@ -9,6 +9,9 @@
 .auto-style2 {
 	font-weight: normal;
 }
+.auto-style3 {
+	font-weight: bold;
+}
 </style>
 </head>
 
@@ -17,9 +20,9 @@
 <h3>Introduction</h3>
 
 <div class="bs-callout bs-callout-warning">
-	<h4>Looking for ASP.NET CORE version?</h4>
-	<p>This document is for ASP.NET MVC 5.x / AngularJS version. 
-	<a href="Development-Guide-Core.html">Click here</a> for ASP.NET Core version.</p>
+	<h4>Looking for ASP.NET MVC 5.x / AngularJS version?</h4>
+	<p>This document is for ASP.NET Core version. 
+	<a href="Development-Guide.html">Click here</a> for ASP.NET MVC 5.x / AngularJS version.</p>
 </div>
 
 <p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
@@ -32,11 +35,11 @@ application framework, this document highly refers it's
 <p>Before reading this document, it's suggested to run the application and explore 
 the user interface. This will help you to have a better understanding of concepts defined here.</p>
 <h4>Solution Structure (Layers)</h4>
-<p>When you create and <a href="/Download">download</a> your project, there will be a solution structure 
+<p>After you create and <a href="/Download">download</a> your project, you have a solution structure 
 as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="ASP.NET Zero solution structure" height="219" src="images/solution-overall-2.png" width="242" /></p>
-<p>There are 7 projects in the solution:</p>
+<img alt="Solution structure" height="183" src="images/solution-overall-core.png" width="257" /></p>
+<p>There are 6 projects in the solution:</p>
 <ul>
 	<li><strong>Core</strong> project contains domain layer classes (like
 	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entities</a> 
@@ -51,31 +54,23 @@ as shown below:</p>
 	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Repositories">
 	repository</a> implementations, database migrations and other 
 	EntityFramework specific concepts. </li>
-	<li><strong>WebApi</strong> project contains Web API Controllers.</li>
-	<li><strong>Web</strong> project contains the presentation layer 
-	(javascripts, styles and views). </li>
+	<li><strong>Web</strong> project contains the presentation/API layer 
+	(Controllers, Views, javascripts, styles, images and so on).</li>
 	<li><strong>Migrator</strong> project is a console application that runs 
 	database migrations.</li>
 	<li><strong>Tests </strong>project contains unit and integration tests.</li>
 </ul>
 
 <h4>Applications</h4>
-<p>ASP.NET Zero solution contains <strong>four</strong> applications:</p>
+<p>ASP.NET Zero solution contains <b>t</b><span class="auto-style3">hree</span> applications:</p>
 <ul>
-	<li><strong>Front End MVC Application</strong>: This can be used to 
+	<li><strong>Front End Application</strong>: This can be used to 
 	create a public web site or a landing page for your application.</li>
-	<li><strong>Angular Back End Single-Page </strong>
-	<strong>Application</strong>. This is the application which is entered by username and password. 
-	It's built as a SPA with AngularJs.</li>
-	<li><strong>MVC Back End Multi-Page Application</strong>: This has identical 
-	functionallity with the Angular application but built using MVC and jQuery 
-	(no AngularJs).</li>
+	<li><strong>Back End Application</strong>: This is the application which is 
+	entered by username and password.</li>
 	<li><strong>Migrator</strong>: Console application that runs database 
 	migrations.</li>
 </ul>
-<p>So, back-end application is built in two different architectures (SPA and 
-MPA). You can choice the one you are comfortable. If you just want to build a 
-SPA, you can safely remove MPA files from your project, or vice versa.</p>
 <h4>Multi tenancy</h4>
 <p>Multi-tenancy is used to build <strong>SaaS</strong> (Software as a Service) 
 applications easily. Wtih this technique, we can deploy <strong>single 
@@ -85,6 +80,7 @@ will have it's own <strong>roles</strong>, <strong>users</strong> and <strong>se
 <p>ASP.NET Zero's all code-base is developed to be <strong>multi-tenant</strong>. But, it 
 <a href="Getting-Started#DocConfigureMultiTenancy"><strong>can be 
 disabled</strong></a> with a single line of configuration if you are developing 
+a 
 <strong>single-tenant</strong> application. When you disable it, all multi-tenancy stuff will be 
 hidden and not available. If multi-tenancy is disabled, there will be a single 
 tenant named <strong>Default</strong>.</p>
@@ -101,7 +97,7 @@ use filter interfaces. Read
 <a href="http://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy" target="_blank">
 multi tenant documentation</a> if you are building multi-tenant applications.</p>
 
-<h3>Front End MVC Application</h3>
+<h3>Front End Application</h3>
 <p>ASP.NET Zero contains front-end pages that can be a starting point for your 
 public web site or a landing page for the application. When you first run the 
 project, you will see the Home Page as shown below:</p>
@@ -124,10 +120,10 @@ link at the top right corner. This link takes us to the <strong>Login page
 <p>Layout of front-end pages are located under <strong>Views/Layout</strong> folder of the 
 <strong>.Web</strong> project:</p>
 <p>
-<img class="img-thumbnail" alt="Layout views" height="234" src="images/frontend-layout-views.png" width="168" /></p>
+<img class="img-thumbnail" alt="Frontend layout views" height="253" src="images/frontend-layout-views-core.png" width="193" /></p>
 <p><strong>_Layout</strong> is the main layout file that includes scripts and 
-styles. Language flags and the menu is rendered in <strong>_Header</strong> 
-file. _PreFooter is not used but you can add it to the _Layout if you want.</p>
+styles. Language flags and the menu is rendered in <strong>Header component</strong> 
+which is located under Shared/Components. _PreFooter is not used but you can add it to the _Layout if you want.</p>
 <h4>Tenant Sign Up</h4>
 <p>When you click the "New tenant" link in the front end application, you can 
 sign up to become a new tenant:</p>
@@ -135,7 +131,7 @@ sign up to become a new tenant:</p>
 <img class="img-thumbnail" alt="Tenant Signup" height="545" src="images/tenant-signup.png" width="418" /></p>
 <p>Here, you can create a new tenant. <strong>TenantRegistration</strong>Controller 
 is used to register a new tenant. Tenant registration can be enabled/disabled 
-and settings can be changed in the settings page of the backend application.</p>
+and some settings can be changed in the settings page of the backend application.</p>
 <h3>Account Controller</h3>
 <p><strong>AccountController</strong> provides <strong>login</strong>, <strong>register</strong>,
 <strong>forgot password </strong>and <strong>email activation</strong> pages.</p>
@@ -143,7 +139,15 @@ and settings can be changed in the settings page of the backend application.</p>
 <p>Account management pages have a seperated <strong>_Layout</strong> view under 
 <strong>Views/Account</strong> folder:</p>
 <p>
-<img class="img-thumbnail" alt="Account Controller Views" height="324" src="images/account-views.png" width="214" /></p>
+<img class="img-thumbnail" alt="Account views" height="218" src="images/account-views-core.png" width="198" /></p>
+<p>
+Related <strong>Script </strong>and <strong>Style </strong>resources located under
+<strong>view-resources/Views/Account</strong> folder:</p>
+<p>
+<img class="img-thumbnail" alt="Account view resources" height="347" src="images/account-views-core-resources.png" width="205" /></p>
+<p>
+As similar, all views of the application have corresponding style and script 
+files under <strong>wwwroot/view-resources</strong> folder.</p>
 <h4>Login</h4>
 <p>Main view for AccountController is the Login page:</p>
 <p>
@@ -159,41 +163,41 @@ password since 123qwe is not very secure:</p>
 <p>
 <img class="img-thumbnail" alt="Change password" height="304" src="images/account-change-password.png" width="422" /></p>
 <p>
-After changing password we are redirected to the Angular application.</p>
+After changing password we are redirected to the <strong>backend application</strong>.</p>
 <h4>Social Logins</h4>
 <p>
 ASP.NET Zero supports social media logins. To enable it, we should change 
-the following settings in <strong>web.config</strong> file.</p>
-<pre lang="xml">&lt;add key=&quot;ExternalAuth.Facebook.IsEnabled&quot; value=&quot;false&quot; /&gt;
-&lt;add key=&quot;ExternalAuth.Facebook.AppId&quot; value=&quot;&quot; /&gt;
-&lt;add key=&quot;ExternalAuth.Facebook.AppSecret&quot; value=&quot;&quot; /&gt;
-    
-&lt;add key=&quot;ExternalAuth.Twitter.IsEnabled&quot; value=&quot;false&quot; /&gt;
-&lt;add key=&quot;ExternalAuth.Twitter.ConsumerKey&quot; value=&quot;&quot; /&gt;
-&lt;add key=&quot;ExternalAuth.Twitter.ConsumerSecret&quot; value=&quot;&quot; /&gt;
-
-&lt;add key=&quot;ExternalAuth.Google.IsEnabled&quot; value=&quot;false&quot; /&gt;
-&lt;add key=&quot;ExternalAuth.Google.ClientId&quot; value=&quot;&quot; /&gt;
-&lt;add key=&quot;ExternalAuth.Google.ClientSecret&quot; value=&quot;&quot; /&gt;</pre>
+the following settings in <b>a</b><span class="auto-style3">ppsettings.json</span> file.</p>
+<pre lang="js">  &quot;Authentication&quot;: {
+    &quot;Facebook&quot;: {
+      &quot;IsEnabled&quot;: &quot;false&quot;,
+      &quot;AppId&quot;: &quot;&quot;,
+      &quot;AppSecret&quot;: &quot;&quot;
+    },
+    &quot;Google&quot;: {
+      &quot;IsEnabled&quot;: &quot;false&quot;,
+      &quot;ClientId&quot;: &quot;&quot;,
+      &quot;ClientSecret&quot;: &quot;&quot;
+    },
+    &quot;Twitter&quot;: {
+      &quot;IsEnabled&quot;: &quot;false&quot;,
+      &quot;ConsumerKey&quot;: &quot;&quot;,
+      &quot;ConsumerSecret&quot;: &quot;&quot;
+    },
+    &quot;Microsoft&quot;: {
+      &quot;IsEnabled&quot;: &quot;false&quot;,
+      &quot;ConsumerKey&quot;: &quot;&quot;,
+      &quot;ConsumerSecret&quot;: &quot;&quot;
+    }
+  },</pre>
 <p>
-We can seperately enable and configure each social media. To learn 'how to 
-obtain social media API keys for your application', you can check
-<a href="http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on" target="_blank">
-this document</a> or search web for it. There are 
-many resources on the web. So, we will not go to details of creating apps on 
-social medias. Once you get your keys, you can write them into web.config. When 
-you enable it, social media logos are shown on the login page as shown below:</p>
+You can find many documents on the web to learn how to obtain authentication 
+keys for social platforms. So, 
+we will not go to details of creating apps on social medias. Once you get your 
+keys, you can write them into appsettings.json. When you enable it, social media logos 
+are automatically shown on the login page as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Social login" height="464" src="images/social-login-logos.png" width="415" /></p>
-<p>
-Then we can click social media icons to login with our existing accounts. Check
-<strong>Startup</strong> class to see where these configuration is used. You can 
-add more social medias yourself.&nbsp;</p>
-<h4>Active Directory Federation Service (ADFS) Login</h4>
-<p>ADFS is just another external login like social logins. In order to configure ADFS login, you just need to configure following settings in <strong>web.config</strong> file.</p>
-<pre lang="xml">&lt;add key=&quot;ExternalAuth.WsFederation.IsEnabled&quot; value=&quot;false&quot; /&gt;
-&lt;add key=&quot;ExternalAuth.WsFederation.MetaDataAddress&quot; value=&quot;&quot; /&gt;
-&lt;add key=&quot;ExternalAuth.WsFederation.Wtrealm&quot; value=&quot;&quot; /&gt;</pre>
+<img class="img-thumbnail" alt="Social Login Icons" height="535" src="images/social-login-logos-2.png" width="416" /></p>
 <h4>Register</h4>
 <p>When we click the "<strong>Create Account</strong>" link in the login page, a 
 registration form is shown:</p>
@@ -205,7 +209,7 @@ application. If it's single-teant, there will be no tenancy name input here.</p>
 service. Recaptcha service works per domain. So, to make it properly work, you 
 should create your own private and public keys for your domain on
 <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> 
-and replace keys in <strong>web.config</strong> file.</p>
+and replace keys in <strong>appsettings.json</strong> file.</p>
 <h4>Email Activation</h4>
 <p>When a user registers as shown above, an email confirmation code is sent to 
 his email address. If user did not receive this email for some reason, he can 
@@ -219,64 +223,33 @@ tenant name is known via subdomain (like tenancyname.mydomain.com).</p>
 get an email to reset the password.</p>
 <p>
 <img class="img-thumbnail" alt="Forgot password" height="359" src="images/forgot-password.png" width="421" /></p>
-<h3>Angular Back End Single-Page Application</h3>
-<p>The backend in ASP.NET Zero is a <strong>Single-Page AngularJs 
-Application</strong>. When you login, you are redirected to the <strong>
-ApplicationController</strong>. It returns the layout view of the application.</p>
-
-<div class="note note-info">
-<strong>Note</strong>: There is also a Multi-Page version of the same 
-application built with ASP.NET MVC and jQuery (see the related section in this 
-document).
-</div>
+<h3>Back End Application</h3>
+<p>This is the actual application which is entered by username and password. You 
+will mostly work on this application to add your business requirements.</p>
 
 <h4>Application Folders</h4>
-<p>All view, script and styles files are located in <strong>App</strong> folder 
-(all folders/files are not shown here):</p>
+<p>Backend application is built in a dedicated area, named "<strong>App</strong>" 
+by default, but can be determined while you are <a href="Getting-Started.html">
+creating the solution</a>. So, all controllers, views and models are located under <strong>
+Areas/App</strong> folder. Also, related script and style files are located 
+under <strong>wwwroot/view-resources/Areas/App</strong> folder, as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Angular App folder structure" height="413" src="images/app-folders.png" width="152" /></p>
-<p>There are three main folders here:</p>
-<ul>
-	<li><strong>common</strong>: Contains common resources used by both host and 
-	tenants.</li>
-	<li><strong>host</strong>: Contains host-specific resources.</li>
-	<li><strong>tenant</strong>: Contains tenant-specific resources.</li>
-</ul>
-<p>So, if we have a view, directive, service, image... used by both tenants and 
-host, we should place it under <strong>common</strong> folder as shown above. We should place tenant or host 
-specific directives, services.. under it's own folder, no to common. If you're 
-developing a single-tenant application, you can place your files under tenant.</p>
+<img class="img-thumbnail" alt="Application folders" height="381" src="images/app-folders-core.png" width="161" /></p>
 <h4>Main Menu</h4>
 <p>Application's main menu is defined in <strong>AppNavigationProvider</strong> 
 class. See ABP's
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">navigation 
-documentation</a> to have a deep understanding on creating menus.</p>
-<h4>Routes</h4>
-<p><strong>app.js</strong> is entrance point of the application. We define 
-the <strong>app</strong> angular module and angular <strong>routes</strong> in 
-this file. Angular <strong>ui-router</strong> is used for routing. Routes (states in ui-router) is dynamically defined based on current user's 
-permissions (see authorization section). Example:</p>
-<pre lang="js">if (abp.auth.hasPermission(&#39;Pages.Administration.Tenant.Settings&#39;)) {
-    $stateProvider.state(&#39;tenant.settings&#39;, {
-        url: &#39;/settings&#39;,
-        templateUrl: &#39;~/App/tenant/views/settings/index.cshtml&#39;,
-        menu: &#39;Administration.Settings.Tenant&#39;
-    });
-}</pre>
-<p>Conditional routing definition prevents user to enter an unauthorized page by 
-just entering a URL to browser's address bar. <strong>Menu</strong> definition 
-helps us to highlight given menu when this route is activated.</p>
-<p>As you see, <strong>.cshtml</strong> files are used as views. While simply
-<strong>.html</strong> files can be used, using .cshtml files allows us to take 
-advantage of Razor's power while creating views.</p>
+documentation</a> to have a deep understanding on creating menus. When you add a 
+new menu item, it's automatically rendered in the layout.</p>
 <h4>Layout</h4>
-<p>Layout of the application is located under common/views/<strong>layout</strong> 
-folder. All scripts and styles in App folder (and subfolders) are <strong>bundled</strong> (See 
-AppBundleConfig class). So, just add your scripts and styles under App folder, 
-they will be automatically added to the layout.</p>
-<p><img class="img-thumbnail" alt="App layout" height="216" src="images/app-layout.png" width="154" /></p>
-<p>Layout consists of different parts as shown above. Main menu is rendered in
-<strong>sidebar</strong>.</p>
+<p>Layout of the application is located under <strong>Areas/App/Views/Layout</strong> 
+folder. It uses <strong>Components</strong> for <strong>header</strong>, <strong>footer</strong> and <strong>
+sidebar</strong>:</p>
+<p>
+<img class="img-thumbnail" alt="Application layout" height="255" src="images/app-layout-core.png" width="137" /></p>
+<p>Main menu is rendered in
+<strong>sidebar</strong> component. Layout also highly uses bundling &amp; 
+minification (see the section below) system for script and style includes.</p>
 <h4>Edition Management</h4>
 <p><em>If you're not developing a multi-tenant application, you can skip this 
 section.</em></p>
@@ -285,7 +258,7 @@ section.</em></p>
 page</strong> (available in host login)<strong> </strong>is used to manage 
 application's editions:</p>
 <p>
-<img class="img-thumbnail" alt="Editions Page" height="476" src="images/editions-page.png" width="826" /></p>
+<img class="img-thumbnail" alt="Editions page" height="227" src="images/editions-page-core.png" width="800" /></p>
 <p>Editions are used to group feature values and assign to tenants. When we 
 click Actions/Edit for an edition, we can see it's assigned features:</p>
 <p>
@@ -314,14 +287,15 @@ section.</em></p>
 <p>If this is a multi-tenant application and you logged in as a host user, then 
 tenants page is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant Management" height="524" src="images/tenant-management-2.png" width="1016" /></p>
-<p>A tenant is represented by <strong>Tenant</strong> class. Tenant class can be 
-extended by adding new properties. There is an only 
+<img class="img-thumbnail"  alt="Tenant management page" height="272" src="images/tenant-management-core.png" width="1168" /></p>
+<p>A tenant is represented by <strong>Tenant</strong> class. Tenant class 
+<a href="Extending-Existing-Entities.html">can be 
+extended</a> by adding new properties. There is an only 
 one tenant, named <strong>Default</strong> as initial.<strong> Tenancy Name</strong> (code name) is the <strong>unique</strong> name 
 of a tenant. A&nbsp;tenant can be <strong>active</strong> or <strong>passive</strong>. 
 If it's passive, no user of this tenant can login to the application.</p>
 <p>When we 
-click the "<strong>Create new Tenant</strong>" button, a dialog is shown:</p>
+click the "<strong>Create New Tenant</strong>" button, a dialog is shown:</p>
 <p>
 <img class="img-thumbnail" alt="Creating tenant" height="667" src="images/create-tenant-4.png" width="615" /></p>
 <p><strong>Tenancy name</strong> should be unique and not contain spaces or 
@@ -356,14 +330,11 @@ edition. But we can also override features and values for a tenant. Click
 <strong>actions/change features</strong> for a tenant to <strong>customize</strong> 
 it's features:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant features" height="245" src="images/tenant-features.png" width="613" /></p>
+<img class="img-thumbnail" alt="Tenant features" height="239" src="images/tenant-features-core.png" width="615" /></p>
 <h5>Tenant User Impersonation</h5>
 <p>As a host user, we may want to perform operations in behalf of a tenant. In 
-this case, we can click the Actions button of a tenant and select "<strong>Login 
-as this tenant</strong>" option:</p>
-<p>
-<img class="img-thumbnail" alt="Login as tenant option" height="169" src="images/login-as-tenant-action.png" width="185" /></p>
-<p>When we click it, we see <strong>a modal to select a user</strong> of the 
+this case, we can click the "<strong>Login 
+as this tenant</strong>" button in the actions. When we click it, we see <strong>a modal to select a user</strong> of the 
 tenant. We can select any user and perform operations allowed that user. See
 <strong>User Impersonation</strong> section in this document for more 
 information.</p>
@@ -377,7 +348,7 @@ so on. ASP.NET Zero automatically identify and get tenant name from subdomain
 Then you can get user or entities based on their OUs. When we click 
 Administration/Organization units, we enter the related page:</p>
 <p>
-<img class="img-thumbnail" alt="Organization Units Page" height="535" src="images/organization-units-page.png" width="1194" /></p>
+<img class="img-thumbnail" alt="Organization units page" height="483" src="images/organization-units-page-core.png" width="931" /></p>
 <p>Here, we can manage OUs (create, edit, delele, move) and members 
 (add/remove).</p>
 <p><strong>OrganizationUnitManager</strong> is used to manage OUs, <strong>
@@ -388,12 +359,12 @@ OrganizationUnitAppService</strong> performs the application logic.</p>
 <strong>add a 
 member</strong>, a modal is shown to select the user:</p>
 <p>
-<img class="img-thumbnail" alt="Select a user" height="595" src="images/select-user-lookup.png" width="614" /></p>
+<img class="img-thumbnail" alt="Select a user dialog" height="549" src="images/select-user-lookup-core.png" width="583" /></p>
 <p>This is actually a <strong>generic lookup modal</strong> and can be used to 
-select any type of entity (see App/common/views/common/lookup.js and 
-corresponding view). To select the users, we created <strong>FindUsers</strong> 
+select any type of entity (see Areas/App/Views/Common/Modals/_LookupModal.cshtml 
+and it's related script file). To select the users, we created <strong>FindUsers</strong> 
 method in <strong>CommonLookupAppService</strong> then configured the modal to 
-work with this method (see organizationUnits/index.js file for usage of 
+work with this method (see view-resources/Areas/App/Views/OrganizationUnits/index.js file for usage of 
 lookupModal.open).</p>
 <p>See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Organization-Units">
@@ -402,7 +373,7 @@ organization unit management document</a> for more information.</p>
 
 <p>When we click Administration/Roles menu, we enter to the role management page:</p>
 <p>
-<img class="img-thumbnail" alt="Role management" height="446" src="images/role-management.png" width="718" /></p>
+<img class="img-thumbnail" alt="Role management page" height="333" src="images/role-management-core.png" width="702" /></p>
 <p>Roles are used to <strong>group permissions</strong>. When a user has a 
 role, then he/she will have all permissions of that role.</p>
 <p>A role is represented by the <strong>Role</strong> class. Role class can be 
@@ -437,7 +408,7 @@ all static roles and <strong>AppRoleConfig</strong> for changing static roles.</
 <p>Since roles are used to group permissions, we can set permissions of a role 
 while creating or editing as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Role permissions" height="554" src="images/role-permissions.png" width="618" /></p>
+<img alt="Role Permissions" height="823" src="images/role-permissions-core.png" width="614" /></p>
 <p>(not all permissions shown in the figure above)</p>
 <p>Every tenant has it's own roles and any change in roles for a tenant does not effect other 
 tenants. Also, host has also own isolated roles.</p>
@@ -445,11 +416,12 @@ tenants. Also, host has also own isolated roles.</p>
 
 <p>When we click Administration/Users menu, we enter to the user management page:</p>
 <p>
-<img class="img-thumbnail" alt="User Management" height="315" src="images/user-management.png" width="720" /></p>
+<img class="img-thumbnail" alt="User management" height="635" src="images/user-management-core.png" width="1643" /></p>
 
 <p><strong>Users</strong> are people who can <strong>login </strong>to the application and 
 perform some operations based on their <strong>permissions</strong>.</p>
-<p><strong>User</strong> class represents a user. User class can be extended by 
+<p><strong>User</strong> class represents a user. User class 
+<a href="Extending-Existing-Entities.html">can be extended</a> by 
 adding new properties.</p>
 <p><strong>UserManager</strong> 
 is used to perform domain logic, <strong>UserAppService</strong> is used to 
@@ -459,25 +431,22 @@ perform application logic for users.</p>
 one role, he inherits union of 
 permissions of all these roles. Also, we can set <strong>user-specific permission</strong>. 
 A user specific permission setting overrides role settings for this permission. 
-A screenshot of user permission dialog (all permissions are not shown here):</p>
+A screenshot of user permission dialog:</p>
 <p>
 <img class="img-thumbnail" alt="User Permissions" height="481" src="images/user-permissions.png" width="620" /></p>
 <p>(not all permissions shown in the figure above)</p>
 <p>A dialog is used to create/edit a user:</p>
 <p>
 <img class="img-thumbnail" alt="Editing User" height="534" src="images/edit-user.png" width="400" /></p>
-<p>We can change user's <strong>password</strong>, make him <strong>
+<p>We can change user's <strong>password</strong>, make her <strong>
 active/passive</strong> and so on... A user can have a <strong>profile picture</strong>. 
 It can be changed by the user (See User Menu section). <strong>Admin</strong> 
 user can not be deleted as a business rule. If you don't want to use admin, you 
 can make it passive.</p>
 <h5>User Impersonation</h5>
 <p>As admin (or any allowed user), we may want to login as a user and perform 
-operations in behalf of that user, without knowing his password. Click actions 
-of a user and select "<strong>Login as this user</strong>":</p>
-<p>
-<img class="img-thumbnail" alt="User actions" height="169" src="images/user-actions.png" width="280" /></p>
-<p>When we click it, we are automatically redirected and logged in as this user. 
+operations in behalf of that user, without knowing his password. When we click "<strong>Login as this user</strong>" 
+icon in the actions of a user, we are automatically redirected and logged in as this user. 
 This is called as "<strong>user impersonation</strong>". When we impersonate a user, a "<strong>back to 
 my account</strong>" option is added to the user profile menu:</p>
 <p>
@@ -494,20 +463,22 @@ project.</p>
 <p>Language management page is used to manage (add/edit/delete) <strong>application 
 languages</strong> and change <strong>localized texts</strong>:</p>
 <p>
-<img class="img-thumbnail" alt="Language list page" height="558" src="images/language-list.png" width="770" /></p>
+<img class="img-thumbnail" alt="Language management" height="510" src="images/language-list-core.png" width="752" /></p>
 <p>We can create new language, edit/delete an existing language and <strong>set a 
-language as default</strong>. When we click to <strong>Change text</strong> for any language, we are 
+language as default</strong>. Note that; tenants can not edit/delete default 
+languages, but host users can do.</p>
+<p>When we click to <strong>Change text</strong> for any language, we are 
 redirected to a new view to edit language texts:</p>
 <p>
-<img class="img-thumbnail" alt="View to change texts of a language" height="594" src="images/language-change-texts-list.png" width="728" /></p>
+<img class="img-thumbnail" alt="Language texts" height="630" src="images/language-change-texts-list-core.png" width="945" /></p>
 <p>We can select any language as a <strong>base</strong> (reference) and change 
 <strong>target</strong> language's 
-texts. Since there maybe different
+texts. Base language is just to help the translation progress. Since there maybe different
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization#DocLocalizationSources">
 localization sources</a>, we select the source to translate. When we click the 
 edit icon, we can see the edit modal for the selected text:</p>
 <p>
-<img class="img-thumbnail" alt="Language text edit modal" height="498" src="images/language-change-text-modal.png" width="614" /></p>
+<img class="img-thumbnail" alt="Language text editing" height="409" src="images/language-change-text-modal-core.png" width="608" /></p>
 <p><strong>Host</strong> users (if allowed) can edit languages and localized 
 texts. These languages will be default for all tenants for a multi-tenant application.
 <strong>Tenants</strong> inherit languages and localized texts and can <strong>
@@ -517,11 +488,13 @@ service. It has methods to manage languages and localized texts. <strong>
 IApplicationLanguageManager</strong> and <strong>IApplicationLanguageTextManager</strong> 
 interfaces are used to perform domain logic (as used by LanguageAppService).</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Language-Management">
-language management documentation</a> for more information.</p>
+language management</a> and
+<a href="http://aspnetboilerplate.com/Pages/Documents/Localization" target="_blank">
+localization</a> documents for more information.</p>
 <h4>Audit Logs</h4>
 <p>In audit logs page, we can see all user interactions with the application:</p>
 <p>
-<img class="img-thumbnail" alt="Auidt Logs Page" height="499" src="images/audit-logs.png" width="800" /></p>
+<img class="img-thumbnail" alt="Audit logs" height="671" src="images/audit-logs-core.png" width="1287" /></p>
 <p>All application service methods and MVC controller actions are automatically logged and can be viewed 
 here. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Audit-Logging">audit 
@@ -577,7 +550,7 @@ enable the following line:</p>
 the server works in domain and application runs with a domain user or local 
 system, then generally even <strong>no need</strong> to set Domain name, user and password. You 
 can logout and then login with your <strong>domain user name and password</strong>. 
-If not, you should set these informations also.</p>
+If not, you should set these credentials.</p>
 <h4>Maintenance</h4>
 <p>Maintenance page is only available to <strong>host</strong> and shown as 
 below:</p>
@@ -630,7 +603,7 @@ See <a href="http://aspnetboilerplate.com/Pages/Documents/Notification-System">n
 <h5>Notification List</h5>
 <p>All notifications of user are listed in this page.</p>
 <p>
-<img alt="notification list" height="600" src="images/notifications-list.png" class="img-thumbnail" width="1075" style="height: 541px"/></p>
+<img class="img-thumbnail" alt="Notification list" height="313" src="images/notifications-list-core.png" width="774" /></p>
 
 <h4>Chat</h4>
 <p>Chat icon is located next to user's profile image on top right corner of the page.  The number in the red circle shows total unread chat message count.</p>
@@ -686,51 +659,20 @@ is used to get login attempts from server.</p>
 <h5>Change Picture</h5>
 <p>A user can change own profile picture. <strong>ProfileController</strong> is 
 used to upload and get user profile pictures.
-<a href="https://github.com/nervgh/angular-file-upload" target="_blank">Angular 
-file upload</a> module used to select and upload profile picture to the server. 
 Currently, jpg/jpeg, gif and png files are supported, you can extend it.</p>
 <h5>Change Password</h5>
 <p><strong>ProfileAppService</strong> is used to change password.</p>
 <h5>Logout</h5>
 <p><strong>AccountController</strong> is used to logout the user and redirect to 
 Login page.</p>
-<h3>MVC Back End Multi Page Application</h3>
-<p>Same backend application is also available as a <strong>MPA</strong> using 
-ASP.NET <strong>MVC</strong>, <strong>Web API</strong> and <strong>jQuery</strong>. 
-All functionallity is identical with SPA Angular application. It uses same 
-application services to perform actions. This is a screenshot from the 
-application:</p>
-<p>
-<img class="img-thumbnail" alt="Multi Page Application Screenshot" height="805" src="images/mpa-screenshot.png" width="1056" /></p>
-<p>
-Since all functionallity is identical, you can read the SPA section above to 
-understand the application. Here, only differences will be explained.</p>
-<h4>
-Application Folders</h4>
-<p>This application 
-is included in the .<strong>Web</strong> project as a seperated <strong>Area</strong> 
-as shown below:</p>
-<p>
-<img class="img-thumbnail" alt="MVC MPA Area" height="299" src="images/mpa-solution-files.png" width="217" /></p>
-<p>
-This is a classic MVC folder structure with Controllers, Models and Views. </p>
-<h4>
-Main Menu</h4>
-<p>Application's main menu is defined in <strong>MpaNavigationProvider</strong> class.
-See ABP's <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">navigation documentation</a> to have a deep understanding on creating menus.</p>
-<h4>Layout</h4>
-<p>Layout of the application is located under Views/<strong>Layout</strong> 
-folder.</p>
-<p>
-<img class="img-thumbnail" alt="MPA layout files" height="245" src="images/mpa-layout-files.png" width="162" /></p>
-<p>Header, footer and siderbar is developed as partial views.</p>
 <h3>Migrator Console Application</h3>
 <p>AspNet Zero includes a tool, Migrator.exe, to easily migrate your databases. 
 You can run this application to create/migrate host and tenant databases.</p>
 <p>
 <img class="img-thumbnail" alt="Database Migrator" height="230" src="images/database-migrator.png" width="659" /></p>
-<p>This application gets host connection string from it's <strong>own .config 
-file</strong>. It will be same in the web.config at the beggining. Be sure that 
+<p>This application gets host connection string from it's <strong>own 
+appsettings.json 
+file</strong>. It will be same as in the appsettings.json in .Web project at the beggining. Be sure that 
 the connection string in config file is the database you want. After getting
 <strong class="auto-style2">host </strong><strong>connection sring</strong>, it 
 first creates the host database or apply migrations if it does already exists. 
@@ -740,32 +682,31 @@ database is already migrated for another tenant (for shared databases between
 multiple tenants).</p>
 <p>You can use this tool on development or on product environment to migrate 
 databases on deployment, instead of EntityFramework's own Migrate.exe (which 
-requires some configuration and can work for single database in one run).</p>
+requires some configuration and can only work for single database in one run).</p>
 <h3>Infrastructure</h3>
-<h4>Dynamic Web API Layer</h4>
-<p>Both SPA and MPA applicationg highly use AJAX to provide a better user 
-experience. They calls application service methods via AJAX. So, it's needed to create web API 
-controllers as adapter (A Client calls Web API Controller action via AJAX, then 
+<h4>Application Services as MVC API Controllers</h4>
+<p>ASP.NET Zero project highly use AJAX to provide a better user 
+experience. UI calls <strong>application service methods</strong> via AJAX. So, it's needed to create 
+MVC API 
+controllers as adapters (A Client calls MVC API Controller action via AJAX, then 
 it calls application service method).</p>
 <p>ABP framework automatically creates
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
-dynamic web API layer</a> using application service interface definitions. So, 
-there is no web API Controller actually. We build dynamic web api controllers in 
-PhoneBook<strong>WebApiModule</strong> class in .WebApi project. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
-dynamic Web API layer documentation</a> for more.</p>
+MVC API Controllers for all application services. So, 
+no need to manually create MVC API Controller. We build dynamic web api controllers in 
+PhoneBook<strong>WebModule</strong> class in .Web project. See related
+<a href="http://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers" target="_blank">
+documentation</a> for more.</p>
 <p>While ABP dynamically create Web API Controllers, we can also create regular 
-Web API Controllers as we always do.&nbsp;</p>
+MVC API Controllers as we always do.</p>
 <h4>Localization</h4>
 <p>ASP.NET Zero <strong>User Interface</strong> is completely
 localized. AspNet Zero uses <strong>dynamic, database based, per-tenant</strong> 
 localization (See the related section above).</p>
 <p>XML files are used as base translation for desired languages:</p>
 <p>
-<img class="img-thumbnail" alt="" height="217" src="images/localization-files-core.png" width="190" /></p>
-<p>PhoneBook will be your ProjectName. You can add more XML files by copying one XML file and 
-translate to desired language. Notice that these XML files should be <strong>
-embedded resource</strong>. See
+<img class="img-thumbnail" alt="Localization XML files" height="217" src="images/localization-files-core.png" width="190" /></p>
+<p>PhoneBook will be your ProjectName. You can add more XML files by copying one 
+XML file and translate to desired language. See
 <a href="http://www.csharp-examples.net/culture-names/" target="_blank">valid 
 culture codes</a>.</p>
 <p>When you are adding a new localizable text, add it to the XML file of the 
@@ -775,20 +716,36 @@ value in the XML file will be used as default.</p>
 <p><strong>Application languages</strong> are defined in <strong>
 DefaultLanguagesCreator</strong> class. This is used as a <strong>seed data</strong> 
 in Entity Framework Migration. So, if you want to <strong>add a new language</strong>, 
-just add it into DefaultLanguagesCreator class. Also, you can add a 
+just add it into DefaultLanguagesCreator class. Also, you should add a 
 corresponding XML file as described above as default translation.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization">
 localization</a> and
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Language-Management">
 language management</a> documentations for more information.</p>
 <h4>EntityFramework Integration</h4>
-<p>ASP.NET Zero template uses EntityFramework <strong>code-first</strong> and 
+<p>ASP.NET Zero template uses EntityFramework 6.x <strong>code-first</strong> and 
 <strong>migrations</strong>. PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
 defines the DbContext class. <strong>Migrations</strong> folder contains EF migrations. </p>
 <p>PhoneBook<strong>RepositoryBase</strong> class is the base class for your
 custom repositories. See entity
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration">
 framework integration</a> documentation for more.</p>
+<h5>Database Migrations</h5>
+<p>Because of new <strong>xproj/project.json</strong> project structure of 
+ASP.NET Core, Entity Framework's "<strong>Update-Database</strong>" and "<strong>Add-Migration</strong>" 
+commands <strong>may not properly work</strong>. We used
+<a href="https://github.com/mrahhal/Migrator.EF6" target="_blank">Migrator.EF6</a> 
+tool&nbsp;to adapt Entity Framework 6.x to the new solution format. So, you can use
+<strong>Windows Command Promt</strong> to add migrations and update database.</p>
+<p>First, open <strong>cmd</strong> in Windows and locate the folder contains
+<strong>.EntityFramework</strong> project file. Then,</p>
+<ul>
+	<li>Use <strong><em>dotnet ef database update</em></strong> command to apply 
+	migrations to database (Instead, you can use Migrator.exe as declared 
+	before).</li>
+	<li>Use <em><strong>dotnet ef migrations add "Your_Migration_Name"</strong></em> 
+	command to add new migrations.</li>
+</ul>
 <h4>Authorization Provider</h4>
 <p>Authorization system is based on permissions. <strong>AppPermissions </strong>
 contains constants for permission names and <strong>
@@ -812,7 +769,7 @@ setting documentation</a> to learn how to create and use settings.</p>
 <h4>Navigation Provider</h4>
 <p>Menus are automatically generated using definitions in <strong>
 AppNavigationProvider</strong> class. We have two menus: <strong>Main</strong> 
-(the main menu in Angular application) and <strong>FrontEnd</strong> (Main menu 
+(the main menu in the backend application) and <strong>FrontEnd</strong> (Main menu 
 in front-end web site).</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
 navigation documentation</a> for more information.</p>
@@ -834,11 +791,11 @@ easily enable it.</p>
 project):</p>
 <pre lang="cs">Configuration.BackgroundJobs.UseHangfire(configuration =&gt;
 {
-    configuration.GlobalConfiguration.UseSqlServerStorage(&quot;Default&quot;);
+    configuration.GlobalConfiguration.UseSqlServerStorage(Configuration.DefaultNameOrConnectionString);
 });</pre>
 <p>If you want to enable Hangfire dashboard, you can uncomment the following 
 line in <strong>Startup.cs</strong> (in App_Start folder in your .Web project):</p>
-<pre lang="cs">app.UseHangfireDashboard();</pre>
+<pre lang="cs">app.UseHangfireDashboard(...);</pre>
 <p><strong>Note</strong>: Hangfire creates it's <strong>own tables</strong> in 
 the database. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Background-Jobs-And-Workers">
@@ -848,14 +805,18 @@ hangfire intergation</a> documents for more information.</p>
 <h4>SignalR Integration</h4>
 <p>SignalR is properly configured and integrated to the startup template. Real 
 time notification system uses it. You can direcly use SignalR in your 
-applications. See
+applications.</p>
+<p>Notice that; As the time being, SignalR
+<a href="https://github.com/aspnet/Home/wiki/Roadmap#12">has not been released</a> 
+for ASP.NET Core yet. We integrated <strong>OWIN</strong> to ASP.NET Core 
+pipeline in order to use SignalR in the application.</p>
+<p>See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/SignalR-Integration">
 SignalR integration</a> document for more information.</p>
 <h4>Logging</h4>
 <p>ASP.NET Zero uses <strong>Log4Net</strong> for logging 
 as default. Configuration is defined in <strong>log4net.config</strong> file in 
-the .Web project. It writes all logs 
-into <strong>Logs</strong> folder of web site as default. When you publish your 
+the .Web project. It writes all logs to <strong>App_Data/Logs/Logs.txt</strong> folder of web site as default. When you publish your 
 project, remember to configure <strong>write permission</strong> to Logs folder.</p>
 <p>Check <a href="http://www.aspnetboilerplate.com/Pages/Documents/Logging">
 logging documentation</a> to see how to inject ILogger and write logs.</p>
@@ -923,19 +884,19 @@ So, if an entity is soft-deleted, it should not be accidently retrieved into the
 <p>In ASP.NET Zero, most entities are soft-deleted. See ABP's
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
 filter documentation</a> for more information about this topic.</p>
-<h4>Bundling &amp; Minifying</h4>
+<h4>Bundling, Minifying and Compiling</h4>
 <p>ASP.NET Zero uses
-<a href="https://www.nuget.org/packages/Microsoft.AspNet.Web.Optimization" target="_blank">
-ASP.NET Optimization</a> for bundling &amp; minifying script and style files. Bundles are defined in 
-different files:</p>
-<ul>
-	<li><strong>AppBundleConfig</strong>: For SPA bundles.</li>
-	<li><strong>MpaBundleConfig</strong>: For MPA bundles.</li>
-	<li><strong>FrontEndBundleConfig</strong>: For the front end application.</li>
-	<li><strong>CommonBundleConfig</strong>: For some common resources.</li>
-</ul>
-<p>Also, see <strong>ScriptPaths</strong> and <strong>StylePaths</strong> classes. They contains 
-constants for locations of js and css files.</p>
+<a href="https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40" target="_blank">
+Bundler &amp; Minifier Visual Studio extension</a> for bundling &amp; minifying script and style files. 
+It should be installed in your Visual Studio. <strong>bundleconfig.json</strong> 
+file defines all bundling configuration.</p>
+<p>ASP.NET Zero also uses
+<a href="https://visualstudiogallery.msdn.microsoft.com/3b329021-cd7a-4a01-86fc-714c2d05bb6c" target="_blank">
+Web Compiler Visual Studio extension</a> for compiling
+<a href="http://lesscss.org/" target="_blank">LESS</a> files to CSS files. This 
+extension also should be installed in your Visual Studio. <strong>
+compilerconfig.json</strong> defines all compiling configuration.</p>
+<p>See documentation of these extensions to learn to use them.</p>
 <h4>Base Classes</h4>
 <p>There are some useful base classes used in the application:</p>
 <ul>
@@ -944,51 +905,47 @@ constants for locations of js and css files.</p>
 	<li>PhoneBook<strong>DomainServiceBase</strong> can be used as a base class 
 	for <strong>domain services</strong>.</li>
 	<li>PhoneBook<strong>ControllerBase</strong> 
-	can be used as a base class for ASP.NET <strong>MVC Controllers</strong>.</li>
-	<li>PhoneBook<strong>WebViewPageBase</strong> 
+	can be used as a base class for ASP.NET Core <strong>MVC Controllers</strong>.</li>
+	<li>PhoneBook<strong>RazorPage</strong> 
 	can be used as a base class for ASP.NET <strong>MVC Views</strong>. 
 	Actually, all views are automatically inherit this since it's defined in 
-	web.config files. So, you can add some common properties/methods here to use 
+	<strong>_ViewImports.cshtml</strong> files. You can add some common properties/methods here to use 
 	in all views.</li>
 	<li>PhoneBook<strong>ServiceBase</strong> can be used as a base class for 
 	other service-like classes. UserEmailer class inherits it, for instance.</li>
 	<li>PhoneBook<strong>RepositoryBase</strong> can be used as a base class for 
 	<a href="http://aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration#DocCustomRepositoryMethods">
 	custom repository</a> implementations.</li>
-	<li>PhoneBook<strong>ApiControllerBase</strong> can be used as a base class 
-	for regular Web API Controllers.</li>
 </ul>
 <p>It's strongly recommended to inherit one of these classes upon your needs 
 since they really make Logging, Localization, Authorization... easier.</p>
 <h4>CSRF/XSRF Protection</h4>
 <p>ABP framework simplifies and automates CSRF protection as much as possible. AspNet Zero template comes with pre-configured and working out of the box. For more information please see ABP's 
-<a href="http://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection">XSRF-CSRF-Protection documentation</a></p>
+<a href="http://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection#aspnet-core">XSRF-CSRF-Protection documentation</a></p>
 <h4>Versioning</h4>
-<p><strong>AppVersionHelper</strong> class is used to define <strong>current version</strong> of the 
-application in single place. When you change <strong>Version</strong> here, all 
-projects in the application will be verisoned. Also, version and release date 
-automatically shown bottom left corner in the application pages. This helps us 
+<p><strong>AppVersionHelper</strong> class is used to define <strong>current version</strong> 
+of the application in single place. Version and release date 
+automatically shown bottom left corner in the backend application pages. This helps us 
 to see running application version always.</p>
 <h3>Token Based Authentication</h3>
 <p>AspNet Zero uses cookie based authentication for browsers. However, if you 
-want to consume Web APIs or application services (those are exposed via dynamic 
-web api) from a mobile application, you probably want a token based 
-authentication mechanism. AspNet Zero includes bearer token authentication 
-infrastructure. <strong>AccountController</strong> in <strong>.WebApi</strong> 
-project contains <strong>Authenticate</strong> action to get the token. Then we 
-can use the token for next requests.</p>
+want to consume MVC APIs or application services (those are exposed via MVC API) from a mobile 
+or 3rd party application, you probably want a token based 
+authentication mechanism. ASP.NET Zero includes a simple JWT bearer token authentication 
+implementation.</p>
 <p>Here, <strong>Postman</strong> (chrome extension) will be used to demonstrate 
 requests and responses.</p>
 <h4>Authentication</h4>
 <p>Just send a <strong>POST</strong> request to <strong>
-http://localhost:6234/api/Account/Authenticate</strong> with <strong>
-Context-Type="application/json"</strong> as shown below:</p>
+http://localhost:62114/jwt-token/authenticate</strong> with <strong>
+Context-Type="application/x-www-form-urlencoded"</strong> as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Token Authentication" height="689" src="images/postman-authenticate.png" width="691" /></p>
-<p>We sent a <strong>JSON request body</strong> includes <strong>tenancyName</strong>,
-<strong>userNameOrEmailAddress </strong>and <strong>password</strong>. 
+<img class="img-thumbnail" alt="Token auth using postman" height="695" src="images/postman-authenticate-core.png" width="698" /></p>
+<p>We sent a form values <strong>tenancyName</strong>,
+<strong>usernameOrEmailAddress </strong>and <strong>password</strong>. 
 tenancyName is not used to authenticate as a <strong>host</strong> user. As seen 
-above, <strong>result</strong> property of returning JSON contains the token. We 
+above, <strong>result</strong> property of returning JSON contains the token and 
+expire time (which is 24 hours by default and can be configured). We 
 can save it and use for next requests.</p>
 <h4>Use API</h4>
 <p>After authenticate and get the token, we can use it to call any <strong>authorized</strong> 
@@ -996,21 +953,33 @@ actions. All <strong>application services </strong>are available to be used remo
 example, we can use the <strong>User service</strong> to get a <strong>list of 
 users</strong>:</p>
 <p>
-<img class="img-thumbnail" alt="Using postman to get users" height="889" src="images/postman-getusers.png" width="688" /></p>
+<img class="img-thumbnail" alt="Postman get users" height="800" src="images/postman-getusers-core.png" width="760" /></p>
 <p>Just made a <strong>POST</strong> request to <strong>
 http://localhost:6234/api/services/app/user/GetUsers</strong> with <strong>
 Content-Type="application/json"</strong> and <strong>Authorization="Bearer <em>
 your-</em></strong><em><strong>auth-token</strong></em><strong>"</strong>. 
 Request body was just empty <strong>{}</strong>. Surely, request and response 
 body will be different for different APIs.</p>
-<p>Almost all operations available on UI also available as Web API (since UI 
-uses the same Web API) and can be consumed easily.</p>
+<p>Note that we also added X-Requested-With header to indicate that this is an 
+AJAX request. Thus, ASP.NET Core can better handle the request and return 
+appropriate return values on success and error cases.</p>
+<p>Almost all operations available on UI also available as API and can be consumed easily 
+as shown here.</p>
 <h3>Swagger UI</h3>
-<p>Swagger UI is integrated to ASP.NET Zero. Swagger UI configuration is located in 
-<strong>WebApiModule</strong> class in WebApi project. You can browse swagger ui 
-under "/<strong>swagger/ui/index</strong>". </p>
+<p><a href="http://swagger.io/swagger-ui/" target="_blank">Swagger UI</a> is 
+<strong>integrated</strong> to ASP.NET Zero but <strong>disabled by default</strong>. Swagger UI configuration is located in
+<b>S</b><span class="auto-style3">tartup</span> class in the <strong>.Web</strong> project. 
+You can enable it by just uncommenting the related lines:</p>
+<p>In Startup.<strong>ConfigureServices</strong> method, enable the following line:</p>
+<pre lang="cs">services.AddSwaggerGen();</pre>
+<p>And in Startup.Configure method, enable the following lines:</p>
+<pre lang="cs">app.UseSwagger();
+app.UseSwaggerUi();</pre>
+<p>You can browse <strong>swagger ui</strong> with this URL: "/<strong>swagger/ui</strong>". </p>
 <p>
-<img class="img-thumbnail" alt="Swagger UI" height="689" src="images/swagger-ui.png" width="1000" style="height: 486px" /></p>
+<img alt="Swagger UI" height="753" src="images/swagger-ui-core.png" width="974" /></p>
+<p>
+Thus, anyone (or any application) can explore, test and use the API easily.</p>
 <h3>Unit Testing</h3>
 <p>ASP.NET Zero startup project contains <strong>unit</strong> and <strong>integration</strong> tests. Tests are developed using following tools:</p>
 <ul>
@@ -1072,11 +1041,8 @@ project. Here, a list of all libraries.</p>
 <ul>
 	<li>Server side<ul>
 		<li><a target="_blank" href="http://aspnetboilerplate.com">ASP.NET Boilerplate Framework &amp; Module-Zero</a></li>
-		<li><a target="_blank" href="http://www.asp.net/mvc">ASP.NET MVC</a></li>
-		<li><a target="_blank" href="http://www.asp.net/web-api">ASP.NET Web API</a></li>
-		<li><a target="_blank" href="http://www.asp.net/identity">ASP.NET Identity Framework (and social login extensions)</a></li>
-		<li>
-		<a target="_blank" href="http://www.asp.net/mvc/overview/performance/bundling-and-minification">ASP.NET Web Optimization Framework</a></li>
+		<li><a href="https://docs.asp.net" target="_blank">ASP.NET Core</a></li>
+		<li><a target="_blank" href="http://www.asp.net/identity">ASP.NET Identity (and social login extensions)</a></li>
 		<li>
 		<a href="http://www.asp.net/signalr" target="_blank">SignalR</a></li>
 		<li><a target="_blank" href="http://www.asp.net/entity-framework">EntityFramework</a></li>
@@ -1085,10 +1051,10 @@ project. Here, a list of all libraries.</p>
 		<li><a target="_blank" href="http://automapper.org/">AutoMapper</a></li>
 		<li><a href="http://hangfire.io/" target="_blank">HangFire</a></li>
 		<li><a target="_blank" href="https://logging.apache.org/log4net/">Log4Net</a></li>
-		<li><a target="_blank" href="https://github.com/tanveery/recaptcha-net">RecaptchaNet</a></li>
+		<li><a href="https://github.com/PaulMiami/reCAPTCHA" target="_blank">PaulMiami reCAPTCHA</a></li>
 		<li><a href="https://xunit.github.io/" target="_blank">xUnit</a></li>
-		<li>
-		<a href="https://github.com/domaindrivendev/Swashbuckle" target="_blank">Swashbuckle</a></li>
+		<li><a href="https://github.com/domaindrivendev/Ahoy" target="_blank">
+		Swashbuckle</a></li>
 		<li>
 		<a href="https://github.com/StackExchange/StackExchange.Redis" target="_blank">
 		StackExchange.Redis</a></li>
@@ -1109,19 +1075,6 @@ project. Here, a list of all libraries.</p>
 		<li>
 		<a href="http://silviomoreto.github.io/bootstrap-select" target="_blank">Bootstrap 
 		Select</a></li>
-		<li><a target="_blank" href="https://angularjs.org/">AngularJs</a></li>
-		<li><a target="_blank" href="https://angular-ui.github.io/bootstrap/">Angular UI-Bootstrap</a></li>
-		<li><a target="_blank" href="http://angular-ui.github.io/ui-router/site/">Angular UI-Router</a></li>
-		<li><a target="_blank" href="https://github.com/angular-ui/ui-utils">Angular UI-Utils</a></li>
-		<li><a target="_blank" href="http://ui-grid.info/">Angular UI-Grid</a></li>
-		<li><a target="_blank" href="https://github.com/nervgh/angular-file-upload">Angular File Upload</a></li>
-		<li><a target="_blank" href="https://github.com/fragaria/angular-daterangepicker">Angular Date Range Picker</a></li>
-		<li><a target="_blank" href="https://github.com/ocombe/ocLazyLoad">Angular ocLazyLoad</a></li>
-		<li><a href="https://github.com/urish/angular-moment" target="_blank">
-		Angular Moment</a></li>
-		<li>
-		<a href="https://github.com/frapontillo/angular-bootstrap-switch" target="_blank">
-		Angular Bootstrap Switch</a></li>
 		<li><a target="_blank" href="http://jquery.com/">jQuery</a></li>
 		<li><a target="_blank" href="http://jqueryui.com/">jQuery UI</a></li>
 		<li><a target="_blank" href="http://malsup.com/jquery/block/">jQuery BlockUI</a></li>
@@ -1132,7 +1085,6 @@ project. Here, a list of all libraries.</p>
 		<li><a target="_blank" href="http://jqueryvalidation.org/">jQuery Validation</a></li>
 		<li><a target="_blank" href="http://jtable.org/">jQuery jTable</a></li>
 		<li><a target="_blank" href="http://malsup.com/jquery/form/">jQuery Ajax Forms</a></li>
-		<li><a target="_blank" href="http://modernizr.com/">Modernizr</a></li>
 		<li><a target="_blank" href="http://momentjs.com/">Moment.js</a></li>
 		<li><a href="http://momentjs.com/timezone/" target="_blank">Moment.js 
 		Timezone</a></li>
