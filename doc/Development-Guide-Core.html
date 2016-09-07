@@ -34,6 +34,25 @@ application framework, this document highly refers it's
 <a href="http://www.aspnetboilerplate.com/Pages/Documents">documentation</a>.</p>
 <p>Before reading this document, it's suggested to run the application and explore 
 the user interface. This will help you to have a better understanding of concepts defined here.</p>
+<h4>Pre Requirements</h4>
+<p>Following tools are needed in order to use ASP.NET Zero Core solution:</p>
+<ul>
+	<li><a href="https://beta.visualstudio.com/vs/community/">Visual Studio 2015</a> 
+	(with
+	<a href="https://www.visualstudio.com/news/releasenotes/vs2015-update3-vs">
+	Update 3</a> installed) or higher.</li>
+	<li>Visual Studio Extensions:<ul>
+		<li>
+		<a href="https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40">
+		Bundler &amp; Minifier</a></li>
+		<li>
+		<a href="https://visualstudiogallery.msdn.microsoft.com/3b329021-cd7a-4a01-86fc-714c2d05bb6c">
+		Web Compiler</a></li>
+	</ul>
+	</li>
+	<li><a href="https://go.microsoft.com/fwlink/?LinkId=817245">ASP.NET Core</a></li>
+	<li>SQL Server</li>
+</ul>
 <h4>Solution Structure (Layers)</h4>
 <p>After you create and <a href="/Download">download</a> your project, you have a solution structure 
 as shown below:</p>
@@ -684,6 +703,15 @@ multiple tenants).</p>
 databases on deployment, instead of EntityFramework's own Migrate.exe (which 
 requires some configuration and can only work for single database in one run).</p>
 <h3>Infrastructure</h3>
+<h4>Bower &amp; Front End Dependencies</h4>
+<p>ASP.NET Zero solution uses <a href="https://bower.io/" target="_blank">bower</a> 
+package manager to obtain front end library dependencies (like bootstrap and 
+jquery). So, you can easily add new packages or update existing packages on 
+Visual Studio or bower's command line interface. You can see all installed bower 
+packages under <strong>Dependencies/Bower</strong> of the .Web project.</p>
+<p>
+<img class="img-thumbnail" alt="Bower dependencies" height="462" src="images/bower-dependencies.png" width="269" /></p>
+<p>s</p>
 <h4>Application Services as MVC API Controllers</h4>
 <p>ASP.NET Zero project highly use AJAX to provide a better user 
 experience. UI calls <strong>application service methods</strong> via AJAX. So, it's needed to create 
@@ -1085,14 +1113,27 @@ project. Here, a list of all libraries.</p>
 		<li><a target="_blank" href="http://jqueryvalidation.org/">jQuery Validation</a></li>
 		<li><a target="_blank" href="http://jtable.org/">jQuery jTable</a></li>
 		<li><a target="_blank" href="http://malsup.com/jquery/form/">jQuery Ajax Forms</a></li>
+		<li><a href="https://github.com/rmm5t/jquery-timeago" target="_blank">
+		jQuery Timeago</a></li>
+		<li>
+		<a href="https://github.com/douglascrockford/JSON-js" target="_blank">
+		Json2</a></li>
+		<li><a href="https://github.com/tapmodo/Jcrop" target="_blank">Jcrop</a></li>
+		<li>
+		<a href="https://github.com/localForage/localForage" target="_blank">
+		LocalForage</a></li>
 		<li><a target="_blank" href="http://momentjs.com/">Moment.js</a></li>
 		<li><a href="http://momentjs.com/timezone/" target="_blank">Moment.js 
 		Timezone</a></li>
+		<li><a href="https://github.com/janl/mustache.js" target="_blank">
+		Mustache.js</a></li>
 		<li><a target="_blank" href="http://underscorejs.org/">Underscore.js</a></li>
 		<li><a target="_blank" href="https://www.jstree.com/">JsTree</a></li>
 		<li><a target="_blank" href="http://morrisjs.github.io/morris.js/">Morris</a></li>
 		<li><a target="_blank" href="https://github.com/scottjehl/Respond">Respondjs</a></li>
 		<li><a target="_blank" href="http://fontawesome.io/">Font-Awesome</a></li>
+		<li><a href="http://www.famfamfam.com/lab/icons/flags/" target="_blank">
+		Famfamfam flags</a></li>
 		<li><a target="_blank" href="http://thesabbir.github.io/simple-line-icons/">Simple Line Icons</a></li>
 		<li><a target="_blank" href="http://fgnass.github.io/spin.js/">SpinJs</a></li>
 		<li><a target="_blank" href="http://t4t5.github.io/sweetalert/">SweetAlert</a></li>
