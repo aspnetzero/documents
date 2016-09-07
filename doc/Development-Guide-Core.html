@@ -703,6 +703,11 @@ multiple tenants).</p>
 databases on deployment, instead of EntityFramework's own Migrate.exe (which 
 requires some configuration and can only work for single database in one run).</p>
 <h3>Infrastructure</h3>
+<h4>Startup Class</h4>
+<p>ASP.NET Core is initialized from the <strong>Startup</strong> class in the 
+application. We configure all libraries (including ABP) in this class. We 
+suggest you to start by checking this class. It is also integrated to <strong>
+OWIN</strong>. So, you can add OWIN middlewares here.</p>
 <h4>Bower &amp; Front End Dependencies</h4>
 <p>ASP.NET Zero solution uses <a href="https://bower.io/" target="_blank">bower</a> 
 package manager to obtain front end library dependencies (like bootstrap and 
@@ -711,7 +716,6 @@ Visual Studio or bower's command line interface. You can see all installed bower
 packages under <strong>Dependencies/Bower</strong> of the .Web project.</p>
 <p>
 <img class="img-thumbnail" alt="Bower dependencies" height="462" src="images/bower-dependencies.png" width="269" /></p>
-<p>s</p>
 <h4>Application Services as MVC API Controllers</h4>
 <p>ASP.NET Zero project highly use AJAX to provide a better user 
 experience. UI calls <strong>application service methods</strong> via AJAX. So, it's needed to create 
@@ -774,6 +778,44 @@ tool&nbsp;to adapt Entity Framework 6.x to the new solution format. So, you can 
 	<li>Use <em><strong>dotnet ef migrations add "Your_Migration_Name"</strong></em> 
 	command to add new migrations.</li>
 </ul>
+<h4>Exception Handling</h4>
+<p>ASP.NET Zero uses ABP's
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/AspNet-Core#exception-filter" target="_blank">
+exception handling</a> system. Thus, you don't need to handle &amp; care about 
+exceptions in most time.</p>
+<p>ASP.NET Zero solution adds <strong>exception handling middlewares</strong> in the
+<strong>Startup</strong> 
+class like that:</p>
+<pre lang="cs">if (env.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseStatusCodePagesWithRedirects("~/Error?statusCode={0}");
+    app.UseExceptionHandler("/Error");
+}</pre>
+<p>So, you get a nicely formatted exception page in development and a more user 
+friendly error page in production. See <strong>ErrorController</strong> and it's 
+related views (<strong>Views\Error</strong>) for details.</p>
+<h4>User Secrets</h4>
+<p>ASP.NET Core introduced
+<a href="https://docs.asp.net/en/latest/security/app-secrets.html#secret-manager" target="_blank">
+user secrets</a> system to store <strong>sensitive data</strong> in development. ASP.NET Zero 
+uses this system (it's configured properly for your solution). You may want to 
+use a different connection string (or social media API keys) in development and 
+do not want to add these secret data in your appsettings.json in the project 
+(and do not want to commit these sensitive information to your source control 
+system). Then use secret manager tool to store this sensitive information in 
+your local computer and allow your application to read them from your local 
+computer if available.</p>
+<p>For example, you can use the following command, in Windows <strong>command 
+prompt</strong> in the location of <strong>.Web</strong> project, to change connection string for your 
+local development environment:</p>
+<pre>dotnet user-secrets set ConnectionStrings:Default "Server=1.2.3.4;Database=MyProjectDevDb;User=sa;Password=12345678"</pre>
+<p>This user secret value overrides the value in the appsettings.json. See ASP.NET's
+<a href="https://docs.asp.net/en/latest/security/app-secrets.html" target="_blank">
+own documentation</a> for details about user secrets.</p>
 <h4>Authorization Provider</h4>
 <p>Authorization system is based on permissions. <strong>AppPermissions </strong>
 contains constants for permission names and <strong>
