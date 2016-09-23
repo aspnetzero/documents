@@ -335,7 +335,8 @@ operations (use cases) in the application.</p>
 <p>Application services are located in
 <strong>.Application</strong> project. We create first application service to 
 get people from server. We're creating an <strong>interface</strong> to define 
-the person application service:</p>
+the person application service (while this interface is optional, we suggest you 
+to create it):</p>
 <pre lang="cs">public interface IPersonAppService : IApplicationService
 {
     ListResultOutput&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
@@ -500,12 +501,12 @@ method. We can see the request if we open <strong>Network</strong> tab:</p>
 <p>
 <img class="img-thumbnail" alt="Google Chrome Console Get People" height="148" src="images/chrome-console-get-people-network.png" width="720" /></p>
 <p>As we see, an AJAX request made and people are got successfully.</p>
-<p>So, how this happen? How we could call to a C# class method (notice that it's 
-not an MVC Controller or Web API Controller, just a plain C# class) from 
+<p>So, how this happen? How we could make a call to a C# class method (notice that it's 
+not an MVC Controller, just a plain C# class) from 
 javascript like calling a javascript method? This is provided by ASP.NET 
 Boilerplate. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
-dynamic web api layer</a> documentation for more information. You can always 
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers" target="_blank">
+AspNet Core</a> documentation for more information. You can always 
 call application services from console to debug or see returned JSON structure.</p>
 <p>We can also check Audit Logs to see the request. Open <strong>AbpAuditLogs</strong> 
 table in PhoneBook database to see the call information:</p>
@@ -513,7 +514,7 @@ table in PhoneBook database to see the call information:</p>
 <img class="img-thumbnail" alt="Audit Logs table" height="71" src="images/audit-log-table-getpeople.png" width="921" /></p>
 <p>There are some other fields not shown here. So, we see that User with Id=2 
 called GetPeople method of the PersonAppService in recorded time with the shown 
-parameters and it' executed in 134 ms.</p>
+parameters and it's executed in 134 ms.</p>
 <h3>Using GetPeople Method From MVC Controller</h3>
 <p>It's time to open <strong>PhoneBookController</strong> and get people to show on the view:</p>
 <pre lang="cs">
@@ -613,7 +614,7 @@ people. See the result:</p>
 	MVC instead of going details of a 3rd party library.</p>
 </div>
 
-<h3>Creating a new people</h3>
+<h3>Creating a New Person</h3>
 <p>Next step is to create a modal to add a new item to phone book.</p>
 <h4>Add a CreatePerson Method to PersonAppService</h4>
 <p>We first define <strong>CreatePerson</strong> method in <strong>IPersonAppService</strong> interface:</p>
@@ -966,13 +967,13 @@ document</a> for details about roles and users).</p>
 <p>While a permission for a page is useful and probably needed always, we may 
 need to define additional permissions to perform some <strong>specific actions</strong> 
 on a page, like creating a new person. </p>
-<h5>Define the permission</h5>
+<h5>Define the Permission</h5>
 <p>Defining a permission is similar:</p>
 <pre lang="cs">var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);
 <strong>phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L(&quot;CreateNewPerson&quot;), multiTenancySides: MultiTenancySides.Tenant);</strong></pre>
 <p>First permission was defined before. In the second line, we are creating a 
 child permission of first one.</p>
-<h5>Add AbpAuthorize attribute</h5>
+<h5>Add AbpAuthorize Attribute</h5>
 <p>This time, we're declaring <strong>AbpAuthorize</strong> attribute just for 
 <strong>CreatePerson</strong> 
 method:</p>
@@ -1474,7 +1475,7 @@ clicking the icon at left. We can add a new phone from the inputs at last line.<
 and allows adding a new phone. Phones table is only shown if we click the edit 
 button. This is implemented using a bit CSS and javascript (we will see in next 
 sections).</p>
-<p>One important think here is we rendered phone rows in a <strong>partial view</strong>. 
+<p>One important thing here is we rendered phone rows in a <strong>partial view</strong>. 
 This is done to make this part re-usable. Because we will use the same partial 
 view when we create a new phone. The
 <strong>            _PhoneRowInPersonList
