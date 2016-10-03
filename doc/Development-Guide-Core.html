@@ -217,6 +217,59 @@ keys, you can write them into appsettings.json. When you enable it, social media
 are automatically shown on the login page as shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Social Login Icons" height="535" src="images/social-login-logos-2.png" width="416" /></p>
+<h4>
+OpenId Connect Login</h4>
+<p>
+In addition to social logins, ASP.NET Zero includes OpenId Connect Login 
+integrated. It's configuration can be changed in <span class="auto-style3">
+appsettings.json</span>:</p>
+<pre lang="js">"OpenId": {
+  "IsEnabled": "false",
+  "Authority": "",
+  "ClientId": "",
+  "ClientSecret": ""
+}</pre>
+<p>A logo (similar to social logos above) is shown in Login page when it's 
+enabled.</p>
+<h4>Two Factor Login</h4>
+<p>ASP.NET Zero is ready to provide two factor login, but it's disabled as 
+default. You can easily enable it in host settings page (in Security tab):</p>
+<p>
+<img class="img-thumbnail" alt="" height="405" src="images/lockout-two-factor-settings.png" width="490" /></p>
+<p>
+Note: In a multi-tenant application, two factor authentication is available to 
+tenants only if it's enabled in the host settings. Also, email verification and 
+SMS verification settings are only available in the host side. This is by 
+design.</p>
+<p>
+When it's enabled, user is asked to select a verification provider after 
+entering user name and password:</p>
+<p>
+<img class="img-thumbnail" alt="Send security code" height="313" src="images/send-security-code.png" width="421" /></p>
+<p>
+Then a <strong>confirmation code</strong> is sent to the selected provider and 
+user enters the code in the next page:</p>
+<p>
+<img class="img-thumbnail" alt="Verify security code" height="292" src="images/verify-security-code.png" width="419" /></p>
+<h5>
+Email Verification</h5>
+<p>
+This is available if user has a confirmed email address. Since email sending is 
+disabled in debug mode, you can see the code in logs. In release mode, email 
+will be sent (You can change this and make emailing available in also debug. See 
+sending emails section).</p>
+<h5>
+SMS Verification</h5>
+<p>
+This is available if user has a confirmed phone number. SMS sending is not 
+implemented actually (because it requires an integration to an SMS vendor). 
+Current implementation just writes security code to logs. You should complete
+<strong>IdentitySmsMessageService</strong> class in the solution to make it 
+usable. Otherwise, disable SMS verification in the settings.</p>
+<h4>User Lockout</h4>
+<p>As seen in the previous section, you can configure user lockout settings. 
+Users are lockout when they enter wrong password for a specified count and 
+duration.</p>
 <h4>Register</h4>
 <p>When we click the "<strong>Create Account</strong>" link in the login page, a 
 registration form is shown:</p>
@@ -932,7 +985,9 @@ folder of .Core project (<strong>default.html</strong>). You can change
 default email template by editing this file.</p>
 <p> <strong>Email sending</strong> is disabled in DEBUG 
 mode. Because, development environment may not be configured properly to send 
-emails. You can enable it if you want. It's enabled in RELEASE mode.</p>
+emails. You can enable it if you want. It's enabled in RELEASE mode. Check <em>
+YourProjectName</em>CoreModule class's PreInitialize method to change it if you 
+like.</p>
 <h4>BinaryObjectManager</h4>
 <p>User <strong>profile pictures</strong> are stored in database, instead of 
 file system. But it's not stored in Users table for performance reasons (Users 
