@@ -12,13 +12,13 @@
 <h3>Introduction</h3>
 
 <p>In this document, we will create a sample <strong>phonebook application</strong> 
-based on ASP.NET Zero step by step. After all steps, we will have a 
-multi-tenant, localized, authorized, configurable, testable... appliaction.</p>
+based on ASP.NET Zero step by step. Once complete, we will have a 
+multi-tenant, localized, authorized, configurable, testable... application.</p>
 
 <div class="bs-callout bs-callout-warning">
 	<h4>Project Type ...?</h4>
-	<p>There are three versions of this tutorial. This one is for <b>SPA</b> 
-	(Single-Page Application) with <strong>Angularjs.</strong><br />
+	<p>There are three versions of this tutorial. This one is for the <b>SPA</b> 
+	(Single-Page Application) with <strong>AngularJS.</strong><br />
     <ul>
         <li><a href="Developing-Step-By-Step-Core.html">Click here</a> to read the MPA (Multi-Page Application) version with ASP.NET Core and jQuery.</li>
         <li><a href="Developing-Step-By-Step-MPA.html">Click here</a> to read the MPA (Multi-Page Application) version ASP.NET MVC, ASP.NET Web API and jQuery.</li>
@@ -27,26 +27,26 @@ multi-tenant, localized, authorized, configurable, testable... appliaction.</p>
 </div>
 
 <h3>Creating The Project</h3>
-<p>We're creating and downloading the solution named "<strong>Acme.PhoneBook</strong>" as described in
-<a href="Getting-Started.html">Getting Started</a> document. After opening 
-solution in Visual Studio, we see an NLayered solution that consists of six projects:</p>
+<p>You will be creating and downloading the solution named "<strong>Acme.PhoneBook</strong>" as described in the
+<a href="Getting-Started.html">Getting Started</a> document. After opening the 
+solution in Visual Studio, you will see an NLayered solution that consists of six projects:</p>
 <p>
 
 <img class="img-thumbnail" alt="Solution Overall" height="166" src="images/solution-overall.png" width="249" /></p>
 <p>
 
-Also, run database migrations, create the database and login to the application 
-as described in <a href="Getting-Started.html">getting started</a> document. 
-After all completed and logged in to the application, we see a dashboard as 
+Once opened, run the database migrations, create the database, and login to the application 
+as described in the <a href="Getting-Started.html">Getting Started</a> document. 
+Once that is done and you are logged in to the application, you will see a dashboard as 
 shown below:</p>
 <p>
 
 <img class="img-thumbnail" alt="Dashboard" height="484" src="images/default-dashboard.png" width="800" /></p>
 <p>
 
-We will make our application <strong>single-tenant</strong> (we will convert it 
-to multi-tenant later). So, we 
-open <strong>PhoneBookCoreModule</strong> class and disable multi-tenancy as 
+Let's start by making the application <strong>single-tenant</strong> (you will convert it 
+to multi-tenant later). So, 
+open the <strong>PhoneBookCoreModule</strong> class (in the Core Project, root level) and disable multi-tenancy as 
 shown below:</p>
 <pre lang="cs">[DependsOn(typeof(AbpZeroCoreModule))]
 public class PhoneBookCoreModule : AbpModule
@@ -59,11 +59,11 @@ public class PhoneBookCoreModule : AbpModule
 }</pre>
 
 <h3>Adding a New Page</h3>
-<p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
+<p>Let's begin with the UI (Web Project) and create a new page named "<strong>Phone book</strong>".</p>
 <h4>Defining a menu item</h4>
-<p><strong>AppNavigationProvider</strong> class defines menus in the application. When 
-we change this class, menus are automatically changed. Open this class and 
-create new menu item as shown below.</p>
+<p><strong>AppNavigationProvider</strong> class (in the Web Project, under Startup) defines menus in the application. When 
+you change this class, the menus are automatically updated. Open this class and 
+create a new menu item as shown below.</p>
 <pre lang="cs">.AddItem(new MenuItemDefinition(
     PageNames.App.Tenant.PhoneBook,
     L("PhoneBook"),
@@ -72,12 +72,12 @@ create new menu item as shown below.</p>
     )
 )</pre>
 <p>Every menu item must have a <strong>unique name</strong> 
-to identify this menu item. Menu names are defined in PageNames class as 
-constants. We add a new constant: "<strong>PhoneBook</strong>".</p>
+to identify it. Menu names are defined in the PageNames class as 
+constants. So you should add a new constant: "<strong>PhoneBook</strong>".</p>
 <h4>Localizing Menu Item Display Name</h4>
-<p>A menu item should also have a <strong>localizable shown name</strong>. It's 
-used to display menu item on the page. <strong>L("PhoneBook")</strong> is localized name of 
-our new menu. <strong>L</strong> method is a helper method gets a localization 
+<p>A menu item should also have a <strong>localizable display name</strong>. It is 
+used to display menu item on the page. <strong>L("PhoneBook")</strong> is the localized name of 
+your new menu. <strong>L</strong> method is a helper method gets a localization 
 key and simply returns a <strong>LocalizableString</strong> object (see 
 AppNavigationProvider class).</p>
 <p>Localization strings are defined in <strong>XML</strong> files in <strong>
@@ -88,21 +88,21 @@ project as shown below:</p>
 <p>Open PhoneBook.xml (the <strong>default</strong>, <strong>English</strong> 
 localization dictionary) and add the following line:</p>
 <pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Phone book&quot; /&gt;</pre>
-<p>If we don't define "PhoneBook"s value for other localization dictionaries, 
-default value is shown in all languages. We can define it also for Turkish in 
+<p>If you do not define "PhoneBook"s value for other localization dictionaries, a 
+default value is shown in all languages. You could also define it for other languages as needed - for example you should define it for Turkish in the 
 PhoneBook-tr.xml file:</p>
 <pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Telefon rehberi&quot; /&gt;</pre>
 <h4>Other menu item properties</h4>
-<p><strong>url</strong> can be a URL or <strong>AngularJs route</strong> (state 
-in angular <strong>ui-router</strong> used in ASP.NET Zero) that will be 
-activated when we click the menu item. We will define this route below.</p>
-<p>Lastly, <strong>icon</strong> is the shown menu icon for new menu item. It 
-can be a <strong>css</strong> class. We can use Glyphicon, Font-Awesome or 
-another css font library here.</p>
-<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
+<p>The <strong>url</strong> can be a URL or an <strong>AngularJs route</strong> (i.e. state 
+in Angular <strong>ui-router</strong> is used in ASP.NET Zero) that will be 
+activated when someone clicks the menu item. See defining this route below.</p>
+<p>Last, the <strong>icon</strong> is the menu icon that will be displayed for new menu item. It 
+can be a <strong>CSS</strong> class. You can use Glyphicon, Font-Awesome or 
+another CSS font library here.</p>
+<p>See the <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
 navigation document</a> for more information on menu definitions.</p>
-<h3>Creating AngularJs Route</h3>
-<p>Angular routes are defined in <strong>app.js</strong>. We're adding a new 
+<h3>Creating AngularJs Routes</h3>
+<p>Angular JS routes are defined in <strong>app.js</strong>. Add a new 
 route definition as shown below:</p>
 <pre lang="js">$stateProvider.state(&#39;tenant.phonebook&#39;, {
     url: &#39;/phonebook&#39;,
@@ -112,16 +112,16 @@ route definition as shown below:</p>
 this state (route). <strong>url</strong> is the mapped URL to this route and
 <strong>templateUrl</strong> is the view path for this route.</p>
 <p>Note that 'tenant.phonebook' is a <strong>second level state</strong> (child 
-of 'tenant' abstract state). See Angular-UI's route document for more 
-information on defining states. But, in most cases, you can define it easily by 
-taking existing routes as reference.</p>
+of 'tenant' abstract state). See Angular-UI's route documentation for more 
+information on defining states. In most cases you can define it easily by 
+using existing routes as reference.</p>
 <h3>Creating AngularJs View and Controller</h3>
-<p>The last step to see our new page is to create an Angularjs view and 
+<p>The last step to see your new page is to create an AngularJS view and 
 controller for it:</p>
 <p>
 <img class="img-thumbnail" alt="Phonebook AngularJs controller and view" height="198" src="images/phonebook-controller-views-files.png" width="171" /></p>
 <p>
-We can use <strong>empty</strong> controller and view located under <strong>
+You can clone the <strong>empty</strong> controller and view located under <strong>
 common/views/_empty</strong> folder to simplify creating a new view.</p>
 <h4>Controller</h4>
 <p>Creating an empty Controller file, <strong>index.js</strong> under <strong>App/tenant/views/phonebook</strong> 
@@ -141,9 +141,9 @@ folder:</p>
     ]);
 })();</pre>
 <p>This is the minimum controller definition that creates a controller named '<strong>tenant.views.phonebook.index</strong>' 
-and triggers Metronic's init method for this page. Controller name is completely 
-arbitrary. You can set any string. We use this naming <strong>as convention</strong> 
-and it's adviced to follow this convention when developing applications based on 
+and triggers Metronic's init method for this page. The controller name is completely 
+arbitrary. You can set it to any string. However, ASP.NET Zero uses this <strong>naming convention</strong> 
+and it is recommended that you follow this convention when developing applications based on 
 ASP.NET Zero.</p>
 <h4>View</h4>
 <p>Creating an empty view, <strong>index.cshtml</strong> under <strong>App/tenant/views/phonebook</strong> 
@@ -168,20 +168,22 @@ folder:</p>
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;</pre>
-<p>We can use <strong>.cshtml (razor)</strong> files as views (thanks to ABP 
-framework). That makes easy localization<strong>,</strong> conditionally 
+<p>You can use <strong>.cshtml (Razor)</strong> files as views (thanks to ABP 
+framework) to get easy localization <strong>--</strong> conditionally 
 creating some part of the view (based on some user permissions for example) and 
-so on. Don't confuse about all these html structure. You can simple copy empty 
+so on. It is not necessary to fully understand the HTML structure for this tutorial -- you can simple copy the empty 
 view from<strong>
-common/views/_empty</strong> folder .</p>
-<p>Now, it's time to run application and see the new phone book page:</p>
+common/views/_empty</strong> folder.</p>
+<p>Now it is time to run the application and see the new phone book page:</p>
 <p>
 <img class="img-thumbnail" alt="Empty page" height="195" src="images/phonebook-page-empty.png" width="720" /></p>
-<p>Menu item display name and page title are localized. Try to change UI 
-language to see difference.</p>
+<p>The menu item display name and page title are localized. Try to change the UI 
+language setting to see the difference.</p>
+
+
 <h3>Creating Person Entity</h3>
-<p>We define entities in <strong>.Core</strong> (domain) project. We can define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
-table in database) to represent a person in phone book as shown below:</p>
+<p>In ASP.NET Zero, you define entities in the <strong>.Core</strong> (domain) project. You can define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
+table in database) to represent a person in the phone book as shown below:</p>
 <pre lang="cs">[Table(&quot;PbPersons&quot;)]
 public class Person : FullAuditedEntity
 {
@@ -201,16 +203,16 @@ public class Person : FullAuditedEntity
     public virtual string EmailAddress { get; set; }
 }</pre>
 <p>Person's <strong>primary key</strong> 
-type is <strong>int </strong>(as default). It inherits <strong>FullAuditedEntity</strong> that 
+type is an <strong>int </strong>(as default). It inherits from <strong>FullAuditedEntity</strong> which 
 contains <strong>creation</strong>, <strong>modification </strong>and <strong>
-deletion </strong>audit properties. It's also <strong>soft-delete</strong>. When 
-we delete a person, it's not deleted by database but marked as deleted (see
+deletion </strong>audit properties. It is also <strong>soft-delete</strong>. When 
+ a Person is deleted, it is not deleted from the database but instead marked as deleted (see
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entity</a> 
 and <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
-filters</a> documentations for more information). We created consts for <strong>
-MaxLength</strong> properties. This is a good practice since we will use same 
+filters</a> documentation for more information). Constants are created to implement <strong>
+MaxLength</strong> properties. This is a good practice since you can use the same 
 values later.</p>
-<p>We add a DbSet property for Person entity to <strong>PhoneBookDbContext</strong> 
+<p>Next add a DbSet property for the Person entity to the <strong>PhoneBookDbContext</strong> 
 class defined in <strong>.EntityFramework</strong> project.</p>
 
 <pre lang="cs">public class PhoneBookDbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
@@ -225,17 +227,18 @@ class defined in <strong>.EntityFramework</strong> project.</p>
 
     }
     
-    //...other codes
+    //...other code
 }</pre>
 
+
 <h3>Database Migrations</h3>
-<p>We use <strong>EntityFramework Code-First migrations</strong> to migrate 
-database schema. Since we added <strong>Person entitiy</strong>, our DbContext 
-model is changed. So, we 
+<p>Use <strong>EntityFramework Code-First migrations</strong> to migrate the 
+database schema. Since you added the <strong>Person entity</strong>, your DbContext 
+model is changed. Therefore, you
 should create a <strong>new migration</strong> to create the new table in the 
 database.</p>
 <p>After opening <strong>Package Manager Console</strong> and selecting <strong>
-.EntityFramework</strong> as <strong>default project</strong>, we write the 
+.EntityFramework</strong> as the <strong>default project</strong>, type the 
 following command:</p>
 <p>
 <img class="img-thumbnail" alt="Entity Framework Code First Migration" height="68" src="images/phonebook-migrations-1.png" width="609" /></p>
@@ -278,19 +281,18 @@ following command:</p>
             });
     }
 }</pre>
-<p>We don't have to know so much about format and rules of this file. But, it's 
-suggested to have a basic understanding of migrations. In the same Package 
-Manager Console, we write "<strong>Update-Database</strong>" command in order to 
-apply the new migration to database. After updating, we can see that <strong>PbPersons 
-table</strong> is added to database.</p>
+<p>It is not necessary to know much about the format and rules of this file although you should have a basic understanding of migrations. In the same Package 
+Manager Console, enter "<strong>Update-Database</strong>" in order to 
+apply the new migration to the database. After updating, you can verify that <strong>PbPersons 
+table</strong> is added to the database.</p>
 <p>
 <img class="img-thumbnail" alt="PhoneBook tables" height="302" src="images/phonebook-tables.png" width="190" /></p>
-<p>But this new table is empty. We can use EntityFramework's <strong>Seed</strong> 
-method to add some initial data to database. In ASP.NET Zero, there are some 
-classes to fill initial data for users and settings:</p>
+<p>This new table is empty. You should use EntityFramework's <strong>Seed</strong> 
+method to add some initial data to the database. In ASP.NET Zero, there are some 
+classes to create initial data for users and settings:</p>
 <p>
 <img class="img-thumbnail" alt="Entity Framework seed data" height="119" src="images/phonebook-seed-files.png" width="283" /></p>
-<p>So, we can add a seperated class to fill some people to database 
+<p>Thus you can add a separate class to add some initial people to the database 
 as shown below:</p>
 <pre lang="cs">public class InitialPeopleCreator
 {
@@ -328,25 +330,23 @@ as shown below:</p>
         }
     }
 }</pre>
-<p>These type of default data is good since we can also use these data in 
+<p>This type of default data is good since you can also use such data with
 <strong>unit 
-tests</strong>. Surely, we should be careful about seed data since this code will always 
-be executed after each <strong>Update-Database</strong> command (See EntityFramework 
-documentations to know more about seed data). This class is created and called 
-in <strong>InitialDbBuilder</strong> class, and it's called from 
-EntityFramework's <strong>Configuration</strong> class. This is not so 
-important, just for a good code organization (see source codes).</p>
+tests</strong>. Of course, you should be careful about seed data since this code will always 
+be executed after each <strong>Update-Database</strong> command (see the EntityFramework 
+documentation to learn more about seed data). This class is created and called 
+in the <strong>InitialDbBuilder</strong> class, and it is called from 
+EntityFramework's <strong>Configuration</strong> class. It is not critical but is useful for a good code organization (see source code).</p>
 
-<p>We execute <strong>Update-Database</strong> command again. This command runs 
-seed and adds two people to PbPersons table:</p>
+<p>Execute the <strong>Update-Database</strong> command again. This command seeds two people into the PbPersons table:</p>
 <p>
 <img class="img-thumbnail" alt="Persons initial data" height="50" src="images/phonebook-persons-table-initial-data.png" width="720" /></p>
 <h3>Creating Person Application Service</h3>
-<p>An Application Service is used from client (presentation layer) to perform 
+<p>An Application Service is used from the client (presentation layer) to perform 
 operations (use cases) in the application.</p>
-<p>Application services are located in
-<strong>.Application</strong> project. We create first application service to 
-get people from server. We're creating an <strong>interface</strong> to define 
+<p>Application services are located in the
+<strong>.Application</strong> project. First create an application service to 
+get people from the server. Create an <strong>interface</strong> to define 
 the person application service:</p>
 <pre lang="cs">public interface IPersonAppService : IApplicationService
 {
@@ -354,7 +354,7 @@ the person application service:</p>
 }</pre>
 <p>An application service method gets/returns <strong>DTO</strong>s. <strong>ListResultOutput</strong> is a 
 pre-build helper DTO to return a list of another DTO. <strong>GetPeopleInput</strong> is a DTO to pass 
-request parameters to <strong>GetPeople</strong> method. So, GetPeopleIntput and PersonListDto 
+request parameters to the <strong>GetPeople</strong> method. GetPeopleIntput and PersonListDto 
 are defined as shown below:</p>
 
 <pre lang="cs">public class GetPeopleInput : <strong>IInputDto</strong>
@@ -373,15 +373,15 @@ public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 }</pre>
 <p>Implementing <strong>IInputDto</strong> interface is a convention in ABP for 
 input DTOs. It provides automatic 
-validation (as we will use later). <strong>AutoMapFrom</strong> attribute is used to configure 
+validation (which you will use later). <strong>AutoMapFrom</strong> attribute is used to configure 
 <strong>AutoMapper</strong> to create mapping from 
-<strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> used to inherit audit properties 
+<strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> is used to inherit audit properties 
 automatically. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">
 application service</a> and
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
-DTO</a> documentations for more information.</p>
-<p>After defining interface, we can implement it as shown below:</p>
+DTO</a> documentation for more information.</p>
+<p>After defining the interface, you can implement it as shown below:</p>
 <pre lang="cs">public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
 {
     private readonly IRepository&lt;Person&gt; _personRepository;
