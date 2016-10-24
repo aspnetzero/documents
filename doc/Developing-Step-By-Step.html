@@ -852,29 +852,31 @@ This way the user cannot view the page without the permission. He or she is redi
 default route by AngularJS.</p>
 
 <h5>Grant permission</h5>
-<p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
-page and edit <strong>admin</strong> role:</p>
+<p>Go to the <strong>Role Management</strong> 
+page and edit the <strong>admin</strong> role:</p>
 <p>
 <img class="img-thumbnail" alt="Role permissions" height="574" src="images/role-permissions-with-phonebook.png" width="617" /></p>
-<p>We see that a <strong>new permission</strong> named "<strong>Phone book</strong>" 
-added to <strong>permissions</strong> tab. So, we can check it and save the 
-role. After saving, we need to <strong>refresh </strong>the whole page to 
-refresh permissions for the current user. We could also grant this permission 
-for a specific user (see <a href="Development-Guide.html">development guide 
-document</a> for details about roles and users).</p>
-<p>Now, we can enter the Phone book page again.</p>
+<p>You will see that a <strong>new permission</strong> named "<strong>Phone book</strong>" 
+has been added to the <strong>permissions</strong> tab. You can check it and save the 
+role. After saving, you need to <strong>refresh </strong>the whole page to 
+refresh permissions for the current user. You could also grant this permission 
+for a specific user (see the <a href="Development-Guide.html">development guide 
+</a> for details about roles and users).</p>
+<p>Now you can view the Phone book page again.</p>
+
+
 <h4>Permission for Create New Person</h4>
-<p>While a permission for a page is useful and probably needed always, we may 
+<p>While a permission for a page is useful and probably needed always, you may 
 need to define additional permissions to perform some <strong>specific actions</strong> 
 on a page, like creating a new person. </p>
 <h5>Define the permission</h5>
 <p>Defining a permission is similar:</p>
 <pre lang="cs">var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);
 <strong>phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L(&quot;CreateNewPerson&quot;), multiTenancySides: MultiTenancySides.Tenant);</strong></pre>
-<p>First permission was defined before. In the second line, we are creating a 
-child permission of first one.</p>
+<p>The first permission was defined before. In the second line, you are creating a 
+child permission of the first one.</p>
 <h5>Add AbpAuthorize attribute</h5>
-<p>This time, we're declaring <strong>AbpAuthorize</strong> attribute just for 
+<p>This time, you are declaring an <strong>AbpAuthorize</strong> attribute just for the
 <strong>CreatePerson</strong> 
 method:</p>
 <pre lang="cs"><strong>[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
@@ -883,44 +885,47 @@ method:</p>
     //...
 }
 </pre>
+
 <h5>Hide Unauthorized Button</h5>
-<p>If we run the application and try to create a person, we get an authorization 
-error after clicking the save button. But, it's good to <strong>completely hide 
-Create New Person button</strong> if we don't have the permission. There are a 
-few ways of doing it.</p>
-<p>We can implement it in <strong>index.cshtml</strong> razor view on <strong>server side</strong> using
+<p>If you run the application and try to create a person, you get an authorization 
+error after clicking the save button. In addition, it would be good to <strong>completely hide 
+Create New Person button</strong> if the user does not have the permission. There are a 
+couple ways of doing this.</p>
+<p>You can implement it in the <strong>index.cshtml</strong> razor view on the <strong>server side</strong> using
 <strong>IsGranted</strong> 
 method:</p>
 <pre lang="xml">@if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson))
 {
     &lt;button class=&quot;btn btn-primary blue&quot; ng-click=&quot;vm.openCreatePersonModal()&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;
 }</pre>
-<p>In this way, the Create New Person does not rendered in server and user can 
+<p>In this way, the Create New Person does not get rendered on the server and the user can 
 not see this button.</p>
-<p>As an alternative, we can check permission on <strong>client side</strong>. 
-First, we declare a variable in AngularJS controller:</p>
+<p>As an alternative, you can check permission on the <strong>client side</strong>. 
+First, declare a variable in the AngularJS controller:</p>
 <pre lang="js">vm.permissions = {
     createPerson: abp.auth.hasPermission(&#39;Pages.Tenant.PhoneBook.CreatePerson&#39;)
 };</pre>
-<p>And then use it in a <strong>ng-if</strong> directive in view to conditionally render the button:</p>
+<p>Then use it in a <strong>ng-if</strong> directive in the view to conditionally render the button:</p>
 <pre lang="xml">&lt;button <strong>ng-if=&quot;vm.permissions.createPerson&quot;</strong> class=&quot;btn btn-primary blue&quot; ng-click=&quot;vm.openCreatePersonModal()&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;</pre>
+
 <h5>Grant permission</h5>
-<p>To see the button again, we can go to role or user manager and grant related 
+<p>To see the button again, you can go to the role or user manager and grant the related 
 permission as shown below:</p>
 <p>
 <img class="img-thumbnail" alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
-<p>As shown above, <strong>Create new person</strong> permission is a child 
+<p>As shown above, the <strong>Create new person</strong> permission is a child 
 permission of the <strong>Phone book</strong>.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization">
 authorization documentation</a> for more information on authorization.</p>
+
 <h3>Deleting a Person</h3>
-<p>Let's add a delete button in people list as shown below:</p>
+<p>Add a delete button to the people list as shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Delete person" height="409" src="images/phonebook-people-delete-button.png" width="768" /></p>
 <p>
-We're starting from UI in this case.</p>
+You're starting from the UI in this case.</p>
 <h4>View</h4>
-<p>We're changing index.cshtml view to add a button (related part is shown 
+<p>You're changing the index.cshtml view to add a button (related part is shown 
 here):</p>
 <pre lang="xml">&lt;div id=&quot;AllPeopleList&quot; class=&quot;list-group&quot;&gt;
     &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; ng-repeat=&quot;person in vm.persons&quot;&gt;
@@ -935,10 +940,10 @@ here):</p>
         &lt;/p&gt;
     &lt;/a&gt;
 &lt;/div&gt;</pre>
-<p>Surely, we defined 'delete person' permission as like before.</p>
+<p>The 'delete person' permission is defined in the same way as demonstrated previously.</p>
 <h4>Style</h4>
-<p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to take button right. Created 
-a file named index.less and added following lines:</p>
+<p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to position the button to the right. Create 
+a file named index.less and added the following lines:</p>
 <pre lang="css">#AllPeopleList {
     .list-group-item-heading {
         button.delete-person {
@@ -947,10 +952,11 @@ a file named index.less and added following lines:</p>
     }
 }
 </pre>
-<p>Pre-built bundling configuration automatically includes styles to layout.</p>
+
+<p>The pre-built bundling configuration automatically includes styles to layout.</p>
 <h4>Controller</h4>
-<p>Now, creating a <strong>deletePerson</strong> function in AngularJS controller (that was called from 
-view above):</p>
+<p>Creating a <strong>deletePerson</strong> function in the AngularJS controller (that was called from 
+the view above):</p>
 <pre lang="js">vm.deletePerson = function (person) {
     abp.message.confirm(
         app.localize(&#39;AreYouSureToDeletePerson&#39;, person.name),
@@ -966,42 +972,42 @@ view above):</p>
         }
     );
 };</pre>
-<p>It first shows a confirmation message when we click the delete button:</p>
+<p>When someone clicks the delete button, it first shows a confirmation message:</p>
 <p>
 <img class="img-thumbnail" alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
-<p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
+<p>If they click Yes, it calls the <strong>deletePerson</strong> method of 
 <strong>PersonAppService</strong> and shows a 
-notification if operation succeed.</p>
+notification if the operation succeeds.</p>
 <p>Localization string "<strong>AreYouSureToDeletePerson</strong>" was defined 
-like that:</p>
+like this:</p>
 <pre lang="xml">&lt;text name=&quot;AreYouSureToDeletePerson&quot; value=&quot;Are you sure to delete person named {0}?&quot; /&gt;</pre>
-<p>So, we can pass a name into localize method. This is similar to C#'s 
+<p>You can pass a name into the localize method. This is similar to C#'s 
 string.Format method.</p>
 <h4>Application Service</h4>
-<p>First, adding a new method definition to <strong>IPersonAppService</strong> interface as always:</p>
+<p>First, adding a new method definition to <strong>IPersonAppService</strong> interface as usual:</p>
 <pre lang="cs">Task DeletePerson(IdInput input);</pre>
-<p><strong>IdInput</strong> is a shortcut of ABP if we only get an id value. Implementation (in 
+<p><strong>IdInput</strong> is a shortcut of ABP if there is only an id value. The implementation (in 
 <strong>PersonAppService</strong>) is very simple:</p>
 <pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson)]
 public async Task DeletePerson(IdInput input)
 {
     await _personRepository.DeleteAsync(input.Id);
 }</pre>
-<p>We also <strong>authorized</strong> deleting a person as did before for creating a person.</p>
+<p>You also need to <strong>authorize</strong> deleting a person as before for creating a person.</p>
 <h3>Filtering people</h3>
-<p>Now, we will implement <strong>search</strong> functionality of <strong>
-GetPeople</strong> method. UI is shown below:</p>
+<p>Now implement <strong>search</strong> functionality for the <strong>
+GetPeople</strong> method. The UI is shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Searching people" height="328" src="images/search-people.png" width="770" /></p>
-<p>We added a search input to filter people:</p>
+<p>Add a search input to filter people:</p>
 <pre lang="xml">&lt;input <strong>ng-model=&quot;vm.filterText&quot; auto-focus</strong> class=&quot;form-control&quot; placeholder=&quot;@L(&quot;SearchWithThreeDot&quot;)&quot; type=&quot;text&quot;&gt;
 &lt;span class=&quot;input-group-btn&quot;&gt;
     &lt;button <strong>ng-click=&quot;vm.getPeople()&quot;</strong> class=&quot;btn btn-default&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;icon-magnifier&quot;&gt;&lt;/i&gt;&lt;/button&gt;
 &lt;/span&gt;</pre>
-<p>and changed title to show people count:</p>
+<p>and change the title to show the person count:</p>
 <pre lang="xml">&lt;h3&gt;@L(&quot;AllPeople&quot;) (<strong>{{vm.persons.length}}</strong>)&lt;/h3&gt;</pre>
-<p>Lastly, changed <strong>getPeople</strong> function in controller, to send 
-<strong>vm.filterText</strong> to server:</p>
+<p>Last, change the <strong>getPeople</strong> function in the controller, to send 
+<strong>vm.filterText</strong> to the server:</p>
 <pre lang="js">vm.getPeople = function() {
     personService.getPeople({
 <strong>        filter: vm.filterText
@@ -1009,12 +1015,13 @@ GetPeople</strong> method. UI is shown below:</p>
         vm.persons = result.items;
     });
 };</pre>
-<p>That's all. It works since we already have implemented filtering on server.</p>
+<p>That is all. It works since you had already implemented filtering on the server.</p>
+
 <h3>Extending the Application: Adding Phone Numbers</h3>
-<p>Until now, we did not even mention about phone numbers. It's time to extend 
+<p>What about phone numbers? It's time to extend 
 our domain to support <strong>multiple phone numbers</strong> for a person.</p>
 <h3>Creating Phone Entity</h3>
-<p>Let's start by creating a new Entity, <strong>Phone</strong> in <strong>.Core</strong> 
+<p>Let's start by creating a new Entity, <strong>Phone</strong>, in the <strong>.Core</strong> 
 project:</p>
 <pre lang="cs">[Table(&quot;PbPhones&quot;)]
 public class Phone : CreationAuditedEntity&lt;long&gt;
@@ -1032,10 +1039,10 @@ public class Phone : CreationAuditedEntity&lt;long&gt;
     [MaxLength(MaxNumberLength)]
     public virtual string Number { get; set; }
 }</pre>
-<p>Phone entities are stored in <strong>PbPhones</strong> table. It's primary key is <strong>long</strong> 
-and inherits creation auditing properties. It has a reference to <strong>Person</strong> entity which owns the phone 
+<p>Phone entities are stored in the <strong>PbPhones</strong> table. It's primary key is <strong>long</strong> 
+and inherits creation auditing properties. It has a reference to the <strong>Person</strong> entity which owns the phone 
 number.</p>
-<p>We added a <strong>Phones</strong> collection to the People:</p>
+<p>Add a <strong>Phones</strong> collection to the Person class:</p>
 <pre lang="cs">[Table(&quot;PbPersons&quot;)]
 public class Person : FullAuditedEntity
 {
@@ -1043,20 +1050,20 @@ public class Person : FullAuditedEntity
 
     <strong>public virtual ICollection&lt;Phone&gt; Phones { get; set; }</strong>
 }</pre>
-<p>We have a <strong>PhoneType</strong> enum as shown below:</p>
+<p>It includes a <strong>PhoneType</strong> enum as shown below:</p>
 <pre lang="cs">public enum PhoneType : byte
 {
     Mobile,
     Home,
     Business
 }</pre>
-<p>Lastly, we're also adding a DbSet property for Phone to our DbContext:</p>
+<p>Last, add a DbSet property for Phone to your DbContext:</p>
 <pre lang="cs">public virtual IDbSet&lt;Phone&gt; Phones { get; set; }</pre>
 <h3>Adding Database Migration</h3>
-<p>Our entity model has changed, so we need to add a new migration:</p>
+<p>The entity model has changed, so you need to add a new migration:</p>
 <p>
 <img class="img-thumbnail" alt="Entity Framework Migration" height="81" src="images/phonebook-migrations-2.png" width="598" /></p>
-<p>This will create a new code based migration file to create <strong>PbPhones</strong> 
+<p>This will create a new code based migration file that will create the <strong>PbPhones</strong> 
 table:</p>
 <pre lang="cs">public partial class Added_Phone : DbMigration
 {
@@ -1086,7 +1093,7 @@ table:</p>
         DropTable(&quot;dbo.PbPhones&quot;);
     }
 }</pre>
-<p>Before updating database, we can go to database <strong>seed</strong> code 
+<p>Before updating the database, you should go to the database <strong>seed</strong> code 
 and add example <strong>phone numbers</strong> for example people:</p>
 <pre lang="cs">public class InitialPeopleAndPhoneCreator
 {
@@ -1128,19 +1135,19 @@ and add example <strong>phone numbers</strong> for example people:</p>
         }
     }
 }</pre>
-<p>We added two phone number to Douglas, one phone number to Isaac. But if we 
+<p>You added two phone numbers for Douglas, one phone number for Isaac. But if you 
 run Update-Database now, phones are not inserted since this seed code checks if 
-people exists, and does not insert if it's already exists. What's solution? 
-Since we haven't deployed yet, we can delete database (or at lease truncate 
-people table) and re-create it. I do it.</p>
-<p>Now, we are running <strong>Update-Database</strong> command in Package 
-Manager Console to re-create database and seed it. You can check database to see
+people exists, and does not insert if they already exist. What is the solution? 
+Since you haven't deployed yet, you can delete the database (or at lease truncate 
+the Person table) and re-create it.</p>
+<p>Now, you should run the <strong>Update-Database</strong> command in Package 
+Manager Console to re-create the database and seed it. You can check the database to see
 <strong>PbPhones</strong> table and rows.</p>
 <h3>Changing GetPeople Method</h3>
-<p>We're changing <strong>PersonAppService.GetPeople</strong> method to <strong>
-include</strong> phone numbers of people into return value.</p>
-<p>First, we're 
-changing <strong>PersonListDto</strong> to contain a list of phones:</p>
+<p>You're changing the <strong>PersonAppService.GetPeople</strong> method to <strong>
+include</strong> phone numbers of people into the return value.</p>
+<p>First, you should
+change <strong>PersonListDto</strong> to contain a list of phones:</p>
 <pre lang="cs">[AutoMapFrom(typeof(Person))]
 public class PersonListDto : FullAuditedEntityDto
 {
@@ -1160,7 +1167,7 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
 
     public string Number { get; set; }
 </strong>}</pre>
-<p>So, added also a DTO to transfer phone numbers and mapped from Phone entity. Now, we can change GetPeople method to get Phones from database:</p>
+<p>Next, a DTO to transfer phone numbers and map them from the Phone entity. Now, you can change the GetPeople method to get Phones from the database:</p>
 <pre lang="cs">public ListResultOutput&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
 {
     var persons = _personRepository
@@ -1178,15 +1185,17 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
 
     return new ListResultOutput&lt;PersonListDto&gt;(persons.MapTo&lt;List&lt;PersonListDto&gt;&gt;());
 }</pre>
-<p>We only added <strong>Include</strong> extension method to the query. Rest of 
-the codes remains same. Furthermore, it would work without adding this, but much 
-slower (since it will lazy load phone numbers for every person seperately).</p>
+
+
+<p>Note that only the <strong>Include</strong> extension method was added to the query. The rest of 
+the code remained the same. Additionally, it would work without adding it, but much 
+slower (since it will lazy load phone numbers for every person separately).</p>
+
 <h3>AddPhone and DeletePhone Methods</h3>
-<p>We are adding two more methods to IPersonAppService interface as shown below:</p>
+<p>Add two more methods to IPersonAppService interface as shown below:</p>
 <pre lang="cs">Task DeletePhone(IdInput&lt;long&gt; input);
 Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input);</pre>
-<p>We could create a new, seperated IPhoneAppService. It's your choice. But, we 
-can consider Person as an aggregate and add phone related methods here. AddPhoneInput 
+<p>You could create a new, separate IPhoneAppService. It's your choice. But, Person can be considered as an aggregate and phone related methods can be added here. AddPhoneInput 
 DTO is shown below:</p>
 <pre lang="cs">[AutoMapTo(typeof(Phone))]
 public class AddPhoneInput : IInputDto
@@ -1201,7 +1210,7 @@ public class AddPhoneInput : IInputDto
     [MaxLength(Phone.MaxNumberLength)]
     public string Number { get; set; }
 }</pre>
-<p>Now, we can implement these methods:</p>
+<p>Now, you can implement these methods:</p>
 <pre lang="cs">public async Task DeletePhone(IdInput&lt;long&gt; input)
 {
     await _phoneRepository.DeleteAsync(input.Id);
@@ -1218,31 +1227,32 @@ public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
 
     return phone.MapTo&lt;PhoneInPersonListDto&gt;();
 }</pre>
-<p><strong>DeletePhone</strong> method is simple. It only deletes phone with 
+<p><strong>DeletePhone</strong> method is simple. It only deletes a phone number with a
 given id.</p>
-<p><strong>AddPhone</strong> method <strong>gets </strong>the person from 
-database and add new phone to person.Phones collection. Then is <strong>save 
-changes</strong>. Saving changes causes inserting new added phone to database 
-and get it's <strong>Id</strong>. Because, we are returning a DTO that contains 
-newly created phone informations including Id. So, it should be assigned before 
-mapping in the last line. (Notice that; normally it's not needed to call 
-CurrentUnitOfWork.SaveChangesAsync. It's automatically called at the end of the 
-method. We called it in the method since we need to save entity and get it's Id 
+<p><strong>AddPhone</strong> method <strong>gets </strong>a person from the 
+database and adds a new phone to that person.Phones collection. Then it calls <strong>save 
+changes</strong>. Saving changes causes the new, added phone number to the database 
+and get it's <strong>Id</strong>. A DTO is returned that contains the
+newly created phone information including Id. It should be assigned before 
+mapping in the last line. (Note that normally you do not need to call 
+CurrentUnitOfWork.SaveChangesAsync. It is automatically called at the end of the 
+method. Here we needed to save the entity and get its Id 
 immediately. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Unit-Of-Work#DocAutoSaveChanges">
-UOW document</a> for more.)</p>
-<p>There may be different approaches for AddPhone method. You can directly work 
-with a <strong>phone repository</strong> to insert new phone. They all have 
+UOW document</a> for more information.)</p>
+<p>There may be different approaches for AddPhone method. You could directly work 
+with a <strong>phone repository</strong> to insert the new phone. The different approaches all have 
 different pros and cons. It's your choice.</p>
+
 <h3>Edit Mode For People List</h3>
-<p>Final UI is shown below:</p>
+<p>The final UI is shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Phone book edit mode" height="642" src="images/phone-book-edit-mode.png" width="762" /></p>
-<p>When we click the <strong>green edit icon</strong> for a person, it's row is 
-expanded and all phone numbers are shown. Then we can delete any number by 
-clicking the icon at left. We can add a new phone from the inputs at last line.</p>
+<p>If you click the <strong>green edit icon</strong> for a person, its row is 
+expanded and all phone numbers are shown. Then you can delete any number by 
+clicking the icon at the left. You can add a new phone using the inputs on the last line.</p>
 <h4>View</h4>
-<p>Changes in view are shown below:</p>
+<p>Changes in the view are shown below:</p>
 <pre lang="xml">&lt;div id=&quot;AllPeopleList&quot; class=&quot;list-group&quot;&gt;
     &lt;div class=&quot;list-group-item&quot; ng-repeat=&quot;person in vm.persons&quot; ng-class=&quot;{&#39;person-editing&#39;:person==vm.editingPerson}&quot;&gt;
         &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
@@ -1298,12 +1308,12 @@ clicking the icon at left. We can add a new phone from the inputs at last line.<
         &lt;/div&gt;
 </strong>    &lt;/div&gt;
 &lt;/div&gt;</pre>
-<p>We added an edit button for each person. Then added a table (shown if this 
-person is being edited) for each person that shows phones of the related person 
+<p>The changed view includes an added edit button for each person. It also includes an a new table (shown if that  
+person is being edited) for each person that displays phones of the related person 
 and allows adding a new phone.</p>
 <h4>Controller</h4>
 
-<p>Added following codes into the AngularJS controller:</p>
+<p>Add following code into the AngularJS controller:</p>
 <pre lang="js">vm.editingPerson = null;
 
 vm.editPerson = function(person) {
@@ -1351,77 +1361,79 @@ vm.addPhone = function(phone, person) {
             phone.number = &#39;&#39;;
         });
 };</pre>
-<h3>Multi Tenancy</h3>
-<p>We have built a fully functional application until here. Now, we will see how 
+<h3>Multi-tenancy</h3>
+<p>Thus far in the tutorial, you have built a fully functional application. Now, you will see how 
 to convert it to a multi-tenant application easily.</p>
 <h4>Enable Multi Tenancy</h4>
-<p>We disabled multi-tenancy at the begginning of this document. Now, re-enabling it in <strong>PhoneBookCoreModule</strong> class:</p>
+<p>We disabled multi-tenancy at the beginning of this tutorial. Now, re-enable it in <strong>PhoneBookCoreModule</strong> class:</p>
 <pre lang="cs">Configuration.MultiTenancy.IsEnabled = true;</pre>
+
 <h4>Make Entities Multi Tenant</h4>
-<p>In a multi-tenant application, a tenant's entities should be isolated by 
-other tenants. For this example project, every tenant should have own phone book 
+<p>In a multi-tenant application, a tenant's entities should be isolated from 
+other tenants. For this example project, every tenant should have thier own phone book 
 with isolated people and phone numbers.</p>
-<p>When we implement IMustHaveTenant interface, ABP automatically
+<p>When you implement the IMustHaveTenant interface, ABP automatically
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">filters 
-data</a> based on current Tenant, while retrieving entities from database. So, we should declare that Person entity 
-must have a tenant using <strong>IMustHaveTenant</strong> interface:</p>
+data</a> based on the current Tenant when retrieving entities from the database. So you should declare that Person entity 
+must have a tenant using the <strong>IMustHaveTenant</strong> interface:</p>
 <pre lang="cs">public class Person : FullAuditedEntity, <strong>IMustHaveTenant</strong>
 {
     <strong>public virtual int TenantId { get; set; }
 </strong>
     //...other properties
 }</pre>
-<p>We may want to add IMustHaveTenant interface to also Phone entity. This is 
-needed if we directly use phone repository to get phones. In this sample 
-project, it's not needed.</p>
-<p>Since entities have changed, we should create a new database migration:</p>
+<p>You may want to add IMustHaveTenant interface to the Phone entity as well. This is 
+needed if you directly use the phone repository to get phones. In this sample 
+project, it is not strictly needed.</p>
+<p>Since entities have changed, you should create a new database migration:</p>
 <pre>Add-Migration "Implemented_IMustHaveTenant_For_Person"</pre>
 <p>This command creates a new code-first database migration. The migration class 
-adds an annotation this is needed for automatic filtering. We don't have to know 
-what it is since it's done automatically. And also it adds a TenantId column to 
+adds an annotation that is needed for automatic filtering. You don't have to know 
+what it is since it is done automatically. It adds a TenantId column to 
 PbPersons table as shown below:</p>
 <pre lang="cs">AddColumn(&quot;dbo.PbPersons&quot;, &quot;TenantId&quot;, c =&gt; c.Int(nullable: false, <strong>defaultValue: 1</strong>));</pre>
 <p>I added <strong>defaultValue as 1</strong> to AddColumn options. Thus, 
-current People are automatically assigned to <strong>default tenant</strong> 
-(default tenant's id is 1).</p>
-<p>Now, we can update the database again:</p>
+current People are automatically assigned to the <strong>default tenant</strong> 
+(the default tenant's id is 1).</p>
+<p>Now, you can update the database again:</p>
 <pre>Update-Database</pre>
+
 <h4>Run The Multi Tenant Application</h4>
-<p><strong>It's finished</strong>! We can test the application. Run the project, <strong>login</strong> as 
+<p><strong>It's finished</strong>! you can test the application: run the project and <strong>log in</strong> as 
 <strong>host</strong> 
 as shown blow:</p>
 <p>
 <img class="img-thumbnail" alt="Login as host" height="400" src="images/login-as-host.png" width="419" /></p>
-<p>Since we enabled multi-tenancy, we see a <strong>Tenancy name </strong>input 
-on login form. When we leave it <strong>empty</strong>, we login as a <strong>host user</strong>. 
+<p>Since you enabled multi-tenancy, you will see a <strong>Tenancy name </strong>input 
+on the login form. If you leave it <strong>empty</strong>, you login as a <strong>host user</strong>. 
 Default <strong>admin</strong> password is <strong>123qwe</strong>.</p>
-<p>After login, we see the <strong>tenant list</strong> which only contains a <strong>default</strong> 
-tenant. We can create a new tenant:</p>
+<p>After login, you will see the <strong>tenant list</strong> which only contains a <strong>default</strong> 
+tenant. Create a new tenant:</p>
 <p>
 <img class="img-thumbnail" alt="Creating tenant" height="655" src="images/create-tenant-2.png" width="619" /></p>
-<p>I created a new tenant named <strong>trio</strong>. Now, tenant list has two 
+<p>I created a new tenant named <strong>trio</strong>. Now, the tenant list has two 
 tenants:</p>
 <p>
 <img class="img-thumbnail" alt="Tenant list" height="497" src="images/tenant-list-with-2-tenant.png" width="871" /></p>
 <p>&nbsp;I can <strong>logout</strong> and 
-login as trio <strong>tenant admin</strong>:</p>
+login as the trio <strong>tenant admin</strong>:</p>
 <p>
 <img alt="Login as tenant" height="404" src="images/login-as-tenant.png" width="420" /></p>
-<p>After login, we see that phone book is empty:</p>
+<p>After login, you can see that the phone book is empty:</p>
 <p>
 <img alt="Empty phonebook of new tenant" height="210" src="images/phonebook-empty.png" width="791" /></p>
-<p>It's empty because trio tenant has a completely islolated people list. You can 
+<p>It's empty because the trio tenant has a completely isolated people list. You can 
 add people here, logout and login as different teants (you can login as default 
 tenant for example). You will see that each tenant 
-has an isolated phone book and can not see other's people.</p>
+has an isolated phone book and can not see other tenant's people.</p>
 <h3>Conclusion</h3>
-<p>In this document, we built a complete example that covers most parts of the 
-ASP.NET Zero system. We hope that it will help you to build your own 
-application.</p>
+<p>In this document, you built a complete example that covers most parts of the 
+ASP.NET Zero system. The ASP.NET Zero Team hopes that it will help you to build your own 
+application quickly and efficiently.</p>
 <h4>Source Code</h4>
-<p>You should <a href="/Prices">purchase</a> ASP.NET Zero in order to get
+<p>You should <a href="/Prices">purchase</a> ASP.NET Zero in order to get the
 <strong>source code</strong>. After purchasing, you can get the sample project 
-from private Github repository:
+from our private Github repository:
 <a href="https://github.com/aspnetzero/aspnet-zero-samples">https://github.com/aspnetzero/aspnet-zero-samples</a></p>
 
 </body>
