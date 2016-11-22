@@ -289,7 +289,7 @@ table</strong> is added to database.</p>
 method to add some initial data to database. In ASP.NET Zero, there are some 
 classes to fill initial data for users and settings:</p>
 <p>
-<img class="img-thumbnail" alt="Entity Framework seed data" height="119" src="images/phonebook-seed-files.png" width="283" /></p>
+<img class="img-thumbnail" alt="Entity Framework seed data" src="images/phonebook-seed-files-1.png" /></p>
 <p>So, we can add a seperated class to fill some people to database 
 as shown below:</p>
 <pre lang="cs">public class InitialPeopleCreator
@@ -350,14 +350,14 @@ get people from server. We're creating an <strong>interface</strong> to define
 the person application service:</p>
 <pre lang="cs">public interface IPersonAppService : IApplicationService
 {
-    ListResultOutput&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
+    ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
 }</pre>
-<p>An application service method gets/returns <strong>DTO</strong>s. <strong>ListResultOutput</strong> is a 
+<p>An application service method gets/returns <strong>DTO</strong>s. <strong>ListResultDto</strong> is a 
 pre-build helper DTO to return a list of another DTO. <strong>GetPeopleInput</strong> is a DTO to pass 
 request parameters to <strong>GetPeople</strong> method. So, GetPeopleIntput and PersonListDto 
 are defined as shown below:</p>
 
-<pre lang="cs">public class GetPeopleInput : <strong>IInputDto</strong>
+<pre lang="cs">public class GetPeopleInput
 {
     public string Filter { get; set; }
 }
@@ -371,9 +371,7 @@ public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 
     public string EmailAddress { get; set; }
 }</pre>
-<p>Implementing <strong>IInputDto</strong> interface is a convention in ABP for 
-input DTOs. It provides automatic 
-validation (as we will use later). <strong>AutoMapFrom</strong> attribute is used to configure 
+<strong>AutoMapFrom</strong> attribute is used to configure 
 <strong>AutoMapper</strong> to create mapping from 
 <strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> used to inherit audit properties 
 automatically. See
@@ -391,7 +389,7 @@ DTO</a> documentations for more information.</p>
         _personRepository = personRepository;
     }
 
-    public ListResultOutput&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
+    public ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
     {
         var persons = _personRepository
             .GetAll()
@@ -405,7 +403,7 @@ DTO</a> documentations for more information.</p>
             .ThenBy(p =&gt; p.Surname)
             .ToList();
 
-        return new ListResultOutput&lt;PersonListDto&gt;(persons.<strong>MapTo</strong>&lt;List&lt;PersonListDto&gt;&gt;());
+        return new ListResultDto&lt;PersonListDto&gt;(persons.<strong>MapTo</strong>&lt;List&lt;PersonListDto&gt;&gt;());
     }
 }</pre>
 <p>We're injecting <strong>person repository</strong> (it's automatically created by ABP) and 
@@ -582,7 +580,7 @@ people (vm.persons). See the result:</p>
 <pre lang="cs">Task CreatePerson(CreatePersonInput input);</pre>
 <p>Then we create <strong>CreatePersonInput</strong> DTO that defines parameters of the method:</p>
 <pre lang="cs">[AutoMapTo(typeof(Person))]
-public class CreatePersonInput : IInputDto
+public class CreatePersonInput
 {
     [Required]
     [MaxLength(Person.MaxNameLength)]
@@ -970,11 +968,11 @@ like that:</p>
 string.Format method.</p>
 <h4>Application Service</h4>
 <p>First, adding a new method definition to <strong>IPersonAppService</strong> interface as always:</p>
-<pre lang="cs">Task DeletePerson(IdInput input);</pre>
-<p><strong>IdInput</strong> is a shortcut of ABP if we only get an id value. Implementation (in 
+<pre lang="cs">Task DeletePerson(EntityDto input);</pre>
+<p><strong>EntityDto</strong> is a shortcut of ABP if we only get an id value. Implementation (in 
 <strong>PersonAppService</strong>) is very simple:</p>
 <pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson)]
-public async Task DeletePerson(IdInput input)
+public async Task DeletePerson(EntityDto input)
 {
     await _personRepository.DeleteAsync(input.Id);
 }</pre>
@@ -1152,7 +1150,7 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
     public string Number { get; set; }
 </strong>}</pre>
 <p>So, added also a DTO to transfer phone numbers and mapped from Phone entity. Now, we can change GetPeople method to get Phones from database:</p>
-<pre lang="cs">public ListResultOutput&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
+<pre lang="cs">public ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
 {
     var persons = _personRepository
         .GetAll()
@@ -1167,20 +1165,20 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
         .ThenBy(p =&gt; p.Surname)
         .ToList();
 
-    return new ListResultOutput&lt;PersonListDto&gt;(persons.MapTo&lt;List&lt;PersonListDto&gt;&gt;());
+    return new ListResultDto&lt;PersonListDto&gt;(persons.MapTo&lt;List&lt;PersonListDto&gt;&gt;());
 }</pre>
 <p>We only added <strong>Include</strong> extension method to the query. Rest of 
 the codes remains same. Furthermore, it would work without adding this, but much 
 slower (since it will lazy load phone numbers for every person seperately).</p>
 <h3>AddPhone and DeletePhone Methods</h3>
 <p>We are adding two more methods to IPersonAppService interface as shown below:</p>
-<pre lang="cs">Task DeletePhone(IdInput&lt;long&gt; input);
+<pre lang="cs">Task DeletePhone(EntityDto&lt;long&gt; input);
 Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input);</pre>
 <p>We could create a new, seperated IPhoneAppService. It's your choice. But, we 
 can consider Person as an aggregate and add phone related methods here. AddPhoneInput 
 DTO is shown below:</p>
 <pre lang="cs">[AutoMapTo(typeof(Phone))]
-public class AddPhoneInput : IInputDto
+public class AddPhoneInput
 {
     [Range(1, int.MaxValue)]
     public int PersonId { get; set; }
@@ -1193,7 +1191,7 @@ public class AddPhoneInput : IInputDto
     public string Number { get; set; }
 }</pre>
 <p>Now, we can implement these methods:</p>
-<pre lang="cs">public async Task DeletePhone(IdInput&lt;long&gt; input)
+<pre lang="cs">public async Task DeletePhone(EntityDto&lt;long&gt; input)
 {
     await _phoneRepository.DeleteAsync(input.Id);
 }
