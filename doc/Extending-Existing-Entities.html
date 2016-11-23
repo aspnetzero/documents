@@ -106,7 +106,7 @@ user information on edit form. It returns <strong>GetUserForEditOutput</strong>
 object which contains a <strong>UserEditDto</strong> object that includes user 
 properties. So, we should add Address to UserEditDto to allow clients to change 
 Address property on create/update:</p>
-<pre lang="cs">public class UserEditDto : IValidate, IPassivable
+<pre lang="cs">public class UserEditDto : IPassivable
 {
     //...existing code
 
@@ -228,7 +228,7 @@ project) is used to get list of editions by clients. It returns a list of
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects" target="_blank">
 DTOs</a> for client communication). So, we should add the Price property to 
 EditionListDto too:</p>
-<pre lang="cs">[AutoMapFrom(typeof(Edition)<strong>, typeof(MyEdition)</strong>)]
+<pre lang="cs">[AutoMapFrom(<strong>typeof(MyEdition)</strong>)]
 public class EditionListDto : EntityDto, IHasCreationTime
 {
     //...existing code
