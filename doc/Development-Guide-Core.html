@@ -50,7 +50,7 @@ the user interface. This will help you to have a better understanding of concept
 		Web Compiler</a></li>
 	</ul>
 	</li>
-	<li><a href="https://go.microsoft.com/fwlink/?LinkId=817245">ASP.NET Core</a></li>
+	<li><a href="https://go.microsoft.com/fwlink/?LinkID=827546">ASP.NET Core</a></li>
 	<li>SQL Server</li>
 </ul>
 <h4>Solution Structure (Layers)</h4>
@@ -170,10 +170,11 @@ files under <strong>wwwroot/view-resources</strong> folder.</p>
 <h4>Login</h4>
 <p>Main view for AccountController is the Login page:</p>
 <p>
-<img class="img-thumbnail" alt="Login page" height="414" src="images/login-screen.png" width="431" /></p>
-<p>The first input is <strong>tenancy name</strong> which is shown only in a 
+<img class="img-thumbnail" alt="Login page" src="images/login-screen-1.png" /></p>
+<p>The <strong>tenant selection</strong> section above login section is shown only in a 
 <strong>multi-tenant</strong> application and if "subdomain tenancy name detection" is 
-<strong>not possible </strong>(See host settings section). There is a single tenant named <strong>Default</strong> 
+<strong>not possible </strong>(See host settings section). When we click Change 
+link, tenant change dialog appears and we can change the tenant. There is a single tenant named <strong>Default</strong> 
 in the initial database (See Entity framework section for initial seed 
 data).&nbsp;Leave tenancy name input as blank to login as <strong>host</strong>.</p>
 <p>We can use <strong>admin</strong> user name and <strong>123qwe</strong> 
@@ -509,7 +510,7 @@ A screenshot of user permission dialog:</p>
 <p>(not all permissions shown in the figure above)</p>
 <p>A dialog is used to create/edit a user:</p>
 <p>
-<img class="img-thumbnail" alt="Editing User" height="534" src="images/edit-user.png" width="400" /></p>
+<img class="img-thumbnail" alt="Editing User" src="images/edit-user-2.png" /></p>
 <p>We can change user's <strong>password</strong>, make her <strong>
 active/passive</strong> and so on... A user can have a <strong>profile picture</strong>. 
 It can be changed by the user (See User Menu section). <strong>Admin</strong> 
@@ -579,10 +580,13 @@ Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
 <h4>Host Settings</h4>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
-<img class="img-thumbnail" alt="General Host Settings" src="images/host-settings-general-3.png" /></p>
+<img class="img-thumbnail" alt="General Host Settings" src="images/host-settings-general-4.png" /></p>
 <p><strong>Web site root address</strong> is important, especially in production. {TENANCY_NAME} 
 is a placeholder for subdomains. It's <strong>optional</strong>. If supplied, current tenant name 
 can be automatically detected.</p>
+<div class="bs-callout bs-callout-warning">
+Web site root address is configured in appsettings.json in your Web.MVC project after AspNet Zero v2.2.
+</div>
 <p>To make tenancy name subdomains properly work, we should make two 
 configuration beside the application:</p>
 <ol>
@@ -1120,6 +1124,11 @@ Thus, anyone (or any application) can explore, test and use the API easily.</p>
 <p>Tests cover <strong>Domain </strong>(core) and <strong>Application</strong> 
 layers of the project. Open Test Explorer (Test\Windows\Test Explorer in VS main 
 menu) to run unit tests:</p>
+<div class="bs-callout bs-callout-warning">
+A new setting named <strong>MultiTenancyEnabled </strong>is introduced for unit test project with AspNet Zero v2.2. If you disable multi tenancy in your Core module, you also need to change this setting's value to false in unit test project's appsettings.json.
+In this way, test related to multi tenancy will not be executed. Because some unit tests (tenant creation, edition creation etc.) are only valid in multi tenancy concept.
+</div>
+
 <p>
 <img class="img-thumbnail" alt="Some unit tests" height="244" src="images/unit-tests.png" width="555" /></p>
 <p>These unit tests will be a guide to understand the code. Also, they can be a 

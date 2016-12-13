@@ -528,7 +528,7 @@ A screenshot of user permission dialog (not all permissions are shown here):</p>
 <p>(not all permissions shown in the figure above)</p>
 <p>A dialog is used to create/edit a user:</p>
 <p>
-<img class="img-thumbnail" alt="Editing User" height="534" src="images/edit-user.png" width="400" /></p>
+<img class="img-thumbnail" alt="Editing User" src="images/edit-user-2.png" /></p>
 <p>You can change user's <strong>password</strong>, make him <strong>
 active/passive</strong> and so on. A user can have a <strong>profile picture</strong>. 
 It can be changed by the user (see User Menu section). <strong>Admin</strong> 
@@ -1085,6 +1085,10 @@ under &quot;/<strong>swagger/ui/index</strong>&quot;. </p>
 <p>Tests cover the <strong>Domain</strong> (core) and <strong>Application</strong> 
 layers of the project. Open Test Explorer (Test\Windows\Test Explorer in VS main 
 menu) to run unit tests:</p>
+<div class="bs-callout bs-callout-warning">
+A new setting named <strong>MultiTenancyEnabled </strong>is introduced for unit test project with AspNet Zero v2.2. If you disable multi tenancy in your Core module, you also need to change this setting's value to false in unit test project's App.config.
+In this way, test related to multi tenancy will not be executed. Because some unit tests (tenant creation, edition creation etc.) are only valid in multi tenancy concept.
+</div>
 <p>
 <img class="img-thumbnail" alt="Some unit tests" height="244" src="images/unit-tests.png" width="555" /></p>
 <p>These unit tests are a guide to understand the code. Also, they can be a 
