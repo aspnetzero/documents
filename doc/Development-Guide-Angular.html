@@ -116,91 +116,39 @@ organize code base:</p>
 <h4>Workarounds</h4>
 <p>As Angular 2 is pretty new, it has some shortcomings (and third party 
 angular2 modules we used). Especially, Angular-cli is still in beta. So, AspNet 
-Zero has some minor workarounds those you can see in the code base.</p>
+Zero has some minor workarounds those can be seen in the code base.</p>
 <h3>AccountModule</h3>
 <p><strong>AccountModule</strong> provides <strong>login</strong>, <strong>register</strong>,
 <strong>forgot password </strong>and <strong>email activation</strong> pages and 
 located under src/account folder:</p>
 <p>
 <img class="thumbnail" alt="Account Module Angular 2" height="217" src="images/ng2-account-module-files.png" width="252" /></p>
-<h4>Layout</h4>
-<p>Account management pages have a seperated <strong>_Layout</strong> view under 
-<strong>Views/Account</strong> folder:</p>
-<p>
-<img class="img-thumbnail" alt="Account views" height="218" src="images/account-views-core.png" width="198" /></p>
-<p>
-Related <strong>Script </strong>and <strong>Style </strong>resources located under
-<strong>view-resources/Views/Account</strong> folder:</p>
-<p>
-<img class="img-thumbnail" alt="Account view resources" height="347" src="images/account-views-core-resources.png" width="205" /></p>
-<p>
-As similar, all views of the application have corresponding style and script 
-files under <strong>wwwroot/view-resources</strong> folder.</p>
 <h4>Login</h4>
-<p>Main view for AccountController is the Login page:</p>
+<p>Default route for AccountModule is the login/<strong>login.component</strong>:</p>
 <p>
 <img class="img-thumbnail" alt="Login page" src="images/login-screen-1.png" /></p>
 <p>The <strong>tenant selection</strong> section above login section is shown only in a 
-<strong>multi-tenant</strong> application and if "subdomain tenancy name detection" is 
-<strong>not possible </strong>(See host settings section). When we click Change 
+<strong>multi-tenant</strong> application and if "tenancy name detection" is 
+<strong>not possible from url</strong> (for example, if you use subdomain as 
+tenancy names, no need to show a tenant selection). When we click Change 
 link, tenant change dialog appears and we can change the tenant. There is a single tenant named <strong>Default</strong> 
-in the initial database (See Entity framework section for initial seed 
-data).&nbsp;Leave tenancy name input as blank to login as <strong>host</strong>.</p>
+in the initial database.&nbsp;Leave tenancy name input as blank to login as <strong>host</strong>.</p>
 <p>We can use <strong>admin</strong> user name and <strong>123qwe</strong> 
 password in first run the application. At first login, we should change admin 
 password since 123qwe is not very secure:</p>
 <p>
 <img class="img-thumbnail" alt="Change password" height="304" src="images/account-change-password.png" width="422" /></p>
 <p>
-After changing password we are redirected to the <strong>backend application</strong>.</p>
+After changing password we are redirected to the 
+<strong>application</strong> (app.module).</p>
 <h4>Social Logins</h4>
 <p>
-ASP.NET Zero supports social media logins. To enable it, we should change 
-the following settings in <b>a</b><span class="auto-style3">ppsettings.json</span> file.</p>
-<pre lang="js">  &quot;Authentication&quot;: {
-    &quot;Facebook&quot;: {
-      &quot;IsEnabled&quot;: &quot;false&quot;,
-      &quot;AppId&quot;: &quot;&quot;,
-      &quot;AppSecret&quot;: &quot;&quot;
-    },
-    &quot;Google&quot;: {
-      &quot;IsEnabled&quot;: &quot;false&quot;,
-      &quot;ClientId&quot;: &quot;&quot;,
-      &quot;ClientSecret&quot;: &quot;&quot;
-    },
-    &quot;Twitter&quot;: {
-      &quot;IsEnabled&quot;: &quot;false&quot;,
-      &quot;ConsumerKey&quot;: &quot;&quot;,
-      &quot;ConsumerSecret&quot;: &quot;&quot;
-    },
-    &quot;Microsoft&quot;: {
-      &quot;IsEnabled&quot;: &quot;false&quot;,
-      &quot;ConsumerKey&quot;: &quot;&quot;,
-      &quot;ConsumerSecret&quot;: &quot;&quot;
-    }
-  },</pre>
-<p>
-You can find many documents on the web to learn how to obtain authentication 
-keys for social platforms. So, 
-we will not go to details of creating apps on social medias. Once you get your 
-keys, you can write them into appsettings.json. When you enable it, social media logos 
-are automatically shown on the login page as shown below:</p>
-<p>
-<img class="img-thumbnail" alt="Social Login Icons" height="535" src="images/social-login-logos-2.png" width="416" /></p>
-<h4>
-OpenId Connect Login</h4>
-<p>
-In addition to social logins, ASP.NET Zero includes OpenId Connect Login 
-integrated. It's configuration can be changed in <span class="auto-style3">
-appsettings.json</span>:</p>
-<pre lang="js">"OpenId": {
-  "IsEnabled": "false",
-  "Authority": "",
-  "ClientId": "",
-  "ClientSecret": ""
-}</pre>
-<p>A logo (similar to social logos above) is shown in Login page when it's 
-enabled.</p>
+Social logins can be enabled and configured from
+<a href="Development-Guide-Core.html">backend</a>. Once they are properly 
+configured, they are automatically shown in the user interface. login/<strong>login.service</strong> 
+implements client side logic for social logins. Note that currently only <strong>
+Facebook</strong> and <strong>Google </strong>authentication is implemented for 
+Angular2 application. Microsoft and Twitter logins are on the road map.</p>
 <h4>Two Factor Login</h4>
 <p>ASP.NET Zero is ready to provide two factor login, but it's disabled as 
 default. You can easily enable it in host settings page (in Security tab):</p>
@@ -220,53 +168,53 @@ entering user name and password:</p>
 Then a <strong>confirmation code</strong> is sent to the selected provider and 
 user enters the code in the next page:</p>
 <p>
-<img class="img-thumbnail" alt="Verify security code" height="292" src="images/verify-security-code.png" width="419" /></p>
+<img class="thumbnail" alt="Verify security code" height="360" src="images/verify-security-code-ng2.png" width="410" /></p>
 <h5>
 Email Verification</h5>
 <p>
 This is available if user has a confirmed email address. Since email sending is 
 disabled in debug mode, you can see the code in logs. In release mode, email 
-will be sent (You can change this and make emailing available in also debug. See 
-sending emails section).</p>
+will be sent (You can change this from <a href="Development-Guide-Core.html">
+server side</a>).</p>
 <h5>
 SMS Verification</h5>
 <p>
 This is available if user has a confirmed phone number. SMS sending is not 
 implemented actually (because it requires an integration to an SMS vendor). 
 Current implementation just writes security code to logs. You should complete
-<strong>IdentitySmsMessageService</strong> class in the solution to make it 
+<strong>IdentitySmsMessageService</strong> class in the 
+<a href="Development-Guide-Core.html">server side</a> to make it 
 usable. Otherwise, disable SMS verification in the settings.</p>
 <h4>User Lockout</h4>
 <p>As seen in the previous section, you can configure user lockout settings. 
 Users are lockout when they enter wrong password for a specified count and 
 duration.</p>
 <h4>Register</h4>
-<p>When we click the "<strong>Create Account</strong>" link in the login page, a 
+<p>When we click the "<strong>Create Account</strong>" link (which is only 
+available for tenants for multitenant applications) in the login page, a 
 registration form is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Registration form" height="488" src="images/registration-form-small.png" width="250" /></p>
-<p>A user can be register for a tenant, not for host if this is a multi-tenant 
-application. If it's single-teant, there will be no tenancy name input here.</p>
+<img class="thumbnail" alt="Registration form" height="840" src="images/registration-form-ng2.png" width="411" /></p>
 <p><strong>Recaptcha</strong> (security question) is optional. It uses Google's recaptcha 
 service. Recaptcha service works per domain. So, to make it properly work, you 
 should create your own private and public keys for your domain on
 <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> 
-and replace keys in <strong>appsettings.json</strong> file.</p>
+and replace keys in <strong>appsettings.json</strong> file in the
+<a href="Development-Guide-Core.html">server side</a> and in the <strong>
+register.component.html</strong> in the client side.</p>
 <h4>Email Activation</h4>
 <p>When a user registers as shown above, an email confirmation code is sent to 
-his email address. If user did not receive this email for some reason, he can 
+his email address. If user did not receive this email for some reason, they can 
 click Email activation and re-send the confirmation code.</p>
 <p>
-<img class="img-thumbnail" alt="Email activation screen" height="363" src="images/email-activation.png" width="417" /></p>
-<p>Again, Tenancy name input is not shown for a single-tenant application or 
-tenant name is known via subdomain (like tenancyname.mydomain.com).</p>
+<img class="thumbnail" alt="Email activation" height="335" src="images/email-activation-2.png" width="413" /></p>
 <h4>Forgot Password</h4>
 <p>If a user forgots his password, he can click the "Forgot Password" link to 
 get an email to reset the password.</p>
 <p>
-<img class="img-thumbnail" alt="Forgot password" height="359" src="images/forgot-password.png" width="421" /></p>
-<h3>Back End Application</h3>
-<p>This is the actual application which is entered by username and password. You 
+<img alt="Forgot password" height="333" src="images/forgot-password-2.png" width="414" /></p>
+<h3>AppModule</h3>
+<p>This is the actual application module which is entered by username and password. You 
 will mostly work on this application to add your business requirements.</p>
 
 <h4>Application Folders</h4>
