@@ -20,11 +20,16 @@
 <h3>Introduction</h3>
 
 <div class="bs-callout bs-callout-warning">
-	<h4>Looking for ASP.NET MVC 5.x / AngularJS version?</h4>
-	<p>This document is for ASP.NET Core version. 
-	<a href="Development-Guide.html">Click here</a> for ASP.NET MVC 5.x / AngularJS version.</p>
+	<h4>Looking for other versions?</h4>
+	<p>This document is for ASP.NET Core 1.x + Angular 2.x. Use following 
+	documents for others;</p>
+	<ul>
+		<li><a href="Development-Guide.html">ASP.NET MVC 5.x / AngularJS</a></li>
+		<li><a href="Development-Guide-Core.html">ASP.NET Core 1.x + jQuery</a></li>
+	</ul>
 </div>
 
+<h4>About This Documentation</h4>
 <p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
 "<strong>Acme.PhoneBook</strong>". This document is a guide while developing your project. 
 We definitely suggest to read this document before starting to the 
@@ -35,125 +40,89 @@ application framework, this document highly refers it's
 <p>Before reading this document, it's suggested to run the application and explore 
 the user interface. This will help you to have a better understanding of concepts defined here.</p>
 <h4>Pre Requirements</h4>
-<p>Following tools are needed in order to use ASP.NET Zero Core solution:</p>
+<p>Following tools are needed in order to use the solution:</p>
 <ul>
-	<li><a href="https://beta.visualstudio.com/vs/community/">Visual Studio 2015</a> 
-	(with
-	<a href="https://www.visualstudio.com/news/releasenotes/vs2015-update3-vs">
-	Update 3</a> installed) or higher.</li>
-	<li>Visual Studio Extensions:<ul>
-		<li>
-		<a href="https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40">
-		Bundler &amp; Minifier</a></li>
-		<li>
-		<a href="https://visualstudiogallery.msdn.microsoft.com/3b329021-cd7a-4a01-86fc-714c2d05bb6c">
-		Web Compiler</a></li>
+	<li>Nodejs 6.9+ and Npm 3.10+</li>
+	<li>Angular-cli 1.0.0-beta.24</li>
+	<li>Typescript 2.0.8+</li>
+</ul>
+<p>In addition, see <a href="Development-Guide-Core.html">AspNet Core</a> 
+documentation for server side requirements.</p>
+<h5>IDE</h5>
+<p>It's suggested to use an IDE to develop your project. We used <a href="https://beta.visualstudio.com/vs/community/">Visual Studio 2015</a>, 
+but you can use VS Code or any other IDE/Editor you like. You can also use any 
+OS you like (MacOS/Linux/Windows).</p>
+<h3>Overall</h3>
+<h4>Architecture</h4>
+<p>The diagram below shows the overall architecture:</p>
+<p>
+<img class="thumbnail" alt="Angular AspNet Core Architecture Overall" height="163" src="images/angular2-core-overall-architecture.png" width="683" /></p>
+<ul>
+	<li><strong>Angular </strong>project is designed so it can be <strong>
+	deployed separately </strong>from the backend ASP.NET Core solution, to a 
+	different port in same server or to a different server. When it's deployed, 
+	it's actually a plan HTML+JS+CSS web application that can be served on any 
+	operating system and any web server.</li>
+	<li><strong>Angular</strong> solution consists of 2 entrance points which is 
+	actually 2 root modules with their own routes:<ul>
+		<li><strong>AccountModule</strong> is for login, register, remember password and so 
+		on. It's mainly used to authenticate a user using TokenAuthController in 
+		the server side.</li>
+		<li><strong>AppModule</strong> is for authenticated users. Once a user logged in 
+		successfully, they are redirected to the main application. Communication 
+		performed via AJAX requests using header based token authentication.</li>
 	</ul>
 	</li>
-	<li><a href="https://go.microsoft.com/fwlink/?LinkID=827546">ASP.NET Core</a></li>
-	<li>SQL Server</li>
-</ul>
-<h4>Solution Structure (Layers)</h4>
-<p>After you create and <a href="/Download">download</a> your project, you have a solution structure 
-as shown below:</p>
-<p>
-<img alt="Solution structure" height="183" src="images/solution-overall-core.png" width="257" /></p>
-<p>There are 6 projects in the solution:</p>
-<ul>
-	<li><strong>Core</strong> project contains domain layer classes (like
-	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entities</a> 
-	and
-	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Domain-Services">
-	domain services</a>).</li>
-	<li><strong>Application</strong> project contains application logic (like <a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">application 
-	services</a> and
-	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
-	DTO</a>s). </li>
-	<li><strong>EntityFramework</strong> project contains your DbContext,
-	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Repositories">
-	repository</a> implementations, database migrations and other 
-	EntityFramework specific concepts. </li>
-	<li><strong>Web</strong> project contains the presentation/API layer 
-	(Controllers, Views, javascripts, styles, images and so on).</li>
-	<li><strong>Migrator</strong> project is a console application that runs 
-	database migrations.</li>
-	<li><strong>Tests </strong>project contains unit and integration tests.</li>
+	<li><strong>ASP.NET Core</strong> solution does not have any HTML, JS or CSS 
+	code. It simply provides end points for token based authentication and to 
+	use the application services.</li>
 </ul>
 
-<h4>Applications</h4>
-<p>ASP.NET Zero solution contains <b>t</b><span class="auto-style3">hree</span> applications:</p>
+<h4>Angular Solution</h4>
+<p>Entrance point of the Angular solution is src/<strong>main.ts</strong>. It 
+simply bootstraps one of the root
+<a href="https://angular.io/docs/ts/latest/guide/ngmodule.html" target="_blank">
+Angular modules</a>: <strong>AccountModule</strong> or <strong>AppModule</strong>. 
+In addition to those root modules, the solution has a few more modules to better 
+organize code base:</p>
 <ul>
-	<li><strong>Front End Application</strong>: This can be used to 
-	create a public web site or a landing page for your application.</li>
-	<li><strong>Back End Application</strong>: This is the application which is 
-	entered by username and password.</li>
-	<li><strong>Migrator</strong>: Console application that runs database 
-	migrations.</li>
+	<li><strong class="auto-style2">account/</strong><strong>account.module</strong>: 
+	Root module of the account application which provides login, two factor 
+	authentication, register, password forget/reset and email activation 
+	functionality.</li>
+	<li>app/<span class="auto-style3">app.module</span>: Root module of the 
+	application which consists of a few sub modules:<ul>
+		<li>app/admin/<strong>admin.module</strong>: Administration pages like 
+		user management, role management, tenant management, language 
+		management, settings and so on.</li>
+		<li>app/main/<strong>main.module</strong>: The main module to develop 
+		your own application. It only contains a demo dashboard page which you 
+		can modify or delete. It's suggested to divide your application into 
+		smaller modules like we did in the startup project, instead of adding 
+		all functionality into the main module.</li>
+		<li>app/shared/common/<strong>app-common.module</strong>: a common 
+		module used by main and admin modules as shared functionality.</li>
+	</ul>
+	</li>
+	<li>shared/common/<strong>common.module</strong>: A common module used by 
+	account and app modules (and their sub modules).</li>
+	<li>shared/utils/<strong>utils.module</strong>: Another common module used 
+	by all modules (and their sub modules). We tried to collect general purpose 
+	code here those can be used even in different applications.</li>
+	<li>shared/service-proxies/<strong>service-proxy.module</strong>: Auto 
+	generated nswag code. It's used to communicate to backend ASP.NET Core API. 
+	We will see "how to generate automatic proxies" later.</li>
 </ul>
-<h4>Multi tenancy</h4>
-<p>Multi-tenancy is used to build <strong>SaaS</strong> (Software as a Service) 
-applications easily. Wtih this technique, we can deploy <strong>single 
-application</strong> to serve to <strong>
-multiple customers</strong>. Each Tenant 
-will have it's own <strong>roles</strong>, <strong>users</strong> and <strong>settings</strong>.</p>
-<p>ASP.NET Zero's all code-base is developed to be <strong>multi-tenant</strong>. But, it 
-<a href="Getting-Started#DocConfigureMultiTenancy"><strong>can be 
-disabled</strong></a> with a single line of configuration if you are developing 
-a 
-<strong>single-tenant</strong> application. When you disable it, all multi-tenancy stuff will be 
-hidden and not available. If multi-tenancy is disabled, there will be a single 
-tenant named <strong>Default</strong>.</p>
-<p>There are two types of perspective in multi-tenant applications:</p>
-<ul>
-	<li><strong>Host</strong>: Manages tenants and system.</li>
-	<li><strong>Tenant</strong>: Uses the application features.</li>
-</ul>
-<p>ASP.NET Zero uses ABP's (ASP.NET Boilerplate)
-<strong>
-<a href="http://aspnetboilerplate.com/Pages/Documents/Data-Filters" target="_blank">data 
-filters</a></strong>. So, it automatically filters tenant datas if you properly 
-use filter interfaces. Read
-<a href="http://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy" target="_blank">
-multi tenant documentation</a> if you are building multi-tenant applications.</p>
-
-<h3>Front End Application</h3>
-<p>ASP.NET Zero contains front-end pages that can be a starting point for your 
-public web site or a landing page for the application. When you first run the 
-project, you will see the Home Page as shown below:</p>
+<h4>Workarounds</h4>
+<p>As Angular 2 is pretty new, it has some shortcomings (and third party 
+angular2 modules we used). Especially, Angular-cli is still in beta. So, AspNet 
+Zero has some minor workarounds those you can see in the code base.</p>
+<h3>AccountModule</h3>
+<p><strong>AccountModule</strong> provides <strong>login</strong>, <strong>register</strong>,
+<strong>forgot password </strong>and <strong>email activation</strong> pages and 
+located under src/account folder:</p>
 <p>
-<img class="img-thumbnail" alt="Frontend home page" height="496" src="images/frontend-homepage.jpg" width="500" /></p>
-<p>There are two pages here: <strong>Home Page</strong> and <strong>About</strong>. 
-Contents of these pages are just placeholders and for demo purposes. You can 
-completely remove content and build your page upon your needs. Also, you should 
-change the <strong>logo</strong> with your Company's logo.</p>
-<p>See
-<a href="http://keenthemes.com/multi-purpose-corporate-frontend-themefreebie-corporate-frontend-theme/" target="_blank">metronic front-end theme 
-</a>for all possibilities and components to build a 
-richer web site.</p>
-<p>Menus 
-are defined in <strong>FrontEndNavigationProvider</strong> class. When you add a new 
-menu item here, it will be automatically shown in the menu. There is a <strong>Login</strong> 
-link at the top right corner. This link takes us to the <strong>Login page
-</strong>to enter to the <strong>backend</strong> application.</p>
-<h4>Layout</h4>
-<p>Layout of front-end pages are located under <strong>Views/Layout</strong> folder of the 
-<strong>.Web</strong> project:</p>
-<p>
-<img class="img-thumbnail" alt="Frontend layout views" height="253" src="images/frontend-layout-views-core.png" width="193" /></p>
-<p><strong>_Layout</strong> is the main layout file that includes scripts and 
-styles. Language flags and the menu is rendered in <strong>Header component</strong> 
-which is located under Shared/Components. _PreFooter is not used but you can add it to the _Layout if you want.</p>
-<h4>Tenant Sign Up</h4>
-<p>When you click the "New tenant" link in the front end application, you can 
-sign up to become a new tenant:</p>
-<p>
-<img class="img-thumbnail" alt="Tenant Signup" height="545" src="images/tenant-signup.png" width="418" /></p>
-<p>Here, you can create a new tenant. <strong>TenantRegistration</strong>Controller 
-is used to register a new tenant. Tenant registration can be enabled/disabled 
-and some settings can be changed in the settings page of the backend application.</p>
-<h3>Account Controller</h3>
-<p><strong>AccountController</strong> provides <strong>login</strong>, <strong>register</strong>,
-<strong>forgot password </strong>and <strong>email activation</strong> pages.</p>
+<img class="thumbnail" alt="Account Module Angular 2" height="217" src="images/ng2-account-module-files.png" width="252" /></p>
 <h4>Layout</h4>
 <p>Account management pages have a seperated <strong>_Layout</strong> view under 
 <strong>Views/Account</strong> folder:</p>
