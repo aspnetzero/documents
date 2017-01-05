@@ -113,6 +113,29 @@ organize code base:</p>
 	generated nswag code. It's used to communicate to backend ASP.NET Core API. 
 	We will see "how to generate automatic proxies" later.</li>
 </ul>
+<h4>Configuration</h4>
+<p>Angular solution contains src/assets/<strong>appconfig.json</strong> file 
+which contains some configuration for the client side:</p>
+<ul>
+	<li><strong>remoteServiceBaseUrl</strong>: Used to configure base address of 
+	the server side APIs. Default value: http://localhost:22742</li>
+	<li><strong>appBaseUrl</strong>: Used to configure base address of the 
+	client application. Default value: http://localhost:4200</li>
+</ul>
+<p><strong>appBaseUrl</strong> is configured since we use it to define format of 
+our URL. If we want to use tenancy name as subdomain for a 
+multi-tenant application then we can define <strong>appBaseUrl</strong> as</p>
+<p>http://<strong>{TENANCY_NAME}</strong>.mydomain.com</p>
+<p>{TENANCY_NAME} is the place holder here for tenant names. Tenancy name can also be 
+configured for <strong>remoteServiceBaseUrl</strong> as similar. To make tenancy name subdomains properly work, we should 
+also make two 
+configurations beside the application:</p>
+<ol>
+	<li>We should configure DNS to redirect all subdomains to a static IP 
+	address. To declare 'all subdomains', we can use wildcard like <strong>*.mydomain.com</strong>.</li>
+	<li>We should configure IIS to bind this static IP to our application.</li>
+</ol>
+<p>There may be other ways of doing it but this is the most simple way.</p>
 <h4>Workarounds</h4>
 <p>As Angular 2 is pretty new, it has some shortcomings (and third party 
 angular2 modules we used). Especially, Angular-cli is still in beta. So, AspNet 
@@ -219,8 +242,11 @@ get an email to reset the password.</p>
 <img class="img-thumbnail" alt="Forgot password" height="333" src="images/forgot-password-2.png" width="414" /></p>
 <h3>AppModule</h3>
 <p>This is the actual application module which is entered by username and password. You 
-will mostly work on this application to add your business requirements. Initial 
-folder structure is like that:</p>
+will mostly work on this application to add your business requirements. A 
+screenshot from the application:</p>
+<p>
+<img class="img-thumbnail" alt="Dashboard" height="870" src="images/dashboard.png" width="1339" /></p>
+<p>Folder structure of the source code is like that:</p>
 <p>
 <img class="img-thumbnail" alt="Angular app module files" height="450" src="images/ng2-app-module.png" width="223" /></p>
 <p>It consists of 3 sub modules as described before. <strong>app.component</strong> 
