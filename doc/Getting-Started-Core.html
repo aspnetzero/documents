@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link type="text/css" rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" />
+<title>Getting Started</title>
+</head>
+
+<body>
+
+<p>This document is aimed to create and run an ASP.NET Zero based project in 
+just 5 minutes. It's assumed that you already <a href="/Prices">purchased</a> and created your ASP.NET Zero account.</p>
+
+<h3 id="DocLogin">Login</h3>
+
+<p><a href="/Account/Login">Login</a> to this web site with your user name and 
+password. Then you will see <a href="/Download">Download</a> link on the main menu.</p>
+
+<h3 id="DocCreateProject">Create a Project</h3>
+
+<p>Go to the <a href="/Download">download</a> page. You will see a form as shown 
+below:</p>
+<p>
+<img class="img-thumbnail" alt="Create project" height="678" src="images/download-core-jquery.png" width="571" /></p>
+<p>Select <strong>ASP.NET Core &amp; jQuery</strong> as Project Type and fill 
+other required fields. Cliek to the Download button, your project will be ready 
+in one minute. Open the solution in Visual Studio:</p>
+
+<p>
+<img class="img-thumbnail" alt="ASP.NET Core solution" height="242" src="images/solution-overall-core-2.png" width="257" /></p>
+<p>
+Right click the 
+<strong>.Web.Mvc</strong> project and select "<strong>Set as StartUp project</strong>": Then <strong>
+build</strong> the solution. It make take longer time in first build since all
+<strong>nuget </strong>packages will be restored.</p>
+
+<h3 id="DocConfigureProject">Configure The Project</h3>
+
+<h4 id="DocConfigureDbConn">Database Connection</h4>
+
+		<p>Open <strong>appsettings.json</strong> in <strong>.Web.Mvc</strong> project and change the  <strong>Default</strong> connection string if you want:</p>
+		<pre lang="js">"ConnectionStrings": {
+    "Default": "Server=localhost; Database=<strong>PhoneBookDb</strong>; Trusted_Connection=True;"
+}</pre>
+
+<h4 id="DocConfigureMigrations">Database Migrations</h4>
+<p>We have two options to create and migrate database to the latest version.</p>
+<h5>AspNet Zero Migrator Application</h5>
+<p>AspNet Zero solution includes a <strong>.Migrator</strong> (like 
+Acme.PhoneBook.Migrator) project in the solution. You can run 
+this tool for database migrations on development and production (see
+<a href="Development-Guide-Core.html">development guide</a> for more information).</p>
+
+<h5>Entity Framework Migration Command</h5>
+
+<p>You can also use Entity Framework's built-in command line tools for migrations.</p>
+
+<p>Open <strong>Windows Command Prompt</strong>, locate to the folder containing 
+the <strong>.EntityFramework</strong> project and run the "<strong>dotnet ef 
+database update</strong>" command as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="dotnet ef database update" height="27" src="images/dotnet-ef-database-update.png" width="499" /></p>
+
+<p>This command will create your database and fill initial data. You can open 
+SQL Server Management Studio to check if database is created:</p>
+<p>
+<img class="img-thumbnail" alt="AspNet Zero Database Tables" height="507" src="images/created-database-tables-3.png" width="243" /></p>
+<p>
+You can use EF console commands for development and Migrator.exe for 
+production. But notice that; Migrator.exe supports running migrations in 
+multiple databases at once, which can be useful in development/production for 
+multi tenant applications.</p>
+
+<h4 id="DocConfigureMultiTenancy">Multi-Tenancy</h4>
+
+<p>ASP.NET Zero supports multi-tenant and single-tenant applications. 
+Multi-tenancy is <strong>enabled by default</strong>. If you don't have idea 
+about multi-tenancy or don't want to create a multi-tenant application, you can
+<strong>disable</strong> it. If you 
+want a multi-tenant application, leave it <strong>enabled</strong> in ProjectName<strong>CoreModule</strong> 
+class in <strong>.Core</strong> project:</p>
+<pre lang="cs">//Enable this line to create a multi-tenant application.
+<strong>Configuration.MultiTenancy.IsEnabled</strong> = true;</pre>
+
+<h3 id="DocRunProject">Run The Project</h3>
+
+<p>All ready.. just run your solution. It will open home page of your web site. 
+You can click login link at top right corner to <strong>login</strong> to the 
+application:</p>
+<p>
+<img class="img-thumbnail" alt="Login page" height="511" src="images/login-screen-2.png" width="424" /></p>
+<p>If multi-tenancy is enabled, you will see the current tenant and a change 
+link. If so, click to Change and enter <strong>default</strong> as tenant name. 
+If you leave it empty, you login as the host admin user. Then enter
+<strong>admin</strong> as user name and <strong>123qwe</strong> as password. You 
+should change password at first login. After login to the application, you will 
+see the sample dashboard screen:</p>
+<p>
+<img class="img-thumbnail" alt="Dashboard screen" height="870" src="images/dashboard.png" width="1339" /></p>
+<h4>Time Zone Setting</h4>
+<p>Remember to adjust your time zone in Settings page in order to see date and 
+times in your local time. Default time zone is <strong>UTC</strong>. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Timing">timing 
+documentation</a> to learn more about timing infrastructure.</p>
+
+<h3 id="DocMore">More</h3>
+
+<p>Your solution is up and working.
+See
+<a href="Development-Guide-Core.html"><span class="text-primary">development guide</span></a> document for more 
+information.</p>
+
+<script src="libs/jquery/jquery-3.1.0.min.js" type="text/javascript"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+</body>
+
+</html>
