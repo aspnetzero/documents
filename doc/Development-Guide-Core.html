@@ -581,26 +581,14 @@ Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
 <img class="img-thumbnail" alt="General Host Settings" src="images/host-settings-general-4.png" /></p>
-<p><strong>Web site root address</strong> is important, especially in production. {TENANCY_NAME} 
-is a placeholder for subdomains. It's <strong>optional</strong>. If supplied, current tenant name 
-can be automatically detected.</p>
-<div class="bs-callout bs-callout-warning">
-Web site root address is configured in appsettings.json in your Web.MVC project after AspNet Zero v2.2.
-</div>
-<p>To make tenancy name subdomains properly work, we should make two 
-configuration beside the application:</p>
-<ol>
-	<li>We should configure DNS to redirect all subdomains to a static IP 
-	address. To declare 'all subdomains', we can use wildcard like <strong>*.mydomain.com</strong>.</li>
-	<li>We should configure IIS to bind this static IP to our application.</li>
-</ol>
-<p>There may be other ways of doing it but this is the most simple way.</p>
-<p><strong>Timezone</strong> is another important setting in this page. AspNet 
-Zero can work in multiple zones. All DateTimes are stored as UTC as default, but 
-each user can see dates and times in his own time zone. Timezone setting in this 
+<p><strong>Timezone</strong> is an important setting in this page. AspNet 
+Zero can work in multiple zones. Each user can see dates and times in their own time zone. Timezone setting in this 
 page allows you to set default time zone for the application including all 
-tenants and users. Tenants and users can change time zone in their own settings.</p>
-<p>In host settings page, there are also other settings. SAVE ALL button saves 
+tenants and users. Tenants and users can change time zone in their own settings. 
+Timezone setting is available only if you are using UTC clock.
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Timing" target="_blank">
+See documentation</a> to switch to UTC.</p>
+<p>SAVE ALL button saves 
 all settings in one click. HostSettingAppService is used to retrieve and save 
 settings (See setting provider section for more information).</p>
 <p><strong>Security</strong> tab in host settings page contains password complexity settings. Host can define system wide password complexity settings in this tab. Each tenant can override this setting in tenant settings page. <strong>PasswordComplexityChecker</strong> 
