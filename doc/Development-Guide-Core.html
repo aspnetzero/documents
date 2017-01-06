@@ -19,15 +19,9 @@
 
 <h3>Introduction</h3>
 
-<div class="bs-callout bs-callout-warning">
-	<h4>Looking for ASP.NET MVC 5.x / AngularJS version?</h4>
-	<p>This document is for ASP.NET Core version. 
-	<a href="Development-Guide.html">Click here</a> for ASP.NET MVC 5.x / AngularJS version.</p>
-</div>
-
 <p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
-"<strong>Acme.PhoneBook</strong>". This document is a guide while developing your project. 
-We definitely suggest to ready this document before starting to the 
+"<strong>Acme.PhoneBook</strong>". This document is a complete guide while developing your project. 
+We definitely suggest to read this document before starting to the 
 development. Since ASP.NET Zero is built on
 <a href="http://www.aspnetboilerplate.com/" target="_blank">ASP.NET Boilerplate</a> 
 application framework, this document highly refers it's 
@@ -581,26 +575,14 @@ Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
 <img class="img-thumbnail" alt="General Host Settings" src="images/host-settings-general-4.png" /></p>
-<p><strong>Web site root address</strong> is important, especially in production. {TENANCY_NAME} 
-is a placeholder for subdomains. It's <strong>optional</strong>. If supplied, current tenant name 
-can be automatically detected.</p>
-<div class="bs-callout bs-callout-warning">
-Web site root address is configured in appsettings.json in your Web.MVC project after AspNet Zero v2.2.
-</div>
-<p>To make tenancy name subdomains properly work, we should make two 
-configuration beside the application:</p>
-<ol>
-	<li>We should configure DNS to redirect all subdomains to a static IP 
-	address. To declare 'all subdomains', we can use wildcard like <strong>*.mydomain.com</strong>.</li>
-	<li>We should configure IIS to bind this static IP to our application.</li>
-</ol>
-<p>There may be other ways of doing it but this is the most simple way.</p>
-<p><strong>Timezone</strong> is another important setting in this page. AspNet 
-Zero can work in multiple zones. All DateTimes are stored as UTC as default, but 
-each user can see dates and times in his own time zone. Timezone setting in this 
+<p><strong>Timezone</strong> is an important setting in this page. AspNet 
+Zero can work in multiple zones. Each user can see dates and times in their own time zone. Timezone setting in this 
 page allows you to set default time zone for the application including all 
-tenants and users. Tenants and users can change time zone in their own settings.</p>
-<p>In host settings page, there are also other settings. SAVE ALL button saves 
+tenants and users. Tenants and users can change time zone in their own settings. 
+Timezone setting is available only if you are using UTC clock.
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Timing" target="_blank">
+See documentation</a> to switch to UTC.</p>
+<p>SAVE ALL button saves 
 all settings in one click. HostSettingAppService is used to retrieve and save 
 settings (See setting provider section for more information).</p>
 <p><strong>Security</strong> tab in host settings page contains password complexity settings. Host can define system wide password complexity settings in this tab. Each tenant can override this setting in tenant settings page. <strong>PasswordComplexityChecker</strong> 
@@ -628,8 +610,9 @@ system, then generally even <strong>no need</strong> to set Domain name, user an
 can logout and then login with your <strong>domain user name and password</strong>. 
 If not, you should set these credentials.</p>
 <h4>Maintenance</h4>
-<p>Maintenance page is only available to <strong>host</strong> and shown as 
-below:</p>
+<p>Maintenance page is available to <strong>host side</strong> for multi tenant 
+applications (for single tenant applications it's shown in tenant side) and 
+shown as below:</p>
 <p>
 <img class="img-thumbnail" alt="Maintenance cache" height="525" src="images/maintenance-cache.png" width="729" /></p>
 <p>In the <strong>Caches</strong> tab, we can clear some or all caches. Clearing 
@@ -931,7 +914,7 @@ background job</a> and
 hangfire intergation</a> documents for more information.</p>
 <h4>SignalR Integration</h4>
 <p>SignalR is properly configured and integrated to the startup template. Real 
-time notification system uses it. You can direcly use SignalR in your 
+time notification and chat systems use it. You can direcly use SignalR in your 
 applications.</p>
 <p>Notice that; As the time being, SignalR
 <a href="https://github.com/aspnet/Home/wiki/Roadmap#12">has not been released</a> 
