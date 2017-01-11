@@ -355,15 +355,21 @@ seed and adds two people to PbPersons table:</p>
 <img class="img-thumbnail" alt="Persons initial data" height="50" src="images/phonebook-persons-table-initial-data.png" width="720" /></p>
 <h3>Creating Person Application Service</h3>
 <p>An Application Service is used from client (presentation layer) to perform 
-operations (use cases) in the application.</p>
+operations (use cases) of the application.</p>
 <p>Application services are located in
-<strong>.Application</strong> project. We create first application service to 
-get people from server. We're creating an <strong>interface</strong> to define 
+<strong>.Application</strong> project. We creating an application service to 
+get people from server. So, we're first creating an <strong>interface</strong> to define 
 the person application service (while this interface is optional, we suggest you 
 to create it):</p>
-<pre lang="cs">public interface IPersonAppService : IApplicationService
+<pre lang="cs">using Abp.Application.Services;
+using Abp.Application.Services.Dto;
+
+namespace Acme.PhoneBook.People
 {
-    ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
+    public interface IPersonAppService : IApplicationService
+    {
+        ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
+    }
 }</pre>
 <p>An application service method gets/returns <strong>DTO</strong>s. <strong>ListResultDto</strong> is a 
 pre-build helper DTO to return a list of another DTO. <strong>GetPeopleInput</strong> is a DTO to pass 
@@ -393,30 +399,42 @@ application service</a> and
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
 DTO</a> documentations for more information.</p>
 <p>After defining interface, we can implement it as shown below:</p>
-<pre lang="cs">public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
+<pre lang="cs">using System.Collections.Generic;
+using System.Linq;
+using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
+using Abp.Domain.Repositories;
+using Abp.Extensions;
+using Abp.Linq.Extensions;
+using Acme.PhoneBook.People.Dtos;
+
+namespace Acme.PhoneBook.People
 {
-    private readonly IRepository&lt;Person&gt; _personRepository;
-
-    public PersonAppService(IRepository&lt;Person&gt; personRepository)
+    public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
     {
-        _personRepository = personRepository;
-    }
+        private readonly IRepository&lt;Person&gt; _personRepository;
 
-    public ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
-    {
-        var persons = _personRepository
-            .GetAll()
-            .<strong>WhereIf</strong>(
-                !input.Filter.IsNullOrEmpty(),
-                p =&gt; p.Name.Contains(input.Filter) ||
-                        p.Surname.Contains(input.Filter) ||
-                        p.EmailAddress.Contains(input.Filter)
-            )
-            .OrderBy(p =&gt; p.Name)
-            .ThenBy(p =&gt; p.Surname)
-            .ToList();
+        public PersonAppService(<strong>IRepository&lt;Person&gt; personRepository</strong>)
+        {
+            _personRepository = personRepository;
+        }
 
-        return new ListResultDto&lt;PersonListDto&gt;(persons.<strong>MapTo</strong>&lt;List&lt;PersonListDto&gt;&gt;());
+        public ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
+        {
+            var persons = _personRepository
+                .GetAll()
+                .<strong>WhereIf</strong>(
+                    !input.Filter.IsNullOrEmpty(),
+                    p =&gt; p.Name.Contains(input.Filter) ||
+                         p.Surname.Contains(input.Filter) ||
+                         p.EmailAddress.Contains(input.Filter)
+                )
+                .OrderBy(p =&gt; p.Name)
+                .ThenBy(p =&gt; p.Surname)
+                .ToList();
+
+            return new ListResultDto&lt;PersonListDto&gt;(persons.<strong>MapTo</strong>&lt;List&lt;PersonListDto&gt;&gt;());
+        }
     }
 }</pre>
 <p>We're injecting <strong>person repository</strong> (it's automatically created by ABP) and 
@@ -444,34 +462,48 @@ exception handling document</a> for more.</p>
 <h3>Creating Unit Tests For PersonAppService</h3>
 <p>You can skip this section if you don't interest in <strong>automated testing</strong>.</p>
 <p>By writing unit test, we can test <strong>PersonAppService.GetPeople</strong> 
-method without creating a user interface that calls it and shows people on the 
-screen.</p>
-<p>We write unit test in .<strong>Tests</strong> project in the solution. Let's 
+method without creating a user interface. We write unit test in .<strong>Tests</strong> project in the solution.</p>
+<div class="bs-callout bs-callout-warning">
+	<h4>MultiTenancy In Tests</h4>
+<p>Since we disabled multitenancy, we should disable it for unit tests 
+too. Open <strong>appsettings.json</strong> in .Tests project and set "<strong>MultiTenancyEnabled</strong>" to 
+false. After a rebuild and run unit tests, you will see that some tests are skipped (those are related to multitenancy).</p>
+</div>
+<p>Let's 
 create first test to verify getting people without any filter:</p>
-<pre lang="cs">public class PersonAppService_Tests : AppTestBase
+<pre lang="cs">using Acme.PhoneBook.People;
+using Acme.PhoneBook.People.Dtos;
+using Shouldly;
+using Xunit;
+
+namespace Acme.PhoneBook.Tests.People
 {
-    private readonly IPersonAppService _personAppService;
-
-    public PersonAppService_Tests()
+    public class PersonAppService_Tests : AppTestBase
     {
-        _personAppService = Resolve&lt;IPersonAppService&gt;();
-    }
+        private readonly IPersonAppService _personAppService;
 
-    [Fact]
-    public void Should_Get_All_People_Without_Any_Filter()
-    {
-        //Act
-        var persons = _personAppService.GetPeople(new GetPeopleInput());
-            
-        //Assert
-        persons.Items.Count.ShouldBe(2);
+        public PersonAppService_Tests()
+        {
+            _personAppService = Resolve&lt;IPersonAppService&gt;();
+        }
+
+        [Fact]
+        public void Should_Get_All_People_Without_Any_Filter()
+        {
+            //Act
+            var persons = _personAppService.GetPeople(new GetPeopleInput());
+
+            //Assert
+            persons.Items.Count.ShouldBe(2);
+        }
     }
-}</pre>
+}
+</pre>
 <p>We derived test class from <strong>AppTestBase</strong>. AppTestBase class 
 initializes all system, creates an in-memory fake database, seeds initial data 
 (that we created before) to database and logins to application as admin. So, this is 
 actually an <strong>integration test</strong> since it tests all server-side 
-codes from entitiy framework mapping to application services, validation and 
+code from entitiy framework mapping to application services, validation and 
 authorization.</p>
 
 <p>In constructor, we get (resolve) an <strong>IPersonAppService</strong> from
@@ -513,32 +545,7 @@ see if every people contains "adams" in his/her name, surname or email. Thus, if
 we add new people to initial data, our tests remain working.</p>
 <p>There are many techniques on unit testing, I kept it simple here. But ASP.NET 
 Zero template makes very easy to write unit and integration tests by base 
-classes and pre-build test codes.</p>
-<h3>Testing PersonAppService From Browser Console</h3>
-<p>Now, lets run and <strong>login</strong> to the application again, open 
-Chrome Developer Console (or similar tools in other browsers) and write the 
-following command:</p>
-<p>
-<img class="img-thumbnail" alt="Google Chrome Console AJAX" height="104" src="images/chrome-console-get-people.png" width="497" /></p>
-<p>This command performs an <strong>AJAX</strong> call to PersonAppService.<strong>GetPeople</strong> 
-method. We can see the request if we open <strong>Network</strong> tab:</p>
-<p>
-<img class="img-thumbnail" alt="Google Chrome Console Get People" height="148" src="images/chrome-console-get-people-network.png" width="720" /></p>
-<p>As we see, an AJAX request made and people are got successfully.</p>
-<p>So, how this happen? How we could make a call to a C# class method (notice that it's 
-not an MVC Controller, just a plain C# class) from 
-javascript like calling a javascript method? This is provided by ASP.NET 
-Boilerplate. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers" target="_blank">
-AspNet Core</a> documentation for more information. You can always 
-call application services from console to debug or see returned JSON structure.</p>
-<p>We can also check Audit Logs to see the request. Open <strong>AbpAuditLogs</strong> 
-table in PhoneBook database to see the call information:</p>
-<p>
-<img class="img-thumbnail" alt="Audit Logs table" height="71" src="images/audit-log-table-getpeople.png" width="921" /></p>
-<p>There are some other fields not shown here. So, we see that User with Id=2 
-called GetPeople method of the PersonAppService in recorded time with the shown 
-parameters and it's executed in 134 ms.</p>
+classes and pre-build test codes.&nbsp;</p>
 <h3>Using GetPeople Method From MVC Controller</h3>
 <p>It's time to open <strong>PhoneBookController</strong> and get people to show on the view:</p>
 <pre lang="cs">
