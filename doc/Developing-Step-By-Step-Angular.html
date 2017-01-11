@@ -12,31 +12,23 @@
 <h3>Introduction</h3>
 
 <p>In this document, we will create a sample <strong>phonebook application</strong> 
-based on ASP.NET Zero (ASP.NET Core version) step by step. After all steps, we will have a 
+based on ASP.NET Zero (ASP.NET Core &amp; Angular 2+ version) step by step. After all steps, we will have a 
 multi-tenant, localized, authorized, configurable, testable... appliaction.</p>
 
-<h3>Creating The Project</h3>
+<h3>Creating And Running The Project</h3>
 <p>We're creating and downloading the solution named "<strong>Acme.PhoneBook</strong>" as described in
-<a href="Getting-Started.html">Getting Started</a> document. After opening 
-solution in Visual Studio, we see an NLayered solution that consists of six projects:</p>
-<p>
-
-<img class="img-thumbnail" alt="Solution Overall" src="images/solution-overall-core.png" /></p>
-<p>
-
-Also, run database migrations, create the database and login to the application 
-as described in <a href="Getting-Started.html">Getting Started</a> document. After all completed and logged in to the application, we see a dashboard as 
-shown below:</p>
-<p>
-
-<img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard2.png" width="800" /></p>
+<a href="Getting-Started-Angular.html">Getting Started</a> document. Please 
+follow the getting started document, run the application, login as default 
+tenant admin (select Default as tenancy name, use admin as username and 123qwe 
+as password) and see the dashboard below:</p>
+<p><img alt="Dashboard" height="870" src="images/dashboard.png" width="1339" /></p>
 <p>
 
 Logout from the application for now.
 
 We will make our application <strong>single-tenant</strong> (we will convert it 
 to multi-tenant later). So, we 
-open <strong>PhoneBookCoreModule</strong> class and disable multi-tenancy as 
+open <strong>PhoneBookCoreModule</strong> class in the server side and disable multi-tenancy as 
 shown below:</p>
 <pre lang="cs">[DependsOn(typeof(AbpZeroCoreModule))]
 public class PhoneBookCoreModule : AbpModule
@@ -52,106 +44,124 @@ public class PhoneBookCoreModule : AbpModule
     }
 }</pre>
 
-<h3>Adding a New Page</h3>
+<h3>Adding a New Menu Item</h3>
 <p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
-<h4>Defining a menu item</h4>
-<p><strong>AppNavigationProvider</strong> class defines menus in the application. When 
-we change this class, menus are automatically changed. Open this class and 
-create new menu item as shown below (You can add it right after the dashboard 
+<h4>Defining a Menu Item</h4>
+<p>Open app\shared\layout\<strong>side-bar.component.ts</strong> in the client 
+side which defines menu items in the application. Create new menu item as shown below (You can add it right after the dashboard 
 menu item).</p>
-<pre lang="cs">
-.AddItem(new MenuItemDefinition(
-    AppPageNames.Tenant.PhoneBook,
-    L("PhoneBook"),
-    url: "App/PhoneBook",
-    icon: "glyphicon glyphicon-book"
-    )
-)</pre>
-<p>Every menu item must have a <strong>unique name</strong> 
-to identify this menu item. Menu names are defined in AppPageNames class as 
-constants. We add a new constant: "<strong>PhoneBook</strong>".</p>
-<h4>Localizing Menu Item Display Name</h4>
-<p>A menu item should also have a <strong>localizable shown name</strong>. It's 
-used to display menu item on the page. <strong>L("PhoneBook")</strong> is localized name of 
-our new menu. <strong>L</strong> method is a helper method gets a localization 
-key and simply returns a <strong>LocalizableString</strong> object (see 
-AppNavigationProvider class).</p>
+<pre lang="js">new SideBarMenuItem("PhoneBook", null, "icon-notebook", "/phonebook")</pre>
+<p><strong>PhoneBook</strong> is the menu name (will localize below), <strong>
+null</strong> is for permission name (will set it later), <strong>icon-notebook</strong> 
+is just an arbitrary icon class (from
+<a href="http://keenthemes.com/preview/metronic/theme/admin_4_material_design/ui_icons.html" target="_blank">
+this set</a>) and <strong>/phonebook</strong> is the angular route.</p>
+<p>If you run the application, you can see a new menu item on the left menu, but 
+it won't work if you click to the menu item, since we haven't defined the 
+Angular route yet.</p>
+<h4>Localize Menu Item Display Name</h4>
 <p>Localization strings are defined in <strong>XML</strong> files in <strong>
 .Core</strong> 
-project as shown below:</p>
+project (in server side) as shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Localization files" height="151" src="images/localization-files-2.png" width="202" /></p>
 <p>Open PhoneBook.xml (the <strong>default</strong>, <strong>English</strong> 
 localization dictionary) and add the following line:</p>
-<pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Phone book&quot; /&gt;</pre>
+<pre lang="xml">&lt;text name="<strong>PhoneBook</strong>"&gt;Phone Book&lt;/text&gt;</pre>
 <p>If we don't define "PhoneBook"s value for other localization dictionaries, 
-default value is shown in all languages. We can define it also for Turkish in 
+default value is shown in all languages. For example, we can define it also for Turkish in 
 PhoneBook-tr.xml file:</p>
-<pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Telefon rehberi&quot; /&gt;</pre>
-<h4>Other menu item properties</h4>
-<p><strong>url</strong> can be a URL (it's URL of an <strong>MVC Action</strong> 
-here) that will be 
-redirected when we click the menu item.</p>
-<p>Lastly, <strong>icon</strong> is the shown menu icon for new menu item. It 
-can be a <strong>css</strong> class. We can use Glyphicon, Font-Awesome or 
-another css font library here.</p>
-<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
-navigation document</a> for more information on menu definitions.</p>
-<h3>Creating the Page</h3>
-<p>After creating the menu item, we can create an empty page.</p>
-<h4>Controller</h4>
-<p>Creating the <strong>PhoneBookController</strong> under <strong>
-Areas/App/Controllers</strong> folder in the Web project:</p>
-<pre lang="cs">
-[Area("App")]
-public class PhoneBookController : PhoneBookControllerBase
-{
-    public ActionResult Index()
-    {
-        return View();
+<pre lang="xml">&lt;text name="PhoneBook"&gt;Telefon Rehberi&lt;/text&gt;</pre>
+<p>Note: Any change in server side (including change localization texts) requires recycle of the server application.
+We suggest to use Ctrl+F5 if you don't need to debugging for a faster startup. In that case, it's enough to make a re-build to recycle the application.</p>
+<h4>Angular Route</h4>
+<p>Angular has a powerful URL routing system. AspNet Zero has defined routes in 
+a few places (for modularity, see <a href="Development-Guide-Angular.html">dev 
+guide</a>). We want to add phone book page to the main module. So, open 
+app\main\<strong>main-routing.module.ts</strong> (in the client side) and add a new route just 
+below to the dashboard:</p>
+<pre lang="js">{ path: '<strong>phonebook</strong>', component: <strong>PhoneBookComponent</strong> }</pre>
+<p>We get an error since we haven't defined PhoneBookComponent yet. Also, we 
+ignored permission for now (will implement later).</p>
+<h3>Creating the PhoneBookComponent</h3>
+<p>Create a <strong>phonebook</strong> folder inside app/main folder and add a 
+new typescript file (<strong>phonebook.component.ts</strong>) in the phonebook 
+folder as shown below:</p>
+<pre lang="js">import { Component, Injector } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+
+@Component({
+    templateUrl: '<strong>./phonebook.component.html</strong>',
+    animations: [appModuleAnimation()]
+})
+export class <strong>PhoneBookComponent</strong> extends <strong>AppComponentBase</strong> {
+
+    constructor(
+        injector: Injector
+    ) {
+        super(injector);
     }
-}
-</pre>
-<p>We inherited from <strong>PhoneBookControllerBase</strong> (will be <em>
-YourProjectName</em>ControllerBase for your projects) instead of MVC's standard 
-Controller class. While it will work if we derive from the standard Controller, PhoneBookControllerBase 
-provides very useful base properties and methods. So, always inherit from this 
-class unless it has a disadvantage for your case.</p>
-<h4>View</h4>
-<p>Creating an empty view, <strong>Index.cshtml</strong> under <strong>Areas/App/Views/PhoneBook</strong> 
-folder:</p>
-<pre lang="xml">
-@using System.Threading.Tasks
-@using Acme.PhoneBook.Web.Areas.App.Startup
 
-@{
-    ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
-}
-
-&lt;div class="row margin-bottom-5"&gt;
-    &lt;div class="col-xs-12"&gt;
-        &lt;div class="page-head"&gt;
-            &lt;div class="page-title"&gt;
-                &lt;h1&gt;
-                    &lt;span&gt;@L("PhoneBook")&lt;/span&gt;
-                &lt;/h1&gt;
+}</pre>
+<p>We inherited from <strong>AppComponentBase</strong> which provides some 
+common functions and fields (like localization and access control) for us. It's 
+not required, but makes our job easier. Now, we can return back to <strong>main-routing.module.ts</strong> 
+and add import statement for the newly created PhoneBookComponent class:</p>
+<pre lang="js">import { <strong>PhoneBookComponent</strong> } from './phonebook/phonebook<span lang="tr">.</span>component';</pre>
+<p>As we declared in <strong>phonebook.component.ts</strong> we should create a <strong>phonebook.component.html</strong> view 
+in the same phonebook folder:</p>
+<pre lang="xml">&lt;div <strong>[@routerTransition]</strong>&gt;
+    &lt;div class="row margin-bottom-5"&gt;
+        &lt;div class="col-xs-12"&gt;
+            &lt;div class="page-head"&gt;
+                &lt;div class="page-title"&gt;
+                    &lt;h1&gt;
+                        &lt;span&gt;<strong>{{l("PhoneBook")}}</strong>&lt;/span&gt;
+                    &lt;/h1&gt;
+                &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;
+   
+    &lt;div class="portlet light margin-bottom-0"&gt;
+        &lt;div class="portlet-body"&gt;
+            
+            &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
 
-&lt;div class="portlet light"&gt;
-    &lt;div class="portlet-body"&gt;
-
-        &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
-
+        &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;
-</pre>
-<p>We set ViewBag.CurrentPageName to the current page's name to automatically 
-highlight the related menu item when this page is active. Now, it's time to run application and see the new phone book page:</p>
+&lt;/div&gt;</pre>
+<p><strong>l</strong> (lower case 'L') function comes from <strong>AppComponentBase</strong> 
+and used to easily localize texts. <strong>[@routerTransition]</strong> 
+attribute is required for page transition animation.</p>
+<p>And finally, Angular required to relate every component to a module. So, we 
+are adding it to the <strong>main.module.ts</strong> as shown below:</p>
+<pre lang="js">import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { MainRoutingModule } from './main-routing.module'
+import { MainComponent } from './main.component'
+import { DashboardComponent } from './dashboard/dashboard.component';
+<strong>import { PhoneBookComponent } from './phonebook/phonebook.component';
+</strong>
+@NgModule({
+    imports: [
+        CommonModule,
+        MainRoutingModule
+    ],
+    declarations: [
+        MainComponent,
+        DashboardComponent,
+        <strong>PhoneBookComponent</strong>
+    ]
+})
+export class MainModule{ }</pre>
+<p>Added an <strong>import</strong> statement and added PhoneBookComponent to
+<strong>declarations</strong> array.</p>
+<p>d</p>
 <p>
-<img class="img-thumbnail" alt="Phone book empty screen" height="255" src="images/phonebook-empty-mpa.png" width="974" /></p>
+<img class="img-thumbnail" alt="Phonebook empty" height="256" src="images/phonebook-empty-ng.png" width="976" /></p>
 <p>Menu item display name and page title are localized. Try to change UI 
 language to see difference.</p>
 <h3>Creating Person Entity</h3>
