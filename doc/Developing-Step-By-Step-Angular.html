@@ -546,89 +546,95 @@ we add new people to initial data, our tests remain working.</p>
 <p>There are many techniques on unit testing, I kept it simple here. But ASP.NET 
 Zero template makes very easy to write unit and integration tests by base 
 classes and pre-build test codes.&nbsp;</p>
-<h3>Using GetPeople Method From MVC Controller</h3>
-<p>It's time to open <strong>PhoneBookController</strong> and get people to show on the view:</p>
-<pre lang="cs">
-[Area(&quot;App&quot;)]
-public class PhoneBookController : PhoneBookControllerBase
-{
-    private readonly IPersonAppService _personAppService;
-
-    public PhoneBookController(IPersonAppService personAppService)
-    {
-        _personAppService = personAppService;
-    }
-
-    public ActionResult Index(GetPeopleInput input)
-    {
-        var output = _personAppService.GetPeople(input);
-        var model = new IndexViewModel(output);
-
-        return View(model);
-    }
-}
-</pre>
-<p>We inject <strong>IPersonAppService </strong>and call it's <strong>GetPeople</strong> method 
-(which is created and tested before) to get list of people. Then we created a 
-ViewModel object and passes to the view. Let's see the <strong>IndexViewModel</strong> class:</p>
-<pre>[AutoMapFrom(typeof (ListResultDto&lt;PersonListDto&gt;))]
-public class IndexViewModel : ListResultDto&lt;PersonListDto&gt;
-{
-    public IndexViewModel(ListResultDto&lt;PersonListDto&gt; output)
-    {
-        output.MapTo(this);
-    }
-}</pre>
-
-<p>Here, we're extending output of PersonAppService.GetPeople method's output. 
-Getting the output from constructor and map to this object. We declared 
-AutoMapFrom attribute to be able to make mapping.</p>
-
-<div class="bs-callout bs-callout-info">
-	<h4>Application Services and ViewModels</h4>
-	<p>We created an <strong>Application Service</strong> (PersonAppService) and 
-	used it from the <strong>Controller</strong>. Instead, we could access
-	<strong>Repository</strong> directly from Controller and completely discard 
-	the application service. AspNet Zero does not enforce any architecture here. 
-	In AspNet Zero, we use the application layer (application services and DTOs). Therefore, we 
-	implemented it <strong>independent</strong> 
-	from ASP.NET MVC. This makes application layer re-usable from different 
-	presentation layers. But if you will only develop ASP.NET MVC, you can 
-	implement application logic inside controllers and access to the 
-	repositories from controllers. This may simplify your architecture and 
-	development model.</p>
-	<p>If you decide to develop application services and use them in controllers 
-	then you can use application service's <strong>output</strong> as your view 
-	model. We did not prefer it and wrapped output by a dedicated <strong>
-	ViewModel</strong> 
-	(IndexViewModel here) since we think that we may add some <strong>additional 
-	properties/methods</strong> for our view model. Again, it's your choice of 
-	implementation.</p>
+<h3>Using GetPeople Method From Angular Component</h3>
+<p>Now, we can switch to the client side and use GetPeople method to show a list 
+of people on the UI.</p>
+<h4>Service Proxy Generation</h4>
+<p>First, run (prefer Ctrl+F5 to be faster) the server side application 
+(.Web.Host project). Then run <strong>nswag/refresh.bat</strong> file on the 
+client side to re-generate service proxy classes (they are used to call server 
+side service methods).</p>
+<p>Since we added a new service, we should add it to shared/service-proxies/<strong>service-proxy.module.ts</strong>. 
+Just open it and add <strong>ApiServiceProxies.PersonServiceProxy</strong> to 
+the providers array. This step is only required when we add a new service. If we 
+change an existing service, it's not needed.</p>
+<div class="bs-callout bs-callout-warning">
+	<h4>Angular-Cli Watcher</h4>
+<p>Sometimes angular-cli can not understand the file changes. In that case, stop it and re-run
+<strong>npm start</strong> command.</p>
 </div>
+<h4>PhoneBookComponent Typescript Class</h4>
+<p>Change <strong>phonebook.component.ts</strong> as like below:</p>
+<pre lang="js">import { Component, Injector, <strong>OnInit</strong> } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+<strong>import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto } from '@shared/service-proxies/service-proxies';
+</strong>
+@Component({
+    templateUrl: './phonebook.component.html',
+    animations: [appModuleAnimation()]
+})
+export class PhoneBookComponent extends AppComponentBase <strong>implements OnInit</strong> {
 
-<h3>Rendering People In MVC View</h3>
-<p>We show people on the page is most basic form. See the changed view below:</p>
-<pre lang="xml">...
-@model Acme.PhoneBook.Web.Areas.App.Models.PhoneBook.IndexViewModel
-...
-        &lt;h3&gt;<strong>@L(&quot;AllPeople&quot;)</strong>&lt;/h3&gt;
+<strong>    people: PersonListDto[];
+    filter: string = '';
+</strong>
+    constructor(
+        injector: Injector,
+<strong>        private _personService: PersonServiceProxy
+</strong>    ) {
+        super(injector);
+    }
 
-        &lt;div class=&quot;list-group&quot;&gt;
-            <strong>@foreach (var person in Model.Items)</strong>
-            {
-                &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot;&gt;
-                    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
-                        <strong>@person.Name @person.Surname</strong>
+<strong>    ngOnInit(): void {
+        this._personService.getPeople(this.filter).subscribe((result) =&gt; {
+            this.people = result.items;
+        });
+    }
+</strong>
+}</pre>
+<p>We inject <strong>PersonServiceProxy</strong>, call it's <strong>getPeople</strong> 
+method and <strong>subscribe</strong> to get the result. We do this in <strong>
+ngOnInit</strong> function (defined in Angular's <strong>OnInit</strong> 
+interface). Assigned returned items to a <strong>people</strong> class member. </p>
+
+<h4>Rendering People In Angular View</h4>
+<p>Now, we can use this people member from the view, <strong>
+phonebook.component.html</strong>:</p>
+<pre lang="xml">&lt;div [@routerTransition]&gt;
+    &lt;div class="row margin-bottom-5"&gt;
+        &lt;div class="col-xs-12"&gt;
+            &lt;div class="page-head"&gt;
+                &lt;div class="page-title"&gt;
+                    &lt;h1&gt;
+                        &lt;span&gt;{{l("PhoneBook")}}&lt;/span&gt;
+                    &lt;/h1&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+   
+    &lt;div class="portlet light margin-bottom-0"&gt;
+        &lt;div class="portlet-body"&gt;
+            
+<strong>            &lt;h3&gt;{{l("AllPeople")}}&lt;/h3&gt;
+
+            &lt;div class="list-group"&gt;
+                &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"&gt;
+                    &lt;h4 class="list-group-item-heading"&gt;
+                        {{person.name + ' ' + person.surname}}
                     &lt;/h4&gt;
-                    &lt;p class=&quot;list-group-item-text&quot;&gt;
-                        <strong>@person.EmailAddress</strong>
+                    &lt;p class="list-group-item-text"&gt;
+                        {{person.emailAddress}}
                     &lt;/p&gt;
                 &lt;/a&gt;
-            }
+            &lt;/div&gt;</strong>
+
         &lt;/div&gt;
-...</pre>
-<p>We declared the <strong>@model</strong> and used a foreach loop to render 
-people. See the result:</p>
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+<p>We simply used <strong>ngFor</strong> directive to loop and render 
+people data. See the result:</p>
 <p>
 <img class="img-thumbnail" alt="Phonebook peoples" height="285" src="images/phonebook-people-view-1.png" width="790" /></p>
 <p>We successfully retrieved list of people from database to the page.</p>
@@ -642,7 +648,7 @@ people. See the result:</p>
 	they make things much more easier and provides a much better user 
 	experience.</p>
 	<p>We did not use a table component here, because we want to show basics of 
-	MVC instead of going details of a 3rd party library.</p>
+	Angular instead of going details of a 3rd party library.</p>
 </div>
 
 <h3>Creating a New Person</h3>
