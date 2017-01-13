@@ -12,7 +12,7 @@
 <h3>Introduction</h3>
 
 <p>In this document, we will create a sample <strong>phonebook application</strong> 
-based on ASP.NET Zero (ASP.NET Core version) step by step. After all steps, we will have a 
+based on ASP.NET Zero step by step. After all steps, we will have a 
 multi-tenant, localized, authorized, configurable, testable... appliaction.</p>
 
 <h3>Creating The Project</h3>
@@ -21,18 +21,17 @@ multi-tenant, localized, authorized, configurable, testable... appliaction.</p>
 solution in Visual Studio, we see an NLayered solution that consists of six projects:</p>
 <p>
 
-<img class="img-thumbnail" alt="Solution Overall" src="images/solution-overall-core.png" /></p>
+<img class="img-thumbnail" alt="Solution Overall" height="166" src="images/solution-overall.png" width="249" /></p>
 <p>
 
 Also, run database migrations, create the database and login to the application 
-as described in <a href="Getting-Started.html">Getting Started</a> document. After all completed and logged in to the application, we see a dashboard as 
+as described in <a href="Getting-Started.html">getting started</a> document. 
+After all completed and logged in to the application, we see a dashboard as 
 shown below:</p>
 <p>
 
-<img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard2.png" width="800" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="484" src="images/default-dashboard.png" width="800" /></p>
 <p>
-
-Logout from the application for now.
 
 We will make our application <strong>single-tenant</strong> (we will convert it 
 to multi-tenant later). So, we 
@@ -43,12 +42,8 @@ public class PhoneBookCoreModule : AbpModule
 {
     public override void PreInitialize()
     {
-        //some other code...
-        
         //Enable this line to create a multi-tenant application.
-        Configuration.MultiTenancy.IsEnabled = false;
-        
-        //some other code...        
+        //Configuration.MultiTenancy.IsEnabled = true;
     }
 }</pre>
 
@@ -57,18 +52,16 @@ public class PhoneBookCoreModule : AbpModule
 <h4>Defining a menu item</h4>
 <p><strong>AppNavigationProvider</strong> class defines menus in the application. When 
 we change this class, menus are automatically changed. Open this class and 
-create new menu item as shown below (You can add it right after the dashboard 
-menu item).</p>
-<pre lang="cs">
-.AddItem(new MenuItemDefinition(
-    AppPageNames.Tenant.PhoneBook,
+create new menu item as shown below.</p>
+<pre lang="cs">.AddItem(new MenuItemDefinition(
+    PageNames.App.Tenant.PhoneBook,
     L("PhoneBook"),
-    url: "App/PhoneBook",
+    url: "tenant.phonebook",
     icon: "glyphicon glyphicon-book"
     )
 )</pre>
 <p>Every menu item must have a <strong>unique name</strong> 
-to identify this menu item. Menu names are defined in AppPageNames class as 
+to identify this menu item. Menu names are defined in PageNames class as 
 constants. We add a new constant: "<strong>PhoneBook</strong>".</p>
 <h4>Localizing Menu Item Display Name</h4>
 <p>A menu item should also have a <strong>localizable shown name</strong>. It's 
@@ -89,69 +82,90 @@ default value is shown in all languages. We can define it also for Turkish in
 PhoneBook-tr.xml file:</p>
 <pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Telefon rehberi&quot; /&gt;</pre>
 <h4>Other menu item properties</h4>
-<p><strong>url</strong> can be a URL (it's URL of an <strong>MVC Action</strong> 
-here) that will be 
-redirected when we click the menu item.</p>
+<p><strong>url</strong> can be a URL or <strong>AngularJs route</strong> (state 
+in angular <strong>ui-router</strong> used in ASP.NET Zero) that will be 
+activated when we click the menu item. We will define this route below.</p>
 <p>Lastly, <strong>icon</strong> is the shown menu icon for new menu item. It 
 can be a <strong>css</strong> class. We can use Glyphicon, Font-Awesome or 
 another css font library here.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
 navigation document</a> for more information on menu definitions.</p>
-<h3>Creating the Page</h3>
-<p>After creating the menu item, we can create an empty page.</p>
+<h3>Creating AngularJs Route</h3>
+<p>Angular routes are defined in <strong>app.js</strong>. We're adding a new 
+route definition as shown below:</p>
+<pre lang="js">$stateProvider.state(&#39;tenant.phonebook&#39;, {
+    url: &#39;/phonebook&#39;,
+    templateUrl: &#39;~/App/tenant/views/phonebook/index.cshtml&#39;
+});</pre>
+<p>'<strong>tenant.phonebook</strong>' is the <strong>unique</strong> name of 
+this state (route). <strong>url</strong> is the mapped URL to this route and
+<strong>templateUrl</strong> is the view path for this route.</p>
+<p>Note that 'tenant.phonebook' is a <strong>second level state</strong> (child 
+of 'tenant' abstract state). See Angular-UI's route document for more 
+information on defining states. But, in most cases, you can define it easily by 
+taking existing routes as reference.</p>
+<h3>Creating AngularJs View and Controller</h3>
+<p>The last step to see our new page is to create an Angularjs view and 
+controller for it:</p>
+<p>
+<img class="img-thumbnail" alt="Phonebook AngularJs controller and view" height="198" src="images/phonebook-controller-views-files.png" width="171" /></p>
+<p>
+We can use <strong>empty</strong> controller and view located under <strong>
+common/views/_empty</strong> folder to simplify creating a new view.</p>
 <h4>Controller</h4>
-<p>Creating the <strong>PhoneBookController</strong> under <strong>
-Areas/App/Controllers</strong> folder in the Web project:</p>
-<pre lang="cs">
-[Area("App")]
-public class PhoneBookController : PhoneBookControllerBase
-{
-    public ActionResult Index()
-    {
-        return View();
-    }
-}
-</pre>
-<p>We inherited from <strong>PhoneBookControllerBase</strong> (will be <em>
-YourProjectName</em>ControllerBase for your projects) instead of MVC's standard 
-Controller class. While it will work if we derive from the standard Controller, PhoneBookControllerBase 
-provides very useful base properties and methods. So, always inherit from this 
-class unless it has a disadvantage for your case.</p>
-<h4>View</h4>
-<p>Creating an empty view, <strong>Index.cshtml</strong> under <strong>Areas/App/Views/PhoneBook</strong> 
+<p>Creating an empty Controller file, <strong>index.js</strong> under <strong>App/tenant/views/phonebook</strong> 
 folder:</p>
-<pre lang="xml">
-@using System.Threading.Tasks
-@using Acme.PhoneBook.Web.Areas.App.Startup
+<pre lang="js">(function() {
+    appModule.controller(&#39;<strong>tenant.views.phonebook.index</strong>&#39;, [
+        &#39;$scope&#39;,
+        function ($scope) {
+            var vm = this;
 
-@{
-    ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
-}
+            $scope.$on(&#39;$viewContentLoaded&#39;, function () {
+                Metronic.initAjax();
+            });
 
-&lt;div class="row margin-bottom-5"&gt;
-    &lt;div class="col-xs-12"&gt;
-        &lt;div class="page-head"&gt;
-            &lt;div class="page-title"&gt;
-                &lt;h1&gt;
-                    &lt;span&gt;@L("PhoneBook")&lt;/span&gt;
-                &lt;/h1&gt;
+            //...
+        }
+    ]);
+})();</pre>
+<p>This is the minimum controller definition that creates a controller named '<strong>tenant.views.phonebook.index</strong>' 
+and triggers Metronic's init method for this page. Controller name is completely 
+arbitrary. You can set any string. We use this naming <strong>as convention</strong> 
+and it's adviced to follow this convention when developing applications based on 
+ASP.NET Zero.</p>
+<h4>View</h4>
+<p>Creating an empty view, <strong>index.cshtml</strong> under <strong>App/tenant/views/phonebook</strong> 
+folder:</p>
+<pre lang="xml">&lt;div ng-controller=&quot;<strong>tenant.views.phonebook.index as vm</strong>&quot;&gt;
+    &lt;div class=&quot;row margin-bottom-5&quot;&gt;
+        &lt;div class=&quot;col-xs-12&quot;&gt;
+            &lt;div class=&quot;page-head&quot;&gt;
+                &lt;div class=&quot;page-title&quot;&gt;
+                    &lt;h1&gt;
+                        &lt;span&gt;<strong>@L(&quot;PhoneBook&quot;)</strong>&lt;/span&gt;
+                    &lt;/h1&gt;
+                &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;
+    &lt;div class=&quot;portlet light&quot;&gt;
+        &lt;div class=&quot;portlet-body&quot;&gt;
 
-&lt;div class="portlet light"&gt;
-    &lt;div class="portlet-body"&gt;
+            &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
 
-        &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
-
+        &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;
-</pre>
-<p>We set ViewBag.CurrentPageName to the current page's name to automatically 
-highlight the related menu item when this page is active. Now, it's time to run application and see the new phone book page:</p>
+&lt;/div&gt;</pre>
+<p>We can use <strong>.cshtml (razor)</strong> files as views (thanks to ABP 
+framework). That makes easy localization<strong>,</strong> conditionally 
+creating some part of the view (based on some user permissions for example) and 
+so on. Don't confuse about all these html structure. You can simple copy empty 
+view from<strong>
+common/views/_empty</strong> folder .</p>
+<p>Now, it's time to run application and see the new phone book page:</p>
 <p>
-<img class="img-thumbnail" alt="Phone book empty screen" height="255" src="images/phonebook-empty-mpa.png" width="974" /></p>
+<img class="img-thumbnail" alt="Empty page" height="195" src="images/phonebook-page-empty.png" width="720" /></p>
 <p>Menu item display name and page title are localized. Try to change UI 
 language to see difference.</p>
 <h3>Creating Person Entity</h3>
@@ -209,19 +223,19 @@ database schema. Since we added <strong>Person entitiy</strong>, our DbContext
 model is changed. So, we 
 should create a <strong>new migration</strong> to create the new table in the 
 database.</p>
-<p>Open <strong>Windows Command Prompt</strong>, locate to the folder containing the 
-<strong>.EntityFramework</strong> project and run the "<strong>dotnet ef migrations add "Added_Persons_Table"</strong>" command as shown below:</p>
+<p>After opening <strong>Package Manager Console</strong> and selecting <strong>
+.EntityFramework</strong> as <strong>default project</strong>, we write the 
+following command:</p>
 <p>
-<img class="img-thumbnail" alt="Entity Framework Code First Migration" src="images/phonebook-migrations-core-1.png" /></p>
+<img class="img-thumbnail" alt="Entity Framework Code First Migration" height="68" src="images/phonebook-migrations-1.png" width="609" /></p>
 <p>This command will add a <strong>migration class</strong> named "<strong>Added_Persons_Table</strong>" as shown below:</p>
 
-<pre lang="cs">
-public partial class Added_Persons_Table : DbMigration
+<pre lang="cs">public partial class <strong>Added_Persons_Table</strong> : DbMigration
 {
     public override void Up()
     {
         CreateTable(
-            "dbo.PbPersons",
+            &quot;dbo.<strong>PbPersons</strong>&quot;,
             c =&gt; new
                 {
                     Id = c.Int(nullable: false, identity: true),
@@ -238,33 +252,33 @@ public partial class Added_Persons_Table : DbMigration
                 },
             annotations: new Dictionary&lt;string, object&gt;
             {
-                { "DynamicFilter_Person_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
+                { &quot;DynamicFilter_Person_SoftDelete&quot;, &quot;EntityFramework.DynamicFilters.DynamicFilterDefinition&quot; },
             })
             .PrimaryKey(t =&gt; t.Id);
-        
+            
     }
-    
+        
     public override void Down()
     {
-        DropTable("dbo.PbPersons",
+        DropTable(&quot;dbo.PbPersons&quot;,
             removedAnnotations: new Dictionary&lt;string, object&gt;
             {
-                { "DynamicFilter_Person_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
+                { &quot;DynamicFilter_Person_SoftDelete&quot;, &quot;EntityFramework.DynamicFilters.DynamicFilterDefinition&quot; },
             });
     }
-}
-</pre>
+}</pre>
 <p>We don't have to know so much about format and rules of this file. But, it's 
-suggested to have a basic understanding of migrations. In the same Windows Command Prompt, we write "<strong>dotnet ef database update</strong>" command in order to 
+suggested to have a basic understanding of migrations. In the same Package 
+Manager Console, we write "<strong>Update-Database</strong>" command in order to 
 apply the new migration to database. After updating, we can see that <strong>PbPersons 
 table</strong> is added to database.</p>
 <p>
-<img class="img-thumbnail" alt="Phonebook tables" height="370" src="images/phonebook-tables-mpa.png" width="192" /></p>
+<img class="img-thumbnail" alt="PhoneBook tables" height="302" src="images/phonebook-tables.png" width="190" /></p>
 <p>But this new table is empty. We can use EntityFramework's <strong>Seed</strong> 
 method to add some initial data to database. In ASP.NET Zero, there are some 
 classes to fill initial data for users and settings:</p>
 <p>
-<img class="img-thumbnail" alt="Entity Framework seed data" height="119" src="images/phonebook-seed-files.png" width="283" /></p>
+<img class="img-thumbnail" alt="Entity Framework seed data" src="images/phonebook-seed-files-1.png" /></p>
 <p>So, we can add a seperated class to fill some people to database 
 as shown below:</p>
 <pre lang="cs">public class InitialPeopleCreator
@@ -306,26 +320,13 @@ as shown below:</p>
 <p>These type of default data is good since we can also use these data in 
 <strong>unit 
 tests</strong>. Surely, we should be careful about seed data since this code will always 
-be executed after each <strong>dotnet ef database update</strong> command (See EntityFramework 
-documentations to know more about seed data). This class (InitialPeopleCreator) is created and called 
-in <strong>InitialHostDbBuilder</strong> class, and it's called from 
+be executed after each <strong>Update-Database</strong> command (See EntityFramework 
+documentations to know more about seed data). This class is created and called 
+in <strong>DefaultTenantBuilder</strong> class, and it's called from 
 EntityFramework's <strong>Configuration</strong> class. This is not so 
 important, just for a good code organization (see source codes).</p>
-<pre lang="cs">
-public class InitialHostDbBuilder
-{
-    //existing codes...
-    
-    public void Create()
-    {
-        //existing codes...
-        <strong>new InitialPeopleCreator(_context).Create();</strong>
 
-        _context.SaveChanges();
-    }
-}
-</pre>
-<p>We execute <strong>dotnet ef database update</strong> command again. This command runs 
+<p>We execute <strong>Update-Database</strong> command again. This command runs 
 seed and adds two people to PbPersons table:</p>
 <p>
 <img class="img-thumbnail" alt="Persons initial data" height="50" src="images/phonebook-persons-table-initial-data.png" width="720" /></p>
@@ -335,8 +336,7 @@ operations (use cases) in the application.</p>
 <p>Application services are located in
 <strong>.Application</strong> project. We create first application service to 
 get people from server. We're creating an <strong>interface</strong> to define 
-the person application service (while this interface is optional, we suggest you 
-to create it):</p>
+the person application service:</p>
 <pre lang="cs">public interface IPersonAppService : IApplicationService
 {
     ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
@@ -360,7 +360,7 @@ public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 
     public string EmailAddress { get; set; }
 }</pre>
-<p><strong>AutoMapFrom</strong> attribute is used to configure 
+<strong>AutoMapFrom</strong> attribute is used to configure 
 <strong>AutoMapper</strong> to create mapping from 
 <strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> used to inherit audit properties 
 automatically. See
@@ -396,7 +396,7 @@ DTO</a> documentations for more information.</p>
     }
 }</pre>
 <p>We're injecting <strong>person repository</strong> (it's automatically created by ABP) and 
-using it to filter and get people from database.</p>
+using it to filter and get people from database. </p>
 <p><strong>WhereIf</strong> is an extension method 
 here (defined in Abp.Linq.Extensions namespace). It performs Where condition, only if filter is not null or empty.
 <strong>IsNullOrEmpty</strong> is also an extension method (defined in 
@@ -501,12 +501,12 @@ method. We can see the request if we open <strong>Network</strong> tab:</p>
 <p>
 <img class="img-thumbnail" alt="Google Chrome Console Get People" height="148" src="images/chrome-console-get-people-network.png" width="720" /></p>
 <p>As we see, an AJAX request made and people are got successfully.</p>
-<p>So, how this happen? How we could make a call to a C# class method (notice that it's 
-not an MVC Controller, just a plain C# class) from 
+<p>So, how this happen? How we could call to a C# class method (notice that it's 
+not an MVC Controller or Web API Controller, just a plain C# class) from 
 javascript like calling a javascript method? This is provided by ASP.NET 
 Boilerplate. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers" target="_blank">
-AspNet Core</a> documentation for more information. You can always 
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+dynamic web api layer</a> documentation for more information. You can always 
 call application services from console to debug or see returned JSON structure.</p>
 <p>We can also check Audit Logs to see the request. Open <strong>AbpAuditLogs</strong> 
 table in PhoneBook database to see the call information:</p>
@@ -514,107 +514,55 @@ table in PhoneBook database to see the call information:</p>
 <img class="img-thumbnail" alt="Audit Logs table" height="71" src="images/audit-log-table-getpeople.png" width="921" /></p>
 <p>There are some other fields not shown here. So, we see that User with Id=2 
 called GetPeople method of the PersonAppService in recorded time with the shown 
-parameters and it's executed in 134 ms.</p>
-<h3>Using GetPeople Method From MVC Controller</h3>
-<p>It's time to open <strong>PhoneBookController</strong> and get people to show on the view:</p>
-<pre lang="cs">
-[Area(&quot;App&quot;)]
-public class PhoneBookController : PhoneBookControllerBase
-{
-    private readonly IPersonAppService _personAppService;
+parameters and it' executed in 134 ms.</p>
+<h3>Calling GetPeople Method From Angularjs Controller</h3>
+<p>It's time to open phonebook Angularjs <strong>controller</strong> and get people to show on the 
+view.</p>
+<pre lang="js">(function() {
+    appModule.controller(&#39;tenant.views.phonebook.index&#39;, [
+        &#39;$scope&#39;, &#39;<strong>abp.services.app.person</strong>&#39;,
+        function($scope, <strong>personService</strong>) {
+            var vm = this;
 
-    public PhoneBookController(IPersonAppService personAppService)
-    {
-        _personAppService = personAppService;
-    }
+            vm.persons = [];
 
-    public ActionResult Index(GetPeopleInput input)
-    {
-        var output = _personAppService.GetPeople(input);
-        var model = new IndexViewModel(output);
-
-        return View(model);
-    }
-}
-</pre>
-<p>We inject <strong>IPersonAppService </strong>and call it's <strong>GetPeople</strong> method 
-(which is created and tested before) to get list of people. Then we created a 
-ViewModel object and passes to the view. Let's see the <strong>IndexViewModel</strong> class:</p>
-<pre>[AutoMapFrom(typeof (ListResultDto&lt;PersonListDto&gt;))]
-public class IndexViewModel : ListResultDto&lt;PersonListDto&gt;
-{
-    public IndexViewModel(ListResultDto&lt;PersonListDto&gt; output)
-    {
-        output.MapTo(this);
-    }
-}</pre>
-
-<p>Here, we're extending output of PersonAppService.GetPeople method's output. 
-Getting the output from constructor and map to this object. We declared 
-AutoMapFrom attribute to be able to make mapping.</p>
-
-<div class="bs-callout bs-callout-info">
-	<h4>Application Services and ViewModels</h4>
-	<p>We created an <strong>Application Service</strong> (PersonAppService) and 
-	used it from the <strong>Controller</strong>. Instead, we could access
-	<strong>Repository</strong> directly from Controller and completely discard 
-	the application service. AspNet Zero does not enforce any architecture here. 
-	In AspNet Zero, we use the application layer (application services and DTOs). Therefore, we 
-	implemented it <strong>independent</strong> 
-	from ASP.NET MVC. This makes application layer re-usable from different 
-	presentation layers. But if you will only develop ASP.NET MVC, you can 
-	implement application logic inside controllers and access to the 
-	repositories from controllers. This may simplify your architecture and 
-	development model.</p>
-	<p>If you decide to develop application services and use them in controllers 
-	then you can use application service's <strong>output</strong> as your view 
-	model. We did not prefer it and wrapped output by a dedicated <strong>
-	ViewModel</strong> 
-	(IndexViewModel here) since we think that we may add some <strong>additional 
-	properties/methods</strong> for our view model. Again, it's your choice of 
-	implementation.</p>
-</div>
-
-<h3>Rendering People In MVC View</h3>
+<strong>            personService.getPeople({}).success(function(result) {
+                vm.persons = result.items;
+            });
+</strong>        }
+    ]);
+})();</pre>
+<p>We inject '<strong>abp.services.app.person</strong>' as <strong>personService</strong> 
+parameter (See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+dynamic web api layer</a> documentation to know how this service is 
+automatically created). Then we call <strong>getPeople</strong> method and 
+create a <strong>success</strong> handler to get <strong>result</strong> of the
+<strong>AJAX</strong> request. That's all!</p>
+<h3>Rendering People In Angular View</h3>
 <p>We show people on the page is most basic form. See the changed view below:</p>
-<pre lang="xml">...
-@model Acme.PhoneBook.Web.Areas.App.Models.PhoneBook.IndexViewModel
-...
-        &lt;h3&gt;<strong>@L(&quot;AllPeople&quot;)</strong>&lt;/h3&gt;
+<pre lang="xml">&lt;div ng-controller=&quot;tenant.views.phonebook.index as vm&quot;&gt;
+...            
+            &lt;h3&gt;<strong>@L(&quot;AllPeople&quot;)</strong>&lt;/h3&gt;
 
-        &lt;div class=&quot;list-group&quot;&gt;
-            <strong>@foreach (var person in Model.Items)</strong>
-            {
-                &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot;&gt;
+            &lt;div class=&quot;list-group&quot;&gt;
+                &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; <strong>ng-repeat=&quot;person in vm.persons&quot;</strong>&gt;
                     &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
-                        <strong>@person.Name @person.Surname</strong>
-                    &lt;/h4&gt;
+                        <strong>{{person.name}} {{person.surname}}
+</strong>                    &lt;/h4&gt;
                     &lt;p class=&quot;list-group-item-text&quot;&gt;
-                        <strong>@person.EmailAddress</strong>
-                    &lt;/p&gt;
+                        <strong>{{person.emailAddress}}
+</strong>                    &lt;/p&gt;
                 &lt;/a&gt;
-            }
-        &lt;/div&gt;
-...</pre>
-<p>We declared the <strong>@model</strong> and used a foreach loop to render 
-people. See the result:</p>
+            &lt;/div&gt;
+...
+&lt;/div&gt;</pre>
+<p>We used <strong>ng-repeat</strong> directive of Angularjs to render the array of 
+people (vm.persons). See the result:</p>
 <p>
 <img class="img-thumbnail" alt="Phonebook peoples" height="285" src="images/phonebook-people-view-1.png" width="790" /></p>
 <p>We successfully retrieved list of people from database to the page.</p>
-
-<div class="bs-callout bs-callout-info">
-	<h4>About Showing Tabular Data</h4>
-	<p>We normally use a javascript based rich table/grid library to show 
-	tabular data, instead of manually rendering data like that. For example, we 
-	used <a href="http://jtable.org/" target="_blank">jTable</a> library to show 
-	users on the Users page of AspNet Zero. Always use such components since 
-	they make things much more easier and provides a much better user 
-	experience.</p>
-	<p>We did not use a table component here, because we want to show basics of 
-	MVC instead of going details of a 3rd party library.</p>
-</div>
-
-<h3>Creating a New Person</h3>
+<h3>Creating a new people</h3>
 <p>Next step is to create a modal to add a new item to phone book.</p>
 <h4>Add a CreatePerson Method to PersonAppService</h4>
 <p>We first define <strong>CreatePerson</strong> method in <strong>IPersonAppService</strong> interface:</p>
@@ -706,204 +654,118 @@ invalid arguments and asserts that it thows AbpValidationException. See
 validation document</a> for more information.</p>
 <h4>Creating a Modal</h4>
 <p>We will create a 
-Bootstrap Modal to create a new person. First of all, you can create modal and save as you already know and like. But 
-AspNet Zero has some helper scripts to make it easier if you use it. We will use 
-them here.</p>
-<p>We can <strong>copy </strong>cshtml and js files from <strong>
-Areas/App/Views/Common/Modals/Empty</strong> folder as a base for a new modal to <strong>Areas/App/Views/PhoneBook/CreatePersonModal.cshtml</strong>.</p>
-<p>Copied and modifined the view code as shown below (_CreatePersonModal.cshtml):&nbsp;</p>
-<pre lang="xml">
-@using Acme.PhoneBook.People
-@using Acme.PhoneBook.Web.Areas.App.Models.Common.Modals
-
-@Html.Partial(&quot;~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml&quot;, new ModalHeaderViewModel(L(&quot;CreateNewPerson&quot;)))
-
-&lt;div class=&quot;modal-body&quot;&gt;
-    &lt;form role=&quot;form&quot; novalidate class=&quot;form-validation&quot;&gt;
-        &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
-            &lt;input class=&quot;form-control&quot; type=&quot;text&quot; name=&quot;Name&quot; required maxlength=&quot;@Person.MaxNameLength&quot;&gt;
-            &lt;label&gt;@L(&quot;Name&quot;)&lt;/label&gt;
+<a href="https://angular-ui.github.io/bootstrap/#/modal" target="_blank">Angular 
+Bootstrap Ui-Modal</a> to create a new person as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
+<p>View code is shown below:&nbsp;</p>
+<pre lang="xml">@using Acme.PhoneBook.People
+&lt;div&gt;
+    &lt;form name=&quot;createPersonForm&quot; role=&quot;form&quot; novalidate class=&quot;form-validation&quot;&gt;
+        &lt;div class=&quot;modal-header&quot;&gt;
+            &lt;h4 class=&quot;modal-title&quot;&gt;
+                &lt;span&gt;@L(&quot;CreateNewPerson&quot;)&lt;/span&gt;
+            &lt;/h4&gt;
         &lt;/div&gt;
+        &lt;div class=&quot;modal-body&quot;&gt;
+            
+            &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
+                &lt;input class=&quot;form-control&quot; type=&quot;text&quot; name=&quot;Name&quot; <strong>ng-model=&quot;vm.person.name&quot;</strong> required maxlength=&quot;@Person.MaxNameLength&quot;&gt;
+                &lt;label&gt;@L(&quot;Name&quot;)&lt;/label&gt;
+            &lt;/div&gt;
 
-        &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
-            &lt;input type=&quot;text&quot; name=&quot;Surname&quot; class=&quot;form-control&quot; required maxlength=&quot;@Person.MaxSurnameLength&quot;&gt;
-            &lt;label&gt;@L(&quot;Surname&quot;)&lt;/label&gt;
+            &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
+                &lt;input type=&quot;text&quot; name=&quot;Surname&quot; class=&quot;form-control&quot; <strong>ng-model=&quot;vm.person.surname&quot;</strong> required maxlength=&quot;@Person.MaxSurnameLength&quot;&gt;
+                &lt;label&gt;@L(&quot;Surname&quot;)&lt;/label&gt;
+            &lt;/div&gt;
+            
+            &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
+                &lt;input type=&quot;email&quot; name=&quot;EmailAddress&quot; class=&quot;form-control&quot; <strong>ng-model=&quot;vm.person.emailAddress&quot;</strong> maxlength=&quot;@Person.MaxEmailAddressLength&quot;&gt;
+                &lt;label&gt;@L(&quot;EmailAddress&quot;)&lt;/label&gt;
+            &lt;/div&gt;
+
         &lt;/div&gt;
-
-        &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
-            &lt;input type=&quot;email&quot; name=&quot;EmailAddress&quot; class=&quot;form-control&quot; maxlength=&quot;@Person.MaxEmailAddressLength&quot;&gt;
-            &lt;label&gt;@L(&quot;EmailAddress&quot;)&lt;/label&gt;
+        &lt;div class=&quot;modal-footer&quot;&gt;
+            &lt;button ng-disabled=&quot;vm.saving&quot; type=&quot;button&quot; class=&quot;btn btn-default&quot; <strong>ng-click=&quot;vm.cancel()&quot;</strong>&gt;@L(&quot;Cancel&quot;)&lt;/button&gt;
+            &lt;button type=&quot;submit&quot; <strong>button-busy=&quot;vm.saving&quot;</strong> busy-text=&quot;@L(&quot;SavingWithThreeDot&quot;)&quot; class=&quot;btn btn-primary blue&quot; <strong>ng-click=&quot;vm.save()&quot; ng-disabled=&quot;createPersonForm.$invalid&quot;</strong>&gt;&lt;i class=&quot;fa fa-save&quot;&gt;&lt;/i&gt; &lt;span&gt;@L(&quot;Save&quot;)&lt;/span&gt;&lt;/button&gt;
         &lt;/div&gt;
     &lt;/form&gt;
-&lt;/div&gt;
-
-@Html.Partial(&quot;~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml&quot;)
-</pre>
-<p>Modal header and footer code comes from the template. We just changed inside 
-of modal-body.</p>
-<p>We have a form with three input (name, surname and email address). We're using <strong>Person</strong> entity's 
+&lt;/div&gt;</pre>
+<p>We have a form with three input (name, surname and email address) <strong>
+validated</strong> using Angularjs. We're using <strong>Person</strong> entity's 
 const values in view to set same <strong>maxlength</strong> to input controls.</p>
-<p>Also, copied the _<strong>Empty.js</strong> from <strong>view-resources/Areas/App/Views/Common/Modals/Empty</strong> to <strong>view-resources/Areas/App/Views/PhoneBook</strong> and modified as shown below (_CreatePersonModal.js):</p>
-<pre lang="js">(function($) {
-    app.modals.<strong>CreatePersonModal</strong> = function () {
+<p><strong>Save</strong> button is <strong>disabled</strong> if the form is
+<strong>invalid</strong>. <strong>button-busy</strong> directive makes buttons 
+disable and animates it while submitting form:</p>
+<p>
+<img class="img-thumbnail" alt="Modal button busy animation" height="59" src="images/modal-buttons-busy.png" width="208" /></p>
+<p>Angularjs <strong>controller</strong> of this view is shown below:</p>
+<pre lang="cs">(function () {
+    appModule.controller(&#39;tenant.views.phonebook.createPersonModal&#39;, [
+        &#39;$scope&#39;, &#39;$uibModalInstance&#39;, &#39;abp.services.app.person&#39;,
+        function ($scope, $uibModalInstance, personService) {
+            var vm = this;
+            
+            vm.saving = false;
+            vm.person = {};
 
-        var _modalManager;
+            vm.save = function () {
+                vm.saving = true;
+<strong>                personService.createPerson(vm.person).success(function () {
+                    abp.notify.info(app.localize(&#39;SavedSuccessfully&#39;));
+                    $uibModalInstance.close();
+                }).finally(function () {
+                    vm.saving = false;
+                });
+</strong>            };
 
-        this.init = function(modalManager) {
-            _modalManager = modalManager;
-
-            //Initialize your modal here...
-        };
-
-        this.save = function () {
-            //Save your modal here...
-        };
-    };
-})(jQuery);</pre>
-<p>Just named the modal as '<strong>CreatePersonModal</strong>'. We will fill 
-the javascript code later.</p>
+            vm.cancel = function () {
+                $uibModalInstance.dismiss();
+            };
+        }
+    ]);
+})();</pre>
+<p>Controller is simple. It calls <strong>createPerson</strong> method of
+<strong>PersonAppService</strong> when we click the <strong>Save</strong> 
+button. <strong>vm.saving</strong> flag is <strong>true</strong> 
+during AJAX operation. This value is used on view to disable and make buttons 
+animated. If createPerson success, modal is <strong>closed</strong>.</p>
 <h4>Opening the Modal</h4>
-<p>We need to put a "Create new person" button to the 'people list page' and write 
-some javascript code to open the modal when clicked to the button.</p>
-<p>So, changing the <strong>Index.cshtml</strong> view header as shown below:</p>
-<pre lang="js">
-@using System.Threading.Tasks
-@using Acme.PhoneBook.Web.Areas.App.Startup
-@model Acme.PhoneBook.Web.Areas.App.Models.PhoneBook.IndexViewModel
+<p>We return to phone book view and add a <strong>button</strong> to open this modal:</p>
+<pre lang="xml">&lt;button class=&quot;btn btn-primary blue&quot; <strong>ng-click=&quot;vm.openCreatePersonModal()&quot;</strong>&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;</pre>
+<p><strong>vm.openCreatePersonModal</strong> method is called when we click this button:</p>
+<pre lang="js">(function() {
+    appModule.controller(&#39;tenant.views.phonebook.index&#39;, [
+        &#39;$scope&#39;, &#39;<strong>$uibModal</strong>&#39;, &#39;abp.services.app.person&#39;,
+        function ($scope, <strong>$uibModal</strong>, personService) {
+            var vm = this;
 
-@{
-    ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
-}
+            vm.persons = [];
 
-@section Scripts
-{
-<strong>    &lt;environment names=&quot;Development&quot;&gt;
-        &lt;script src=&quot;~/view-resources/Areas/App/Views/PhoneBook/_CreatePersonModal.js&quot; asp-append-version=&quot;true&quot;&gt;&lt;/script&gt;
-        &lt;script src=&quot;~/view-resources/Areas/App/Views/PhoneBook/Index.js&quot; asp-append-version=&quot;true&quot;&gt;&lt;/script&gt;
-    &lt;/environment&gt;
-</strong>}
-
-&lt;div class=&quot;row margin-bottom-5&quot;&gt;
-    &lt;div class=&quot;col-xs-6&quot;&gt;
-        &lt;div class=&quot;page-head&quot;&gt;
-            &lt;div class=&quot;page-title&quot;&gt;
-                &lt;h1&gt;
-                    &lt;span&gt;@L(&quot;PhoneBook&quot;)&lt;/span&gt;
-                &lt;/h1&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    
-    &lt;div class=&quot;col-xs-6 text-right&quot;&gt;
-<strong>        &lt;button id=&quot;CreateNewPersonButton&quot; class=&quot;btn btn-primary blue&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;</strong>
-    &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;portlet light&quot;&gt;
-    &lt;div class=&quot;portlet-body&quot;&gt;
-
-        &lt;h3&gt;@L(&quot;AllPeople&quot;)&lt;/h3&gt;
-
-        &lt;div class=&quot;list-group&quot;&gt;
-            @foreach (var person in Model.Items)
-            {
-                &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot;&gt;
-                    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
-                        @person.Name @person.Surname
-                    &lt;/h4&gt;
-                    &lt;p class=&quot;list-group-item-text&quot;&gt;
-                        @person.EmailAddress
-                    &lt;/p&gt;
-                &lt;/a&gt;
+            function getPeople() {
+                personService.getPeople({}).success(function (result) {
+                    vm.persons = result.items;
+                });
             }
-        &lt;/div&gt;
+            
+<strong>            vm.openCreatePersonModal = function () {
+                var modalInstance = $uibModal.open({
+                    templateUrl: &#39;~/App/tenant/views/phonebook/createPersonModal.cshtml&#39;,
+                    controller: &#39;tenant.views.phonebook.createPersonModal as vm&#39;,
+                    backdrop: &#39;static&#39;
+                });
 
-    &lt;/div&gt;
-&lt;/div&gt;
-</pre>
-<p>We included modal's javascript (_CreatePersonModal.js) and a <strong>Index.js</strong> file which is defined as shown below:</p>
-<pre lang="js">
-(function () {
-    $(function () {
+                modalInstance.result.then(function () {
+                    getPeople();
+                });
+            };</strong>
 
-        var _createPersonModal = new app.ModalManager({
-            viewUrl: abp.appPath + 'App/PhoneBook/CreatePersonModal',
-            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/PhoneBook/_CreatePersonModal.js',
-            modalClass: 'CreatePersonModal'
-        });
-
-        $('#CreateNewPersonButton').click(function (e) {
-            e.preventDefault();
-            _createPersonModal.open();
-        });
-
-    });
-})();
-</pre>
-<p><strong>ModalManager </strong>is a predefined modal helper javascript class 
-of AspNet Zero. It accepts a <strong>viewUrl</strong> (which is actually an MVC 
-action to load the view), a <strong>scriptUrl</strong> (javascript file of the 
-modal) and a <strong>modalClass</strong> (which is set when we define the modal 
-above).</p>
-<p>ModalManager's <strong>open</strong> method loads view and javascript (if 
-needed) and opens the modal.</p>
-<p>Lastly, we should create the MVC action defined as App/PhoneBook/CreatePersonModal. 
-So, open the <strong>PhoneBookController</strong> again and add the following action:</p>
-<pre lang="js">public PartialViewResult CreatePersonModal()
-{
-    return PartialView(&quot;_CreatePersonModal&quot;);
-}</pre>
-<p>Now, we can run the application and open the modal by clicking the 'Create 
-New Person' button:</p>
-<p><img class="img-thumbnail" alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
-<h4>Saving The Person</h4>
-<p>Finally, we can save the person when user clicks the the save button. We 
-implement it in the _CreatePersonModal.js file:</p>
-<pre lang="js">(function($) {
-    app.modals.CreatePersonModal = function () {
-
-        var _modalManager;
-<strong>        var _personService = abp.services.app.person;
-        var _$form = null;
-</strong>
-        this.init = function(modalManager) {
-            _modalManager = modalManager;
-
-<strong>            _$form = _modalManager.getModal().find(&#39;form&#39;);
-            _$form.validate();
-</strong>        };
-
-        this.save = function () {
-<strong>            if (!_$form.valid()) {
-                return;
-            }
-
-            var person = _$form.serializeFormToObject();
-
-            _modalManager.setBusy(true);
-            _personService.createPerson(person).done(function () {
-                _modalManager.close();
-                location.reload();
-            }).always(function () {
-                _modalManager.setBusy(false);
-            });
-</strong>        };
-    };
-})(jQuery);</pre>
-<p>In the <strong>init</strong> function, we got a reference to the <strong>form</strong> 
-and enable <strong>validation</strong>.</p>
-<p>In the <strong>save</strong> method, we first <strong>validate</strong> the
-<strong>form</strong>. Then we convert the form to a <strong>javascript object
-</strong>(since server waits for JSON). Then we use PersonAppService's <strong>
-createPerson</strong> method to save the person. <strong>setBusy</strong> method 
-automatically disables save and cancel buttons. In the <strong>done</strong> 
-method, we simple <strong>reload</strong>ed the page to show new user in the 
-page (In a real application, we could add new person to the page dynamically 
-using jQuery)</p>
-<p>Notice that; We used PersonAppService's createPerson method directly from 
-javascript. This is possible by ABP's
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
-Dynamic Web API layer</a>.</p>
+            getPeople();
+        }
+    ]);
+})();</pre>
+<p>We open modal using $uibModal service by providing view and controller. We 
+re-load person list (by calling getPeople function) after modal closed.</p>
 <h3>Authorization For Phone Book</h3>
 <p>At this point, anyone can enter phone book page since no authorization 
 defined. We will define two permission:</p>
@@ -937,13 +799,13 @@ class, we can declare a class level attribute as shown below:</p>
 }</pre>
 <p>Now, let's try to enter Phone Book page by clicking the menu item:</p>
 <p>
-<img class="img-thumbnail" alt="500 Error" height="243" src="images/error-500.png" width="614" /></p>
+<img class="img-thumbnail" alt="Permission (Authorization) Error" height="461" src="images/permission-error.png" width="971" /></p>
 <p>We get an error message. This exception is thrown when any method of 
-PersonAppService is called without required permission.</p>
+PersonAppService is called without needed permission.</p>
 <h5>Hide Unauthorized Menu Item</h5>
 <p>This secures the service, but we should also <strong>hide</strong> the Phone book 
 <strong>menu item</strong>. It's 
-easy, open <strong>AppNavigationProvider</strong> and add requiredPermissionName as shown below:</p>
+easy, open AppNavigationProvider and add requiredPermissionName as shown below:</p>
 <pre lang="cs">new MenuItemDefinition(
     PageNames.App.Tenant.PhoneBook,
     L(&quot;PhoneBook&quot;),
@@ -951,6 +813,22 @@ easy, open <strong>AppNavigationProvider</strong> and add requiredPermissionName
     icon: &quot;glyphicon glyphicon-book&quot;,
     <strong>requiredPermissionName: AppPermissions.Pages_Tenant_PhoneBook
 </strong>)</pre>
+<h5>Disable Angular Route</h5>
+<p>While hiding menu item prevents user to enter the page by clicking it, he can 
+still enter the page by entering the following URL directly to address bar of browsers:</p>
+<pre>http://localhost:6234/Application#/tenant/phonebook</pre>
+<p>We should also conditionally define angular routes. Thus, if user has no 
+permission to enter this page, he can not activate the route:</p>
+<pre lang="js">if (abp.auth.hasPermission(&#39;Pages.Tenant.PhoneBook&#39;)) {
+    $stateProvider.state(&#39;tenant.phonebook&#39;, {
+        url: &#39;/phonebook&#39;,
+        templateUrl: &#39;~/App/tenant/views/phonebook/index.cshtml&#39;,
+        menu: &#39;PhoneBook&#39;
+    });
+}</pre>
+<p>We wrapper route definition by an if block that checks related permission. 
+Now, user can not open the page without the permission. He is redirected to 
+default route by Angularjs.</p>
 <h5>Grant permission</h5>
 <p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
 page and edit <strong>admin</strong> role:</p>
@@ -967,13 +845,13 @@ document</a> for details about roles and users).</p>
 <p>While a permission for a page is useful and probably needed always, we may 
 need to define additional permissions to perform some <strong>specific actions</strong> 
 on a page, like creating a new person. </p>
-<h5>Define the Permission</h5>
+<h5>Define the permission</h5>
 <p>Defining a permission is similar:</p>
 <pre lang="cs">var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);
 <strong>phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L(&quot;CreateNewPerson&quot;), multiTenancySides: MultiTenancySides.Tenant);</strong></pre>
 <p>First permission was defined before. In the second line, we are creating a 
 child permission of first one.</p>
-<h5>Add AbpAuthorize Attribute</h5>
+<h5>Add AbpAuthorize attribute</h5>
 <p>This time, we're declaring <strong>AbpAuthorize</strong> attribute just for 
 <strong>CreatePerson</strong> 
 method:</p>
@@ -986,18 +864,24 @@ method:</p>
 <h5>Hide Unauthorized Button</h5>
 <p>If we run the application and try to create a person, we get an authorization 
 error after clicking the save button. But, it's good to <strong>completely hide 
-Create New Person button</strong> if we don't have the permission. It's very 
-simple:</p>
-<p>Open the <strong>index.cshtml</strong> razor view and use
+Create New Person button</strong> if we don't have the permission. There are a 
+few ways of doing it.</p>
+<p>We can implement it in <strong>index.cshtml</strong> razor view on <strong>server side</strong> using
 <strong>IsGranted</strong> 
 method:</p>
-<pre lang="xml"><strong>@if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson))
-</strong>{
-    &lt;button id=&quot;CreateNewPersonButton&quot; class=&quot;btn btn-primary blue&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;
-}
-</pre>
-<p>In this way, the "Create New Person" button does not rendered in server and user can 
+<pre lang="xml">@if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson))
+{
+    &lt;button class=&quot;btn btn-primary blue&quot; ng-click=&quot;vm.openCreatePersonModal()&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;
+}</pre>
+<p>In this way, the Create New Person does not rendered in server and user can 
 not see this button.</p>
+<p>As an alternative, we can check permission on <strong>client side</strong>. 
+First, we declare a variable in Angularjs controller:</p>
+<pre lang="js">vm.permissions = {
+    createPerson: abp.auth.hasPermission(&#39;Pages.Tenant.PhoneBook.CreatePerson&#39;)
+};</pre>
+<p>And then use it in a <strong>ng-if</strong> directive in view to conditionally render the button:</p>
+<pre lang="xml">&lt;button <strong>ng-if=&quot;vm.permissions.createPerson&quot;</strong> class=&quot;btn btn-primary blue&quot; ng-click=&quot;vm.openCreatePersonModal()&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;</pre>
 <h5>Grant permission</h5>
 <p>To see the button again, we can go to role or user manager and grant related 
 permission as shown below:</p>
@@ -1005,28 +889,6 @@ permission as shown below:</p>
 <img class="img-thumbnail" alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
 <p>As shown above, <strong>Create new person</strong> permission is a child 
 permission of the <strong>Phone book</strong>.</p>
-<h4>Authorization for MVC Controllers</h4>
-<p>We added Authorize attrbiutes to PersonAppService. This prevents unauthorized 
-calls to this service. But unauthorized clients <strong>still can call </strong>actions of 
-PhoneBookController actions. Since PhoneBookController uses PersonAppService, they will 
-get authorization exception and can not use the service. But we can also secure MVC Controllers. 
-This is suggested since some MVC actions may not use application services. Also, 
-it's better to prevent unauthorized attemps at the very beginning.</p>
-<p>We use <strong>AbpMvcAuthorize</strong> attribute for MVC Controllers as 
-shown below:</p>
-<pre lang="cs"><strong>[AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
-</strong>public class PhoneBookController : PhoneBookControllerBase
-{
-    ...
-    
-    <strong>[AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
-</strong>    public PartialViewResult CreatePersonModal()
-    {
-        ...
-    }
-    
-    ...
-}</pre>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization">
 authorization documentation</a> for more information on authorization.</p>
 <h3>Deleting a Person</h3>
@@ -1036,31 +898,25 @@ authorization documentation</a> for more information on authorization.</p>
 <p>
 We're starting from UI in this case.</p>
 <h4>View</h4>
-<p>We're changing <strong>index.cshtml</strong> view to add a button (related part is shown 
+<p>We're changing index.cshtml view to add a button (related part is shown 
 here):</p>
-<pre lang="xml">&lt;div<strong> id=&quot;AllPeopleList&quot;</strong> class=&quot;list-group&quot;&gt;
-    @foreach (var person in Model.Items)
-    {
-        &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; <strong>data-person-id="@person.Id"</strong>&gt;
-            &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
-                @person.Name @person.Surname
-<strong>                @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
-                {
-                    &lt;button title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red delete-person&quot; href=&quot;javascript:;&quot;&gt;
-                        &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
-                    &lt;/button&gt;
-                }
-</strong>            &lt;/h4&gt;
-            &lt;p class=&quot;list-group-item-text&quot;&gt;
-                @person.EmailAddress
-            &lt;/p&gt;
-        &lt;/a&gt;
-    }
+<pre lang="xml">&lt;div id=&quot;AllPeopleList&quot; class=&quot;list-group&quot;&gt;
+    &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; ng-repeat=&quot;person in vm.persons&quot;&gt;
+        &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
+            {{person.name}} {{person.surname}}
+<strong>            &lt;button ng-if="vm.permissions.deletePerson" ng-click=&quot;vm.deletePerson(person)&quot; title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red delete-person&quot; href=&quot;javascript:;&quot;&gt;
+                &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+            &lt;/button&gt;
+</strong>        &lt;/h4&gt;
+        &lt;p class=&quot;list-group-item-text&quot;&gt;
+            {{person.emailAddress}}
+        &lt;/p&gt;
+    &lt;/a&gt;
 &lt;/div&gt;</pre>
 <p>Surely, we defined 'delete person' permission as like before.</p>
 <h4>Style</h4>
 <p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to take button right. Created 
-a file named <strong>index.less</strong> and added following lines:</p>
+a file named index.less and added following lines:</p>
 <pre lang="css">#AllPeopleList {
     .list-group-item-heading {
         button.delete-person {
@@ -1069,48 +925,36 @@ a file named <strong>index.less</strong> and added following lines:</p>
     }
 }
 </pre>
-<p>And add the sytle to your Index.cshtml page (You can also add minified versions of styles for other environmets like production and staging):</p>
-<pre lang="xml">
-@section Styles
-{
-    &lt;environment names=&quot;Development&quot;&gt;
-        &lt;link rel=&quot;stylesheet&quot; href=&quot;~/view-resources/Areas/App/Views/PhoneBook/Index.css&quot; asp-append-version=&quot;true&quot; /&gt;
-    &lt;/environment&gt;
-}
-</pre>
-<h4>Javascript</h4>
-<p>Now, adding code to delete person (to Index.js):</p>
-<pre lang="js">var _personService = <strong>abp.services.app.person</strong>;
-
-$(&#39;#AllPeopleList button.delete-person&#39;).click(function (e) {
-    e.preventDefault();
-    
-    var $listItem = <strong>$(this).closest(&#39;.list-group-item&#39;);</strong>
-    var personId = $listItem.attr(&#39;<strong>data-person-id</strong>&#39;);
-
+<p>Pre-built bundling configuration automatically includes styles to layout.</p>
+<h4>Controller</h4>
+<p>Now, creating a <strong>deletePerson</strong> function in Angularjs controller (that was called from 
+view above):</p>
+<pre lang="js">vm.deletePerson = function (person) {
     abp.message.confirm(
-        app.localize(&#39;AreYouSureToDeleteThePerson&#39;),
-        function(isConfirmed) {
+        app.localize(&#39;AreYouSureToDeletePerson&#39;, person.name),
+        function (isConfirmed) {
             if (isConfirmed) {
-                <strong>_personService.deletePerson</strong>({
-                    id: personId
-                }).done(function () {
-                    abp.notify.info(app.localize(&#39;SuccessfullyDeleted&#39;));
-                    <strong>$listItem.remove();</strong>
+                personService.deletePerson({
+                    id: person.id
+                }).success(function () {
+                    abp.notify.success(app.localize(&#39;SuccessfullyDeleted&#39;));
+                    getPeople();
                 });
             }
         }
     );
-});</pre>
+};</pre>
 <p>It first shows a confirmation message when we click the delete button:</p>
 <p>
 <img class="img-thumbnail" alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
 <p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
 <strong>PersonAppService</strong> and shows a 
-<strong>
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Javascript-API/Notification">notification</a></strong> if operation succeed.&nbsp;Also, 
-removes the person from the page using jQuery's <strong>remove</strong> 
-function.</p>
+notification if operation succeed.</p>
+<p>Localization string "<strong>AreYouSureToDeletePerson</strong>" was defined 
+like that:</p>
+<pre lang="xml">&lt;text name=&quot;AreYouSureToDeletePerson&quot; value=&quot;Are you sure to delete person named {0}?&quot; /&gt;</pre>
+<p>So, we can pass a name into localize method. This is similar to C#'s 
+string.Format method.</p>
 <h4>Application Service</h4>
 <p>First, adding a new method definition to <strong>IPersonAppService</strong> interface as always:</p>
 <pre lang="cs">Task DeletePerson(EntityDto input);</pre>
@@ -1127,56 +971,23 @@ public async Task DeletePerson(EntityDto input)
 GetPeople</strong> method. UI is shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Searching people" height="328" src="images/search-people.png" width="770" /></p>
-<p>We added a search input to filter people (showing the related part of the 
-code):</p>
-<pre lang="xml">&lt;div class=&quot;portlet light&quot;&gt;
-<strong>    &lt;div class=&quot;portlet-title portlet-title-filter&quot;&gt;
-
-        &lt;h3&gt;@L(&quot;AllPeople&quot;) (@Model.Items.Count)&lt;/h3&gt;
-
-        &lt;div class=&quot;inputs inputs-full-width&quot;&gt;
-            &lt;div class=&quot;portlet-input&quot;&gt;
-                &lt;form action=&quot;@Url.Action(&quot;Index&quot;)&quot; method=&quot;GET&quot;&gt;
-                    &lt;div class=&quot;input-group&quot;&gt;
-                        &lt;input id=&quot;FilterPeopleText&quot; name=&quot;Filter&quot; value=&quot;@Model.Filter&quot; class=&quot;form-control&quot; placeholder=&quot;@L(&quot;SearchWithThreeDot&quot;)&quot; type=&quot;text&quot;&gt;
-                        &lt;span class=&quot;input-group-btn&quot;&gt;
-                            &lt;button id=&quot;FilterPeopleButton&quot; class=&quot;btn default&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;icon-magnifier&quot;&gt;&lt;/i&gt;&lt;/button&gt;
-                        &lt;/span&gt;
-                    &lt;/div&gt;
-                &lt;/form&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-</strong>
-    &lt;div class=&quot;portlet-body&quot;&gt;
-
-        ...
-
-    &lt;/div&gt;
-&lt;/div&gt;</pre>
-<p>And added Filter property to the IndexViewModel:</p>
-<pre lang="cs">[AutoMapFrom(typeof (ListResultDto&lt;PersonListDto&gt;))]
-public class IndexViewModel : ListResultDto&lt;PersonListDto&gt;
-{
-    <strong>public string Filter { get; set; }</strong>
-
-    public IndexViewModel(ListResultDto&lt;PersonListDto&gt; output<strong>, string filter = null</strong>)
-    {
-        output.MapTo(this);
-        <strong>Filter = filter;</strong>
-    }
-}</pre>
-<p>Lastly, changed PhoneBookController's <strong>Index</strong> action to pass 
-the <strong>filter</strong> to the IndexViewModel:</p>
-<pre lang="cs">public ActionResult Index(GetPeopleInput input)
-{
-    var output = _personAppService.GetPeople(input);
-    var model = new IndexViewModel(output<strong>, input.Filter</strong>);
-
-    return View(model);
-}</pre>
-<p>That's all, It works! (Notice that; PersonAppService.GetPeople method was 
-already using the input.Filter as we implemented it before).</p>
+<p>We added a search input to filter people:</p>
+<pre lang="xml">&lt;input <strong>ng-model=&quot;vm.filterText&quot; auto-focus</strong> class=&quot;form-control&quot; placeholder=&quot;@L(&quot;SearchWithThreeDot&quot;)&quot; type=&quot;text&quot;&gt;
+&lt;span class=&quot;input-group-btn&quot;&gt;
+    &lt;button <strong>ng-click=&quot;vm.getPeople()&quot;</strong> class=&quot;btn btn-default&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;icon-magnifier&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+&lt;/span&gt;</pre>
+<p>and changed title to show people count:</p>
+<pre lang="xml">&lt;h3&gt;@L(&quot;AllPeople&quot;) (<strong>{{vm.persons.length}}</strong>)&lt;/h3&gt;</pre>
+<p>Lastly, changed <strong>getPeople</strong> function in controller, to send 
+<strong>vm.filterText</strong> to server:</p>
+<pre lang="js">vm.getPeople = function() {
+    personService.getPeople({
+<strong>        filter: vm.filterText
+</strong>    }).success(function (result) {
+        vm.persons = result.items;
+    });
+};</pre>
+<p>That's all. It works since we already have implemented filtering on server.</p>
 <h3>Extending the Application: Adding Phone Numbers</h3>
 <p>Until now, we did not even mention about phone numbers. It's time to extend 
 our domain to support <strong>multiple phone numbers</strong> for a person.</p>
@@ -1222,11 +1033,10 @@ public class Person : FullAuditedEntity
 <h3>Adding Database Migration</h3>
 <p>Our entity model has changed, so we need to add a new migration:</p>
 <p>
-<img class="img-thumbnail" alt="Entity Framework Migration" src="images/phonebook-migrations-core-2.png" /></p>
+<img class="img-thumbnail" alt="Entity Framework Migration" height="81" src="images/phonebook-migrations-2.png" width="598" /></p>
 <p>This will create a new code based migration file to create <strong>PbPhones</strong> 
 table:</p>
-<pre lang="cs">
-public partial class Added_Phone : DbMigration
+<pre lang="cs">public partial class Added_Phone : DbMigration
 {
     public override void Up()
     {
@@ -1244,20 +1054,18 @@ public partial class Added_Phone : DbMigration
             .PrimaryKey(t =&gt; t.Id)
             .ForeignKey(&quot;dbo.PbPersons&quot;, t =&gt; t.PersonId, cascadeDelete: true)
             .Index(t =&gt; t.PersonId);
-        
+            
     }
-    
+        
     public override void Down()
     {
         DropForeignKey(&quot;dbo.PbPhones&quot;, &quot;PersonId&quot;, &quot;dbo.PbPersons&quot;);
         DropIndex(&quot;dbo.PbPhones&quot;, new[] { &quot;PersonId&quot; });
         DropTable(&quot;dbo.PbPhones&quot;);
     }
-}
-</pre>
+}</pre>
 <p>Before updating database, we can go to database <strong>seed</strong> code 
-and add example <strong>phone numbers</strong> for example people (We renamed 
-InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):</p>
+and add example <strong>phone numbers</strong> for example people:</p>
 <pre lang="cs">public class InitialPeopleAndPhoneCreator
 {
     //...
@@ -1299,11 +1107,12 @@ InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):</p>
     }
 }</pre>
 <p>We added two phone number to Douglas, one phone number to Isaac. But if we 
-run "dotnet ef database update" now, phones are not inserted since this seed code checks if 
+run Update-Database now, phones are not inserted since this seed code checks if 
 people exists, and does not insert if it's already exists. What's solution? 
 Since we haven't deployed yet, we can delete database (or at lease truncate 
 people table) and re-create it. I do it.</p>
-<p>Now, we are running <strong>dotnet ef database update</strong> command in Command Prompt to re-create database and seed it. You can check database to see
+<p>Now, we are running <strong>Update-Database</strong> command in Package 
+Manager Console to re-create database and seed it. You can check database to see
 <strong>PbPhones</strong> table and rows.</p>
 <h3>Changing GetPeople Method</h3>
 <p>We're changing <strong>PersonAppService.GetPeople</strong> method to <strong>
@@ -1376,7 +1185,7 @@ public class AddPhoneInput
     await _phoneRepository.DeleteAsync(input.Id);
 }
 
-public async Task&lt;PhoneInPersonListDto&gt; AddPhone([FromBody]AddPhoneInput input)
+public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
 {
     var person = _personRepository.Get(input.PersonId);
 
@@ -1387,8 +1196,6 @@ public async Task&lt;PhoneInPersonListDto&gt; AddPhone([FromBody]AddPhoneInput i
 
     return phone.MapTo&lt;PhoneInPersonListDto&gt;();
 }</pre>
-<p>(Note: We injected <strong>IRepository&lt;Phone, long&gt;</strong> in the 
-constructor and set to _personRepository field)</p>
 <p><strong>DeletePhone</strong> method is simple. It only deletes phone with 
 given id.</p>
 <p><strong>AddPhone</strong> method <strong>gets </strong>the person from 
@@ -1415,206 +1222,113 @@ clicking the icon at left. We can add a new phone from the inputs at last line.<
 <h4>View</h4>
 <p>Changes in view are shown below:</p>
 <pre lang="xml">&lt;div id=&quot;AllPeopleList&quot; class=&quot;list-group&quot;&gt;
-    @foreach (var person in Model.Items)
-    {
-        &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; data-person-id=&quot;@person.Id&quot;&gt;
-            &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
-                @person.Name @person.Surname
-
-                &lt;span class=&quot;person-buttons&quot;&gt;
-<strong>                    &lt;button title=&quot;@L(&quot;Edit&quot;)&quot; class=&quot;btn btn-circle btn-icon-only green edit-person&quot;&gt;
-                        &lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;
-                    &lt;/button&gt;
-</strong>                    @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
-                    {
-                        &lt;button title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red delete-person&quot; href=&quot;javascript:;&quot;&gt;
-                            &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
-                        &lt;/button&gt;
-                    }
-                &lt;/span&gt;
-            &lt;/h4&gt;
-            &lt;p class=&quot;list-group-item-text&quot;&gt;
-                @person.EmailAddress
-            &lt;/p&gt;
-<strong>            &lt;div class=&quot;table-scrollable table-phones&quot;&gt;
-                &lt;table class=&quot;table table-hover&quot;&gt;
-                    &lt;thead&gt;
-                        &lt;tr&gt;
-                            &lt;th style=&quot;width:10%&quot;&gt;&lt;/th&gt;
-                            &lt;th style=&quot;width:15%&quot;&gt;@L(&quot;Type&quot;)&lt;/th&gt;
-                            &lt;th style=&quot;width:75%&quot;&gt;@L(&quot;PhoneNumber&quot;)&lt;/th&gt;
-                        &lt;/tr&gt;
-                    &lt;/thead&gt;
-                    &lt;tbody&gt;
-                        @foreach (var phone in person.Phones)
-                        {
-                            @Html.Partial(&quot;_PhoneRowInPersonList&quot;, new PhoneRowInPersonListViewModel(phone))
-                        }
-                        &lt;tr&gt;
-                            &lt;td&gt;
-                                &lt;button class=&quot;btn btn-sm green button-save-phone&quot;&gt;
-                                    &lt;i class=&quot;fa fa-floppy-o&quot;&gt;&lt;/i&gt;
-                                &lt;/button&gt;
-                            &lt;/td&gt;
-                            &lt;td&gt;
-                                &lt;select name=&quot;Type&quot;&gt;
-                                    &lt;option value=&quot;0&quot;&gt;@L(&quot;PhoneType_Mobile&quot;)&lt;/option&gt;
-                                    &lt;option value=&quot;1&quot;&gt;@L(&quot;PhoneType_Home&quot;)&lt;/option&gt;
-                                    &lt;option value=&quot;2&quot;&gt;@L(&quot;PhoneType_Business&quot;)&lt;/option&gt;
-                                &lt;/select&gt;
-                            &lt;/td&gt;
-                            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;Number&quot; /&gt;&lt;/td&gt;
-                        &lt;/tr&gt;
-                    &lt;/tbody&gt;
-                &lt;/table&gt;
-            &lt;/div&gt;
-</strong>        &lt;/a&gt;
-    }
+    &lt;div class=&quot;list-group-item&quot; ng-repeat=&quot;person in vm.persons&quot; ng-class=&quot;{&#39;person-editing&#39;:person==vm.editingPerson}&quot;&gt;
+        &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
+            {{person.name}} {{person.surname}}
+            &lt;span class=&quot;person-buttons&quot;&gt;
+<strong>                &lt;button ng-click=&quot;vm.editPerson(person)&quot; title=&quot;@L(&quot;Edit&quot;)&quot; class=&quot;btn btn-circle btn-icon-only green&quot;&gt;
+                    &lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;
+                &lt;/button&gt;
+</strong>                &lt;button ng-if=&quot;vm.permissions.deletePerson&quot; ng-click=&quot;vm.deletePerson(person)&quot; title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red&quot;&gt;
+                    &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+                &lt;/button&gt;
+            &lt;/span&gt;
+        &lt;/h4&gt;
+        &lt;p class=&quot;list-group-item-text&quot;&gt;
+            {{person.emailAddress}}
+        &lt;/p&gt;
+<strong>        &lt;div class=&quot;table-scrollable&quot; ng-if=&quot;person==vm.editingPerson&quot;&gt;
+            &lt;table class=&quot;table table-hover&quot;&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th style=&quot;width:10%&quot;&gt;&lt;/th&gt;
+                        &lt;th style=&quot;width:15%&quot;&gt;@L(&quot;Type&quot;)&lt;/th&gt;
+                        &lt;th style=&quot;width:75%&quot;&gt;@L(&quot;PhoneNumber&quot;)&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    &lt;tr ng-repeat=&quot;phone in person.phones&quot;&gt;
+                        &lt;td&gt;
+                            &lt;button ng-click=&quot;vm.deletePhone(phone, person)&quot; class=&quot;btn btn-sm btn-default&quot;&gt;
+                                &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+                            &lt;/button&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;{{vm.getPhoneTypeAsString(phone.type)}}&lt;/td&gt;
+                        &lt;td&gt;{{phone.number}}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;
+                            &lt;button ng-click=&quot;vm.addPhone(person.newPhone, person)&quot; class=&quot;btn btn-sm green&quot;&gt;
+                                &lt;i class=&quot;fa fa-floppy-o&quot;&gt;&lt;/i&gt;
+                            &lt;/button&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;
+                            &lt;select name=&quot;Type&quot; ng-model=&quot;person.newPhone.type&quot;&gt;
+                                &lt;option value=&quot;0&quot;&gt;@L(&quot;PhoneType_Mobile&quot;)&lt;/option&gt;
+                                &lt;option value=&quot;1&quot;&gt;@L(&quot;PhoneType_Home&quot;)&lt;/option&gt;
+                                &lt;option value=&quot;2&quot;&gt;@L(&quot;PhoneType_Business&quot;)&lt;/option&gt;
+                            &lt;/select&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;Number&quot; ng-model=&quot;person.newPhone.number&quot; /&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+</strong>    &lt;/div&gt;
 &lt;/div&gt;</pre>
-<p>We added an edit button for each person. Then added a table for each person that shows phones of the related person 
-and allows adding a new phone. Phones table is only shown if we click the edit 
-button. This is implemented using a bit CSS and javascript (we will see in next 
-sections).</p>
-<p>One important thing here is we rendered phone rows in a <strong>partial view</strong>. 
-This is done to make this part re-usable. Because we will use the same partial 
-view when we create a new phone. The
-<strong>            _PhoneRowInPersonList
-</strong>        partial view is here:</p>
-<pre lang="xml">
-@model Acme.PhoneBook.Web.Areas.App.Models.PhoneBook.PhoneRowInPersonListViewModel
-&lt;tr data-phone-id=&quot;@Model.Phone.Id&quot;&gt;
-    &lt;td&gt;
-        &lt;button class=&quot;btn btn-sm default button-delete-phone&quot;&gt;
-            &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
-        &lt;/button&gt;
-    &lt;/td&gt;
-    &lt;td&gt;@Model.GetPhoneTypeAsString()&lt;/td&gt;
-    &lt;td&gt;@Model.Phone.Number&lt;/td&gt;
-&lt;/tr&gt;
-</pre>
-<p>And the <strong>PhoneRowInPersonListViewModel</strong> is here:</p>
-<pre lang="cs">public class PhoneRowInPersonListViewModel
-{
-    public PhoneInPersonListDto Phone { get; set; }
+<p>We added an edit button for each person. Then added a table (shown if this 
+person is being edited) for each person that shows phones of the related person 
+and allows adding a new phone.</p>
+<h4>Controller</h4>
 
-    public PhoneRowInPersonListViewModel(PhoneInPersonListDto phone)
-    {
-        Phone = phone;
+<p>Added following codes into the Angularjs controller:</p>
+<pre lang="js">vm.editingPerson = null;
+
+vm.editPerson = function(person) {
+    if (person == vm.editingPerson) {
+        vm.editingPerson = null;
+    } else {
+        vm.editingPerson = person;
     }
+};
 
-    public string GetPhoneTypeAsString()
-    {
-        return LocalizationHelper.GetString(PhoneBookConsts.LocalizationSourceName, &quot;PhoneType_&quot; + Phone.Type);
+vm.getPhoneTypeAsString = function(typeAsNumber) {
+    switch (typeAsNumber) {
+    case 0:
+        return app.localize(&#39;PhoneType_Mobile&#39;);
+    case 1:
+        return app.localize(&#39;PhoneType_Home&#39;);
+    case 2:
+        return app.localize(&#39;PhoneType_Business&#39;);
+    default:
+        return &#39;?&#39;;
     }
-}</pre>
-<h4>Styles</h4>
-<p>Changed <strong>Index.less</strong> a bit to adapt to the changed view:</p>
-<pre>#AllPeopleList {
-    .list-group-item-heading {
-<strong>        span.person-buttons {
-            float: right;
-        }
-</strong>    }
+};
 
-<strong>    .table-phones {
-        display: none;
-    }
-</strong>
-    .person-editing {
-        background-color: #ccffcc;
-
-        h4 {
-            font-weight: bold;
-        }
-
-<strong>        .table-phones {
-            display: table;
-        }
-</strong>    }
-}
-</pre>
-<h4>Scripts</h4>
-
-<p>Added following codes into <strong>Index.js</strong>:</p>
-<pre lang="js">//Edit person button
-$(&#39;#AllPeopleList button.edit-person&#39;).click(function (e) {
-    e.preventDefault();
-
-    var $listItem = $(this).closest(&#39;.list-group-item&#39;);
-
-    $listItem
-        .toggleClass(&#39;person-editing&#39;)
-        .siblings().removeClass(&#39;person-editing&#39;);
-});
-
-//Save phone button
-$(&#39;#AllPeopleList .button-save-phone&#39;).click(function (e) {
-    e.preventDefault();
-            
-    var $phoneEditorRow = $(this).closest(&#39;tr&#39;);
-
-<strong>    abp.ajax({
-        url: abp.appPath + &#39;<span lang="en-us">App</span>/PhoneBook/AddPhone&#39;,
-        dataType: &#39;html&#39;,
-        data: JSON.stringify({
-            personId: $phoneEditorRow.closest(&#39;.list-group-item&#39;).attr(&#39;data-person-id&#39;),
-            Type: $phoneEditorRow.find(&#39;select[name=Type]&#39;).val(),
-            Number: $phoneEditorRow.find(&#39;input[name=Number]&#39;).val()
-        })
-    }).done(function (result) {
-        $(result).insertBefore($phoneEditorRow);
-    });</strong>
-});
-
-//Delete phone button
-$(&#39;#AllPeopleList&#39;).on(&#39;click&#39;, &#39;.button-delete-phone&#39;, function (e) {
-    e.preventDefault();
-
-    var $phoneRow = $(this).closest(&#39;tr&#39;);
-    var phoneId = $phoneRow.attr(&#39;data-phone-id&#39;);
-
-<strong>    _personService.deletePhone({
-        id: phoneId
-    }).done(function () {
+vm.deletePhone = function(phone, person) {
+    personService.deletePhone({
+        id: phone.id
+    }).success(function() {
         abp.notify.success(app.localize(&#39;SuccessfullyDeleted&#39;));
-        $phoneRow.remove();
-    });</strong>
-});</pre>
-<p>When click to '<strong>edit person</strong>' button, we simple open/close (<strong>toggle</strong>) 
-the phones table of related person by using <strong>css</strong> classes.</p>
-<p>In the '<strong>save phone</strong>' button's click, we make an <strong>AJAX</strong> request 
-to PhoneBookController's <strong>AddPhone</strong> action. Server returns an 
-HTML which is then inserted to the table. That's why we did this part partial 
-(We will see PhoneBookController.AddPhone action in the next section).</p>
-<p>Lastly, we deleting the phone when clicking to the '<strong>delete phone</strong>' 
-button and remove the related phone row (tr) from DOM. Notice the event 
-registration here. We used <strong>on</strong> function of jQuery. Thus, the 
-selector becomes <strong>live</strong>. That means, if we add new elements to 
-the page and any element matches to the selector, it's click event is 
-automatically binded.</p>
-<h4>AddPhone Action</h4>
-<p>We added AddPhone action to the PhoneController as shown below:</p>
-<pre lang="cs">[HttpPost]
-public async Task&lt;PartialViewResult&gt; AddPhone(AddPhoneInput input)
-{
-    PhoneInPersonListDto phoneInPersonList = await _personAppService.AddPhone(input);
-    var model = new PhoneRowInPersonListViewModel(phoneInPersonList);
+        person.phones = _.without(person.phones, phone);
+    });
+};
 
-    return PartialView(&quot;_PhoneRowInPersonList&quot;, model);
-}</pre>
-<p>It simply uses PersonAppService.AddPhone and returns <strong>_PhoneRowInPersonList</strong> 
-partial view as response. Thus, we directly insert returning value to the table. 
-A sample return value is shown below:</p>
-<pre lang="xml">&lt;tr data-phone-id=&quot;19&quot;&gt;
-    &lt;td&gt;
-        &lt;button class=&quot;btn btn-sm default button-delete-phone&quot;&gt;
-            &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
-        &lt;/button&gt;
-    &lt;/td&gt;
-    &lt;td&gt;Mobile&lt;/td&gt;
-    &lt;td&gt;129838172&lt;/td&gt;
-&lt;/tr&gt;</pre>
-<p>As you see, this can be directly inserted to the table, as we already do.</p>
+vm.addPhone = function(phone, person) {
+    if (!phone || !phone.type || !phone.number) {
+        abp.message.warn(&#39;Please select a phone type and enter a number!&#39;);
+        return;
+    }
+
+    phone.personId = person.id;
+
+    personService.addPhone(phone)
+        .success(function(result) {
+            abp.notify.success(app.localize(&#39;SavedSuccessfully&#39;));
+            person.phones.push(result);
+            phone.number = &#39;&#39;;
+        });
+};</pre>
 <h3>Multi Tenancy</h3>
 <p>We have built a fully functional application until here. Now, we will see how 
 to convert it to a multi-tenant application easily.</p>
@@ -1639,17 +1353,17 @@ must have a tenant using <strong>IMustHaveTenant</strong> interface:</p>
 needed if we directly use phone repository to get phones. In this sample 
 project, it's not needed.</p>
 <p>Since entities have changed, we should create a new database migration:</p>
-<pre>dotnet ef migrations add "Implemented_IMustHaveTenant_For_Person"</pre>
+<pre>Add-Migration "Implemented_IMustHaveTenant_For_Person"</pre>
 <p>This command creates a new code-first database migration. The migration class 
 adds an annotation this is needed for automatic filtering. We don't have to know 
 what it is since it's done automatically. And also it adds a TenantId column to 
 PbPersons table as shown below:</p>
 <pre lang="cs">AddColumn(&quot;dbo.PbPersons&quot;, &quot;TenantId&quot;, c =&gt; c.Int(nullable: false, <strong>defaultValue: 1</strong>));</pre>
 <p>I added <strong>defaultValue as 1</strong> to AddColumn options. Thus, 
-current people are automatically assigned to <strong>default tenant</strong> 
+current People are automatically assigned to <strong>default tenant</strong> 
 (default tenant's id is 1).</p>
 <p>Now, we can update the database again:</p>
-<pre>dotnet ef database update</pre>
+<pre>Update-Database</pre>
 <h4>Run The Multi Tenant Application</h4>
 <p><strong>It's finished</strong>! We can test the application. Run the project, <strong>login</strong> as 
 <strong>host</strong> 
@@ -1678,14 +1392,10 @@ login as trio <strong>tenant admin</strong>:</p>
 add people here, logout and login as different teants (you can login as default 
 tenant for example). You will see that each tenant 
 has an isolated phone book and can not see other's people.</p>
-
 <h3>Conclusion</h3>
 <p>In this document, we built a complete example that covers most parts of the 
 ASP.NET Zero system. We hope that it will help you to build your own 
 application.</p>
-<p>We intentionally used different approaches for similar tasks to show you 
-different styles of development. AspNet Zero provides an architecture but does 
-not restrict you. You can make your own style development.</p>
 <h4>Source Code</h4>
 <p>You should <a href="/Prices">purchase</a> ASP.NET Zero in order to get
 <strong>source code</strong>. After purchasing, you can get the sample project 
