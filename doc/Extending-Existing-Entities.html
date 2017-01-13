@@ -22,7 +22,7 @@ some differences between them. So, we seperated it into two sections.</p>
 an <strong>Address</strong> property to the User.</p>
 <h4>Add New Property To User</h4>
 <p>Open Authorization\Users\<strong>User.cs</strong> (in .Core project) and add the new property:</p>
-<pre lang="cs">public class User : AbpUser&lt;Tenant, User&gt;
+<pre lang="cs">public class User : AbpUser&lt;User&gt;
 {
     //...existing code
 
