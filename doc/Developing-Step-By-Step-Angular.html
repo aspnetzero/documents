@@ -596,7 +596,7 @@ export class PhoneBookComponent extends AppComponentBase <strong>implements OnIn
 <p>We inject <strong>PersonServiceProxy</strong>, call it's <strong>getPeople</strong> 
 method and <strong>subscribe</strong> to get the result. We do this in <strong>
 ngOnInit</strong> function (defined in Angular's <strong>OnInit</strong> 
-interface). Assigned returned items to a <strong>people</strong> class member. </p>
+interface). Assigned returned items to the <strong>people</strong> class member. </p>
 
 <h4>Rendering People In Angular View</h4>
 <p>Now, we can use this people member from the view, <strong>
@@ -743,9 +743,86 @@ invalid arguments and asserts that it thows AbpValidationException. See
 validation document</a> for more information.</p>
 <h4>Creating a Modal</h4>
 <p>We will create a 
-Bootstrap Modal to create a new person. First of all, you can create modal and save as you already know and like. But 
-AspNet Zero has some helper scripts to make it easier if you use it. We will use 
-them here.</p>
+Bootstrap Modal to create a new person. AspNet Zero uses
+<a href="https://github.com/valor-software/ng2-bootstrap" target="_blank">
+ng2-bootstrap</a> library to create modals (you can use another library, but we 
+will use it in this sample too). Final modal will be like below:</p>
+<p><img class="img-thumbnail" alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
+<p>First, we are creating a new component, named <strong>
+create-person-modal.component.ts</strong> into client side phonebook folder:</p>
+<pre lang="js">import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
+import { ModalDirective } from 'ng2-bootstrap';
+import { PersonServiceProxy, CreatePersonInput } from '@shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/common/app-component-base';
+
+@Component({
+    selector: 'createPersonModal',
+    templateUrl: './create-person-modal.component.html'
+})
+export class CreatePersonModalComponent extends AppComponentBase {
+
+    @Output() modalSave: EventEmitter&lt;any&gt; = new EventEmitter&lt;any&gt;();
+
+    @ViewChild('modal') modal: ModalDirective;
+    @ViewChild('nameInput') nameInput: ElementRef;
+
+    person: CreatePersonInput;
+
+    active: boolean = false;
+    saving: boolean = false;
+
+    constructor(
+        injector: Injector,
+        private _personService: PersonServiceProxy
+    ) {
+        super(injector);
+    }
+
+    show(): void {
+        this.active = true;
+        this.person = new CreatePersonInput();
+        this.modal.show();
+    }
+
+    onShown(): void {
+        $(this.nameInput.nativeElement).focus();
+    }
+
+    save(): void {
+        this.saving = true;
+        this._personService.createPerson(this.person)
+            .finally(() =&gt; this.saving = false)
+            .subscribe(() =&gt; {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(this.person);
+            });
+    }
+
+    close(): void {
+        this.modal.hide();
+        this.active = false;
+    }
+}</pre>
+<p>Let me explain some parts of this class:</p>
+<ul>
+	<li>It has a selector, <strong>createPersonModal</strong>, which will be 
+	used as like an HTML element in the person list page.</li>
+	<li>It extends <strong>AppComponentBase</strong> to take advantage of it 
+	(defines this.l and this.notify in this sample).</li>
+	<li>Defines an event, <strong>modalSave</strong>, which is triggered when we 
+	successfully save the modal. Thus, the main page will be informed and it can 
+	reload the person list.</li>
+	<li>Declares two <strong>ViewChild</strong> members (<strong>modal</strong> 
+	and <strong>nameInput</strong>) to access some elements in the view.</li>
+	<li>Injects <strong>PersonServiceProxy</strong> to call server side method 
+	while creating the person.</li>
+	<li>It focuses to <strong>name</strong> input when modal is shown.</li>
+</ul>
+<p>The code is simple and easy to understand except a small hack: an active flag 
+is used to reset validation for angular view (explained in angular's
+<a href="https://angular.io/docs/ts/latest/cookbook/form-validation.html" target="_blank">
+documentation</a>).</p>
 <p>We can <strong>copy </strong>cshtml and js files from <strong>
 Areas/App/Views/Common/Modals/Empty</strong> folder as a base for a new modal to <strong>Areas/App/Views/PhoneBook/CreatePersonModal.cshtml</strong>.</p>
 <p>Copied and modifined the view code as shown below (_CreatePersonModal.cshtml):&nbsp;</p>
@@ -892,7 +969,7 @@ So, open the <strong>PhoneBookController</strong> again and add the following ac
 }</pre>
 <p>Now, we can run the application and open the modal by clicking the 'Create 
 New Person' button:</p>
-<p><img class="img-thumbnail" alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
+<p>&nbsp;</p>
 <h4>Saving The Person</h4>
 <p>Finally, we can save the person when user clicks the the save button. We 
 implement it in the _CreatePersonModal.js file:</p>
