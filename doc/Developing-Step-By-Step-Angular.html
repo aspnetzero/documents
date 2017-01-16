@@ -1618,13 +1618,79 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
         });
     };</strong>
 }</pre>
-<h3>&nbsp;</h3>
-<p>&nbsp;</p>
+<h3>Multi Tenancy</h3>
+<p>We have built a fully functional application until here. Now, we will see how 
+to convert it to a multi-tenant application easily. Logout from the application 
+before any change.</p>
+<h4>Enable Multi Tenancy</h4>
+<p>We disabled multi-tenancy at the begginning of this document. Now, re-enabling it in <strong>PhoneBookCoreModule</strong> class:</p>
+<pre lang="cs">Configuration.MultiTenancy.IsEnabled = true;</pre>
+<h4>Make Entities Multi Tenant</h4>
+<p>In a multi-tenant application, a tenant's entities should be isolated by 
+other tenants. For this example project, every tenant should have own phone book 
+with isolated people and phone numbers.</p>
+<p>When we implement IMustHaveTenant interface, ABP automatically
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">filters 
+data</a> based on current Tenant, while retrieving entities from database. So, we should declare that Person entity 
+must have a tenant using <strong>IMustHaveTenant</strong> interface:</p>
+<pre lang="cs">public class Person : FullAuditedEntity, <strong>IMustHaveTenant</strong>
+{
+    <strong>public virtual int TenantId { get; set; }
+</strong>
+    //...other properties
+}</pre>
+<p>We may want to add IMustHaveTenant interface to also Phone entity. This is 
+needed if we directly use phone repository to get phones. In this sample 
+project, it's not needed.</p>
+<p>Since entities have changed, we should create a new database migration:</p>
+<pre>dotnet ef migrations add "Implemented_IMustHaveTenant_For_Person"</pre>
+<p>This command creates a new code-first database migration. The migration class 
+adds an annotation this is needed for automatic filtering. We don't have to know 
+what it is since it's done automatically. It also adds a <strong>TenantId</strong> column to 
+PbPersons table as shown below:</p>
+<pre lang="cs">AddColumn(&quot;dbo.PbPersons&quot;, &quot;TenantId&quot;, c =&gt; c.Int(nullable: false, <strong>defaultValue: 1</strong>));</pre>
+<p>I added <strong>defaultValue as 1</strong> to AddColumn options. Thus, 
+current people are automatically assigned to <strong>default tenant</strong> 
+(default tenant's id is always 1).</p>
+<p>Now, we can update the database again:</p>
+<pre>dotnet ef database update</pre>
+<h4>Run The Multi Tenant Application</h4>
+<p><strong>It's finished</strong>! We can test the application. Run the project, <strong>login</strong> as 
+the <strong>host admin</strong> (click Change link and clear tenancy name) shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Login as host" height="506" src="images/login-as-host-2.png" width="416" /></p>
+<p>After login, we see the <strong>tenant list</strong> which only contains a <strong>default</strong> 
+tenant. We can create a new tenant:</p>
+<p>
+<img class="img-thumbnail" alt="Creating tenant" height="655" src="images/create-tenant-2.png" width="619" /></p>
+<p>I created a new tenant named <strong>trio</strong>. Now, tenant list has two 
+tenants:</p>
+<p>
+<img class="img-thumbnail" alt="Tenant management page" height="308" src="images/tenant-management-phonebook.png" width="1141" /></p>
+<p>&nbsp;I can <strong>logout</strong> and 
+login as trio <strong>tenant admin</strong>:</p>
+<p>
+<img alt="Login as tenant" height="404" src="images/login-as-tenant.png" width="420" /></p>
+<p>After login, we see that phone book is empty:</p>
+<p>
+<img alt="Empty phonebook of new tenant" height="210" src="images/phonebook-empty.png" width="791" /></p>
+<p>It's empty because trio tenant has a completely islolated people list. You can 
+add people here, logout and login as different teants (you can login as default 
+tenant for example). You will see that each tenant 
+has an isolated phone book and can not see other's people.</p>
 
-<div class="bs-callout bs-callout-warning">
-	<h4>TODO</h4>
-<p>THIS DOCUMENT HAS NOT BEEN COMPLETED YET.</p>
-</div>
+<h3>Conclusion</h3>
+<p>In this document, we built a complete example that covers most parts of the 
+ASP.NET Zero system. We hope that it will help you to build your own 
+application.</p>
+<p>We intentionally used different approaches for similar tasks to show you 
+different styles of development. AspNet Zero provides an architecture but does 
+not restrict you. You can make your own style development.</p>
+<h4>Source Code</h4>
+<p>You should <a href="/Prices">purchase</a> ASP.NET Zero in order to get
+<strong>source code</strong>. After purchasing, you can get the sample project 
+from private Github repository:
+<a href="https://github.com/aspnetzero/aspnet-zero-samples">https://github.com/aspnetzero/aspnet-zero-samples</a></p>
 
 </body>
 
