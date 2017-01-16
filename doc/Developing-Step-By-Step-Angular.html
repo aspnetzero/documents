@@ -949,6 +949,200 @@ To do that, we made the following changes in <strong>phonebook.component.html</s
 the modal and the <strong>createPersonModal</strong> component as like another 
 HTML tag (which matches to the selector in the <strong>
 create-person-modal.component.ts</strong>).</p>
+<h3>Authorization For Phone Book</h3>
+<p>At this point, anyone can enter phone book page since no authorization 
+defined. We will define two permission:</p>
+<ul>
+	<li>A permission to <strong>enter phone book page</strong>.</li>
+	<li>A permission to <strong>create new person</strong> (which is a child 
+	permission of first one, as naturally).</li>
+</ul>
+<h4>Permission for Entering Phone Book Page</h4>
+<h5>Define the permission</h5>
+<p>Go to <strong>AppAuthorizationProvider</strong> class in the server side and add a new permission as shown below 
+(you can add just below the dashboard permission):</p>
+<pre lang="cs">pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);</pre>
+<p>A permission should have a unique name. We define permission names as 
+constant strings in <strong>AppPermissions</strong> class. It's a simple constant string:</p>
+<pre lang="cs">public const string Pages_Tenant_PhoneBook = &quot;<strong>Pages.Tenant.PhoneBook</strong>&quot;;</pre>
+<p>Unique name of this permission is "<strong>Pages.Tenant.PhoneBook</strong>". 
+While you can set any string (as long as it's unique), it's suggested to use 
+that 
+convention. A permission can have a localizable display name: "<strong>PhoneBook</strong>" 
+here. (see "Adding a New Page" section for more about localization, since it's 
+very similar). Lastly, we set that this is a <strong>tenant</strong> level 
+permission.</p>
+<h5>Add AbpAuthorize attribute</h5>
+<p><strong>AbpAuthorize</strong> attribute can be used as <strong>class level</strong> 
+or <strong>method level</strong> to protect an application service or service method from 
+unauthorized users. Since all server side code is located in PersonAppService 
+class, we can declare a class level attribute as shown below:</p>
+<pre lang="cs"><strong>[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
+</strong>public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
+{
+    //...
+}</pre>
+<p>Now, let's try to enter Phone Book page by clicking the menu item:</p>
+<p>
+<img class="img-thumbnail" alt="Permission error" height="412" src="images/phonebook-permission-error.png" width="505" /></p>
+<p>We get an error message. This exception is thrown when any method of 
+PersonAppService is called without required permission.</p>
+<h5>Guard Angular Route</h5>
+<p>While we got an exception and could not see the actual data, we could still 
+entered to the page. We should prevent it. To do that, open <strong>
+main-routing.module.ts</strong> and change the route definition like that:</p>
+<pre lang="js">{ path: 'phonebook', component: PhoneBookComponent<strong>, data: { permission: 'Pages.Tenant.PhoneBook' }</strong> }</pre>
+<p><strong>AuthRouteGuard</strong> class automatically checks route permission 
+data and prevents entering to the view if specified permission is not granted. 
+Try to click Phone Book menu!</p>
+<h5>Hide Unauthorized Menu Item</h5>
+<p>While user can not enter to the page, the menu item still there! We should also <strong>hide</strong> the Phone book 
+<strong>menu item</strong>. It's 
+easy, open <strong>side-bar.component.ts</strong> and add change PhoneBook menu 
+definition as shown below:</p>
+<pre lang="js">new SideBarMenuItem("PhoneBook", <strong>'Pages.Tenant.PhoneBook'</strong>, "icon-notebook", "/phonebook")</pre>
+<h5>Grant permission</h5>
+<p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
+page and edit <strong>admin</strong> role:</p>
+<p>
+<img class="img-thumbnail" alt="Role permissions" height="574" src="images/role-permissions-with-phonebook.png" width="617" /></p>
+<p>We see that a <strong>new permission</strong> named "<strong>Phone book</strong>" 
+added to <strong>permissions</strong> tab. So, we can check it and save the 
+role. After saving, we need to <strong>refresh </strong>the whole page to 
+refresh permissions for the current user. We could also grant this permission 
+for a specific user (see <a href="Development-Guide.html">development guide 
+document</a> for details about roles and users).</p>
+<p>Now, we can enter the Phone book page again.</p>
+<h4>Permission for Create New Person</h4>
+<p>While a permission for a page is useful and probably always needed, we may 
+want to define additional permissions to perform some <strong>specific actions</strong> 
+on a page, like creating a new person. </p>
+<h5>Define the Permission</h5>
+<p>Defining a permission is similar (in the AppAuthorizationProvider class):</p>
+<pre lang="cs"><strong>var phoneBook = </strong>pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);
+<strong>phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L(&quot;CreateNewPerson&quot;), multiTenancySides: MultiTenancySides.Tenant);</strong></pre>
+<p>First permission was defined before. In the second line, we are creating a 
+child permission of first one. Remember to create a constant in AppPermissions 
+class:</p>
+<pre lang="cs">public const string Pages_Tenant_PhoneBook_CreatePerson = <strong>"Pages.Tenant.PhoneBook.CreatePerson"</strong>;</pre>
+<h5>Add AbpAuthorize Attribute</h5>
+<p>This time, we're declaring <strong>AbpAuthorize</strong> attribute just for 
+<strong>CreatePerson</strong> 
+method:</p>
+<pre lang="cs"><strong>[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
+</strong>public async Task CreatePerson(CreatePersonInput input)
+{
+    //...
+}
+</pre>
+<h5>Hide Unauthorized Button</h5>
+<p>If we run the application and try to create a person, we get an authorization 
+error after clicking the save button. But, it's good to <strong>completely hide 
+Create New Person button</strong> if we don't have the permission. It's very 
+simple:</p>
+<p>Open the <strong>phonebook.component.html</strong> view and use
+<strong>isGranted</strong> condition as shown below:</p>
+<pre lang="xml">&lt;button <strong>*ngIf="isGranted('Pages.Tenant.PhoneBook.CreatePerson')"</strong> class="btn btn-primary blue" (click)="createPersonModal.show()"&gt;&lt;i class="fa fa-plus"&gt;&lt;/i&gt; {{l("CreateNewPerson")}}&lt;/button&gt;</pre>
+<p>In this way, the "Create New Person" button does not rendered in server and user can 
+not see this button.</p>
+<h5>Grant permission</h5>
+<p>To see the button again, we can go to role or user manager and grant related 
+permission as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
+<p>As shown above, <strong>Create new person</strong> permission is a child 
+permission of the <strong>Phone book</strong>. Remember to refresh page to get 
+permissions updated.</p>
+<h3>Deleting a Person</h3>
+<p>Let's add a delete button in people list as shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Delete person" height="409" src="images/phonebook-people-delete-button.png" width="768" /></p>
+<p>
+We're starting from UI in this case.</p>
+<h4>View</h4>
+<p>We're changing <strong>phonebook.component.html</strong> view to add a delete button (related part is shown 
+here):</p>
+<pre lang="xml">...
+&lt;h3&gt;{{l("AllPeople")}}&lt;/h3&gt;
+
+&lt;div class="list-group"&gt;
+    &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"&gt;
+        &lt;h4 class="list-group-item-heading"&gt;
+            {{person.name + ' ' + person.surname}}
+<strong>            &lt;button (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-circle btn-icon-only red delete-person" href="javascript:;"&gt;
+                &lt;i class="icon-trash"&gt;&lt;/i&gt;
+            &lt;/button&gt;</strong>
+        &lt;/h4&gt;
+        &lt;p class="list-group-item-text"&gt;
+            {{person.emailAddress}}
+        &lt;/p&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+...</pre>
+<p>We simply added a button which calls <strong>deletePerson</strong> method 
+(will be defined) when it's clicked. You can define a permission for 'deleting person' as we did for 'creating 
+person' above.</p>
+<h4>Style</h4>
+<p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to take 
+the button right. Created 
+a file named <strong>phonebook.component.less</strong> (in phonebook folder) and added following lines:</p>
+<pre lang="css">.list-group-item-heading {
+    button<strong>.delete-person</strong> {
+        float: right;
+    }
+}
+</pre>
+<p>And adding the style to the <strong>phonebook.component.ts</strong> Component 
+declaration:</p>
+<pre lang="js">@Component({
+    templateUrl: './phonebook.component.html',
+    <strong>styleUrls: ['./phonebook.component.less'],</strong>
+    animations: [appModuleAnimation()]
+})</pre>
+<p>Now, we can now the buttons, but they don't work since we haven't defined the 
+deletePerson method yet.</p>
+<h4>Application Service</h4>
+<p>Let's leave the client side and add a DeletePerson method to the server side. 
+We are adding it to the service interface,<strong>IPersonAppService:</strong>:</p>
+<pre lang="cs">Task DeletePerson(EntityDto input);</pre>
+<p><strong>EntityDto</strong> is a shortcut of ABP if we only get an id value. Implementation (in 
+<strong>PersonAppService</strong>) is very simple:</p>
+<pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson)]
+public async Task DeletePerson(EntityDto input)
+{
+    await _personRepository.DeleteAsync(input.Id);
+}</pre>
+<h4>Service Proxy Generation</h4>
+<p>Since we changed server side services, we should re-generate the client side 
+service proxies via NSwag. Make server side running and use refresh.bat as we 
+did before.</p>
+<h4>Component Script</h4>
+<p>Now, we can add <strong>deletePerson</strong> method to <strong>phonebook.component.ts</strong>:</p>
+<pre lang="js">deletePerson(person: PersonListDto): void {
+    <strong>this.message.confirm</strong>(
+        this.l('AreYouSureToDeleteThePerson', person.name),
+        isConfirmed =&gt; {
+            if (isConfirmed) {
+                this._personService.deletePerson(person.id).subscribe(() =&gt; {
+                    this.notify.info(this.l('SuccessfullyDeleted'));
+                    <strong>_.remove(this.people, person);
+</strong>                });
+            }
+        }
+    );
+}&nbsp;</pre>
+<p>It first shows a confirmation message when we click the delete button:</p>
+<p>
+<img class="img-thumbnail" alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
+<p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
+<strong>PersonAppService</strong> and shows a 
+<strong>
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Javascript-API/Notification">notification</a></strong> 
+if operation succeed.&nbsp;Also, removes the person from the person array using
+<a href="https://lodash.com/" target="_blank">lodash</a> library. We also added 
+an import statement before the @Component declaration:</p>
+<pre lang="cs">import * as _ from 'lodash';</pre>
+<p>&nbsp;</p>
 
 <div class="bs-callout bs-callout-warning">
 	<h4>TODO</h4>
