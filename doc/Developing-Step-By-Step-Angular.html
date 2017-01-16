@@ -593,7 +593,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 })
 export class PhoneBookComponent extends AppComponentBase <strong>implements OnInit</strong> {
 
-<strong>    people: PersonListDto[];
+<strong>    people: PersonListDto[] = [];
     filter: string = '';
 </strong>
     constructor(
@@ -1142,6 +1142,53 @@ if operation succeed.&nbsp;Also, removes the person from the person array using
 <a href="https://lodash.com/" target="_blank">lodash</a> library. We also added 
 an import statement before the @Component declaration:</p>
 <pre lang="cs">import * as _ from 'lodash';</pre>
+<h3>Filtering people</h3>
+<p>Now, we will implement <strong>search</strong> functionality of <strong>
+GetPeople</strong> method. UI is shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Searching people" height="328" src="images/search-people.png" width="770" /></p>
+<p>We added a search input to <strong>phonebook.component.html</strong> view (showing the related part of the 
+code):</p>
+<pre lang="xml">&lt;h3&gt;{{l("AllPeople")}} <strong>({{people.length}})</strong>&lt;/h3&gt;
+
+<strong>&lt;div class="form"&gt;
+    &lt;form class="horizontal-form"&gt;
+        &lt;div class="form-body"&gt;
+            &lt;div class="row margin-bottom-10"&gt;
+                &lt;div class="col-md-12"&gt;
+                    &lt;div class="inputs inputs-full-width"&gt;
+                        &lt;div class="portlet-input"&gt;
+                            &lt;div class="input-group"&gt;
+                                &lt;input [(ngModel)]="filter" name="filter" autoFocus class="form-control" [placeholder]="l('SearchWithThreeDot')" type="text"&gt;
+                                &lt;span class="input-group-btn"&gt;
+                                    &lt;button (click)="getPeople()" class="btn default" type="submit"&gt;&lt;i class="icon-magnifier"&gt;&lt;/i&gt;&lt;/button&gt;
+                                &lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;</strong>
+
+&lt;div class="list-group"&gt;
+    &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"&gt;
+        &lt;h4 class="list-group-item-heading"&gt;
+            {{person.name + ' ' + person.surname}}
+            &lt;button (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-circle btn-icon-only red delete-person" href="javascript:;"&gt;
+                &lt;i class="icon-trash"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/h4&gt;
+        &lt;p class="list-group-item-text"&gt;
+            {{person.emailAddress}}
+        &lt;/p&gt;
+    &lt;/a&gt;
+&lt;/div&gt;</pre>
+<p>We also added currently filtered people count (people.length) in the header. 
+Since we have already defined and used the filter property in <strong>
+phonebook.component.ts</strong> and implemented in the server side, this new 
+code immediately works.</p>
 <p>&nbsp;</p>
 
 <div class="bs-callout bs-callout-warning">

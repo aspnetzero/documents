@@ -9,61 +9,6 @@
 
 <body>
 
-<h3>Filtering people</h3>
-<p>Now, we will implement <strong>search</strong> functionality of <strong>
-GetPeople</strong> method. UI is shown below:</p>
-<p>
-<img class="img-thumbnail" alt="Searching people" height="328" src="images/search-people.png" width="770" /></p>
-<p>We added a search input to filter people (showing the related part of the 
-code):</p>
-<pre lang="xml">&lt;div class=&quot;portlet light&quot;&gt;
-<strong>    &lt;div class=&quot;portlet-title portlet-title-filter&quot;&gt;
-
-        &lt;h3&gt;@L(&quot;AllPeople&quot;) (@Model.Items.Count)&lt;/h3&gt;
-
-        &lt;div class=&quot;inputs inputs-full-width&quot;&gt;
-            &lt;div class=&quot;portlet-input&quot;&gt;
-                &lt;form action=&quot;@Url.Action(&quot;Index&quot;)&quot; method=&quot;GET&quot;&gt;
-                    &lt;div class=&quot;input-group&quot;&gt;
-                        &lt;input id=&quot;FilterPeopleText&quot; name=&quot;Filter&quot; value=&quot;@Model.Filter&quot; class=&quot;form-control&quot; placeholder=&quot;@L(&quot;SearchWithThreeDot&quot;)&quot; type=&quot;text&quot;&gt;
-                        &lt;span class=&quot;input-group-btn&quot;&gt;
-                            &lt;button id=&quot;FilterPeopleButton&quot; class=&quot;btn default&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;icon-magnifier&quot;&gt;&lt;/i&gt;&lt;/button&gt;
-                        &lt;/span&gt;
-                    &lt;/div&gt;
-                &lt;/form&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-</strong>
-    &lt;div class=&quot;portlet-body&quot;&gt;
-
-        ...
-
-    &lt;/div&gt;
-&lt;/div&gt;</pre>
-<p>And added Filter property to the IndexViewModel:</p>
-<pre lang="cs">[AutoMapFrom(typeof (ListResultDto&lt;PersonListDto&gt;))]
-public class IndexViewModel : ListResultDto&lt;PersonListDto&gt;
-{
-    <strong>public string Filter { get; set; }</strong>
-
-    public IndexViewModel(ListResultDto&lt;PersonListDto&gt; output<strong>, string filter = null</strong>)
-    {
-        output.MapTo(this);
-        <strong>Filter = filter;</strong>
-    }
-}</pre>
-<p>Lastly, changed PhoneBookController's <strong>Index</strong> action to pass 
-the <strong>filter</strong> to the IndexViewModel:</p>
-<pre lang="cs">public ActionResult Index(GetPeopleInput input)
-{
-    var output = _personAppService.GetPeople(input);
-    var model = new IndexViewModel(output<strong>, input.Filter</strong>);
-
-    return View(model);
-}</pre>
-<p>That's all, It works! (Notice that; PersonAppService.GetPeople method was 
-already using the input.Filter as we implemented it before).</p>
 <h3>Extending the Application: Adding Phone Numbers</h3>
 <p>Until now, we did not even mention about phone numbers. It's time to extend 
 our domain to support <strong>multiple phone numbers</strong> for a person.</p>
