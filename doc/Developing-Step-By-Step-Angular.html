@@ -1189,6 +1189,237 @@ code):</p>
 Since we have already defined and used the filter property in <strong>
 phonebook.component.ts</strong> and implemented in the server side, this new 
 code immediately works.</p>
+<h3>Extending the Application: Adding Phone Numbers</h3>
+<p>Until now, we did not even mention about phone numbers. It's time to extend 
+our domain to support <strong>multiple phone numbers</strong> for a person.</p>
+<h3>Creating Phone Entity</h3>
+<p>Let's start by creating a new Entity, <strong>Phone</strong> in <strong>.Core</strong> 
+project:</p>
+<pre lang="cs">[Table(&quot;PbPhones&quot;)]
+public class Phone : CreationAuditedEntity&lt;long&gt;
+{
+    public const int MaxNumberLength = 16;
+
+    [ForeignKey(&quot;PersonId&quot;)]
+    public virtual Person Person { get; set; }
+    public virtual int PersonId { get; set; }
+
+    [Required]
+    public virtual PhoneType Type { get; set; }
+
+    [Required]
+    [MaxLength(MaxNumberLength)]
+    public virtual string Number { get; set; }
+}</pre>
+<p>Phone entities are stored in <strong>PbPhones</strong> table. It's primary key is <strong>long</strong> 
+and inherits creation auditing properties. It has a reference to <strong>Person</strong> entity which owns the phone 
+number.</p>
+<p>We added a <strong>Phones</strong> collection to the People:</p>
+<pre lang="cs">[Table(&quot;PbPersons&quot;)]
+public class Person : FullAuditedEntity
+{
+    //...other properties
+
+    <strong>public virtual ICollection&lt;Phone&gt; Phones { get; set; }</strong>
+}</pre>
+<p>We have a <strong>PhoneType</strong> enum as shown below:</p>
+<pre lang="cs">public enum PhoneType : byte
+{
+    Mobile,
+    Home,
+    Business
+}</pre>
+<p>Lastly, we're also adding a DbSet property for Phone to our DbContext:</p>
+<pre lang="cs">public virtual IDbSet&lt;Phone&gt; Phones { get; set; }</pre>
+<h3>Adding Database Migration</h3>
+<p>Our entity model has changed, so we need to add a new migration. Run this 
+command in the .EntityFramework project's directory:</p>
+<p>
+<img class="img-thumbnail" alt="Entity Framework Migration" src="images/phonebook-migrations-core-2.png" /></p>
+<p>This will create a new code based migration file to create <strong>PbPhones</strong> 
+table:</p>
+<pre lang="cs">
+public partial class Added_Phone : DbMigration
+{
+    public override void Up()
+    {
+        CreateTable(
+            &quot;dbo.PbPhones&quot;,
+            c =&gt; new
+                {
+                    Id = c.Long(nullable: false, identity: true),
+                    PersonId = c.Int(nullable: false),
+                    Type = c.Byte(nullable: false),
+                    Number = c.String(nullable: false, maxLength: 16),
+                    CreationTime = c.DateTime(nullable: false),
+                    CreatorUserId = c.Long(),
+                })
+            .PrimaryKey(t =&gt; t.Id)
+            .ForeignKey(&quot;dbo.PbPersons&quot;, t =&gt; t.PersonId, cascadeDelete: true)
+            .Index(t =&gt; t.PersonId);
+        
+    }
+    
+    public override void Down()
+    {
+        DropForeignKey(&quot;dbo.PbPhones&quot;, &quot;PersonId&quot;, &quot;dbo.PbPersons&quot;);
+        DropIndex(&quot;dbo.PbPhones&quot;, new[] { &quot;PersonId&quot; });
+        DropTable(&quot;dbo.PbPhones&quot;);
+    }
+}
+</pre>
+<p>Before updating database, we can go to database <strong>seed</strong> code 
+and add example <strong>phone numbers</strong> for example people (We renamed 
+InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):</p>
+<pre lang="cs">public class InitialPeopleAndPhoneCreator
+{
+    //...
+
+    public void Create()
+    {
+        var douglas = _context.Persons.FirstOrDefault(p =&gt; p.EmailAddress == &quot;douglas.adams@fortytwo.net&quot;);
+        if (douglas == null)
+        {
+            _context.Persons.Add(
+                new Person
+                {
+                    Name = &quot;Douglas&quot;,
+                    Surname = &quot;Adams&quot;,
+                    EmailAddress = &quot;douglas.adams@fortytwo.com&quot;,
+<strong>                    Phones = new List&lt;Phone&gt;
+                                {
+                                    new Phone {Type = PhoneType.Home, Number = &quot;1112242&quot;},
+                                    new Phone {Type = PhoneType.Mobile, Number = &quot;2223342&quot;}
+                                }
+</strong>                });
+        }
+
+        var asimov = _context.Persons.FirstOrDefault(p =&gt; p.EmailAddress == &quot;isaac.asimov@foundation.org&quot;);
+        if (asimov == null)
+        {
+            _context.Persons.Add(
+                new Person
+                {
+                    Name = &quot;Isaac&quot;,
+                    Surname = &quot;Asimov&quot;,
+                    EmailAddress = &quot;isaac.asimov@foundation.org&quot;,
+<strong>                    Phones = new List&lt;Phone&gt;
+                                {
+                                    new Phone {Type = PhoneType.Home, Number = &quot;8889977&quot;}
+                                }
+</strong>                });
+        }
+    }
+}</pre>
+<p>We added two phone number to Douglas, one phone number to Isaac. But if we 
+run "dotnet ef database update" now, phones are not inserted since this seed code checks if 
+people exists, and does not insert if it's already exists. What's solution? 
+Since we haven't deployed yet, we can delete database (or at lease truncate 
+people table) and re-create it. I did this.</p>
+<p>Now, we are running <strong>dotnet ef database update</strong> command in Command Prompt to re-create database and seed it. You can check database to see
+<strong>PbPhones</strong> table and rows.</p>
+<h3>Changing GetPeople Method</h3>
+<p>We're changing <strong>PersonAppService.GetPeople</strong> method to <strong>
+include</strong> phone numbers of people into return value.</p>
+<p>First, we're 
+changing <strong>PersonListDto</strong> to contain a list of phones:</p>
+<pre lang="cs">[AutoMapFrom(typeof(Person))]
+public class PersonListDto : FullAuditedEntityDto
+{
+    public string Name { get; set; }
+
+    public string Surname { get; set; }
+
+    public string EmailAddress { get; set; }
+
+<strong>    public Collection&lt;PhoneInPersonListDto&gt; Phones { get; set; }
+</strong>}
+
+<strong>[AutoMapFrom(typeof(Phone))]
+public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
+</strong>{<strong>
+    public PhoneType Type { get; set; }
+
+    public string Number { get; set; }
+</strong>}</pre>
+<p>So, added also a DTO to transfer phone numbers and mapped from Phone entity. Now, we can change GetPeople method to get Phones from database:</p>
+<pre lang="cs">public ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input)
+{
+    var persons = _personRepository
+        .GetAll()
+<strong>        .Include(p =&gt; p.Phones)
+</strong>        .WhereIf(
+            !input.Filter.IsNullOrEmpty(),
+            p =&gt; p.Name.Contains(input.Filter) ||
+                    p.Surname.Contains(input.Filter) ||
+                    p.EmailAddress.Contains(input.Filter)
+        )
+        .OrderBy(p =&gt; p.Name)
+        .ThenBy(p =&gt; p.Surname)
+        .ToList();
+
+    return new ListResultDto&lt;PersonListDto&gt;(persons.MapTo&lt;List&lt;PersonListDto&gt;&gt;());
+}</pre>
+<p>We only added <strong>Include</strong> extension method to the query. Rest of 
+the codes remains same. Furthermore, it would work without adding this, but much 
+slower (since it will lazy load phone numbers for every person seperately).</p>
+<h3>AddPhone and DeletePhone Methods</h3>
+<p>We are adding two more methods to IPersonAppService interface as shown below:</p>
+<pre lang="cs">Task DeletePhone(EntityDto&lt;long&gt; input);
+Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input);</pre>
+<p>We could create a new, seperated IPhoneAppService. It's your choice. But, we 
+can consider Person as an aggregate and add phone related methods here. AddPhoneInput 
+DTO is shown below:</p>
+<pre lang="cs">[AutoMapTo(typeof(Phone))]
+public class AddPhoneInput
+{
+    [Range(1, int.MaxValue)]
+    public int PersonId { get; set; }
+
+    [Required]
+    public PhoneType Type { get; set; }
+
+    [Required]
+    [MaxLength(Phone.MaxNumberLength)]
+    public string Number { get; set; }
+}</pre>
+<p>Now, we can implement these methods:</p>
+<pre lang="cs">public async Task DeletePhone(EntityDto&lt;long&gt; input)
+{
+    await _phoneRepository.DeleteAsync(input.Id);
+}
+
+public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
+{
+    var person = _personRepository.Get(input.PersonId);
+
+    var phone = input.MapTo&lt;Phone&gt;();
+    person.Phones.Add(phone);
+    
+    //Get auto increment Id of the new Phone by saving to database
+    await CurrentUnitOfWork.SaveChangesAsync();
+
+    return phone.MapTo&lt;PhoneInPersonListDto&gt;();
+}</pre>
+<p>(Note: We injected <strong>IRepository&lt;Phone, long&gt;</strong> in the 
+constructor and set to _personRepository field, as similar to _personRepository)</p>
+<p><strong>DeletePhone</strong> method is simple. It only deletes phone with 
+given id.</p>
+<p><strong>AddPhone</strong> method <strong>gets </strong>the person from 
+database and add new phone to person.Phones collection. Then is <strong>save 
+changes</strong>. Saving changes causes inserting new added phone to database 
+and get it's <strong>Id</strong>. Because, we are returning a DTO that contains 
+newly created phone informations including Id. So, it should be assigned before 
+mapping in the last line. (Notice that; normally it's not needed to call 
+CurrentUnitOfWork.SaveChangesAsync. It's automatically called at the end of the 
+method. We called it in the method since we need to save entity and get it's Id 
+immediately. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Unit-Of-Work#DocAutoSaveChanges">
+UOW document</a> for more.)</p>
+<p>There may be different approaches for AddPhone method. You can directly work 
+with a <strong>phone repository</strong> to insert new phone. They all have 
+different pros and cons. It's your choice.</p>
+<h3>&nbsp;</h3>
 <p>&nbsp;</p>
 
 <div class="bs-callout bs-callout-warning">

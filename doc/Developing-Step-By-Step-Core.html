@@ -1376,7 +1376,7 @@ public class AddPhoneInput
     await _phoneRepository.DeleteAsync(input.Id);
 }
 
-public async Task&lt;PhoneInPersonListDto&gt; AddPhone([FromBody]AddPhoneInput input)
+public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
 {
     var person = _personRepository.Get(input.PersonId);
 
