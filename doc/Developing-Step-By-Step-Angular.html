@@ -1419,6 +1419,205 @@ UOW document</a> for more.)</p>
 <p>There may be different approaches for AddPhone method. You can directly work 
 with a <strong>phone repository</strong> to insert new phone. They all have 
 different pros and cons. It's your choice.</p>
+<h3>Edit Mode For People List</h3>
+<p>Final UI is shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Phone book edit mode" height="642" src="images/phone-book-edit-mode.png" width="762" /></p>
+<p>When we click the <strong>green edit icon</strong> for a person, it's row is 
+expanded and all phone numbers are shown. Then we can delete any phone by 
+clicking the icon at left. We can add a new phone from the inputs at last line.</p>
+<h4>View</h4>
+<p>Changes in view are shown below:</p>
+<pre lang="xml">&lt;div class="list-group"&gt;
+                &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"<strong> [ngClass]="{'person-editing': person===editingPerson}"</strong>&gt;
+                    &lt;h4 class="list-group-item-heading"&gt;
+                        {{person.name + ' ' + person.surname}}
+
+<strong>                        &lt;span class="person-buttons"&gt;
+                            &lt;button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-circle btn-icon-only green edit-person"&gt;
+                                &lt;i class="icon-pencil"&gt;&lt;/i&gt;
+                            &lt;/button&gt;
+                            &lt;button (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-circle btn-icon-only red delete-person" href="javascript:;"&gt;
+                                &lt;i class="icon-trash"&gt;&lt;/i&gt;
+                            &lt;/button&gt;
+                        &lt;/span&gt;</strong>
+
+                    &lt;/h4&gt;
+                    &lt;p class="list-group-item-text"&gt;
+                        {{person.emailAddress}}
+                    &lt;/p&gt;
+<strong>                    &lt;div class="table-scrollable" *ngIf="person===editingPerson"&gt;
+                        &lt;table class="table table-hover"&gt;
+                            &lt;thead&gt;
+                                &lt;tr&gt;
+                                    &lt;th style="width:10%"&gt;&lt;/th&gt;
+                                    &lt;th style="width:15%"&gt;{{l("Type")}}&lt;/th&gt;
+                                    &lt;th style="width:75%"&gt;{{l("PhoneNumber")}}&lt;/th&gt;
+                                &lt;/tr&gt;
+                            &lt;/thead&gt;
+                            &lt;tbody&gt;
+                                &lt;tr *ngFor="let phone of person.phones"&gt;
+                                    &lt;td&gt;
+                                        &lt;button (click)="deletePhone(phone, person)" class="btn btn-sm btn-default"&gt;
+                                            &lt;i class="icon-trash"&gt;&lt;/i&gt;
+                                        &lt;/button&gt;
+                                    &lt;/td&gt;
+                                    &lt;td&gt;{{getPhoneTypeAsString(phone.type)}}&lt;/td&gt;
+                                    &lt;td&gt;{{phone.number}}&lt;/td&gt;
+                                &lt;/tr&gt;
+                                &lt;tr&gt;
+                                    &lt;td&gt;
+                                        &lt;button (click)="savePhone()" class="btn btn-sm green"&gt;
+                                            &lt;i class="fa fa-floppy-o"&gt;&lt;/i&gt;
+                                        &lt;/button&gt;
+                                    &lt;/td&gt;
+                                    &lt;td&gt;
+                                        &lt;select name="Type" [(ngModel)]="newPhone.type"&gt;
+                                            &lt;option value="0"&gt;{{l("PhoneType_Mobile")}}&lt;/option&gt;
+                                            &lt;option value="1"&gt;{{l("PhoneType_Home")}}&lt;/option&gt;
+                                            &lt;option value="2"&gt;{{l("PhoneType_Business")}}&lt;/option&gt;
+                                        &lt;/select&gt;
+                                    &lt;/td&gt;
+                                    &lt;td&gt;&lt;input type="text" name="number" [(ngModel)]="newPhone.number" /&gt;&lt;/td&gt;
+                                &lt;/tr&gt;
+                            &lt;/tbody&gt;
+                        &lt;/table&gt;
+                    &lt;/div&gt;</strong>
+                &lt;/a&gt;
+            &lt;/div&gt;</pre>
+<p>We added an edit button for each person. Then added a table for each person that shows phones of the related person 
+and allows adding a new phone. Phones table is only shown if we click the edit 
+button.</p>
+<h4>Styles</h4>
+<p>Changed <strong>phonebook.component.less</strong> to adapt to the changed view:</p>
+<pre>.list-group-item-heading {
+    span.person-buttons {
+        float: right;
+    }
+}
+
+.table-phones {
+    display: none;
+}
+
+.person-editing {
+    background-color: #ccffcc;
+
+    h4 {
+        font-weight: bold;
+    }
+
+    .table-phones {
+        display: table;
+    }
+
+    &amp;:hover {
+        background-color: #ccffcc;
+    }
+}
+</pre>
+<h4>PhoneBook Component Class</h4>
+
+<p>Before changing PhoneBookComponent, we should re-generate service-proxies 
+using nswag as did above. And finally we can change PhoneBookComponent as shown 
+below:</p>
+<pre lang="js">import { Component, Injector, OnInit } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto, <strong>PhoneInPersonListDto, AddPhoneInput, AddPhoneInputType, PhoneInPersonListDtoType</strong> } from '@shared/service-proxies/service-proxies';
+
+import * as _ from 'lodash';
+
+@Component({
+    templateUrl: './phonebook.component.html',
+    styleUrls: ['./phonebook.component.less'],
+    animations: [appModuleAnimation()]
+})
+export class PhoneBookComponent extends AppComponentBase implements OnInit {
+
+    people: PersonListDto[] = [];
+    filter: string = '';
+
+<strong>    editingPerson: PersonListDto = null;
+    newPhone: AddPhoneInput = null;</strong>
+
+    constructor(
+        injector: Injector,
+        private _personService: PersonServiceProxy
+    ) {
+        super(injector);
+    }
+
+    ngOnInit(): void {
+        this.getPeople();
+    }
+
+    getPeople(): void {
+        this._personService.getPeople(this.filter).subscribe((result) =&gt; {
+            this.people = result.items;
+        });
+    }
+
+    deletePerson(person: PersonListDto): void {
+        this.message.confirm(
+            this.l('AreYouSureToDeleteThePerson', person.name),
+            isConfirmed =&gt; {
+                if (isConfirmed) {
+                    this._personService.deletePerson(person.id).subscribe(() =&gt; {
+                        this.notify.info(this.l('SuccessfullyDeleted'));
+                        _.remove(this.people, person);
+                    });
+                }
+            }
+        );
+    }
+    
+<strong>    editPerson(person: PersonListDto): void {
+        if (person === this.editingPerson) {
+            this.editingPerson = null;
+        } else {
+            this.editingPerson = person;
+
+            this.newPhone = new AddPhoneInput();
+            this.newPhone.type = AddPhoneInputType._0;
+            this.newPhone.personId = person.id;
+        }
+    };
+
+    getPhoneTypeAsString(phoneType: PhoneInPersonListDtoType): string {
+        switch (phoneType) {
+            case PhoneInPersonListDtoType._0:
+                return this.l('PhoneType_Mobile');
+            case PhoneInPersonListDtoType._1:
+                return this.l('PhoneType_Home');
+            case PhoneInPersonListDtoType._2:
+                return this.l('PhoneType_Business');
+            default:
+                return '?';
+        }
+    };
+
+    deletePhone(phone, person): void {
+        this._personService.deletePhone(phone.id).subscribe(() =&gt; {
+            this.notify.success(this.l('SuccessfullyDeleted'));
+            _.remove(person.phones, phone);
+        });
+    };
+
+    savePhone(): void {
+        if (!this.newPhone.number) {
+            this.message.warn('Please enter a number!');
+            return;
+        }
+        
+        this._personService.addPhone(this.newPhone).subscribe(result =&gt; {
+            this.editingPerson.phones.push(result);
+            this.newPhone.number = '';
+
+            this.notify.success(this.l('SavedSuccessfully'));
+        });
+    };</strong>
+}</pre>
 <h3>&nbsp;</h3>
 <p>&nbsp;</p>
 
