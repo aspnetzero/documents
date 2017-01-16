@@ -19,7 +19,7 @@
 
 <h3>Introduction</h3>
 
-<p>In <a href="Getting-Started.html">Getting Started</a> document, a new sample project is created named 
+<p>In <a href="Getting-Started-Core.html">Getting Started</a> document, a new sample project is created named 
 "<strong>Acme.PhoneBook</strong>". This document is a complete guide while developing your project. 
 We definitely suggest to read this document before starting to the 
 development. Since ASP.NET Zero is built on
@@ -54,8 +54,8 @@ the user interface. This will help you to have a better understanding of concept
 <p>After you create and <a href="/Download">download</a> your project, you have a solution structure 
 as shown below:</p>
 <p>
-<img alt="Solution structure" height="183" src="images/solution-overall-core.png" width="257" /></p>
-<p>There are 6 projects in the solution:</p>
+<img class="img-thumbnail" alt="Solution Structure" height="242" src="images/solution-overall-core-2.png" width="257" /></p>
+<p>There are 8 projects in the solution:</p>
 <ul>
 	<li><strong>Core</strong> project contains domain layer classes (like
 	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entities</a> 
@@ -70,8 +70,14 @@ as shown below:</p>
 	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Repositories">
 	repository</a> implementations, database migrations and other 
 	EntityFramework specific concepts. </li>
-	<li><strong>Web</strong> project contains the presentation/API layer 
-	(Controllers, Views, javascripts, styles, images and so on).</li>
+	<li><strong>Web.Mvc</strong> project contains the presentation/API layer 
+	(Controllers, Views, javascripts, styles, images and so on) for backend and 
+	frontend applications.</li>
+	<li><strong>Web.Host</strong> project does not contain any view/css/js 
+	files. Instead, it just serves the application as remote API. So, any device 
+	can consume your application as API.</li>
+	<li><strong>Web.Common</strong> project contains common classes used by Mvc 
+	and Host projects.</li>
 	<li><strong>Migrator</strong> project is a console application that runs 
 	database migrations.</li>
 	<li><strong>Tests </strong>project contains unit and integration tests.</li>
@@ -727,6 +733,27 @@ Currently, jpg/jpeg, gif and png files are supported, you can extend it.</p>
 <h5>Logout</h5>
 <p><strong>AccountController</strong> is used to logout the user and redirect to 
 Login page.</p>
+<h3>Web.Host Application</h3>
+<p>AspNet Zero solution contains an extra project, <strong>Web.Host</strong>, 
+which just exposes all application functionality as <strong>remote API</strong>. 
+Thus, you can consume your application as API from any device. Actually, Web.Mvc 
+project also does it, provides API for all application functionality. The 
+difference is that Web.Mvc project has also MVC Controllers, Views, scripts and 
+so on. If you just want to deploy API without UI, you can use Web.Host project. 
+Otherwise, you can even delete it. We are using Web.Host project to provide 
+server side API to <a href="Development-Guide-Angular.html">Angular SPA</a>.</p>
+<p>A few notes on Web.Host project:</p>
+<ul>
+	<li>It has only <strong>token based (JWT) authentication</strong> (plus 
+	social login possibility). No form based authentication (because there is no 
+	UI).</li>
+	<li>It does <strong>not</strong> implement <strong>CSRF</strong> protection 
+	since it's not a security concern in token based auth.</li>
+	<li>&nbsp;It enables <strong>CORS</strong>. So, cross origin requests are 
+	allowed. It only allows to <strong>http://localhost:4200</strong> by default 
+	(see Startup class for the configuration).</li>
+	<li>Configured and enabled <strong>Swagger UI</strong> by default.</li>
+</ul>
 <h3>Migrator Console Application</h3>
 <p>AspNet Zero includes a tool, Migrator.exe, to easily migrate your databases. 
 You can run this application to create/migrate host and tenant databases.</p>
