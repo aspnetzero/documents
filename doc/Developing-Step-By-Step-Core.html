@@ -1595,7 +1595,7 @@ automatically binded.</p>
 <h4>AddPhone Action</h4>
 <p>We added AddPhone action to the PhoneController as shown below:</p>
 <pre lang="cs">[HttpPost]
-public async Task&lt;PartialViewResult&gt; AddPhone(AddPhoneInput input)
+public async Task&lt;PartialViewResult&gt; AddPhone([FromBody]AddPhoneInput input)
 {
     PhoneInPersonListDto phoneInPersonList = await _personAppService.AddPhone(input);
     var model = new PhoneRowInPersonListViewModel(phoneInPersonList);
