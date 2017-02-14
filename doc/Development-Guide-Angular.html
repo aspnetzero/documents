@@ -5,14 +5,6 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
 <title>Development Guide</title>
-<style type="text/css">
-.auto-style2 {
-	font-weight: normal;
-}
-.auto-style3 {
-	font-weight: bold;
-}
-</style>
 </head>
 
 <body>
@@ -52,8 +44,7 @@ OS you like (MacOS/Linux/Windows).</p>
 	different port in same server or to a different server. When it's deployed, 
 	it's actually a plan HTML+JS+CSS web application that can be served on any 
 	operating system and any web server.</li>
-	<li><strong>Angular</strong> solution consists of 2 entrance points which is 
-	actually 2 root modules with their own routes:<ul>
+	<li><strong>Angular</strong> solution consists of 2 fundamental modules:<ul>
 		<li><strong>AccountModule</strong> is for login, register, remember password and so 
 		on. It's mainly used to authenticate a user using TokenAuthController in 
 		the server side.</li>
@@ -74,30 +65,44 @@ OS you like (MacOS/Linux/Windows).</p>
 
 <h4>Angular Solution</h4>
 <p>Entrance point of the Angular solution is src/<strong>main.ts</strong>. It 
-simply bootstraps one of the root
+simply bootstraps the root
 <a href="https://angular.io/docs/ts/latest/guide/ngmodule.html" target="_blank">
-Angular modules</a>: <strong>AccountModule</strong> or <strong>AppModule</strong>. 
-In addition to those root modules, the solution has a few more modules to better 
-organize code base:</p>
+Angular module</a>: <strong>RootModule</strong>. Fundamental modules of the 
+solution are shown below:</p>
+<p>
+<img class="img-thumbnail" alt="Angular 2 modules" height="221" src="images/ng2-modules.png" width="501" /></p>
 <ul>
-	<li><strong class="auto-style2">account/</strong><strong>account.module</strong>: 
-	Root module of the account application which provides login, two factor 
-	authentication, register, password forget/reset and email activation 
-	functionality.</li>
-	<li>app/<span class="auto-style3">app.module</span>: Root module of the 
-	application which consists of a few sub modules:<ul>
-		<li>app/admin/<strong>admin.module</strong>: Administration pages like 
-		user management, role management, tenant management, language 
-		management, settings and so on.</li>
-		<li>app/main/<strong>main.module</strong>: The main module to develop 
-		your own application. It only contains a demo dashboard page which you 
-		can modify or delete. It's suggested to divide your application into 
-		smaller modules like we did in the startup project, instead of adding 
-		all functionality into the main module.</li>
-		<li>app/shared/common/<strong>app-common.module</strong>: a common 
-		module used by main and admin modules as shared functionality.</li>
+	<li><strong>RootModule</strong> is responsible to bootstrap the application.</li>
+	<li><strong>AccountModule</strong> provides login, two factor 
+	authentication, register, password forget/reset, email activation... 
+	functionalities. It's
+	<a href="https://angular.io/docs/ts/latest/guide/router.html" target="_blank">
+	lazy loaded</a>.</li>
+	<li><strong>AppModule</strong> is just to group application modules and 
+	provide a base layout. It contains 2 sub modules:<ul>
+		<li><strong>AdminModule</strong> contains pages like user management, 
+		role management, tenant management, language management, settings and so 
+		on. It's lazy loaded.</li>
+		<li><strong>MainModule</strong> is the main module to develop your own 
+		application. It only contains a demo dashboard page which you can modify 
+		or delete. It's suggested to divide your application into smaller 
+		modules like we did in the startup project, instead of adding all 
+		functionality into the main module. It's lazy loaded.</li>
 	</ul>
 	</li>
+</ul>
+<p>Fundamental modules have their own <strong>routes</strong>. For example; 
+AccountModule views start with "<strong>/account</strong>" (like 
+"/account/login"), AdminModule views starts with "<strong>/app/admin</strong>" 
+(like "/app/admin/users"). Angular's router lazy loads modules based on their 
+url. For instance, when you request a url starts with "app/admin", the 
+AdminModule and all it's components are loaded. They are not loaded if you don't 
+request those pages. That brings better startup time (and also better 
+development time since they are independently splitted to chunks).</p>
+<p>In addition to those fundamental modules, there are some share modules:</p>
+<ul>
+	<li>app/shared/common/<strong>app-common.module</strong>: a common 
+		module used by main and admin modules as shared functionality.</li>
 	<li>shared/common/<strong>common.module</strong>: A common module used by 
 	account and app modules (and their sub modules).</li>
 	<li>shared/utils/<strong>utils.module</strong>: Another common module used 
@@ -234,6 +239,13 @@ click Email activation and re-send the confirmation code.</p>
 get an email to reset the password.</p>
 <p>
 <img class="img-thumbnail" alt="Forgot password" height="333" src="images/forgot-password-2.png" width="414" /></p>
+<h4>
+Tenant Registration</h4>
+<p>
+Tenant registration link is shown on the login form only if you are in the host 
+context. When you click to the link, a registration form is shown:</p>
+<p>
+<img class="img-thumbnail" alt="Tenant registration form" height="663" src="images/ng2-tenant-registration.png" width="412" /></p>
 <h3>AppModule</h3>
 <p>This is the actual application module which is entered by username and password. You 
 will mostly work on this application to add your business requirements. A 
@@ -611,7 +623,8 @@ on yarn's or npm's command line interface.</p>
 <p>AspNet Zero uses <a href="https://cli.angular.io/" target="_blank">
 angular-cli</a> for the development and deployment. It's properly configured for 
 angular-cli and already working. To run the application, open command line and 
-type "<strong>npm start</strong>" command. Once it's compiled and ready, you can 
+type "<strong>npm start</strong>" command (or "npm run hmr" to enable hot module 
+replacement feature). Once it's compiled and ready, you can 
 go to <a href="http://localhost:4200">http://localhost:4200</a> to open the 
 application in your browser. See <a href="https://cli.angular.io/">angular-cli</a> 
 official web site for more.</p>
@@ -744,6 +757,39 @@ In this page (which is the default page of server side API application) you can
 see all available API:</p>
 <p>
 <img class="img-thumbnail" alt="Swagger UI" height="837" src="images/swagger-ui-ng2.png" width="973" /></p>
+<h3>
+Deployment</h3>
+<p>
+<em>If you want to merge and deploy Angular 2 UI to the ASP.NET Core backend, 
+you can follow this </em><a href="Merge-Angular-Client-Server.html"><em>tutorial</em></a><em>.</em></p>
+<p>
+We are using <a href="https://cli.angular.io/" target="_blank">angular-cli</a> 
+for development &amp; deployment. Angular CLI has it's own build command that can be 
+used to build your application:</p>
+<pre>ng build -prod</pre>
+<p>
+This command uses <strong>dist</strong> folder as output. Just remember to 
+change
+<strong>assets/appconfig.json</strong> file with your own configuration.</p>
+<h4>
+AOT</h4>
+<p>
+Angular CLI uses <strong>
+<a href="https://angular.io/docs/ts/latest/cookbook/aot-compiler.html" target="_blank">
+AOT</a> (Ahead of Time)</strong> Compilation by default. You can add --no-aot 
+parameter to ng build command to disable it. But we recommend AOT since it has 
+significiant performance gain.</p>
+<h4>
+IIS Deploy</h4>
+<p>
+After ng build command, dist folder contains all necessary files to create a web 
+site under IIS. One important thing is that; Angular uses client side routing. 
+If you refresh a page (F5) then IIS will handle the request and naturally can 
+not find the requested path and returns a HTTP 404 error. We should configure 
+IIS to redirect all requests to the index.html page (or, to the root path).</p>
+<p>
+AspNet Zero Angular UI contains a <strong>web.config</strong> file. You can copy 
+it to the web site's root folder to overcome the problem described above.</p>
 
 <h3>Used Library &amp; Frameworks</h3>
 <p>Many open source frameworks and libraries are used to build ASP.NET Zero 

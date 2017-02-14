@@ -118,6 +118,24 @@ filters</a></strong>. So, it automatically filters tenant datas if you properly
 use filter interfaces. Read
 <a href="http://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy" target="_blank">
 multi tenant documentation</a> if you are building multi-tenant applications.</p>
+<h4>Web Site Root URL</h4>
+
+<p><strong>appsettings.json</strong> file contains a setting, named "<strong>WebSiteRootAddress</strong>", 
+which stores root URL of the web application:</p>
+<pre lang="xml">"WebSiteRootAddress": "http://localhost:62114/"</pre>
+<p>It's used to calculate some URLs in the application. So, you need to change 
+this on deployment. For multi-tenant applications, this URL can contain dynamic 
+tenancy name. In that case, put {TENANCY_NAME} instead of tenancy name like:</p>
+<pre lang="xml">"WebSiteRootAddress": "http://<strong>{TENANCY_NAME}</strong>.mydomain.com/"</pre>
+<p>Thus, AspNet Zero can automatically detect current tenant from URLs. If you 
+configure it as above, you should also redirect all subdomains to your 
+application. To do that;</p>
+<ol>
+	<li>You should configure DNS to redirect all subdomains to a static IP 
+	address. To declare 'all subdomains', you can use a wildcard e.g. <strong>*.mydomain.com</strong>.</li>
+	<li>You should configure IIS to bind this static IP to your application.</li>
+</ol>
+<p>There may be other ways of doing it but this is the simplest.</p>
 
 <h3>Front End Application</h3>
 <p>ASP.NET Zero contains front-end pages that can be a starting point for your 
@@ -1225,7 +1243,6 @@ project. Here, a list of all libraries.</p>
 		<li><a target="_blank" href="http://jquery.com/">jQuery</a></li>
 		<li><a target="_blank" href="http://jqueryui.com/">jQuery UI</a></li>
 		<li><a target="_blank" href="http://malsup.com/jquery/block/">jQuery BlockUI</a></li>
-		<li><a target="_blank" href="https://github.com/carhartl/jquery-cookie">jQuery Cookie</a></li>
 		<li><a target="_blank" href="http://rocha.la/jQuery-slimScroll">jQuery Slimscroll</a></li>
 		<li><a target="_blank" href="http://omnipotent.net/jquery.sparkline/">jQuery Sparkline</a></li>
 		<li><a target="_blank" href="https://github.com/pixelmatrix/uniform">jQuery Uniform</a></li>
@@ -1241,6 +1258,8 @@ project. Here, a list of all libraries.</p>
 		<li>
 		<a href="https://github.com/localForage/localForage" target="_blank">
 		LocalForage</a></li>
+		<li><a href="https://github.com/js-cookie/js-cookie" target="_blank">Js 
+		Cookie</a></li>
 		<li><a target="_blank" href="http://momentjs.com/">Moment.js</a></li>
 		<li><a href="http://momentjs.com/timezone/" target="_blank">Moment.js 
 		Timezone</a></li>

@@ -103,6 +103,23 @@ filters</a></strong>. Therefore it automatically filters tenant data if you prop
 use filter interfaces. Read
 <a href="http://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy" target="_blank">
 multi-tenant documentation</a> if you are building multi-tenant applications.</p>
+<h4>Web Site Root URL</h4>
+<p><strong>web.config</strong> file contains a setting, named "<strong>WebSiteRootAddress</strong>", 
+which stores root URL of the web application:</p>
+<pre lang="xml">&lt;add key="WebSiteRootAddress" value="http://localhost:6240/" /&gt;</pre>
+<p>It's used to calculate some URLs in the application. So, you need to change 
+this on deployment. For multi-tenant applications, this URL can contain dynamic 
+tenancy name. In that case, put {TENANCY_NAME} instead of tenancy name like:</p>
+<pre lang="xml">&lt;add key="WebSiteRootAddress" value="http://<strong>{TENANCY_NAME}</strong>.mydomain.com/" /&gt;</pre>
+<p>Thus, AspNet Zero can automatically detect current tenant from URLs. If you 
+configure it as above, you should also redirect all subdomains to your 
+application. To do that;</p>
+<ol>
+	<li>You should configure DNS to redirect all subdomains to a static IP 
+	address. To declare 'all subdomains', you can use a wildcard e.g. <strong>*.mydomain.com</strong>.</li>
+	<li>You should configure IIS to bind this static IP to your application.</li>
+</ol>
+<p>There may be other ways of doing it but this is the simplest.</p>
 
 <h3>Front End MVC Application</h3>
 <p>ASP.NET Zero contains front-end pages that can be a starting point for your 
@@ -590,29 +607,23 @@ The audit log report is provided by the <strong>AuditLogAppService</strong> clas
 <h4>Host Settings</h4>
 <p>The host settings page is used to configure some system settings:</p>
 <p>
-<img class="img-thumbnail" alt="General Host Settings" src="images/host-settings-general-3.png" /></p>
-<p><strong>Web site root address</strong> is important, especially in production. {TENANCY_NAME} 
-is a placeholder for subdomains. It is <strong>optional</strong>. If supplied, current tenant name 
-can be automatically detected.</p>
-<p>To make tenancy name subdomains work properly, you should make two 
-configuration entries:</p>
-<ol>
-	<li>You should configure DNS to redirect all subdomains to a static IP 
-	address. To declare 'all subdomains', you can use a wildcard e.g. <strong>*.mydomain.com</strong>.</li>
-	<li>You should configure IIS to bind this static IP to your application.</li>
-</ol>
-<p>There may be other ways of doing it but this is the simplest.</p>
-<p><strong>Timezone</strong> is another important setting on this page. AspNet 
-Zero can work in multiple timezones. All DateTimes are stored as UTC by default, but 
+<img class="img-thumbnail" alt="General host settings" height="243" src="images/host-settings-general-5.png" width="737" /></p>
+<p><strong>Timezone</strong> is an important setting on this page. AspNet 
+Zero can work in multiple timezones. While it's easy to change, default startup 
+solution does not enable UTC datetimes. See
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Timing">timing 
+document</a> to know how to change.</p>
+<p>When you switch to UTC datetime, all DateTimes are stored as UTC by default, but 
 each user can see dates and times in his own time zone. Timezone setting on this 
 page allows you to set a default time zone for the application including all 
 tenants and users. Tenants and users can change the time zone in their own settings.</p>
 <p>On the host settings page, there are also other settings. The "SAVE ALL" button saves 
 all settings in one click. HostSettingAppService is used to retrieve and save 
 settings (see setting provider section for more information).</p>
-<p>The <strong>Security</strong> tab on the host settings page contains password complexity settings. The host can define systemwide password complexity settings on this tab. Each tenant can override this setting on the tenant settings page. <strong>PasswordComplexityChecker</strong> 
+<p>The <strong>Security</strong> tab on the host settings page contains password complexity settings. The host can define system wide password complexity settings on this tab. Each tenant can override this setting on the tenant settings page. <strong>PasswordComplexityChecker</strong> 
 class is responsible for checking if a password satisfies the password complexity settings.</p>
-<img class="img-thumbnail" alt="Tenant settings" src="images/host-settings-security.png" />
+<p>
+<img class="img-thumbnail" alt="Security settings" height="895" src="images/security-settings.png" width="736" /></p>
 <h4>Tenant Settings</h4>
 <p>In a multi-tenant application, tenant settings are shown as below:</p>
 <p>
@@ -1183,13 +1194,14 @@ project. Here is a list of all libraries:</p>
 		<li><a target="_blank" href="http://jquery.com/">jQuery</a></li>
 		<li><a target="_blank" href="http://jqueryui.com/">jQuery UI</a></li>
 		<li><a target="_blank" href="http://malsup.com/jquery/block/">jQuery BlockUI</a></li>
-		<li><a target="_blank" href="https://github.com/carhartl/jquery-cookie">jQuery Cookie</a></li>
 		<li><a target="_blank" href="http://rocha.la/jQuery-slimScroll">jQuery Slimscroll</a></li>
 		<li><a target="_blank" href="http://omnipotent.net/jquery.sparkline/">jQuery Sparkline</a></li>
 		<li><a target="_blank" href="https://github.com/pixelmatrix/uniform">jQuery Uniform</a></li>
 		<li><a target="_blank" href="http://jqueryvalidation.org/">jQuery Validation</a></li>
 		<li><a target="_blank" href="http://jtable.org/">jQuery jTable</a></li>
 		<li><a target="_blank" href="http://malsup.com/jquery/form/">jQuery Ajax Forms</a></li>
+		<li><a href="https://github.com/js-cookie/js-cookie" target="_blank">Js 
+		Cookie</a></li>
 		<li><a target="_blank" href="http://modernizr.com/">Modernizr</a></li>
 		<li><a target="_blank" href="http://momentjs.com/">Moment.js</a></li>
 		<li><a href="http://momentjs.com/timezone/" target="_blank">Moment.js 
