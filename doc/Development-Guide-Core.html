@@ -894,6 +894,7 @@ system). Then use secret manager tool to store this sensitive information in
 your local computer and allow your application to read them from your local 
 computer if available.</p>
 <p>For example, you can use the following command, in Windows <strong>command 
+prompt</strong> in the location of <strong>Core</strong> project, to change connection string for your 
 local development environment:</p>
 <pre>dotnet user-secrets set ConnectionStrings:Default "Server=1.2.3.4;Database=MyProjectDevDb;User=sa;Password=12345678"</pre>
 <p>This user secret value overrides the value in the appsettings.json. See ASP.NET's
