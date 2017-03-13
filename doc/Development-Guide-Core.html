@@ -31,30 +31,24 @@ the user interface. This will help you to have a better understanding of concept
 <h4>Pre Requirements</h4>
 <p>Following tools are needed in order to use ASP.NET Zero Core solution:</p>
 <ul>
-	<li><a href="https://beta.visualstudio.com/vs/community/">Visual Studio 2015</a> 
-	(with
-	<a href="https://www.visualstudio.com/news/releasenotes/vs2015-update3-vs">
-	Update 3</a> installed) or higher.</li>
+	<li><a href="https://www.visualstudio.com">Visual Studio 2017</a>.</li>
 	<li>Visual Studio Extensions:<ul>
 		<li>
-		<a href="https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40">
-		Bundler &amp; Minifier</a></li>
+		<a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.BundlerMinifier">Bundler &amp; Minifier</a></li>
 		<li>
-		<a href="https://visualstudiogallery.msdn.microsoft.com/3b329021-cd7a-4a01-86fc-714c2d05bb6c">
-		Web Compiler</a></li>
+		<a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebCompiler">Web Compiler</a></li>
 		<li>
 		<a href="https://www.microsoft.com/en-us/download/details.aspx?id=48593">
 		Typescript</a> 2+</li>
 	</ul>
 	</li>
-	<li><a href="https://go.microsoft.com/fwlink/?LinkID=827546">ASP.NET Core</a></li>
 	<li>SQL Server</li>
 </ul>
 <h4>Solution Structure (Layers)</h4>
 <p>After you create and <a href="/Download">download</a> your project, you have a solution structure 
 as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Solution Structure" height="242" src="images/solution-overall-core-2.png" width="257" /></p>
+<img class="img-thumbnail" alt="ASP.NET Core solution" height="201" src="images/solution-overall-core-3.png" width="256" /></p>
 <p>There are 8 projects in the solution:</p>
 <ul>
 	<li><strong>Core</strong> project contains domain layer classes (like
@@ -667,6 +661,8 @@ graphs.</p>
 <p>User can see 3 recent notifications by clicking this icon. </p>
 <p><img alt="notifications" src="images/recent-notifications.png" width="320" class="img-thumbnail" style="height: 424px"/></p>
 <p>User can marks all notifications as read by clicking the "Set all as read" link or can mark a single notification by clicking the "set as read" link next to each notification.</p>
+<p>Notifications are sent real-time using SignalR. In addition, a <strong>
+desktop push notification</strong> is shown when a notification is received.</p>
 <h5>Notification Settings</h5>
 <p>"Settings" link opens notification settings dialog.</p>
 <p><img alt="notifications" src="images/notification-settings.png" width="601" class="img-thumbnail" style="height: 311px"/></p>
@@ -898,7 +894,7 @@ system). Then use secret manager tool to store this sensitive information in
 your local computer and allow your application to read them from your local 
 computer if available.</p>
 <p>For example, you can use the following command, in Windows <strong>command 
-prompt</strong> in the location of <strong>.Web</strong> project, to change connection string for your 
+prompt</strong> in the location of <strong>Core</strong> project, to change connection string for your 
 local development environment:</p>
 <pre>dotnet user-secrets set ConnectionStrings:Default "Server=1.2.3.4;Database=MyProjectDevDb;User=sa;Password=12345678"</pre>
 <p>This user secret value overrides the value in the appsettings.json. See ASP.NET's
@@ -1199,6 +1195,10 @@ property must be true if it's deleted.</p>
 <p>You can read
 <a href="http://www.codeproject.com/Articles/871786/Unit-testing-in-Csharp-using-xUnit-Entity-Framewor">
 this article</a> to understand unit testing better.</p>
+<h3>Publish To IIS</h3>
+<p>If you want to publish your solution to IIS, then check Microsoft's
+<a href="https://docs.microsoft.com/en-us/aspnet/core/publishing/iis" target="_blank">
+documentation</a>.</p>
 
 <h3>Used Library &amp; Frameworks</h3>
 <p>Many open source frameworks and libraries are used to build ASP.NET Zero 
