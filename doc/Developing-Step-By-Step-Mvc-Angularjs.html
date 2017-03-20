@@ -526,8 +526,8 @@ view.</p>
 
             vm.persons = [];
 
-<strong>            personService.getPeople({}).success(function(result) {
-                vm.persons = result.items;
+<strong>            personService.getPeople({}).then(function(result) {
+                vm.persons = result.data.items;
             });
 </strong>        }
     ]);
@@ -711,7 +711,7 @@ disable and animates it while submitting form:</p>
 
             vm.save = function () {
                 vm.saving = true;
-<strong>                personService.createPerson(vm.person).success(function () {
+<strong>                personService.createPerson(vm.person).then(function () {
                     abp.notify.info(app.localize(&#39;SavedSuccessfully&#39;));
                     $uibModalInstance.close();
                 }).finally(function () {
@@ -743,8 +743,8 @@ animated. If createPerson success, modal is <strong>closed</strong>.</p>
             vm.persons = [];
 
             function getPeople() {
-                personService.getPeople({}).success(function (result) {
-                    vm.persons = result.items;
+                personService.getPeople({}).then(function (result) {
+                    vm.persons = result.data.items;
                 });
             }
             
@@ -936,7 +936,7 @@ view above):</p>
             if (isConfirmed) {
                 personService.deletePerson({
                     id: person.id
-                }).success(function () {
+                }).then(function () {
                     abp.notify.success(app.localize(&#39;SuccessfullyDeleted&#39;));
                     getPeople();
                 });
@@ -983,8 +983,8 @@ GetPeople</strong> method. UI is shown below:</p>
 <pre lang="js">vm.getPeople = function() {
     personService.getPeople({
 <strong>        filter: vm.filterText
-</strong>    }).success(function (result) {
-        vm.persons = result.items;
+</strong>    }).then(function (result) {
+        vm.persons = result.data.items;
     });
 };</pre>
 <p>That's all. It works since we already have implemented filtering on server.</p>
@@ -1308,7 +1308,7 @@ vm.getPhoneTypeAsString = function(typeAsNumber) {
 vm.deletePhone = function(phone, person) {
     personService.deletePhone({
         id: phone.id
-    }).success(function() {
+    }).then(function() {
         abp.notify.success(app.localize(&#39;SuccessfullyDeleted&#39;));
         person.phones = _.without(person.phones, phone);
     });
@@ -1323,7 +1323,7 @@ vm.addPhone = function(phone, person) {
     phone.personId = person.id;
 
     personService.addPhone(phone)
-        .success(function(result) {
+        .then(function(result) {
             abp.notify.success(app.localize(&#39;SavedSuccessfully&#39;));
             person.phones.push(result);
             phone.number = &#39;&#39;;
