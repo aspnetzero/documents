@@ -18,39 +18,66 @@
 	Copy files in below screenshot from your client solution to root folder of <strong>*Web.Host</strong> project in server solution.
 </p>
 <p>
-	<img class="img-thumbnail" alt="copy" src="images/angular2-client-server-merge-copied-files.png"></img>
+	<img class="img-thumbnail" alt="copy" src="images/angular2-client-server-merge-copied-files-2.png"></img>
 </p>
 
+<h4 id="DocStep2">Step 2: Modify tsconfig.json</h4>
+<p>If the tsconfig.json file under src folder does not contain skipLibCheck configuration, you need to add it, because current version of lodash typings has an error.</p>
+<pre lang="js">
+"target": "es5",
+<strong>"skipLibCheck": true,</strong>
+"typeRoots": [
+    "../node_modules/@types"
+]
+</pre>
 
-<h4 id="DocStep2">Step 2: Modify .gitignore file</h4>
+<p>If the tsconfig.json file under e2e folder contains below configuration</p>
+<pre lang="js">
+"extends": "../tsconfig.json"
+</pre>
+You need to change it like this, becasue above configuration is wrong.
+<pre lang="js">
+"extends": "../src/tsconfig.json"
+</pre>
+
+
+<h4 id="DocStep3">Step 3: Modify .gitignore file</h4>
 <p>Since we copied .gitignore file from another project, we need to remove lines under "<strong># VS files</strong>" which contains "<strong>PhoneBook.AngularUI</strong>" keyword.</p>
 
 
-<h4 id="DocStep3">Step 3: Modify project.json</h4>
+<h4 id="DocStep4">Step 4: Modify *.Web.Host.csproj</h4>
 <p>
-	We need to exclude "<strong>node_modules</strong>" and "<strong>external_libs</strong>" folders from compiled folders. In order to do that, change your buildOptions in project.json like this:
-	<pre lang="js">
-"buildOptions": {
-    "emitEntryPoint": true,
-    "preserveCompilationContext": true,
-    "copyToOutput": "log4net.config",
-    <strong>"compile": {
-      "exclude": [
-        "node_modules",
-        "external_libs"
-      ]
-    }
-</strong>  }	
+	We need to exclude "<strong>node_modules</strong>", "<strong>dist</strong>" and "<strong>external_libs</strong>" folders from compiled folders. In order to do that, add below content to your csproj file's content:
+	<pre lang="xml">
+  &lt;ItemGroup&gt;
+    &lt;None Include="App.config" /&gt;
+    &lt;None Update="log4net.config"&gt;
+      &lt;CopyToOutputDirectory&gt;PreserveNewest&lt;/CopyToOutputDirectory&gt;
+      &lt;CopyToPublishDirectory&gt;PreserveNewest&lt;/CopyToPublishDirectory&gt;
+    &lt;/None&gt;
+    &lt;None Update="wwwroot\**\*"&gt;
+      &lt;CopyToPublishDirectory&gt;PreserveNewest&lt;/CopyToPublishDirectory&gt;
+    &lt;/None&gt;
+   <strong> &lt;Compile Remove="dist\**" /&gt;
+    &lt;Compile Remove="external_libs\**" /&gt;
+    &lt;Compile Remove="node_modules\**" /&gt;
+    &lt;EmbeddedResource Remove="dist\**" /&gt;
+    &lt;EmbeddedResource Remove="external_libs\**" /&gt;
+    &lt;EmbeddedResource Remove="node_modules\**" /&gt;
+    &lt;None Remove="dist\**" /&gt;
+    &lt;None Remove="external_libs\**" /&gt;
+    &lt;None Remove="node_modules\**" /&gt;
+</strong>  &lt;/ItemGroup&gt;
 	</pre>
 	After doing this, your project must be build successfully.
 </p>
 
-<h4 id="DocStep4">Step 4: Running the host project</h4>
+<h4 id="DocStep5">Step 5: Running the host project</h4>
 <p>
 	Now, we can run our host project by pressing the F5 button. We assume that, you have already applied migrations to your database and runned host project before starting this document according to <a href="Getting-Started-Angular.html">ASP.NET Core &amp; Angular 2+</a> document.
 </p>
 
-<h4 id="DocStep5">Step 5: Running the client (Angular 2.x) project</h4>
+<h4 id="DocStep6">Step 6: Running the client (Angular 2.x) project</h4>
 <p>
 	We need to open a command prompt and navigate to "<strong>..\src\Acme.PhoneBook.Web.Host</strong>" folder. Then we need to run "<strong>npm install</strong>" command in order to install our project's dependencies.
 	Then we can run "<strong>npm start</strong>" command to start our project.
@@ -64,38 +91,31 @@
 
 
 <h3>Publish Configuration</h3>
-<h4 id="PubStep1">Step 1: Configure angular-cli.json</h4>
+<h4 id="PubStep1">Step 1: Configure .angular-cli.json</h4>
 <p>
-	Our client project is published by angular-cli. In order to publish a single website using Visual Studio, first we need to modify publish directory for angular-cli. In order to do that, open <strong>angular-cli.json</strong> in your project and change value of <strong>"outDir"</strong> to <strong>"wwwroot/dist"</strong>.
+	Our client project is published by angular-cli. In order to publish a single website using Visual Studio, first we need to modify publish directory for angular-cli. In order to do that, open <strong>.angular-cli.json</strong> in your project and change value of <strong>"outDir"</strong> to <strong>"wwwroot/dist"</strong>.
 	We could use "wwwroot" as outDir but, angular-cli deletes entire folder before it builds the application. So, In order not to loose other files under 
-	<strong>wwwroot </strong>folder, we ued <strong>wwwroot/dist</strong>.
+	<strong>wwwroot </strong>folder, we used <strong>wwwroot/dist</strong>.
 </p>
 
 <h4 id="PubStep2">Step 2: Build client app before publish</h4>
 <p>
-	Before publishing our application using Visual Studio's publish, we need to build our angular application using angular-cli. We can do it using <strong>prepublish</strong> scripts. Add <strong>"ng build --prod"</strong> to your prepublish script in project.json. Your scripts in project.json will be like this:
-	<pre lang="js">
-"scripts": {
-    "prepublish": [
-      <strong>"ng build --prod"</strong>
-    ],
-    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
-  }	
-	</pre>
+	Before publishing our application using Visual Studio's publish, we need to build our angular application using angular-cli. Your *.Web.Host.csproj will be like this:
+	<pre lang="xml">
+&lt;Target Name="PrepublishScript" BeforeTargets="ComputeFilesToPublish"&gt;
+    &lt;Exec Command="ng build --prod" /&gt;
+&lt;/Target&gt;</pre>
 	In this way, angular-cli is going to build your client application before every publish you make.
 </p>
 
 <h4 id="PubStep3">Step 3: Move client app files to wwwroot</h4>
 <p>
-	We need to move files and folders under "<strong>wwwroot/dist</strong>" to "<strong>wwwroot</strong>". In order to do that, change your <strong>prepublish</strong> scripts like this:
-	<pre lang="js">
-"scripts": {
-    "prepublish": [
-      "ng build --prod",
-      <strong>"robocopy %publish:ProjectPath%\\wwwroot\\dist\\ %publish:ProjectPath%\\wwwroot\\ /S /E /MOVE"</strong>
-    ],
-    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
-  }	
+	We need to move files and folders under "<strong>wwwroot/dist</strong>" to "<strong>wwwroot</strong>". In order to do that, change your *.Web.Host.csproj like this:
+	<pre lang="xml">
+&lt;Target Name="PrepublishScript" BeforeTargets="ComputeFilesToPublish"&gt;
+    &lt;Exec Command="ng build --prod"&gt;&lt;/Exec&gt;
+    <strong>&lt;Exec Command="robocopy $(MSBuildProjectDirectory)\wwwroot\dist\ $(MSBuildProjectDirectory)\wwwroot\ /S /E /MOVE" /&gt;</strong>
+&lt;/Target&gt;
 	</pre>
 	This command copies entire content of <strong>wwwroot\dist</strong> folder to <strong>wwwroot </strong> and deletes dist folder before publish. In this way, will have a clean wwwroot folder.
 </p>
@@ -119,16 +139,20 @@ app.Use(async (context, next) =&gt;
 });
 
 </pre>
+<h4 id="PubStep5">Step 5: Remove HomeContoller</h4>
+<p>We also need to remove HomeController from our project, so the app's default route will be our angular client app. We can still access to swagger ui under 
+<strong>/swagger/ui/index.html</strong>.</p>
 
 <p>Now, we can publish our website using Visaul Studio's publish at once.</p>
 <h3>After Publish</h3>
 <p>
 	Our client and server applications are designed to work separately. Because of that, they have different configurations. In order to make them work together, we need to make some configurations after publish as well.
 	We need to use same address configured for our host application in <strong>appsettings.json</strong> for our angular2 application. 
-	Copy the value of "<strong>WebSiteRootAddress</strong>" in appsettings.json and use this value for "<strong>remoteServiceBaseUrl</strong>" and "<strong>appBaseUrl</strong>" in "<strong>appconfig.json</strong>" under "<strong>wwwroot\assets\</strong>" folder.
+	First configure your appsettings.json file for values "<strong>ServerRootAddress</strong>", "<strong>ClientRootAddress</strong>", "CorsOrigins". ServerRootAddress and ClientRootAddress must be same since we are hosting client and server together. If you are using subdomain per tenancy, then you need to include allowed addresses into CorsOrigins, otherwise CorsOrigins will be same as ServerRootAddress and ClientRootAddress.
+    Then, copy the value of "<strong>ServerRootAddress</strong>" in appsettings.json and use this value for "<strong>remoteServiceBaseUrl</strong>" and "<strong>appBaseUrl</strong>" in "<strong>appconfig.json</strong>" under "<strong>wwwroot\assets\</strong>" folder.
 </p>
 <p>
-	Now you can view your website under "<strong>http://yourwebsite.com/index.html</strong>". If you enter only http://yourwebsite.com/, it will redirect you to swagger ui (to swagger/ui/index.html), so you need to add index.html after your website name.
+	Now you can view your website under "<strong>http://yourwebsite.com/</strong>". If you want to view swagger ui, then you can use http://yourwebsite.com/swagger/ui/index.html.
 </p>
 <div class="alert alert-warning">
 Notice that, appsettings.json and appconfig.json are two different files.
