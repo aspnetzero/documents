@@ -54,11 +54,9 @@ this tool for database migrations on development and production (see
 
 <h5>Entity Framework Migration Command</h5>
 
-<p>You can also use Entity Framework's built-in command line tools for migrations.</p>
-
-<p>Open <strong>Windows Command Prompt</strong>, locate to the folder containing 
-the <strong>.EntityFramework</strong> project and run the "<strong>dotnet ef 
-database update</strong>" command as shown below:</p>
+<p>You can also use Entity Framework's built-in tools for migrations. Open 
+<strong>Package Manager Console</strong> in Visual Studio, set<strong> .</strong>EntityFrameworkCore 
+as the <strong>Default Project</strong> and run the <strong>Update-Database</strong> command as shown below:&nbsp;</p>
 <p>
 <img class="img-thumbnail" alt="dotnet ef database update" height="27" src="images/dotnet-ef-database-update.png" width="499" /></p>
 
@@ -69,7 +67,7 @@ SQL Server Management Studio to check if database is created:</p>
 <p>
 You can use EF console commands for development and Migrator.exe for 
 production. But notice that; Migrator.exe supports running migrations in 
-multiple databases at once, which can be useful in development/production for 
+multiple databases at once, which is very useful in development/production for 
 multi tenant applications.</p>
 
 <h4 id="DocConfigureMultiTenancy">Multi-Tenancy</h4>
@@ -77,11 +75,9 @@ multi tenant applications.</p>
 <p>ASP.NET Zero supports multi-tenant and single-tenant applications. 
 Multi-tenancy is <strong>enabled by default</strong>. If you don't have idea 
 about multi-tenancy or don't want to create a multi-tenant application, you can
-<strong>disable</strong> it. If you 
-want a multi-tenant application, leave it <strong>enabled</strong> in ProjectName<strong>CoreModule</strong> 
-class in <strong>.Core</strong> project:</p>
-<pre lang="cs">//Enable this line to create a multi-tenant application.
-<strong>Configuration.MultiTenancy.IsEnabled</strong> = true;</pre>
+<strong>disable</strong> it by setting <strong>
+AbpZeroTemplateConsts.MultiTenancyEnabled</strong> to false in the .Core 
+project.</p>
 
 <h3 id="DocRunProject">Run The Project</h3>
 
@@ -98,12 +94,6 @@ should change password at first login. After login to the application, you will
 see the sample dashboard screen:</p>
 <p>
 <img class="img-thumbnail" alt="Dashboard screen" height="870" src="images/dashboard.png" width="1339" /></p>
-<h4>Time Zone Setting</h4>
-<p>Remember to adjust your time zone in Settings page in order to see date and 
-times in your local time. Default time zone is <strong>UTC</strong>. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Timing">timing 
-documentation</a> to learn more about timing infrastructure.</p>
-
 <h3 id="DocMore">More</h3>
 
 <p>Your solution is up and working.

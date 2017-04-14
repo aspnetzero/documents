@@ -31,7 +31,7 @@ the user interface. This will help you to have a better understanding of concept
 <h4>Pre Requirements</h4>
 <p>Following tools are needed in order to use ASP.NET Zero Core solution:</p>
 <ul>
-	<li><a href="https://www.visualstudio.com">Visual Studio 2017</a>.</li>
+	<li><a href="https://www.visualstudio.com">Visual Studio 2017</a>+</li>
 	<li>Visual Studio Extensions:<ul>
 		<li>
 		<a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.BundlerMinifier">Bundler &amp; Minifier</a></li>
@@ -39,7 +39,7 @@ the user interface. This will help you to have a better understanding of concept
 		<a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebCompiler">Web Compiler</a></li>
 		<li>
 		<a href="https://www.microsoft.com/en-us/download/details.aspx?id=48593">
-		Typescript</a> 2+</li>
+		Typescript</a> 2.0+</li>
 	</ul>
 	</li>
 	<li>SQL Server</li>
@@ -60,10 +60,10 @@ as shown below:</p>
 	services</a> and
 	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
 	DTO</a>s). </li>
-	<li><strong>EntityFramework</strong> project contains your DbContext,
+	<li><strong>EntityFrameworkCore</strong> project contains your DbContext,
 	<a href="http://www.aspnetboilerplate.com/Pages/Documents/Repositories">
 	repository</a> implementations, database migrations and other 
-	EntityFramework specific concepts. </li>
+	EntityFramework Core specific concepts.</li>
 	<li><strong>Web.Mvc</strong> project contains the presentation/API layer 
 	(Controllers, Views, javascripts, styles, images and so on) for backend and 
 	frontend applications.</li>
@@ -105,16 +105,12 @@ tenant named <strong>Default</strong>.</p>
 	<li><strong>Host</strong>: Manages tenants and system.</li>
 	<li><strong>Tenant</strong>: Uses the application features.</li>
 </ul>
-<p>ASP.NET Zero uses ABP's (ASP.NET Boilerplate)
-<strong>
-<a href="http://aspnetboilerplate.com/Pages/Documents/Data-Filters" target="_blank">data 
-filters</a></strong>. So, it automatically filters tenant datas if you properly 
-use filter interfaces. Read
+<p>Read
 <a href="http://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy" target="_blank">
 multi tenant documentation</a> if you are building multi-tenant applications.</p>
 <h4>Web Site Root URL</h4>
 
-<p><strong>appsettings.json</strong> file contains a setting, named "<strong>WebSiteRootAddress</strong>", 
+<p><strong>appsettings.json</strong> in Web.Mvc project contains a setting, named "<strong>WebSiteRootAddress</strong>", 
 which stores root URL of the web application:</p>
 <pre lang="xml">"WebSiteRootAddress": "http://localhost:62114/"</pre>
 <p>It's used to calculate some URLs in the application. So, you need to change 
@@ -130,6 +126,13 @@ application. To do that;</p>
 	<li>You should configure IIS to bind this static IP to your application.</li>
 </ol>
 <p>There may be other ways of doing it but this is the simplest.</p>
+<p>Same "WebSiteRootAddress" setting is also exists in appsettings.json in 
+.Web.Host project. In addition, .Web.Host application contains "<strong>ClientRootAddress</strong>" 
+which is used if this API is used by the
+<a href="Developing-Step-By-Step-Angular.html">Angular</a> UI. If you are not 
+using Angular UI, you can ignore it. Finally, "<strong>CorsOrigins</strong>" 
+setting is used to allow some domains for cross origin requests. This is also 
+useful when you are hosting your Angular UI in a seperated server/domain.</p>
 
 <h3>Front End Application</h3>
 <p>ASP.NET Zero contains front-end pages that can be a starting point for your 
@@ -186,7 +189,8 @@ files under <strong>wwwroot/view-resources</strong> folder.</p>
 <p>Main view for AccountController is the Login page:</p>
 <p>
 <img class="img-thumbnail" alt="Login page" src="images/login-screen-1.png" /></p>
-<p>The <strong>tenant selection</strong> section above login section is shown only in a 
+<p>The <strong>tenant selection</strong> section above login section is only 
+shown in a 
 <strong>multi-tenant</strong> application and if "subdomain tenancy name detection" is 
 <strong>not possible </strong>(See host settings section). When we click Change 
 link, tenant change dialog appears and we can change the tenant. There is a single tenant named <strong>Default</strong> 
@@ -475,7 +479,7 @@ dynamic or static:</p>
 	<li><strong>Static role</strong>: A static role has a known <strong>name
 	</strong>(like 'admin') and can not change this name (we can change <strong>
 	display name</strong>). It's exists on the system startup and can not be 
-	deleted. Thus, we can write codes based on a static role name.</li>
+	deleted. Thus, we can write our code based on a static role name.</li>
 	<li><strong>Dynamic role</strong>: We can create a dynamic role 
 	after deployment. Then we can grant permissions for that role, we can assign 
 	the role to some users and we can delete it. We can not know names of 
@@ -606,9 +610,10 @@ See documentation</a> to switch to UTC.</p>
 <p>SAVE ALL button saves 
 all settings in one click. HostSettingAppService is used to retrieve and save 
 settings (See setting provider section for more information).</p>
-<p><strong>Security</strong> tab in host settings page contains password complexity settings. Host can define system wide password complexity settings in this tab. Each tenant can override this setting in tenant settings page. <strong>PasswordComplexityChecker</strong> 
+<p><strong>Security</strong> tab in host settings page contains password complexity 
+and other security settings. Host can define system wide security settings in this tab. Each tenant can override this setting in tenant settings page. <strong>PasswordComplexityChecker</strong> 
 class is responsible for checking if a password satisfies the password complexity settings.</p>
-<img class="img-thumbnail" alt="Tenant settings" src="images/host-settings-security.png" />
+<img class="img-thumbnail" alt="Tenant settings" src="images/host-settings-security-2.png" width="602" height="701" />
 <h4>Tenant Settings</h4>
 <p>In a multi-tenant application, tenant settings are shown as below:</p>
 <p>
@@ -630,6 +635,12 @@ the server works in domain and application runs with a domain user or local
 system, then generally even <strong>no need</strong> to set Domain name, user and password. You 
 can logout and then login with your <strong>domain user name and password</strong>. 
 If not, you should set these credentials.</p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>LDAP Authentication is not supportted by .net core yet. Thus, it's designed 
+to be conditional. If you are using .Net Framework (4.6+) then it will be 
+available, otherwise it will be disabled.</p>
+</div>
 <h4>Maintenance</h4>
 <p>Maintenance page is available to <strong>host side</strong> for multi tenant 
 applications (for single tenant applications it's shown in tenant side) and 
@@ -686,6 +697,11 @@ See <a href="http://aspnetboilerplate.com/Pages/Documents/Notification-System">n
 <p>All notifications of user are listed in this page.</p>
 <p>
 <img class="img-thumbnail" alt="Notification list" height="313" src="images/notifications-list-core.png" width="774" /></p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>Since SignalR is not ready yet for .net core, real time notifications will 
+not work if you select .net core as your base framework.</p>
+</div>
 
 <h4>Chat</h4>
 <p>Chat icon is located next to user's profile image on top right corner of the page.  The number in the red circle shows total unread chat message count.</p>
@@ -705,6 +721,11 @@ have a gray circle.</p>
 <p>Since chat is a real time operation, application caches friends of online users and unread message count from each friend. <strong>UserFriendsCache</strong> 
 class manages these caching operations. </p>
 <p><strong>UserFriendCacheSyncronizer</strong> class is responsible for keeping user friends cache up to date. In order to do that, it watches some events of Friendship and ChatMessage entities.</p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>Since SignalR is not ready yet for .net core, chat feature will 
+not work if you select .net core as your base framework.</p>
+</div>
 <h5>Chat Features</h5>
 <img class="img-thumbnail" alt="User menu" src="images/chat-features.png" />
 <p>There are three chat features in the system. These are "Chat", "Chat with host", "Chat with other tenants". These features can be enabled/disabled 
@@ -797,7 +818,7 @@ OWIN</strong>. So, you can add OWIN middlewares here.</p>
 package manager to obtain front end library dependencies (like bootstrap and 
 jquery). So, you can easily add new packages or update existing packages on 
 Visual Studio or bower's command line interface. You can see all installed bower 
-packages under <strong>Dependencies/Bower</strong> of the .Web project.</p>
+packages under <strong>Dependencies/Bower</strong> of the .Web.Mvc project.</p>
 <p>
 <img class="img-thumbnail" alt="Bower dependencies" height="462" src="images/bower-dependencies.png" width="269" /></p>
 <h4>Application Services as MVC API Controllers</h4>
@@ -805,14 +826,11 @@ packages under <strong>Dependencies/Bower</strong> of the .Web project.</p>
 experience. UI calls <strong>application service methods</strong> via AJAX. So, it's needed to create 
 MVC API 
 controllers as adapters (A Client calls MVC API Controller action via AJAX, then 
-it calls application service method).</p>
-<p>ABP framework automatically creates
+it calls application service method). ABP framework automatically creates
 MVC API Controllers for all application services. So, 
-no need to manually create MVC API Controller. We build dynamic web api controllers in 
-PhoneBook<strong>WebModule</strong> class in .Web project. See related
+no need to manually create MVC API Controllers for application services.See related
 <a href="http://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers" target="_blank">
-documentation</a> for more.</p>
-<p>While ABP dynamically create Web API Controllers, we can also create regular 
+documentation</a> for more. While ABP dynamically create Web API Controllers, we can also create regular 
 MVC API Controllers as we always do.</p>
 <h4>Localization</h4>
 <p>ASP.NET Zero <strong>User Interface</strong> is completely
@@ -831,15 +849,15 @@ corresponding XML files). No need to add it to database migration code since
 value in the XML file will be used as default.</p>
 <p><strong>Application languages</strong> are defined in <strong>
 DefaultLanguagesCreator</strong> class. This is used as a <strong>seed data</strong> 
-in Entity Framework Migration. So, if you want to <strong>add a new language</strong>, 
+in Entity Framework Migration. So, if you want to <strong>add a new default language</strong>, 
 just add it into DefaultLanguagesCreator class. Also, you should add a 
 corresponding XML file as described above as default translation.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Localization">
 localization</a> and
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Language-Management">
 language management</a> documentations for more information.</p>
-<h4>EntityFramework Integration</h4>
-<p>ASP.NET Zero template uses EntityFramework 6.x <strong>code-first</strong> and 
+<h4>EntityFrameworkCore Integration</h4>
+<p>ASP.NET Zero template uses EntityFramework Core <strong>code-first</strong> and 
 <strong>migrations</strong>. PhoneBook<strong>DbContext</strong> (YourProjectDbContext for your project) 
 defines the DbContext class. <strong>Migrations</strong> folder contains EF migrations. </p>
 <p>PhoneBook<strong>RepositoryBase</strong> class is the base class for your
@@ -847,21 +865,10 @@ custom repositories. See entity
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration">
 framework integration</a> documentation for more.</p>
 <h5>Database Migrations</h5>
-<p>Because of new <strong>xproj/project.json</strong> project structure of 
-ASP.NET Core, Entity Framework's "<strong>Update-Database</strong>" and "<strong>Add-Migration</strong>" 
-commands <strong>may not properly work</strong>. We used
-<a href="https://github.com/mrahhal/Migrator.EF6" target="_blank">Migrator.EF6</a> 
-tool&nbsp;to adapt Entity Framework 6.x to the new solution format. So, you can use
-<strong>Windows Command Promt</strong> to add migrations and update database.</p>
-<p>First, open <strong>cmd</strong> in Windows and locate the folder contains
-<strong>.EntityFramework</strong> project file. Then,</p>
-<ul>
-	<li>Use <strong><em>dotnet ef database update</em></strong> command to apply 
-	migrations to database (Instead, you can use Migrator.exe as declared 
-	before).</li>
-	<li>Use <em><strong>dotnet ef migrations add "Your_Migration_Name"</strong></em> 
-	command to add new migrations.</li>
-</ul>
+<p>You can use Package Manager Console to add new migrations and update your 
+database as you normally do. See EF Core's
+<a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell" target="_blank">
+documentation</a> for details.</p>
 <h4>Exception Handling</h4>
 <p>ASP.NET Zero uses ABP's
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/AspNet-Core#exception-filter" target="_blank">
@@ -884,8 +891,7 @@ friendly error page in production. See <strong>ErrorController</strong> and it's
 related views (<strong>Views\Error</strong>) for details.</p>
 <h4>User Secrets</h4>
 <p>ASP.NET Core introduced
-<a href="https://docs.asp.net/en/latest/security/app-secrets.html#secret-manager" target="_blank">
-user secrets</a> system to store <strong>sensitive data</strong> in development. ASP.NET Zero 
+<a href="https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets" target="_blank">user secrets</a> system to store <strong>sensitive data</strong> in development. ASP.NET Zero 
 uses this system (it's configured properly for your solution). You may want to 
 use a different connection string (or social media API keys) in development and 
 do not want to add these secret data in your appsettings.json in the project 
@@ -898,8 +904,7 @@ prompt</strong> in the location of <strong>Core</strong> project, to change conn
 local development environment:</p>
 <pre>dotnet user-secrets set ConnectionStrings:Default "Server=1.2.3.4;Database=MyProjectDevDb;User=sa;Password=12345678"</pre>
 <p>This user secret value overrides the value in the appsettings.json. See ASP.NET's
-<a href="https://docs.asp.net/en/latest/security/app-secrets.html" target="_blank">
-own documentation</a> for details about user secrets.</p>
+<a href="https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets" target="_blank">own documentation</a> for details about user secrets.</p>
 <h4>Authorization Provider</h4>
 <p>Authorization system is based on permissions. <strong>AppPermissions </strong>
 contains constants for permission names and <strong>
@@ -930,28 +935,20 @@ navigation documentation</a> for more information.</p>
 <h4>Caching And Redis Cache</h4>
 <p>ASP.NET Zero uses <strong>in-memory</strong> caching but it's ready to use
 <strong>Redis</strong> as cache server. If you want to enable it, 
-just uncomment the following line in your <strong>WebModule</strong> (in App_Start folder in your 
-.Web project):</p>
-<pre lang="cs">Configuration.Caching.UseRedis<strong>()</strong>;</pre>
-<p>Redis server should be running to be able to use it. See
+just uncomment the following line in your <strong>WebCoreModule</strong> (in your 
+.Web.Core project):</p>
+<pre lang="cs">Configuration.Caching.UseRedis(...);</pre>
+<p>Redis server should be up &amp; running to be able to use it. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Caching">caching 
 documentation</a> for more information.</p>
 <h4>Background Jobs And HangFire</h4>
 <p>ABP framework contains a <strong>background job system</strong> with a 
 <strong>default</strong> background job 
 manager. If you want to use <a href="http://hangfire.io/" target="_blank">Hangfire</a> as your background job manager, you can 
-easily enable it.</p>
-<p>First, uncomment these lines in <strong>WebModule</strong> (in App_Start folder in your .Web 
-project):</p>
-<pre lang="cs">Configuration.BackgroundJobs.UseHangfire(configuration =&gt;
-{
-    configuration.GlobalConfiguration.UseSqlServerStorage(Configuration.DefaultNameOrConnectionString);
-});</pre>
-<p>If you want to enable Hangfire dashboard, you can uncomment the following 
-line in <strong>Startup.cs</strong> (in App_Start folder in your .Web project):</p>
-<pre lang="cs">app.UseHangfireDashboard(...);</pre>
+easily enable it. Just uncomment AddHangfire and UserHangfire lines in 
+Startup.cs (of Web.Mvc or Web.Host depending on your case).</p>
 <p><strong>Note</strong>: Hangfire creates it's <strong>own tables</strong> in 
-the database. See
+the database on first run. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Background-Jobs-And-Workers">
 background job</a> and
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Hangfire-Integration">
@@ -963,10 +960,14 @@ applications.</p>
 <p>Notice that; As the time being, SignalR
 <a href="https://github.com/aspnet/Home/wiki/Roadmap#12">has not been released</a> 
 for ASP.NET Core yet. We integrated <strong>OWIN</strong> to ASP.NET Core 
-pipeline in order to use SignalR in the application.</p>
-<p>See
+pipeline in order to use SignalR in the application. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/SignalR-Integration">
-SignalR integration</a> document for more information.</p>
+SignalR integration</a> document for more information on 
+SignalR.</p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>Since SignalR is not ready yet for .net core, SignalR integration is disabled if you select .net core as your base framework.</p>
+</div>
 <h4>Logging</h4>
 <p>ASP.NET Zero uses <strong>Log4Net</strong> for logging 
 as default. Configuration is defined in <strong>log4net.config</strong> file in 
@@ -979,7 +980,7 @@ logging documentation</a> to see how to inject ILogger and write logs.</p>
 for DTO to Entity mappings (and other types of object-to-object mappings). We 
 use <a href="https://www.nuget.org/packages/Abp.AutoMapper" target="_blank">Abp.AutoMapper</a> library that makes usage of AutoMapper simpler and 
 declarative.</p>
-<p>See the DTO class that is used to transfer a tenant editing information:</p>
+<p>For instance, see the DTO class that is used to transfer a tenant editing information:</p>
 <pre lang="cs"><strong>[AutoMap(typeof (Tenant))]
 </strong>public class TenantEditDto : EntityDto
 {
@@ -1002,7 +1003,7 @@ public async Task&lt;TenantEditDto&gt; GetTenantForEdit(EntityRequestInput input
 {
     return (await TenantManager.GetByIdAsync(input.Id)).<strong>MapTo</strong>&lt;TenantEditDto&gt;();
 }</pre>
-<p><strong>MapTo</strong> method does mapping.</p>
+<p><strong>MapTo</strong> extension method performs the mapping.</p>
 <h5>Custom Object Mappings</h5>
 <p>Attribute based mapping may not be sufficient in some cases. If you need to 
 directly use Automapper API to configure your mappings, you should do it in
@@ -1084,43 +1085,39 @@ of the application in single place. Version and release date
 automatically shown bottom left corner in the backend application pages. This helps us 
 to see running application version always.</p>
 <h3>Token Based Authentication</h3>
-<p>AspNet Zero uses cookie based authentication for browsers. However, if you 
-want to consume MVC APIs or application services (those are exposed via MVC API) from a mobile 
-or 3rd party application, you probably want a token based 
-authentication mechanism. ASP.NET Zero includes a simple JWT bearer token authentication 
-implementation.</p>
-<p>Here, <strong>Postman</strong> (chrome extension) will be used to demonstrate 
-requests and responses.</p>
+<p>&nbsp;Any application can authenticate and 
+use any functionality in the application as API. For instance, you can create a 
+mobile application consumes the same API. In this section, we'll demonstrate 
+usage of the API from
+<a href="https://www.getpostman.com/docs/introduction" target="_blank">Postman</a> 
+(a Google Chrome extension).</p>
 <h4>Authentication</h4>
-<p>Just send a <strong>POST</strong> request to <strong>
-http://localhost:62114/jwt-token/authenticate</strong> with <strong>
-Context-Type="application/x-www-form-urlencoded"</strong> as shown below:</p>
+<p>We suggest you to disable two factor authentication for the user which will 
+be used for remote authentication. Otherwise, two factor authentication flow 
+should be implemented by the client. We assume that you have disabled two factor authentication for the <strong>admin</strong> 
+user of <strong>default</strong> tenant since we will use it in this sample.</p>
+<p>Following headers should be configured for all requests (Abp.TenantId is Id 
+of the default tenant. This is not required for single tenant applications or if 
+you want to work with host users):</p>
 <p>
-<img class="img-thumbnail" alt="Token auth using postman" height="695" src="images/postman-authenticate-core.png" width="698" /></p>
-<p>We sent a form values <strong>tenancyName</strong>,
-<strong>usernameOrEmailAddress </strong>and <strong>password</strong>. 
-tenancyName is not used to authenticate as a <strong>host</strong> user. As seen 
-above, <strong>result</strong> property of returning JSON contains the token and 
-expire time (which is 24 hours by default and can be configured). We 
-can save it and use for next requests.</p>
-<h4>Use API</h4>
-<p>After authenticate and get the token, we can use it to call any <strong>authorized</strong> 
-actions. All <strong>application services </strong>are available to be used remotely. For 
+<img alt="Postman auth headers" height="112" src="images/postman-ng2-auth-headers.png" width="523" /></p>
+<p>Then we can send username and password as a <strong>POST</strong> request to 
+http://localhost:62114<strong>/api/TokenAuth/Authenticate</strong></p>
+<p>
+<img class="img-thumbnail" alt="Postman get user list" height="1023" src="images/postman-authenticate-core-2.png" width="919" /></p>
+<p>
+In the returning response, <strong>accessToken</strong> will be used to 
+authorize for the API.</p>
+<h4>Using API</h4>
+<p>After authenticate and get the access token, we can use it to call any <strong>authorized</strong> 
+actions. All <strong>services </strong>are available to be used remotely. For 
 example, we can use the <strong>User service</strong> to get a <strong>list of 
 users</strong>:</p>
 <p>
-<img class="img-thumbnail" alt="Postman get users" height="800" src="images/postman-getusers-core.png" width="760" /></p>
-<p>Just made a <strong>POST</strong> request to <strong>
-http://localhost:6234/api/services/app/user/GetUsers</strong> with <strong>
-Content-Type="application/json"</strong> and <strong>Authorization="Bearer <em>
-your-</em></strong><em><strong>auth-token</strong></em><strong>"</strong>. 
-Request body was just empty <strong>{}</strong>. Surely, request and response 
-body will be different for different APIs.</p>
-<p>Note that we also added X-Requested-With header to indicate that this is an 
-AJAX request. Thus, ASP.NET Core can better handle the request and return 
-appropriate return values on success and error cases.</p>
-<p>Almost all operations available on UI also available as API and can be consumed easily 
-as shown here.</p>
+<img class="img-thumbnail" alt="Postman authentication" height="1023" src="images/postman-getusers-core-2.png" width="919" /></p>
+<p>We sent a GET request to http://localhost:62114<strong>/api/services/app/User/GetUsers</strong> 
+and added Authorization to the header as "<strong>Bearer &lt;accessToken&gt;</strong>". 
+Returning JSON contains the list of users.</p>
 <h3>Swagger UI</h3>
 <p><a href="http://swagger.io/swagger-ui/" target="_blank">Swagger UI</a> is 
 <strong>integrated</strong> to ASP.NET Zero but <strong>disabled by default</strong>. Swagger UI configuration is located in
@@ -1143,8 +1140,10 @@ Thus, anyone (or any application) can explore, test and use the API easily.</p>
 	framework.</li>
 	<li><a href="https://github.com/shouldly/shouldly" target="_blank">Shouldly</a> 
 	as assertion library.</li>
-	<li><a href="https://github.com/tamasflamich/effort" target="_blank">Effort</a> 
-	for mocking entity framework and database.</li>
+	<li>
+	<a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/testing/in-memory" target="_blank">
+	<span class="text-primary">Microsoft.EntityFrameworkCore.InMemory </span>
+	</a>for mocking entity framework and database.</li>
 	<li><a href="http://www.nuget.org/packages/Abp.TestBase">Abp.TestBase</a> to 
 	simplify integration testing for ABP based applications.</li>
 </ul>
@@ -1152,9 +1151,10 @@ Thus, anyone (or any application) can explore, test and use the API easily.</p>
 layers of the project. Open Test Explorer (Test\Windows\Test Explorer in VS main 
 menu) to run unit tests:</p>
 <div class="bs-callout bs-callout-warning">
-A new setting named <strong>MultiTenancyEnabled </strong>is introduced for unit test project with AspNet Zero v2.2. If you disable multi tenancy in your Core module, you also need to change this setting's value to false in unit test project's appsettings.json.
-In this way, test related to multi tenancy will not be executed. Because some unit tests (tenant creation, edition creation etc.) are only valid in multi tenancy concept.
-</div>
+	Some unit tests (tenant creation, edition creation etc.) are only valid in multi tenancy concept. 
+	You can change AbpZeroTemplateConsts.MultiTenancyEnabled to false in order 
+	to make your application single tenant. Thus, multitenancy related tests 
+	will be skipped.</div>
 
 <p>
 <img class="img-thumbnail" alt="Some unit tests" height="244" src="images/unit-tests.png" width="555" /></p>
@@ -1206,12 +1206,16 @@ project. Here, a list of all libraries.</p>
 <ul>
 	<li>Server side<ul>
 		<li><a target="_blank" href="http://aspnetboilerplate.com">ASP.NET Boilerplate Framework &amp; Module-Zero</a></li>
-		<li><a href="https://docs.asp.net" target="_blank">ASP.NET Core</a></li>
-		<li><a target="_blank" href="http://www.asp.net/identity">ASP.NET Identity (and social login extensions)</a></li>
+		<li>
+		<a href="https://docs.microsoft.com/en-us/aspnet/core/" target="_blank">ASP.NET Core</a></li>
+		<li>
+		<a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity" target="_blank">ASP.NET Identity 
+		Core (and social login extensions)</a></li>
 		<li>
 		<a href="http://www.asp.net/signalr" target="_blank">SignalR</a></li>
-		<li><a target="_blank" href="http://www.asp.net/entity-framework">EntityFramework</a></li>
-		<li><a target="_blank" href="https://github.com/jcachat/EntityFramework.DynamicFilters">EntityFramework.DynamicFilters</a></li>
+		<li>
+		<a href="https://docs.microsoft.com/en-us/ef/core/index" target="_blank">
+		EntityFramework Core</a></li>
 		<li><a target="_blank" href="http://www.castleproject.org/projects/windsor/">Castle Windsor</a></li>
 		<li><a target="_blank" href="http://automapper.org/">AutoMapper</a></li>
 		<li><a href="http://hangfire.io/" target="_blank">HangFire</a></li>
@@ -1223,11 +1227,9 @@ project. Here, a list of all libraries.</p>
 		<li>
 		<a href="https://github.com/StackExchange/StackExchange.Redis" target="_blank">
 		StackExchange.Redis</a></li>
-		<li><a href="http://icsharpcode.github.io/SharpZipLib/" target="_blank">
-		SharpZipLib</a></li>
 		<li>
-		<a href="https://github.com/kahanu/System.Linq.Dynamic" target="_blank">
-		System.Linq.Dynamic</a></li>
+		<a href="https://github.com/StefH/System.Linq.Dynamic.Core" target="_blank">
+		System.Linq.Dynamic.Core</a></li>
 		<li><a href="http://epplus.codeplex.com/" target="_blank">EPPlus</a></li>
 	</ul>
 	</li>
