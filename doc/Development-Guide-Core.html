@@ -945,8 +945,14 @@ documentation</a> for more information.</p>
 <p>ABP framework contains a <strong>background job system</strong> with a 
 <strong>default</strong> background job 
 manager. If you want to use <a href="http://hangfire.io/" target="_blank">Hangfire</a> as your background job manager, you can 
-easily enable it. Just uncomment AddHangfire and UserHangfire lines in 
-Startup.cs (of Web.Mvc or Web.Host depending on your case).</p>
+easily enable it;</p>
+<ol>
+	<li>Uncomment <strong>AddHangfire</strong> and <strong>UseHangfireDashboard</strong> 
+	and <strong>UseHangfireServer</strong> lines in 
+Startup.cs (of Web.Mvc or Web.Host depending on your case).</li>
+	<li>Uncomment Configuration.BackgroundJobs.UseHangfire in 
+	...WebCoreModule.cs class in your .Web.Core project.</li>
+</ol>
 <p><strong>Note</strong>: Hangfire creates it's <strong>own tables</strong> in 
 the database on first run. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Background-Jobs-And-Workers">
