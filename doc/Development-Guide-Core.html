@@ -48,7 +48,7 @@ the user interface. This will help you to have a better understanding of concept
 <p>After you create and <a href="/Download">download</a> your project, you have a solution structure 
 as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="ASP.NET Core solution" height="201" src="images/solution-overall-core-3.png" width="256" /></p>
+<img class="img-thumbnail" alt="ASP.NET Core solution" src="images/solution-overall-core-4.png" /></p>
 <p>There are 8 projects in the solution:</p>
 <ul>
 	<li><strong>Core</strong> project contains domain layer classes (like
@@ -350,7 +350,7 @@ section.</em></p>
 page</strong> (available in host login)<strong> </strong>is used to manage 
 application's editions:</p>
 <p>
-<img class="img-thumbnail" alt="Editions page" height="227" src="images/editions-page-core.png" width="800" /></p>
+<img class="img-thumbnail" alt="Editions page" src="images/editions-page-core-2.png" /></p>
 <p>Editions are used to group feature values and assign to tenants. When we 
 click Actions/Edit for an edition, we can see it's assigned features:</p>
 <p>
@@ -379,7 +379,7 @@ section.</em></p>
 <p>If this is a multi-tenant application and you logged in as a host user, then 
 tenants page is shown:</p>
 <p>
-<img class="img-thumbnail"  alt="Tenant management page" height="272" src="images/tenant-management-core.png" width="1168" /></p>
+<img class="img-thumbnail"  alt="Tenant management page" src="images/tenant-management-core-1.png" /></p>
 <p>A tenant is represented by <strong>Tenant</strong> class. Tenant class 
 <a href="Extending-Existing-Entities.html">can be 
 extended</a> by adding new properties. There is an only 
@@ -465,7 +465,7 @@ organization unit management document</a> for more information.</p>
 
 <p>When we click Administration/Roles menu, we enter to the role management page:</p>
 <p>
-<img class="img-thumbnail" alt="Role management page" height="333" src="images/role-management-core.png" width="702" /></p>
+<img class="img-thumbnail" alt="Role management page" src="images/role-management-core-1.png" /></p>
 <p>Roles are used to <strong>group permissions</strong>. When a user has a 
 role, then he/she will have all permissions of that role.</p>
 <p>A role is represented by the <strong>Role</strong> class. Role class can be 
@@ -508,7 +508,7 @@ tenants. Also, host has also own isolated roles.</p>
 
 <p>When we click Administration/Users menu, we enter to the user management page:</p>
 <p>
-<img class="img-thumbnail" alt="User management" height="635" src="images/user-management-core.png" width="1643" /></p>
+<img class="img-thumbnail" alt="User management" src="images/user-management-core-1.png" /></p>
 
 <p><strong>Users</strong> are people who can <strong>login </strong>to the application and 
 perform some operations based on their <strong>permissions</strong>.</p>
@@ -555,7 +555,7 @@ project.</p>
 <p>Language management page is used to manage (add/edit/delete) <strong>application 
 languages</strong> and change <strong>localized texts</strong>:</p>
 <p>
-<img class="img-thumbnail" alt="Language management" height="510" src="images/language-list-core.png" width="752" /></p>
+<img class="img-thumbnail" alt="Language management" src="images/language-list-core-1.png" /></p>
 <p>We can create new language, edit/delete an existing language and <strong>set a 
 language as default</strong>. Note that; tenants can not edit/delete default 
 languages, but host users can do.</p>
@@ -1026,6 +1026,10 @@ mode. Because, development environment may not be configured properly to send
 emails. You can enable it if you want. It's enabled in RELEASE mode. Check <em>
 YourProjectName</em>CoreModule class's PreInitialize method to change it if you 
 like.</p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>Since .net core does not support smpt client, AspNet Zero uses <a href="https://github.com/jstedfast/MailKit">MailKit</a> to send emails.</p>
+</div>
 <h4>BinaryObjectManager</h4>
 <p>User <strong>profile pictures</strong> are stored in database, instead of 
 file system. But it's not stored in Users table for performance reasons (Users 
