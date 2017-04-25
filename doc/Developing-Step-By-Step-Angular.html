@@ -218,7 +218,7 @@ filters</a> documentations for more information). We created consts for <strong>
 MaxLength</strong> properties. This is a good practice since we will use same 
 values later.</p>
 <p>We add a DbSet property for Person entity to <strong>PhoneBookDbContext</strong> 
-class defined in <strong>.EntityFramework</strong> project.</p>
+class defined in <strong>.EntityFrameworkCore</strong> project.</p>
 
 <pre lang="cs">public class PhoneBookDbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
 {
@@ -245,24 +245,24 @@ public partial class Added_Persons_Table : Migration
     {
         migrationBuilder.CreateTable(
             name: "PbPersons",
-            columns: table => new
+            columns: table =&gt; new
             {
-                Id = table.Column<int>(nullable: false)
+                Id = table.Column(nullable: false)
                     .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                CreationTime = table.Column<DateTime>(nullable: false),
-                CreatorUserId = table.Column<long>(nullable: true),
-                DeleterUserId = table.Column<long>(nullable: true),
-                DeletionTime = table.Column<DateTime>(nullable: true),
-                EmailAddress = table.Column<string>(maxLength: 255, nullable: true),
-                IsDeleted = table.Column<bool>(nullable: false),
-                LastModificationTime = table.Column<DateTime>(nullable: true),
-                LastModifierUserId = table.Column<long>(nullable: true),
-                Name = table.Column<string>(maxLength: 32, nullable: false),
-                Surname = table.Column<string>(maxLength: 32, nullable: false)
+                CreationTime = table.Column(nullable: false),
+                CreatorUserId = table.Column(nullable: true),
+                DeleterUserId = table.Column(nullable: true),
+                DeletionTime = table.Column(nullable: true),
+                EmailAddress = table.Column(maxLength: 255, nullable: true),
+                IsDeleted = table.Column(nullable: false),
+                LastModificationTime = table.Column(nullable: true),
+                LastModifierUserId = table.Column(nullable: true),
+                Name = table.Column(maxLength: 32, nullable: false),
+                Surname = table.Column(maxLength: 32, nullable: false)
             },
-            constraints: table =>
+            constraints: table =&gt;
             {
-                table.PrimaryKey("PK_PbPersons", x => x.Id);
+                table.PrimaryKey("PK_PbPersons", x =&gt; x.Id);
             });
     }
 
@@ -271,8 +271,7 @@ public partial class Added_Persons_Table : Migration
         migrationBuilder.DropTable(
             name: "PbPersons");
     }
-}
-</pre>
+}</pre>
 <p>We don't have to know so much about format and rules of this file. But, it's 
 suggested to have a basic understanding of migrations. In the same Package Manager Console, we write <strong>Update-Database</strong> command in order to 
 apply the new migration to database. After updating, we can see that <strong>PbPersons 
@@ -285,11 +284,7 @@ classes to fill initial data for users and settings:</p>
 <img class="img-thumbnail" alt="Seed folders" src="images/aspnet-core-ef-seed-1.png" /></p>
 <p>So, we can add a seperated class to fill some people to database 
 as shown below:</p>
-<pre lang="cs">using System.Linq;
-using Acme.PhoneBook.EntityFramework;
-using Acme.PhoneBook.People;
-
-namespace Acme.PhoneBook.Migrations.Seed.Host
+<pre lang="cs">namespace Acme.PhoneBook.Migrations.Seed.Host
 {
     public class InitialPeopleCreator
     {
