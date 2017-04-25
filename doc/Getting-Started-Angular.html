@@ -29,17 +29,18 @@ in one minute. When you open the downloaded zip file, you will see two folders:<
 <p>
 <img class="img-thumbnail" alt="Client Server folders" height="54" src="images/client-server-folders.png" width="70" /></p>
 <ul>
-	<li>Client folder contains the <a href="Development-Guide-Angular.html">
+	<li><strong>angular</strong> folder contains the <a href="Development-Guide-Angular.html">
 	Angular application</a> which is configured to work with
 	<a href="https://cli.angular.io/" target="_blank">angular-cli</a>.</li>
-	<li>Server folder contains the <a href="Development-Guide-Core.html">server 
+	<li><strong>aspnet-core</strong> folder contains the <a href="Development-Guide-Core.html">server 
 	side</a> ASP.NET Core solution and configured to work with
 	<a href="https://www.visualstudio.com/vs/community/" target="_blank">Visual 
 	Studio</a>.</li>
 </ul>
 <h4>Merging Client and Server Solutions</h4>
 <p>
-	Client and Server solutions are designed to work separately by default but if you want to work on a single Visual Studio solution, you can read <a href="Merge-Angular-Client-Server">Merging Angular 2.x Client and Server solution</a> document.
+	Client and Server solutions are designed to work separately by default but if you want to work on a single Visual Studio solution, you can read <a href="Merge-Angular-Client-Server">
+	Merging Angular Client and Server solution</a> document.
 </p>
 <h3>ASP.NET Core Application</h3>
 <p>When you open Server side solution in <strong>Visual Studio 2017+</strong>, you will see the 
@@ -68,11 +69,9 @@ this tool for database migrations on development and production (see
 
 <h5>Entity Framework Migration Command</h5>
 
-<p>You can also use Entity Framework's built-in command line tools for migrations.</p>
-
-<p>Open <strong>Windows Command Prompt</strong>, locate to the folder containing 
-the <strong>.EntityFramework</strong> project and run the "<strong>dotnet ef 
-database update</strong>" command as shown below:</p>
+<p>You can also use Entity Framework's built-in tools for migrations. Open 
+<strong>Package Manager Console</strong> in Visual Studio, set<strong> .</strong>EntityFrameworkCore 
+as the <strong>Default Project</strong> and run the <strong>Update-Database</strong> command as shown below:&nbsp;</p>
 <p>
 <img class="img-thumbnail" alt="dotnet ef database update" height="27" src="images/dotnet-ef-database-update.png" width="499" /></p>
 
@@ -91,11 +90,10 @@ multi tenant applications.</p>
 <p>ASP.NET Zero supports multi-tenant and single-tenant applications. 
 Multi-tenancy is <strong>enabled by default</strong>. If you don't have idea 
 about multi-tenancy or don't want to create a multi-tenant application, you can
-<strong>disable</strong> it. If you 
-want a multi-tenant application, leave it <strong>enabled</strong> in ProjectName<strong>CoreModule</strong> 
-class in <strong>.Core</strong> project:</p>
-<pre lang="cs">//Enable this line to create a multi-tenant application.
-<strong>Configuration.MultiTenancy.IsEnabled</strong> = true;</pre>
+<strong>disable</strong> it by setting <strong>
+AbpZeroTemplateConsts.MultiTenancyEnabled</strong> to false in the .Core 
+project.</p>
+<h4>Run API Host</h4>
 
 <p>Once you've done the configuration, you can run the application. Server side 
 application only contains APIs. So, default page is a swagger UI which can be 
@@ -109,15 +107,15 @@ used to investigate the API:</p>
 	<li><a href="https://nodejs.org/en/download/" target="_blank">nodejs</a> 
 	6.9+ with npm 3.10+</li>
 	<li>Typescript 2.0+</li>
+	<li><a href="https://yarnpkg.com/">yarn</a></li>
 </ul>
 <h4>Restore Packages</h4>
 <p>Locate to the Client folder, open a command line and run the following command to restore packages:</p>
 <pre>yarn</pre>
 <p>We suggest to use 
-<a href="https://yarnpkg.com/" target="_blank">yarn</a> because npm has some problems, yarn solves those problems and it is compatible with npm as well. Alternatively, you can use npm to restore packages. If you want to use npm, you need to run</p>
-<pre>npm install</pre>
-<p>Notice that npm install may show some warn messages, which is not related to 
-our solution and generally it's not a problem.</p>
+<a href="https://yarnpkg.com/" target="_blank">yarn</a> because npm has some problems. 
+It is slow and can not consistently resolve dependencies, yarn solves those problems and it is compatible 
+to npm as well.</p>
 <h4>Run The Application</h4>
 
 <p>
@@ -145,13 +143,6 @@ should change password at first login. </p>
 see the sample dashboard screen:</p>
 <p>
 <img class="img-thumbnail" alt="Dashboard screen" height="870" src="images/dashboard.png" width="1339" /></p>
-<h4>Time Zone Setting</h4>
-<p>Remember to adjust your time zone in Settings page (available to the host 
-admin) in order to see date and 
-times in your local time. Default time zone is <strong>UTC</strong>. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Timing">timing 
-documentation</a> to learn more about timing infrastructure.</p>
-
 <h3 id="DocMore">More</h3>
 
 <p>Your solution is up and working.

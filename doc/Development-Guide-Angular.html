@@ -24,8 +24,9 @@ the user interface. This will help you to have a better understanding of concept
 <h4>Pre Requirements</h4>
 <p>Following tools are needed in order to use the solution:</p>
 <ul>
-	<li>Nodejs 6.9+ and Npm 3.10+</li>
-	<li>Typescript 2.0+</li>
+	<li><a href="https://nodejs.org" target="_blank">Nodejs 6.9+ and Npm 3.10+</a></li>
+	<li><a href="https://www.typescriptlang.org/" target="_blank">Typescript 2.0+</a></li>
+	<li><a href="https://yarnpkg.com/lang/en/" target="_blank">Yarn</a></li>
 </ul>
 <p>In addition, see <a href="Development-Guide-Core.html">AspNet Core</a> 
 documentation for server side requirements.</p>
@@ -137,10 +138,6 @@ configurations beside the application:</p>
 	<li>We should configure IIS to bind this static IP to our application.</li>
 </ol>
 <p>There may be other ways of doing it but this is the most simple way.</p>
-<h4>Workarounds</h4>
-<p>As Angular 2 is pretty new, it has some shortcomings (and third party 
-angular2 modules we used). Especially, Angular-cli is still in beta. So, AspNet 
-Zero has some minor workarounds those can be seen in the code base.</p>
 <h3>AccountModule</h3>
 <p><strong>AccountModule</strong> provides <strong>login</strong>, <strong>register</strong>,
 <strong>forgot password </strong>and <strong>email activation</strong> pages and 
@@ -532,6 +529,12 @@ the server works in domain and application runs with a domain user or local
 system, then generally even <strong>no need</strong> to set Domain name, user and password. You 
 can logout and then login with your <strong>domain user name and password</strong>. 
 If not, you should set these credentials.</p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>LDAP Authentication is not supportted by .net core yet. Thus, it's designed 
+to be conditional. If you are using .Net Framework (4.6+) then it will be 
+available, otherwise it will be disabled.</p>
+</div>
 <h4>Maintenance</h4>
 <p>Maintenance page is available to <strong>host side</strong> for multi tenant 
 applications (for single tenant applications it's shown in tenant side) and shown as 
@@ -573,6 +576,11 @@ desktop push notification</strong> is shown when a notification is received.</p>
 <p>All notifications of the user are listed in this page.</p>
 <p>
 <img class="img-thumbnail" alt="Notification list" height="313" src="images/notifications-list-core.png" width="774" /></p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>Since SignalR is not ready yet for .net core, real time notifications will 
+not work if you select .net core as your base framework.</p>
+</div>
 
 <h4>Chat</h4>
 <p>Chat icon is located next to user's profile image on top right corner of the page.  The number in the red circle shows total unread chat message count.</p>
@@ -590,6 +598,11 @@ have a gray circle.</p>
 <img class="img-thumbnail" alt="User menu" src="images/chat-features.png" />
 <p>There are three chat features in the system. These are "Chat", "Chat with host", "Chat with other tenants". These features can be enabled/disabled 
 per edition/tenant. By using these features host can enable/disable chat with other tenant's users or host users.</p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>Since SignalR is not ready yet for .net core, chat feature will 
+not work if you select .net core as your base framework.</p>
+</div>
 <h4>User Menu</h4>
 <p>A user can click his name at top right corner to open user menu:</p>
 <p>
@@ -622,7 +635,7 @@ can see last login attempts for his/her account.</p>
 <p>ASP.NET Zero solution supports both <a href="https://yarnpkg.com/" target="_blank">
 yarn</a> and <a href="https://www.npmjs.com/" target="_blank">
 npm</a> to obtain front end library dependencies (like angular and bootstrap). We suggest to use yarn because npm has some problems, yarn solves those problems and it is compatible with npm as well. You can easily add, update or remove packages 
-on yarn's or npm's command line interface.</p>
+on yarn's command line interface.</p>
 <h4>Angular CLI &amp; WebPack</h4>
 <p>AspNet Zero uses <a href="https://cli.angular.io/" target="_blank">
 angular-cli</a> for the development and deployment. It's properly configured for 
@@ -643,9 +656,13 @@ for a non-Windows OS) while server side (.Host project) is running.</p>
 <p>Generated code is located in shared/service-proxies/<strong>service-proxies</strong>.ts 
 file. You should not make manual change in this file since it will be overritten 
 on the next code generation.</p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>Refreshing Service Proxies</strong></p>
 <p>While Nswag automatically generate proxy files, it does not refresh <strong>
 service-proxies.module</strong>.ts. If you add a new service, you should <strong>
-manually</strong> add it to this file as like others.</p>
+manually</strong> add it to this file as like others.&nbsp;</p>
+</div>
+
 <h4>AppComponentBase</h4>
 <p>If you inherit your components from <strong>AppComponentBase</strong> class, 
 you can get many commonly used services as pre-injected (like localization, 
@@ -655,7 +672,7 @@ For example; you can just use <strong>l(...)</strong> function In views and
 function in component classes for localization. See pre-built components for 
 example usages.</p>
 <h4>Localization</h4>
-<p>ASP.NET Zero strong>User Interface</strong> is completely
+<p>ASP.NET Zero <strong>User Interface</strong> is completely
 localized. AspNet Zero uses <strong>dynamic, database based, per-tenant</strong> 
 localization.</p>
 <p>XML files are used as base translation for desired languages (defined in the
@@ -682,7 +699,7 @@ on localization.</p>
 exception handling</a> system. Thus, you don't need to handle &amp; care about 
 exceptions in most time. All server side exceptions are gracefuly handled and an 
 appropriate message is shown to the user.</p>
-<h4>AAuthorization</h4>
+<h4>Authorization</h4>
 <p>You can inject and use PermissionCheckerService to check user permissions. 
 It's pre injected for AppComponentBase (permission field) and also you can use 
 shortcut isGranted function. Permissions are defined in
@@ -715,6 +732,10 @@ pipeline in order to use SignalR in the application.</p>
 <p>See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/SignalR-Integration">
 SignalR integration</a> document for more information.</p>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>.Net Core Compability</strong></p>
+<p>Since SignalR is not ready yet for .net core, SignalR integration is disabled if you select .net core as your base framework.</p>
+</div>
 <h3>Token Based Authentication</h3>
 <p>AspNet Zero Angular UI uses the <a href="Development-Guide-Core.html">server 
 side</a> via token based authentication. Any application can authenticate and 
@@ -727,11 +748,11 @@ usage of the API from
 <p>We suggest you to disable two factor authentication for the user which will 
 be used for remote authentication. Otherwise, two factor authentication flow 
 should be implemented by the client. You can check account module source code to 
-understand the flow.</p>
-<p>We assume that you disable two factor authentication for the <strong>admin</strong> 
+understand the flow. We assume that you have disabled two factor authentication for the <strong>admin</strong> 
 user of <strong>default</strong> tenant since we will use it in this sample.</p>
 <p>Following headers should be configured for all requests (Abp.TenantId is Id 
-of the default tenant. This is not required for single tenant applications):</p>
+of the default tenant. This is not required for single tenant applications or if 
+you want to work with host users):</p>
 <p>
 <img alt="Postman auth headers" height="112" src="images/postman-ng2-auth-headers.png" width="523" /></p>
 <p>Then we can send username and password as a <strong>POST</strong> request to
@@ -763,9 +784,12 @@ see all available API:</p>
 <img class="img-thumbnail" alt="Swagger UI" height="837" src="images/swagger-ui-ng2.png" width="973" /></p>
 <h3>
 Deployment</h3>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>About Deployment</strong></p>
 <p>
-<em>If you want to merge and deploy Angular 2 UI to the ASP.NET Core backend, 
-you can follow this </em><a href="Merge-Angular-Client-Server.html"><em>tutorial</em></a><em>.</em></p>
+If you want to merge and deploy Angular 2 UI with the ASP.NET Core backend, 
+you can follow this <a href="Merge-Angular-Client-Server.html">tutorial</a>.</p>
+</div>
 <p>
 We are using <a href="https://cli.angular.io/" target="_blank">angular-cli</a> 
 for development &amp; deployment. Angular CLI has it's own build command that can be 
