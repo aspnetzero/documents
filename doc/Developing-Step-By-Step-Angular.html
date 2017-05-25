@@ -954,8 +954,7 @@ class, we can declare a class level attribute as shown below:</p>
 <p>We get an error message. This exception is thrown when any method of 
 PersonAppService is called without required permission.</p>
 <h5>Guard Angular Route</h5>
-<p>While we got an exception and could not see the actual data, we could still 
-entered to the page. We should prevent it. To do that, open <strong>
+<p>We got an exception about permission. Server did not send the data but we can still enter the page. To prevent it, open <strong>
 main-routing.module.ts</strong> and change the route definition like that:</p>
 <pre lang="js">{ path: 'phonebook', component: PhoneBookComponent<strong>, data: { permission: 'Pages.Tenant.PhoneBook' }</strong> }</pre>
 <p><strong>AuthRouteGuard</strong> class automatically checks route permission 
