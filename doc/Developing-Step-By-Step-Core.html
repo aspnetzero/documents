@@ -49,8 +49,8 @@ to multi-tenant later). So, we open PhoneBookConsts class in the Acme.PhoneBook.
 <p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
 <h4>Defining a menu item</h4>
 <p><strong>AppNavigationProvider</strong> class defines menus in the application. When 
-we change this class, menus are automatically changed. Open this class and 
-create new menu item as shown below (You can add it right after the dashboard 
+we change this class, menus automatically changes. Open this class and 
+create a new menu item as shown below (You can add it right after the dashboard 
 menu item).</p>
 <pre lang="cs">
 .AddItem(new MenuItemDefinition(
@@ -85,7 +85,7 @@ PhoneBook-tr.xml file:</p>
 <p><strong>url</strong> can be a URL (it's URL of an <strong>MVC Action</strong> 
 here) that will be 
 redirected when we click the menu item.</p>
-<p>Lastly, <strong>icon</strong> is the shown menu icon for new menu item. It 
+<p>Lastly, <strong>icon</strong> is the shown menu icon for the new menu item. It 
 can be a <strong>css</strong> class. We can use Glyphicon, Font-Awesome or 
 another css font library here.</p>
 <p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
@@ -107,12 +107,12 @@ public class PhoneBookController : PhoneBookControllerBase
 </pre>
 <p>We inherited from <strong>PhoneBookControllerBase</strong> (will be <em>
 YourProjectName</em>ControllerBase for your projects) instead of MVC's standard 
-Controller class. While it will work if we derive from the standard Controller, PhoneBookControllerBase 
+Controller class. While it works even if we derive from the standard Controller, PhoneBookControllerBase 
 provides very useful base properties and methods. So, always inherit from this 
-class unless it has a disadvantage for your case.</p>
+class unless there is a disadvantage for your case.</p>
 <h4>View</h4>
-<p>Creating an empty view, <strong>Index.cshtml</strong> under <strong>Areas/App/Views/PhoneBook</strong> 
-folder:</p>
+<p>Create a new folder named <strong>PhoneBook</strong> under <strong>Areas/App/Views/</strong> . 
+Create an empty view named <strong>Index.cshtml</strong> in this folder. Then copy the below content into the new view.</p>
 <pre lang="xml">
 @using System.Threading.Tasks
 @using Acme.PhoneBook.Web.Areas.App.Startup
@@ -142,11 +142,12 @@ folder:</p>
 &lt;/div&gt;
 </pre>
 <p>We set ViewBag.CurrentPageName to the current page's name to automatically 
-highlight the related menu item when this page is active. Now, it's time to run application and see the new phone book page:</p>
+highlight the related menu item when this page is active. 
+Now, it's time to run application and see the new phone book page:</p>
 <p>
 <img class="img-thumbnail" alt="Phone book empty screen" height="255" src="images/phonebook-empty-mpa.png" width="974" /></p>
 <p>Menu item display name and page title are localized. Try to change UI 
-language to see difference.</p>
+language to see the difference.</p>
 <h3>Creating Person Entity</h3>
 <p>We define entities in <strong>.Core</strong> (domain) project. We can define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
 table in database) to represent a person in phone book as shown below:</p>
@@ -202,7 +203,7 @@ database schema. Since we added <strong>Person entitiy</strong>, our DbContext
 model is changed. So, we 
 should create a <strong>new migration</strong> to create the new table in the 
 database.</p>
-<p>Open <strong>Package Manager Console</strong>, run the <strong>Add-Migration "Added_Persons_Table"</strong> command as shown below:</p>
+<p>Open <strong>Package Manager Console</strong>, set default project as <strong>Acme.PhoneBook.EntityFrameworkCore</strong>. Run the <strong>Add-Migration "Added_Persons_Table"</strong> command as shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Entity Framework Code First Migration" src="images/phonebook-migrations-core-3.png" /></p>
 <p>This command will add a <strong>migration class</strong> named "<strong>Added_Persons_Table</strong>" as shown below:</p>
@@ -324,14 +325,14 @@ operations (use cases) in the application.</p>
 <p>Application services are located in
 <strong>.Application</strong> project. We create first application service to 
 get people from server. We're creating an <strong>interface</strong> to define 
-the person application service (while this interface is optional, we suggest you 
-to create it):</p>
+the person application service (while this interface is optional, it's suggested you 
+to create it)</p>
 <pre lang="cs">public interface IPersonAppService : IApplicationService
 {
     ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
 }</pre>
 <p>An application service method gets/returns <strong>DTO</strong>s. <strong>ListResultDto</strong> is a 
-pre-build helper DTO to return a list of another DTO. <strong>GetPeopleInput</strong> is a DTO to pass 
+prebuilt helper DTO to return a list of another DTO. <strong>GetPeopleInput</strong> is a DTO to pass 
 request parameters to <strong>GetPeople</strong> method. So, GetPeopleIntput and PersonListDto 
 are defined as shown below:</p>
 
@@ -394,20 +395,19 @@ many similar
 shortcut extension methods. <strong>MapTo</strong> method automatically 
 converts list of Person entities to list of PersonListDto entities using <strong>AutoMapper</strong> library.</p>
 <h4>Connection &amp; Transaction Management</h4>
-<p>We don't manually open database connection or start/commit transactions 
-manually. It's automatically done with ABP framework's Unit Of Work system. See
+<p>We don't manually open database connection or start/commit transactions. It's automatically done in ABP framework's Unit Of Work system. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Unit-Of-Work">UOW 
 documentation</a> for more.</p>
 <h4>Exception Handling</h4>
 <p>We don't handle exceptions manually (using a try-catch block). Because ABP 
 framework automatically handles all exceptions on the web layer and returns 
-appropriate error messages to the client. It then handles errors on the client 
+appropriate error messages to the client. It handles errors on the client 
 and shows needed error information to the user. See
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/Handling-Exceptions">
 exception handling document</a> for more.</p>
 
 <h3>Creating Unit Tests For PersonAppService</h3>
-<p>You can skip this section if you don't interest in <strong>automated testing</strong>.</p>
+<p>You can skip this section if you are not interest in <strong>automated testing</strong>.</p>
 <p>By writing unit test, we can test <strong>PersonAppService.GetPeople</strong> 
 method without creating a user interface that calls it and shows people on the 
 screen.</p>
@@ -445,14 +445,14 @@ PersonAppService</strong> class with all dependencies. Then we can use it in
 test methods.</p>
 <p>Since we're using <a href="http://xunit.github.io/" target="_blank">xUnit</a>, 
 we add <strong>Fact</strong> attribute to each test method. In the test method, 
-we called <strong>GetPeople</strong> method and checked if there are <strong>two 
-people</strong> in the returned list as we know that there were 2 people in
+we test <strong>GetPeople</strong> application service method and check if there are <strong>two 
+people</strong> in the returned list. We know that there are 2 people in
 <strong>initial</strong> database.</p>
 <p>Let's run the <strong>all unit tests</strong> in Test Explorer and see if it 
 works:</p>
 <p>
 <img class="img-thumbnail" alt="xUnit unit test success" height="40" src="images/phone-book-unit-test-success-1.png" width="750" /></p>
-<p>As you see, it worked <strong>successfully</strong>. Now, we know that 
+<p>As you see, it works <strong>successfully</strong>. Now, we know that 
 PersonAppService works properly without any filter. Let's add a new unit test to 
 get filtered people:</p>
 <pre lang="cs">[Fact]
@@ -470,27 +470,28 @@ public void Should_Get_People_With_Filter()
     persons.Items[0].Name.ShouldBe(&quot;Douglas&quot;);
     persons.Items[0].Surname.ShouldBe(&quot;Adams&quot;);
 }</pre>
-<p>Again, since we know initial database, we can check returned results easily. 
+<p>Since we know initial database, we can check returned results easily. 
 Here, initial test data is important. When we change initial data, our test may 
 fail even if our services are correct. So, it's better to write unit tests 
 independed of initial data as much as possible. We could check incoming data to 
 see if every people contains "adams" in his/her name, surname or email. Thus, if 
 we add new people to initial data, our tests remain working.</p>
 <p>There are many techniques on unit testing, I kept it simple here. But ASP.NET 
-Zero template makes very easy to write unit and integration tests by base 
+Zero template makes it easy to write unit and integration tests by base 
 classes and pre-build test codes.</p>
 <h3>Testing PersonAppService From Browser Console</h3>
 <p>Now, lets run and <strong>login</strong> to the application again, open 
 Chrome Developer Console (or similar tools in other browsers) and write the 
 following command:</p>
+<pre lang="js">abp.services.app.person.getPeople({});</pre>
 <p>
 <img class="img-thumbnail" alt="Google Chrome Console AJAX" height="104" src="images/chrome-console-get-people.png" width="497" /></p>
 <p>This command performs an <strong>AJAX</strong> call to PersonAppService.<strong>GetPeople</strong> 
 method. We can see the request if we open <strong>Network</strong> tab:</p>
 <p>
 <img class="img-thumbnail" alt="Google Chrome Console Get People" height="148" src="images/chrome-console-get-people-network.png" width="720" /></p>
-<p>As we see, an AJAX request made and people are got successfully.</p>
-<p>So, how this happen? How we could make a call to a C# class method (notice that it's 
+<p>As we see, an AJAX request is made and people data are successfully retrieved.</p>
+<p>So, how can this happen ? How we can make a call to a C# class method (notice that it's 
 not an MVC Controller, just a plain C# class) from 
 javascript like calling a javascript method? This is provided by ASP.NET 
 Boilerplate. See
@@ -565,7 +566,7 @@ AutoMapFrom attribute to be able to make mapping.</p>
 </div>
 
 <h3>Rendering People In MVC View</h3>
-<p>We show people on the page is most basic form. See the changed view below:</p>
+<p>As a basic form we show people on the page. Modify <strong>Areas/App/Views/PhoneBook/Index.cshtml</strong> file as shown below:</p>
 <pre lang="xml">...
 @model Acme.PhoneBook.Web.Areas.App.Models.PhoneBook.IndexViewModel
 ...
@@ -587,6 +588,17 @@ AutoMapFrom attribute to be able to make mapping.</p>
 ...</pre>
 <p>We declared the <strong>@model</strong> and used a foreach loop to render 
 people. See the result:</p>
+<p>To show localized text for AllPeople, add <strong>AllPeople</strong> localization to:</p>
+
+<strong>PhoneBook.xml</strong>
+<pre lang="xml">
+  &lt;text name=&quot;AllPeople&quot; value=&quot;All people&quot; /&gt;
+</pre> 
+
+<strong>PhoneBook-tr.xml</strong>
+ <pre lang="xml">
+  &lt;text name=&quot;AllPeople&quot; value=&quot;Tüm kisiler&quot; /&gt;
+</pre> 
 <p>
 <img class="img-thumbnail" alt="Phonebook peoples" height="285" src="images/phonebook-people-view-1.png" width="790" /></p>
 <p>We successfully retrieved list of people from database to the page.</p>
@@ -664,7 +676,7 @@ public async Task Should_Create_Person_With_Valid_Arguments()
             john.Name.ShouldBe(&quot;John&quot;);
         });
 }</pre>
-<p>Test method also written using <strong>async/await</strong> pattern since 
+<p>Test method is written using <strong>async/await</strong> pattern since 
 calling method is async. We called CreatePerson method, then checked if given 
 person is in the database. <strong>UsingDbContext</strong> method is a helper 
 method of <strong>AppTestBase</strong> class (which we inherited this unit test 
@@ -752,8 +764,8 @@ const values in view to set same <strong>maxlength</strong> to input controls.</
 <p>Just named the modal as '<strong>CreatePersonModal</strong>'. We will fill 
 the javascript code later.</p>
 <h4>Opening the Modal</h4>
-<p>We need to put a "Create new person" button to the 'people list page' and write 
-some javascript code to open the modal when clicked to the button.</p>
+<p>We need to put a "Create new person" button to the <strong>PhoneBook/Index.cshtml</strong> in MVC project and write 
+javascript code to open the modal when clicked to the button.</p>
 <p>So, changing the <strong>Index.cshtml</strong> view header as shown below:</p>
 <pre lang="js">
 @using System.Threading.Tasks
@@ -810,6 +822,8 @@ some javascript code to open the modal when clicked to the button.</p>
     &lt;/div&gt;
 &lt;/div&gt;
 </pre>
+<p>Note: you should add localization for <strong>CreateNewPerson</strong></p>
+
 <p>We included modal's javascript (_CreatePersonModal.js) and a <strong>Index.js</strong> file which is defined as shown below:</p>
 <pre lang="js">
 (function () {
@@ -882,11 +896,11 @@ and enable <strong>validation</strong>.</p>
 </strong>(since server waits for JSON). Then we use PersonAppService's <strong>
 createPerson</strong> method to save the person. <strong>setBusy</strong> method 
 automatically disables save and cancel buttons. In the <strong>done</strong> 
-method, we simple <strong>reload</strong>ed the page to show new user in the 
-page (In a real application, we could add new person to the page dynamically 
+method, we <strong>reload</strong> the page to show new user in the 
+page (In a real application, we can add new person to the page dynamically 
 using jQuery)</p>
 <p>Notice that; We used PersonAppService's createPerson method directly from 
-javascript. This is possible by ABP's
+javascript. This is done by ABP's
 <a href="http://www.aspnetboilerplate.com/Pages/Documents/AspNet-Core#client-proxies">
 dynamic javascript proxy system</a>.</p>
 <h3>Authorization For Phone Book</h3>
@@ -895,7 +909,7 @@ defined. We will define two permission:</p>
 <ul>
 	<li>A permission to <strong>enter phone book page</strong>.</li>
 	<li>A permission to <strong>create new person</strong> (which is a child 
-	permission of first one, as naturally).</li>
+	permission of first one).</li>
 </ul>
 <h4>Permission for Entering Phone Book Page</h4>
 <h5>Define the permission</h5>
@@ -937,7 +951,7 @@ easy, open <strong>AppNavigationProvider</strong> and add requiredPermissionName
     <strong>requiredPermissionName: AppPermissions.Pages_Tenant_PhoneBook
 </strong>)</pre>
 <h5>Grant permission</h5>
-<p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
+<p>So, how can we enter the page now? Simple! Go to <strong>Role Management</strong> 
 page and edit <strong>admin</strong> role:</p>
 <p>
 <img class="img-thumbnail" alt="Role permissions" height="574" src="images/role-permissions-with-phonebook.png" width="617" /></p>
@@ -954,7 +968,7 @@ need to define additional permissions to perform some <strong>specific actions</
 on a page, like creating a new person. </p>
 <h5>Define the Permission</h5>
 <p>Defining a permission is similar:</p>
-<pre lang="cs">var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);
+<pre lang="cs"><strong>var phoneBook = </strong>pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L(&quot;PhoneBook&quot;), multiTenancySides: MultiTenancySides.Tenant);
 <strong>phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L(&quot;CreateNewPerson&quot;), multiTenancySides: MultiTenancySides.Tenant);</strong></pre>
 <p>First permission was defined before. In the second line, we are creating a 
 child permission of first one.</p>
@@ -991,7 +1005,7 @@ permission as shown below:</p>
 <p>As shown above, <strong>Create new person</strong> permission is a child 
 permission of the <strong>Phone book</strong>.</p>
 <h4>Authorization for MVC Controllers</h4>
-<p>We added Authorize attrbiutes to PersonAppService. This prevents unauthorized 
+<p>We added Authorize attributes to PersonAppService. This prevents unauthorized 
 calls to this service. But unauthorized clients <strong>still can call </strong>actions of 
 PhoneBookController actions. Since PhoneBookController uses PersonAppService, they will 
 get authorization exception and can not use the service. But we can also secure MVC Controllers. 
@@ -999,7 +1013,8 @@ This is suggested since some MVC actions may not use application services. Also,
 it's better to prevent unauthorized attemps at the very beginning.</p>
 <p>We use <strong>AbpMvcAuthorize</strong> attribute for MVC Controllers as 
 shown below:</p>
-<pre lang="cs"><strong>[AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
+<pre lang="cs">[Area("App")]
+<strong>[AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
 </strong>public class PhoneBookController : PhoneBookControllerBase
 {
     ...
@@ -1042,10 +1057,9 @@ here):</p>
         &lt;/a&gt;
     }
 &lt;/div&gt;</pre>
-<p>Surely, we defined 'delete person' permission as like before.</p>
 <h4>Style</h4>
-<p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to take button right. Created 
-a file named <strong>index.less</strong> and added following lines:</p>
+<p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to take button right. Create 
+a file named <strong>index.less</strong> into <strong>view-resources/Areas/App/Views/PhoneBook</strong> folder and add the following lines:</p>
 <pre lang="css">#AllPeopleList {
     .list-group-item-heading {
         button.delete-person {
@@ -1054,7 +1068,7 @@ a file named <strong>index.less</strong> and added following lines:</p>
     }
 }
 </pre>
-<p>And add the sytle to your Index.cshtml page (You can also add minified versions of styles for other environmets like production and staging):</p>
+<p>And add the style to your <strong>Index.cshtml</strong> page before <strong>Scripts</strong> section (You can also add minified versions of styles for other environments like production and staging)</p>
 <pre lang="xml">
 @section Styles
 {
@@ -1064,7 +1078,7 @@ a file named <strong>index.less</strong> and added following lines:</p>
 }
 </pre>
 <h4>Javascript</h4>
-<p>Now, adding code to delete person (to Index.js):</p>
+<p>Now, add the below code to delete person into <strong>Index.js</strong></p>
 <pre lang="js">var _personService = <strong>abp.services.app.person</strong>;
 
 $(&#39;#AllPeopleList button.delete-person&#39;).click(function (e) {
@@ -1093,7 +1107,7 @@ $(&#39;#AllPeopleList button.delete-person&#39;).click(function (e) {
 <p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
 <strong>PersonAppService</strong> and shows a 
 <strong>
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Javascript-API/Notification">notification</a></strong> if operation succeed.&nbsp;Also, 
+<a href="http://www.aspnetboilerplate.com/Pages/Documents/Javascript-API/Notification">notification</a></strong> if the operation succeeds.&nbsp;Also, 
 removes the person from the page using jQuery's <strong>remove</strong> 
 function.</p>
 <h4>Application Service</h4>
@@ -1106,9 +1120,9 @@ public async Task DeletePerson(EntityDto input)
 {
     await _personRepository.DeleteAsync(input.Id);
 }</pre>
-<p>We also <strong>authorized</strong> deleting a person as did before for creating a person.</p>
-<p>We also need to define <strong>Pages_Tenant_PhoneBook_DeletePerson</strong> 
-constant in AppPermissions and define related permission in <strong>
+<p>We also <strong>authorized</strong> deleting a person as we did before for creating a person.</p>
+<p>Add <strong>Pages_Tenant_PhoneBook_DeletePerson</strong> permission in <strong>
+AppPermissions </strong> like we did before. Grant this permission. And define related permission in <strong>
 AppAuthorizationProvider</strong>.</p>
 <h3>Filtering people</h3>
 <p>Now, we will implement <strong>search</strong> functionality of <strong>
@@ -1164,13 +1178,12 @@ the <strong>filter</strong> to the IndexViewModel:</p>
     return View(model);
 }</pre>
 <p>That's all, It works! (Notice that; PersonAppService.GetPeople method was 
-already using the input.Filter as we implemented it before).</p>
+already using the input. Filter was implemented before).</p>
 <h3>Extending the Application: Adding Phone Numbers</h3>
 <p>Until now, we did not even mention about phone numbers. It's time to extend 
 our domain to support <strong>multiple phone numbers</strong> for a person.</p>
 <h3>Creating Phone Entity</h3>
-<p>Let's start by creating a new Entity, <strong>Phone</strong> in <strong>.Core</strong> 
-project:</p>
+<p>Let's start by creating a new Entity; <strong>Phone</strong> in <strong>People</strong> folder of <strong>.Core</strong> project:</p>
 <pre lang="cs">[Table(&quot;PbPhones&quot;)]
 public class Phone : CreationAuditedEntity&lt;long&gt;
 {
@@ -1210,6 +1223,7 @@ public class Person : FullAuditedEntity
 <h3>Adding Database Migration</h3>
 <p>Our entity model has changed, so we need to add a new migration:</p>
 <p>
+<pre lang="cs">Add-Migration "Added_Phone"</pre>
 <img class="img-thumbnail" alt="Entity Framework Migration" src="images/phonebook-migrations-core-4.png" /></p>
 <p>This will create a new code based migration file to create <strong>PbPhones</strong> 
 table:</p>
@@ -1296,7 +1310,7 @@ InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):</p>
         }
     }
 }</pre>
-<p>We added two phone number to Douglas, one phone number to Isaac. But if we 
+<p>We added two phone numbers to Douglas, one phone number to Isaac. But if we 
 run "dotnet ef database update" now, phones are not inserted since this seed code checks if 
 people exists, and does not insert if it's already exists. What's solution? 
 Since we haven't deployed yet, we can delete database (or at lease truncate 
@@ -1346,7 +1360,7 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
     return new ListResultDto&lt;PersonListDto&gt;(persons.MapTo&lt;List&lt;PersonListDto&gt;&gt;());
 }</pre>
 <p>We only added <strong>Include</strong> extension method to the query. Rest of 
-the codes remains same. Furthermore, it would work without adding this, but much 
+the code remains the same. Furthermore, it would work without adding this, but much 
 slower (since it will lazy load phone numbers for every person seperately).</p>
 <h3>AddPhone and DeletePhone Methods</h3>
 <p>We are adding two more methods to IPersonAppService interface as shown below:</p>
@@ -1386,8 +1400,26 @@ public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
 
     return ObjectMapper.Map&lt;PhoneInPersonListDto&gt;(<span lang="tr">phone</span>);
 }</pre>
-<p>(Note: We injected <strong>IRepository&lt;Phone, long&gt;</strong> in the 
-constructor and set to _personRepository field)</p>
+<p>Note: We injected <strong>IRepository&lt;Phone, long&gt;</strong> in the 
+constructor and set to _personRepository field
+Now <strong>PersonAppService</strong> code should look like below 
+<pre lang="cs">
+    //...
+    [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
+    public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
+    {
+        private readonly IRepository<Person> _personRepository;
+        private readonly IRepository<Phone, long> _phoneRepository;
+       
+        public PersonAppService(IRepository<Person> personRepository, IRepository<Phone, long> phoneRepository)
+        {
+            _personRepository = personRepository;
+            _phoneRepository = phoneRepository;
+        }
+         
+     //...       
+</pre></p>
+
 <p><strong>DeletePhone</strong> method is simple. It only deletes phone with 
 given id.</p>
 <p><strong>AddPhone</strong> method <strong>gets </strong>the person from 
@@ -1405,7 +1437,7 @@ UOW document</a> for more.)</p>
 with a <strong>phone repository</strong> to insert new phone. They all have 
 different pros and cons. It's your choice.</p>
 <h3>Edit Mode For People List</h3>
-<p>Final UI is shown below:</p>
+<p>Final view is shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Phone book edit mode" height="642" src="images/phone-book-edit-mode.png" width="762" /></p>
 <p>When we click the <strong>green edit icon</strong> for a person, it's row is 
@@ -1491,7 +1523,7 @@ view when we create a new phone. The
     &lt;td&gt;@Model.Phone.Number&lt;/td&gt;
 &lt;/tr&gt;
 </pre>
-<p>And the <strong>PhoneRowInPersonListViewModel</strong> is here:</p>
+<p>And create the <strong>PhoneRowInPersonListViewModel</strong> as shown below:</p>
 <pre lang="cs">public class PhoneRowInPersonListViewModel
 {
     public PhoneInPersonListDto Phone { get; set; }
@@ -1508,6 +1540,7 @@ view when we create a new phone. The
 }</pre>
 <h4>Styles</h4>
 <p>Changed <strong>Index.less</strong> a bit to adapt to the changed view:</p>
+<p>Note: As we updated index.css, ensure that css file is updated via Web Compiler</p>
 <pre>#AllPeopleList {
     .list-group-item-heading {
 <strong>        span.person-buttons {
