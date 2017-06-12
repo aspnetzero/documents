@@ -101,7 +101,7 @@ redirected when we click the menu item.</p>
 <p>Lastly, <strong>icon</strong> is the shown menu icon for new menu item. It 
 can be a <strong>css</strong> class. We can use Glyphicon, Font-Awesome or 
 another css font library here.</p>
-<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Navigation">
+<p>See <a href="https://aspnetboilerplate.com/Pages/Documents/Navigation">
 navigation document</a> for more information on menu definitions.</p>
 <h3>Creating the Page</h3>
 <p>After creating the menu item, we can create an empty page.</p>
@@ -180,8 +180,8 @@ type is <strong>int </strong>(as default). It inherits <strong>FullAuditedEntity
 contains <strong>creation</strong>, <strong>modification </strong>and <strong>
 deletion </strong>audit properties. It's also <strong>soft-delete</strong>. When 
 we delete a person, it's not deleted by database but marked as deleted (see
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Entities">entity</a> 
-and <a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
+<a href="https://aspnetboilerplate.com/Pages/Documents/Entities">entity</a> 
+and <a href="https://aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
 filters</a> documentations for more information). We created consts for <strong>
 MaxLength</strong> properties. This is a good practice since we will use same 
 values later.</p>
@@ -350,9 +350,9 @@ public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 <strong>AutoMapper</strong> to create mapping from 
 <strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> used to inherit audit properties 
 automatically. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Application-Services">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Application-Services">
 application service</a> and
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
 DTO</a> documentations for more information.</p>
 <p>After defining interface, we can implement it as shown below:</p>
 <pre lang="cs">public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
@@ -393,14 +393,14 @@ converts list of Person entities to list of PersonListDto entities using <strong
 <h4>Connection &amp; Transaction Management</h4>
 <p>We don't manually open database connection or start/commit transactions 
 manually. It's automatically done with ABP framework's Unit Of Work system. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Unit-Of-Work">UOW 
+<a href="https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work">UOW 
 documentation</a> for more.</p>
 <h4>Exception Handling</h4>
 <p>We don't handle exceptions manually (using a try-catch block). Because ABP 
 framework automatically handles all exceptions on the web layer and returns 
 appropriate error messages to the client. It then handles errors on the client 
 and shows needed error information to the user. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Handling-Exceptions">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Handling-Exceptions">
 exception handling document</a> for more.</p>
 
 <h3>Creating Unit Tests For PersonAppService</h3>
@@ -491,7 +491,7 @@ method. We can see the request if we open <strong>Network</strong> tab:</p>
 not an MVC Controller or Web API Controller, just a plain C# class) from 
 javascript like calling a javascript method? This is provided by ASP.NET 
 Boilerplate. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
 dynamic web api layer</a> documentation for more information. You can always 
 call application services from console to debug or see returned JSON structure.</p>
 <p>We can also check Audit Logs to see the request. Open <strong>AbpAuditLogs</strong> 
@@ -622,7 +622,7 @@ public class CreatePersonInput
 <p><strong>CreatePersonInput</strong> is mapped to <strong>Person</strong> 
 entity (we will use mapping below). All properties are decorated by <strong>data 
 annotation attributes</strong> to provide automatic <strong>
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">validation</a></strong>. 
+<a href="https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">validation</a></strong>. 
 Notice that we use same consts defined in Person entity for <strong>MaxLength</strong> 
 properties.</p>
 <p>Here, the implementation of CreatePerson method:</p>
@@ -686,7 +686,7 @@ of it's <strong>required</strong>. So, it throws <strong>AbpValidationException<
 automatically. Also, we can not send null to CreatePerson method since 
 validation system also checks it. This test calls CreatePerson with 
 invalid arguments and asserts that it thows AbpValidationException. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">
 validation document</a> for more information.</p>
 <h4>Creating a Modal</h4>
 <p>We will create a 
@@ -855,7 +855,7 @@ page (In a real application, we could add new person to the page dynamically
 using jQuery)</p>
 <p>Notice that; We used PersonAppService's createPerson method directly from 
 javascript. This is possible by ABP's
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Dynamic-Web-API">
 Dynamic Web API layer</a>.</p>
 <h3>Authorization For Phone Book</h3>
 <p>At this point, anyone can enter phone book page since no authorization 
@@ -980,7 +980,7 @@ shown below:</p>
     
     ...
 }</pre>
-<p>See <a href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization">
+<p>See <a href="https://aspnetboilerplate.com/Pages/Documents/Authorization">
 authorization documentation</a> for more information on authorization.</p>
 <h3>Deleting a Person</h3>
 <p>Let's add a delete button in people list as shown below:</p>
@@ -1058,7 +1058,7 @@ $(&#39;#AllPeopleList button.delete-person&#39;).click(function (e) {
 <p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
 <strong>PersonAppService</strong> and shows a 
 <strong>
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Javascript-API/Notification">notification</a></strong> if operation succeed.&nbsp;Also, 
+<a href="https://aspnetboilerplate.com/Pages/Documents/Javascript-API/Notification">notification</a></strong> if operation succeed.&nbsp;Also, 
 removes the person from the page using jQuery's <strong>remove</strong> 
 function.</p>
 <h4>Application Service</h4>
@@ -1348,7 +1348,7 @@ mapping in the last line. (Notice that; normally it's not needed to call
 CurrentUnitOfWork.SaveChangesAsync. It's automatically called at the end of the 
 method. We called it in the method since we need to save entity and get it's Id 
 immediately. See
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Unit-Of-Work#DocAutoSaveChanges">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work#DocAutoSaveChanges">
 UOW document</a> for more.)</p>
 <p>There may be different approaches for AddPhone method. You can directly work 
 with a <strong>phone repository</strong> to insert new phone. They all have 
@@ -1572,7 +1572,7 @@ to convert it to a multi-tenant application easily.</p>
 other tenants. For this example project, every tenant should have own phone book 
 with isolated people and phone numbers.</p>
 <p>When we implement IMustHaveTenant interface, ABP automatically
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Filters">filters 
+<a href="https://aspnetboilerplate.com/Pages/Documents/Data-Filters">filters 
 data</a> based on current Tenant, while retrieving entities from database. So, we should declare that Person entity 
 must have a tenant using <strong>IMustHaveTenant</strong> interface:</p>
 <pre lang="cs">public class Person : FullAuditedEntity, <strong>IMustHaveTenant</strong>

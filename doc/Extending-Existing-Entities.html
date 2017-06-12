@@ -60,7 +60,7 @@ new <strong>Address</strong> field:</p>
 <p>Authorization\Users\<strong>UserAppService.cs</strong> (in .Application 
 project) is used to get list of users by clients. It returns a list of <strong>
 UserListDto</strong> (we always use
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects" target="_blank">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects" target="_blank">
 DTOs</a> for client communication). So, we should add the Address property to 
 UserListDto too:</p>
 <pre lang="cs">[AutoMapFrom(typeof(User))]
@@ -225,7 +225,7 @@ Show Price On The UI</h4>
 <p>Editions\<strong>EditionAppService.cs</strong> (in .Application 
 project) is used to get list of editions by clients. It returns a list of
 <strong>EditionListDto</strong> (we always use
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects" target="_blank">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects" target="_blank">
 DTOs</a> for client communication). So, we should add the Price property to 
 EditionListDto too:</p>
 <pre lang="cs">[AutoMapFrom(<strong>typeof(MyEdition)</strong>)]
@@ -311,7 +311,7 @@ protected virtual async Task UpdateEditionAsync(CreateOrUpdateEditionDto input)
 <p>Notice the highlighted areas. First, we should create <strong>MyEdition</strong>, 
 instead of <strong>Edition</strong> and set also <strong>Price</strong> 
 property. In the update part, we used
-<a href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management" target="_blank">
+<a href="https://aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management" target="_blank">
 edition manager</a> to get the edition. Edition manager normally works for the
 <strong>Edition</strong> entity. So, we should <strong>cast </strong>it to
 <strong>MyEdition</strong> in order to reach to the <strong>Price</strong> 
