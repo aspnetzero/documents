@@ -47,6 +47,7 @@ the user interface. This will help you to have a better understanding of concept
 <h4>Solution Structure (Layers)</h4>
 <p>After you create and <a href="/Download">download</a> your project, you have a solution structure 
 as shown below:</p>
+<p>TODO: Screenshot update.</p>
 <p>
 <img class="img-thumbnail" alt="ASP.NET Core solution" src="images/solution-overall-core-4.png" /></p>
 <p>There are 8 projects in the solution:</p>
@@ -72,13 +73,19 @@ as shown below:</p>
 	can consume your application as API.</li>
 	<li><strong>Web.Common</strong> project contains common classes used by Mvc 
 	and Host projects.</li>
+	<li><strong>Web.Public</strong> project is a seperated web application that 
+	can be used to create a public web site or a landing page for your 
+	application.</li>
 	<li><strong>Migrator</strong> project is a console application that runs 
 	database migrations.</li>
+	<li><strong>ConsoleApiClient</strong> project is a simple console 
+	application for performing API requests to the application authenticated via 
+	IdentityServer4.</li>
 	<li><strong>Tests </strong>project contains unit and integration tests.</li>
 </ul>
 
 <h4>Applications</h4>
-<p>ASP.NET Zero solution contains <b>t</b><span class="auto-style3">hree</span> applications:</p>
+<p>ASP.NET Zero solution contains <strong>three</strong> applications:</p>
 <ul>
 	<li><strong>Front End Application</strong>: This can be used to 
 	create a public web site or a landing page for your application.</li>
@@ -134,41 +141,6 @@ using Angular UI, you can ignore it. Finally, "<strong>CorsOrigins</strong>"
 setting is used to allow some domains for cross origin requests. This is also 
 useful when you are hosting your Angular UI in a seperated server/domain.</p>
 
-<h3>Front End Application</h3>
-<p>ASP.NET Zero contains front-end pages that can be a starting point for your 
-public web site or a landing page for the application. When you first run the 
-project, you will see the Home Page as shown below:</p>
-<p>
-<img class="img-thumbnail" alt="Frontend home page" height="496" src="images/frontend-homepage.jpg" width="500" /></p>
-<p>There are two pages here: <strong>Home Page</strong> and <strong>About</strong>. 
-Contents of these pages are just placeholders and for demo purposes. You can 
-completely remove content and build your page upon your needs. Also, you should 
-change the <strong>logo</strong> with your Company's logo.</p>
-<p>See
-<a href="http://keenthemes.com/multi-purpose-corporate-frontend-themefreebie-corporate-frontend-theme/" target="_blank">metronic front-end theme 
-</a>for all possibilities and components to build a 
-richer web site.</p>
-<p>Menus 
-are defined in <strong>FrontEndNavigationProvider</strong> class. When you add a new 
-menu item here, it will be automatically shown in the menu. There is a <strong>Login</strong> 
-link at the top right corner. This link takes us to the <strong>Login page
-</strong>to enter to the <strong>backend</strong> application.</p>
-<h4>Layout</h4>
-<p>Layout of front-end pages are located under <strong>Views/Layout</strong> folder of the 
-<strong>.Web</strong> project:</p>
-<p>
-<img class="img-thumbnail" alt="Frontend layout views" height="253" src="images/frontend-layout-views-core.png" width="193" /></p>
-<p><strong>_Layout</strong> is the main layout file that includes scripts and 
-styles. Language flags and the menu is rendered in <strong>Header component</strong> 
-which is located under Shared/Components. _PreFooter is not used but you can add it to the _Layout if you want.</p>
-<h4>Tenant Sign Up</h4>
-<p>When you click the "New tenant" link in the front end application, you can 
-sign up to become a new tenant:</p>
-<p>
-<img class="img-thumbnail" alt="Tenant Signup" height="545" src="images/tenant-signup.png" width="418" /></p>
-<p>Here, you can create a new tenant. <strong>TenantRegistration</strong>Controller 
-is used to register a new tenant. Tenant registration can be enabled/disabled 
-and some settings can be changed in the settings page of the backend application.</p>
 <h3>Account Controller</h3>
 <p><strong>AccountController</strong> provides <strong>login</strong>, <strong>register</strong>,
 <strong>forgot password </strong>and <strong>email activation</strong> pages.</p>
@@ -176,7 +148,7 @@ and some settings can be changed in the settings page of the backend application
 <p>Account management pages have a seperated <strong>_Layout</strong> view under 
 <strong>Views/Account</strong> folder:</p>
 <p>
-<img class="img-thumbnail" alt="Account views" height="218" src="images/account-views-core.png" width="198" /></p>
+<img class="img-thumbnail" alt="Account Views" height="214" src="images/account-views-core-v2.png" width="216" /></p>
 <p>
 Related <strong>Script </strong>and <strong>Style </strong>resources located under
 <strong>view-resources/Views/Account</strong> folder:</p>
@@ -352,18 +324,20 @@ application's editions:</p>
 <p>
 <img class="img-thumbnail" alt="Editions page" src="images/editions-page-core-2.png" /></p>
 <p>Editions are used to group feature values and assign to tenants. When we 
-click Actions/Edit for an edition, we can see it's assigned features:</p>
+click Actions/Edit for an edition, we can see it&#39;s poperties:</p>
+<p>
+<img class="img-thumbnail" alt="Edit Edition" height="882" src="images/edition-edit.png" width="595" /></p>
+<p>
+An edition can be free or paid. If it&#39;s a paid edition then you should enter 
+monthly and annual prices. You can allow tenants to use trial version of this 
+edition for a specified days. Then you can determine an expire strategy: How 
+many days to allow a tenant to use the application after subscription expires. 
+And finally, you can deactivate tenant or assign to a free edition if they don&#39;t 
+extend their subscription.</p>
+<p>Features tab is used to determing features available for the edition:</p>
 <p>
 <img class="img-thumbnail" alt="Edit edition features" height="343" src="images/edition-feature-editing-core.png" width="615" /></p>
-<p>Startup project only contains Chat feature (and it's 2 sub-features) that can 
-be enabled/disabled per edition/tenant. All features are defined in <strong>
-AppFeatureProvider</strong> class. Feature values are stored in <strong>
-AbpFeatures</strong> table. Features are not restricted to boolean 
-(enabled/disabled) values and can contain different type of values as shown 
-below:&nbsp;</p>
-<p>
-<img class="img-thumbnail" alt="Edition feature editing" height="317" src="images/edition-feature-editing.png" width="613" /></p>
-<p>&nbsp;See
+<p>See
 <a href="https://aspnetboilerplate.com/Pages/Documents/Feature-Management">
 feature management</a> and
 <a href="https://aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management">
@@ -389,7 +363,7 @@ If it's passive, no user of this tenant can login to the application.</p>
 <p>When we 
 click the "<strong>Create New Tenant</strong>" button, a dialog is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Creating tenant" height="667" src="images/create-tenant-4.png" width="615" /></p>
+<img class="img-thumbnail" alt="Tenant Creation Modal" height="771" src="images/tenant-create-modal.png" width="596" /></p>
 <p><strong>Tenancy name</strong> should be unique and not contain spaces or 
 other special chars since it may be used as subdomain name (like 
 tenancyname.mydomain.com. See the section below). <strong>Name</strong> can be anything. <strong>Admin email</strong> 
@@ -405,6 +379,9 @@ can specify a connection string to create/use a <strong>dedicated database
 That means you can use host database for some tenants and create dedicated 
 databases for some other tenants. Even you can <strong>group </strong>some 
 tenants in a separated database.</p>
+<p>Once you assign an edition to the tenant, you can select an expiration date 
+(see edition management section to know what happens after subscription 
+expiration).</p>
 <p>All tenant actions are handled by <strong>TenantAppService</strong> 
 class. Example (deleting a tenant):</p>
 <pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenants_Delete)]
@@ -414,7 +391,7 @@ public async Task DeleteTenant(EntityRequestInput input)
     CheckErrors(await TenantManager.DeleteAsync(tenant));
 }</pre>
 <p>TenantAppService mostly uses <strong>TenantManager</strong> domain service 
-for tenant operations..</p>
+for tenant operations.</p>
 <h5>Tenant Edition and Features</h5>
 <p>An <strong>edition</strong> can be <strong>assigned</strong> to a tenant 
 (while creating or editing). Tenant will inherit all features of the assigned 
@@ -435,6 +412,13 @@ information.</p>
 <strong>tenant1</strong>.mydomain.com, <strong>tenant2</strong>.mydomain.com and 
 so on. ASP.NET Zero automatically identify and get tenant name from subdomain 
 (See host settings section).</p>
+<h4>Host Dashboard</h4>
+<p>Host dashboard is used to show some statistics about tenants, editions and 
+income:</p>
+<p>
+<img class="img-thumbnail" alt="Host dashboard" height="495" src="images/host-dashboard%20-%20Copy.jpg" width="600" /></p>
+<p>This is a fully implemented dashboard except two sample statistics (sample 
+statistics 1 &amp; 2) those are placeholders for your own statistics.</p>
 <h4>Organization Units</h4>
 <p>Organization units (OU) are used to hierarchically group user and entities. 
 Then you can get user or entities based on their OUs. When we click 
@@ -662,10 +646,8 @@ logs: </p>
 dashboard. It's just for demo purposes, you can make it as a start point for 
 your actual dashboard:</p>
 <p>
-<img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard2.png" width="800" /></p>
-<p>Here, only <strong>Member Activity</strong> graph data is retrieved from server (from 
-<strong>TenantDashboardAppService</strong>). You can click the refresh button to generate random 
-graphs.</p>
+<img class="img-thumbnail" alt="Tenant Dashboard" height="965" src="images/dashboardV2.png" width="1235" /></p>
+<p>Client gets all data from server, server generates random data.</p>
 <h4>Notifications</h4>
 <p>Notification icon is located next to the language selection button. The number in the red circle shows unread notification count.</p>
 <p><img alt="notifications" src="images/notifications-icon.png" width="189" class="img-thumbnail"/></p>
@@ -807,6 +789,43 @@ multiple tenants).</p>
 <p>You can use this tool on development or on product environment to migrate 
 databases on deployment, instead of EntityFramework's own Migrate.exe (which 
 requires some configuration and can only work for single database in one run).</p>
+
+<h3>Front End Application</h3>
+<p>ASP.NET Zero contains a seperated application that can be a starting point 
+for your public web site or a landing page for your application. Set <strong>
+Web.Public</strong> as <strong>Startup Project</strong> and run the application:</p>
+<p>
+<img class="img-thumbnail" alt="Frontend home page" height="496" src="images/frontend-homepage.jpg" width="500" /></p>
+<p>There are two pages here: <strong>Home Page</strong> and <strong>About</strong>. 
+Contents of these pages are just placeholders and for demo purposes. You can 
+completely remove content and build your page upon your needs. Also, you should 
+change the <strong>logo</strong> with your Company's logo.</p>
+<p>See
+<a href="http://keenthemes.com/free-bootstrap-templates/multi-purpose-corporate-frontend-themefreebie-corporate-frontend-theme/" target="_blank">metronic front-end theme 
+</a>for all possibilities and components to build a 
+richer web site.</p>
+<p>Menus 
+are defined in <strong>FrontEndNavigationProvider</strong> class. When you add a new 
+menu item here, it will be automatically shown in the menu. There is a <strong>Login</strong> 
+link at the top right corner. This link takes us to the <strong>Login page
+</strong>to enter to the <strong>backend</strong> application.</p>
+<h4>Layout</h4>
+<p>Layout of front-end pages are located under <strong>Views/Layout</strong> 
+folder:</p>
+<p>
+<img class="img-thumbnail" alt="Frontend layout views" height="253" src="images/frontend-layout-views-core.png" width="193" /></p>
+<p><strong>_Layout</strong> is the main layout file that includes scripts and 
+styles. Language flags and the menu is rendered in <strong>Header component</strong> 
+which is located under Shared/Components. _PreFooter is not used but you can add it to the _Layout if you want.</p>
+<p>TODO: Mention about single sign on and account controller.</p>
+<h4>Tenant Sign Up</h4>
+<p>When you click the "New tenant" link in the front end application, you can 
+sign up to become a new tenant:</p>
+<p>
+<img class="img-thumbnail" alt="Tenant Signup" height="545" src="images/tenant-signup.png" width="418" /></p>
+<p>Here, you can create a new tenant. <strong>TenantRegistration</strong>Controller 
+is used to register a new tenant. Tenant registration can be enabled/disabled 
+and some settings can be changed in the settings page of the backend application.</p>
 <h3>Infrastructure</h3>
 <h4>Startup Class</h4>
 <p>ASP.NET Core is initialized from the <strong>Startup</strong> class in the 
@@ -1143,21 +1162,69 @@ app.UseSwaggerUi();</pre>
 <img alt="Swagger UI" height="753" src="images/swagger-ui-core.png" width="974" /></p>
 <p>
 Thus, anyone (or any application) can explore, test and use the API easily.</p>
+<h3>Identity Server 4 Integration</h3>
+<p><a href="http://identityserver.io/" target="_blank">IdentityServer4</a> is an 
+OpenID Connect and OAuth 2.0 framework for ASP.NET Core. ASP.NET Zero is 
+integrated to IdentityServer4. It&#39;s <strong>enabled by default</strong>.</p>
+<h4>Configuration</h4>
+<p>You can disable or configure it from <strong>appsettings.json</strong> file</p>
+<pre lang="js">"IdentityServer": {
+  "IsEnabled": "true",
+  "Clients": [
+    {
+      "ClientId": "client",
+      "AllowedGrantTypes": [ "password" ],
+      "ClientSecrets": [
+        {
+          "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
+        }
+      ],
+      "AllowedScopes": [ "default-api" ]
+    },
+    {
+      "ClientId": "demo",
+      "ClientName": "MVC Client Demo",
+      "AllowedGrantTypes": [ "hybrid", "client_credentials" ],
+      "RequireConsent": "true",
+      "ClientSecrets": [
+        {
+          "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
+        }
+      ],
+      "RedirectUris": [ "http://openidclientdemo.com:8001/signin-oidc" ],
+      "PostLogoutRedirectUris": [ "http://openidclientdemo.com:8001/signout-callback-oidc" ],
+      "AllowedScopes": [ "openid", "profile", "email", "phone", "default-api" ],
+      "AllowOfflineAccess": "true"
+    }
+  ]
+}</pre>
+<h4>Testing with Client</h4>
+<p>ASP.NET Zero solution has a sample console application (ConsoleApiClient) 
+that can connects to the application, authenticates through IdentityServer4 and 
+calls an API.</p>
+<h4>OpenId Connect Integration</h4>
+<p>Once IdentityServer4 integration is enabled Web.Mvc application becomes an 
+OpenId Connect server. That means another web application can use standard 
+OpenId Connect protocol to authenticate users with your application and get 
+permission to share their information (a.k.a. consent screen).</p>
+<h4>More</h4>
+<p>See <a href="https://identityserver4.readthedocs.io/en/release/" target="_blank">
+IdentityServer4&#39;s own documentation> to understand and configure 
+IdentityServer4.</p>
 <h3>Unit Testing</h3>
 <p>ASP.NET Zero startup project contains <strong>unit</strong> and <strong>integration</strong> tests. Tests are developed using following tools:</p>
 <ul>
-	<li><a href="http://xunit.github.io/" target="_blank">xUnit</a> as testing 
+	<li><a href="http://xunit.github.io/" target="_blank">xUnit</a> as  as testing 
 	framework.</li>
-	<li><a href="https://github.com/shouldly/shouldly" target="_blank">Shouldly</a> 
-	as assertion library.</li>
 	<li>
-	<a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/testing/in-memory" target="_blank">
-	<span class="text-primary">Microsoft.EntityFrameworkCore.InMemory </span>
-	</a>for mocking entity framework and database.</li>
+	<a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/testing/sqlite" target="_blank">
+	SQLite In-Memory</a> database for mocking entity framework and database.</li>
 	<li><a href="http://www.nuget.org/packages/Abp.TestBase">Abp.TestBase</a> to 
 	simplify integration testing for ABP based applications.</li>
+	<li><a href="https://github.com/shouldly/shouldly" target="_blank">Shouldly</a> 
+	as assertion library.</li>
 </ul>
-<p>Tests cover <strong>Domain </strong>(core) and <strong>Application</strong> 
+<p>Tests cover ong>Domain </strong>(core) and <strong>Application</strong> 
 layers of the project. Open Test Explorer (Test\Windows\Test Explorer in VS main 
 menu) to run unit tests:</p>
 <div class="bs-callout bs-callout-warning">
@@ -1222,13 +1289,14 @@ project. Here, a list of all libraries.</p>
 		<a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity" target="_blank">ASP.NET Identity 
 		Core (and social login extensions)</a></li>
 		<li>
-		<a href="http://www.asp.net/signalr" target="_blank">SignalR</a></li>
+		<a href="http://www.asp.net/signalr" target="_blank">SignSignalR</a></li>
 		<li>
 		<a href="https://docs.microsoft.com/en-us/ef/core/index" target="_blank">
 		EntityFramework Core</a></li>
 		<li><a target="_blank" href="http://www.castleproject.org/projects/windsor/">Castle Windsor</a></li>
 		<li><a target="_blank" href="http://automapper.org/">AutoMapper</a></li>
-		<li><a href="http://hangfire.io/" target="_blank">HangFire</a></li>
+		<li><a href="http://identityserver.io/" target="_blank">IdentityServer4</a></li>
+		<li><a href="http://hangfire.io/" target="_blank">HangFire</li>
 		<li><a target="_blank" href="https://logging.apache.org/log4net/">Log4Net</a></li>
 		<li><a href="https://github.com/PaulMiami/reCAPTCHA" target="_blank">PaulMiami reCAPTCHA</a></li>
 		<li><a href="https://xunit.github.io/" target="_blank">xUnit</a></li>
