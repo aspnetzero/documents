@@ -582,6 +582,12 @@ icon, we can see all details an audit log:</p>
 <img class="img-thumbnail" alt="Audit Log" height="827" src="images/audit-logs-detail.png" width="620" /></p>
 <p>
 Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
+<h4>
+Subscription</h4>
+<p>
+Tenants can manage (show, extend or upgrade) their edition/plan subscriptions using this page:</p>
+<p>
+<img class="img-thumbnail" alt="Subscription" height="300" src="images/subscription.png" width="413" /></p>
 <h4>Host Settings</h4>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
@@ -1052,9 +1058,11 @@ TenantEditDto (and vice verse) object as shown below:</p>
 <pre lang="cs">[AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
 public async Task&lt;TenantEditDto&gt; GetTenantForEdit(EntityRequestInput input)
 {
-    return (await TenantManager.GetByIdAsync(input.Id)).<strong>MapTo</strong>&lt;TenantEditDto&gt;();
+    return <strong>ObjectMapper.Map</strong>&lt;TenantEditDto&gt;(await TenantManager.GetByIdAsync(input.Id));
 }</pre>
-<p><strong>MapTo</strong> extension method performs the mapping.</p>
+<p><span class="auto-style3">ObjectMapper</span> (this property comes from base 
+class, but can be injected as IObjectMapper when you need somewhere else) is 
+used to perform mappings.</p>
 <h5>Custom Object Mappings</h5>
 <p>Attribute based mapping may not be sufficient in some cases. If you need to 
 directly use Automapper API to configure your mappings, you should do it in
@@ -1375,9 +1383,9 @@ documentation</a>.</p>
 <h4>Publishing to Docker Containers</h4>
 <p>ASP.NET Zero solution has a <strong>build folder</strong> which contains a 
 Powershell script to <strong>build &amp; publish</strong> your solution to the
-<strong>output</strong> folder. It also contains <strong>Docker</strong> files 
-to run your application inside Docker containers. These files are very simple, 
-you can improve them based on your needs.</p>
+<strong>output</strong> folder. It also contains <strong>Docker</strong> files to run 
+your application inside Docker containers. These files are very simple, you can 
+improve them based on your needs.</p>
 
 <h3>Used Library &amp; Frameworks</h3>
 <p>Many open source frameworks and libraries are used to build ASP.NET Zero 
