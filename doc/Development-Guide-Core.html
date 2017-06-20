@@ -50,7 +50,7 @@ as shown below:</p>
 <p>TODO: Screenshot update.</p>
 <p>
 <img class="img-thumbnail" alt="ASP.NET Core solution" src="images/solution-overall-core-4.png" /></p>
-<p>There are 8 projects in the solution:</p>
+<p>There are 10 projects in the solution:</p>
 <ul>
 	<li><strong>Core</strong> project contains domain layer classes (like
 	<a href="https://aspnetboilerplate.com/Pages/Documents/Entities">entities</a> 
@@ -85,12 +85,14 @@ as shown below:</p>
 </ul>
 
 <h4>Applications</h4>
-<p>ASP.NET Zero solution contains <strong>three</strong> applications:</p>
+<p>ASP.NET Zero solution contains <strong>four</strong> applications:</p>
 <ul>
-	<li><strong>Front End Application</strong>: This can be used to 
-	create a public web site or a landing page for your application.</li>
-	<li><strong>Back End Application</strong>: This is the application which is 
+	<li><strong>Back End Application</strong> (Web.Mvc): This is the main application which is 
 	entered by username and password.</li>
+	<li><strong>Back End API</strong> (Web.Host): An application to only serve 
+	the main application as API and does not provide UI.</li>
+	<li><span class="auto-style3">Public Web Site</span> (Web.Public): This can be used to 
+	create a public web site or a landing page for your application.</li>
 	<li><strong>Migrator</strong>: Console application that runs database 
 	migrations.</li>
 </ul>
@@ -790,7 +792,7 @@ multiple tenants).</p>
 databases on deployment, instead of EntityFramework's own Migrate.exe (which 
 requires some configuration and can only work for single database in one run).</p>
 
-<h3>Front End Application</h3>
+<h3>Public Web Site</h3>
 <p>ASP.NET Zero contains a seperated application that can be a starting point 
 for your public web site or a landing page for your application. Set <strong>
 Web.Public</strong> as <strong>Startup Project</strong> and run the application:</p>
@@ -808,7 +810,7 @@ richer web site.</p>
 are defined in <strong>FrontEndNavigationProvider</strong> class. When you add a new 
 menu item here, it will be automatically shown in the menu. There is a <strong>Login</strong> 
 link at the top right corner. This link takes us to the <strong>Login page
-</strong>to enter to the <strong>backend</strong> application.</p>
+</strong>to enter to the <strong>backend</strong> application.&nbsp;</p>
 <h4>Layout</h4>
 <p>Layout of front-end pages are located under <strong>Views/Layout</strong> 
 folder:</p>
@@ -817,15 +819,39 @@ folder:</p>
 <p><strong>_Layout</strong> is the main layout file that includes scripts and 
 styles. Language flags and the menu is rendered in <strong>Header component</strong> 
 which is located under Shared/Components. _PreFooter is not used but you can add it to the _Layout if you want.</p>
-<p>TODO: Mention about single sign on and account controller.</p>
-<h4>Tenant Sign Up</h4>
-<p>When you click the "New tenant" link in the front end application, you can 
-sign up to become a new tenant:</p>
+<h4>New Tenant Registration</h4>
+<p>When you click &quot;<strong>New Tenant</strong>&quot; link (at the top right 
+area) you are 
+redirected to the edition/plan selection page:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant Signup" height="545" src="images/tenant-signup.png" width="418" /></p>
-<p>Here, you can create a new tenant. <strong>TenantRegistration</strong>Controller 
-is used to register a new tenant. Tenant registration can be enabled/disabled 
-and some settings can be changed in the settings page of the backend application.</p>
+<img class="img-thumbnail" alt="New Tenant Register Edition Selection" height="584" src="images/new-tenant-select-edition.png" width="991" /></p>
+<p>Actually, this UI is located in the main application. When you pick an 
+edition, you are redirected to the payment or register form depending on the 
+button you clicked. Register form is shown as below:</p>
+<p>
+<img class="img-thumbnail" alt="Tenant register form" height="514" src="images/tenant-signup-v2.png" width="392" /></p>
+<h4>Single Sign On</h4>
+<p>Public web site has a login integration to the main application. When you 
+click to login button (at the top right area) you are redirected to the main 
+application. If you are already logged then you automatically login in the 
+public web site too. If not, you can enter your username and password to login. 
+Then you are redirected back to the public web site and your username is shown 
+at the top right:</p>
+<p>
+<img class="img-thumbnail" alt="public web site login username" height="140" src="images/public-web-site-login-username.png" width="256" /></p>
+<p>
+To make this working, public web site and main application must know their URLs. 
+There are two configuration for that:</p>
+<ol>
+	<li>&nbsp;In the <strong>appsettings.json</strong> of the <strong>Web.</strong><span class="auto-style3">Public</span> 
+	project, set &quot;<strong>AdminWebSiteRootAddress</strong>&quot; to root URL of the 
+	main application.</li>
+	<li>In the <strong>appsettings.json</strong> of the <strong>Web.</strong><span class="auto-style3">Mvc</span> 
+	project, set &quot;<strong>RedirectAllowedExternalWebSites</strong>&quot; to root URL 
+	of the public web site.</li>
+</ol>
+<p>Both configuration is properly set for the development environment. You 
+should change them when you publish your project.</p>
 <h3>Infrastructure</h3>
 <h4>Startup Class</h4>
 <p>ASP.NET Core is initialized from the <strong>Startup</strong> class in the 
@@ -1129,7 +1155,7 @@ user of <strong>default</strong> tenant since we will use it in this sample.</p>
 of the default tenant. This is not required for single tenant applications or if 
 you want to work with host users):</p>
 <p>
-<img alt="Postman auth headers" height="112" src="images/postman-ng2-auth-headers.png" width="523" /></p>
+<img class="img-thumbnail" alt="Postman auth headers" height="112" src="images/postman-ng2-auth-headers.png" width="523" /></p>
 <p>Then we can send username and password as a <strong>POST</strong> request to 
 http://localhost:62114<strong>/api/TokenAuth/Authenticate</strong></p>
 <p>
@@ -1167,7 +1193,7 @@ Thus, anyone (or any application) can explore, test and use the API easily.</p>
 OpenID Connect and OAuth 2.0 framework for ASP.NET Core. ASP.NET Zero is 
 integrated to IdentityServer4. It&#39;s <strong>enabled by default</strong>.</p>
 <h4>Configuration</h4>
-<p>You can disable or configure it from <strong>appsettings.json</strong> file</p>
+<p>You can enable/disable or configure it from <strong>appsettings.json</strong> file</p>
 <pre lang="js">"IdentityServer": {
   "IsEnabled": "true",
   "Clients": [
@@ -1209,7 +1235,7 @@ OpenId Connect protocol to authenticate users with your application and get
 permission to share their information (a.k.a. consent screen).</p>
 <h4>More</h4>
 <p>See <a href="https://identityserver4.readthedocs.io/en/release/" target="_blank">
-IdentityServer4&#39;s own documentation> to understand and configure 
+IdentityServer4&#39;s own documentation</a> to understand and configure 
 IdentityServer4.</p>
 <h3>Unit Testing</h3>
 <p>ASP.NET Zero startup project contains <strong>unit</strong> and <strong>integration</strong> tests. Tests are developed using following tools:</p>
@@ -1224,7 +1250,7 @@ IdentityServer4.</p>
 	<li><a href="https://github.com/shouldly/shouldly" target="_blank">Shouldly</a> 
 	as assertion library.</li>
 </ul>
-<p>Tests cover ong>Domain </strong>(core) and <strong>Application</strong> 
+<p>Tests cover <strong>Domain </strong>(core) and <strong>Application</strong> 
 layers of the project. Open Test Explorer (Test\Windows\Test Explorer in VS main 
 menu) to run unit tests:</p>
 <div class="bs-callout bs-callout-warning">
@@ -1272,7 +1298,37 @@ property must be true if it's deleted.</p>
 <p>You can read
 <a href="http://www.codeproject.com/Articles/871786/Unit-testing-in-Csharp-using-xUnit-Entity-Framewor">
 this article</a> to understand unit testing better.</p>
-<h3>Publish To IIS</h3>
+<h3>Publishing</h3>
+<h4>Main Configurations</h4>
+<p>ASP.NET Zero is properly configured for development. But when you want to 
+publish your application to your <strong>test/production environment</strong>, 
+you may need to change some configuration in order to make it properly work. 
+Each section in this document describes it&#39;s own configuration, but we will 
+provide a summary here.</p>
+<p>Every application (see Applications section at the beginning of this 
+document) has it&#39;s own <strong>appsettings.json</strong> that should be 
+independently configured.</p>
+<h5>Web.Mvc Project</h5>
+<ul>
+	<li>&quot;<strong>ConnectionStrings:Default</strong>&quot;: Database connection 
+	string.</li>
+	<li>&quot;<strong>Abp.RedisCache</strong>&quot;: Redis cache settings if you are 
+	enabled
+	<a href="https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration" target="_blank">
+	Redis cache provider</a>.</li>
+	<li>&quot;<strong>App:WebSiteRootAddress</strong>&quot;: Root URL of the application.</li>
+	<li>&quot;<strong>App:RedirectAllowedExternalWebSites</strong>&quot;: A comma 
+	seperated list of root URLs those are allowed to be redirected once user 
+	logins. For security reasons, ASP.NET Zero only redirects to local URLs 
+	except this list. If you will use the public web site, you should add it&#39;s 
+	root URL to this list.</li>
+	<li>&quot;<strong>Authentication</strong>&quot;: Authentication settings especially 
+	for external login providers.</li>
+	<li>&quot;<strong>Recaptcha</strong>&quot;: Recaptcha settings if you enabled it.</li>
+	<li>&quot;<strong>IdentityServer</strong>&quot;: IdentityServer settings. It&#39;s 
+	important</li>
+</ul>
+<h4>Publishing to IIS</h4>
 <p>If you want to publish your solution to IIS, then check Microsoft's
 <a href="https://docs.microsoft.com/en-us/aspnet/core/publishing/iis" target="_blank">
 documentation</a>.</p>
