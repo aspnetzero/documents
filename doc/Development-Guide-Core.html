@@ -1299,16 +1299,17 @@ property must be true if it's deleted.</p>
 <a href="http://www.codeproject.com/Articles/871786/Unit-testing-in-Csharp-using-xUnit-Entity-Framewor">
 this article</a> to understand unit testing better.</p>
 <h3>Publishing</h3>
-<h4>Main Configurations</h4>
+<p>Publishing ASP.NET Zero is not different than any other solution. You can use 
+Visual Studio as normally you do.</p>
+<h4>Configuration</h4>
 <p>ASP.NET Zero is properly configured for development. But when you want to 
 publish your application to your <strong>test/production environment</strong>, 
 you may need to change some configuration in order to make it properly work. 
 Each section in this document describes it&#39;s own configuration, but we will 
 provide a summary here.</p>
-<p>Every application (see Applications section at the beginning of this 
-document) has it&#39;s own <strong>appsettings.json</strong> that should be 
+<p>Every application in the solution has it&#39;s own <strong>appsettings.json</strong> that should be 
 independently configured.</p>
-<h5>Web.Mvc Project</h5>
+<h5>Web.Mvc Application</h5>
 <ul>
 	<li>&quot;<strong>ConnectionStrings:Default</strong>&quot;: Database connection 
 	string.</li>
@@ -1316,7 +1317,7 @@ independently configured.</p>
 	enabled
 	<a href="https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration" target="_blank">
 	Redis cache provider</a>.</li>
-	<li>&quot;<strong>App:WebSiteRootAddress</strong>&quot;: Root URL of the application.</li>
+	<li>&quot;<strong>App:WebSiteRootAddress</strong>&quot;: Root URL of this application.</li>
 	<li>&quot;<strong>App:RedirectAllowedExternalWebSites</strong>&quot;: A comma 
 	seperated list of root URLs those are allowed to be redirected once user 
 	logins. For security reasons, ASP.NET Zero only redirects to local URLs 
@@ -1326,7 +1327,46 @@ independently configured.</p>
 	for external login providers.</li>
 	<li>&quot;<strong>Recaptcha</strong>&quot;: Recaptcha settings if you enabled it.</li>
 	<li>&quot;<strong>IdentityServer</strong>&quot;: IdentityServer settings. It&#39;s 
-	important</li>
+	important to disable it if you are not using IdentityServer. If you are 
+	using, ensure that you configured proper settings.</li>
+	<li>&quot;<strong>Payment</strong>&quot;: Payment provider settings if you are 
+	developing a paid SaaS product.</li>
+</ul>
+<p>Web.Public Application</p>
+<ul>
+	<li>&quot;<strong>ConnectionStrings:Default</strong>&quot;: Database connection 
+	string.</li>
+	<li>&quot;<strong>App:WebSiteRootAddress</strong>&quot;: Root URL of this 
+	application (the public web site).</li>
+	<li>&quot;<strong>App:AdminWebSiteRootAddress</strong>&quot;: Root URL of the 
+	main (Web.Mvc) application.</li>
+</ul>
+<p>Migrator Application</p>
+<ul>
+	<li>&quot;<strong>ConnectionStrings:Default</strong>&quot;: Database connection 
+	string.</li>
+</ul>
+<p>Web.Host Application</p>
+<ul>
+	<li>&quot;<strong>ConnectionStrings:Default</strong>&quot;: Database connection 
+	string.</li>
+	<li>&quot;<strong>Abp.RedisCache</strong>&quot;: Redis cache settings if you are 
+	enabled
+	<a href="https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration" target="_blank">
+	Redis cache provider</a>.</li>
+	<li>&quot;<strong>App:</strong><span class="auto-style3">ServerRootAddress</span>&quot;: 
+	Root URL of this application.</li>
+	<li>&quot;<strong>App:ClientRootAddress</strong>&quot;: Root URL of the angular 
+	application (if you are using Angular as UI).</li>
+	<li>&quot;<strong>App:CorsOrigins</strong>&quot;: Allowed origins for cross 
+	origin requests (splitted by comma).</li>
+	<li>&quot;<strong>Authentication</strong>&quot;: Authentication settings especially 
+	for external login providers.</li>
+	<li>&quot;<strong>IdentityServer</strong>&quot;: IdentityServer settings. It&#39;s 
+	important to disable it if you are not using IdentityServer. If you are 
+	using, ensure that you configured proper settings.</li>
+	<li>&quot;<strong>Payment</strong>&quot;: Payment provider settings if you are 
+	developing a paid SaaS product.</li>
 </ul>
 <h4>Publishing to IIS</h4>
 <p>If you want to publish your solution to IIS, then check Microsoft's
@@ -1352,7 +1392,7 @@ project. Here, a list of all libraries.</p>
 		<li><a target="_blank" href="http://www.castleproject.org/projects/windsor/">Castle Windsor</a></li>
 		<li><a target="_blank" href="http://automapper.org/">AutoMapper</a></li>
 		<li><a href="http://identityserver.io/" target="_blank">IdentityServer4</a></li>
-		<li><a href="http://hangfire.io/" target="_blank">HangFire</li>
+		<li><a href="http://hangfire.io/" target="_blank">HangFire</a></li>
 		<li><a target="_blank" href="https://logging.apache.org/log4net/">Log4Net</a></li>
 		<li><a href="https://github.com/PaulMiami/reCAPTCHA" target="_blank">PaulMiami reCAPTCHA</a></li>
 		<li><a href="https://xunit.github.io/" target="_blank">xUnit</a></li>
