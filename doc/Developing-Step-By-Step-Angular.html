@@ -1203,41 +1203,45 @@ command in the .EntityFramework project's directory:</p>
 <img class="img-thumbnail" alt="Entity Framework Migration" src="images/phonebook-migrations-core-4.png" /></p>
 <p>This will create a new code based migration file to create <strong>PbPhones</strong> 
 table:</p>
-<pre lang="cs">
-public partial class Added_Persons_Table : Migration
+<pre lang="cs">public partial class Added_Phone : Migration
 {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
         migrationBuilder.CreateTable(
-            name: "PbPersons",
+            name: "PbPhones",
             columns: table =&gt; new
             {
-                Id = table.Column&lt;int&gt;(nullable: false)
+                Id = table.Column&lt;long&gt;(nullable: false)
                     .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                 CreationTime = table.Column&lt;DateTime&gt;(nullable: false),
                 CreatorUserId = table.Column&lt;long&gt;(nullable: true),
-                DeleterUserId = table.Column&lt;long&gt;(nullable: true),
-                DeletionTime = table.Column&lt;DateTime&gt;(nullable: true),
-                EmailAddress = table.Column&lt;string&gt;(maxLength: 255, nullable: true),
-                IsDeleted = table.Column&lt;bool&gt;(nullable: false),
-                LastModificationTime = table.Column&lt;DateTime&gt;(nullable: true),
-                LastModifierUserId = table.Column&lt;long&gt;(nullable: true),
-                Name = table.Column&lt;string&gt;(maxLength: 32, nullable: false),
-                Surname = table.Column&lt;string&gt;(maxLength: 32, nullable: false)
+                Number = table.Column&lt;string&gt;(maxLength: 16, nullable: false),
+                PersonId = table.Column&lt;int&gt;(nullable: false),
+                Type = table.Column&lt;byte&gt;(nullable: false)
             },
             constraints: table =&gt;
             {
-                table.PrimaryKey("PK_PbPersons", x =&gt; x.Id);
+                table.PrimaryKey("PK_PbPhones", x =&gt; x.Id);
+                table.ForeignKey(
+                    name: "FK_PbPhones_PbPersons_PersonId",
+                    column: x =&gt; x.PersonId,
+                    principalTable: "PbPersons",
+                    principalColumn: "Id",
+                    onDelete: ReferentialAction.Cascade);
             });
+
+        migrationBuilder.CreateIndex(
+            name: "IX_PbPhones_PersonId",
+            table: "PbPhones",
+            column: "PersonId");
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)
     {
         migrationBuilder.DropTable(
-            name: "PbPersons");
+            name: "PbPhones");
     }
-}
-</pre>
+}</pre>
 <p>Before updating database, we can go to database <strong>InitialPeopleCreator</strong>, rename it to <strong>InitialPeopleAndPhoneCreator</strong>
 and add example <strong>phone numbers</strong> for example people (We renamed 
 InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):</p>
