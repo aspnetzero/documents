@@ -5,6 +5,11 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
 <title>Development Guide</title>
+<style type="text/css">
+.auto-style1 {
+	font-weight: bold;
+}
+</style>
 </head>
 
 <body>
@@ -21,6 +26,12 @@ application framework, this document highly refers it's
 <a href="https://aspnetboilerplate.com/Pages/Documents">documentation</a>.</p>
 <p>Before reading this document, it's suggested to run the application and explore 
 the user interface. This will help you to have a better understanding of concepts defined here.</p>
+<div class="bs-callout bs-callout-warning">
+	<p class="auto-style1">About Server Side</p>
+<p>This document is only for the <strong>Angular</strong> application. For
+<strong>server side</strong>, see <a href="Development-Guide-Core.html">ASP.NET 
+Core documentation</a> too.</p>
+</div>
 <h4>Pre Requirements</h4>
 <p>Following tools are needed in order to use the solution:</p>
 <ul>
@@ -29,7 +40,7 @@ the user interface. This will help you to have a better understanding of concept
 	<li><a href="https://yarnpkg.com/lang/en/" target="_blank">Yarn</a></li>
 </ul>
 <p>In addition, see <a href="Development-Guide-Core.html">AspNet Core</a> 
-documentation for server side requirements.</p>
+documentation for server side requirements and other server side features.</p>
 <h5>IDE</h5>
 <p>It's suggested to use an IDE to develop your project. We used 
 <a href="https://www.visualstudio.com">Visual Studio 2017</a>, 
@@ -250,7 +261,7 @@ context. When you click to the link, a registration form is shown:</p>
 will mostly work on this application to add your business requirements. A 
 screenshot from the application:</p>
 <p>
-<img class="img-thumbnail" alt="Dashboard" height="870" src="images/dashboard.png" width="1339" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV2.png" width="1235" /></p>
 <p>Folder structure of the source code is like that:</p>
 <p>
 <img class="img-thumbnail" alt="Angular app module files" height="450" src="images/ng2-app-module.png" width="223" /></p>
@@ -281,18 +292,19 @@ application's editions:</p>
 <p>
 <img class="img-thumbnail" alt="Editions page" src="images/editions-page-core-2.png" /></p>
 <p>Editions are used to group feature values and assign to tenants. When we 
-click Actions/Edit for an edition, we can see it's assigned features:</p>
+click Actions/Edit for an edition, we can see it&#39;s poperties:</p>
+<p>
+<img class="img-thumbnail" alt="Edit Edition" height="882" src="images/edition-edit.png" width="595" /></p>
+<p>
+An edition can be free or paid. If it&#39;s a paid edition then you should enter 
+monthly and annual prices. You can allow tenants to use trial version of this 
+edition for a specified days. Then you can determine an expire strategy: How 
+many days to allow a tenant to use the application after subscription expires. 
+And finally, you can deactivate tenant or assign to a free edition if they don&#39;t 
+extend their subscription.</p>
+<p>Features tab is used to determing features available for the edition:</p>
 <p>
 <img class="img-thumbnail" alt="Edit edition features" height="343" src="images/edition-feature-editing-core.png" width="615" /></p>
-<p>Startup project only contains Chat feature (and it's 2 sub-features) that can 
-be enabled/disabled per edition/tenant. All features are defined in <strong>
-AppFeatureProvider</strong> class in the <a href="Development-Guide-Core.html">
-server side</a> and automatically rendered here. Feature values are stored in <strong>
-AbpFeatures</strong> table in the database. Features are not restricted to boolean 
-(enabled/disabled) values and can contain different type of values as shown 
-below:&nbsp;</p>
-<p>
-<img class="img-thumbnail" alt="Edition feature editing" height="317" src="images/edition-feature-editing.png" width="613" /></p>
 <p>See
 <a href="https://aspnetboilerplate.com/Pages/Documents/Feature-Management">
 feature management</a> and
@@ -320,7 +332,7 @@ If it's passive, no user of this tenant can login to the application.</p>
 <p>When we 
 click the "<strong>Create New Tenant</strong>" button, a dialog is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Creating tenant" height="667" src="images/create-tenant-4.png" width="615" /></p>
+<img class="img-thumbnail" alt="Tenant Creation Modal" height="771" src="images/tenant-create-modal.png" width="596" /></p>
 <p><strong>Tenancy name</strong> should be unique and can not contain spaces or 
 other special chars since it may be used as subdomain name (like 
 tenancyname.mydomain.com). <strong>Name</strong> can be anything. <strong>Admin email</strong> 
@@ -336,6 +348,9 @@ can specify a connection string to create/use a <strong>dedicated database
 That means you can use host database for some tenants and create dedicated 
 databases for some other tenants. Even you can <strong>group </strong>some 
 tenants in a separated database.</p>
+<p>Once you assign an edition to the tenant, you can select an expiration date 
+(see edition management section to know what happens after subscription 
+expiration).</p>
 <h5>Tenant Edition and Features</h5>
 <p>An <strong>edition</strong> can be <strong>assigned</strong> to a tenant 
 (while creating or editing). Tenant will inherit all features of the assigned 
@@ -356,6 +371,13 @@ information.</p>
 <strong>tenant1</strong>.mydomain.com, <strong>tenant2</strong>.mydomain.com and 
 so on. ASP.NET Zero automatically identify and get tenant name from subdomain. 
 See application configuration section.</p>
+<h4>Host Dashboard</h4>
+<p>Host dashboard is used to show some statistics about tenants, editions and 
+income:</p>
+<p>
+<img class="img-thumbnail" alt="Host dashboard" height="495" src="images/host-dashboard%20-%20Copy.jpg" width="600" /></p>
+<p>This is a fully implemented dashboard except two sample statistics (sample 
+statistics 1 &amp; 2) those are placeholders for your own statistics.</p>
 <h4>Organization Units</h4>
 <p>Organization units (OU) are used to hierarchically group user and entities. 
 Then you can get user or entities based on their OUs. When we click 
@@ -497,6 +519,12 @@ icon, we can see all details an audit log:</p>
 <img class="img-thumbnail" alt="Audit Log" height="827" src="images/audit-logs-detail.png" width="620" /></p>
 <p>
 Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
+<h4>
+Subscription</h4>
+<p>
+Tenants can manage (show, extend or upgrade) their edition/plan subscriptions using this page:</p>
+<p>
+<img class="img-thumbnail" alt="Subscription" height="300" src="images/subscription.png" width="413" /></p>
 <h4>Host Settings</h4>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
@@ -554,10 +582,8 @@ dashboard. It's just for demo purposes, you can make it as a start point for
 your actual dashboard. It's implemented with app/main/<strong>dashboard.component</strong> 
 in <strong>main.module</strong>.</p>
 <p>
-<img class="img-thumbnail" alt="Dashboard" height="870" src="images/dashboard.png" width="1339" /></p>
-<p>In this dashboard, only <strong>Member Activity</strong> graph data is retrieved from 
-server. You can click the refresh button to generate random 
-graphs.</p>
+<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV2.png" width="1235" /></p>
+<p>Client gets all data from server, server generates random data.</p>
 <h4>Notifications</h4>
 <p>Notification icon is located next to the language selection button. The number in the red circle shows unread notification count.</p>
 <p><img alt="notifications" src="images/notifications-icon.png" width="189" class="img-thumbnail"/></p>
@@ -823,7 +849,7 @@ it to the web site's root folder to overcome the problem described above.</p>
 <p>Many open source frameworks and libraries are used to build ASP.NET Zero 
 project. Here, a list of all libraries:</p>
 <ul>
-	<li><a href="https://angular.io/" target="_blank">Angular (v2+)</a></li>
+	<li><a href="https://angular.io/" target="_blank">Angular</a></li>
 	<li><a href="https://cli.angular.io/" target="_blank">Angular-cli</a></li>
 	<li><a href="http://typescriptlang.org/" target="_blank">Typescript</a></li>
 	<li><a href="http://asp.net/signalr" target="_blank">SignalR</a></li>
