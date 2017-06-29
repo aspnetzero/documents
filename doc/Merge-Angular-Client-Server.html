@@ -114,7 +114,7 @@ You need to change it like this, becasue above configuration is wrong.
 	<pre lang="xml">
 &lt;Target Name="PrepublishScript" BeforeTargets="ComputeFilesToPublish"&gt;
     &lt;Exec Command="ng build --prod"&gt;&lt;/Exec&gt;
-    <strong>&lt;Exec Command="robocopy $(MSBuildProjectDirectory)\wwwroot\dist\ $(MSBuildProjectDirectory)\wwwroot\ /S /E /MOVE" /&gt;</strong>
+    <strong>&lt;Exec Command="robocopy $(MSBuildProjectDirectory)\wwwroot\dist\ $(MSBuildProjectDirectory)\wwwroot\ /S /E /MOVE" IgnoreExitCode="True" /&gt;</strong>
 &lt;/Target&gt;
 	</pre>
 	This command copies entire content of <strong>wwwroot\dist</strong> folder to <strong>wwwroot </strong> and deletes dist folder before publish. In this way, will have a clean wwwroot folder.
