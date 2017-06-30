@@ -46,6 +46,9 @@ public class PhoneBookConsts
 }
 </pre>
 
+<p>
+<strong>Note:</strong> If you loggeg in before changing <strong>MultiTenancyEnabled</strong> to false, you might be get login error. To overcome this, you should remove cookies.
+</p>
 <h3>Adding a New Menu Item</h3>
 <p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
 <h4>Defining a Menu Item</h4>
@@ -450,7 +453,7 @@ method without creating a user interface. We write unit test in .<strong>Tests</
 <div class="bs-callout bs-callout-warning">
 	<h4>MultiTenancy In Tests</h4>
 <p>Since we disabled multitenancy, we should disable it for unit tests 
-too. Open <strong>appsettings.json</strong> in .Tests project and set "<strong>MultiTenancyEnabled</strong>" to 
+too. Open <strong>PhoneBookConsts</strong> class in the Acme.PhoneBook.Core project and set "<strong>MultiTenancyEnabled</strong>" to 
 false. After a rebuild and run unit tests, you will see that some tests are skipped (those are related to multitenancy).</p>
 </div>
 <p>Let's 
