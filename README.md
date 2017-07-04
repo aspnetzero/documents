@@ -1,2 +1,11 @@
-# ASP.NET Zero Documentation
-http://aspnetzero.com/Documents
+## ASP.NET Zero Documentation
+
+This is the documentation of [ASP.NET Zero](http://aspnetzero.com).
+
+ASP.NET Zero is a starting point for new web applications with a modern UI and solid architecture. It saves your time by providing pre-built and working pages and a strong infrastructure.
+
+* Read documentation: http://aspnetzero.com/Documents
+
+### Contribution
+
+Documentation is open for any contribution: Fork it, edit and send a pull request.
