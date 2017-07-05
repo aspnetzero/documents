@@ -112,10 +112,17 @@ You need to change it like this, becasue above configuration is wrong.
 <p>
 	We need to move files and folders under "<strong>wwwroot/dist</strong>" to "<strong>wwwroot</strong>". In order to do that, change your *.Web.Host.csproj like this:
 	<pre lang="xml">
-&lt;Target Name="PrepublishScript" BeforeTargets="ComputeFilesToPublish"&gt;
-    &lt;Exec Command="ng build --prod"&gt;&lt;/Exec&gt;
-    <strong>&lt;Exec Command="robocopy $(MSBuildProjectDirectory)\wwwroot\dist\ $(MSBuildProjectDirectory)\wwwroot\ /S /E /MOVE" IgnoreExitCode="True" /&gt;</strong>
-&lt;/Target&gt;
+ &#x3C;Target Name=&#x22;PrepublishScript&#x22; BeforeTargets=&#x22;ComputeFilesToPublish&#x22;&#x3E;
+    &#x3C;Exec Command=&#x22;ng build --prod&#x22;&#x3E;&#x3C;/Exec&#x3E;
+    &#x3C;Exec Command=&#x22;robocopy $(MSBuildProjectDirectory)\wwwroot\dist\ $(MSBuildProjectDirectory)\wwwroot\ /S /E /MOVE&#x22; IgnoreExitCode=&#x22;True&#x22; /&#x3E;
+    &#x3C;ItemGroup&#x3E;
+      &#x3C;DistFiles Include=&#x22;wwwroot\**\*&#x22; /&#x3E;
+      &#x3C;ResolvedFileToPublish Include=&#x22;@(DistFiles-&#x3E;&#x27;%(FullPath)&#x27;)&#x22; Exclude=&#x22;@(ResolvedFileToPublish)&#x22;&#x3E;
+        &#x3C;RelativePath&#x3E;%(DistFiles.Identity)&#x3C;/RelativePath&#x3E;
+        &#x3C;CopyToPublishDirectory&#x3E;PreserveNewest&#x3C;/CopyToPublishDirectory&#x3E;
+      &#x3C;/ResolvedFileToPublish&#x3E;
+    &#x3C;/ItemGroup&#x3E;
+  &#x3C;/Target&#x3E;
 	</pre>
 	This command copies entire content of <strong>wwwroot\dist</strong> folder to <strong>wwwroot </strong> and deletes dist folder before publish. In this way, will have a clean wwwroot folder.
 </p>
