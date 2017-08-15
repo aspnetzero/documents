@@ -71,12 +71,6 @@ OS you like (MacOS/Linux/Windows).</p>
 	use the application services.</li>
 </ul>
 
-<h4>Merging Client and Server Solutions</h4>
-<p>
-	Client and Server solutions are designed to work separately by default but if you want to work on a single Visual Studio solution, you can read 
-	<a href="Merge-Angular-Client-Server.html">Merging Angular 2.x Client and Server solution</a> document.
-</p>
-
 <h4>Angular Solution</h4>
 <p>Entrance point of the Angular solution is src/<strong>main.ts</strong>. It 
 simply bootstraps the root
@@ -290,7 +284,7 @@ section.</em></p>
 page</strong> (available in host login)<strong> </strong>is used to manage 
 application's editions:</p>
 <p>
-<img class="img-thumbnail" alt="Editions page" src="images/editions-page-core-2.png" /></p>
+<img  class="img-thumbnail" alt="Editions Page" height="277" src="images/editions-page-core-3.png" width="1277" /></p>
 <p>Editions are used to group feature values and assign to tenants. When we 
 click Actions/Edit for an edition, we can see it&#39;s poperties:</p>
 <p>
@@ -321,7 +315,7 @@ section.</em></p>
 <p>If this is a multi-tenant application and you logged in as a host user, then 
 tenants page is shown:</p>
 <p>
-<img class="img-thumbnail"  alt="Tenant management page" src="images/tenant-management-core-1.png" /></p>
+<img class="img-thumbnail"  alt="Tenant management page" height="438" src="images/tenant-management-core-2.png" width="1277" /></p>
 <p>A tenant is represented by <strong>Tenant</strong> class. Tenant class 
 <a href="Extending-Existing-Entities.html">can be 
 extended</a> by adding new properties. There is an only 
@@ -383,7 +377,7 @@ statistics 1 &amp; 2) those are placeholders for your own statistics.</p>
 Then you can get user or entities based on their OUs. When we click 
 Administration/Organization units, we enter the related page:</p>
 <p>
-<img class="img-thumbnail" alt="Organization units page" height="483" src="images/organization-units-page-core.png" width="931" /></p>
+<img class="img-thumbnail" alt="Organization units page" height="485" src="images/organization-units-page-core-2.png" width="1277" /></p>
 <p>Here, we can manage OUs (create, edit, delele, move) and members 
 (add/remove).</p>
 <p>In the left OU tree, we can <strong>right click</strong> to an OU (or left click to
@@ -391,7 +385,7 @@ Administration/Organization units, we enter the related page:</p>
 OU operations. We can also add new members with the upper right button of 
 members area.</p>
 <p>
-<img class="img-thumbnail" alt="Select a user dialog" height="549" src="images/select-user-lookup-core.png" width="583" /></p>
+<img class="img-thumbnail" alt="Select a user dialog" height="686" src="images/select-user-lookup-core-2.png" width="614" /></p>
 <p>This is actually a <strong>generic lookup modal</strong> and can be used to 
 select any type of entity (see app/shared/common/lookup/<strong>common-lookup-modal.component</strong>).</p>
 <p>See
@@ -401,7 +395,7 @@ organization unit management document</a> for more information.</p>
 
 <p>When we click Administration/Roles menu, we enter to the role management page:</p>
 <p>
-<img class="img-thumbnail" alt="Role management page" src="images/role-management-core-1.png" /></p>
+<img class="img-thumbnail" alt="Role management page" height="325" src="images/role-management-core-2.png" width="852" /></p>
 <p>Roles are used to <strong>group permissions</strong>. When a user has a 
 role, then they will have all permissions of that role.</p>
 <p>A role is represented by the <strong>Role</strong> class. Role class 
@@ -443,7 +437,7 @@ tenants. Also, host has also it's own isolated roles.</p>
 
 <p>When we click Administration/Users menu, we enter to the user management page:</p>
 <p>
-<img class="img-thumbnail" alt="User management" src="images/user-management-core-1.png" /></p>
+<img class="img-thumbnail" alt="User management" height="585" src="images/user-management-core-2.png" width="1328" /></p>
 
 <p><strong>Users</strong> are people who can <strong>login </strong>to the application and 
 perform some operations based on their <strong>permissions</strong>.</p>
@@ -482,14 +476,14 @@ impersonated account.</p>
 <p>Language management page is used to manage (add/edit/delete) <strong>application 
 languages</strong> and change <strong>localized texts</strong>:</p>
 <p>
-<img class="img-thumbnail" alt="Language management" src="images/language-list-core-1.png" /></p>
+<img class="img-thumbnail" alt="Language management" height="583" src="images/language-list-core-2.png" width="1333" /></p>
 <p>We can create new language, edit/delete an existing language and <strong>set a 
 language as default</strong>. Note that; tenants can not edit/delete default 
 languages, but host users can do.</p>
 <p>When we click to <strong>Change text</strong> for any language, we are 
 redirected to a new view to edit language texts:</p>
 <p>
-<img class="img-thumbnail" alt="Language texts" height="630" src="images/language-change-texts-list-core.png" width="945" /></p>
+<img class="img-thumbnail" alt="Language texts" height="661" src="images/language-change-text-modal-core-2.png" width="1286" /></p>
 <p>We can select any language as a <strong>base</strong> (reference) and change 
 <strong>target</strong> language's 
 texts. Base language is just to help the translation progress. Since there maybe different
@@ -509,7 +503,7 @@ localization</a> documents for more information.</p>
 <h4>Audit Logs</h4>
 <p>In audit logs page, we can see all user interactions with the application:</p>
 <p>
-<img class="img-thumbnail" alt="Audit logs" height="671" src="images/audit-logs-core.png" width="1287" /></p>
+<img class="img-thumbnail" alt="Audit logs"  height="593" src="images/audit-logs-core-2.png" width="1330" /></p>
 <p>All application service methods and MVC controller actions are automatically logged and can be viewed 
 here. See
 <a href="https://aspnetboilerplate.com/Pages/Documents/Audit-Logging">audit 
@@ -601,7 +595,7 @@ desktop push notification</strong> is shown when a notification is received.</p>
 <h5>Notification List</h5>
 <p>All notifications of the user are listed in this page.</p>
 <p>
-<img class="img-thumbnail" alt="Notification list" height="313" src="images/notifications-list-core.png" width="774" /></p>
+<img class="img-thumbnail" alt="Notification list" height="215" src="images/notifications-list-core-2.png" width="858" /></p>
 <div class="bs-callout bs-callout-warning">
 	<p><strong>.Net Core Compability</strong></p>
 <p>Since SignalR is not ready yet for .net core, real time notifications will 
@@ -638,7 +632,7 @@ not work if you select .net core as your base framework.</p>
 way, a user can easily navigate through his accounts using this feature.</p>
 <p>User can link new accounts or delete already linked accounts by clicking the 
 "Manage accounts" link.</p>
-<p><img class="img-thumbnail" alt="User menu" src="images/linked-accounts.png"/></p>
+<p><img class="img-thumbnail" alt="User menu" height="227" src="images/linked-accounts-2.png" width="466" /></p>
 <p>
 In order to link a new account, user must enter login credentials of related account.</p>
 <p><img class="img-thumbnail" alt="link new account" height="353" src="images/link-new-account.png" width="599"/></p>
@@ -813,8 +807,8 @@ Deployment</h3>
 <div class="bs-callout bs-callout-warning">
 	<p><strong>About Deployment</strong></p>
 <p>
-If you want to merge and deploy Angular 2 UI with the ASP.NET Core backend, 
-you can follow this <a href="Merge-Angular-Client-Server.html">tutorial</a>.</p>
+If you have merged Angular UI project into ASP.NET Core project then you only 
+need to publish your .Host project.</p>
 </div>
 <p>
 We are using <a href="https://cli.angular.io/" target="_blank">angular-cli</a> 
