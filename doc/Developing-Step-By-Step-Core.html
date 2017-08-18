@@ -1404,7 +1404,7 @@ UOW document</a> for more.)</p>
 <p>There may be different approaches for AddPhone method. You can directly work 
 with a <strong>phone repository</strong> to insert new phone. They all have 
 different pros and cons. It's your choice.</p>
-<h3>Edit Mode For People List</h3>
+<h3>Edit Mode For Phone Numbers</h3>
 <p>Final UI is shown below:</p>
 <p>
 <img class="img-thumbnail" alt="Phone book edit mode" height="642" src="images/phone-book-edit-mode.png" width="762" /></p>
@@ -1614,6 +1614,153 @@ A sample return value is shown below:</p>
     &lt;td&gt;129838172&lt;/td&gt;
 &lt;/tr&gt;</pre>
 <p>As you see, this can be directly inserted to the table, as we already do.</p>
+
+<h3>Edit Mode For People</h3>
+
+<p>Now we want to edit name, surname and e-mail of people: </p>
+
+<img class="img-thumbnail" alt="Edit Person" height="333" src="images/edit-person-core.png" width="548" /><br />
+<br />
+First of all, we create needed Dto&#39;s that transfers people&#39;s id, name, surname 
+and e-mail. Then create the functions in PersonAppService for editing people:<br />
+
+<pre lang="cs" >
+        public async Task&lt;GetPersonForEditOutput&gt; GetPersonForEdit(IEntityDto input)
+        {
+            var person = await _personRepository.GetAsync(input.Id);
+            return ObjectMapper.Map&lt;GetPersonForEditOutput&gt;(person);
+        }
+
+        public async Task EditPerson(EditPersonInput input)
+        {
+            var person = await _personRepository.GetAsync(input.Id);
+            person.Name = input.Name;
+            person.Surname = input.Surname;
+            person.EmailAddress = input.EmailAddress;
+            await _personRepository.UpdateAsync(person);
+        }</pre>
+</p>
+
+
+<h4>View</h4>
+<pre lang="html">
+@using Acme.PhoneBook.People
+@using Acme.PhoneBook.Web.Areas.App.Models.Common.Modals
+@using Acme.PhoneBook.Web.Areas.App.Models.PhoneBook
+@Html.Partial("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel("Edit Person"))
+@model EditPersonModalViewModel
+
+&lt;div class="modal-body"&gt;
+    &lt;form role="form" novalidate class="form-validation"&gt;
+        
+        &lt;input type="hidden" name="Id" value="@Model.Id" /&gt;
+
+        &lt;div class="form-group form-md-line-input  no-hint"&gt;
+            &lt;input class="form-control" type="text" name="Name" value="@Model.Name" required maxlength="@Person.MaxNameLength"&gt;
+            &lt;label&gt;@L("Name")&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group form-md-line-input  no-hint"&gt;
+            &lt;input type="text" name="Surname" value="@Model.Surname" class="form-control" required maxlength="@Person.MaxSurnameLength"&gt;
+            &lt;label&gt;@L("Surname")&lt;/label&gt;
+        &lt;/div&gt;
+
+        &lt;div class="form-group form-md-line-input  no-hint"&gt;
+            &lt;input type="email" name="EmailAddress" value="@Model.EmailAddress" class="form-control"  maxlength="@Person.MaxEmailAddressLength"&gt;
+            &lt;label&gt;@L("EmailAddress")&lt;/label&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+@Html.Partial("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")</pre>
+
+<h4>View Model</h4>
+
+<pre lang="cs" >
+using Abp.AutoMapper;
+using Acme.PhoneBook.Localization.Dto;
+using Acme.PhoneBook.PhoneBook.Dto;
+
+namespace Acme.PhoneBook.Web.Areas.App.Models.PhoneBook
+{
+    [AutoMapFrom(typeof(GetPersonForEditOutput))]
+    public class EditPersonModalViewModel : GetPersonForEditOutput
+    {
+        public EditPersonModalViewModel(GetPersonForEditOutput output)
+        {
+            output.MapTo(this);
+        }
+    }
+}
+</pre>
+
+<h4>Scipts</h4>
+
+<p>Create <strong>_editPersonModal.js</strong>:</p>
+<pre lang="cs">
+
+
+(function ($) {
+    	app.modals.EditPersonModal = function () {
+
+        var _modalManager;
+        var _personService = abp.services.app.person;
+        var _$form = null;
+
+        this.init = function (modalManager) {
+            _modalManager = modalManager;
+            personId = _modalManager.getArgs().personId;
+            _$form = _modalManager.getModal().find('form');
+            _$form.validate();
+        };
+
+        this.save = function () {
+            if (!_$form.valid()) {
+                return;
+            }
+
+            var person = _$form.serializeFormToObject();
+
+            _modalManager.setBusy(true);
+            _personService.editPerson(person).done(function () {
+                _modalManager.close();
+                location.reload();
+            }).always(function () {
+                _modalManager.setBusy(false);
+            });
+        };
+    };
+})(jQuery);
+</pre>
+<p>Add Those lines to <strong>index.js</strong>:</p>
+<pre lang="cs">
+	var _editPersonModal = new app.ModalManager({
+        viewUrl: abp.appPath + 'App/PhoneBook/EditPersonModal',
+        scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/PhoneBook/_EditPersonModal.js',
+        modalClass: 'EditPersonModal'
+    });
+
+    $('#AllPeopleList button.edit-person').click(function (e) {
+        e.preventDefault();
+        var $listItem = $(this).closest('.list-group-item');
+        var id = $listItem.data('person-id');
+        _editPersonModal.open({ id: id });
+    });
+
+</pre>
+
+<p>Add Those lines to <strong>PhoneBookController.cs</strong>:</p>
+<pre lang="cs">
+
+
+        public async Task&lt;PartialViewResult&gt; EditPersonModal(int id)
+        {
+            var output = await _personAppService.GetPersonForEdit(new EntityDto { Id = id });
+            var viewModel = new EditPersonModalViewModel(output);
+
+            return PartialView("_EditPersonModal", viewModel);
+        }
+</pre>
+
 <h3>Multi Tenancy</h3>
 <p>We have built a fully functional application until here. Now, we will see how 
 to convert it to a multi-tenant application easily.</p>

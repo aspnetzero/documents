@@ -78,11 +78,9 @@ multi tenant applications.</p>
 <p>ASP.NET Zero supports multi-tenant and single-tenant applications. 
 Multi-tenancy is <strong>enabled by default</strong>. If you don't have idea 
 about multi-tenancy or don't want to create a multi-tenant application, you can
-<strong>disable</strong> it. If you 
-want a multi-tenant application, leave it <strong>enabled</strong> in ProjectName<strong>CoreModule</strong> 
-class in <strong>.Core</strong> project:</p>
-<pre lang="cs">//Enable this line to create a multi-tenant application.
-Configuration.MultiTenancy.IsEnabled = true;</pre>
+<strong>disable</strong> it by setting <strong>
+AbpZeroTemplateConsts.MultiTenancyEnabled</strong> to false in the .Core 
+project.</p>
 
 <h3 id="DocRunProject">Run The Project</h3>
 

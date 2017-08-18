@@ -22,7 +22,7 @@ password. Then you will see <a href="/Download">Download</a> link on the main me
 <p>Go to the <a href="/Download">download</a> page. You will see a form as shown 
 below:</p>
 <p>
-<img class="img-thumbnail" alt="Download angular" src="images/download-angular-1.png" /></p>
+<img class="img-thumbnail" alt="Download angular" src="images/download-angular-2.png" /></p>
 <p>Select <strong>ASP.NET Core &amp; Angular</strong> as Project Type and fill 
 other required fields. Your project will be ready 
 in one minute. When you open the downloaded zip file, you will see two folders:</p>
@@ -39,8 +39,7 @@ in one minute. When you open the downloaded zip file, you will see two folders:<
 </ul>
 <h4>Merging Client and Server Solutions</h4>
 <p>
-	Client and Server solutions are designed to work separately by default but if you want to work on a single Visual Studio solution, you can read <a href="Merge-Angular-Client-Server">
-	Merging Angular Client and Server solution</a> document.
+	Client and Server solutions are designed to work separately by default but if you want to work on a single Visual Studio solution, you can select "One Solution" checkbox while downloading your project.
 </p>
 <h3>ASP.NET Core Application</h3>
 <p>When you open Server side solution in <strong>Visual Studio 2017+</strong>, you will see the 
@@ -54,7 +53,7 @@ build</strong> the solution. It make take longer time in first build since all
 <strong>nuget </strong>packages will be restored.</p>
 <h4 id="DocConfigureDbConn">Database Connection</h4>
 
-		<p>Open <strong>appsettings.json</strong> in <strong>.Web.Mvc</strong> project and change the  <strong>Default</strong> connection string if you want:</p>
+		<p>Open <strong>appsettings.json</strong> in <strong>.Web.Host</strong> project and change the  <strong>Default</strong> connection string if you want:</p>
 		<pre lang="js">"ConnectionStrings": {
     "Default": "Server=localhost; Database=<strong>PhoneBookDb</strong>; Trusted_Connection=True;"
 }</pre>
@@ -110,7 +109,7 @@ used to investigate the API:</p>
 	<li><a href="https://yarnpkg.com/">yarn</a></li>
 </ul>
 <h4>Restore Packages</h4>
-<p>Locate to the Client folder, open a command line and run the following command to restore packages:</p>
+<p>Locate to the Angular folder, open a command line and run the following command to restore packages:</p>
 <pre>yarn</pre>
 <p>We suggest to use 
 <a href="https://yarnpkg.com/" target="_blank">yarn</a> because npm has some problems. 
