@@ -1377,7 +1377,7 @@ public class AddPhoneInput
 public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
 {
     var person = _personRepository.Get(input.PersonId);
-    await _personRepository.EnsureLoadedAsync(person, p =&gt; p.Phones);
+    await _personRepository.EnsureCollectionLoadedAsync(person, p =&gt; p.Phones);
 
     var phone = ObjectMapper.Map&lt;Phone&gt;(<span lang="tr">input</span>);
     person.Phones.Add(phone);
