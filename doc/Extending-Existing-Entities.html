@@ -330,6 +330,8 @@ we can edit an edition with entering the price:</p>
 <img alt="Edit edition with price" height="411" src="images/extend-entities-editions-ui-edit.png" width="392" /></p>
 <p>You can see this Github
 <a href="https://github.com/aspnetzero/aspnet-zero-samples/commit/ecf25b60bda72166d41ad7605000d7dc7556e8bf" target="_blank">commit</a> for all changes applied.</p>
+<h3>A Note about EF Core 2.0</h3>
+<p>In EntityFramework Core 2.0, OnModelCrreating must be used to configure extended entity if base entity contains a self reference (see <a href="https://github.com/aspnet/EntityFrameworkCore/issues/9704">https://github.com/aspnet/EntityFrameworkCore/issues/9704</a>). An example of this case is extending OrganizationUnit entity.</p>
 <h3>Source Code</h3>
 <p>You can get the full source code of this sample from the Github repository: </p>
 <p>
