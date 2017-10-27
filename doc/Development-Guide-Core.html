@@ -31,7 +31,7 @@ the user interface. This will help you to have a better understanding of concept
 <h4>Pre Requirements</h4>
 <p>Following tools are needed in order to use ASP.NET Zero Core solution:</p>
 <ul>
-	<li><a href="https://www.visualstudio.com">Visual Studio 2017</a>+</li>
+	<li><a href="https://www.visualstudio.com">Visual Studio 2017 v15.3.5</a>+</li>
 	<li>Visual Studio Extensions:<ul>
 		<li>
 		<a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.BundlerMinifier">Bundler &amp; Minifier</a></li>
@@ -47,7 +47,6 @@ the user interface. This will help you to have a better understanding of concept
 <h4>Solution Structure (Layers)</h4>
 <p>After you create and <a href="/Download">download</a> your project, you have a solution structure 
 as shown below:</p>
-<p>TODO: Screenshot update.</p>
 <p>
 <img class="img-thumbnail" alt="ASP.NET Core solution" src="images/solution-overall-core-4.png" /></p>
 <p>There are 10 projects in the solution:</p>
@@ -258,7 +257,7 @@ SMS Verification</h5>
 This is available if user has a confirmed phone number. SMS sending is not 
 implemented actually (because it requires an integration to an SMS vendor). 
 Current implementation just writes security code to logs. You should complete
-<strong>IdentitySmsMessageService</strong> class in the solution to make it 
+<strong>SmsSender</strong> class in the solution to make it 
 usable. Otherwise, disable SMS verification in the settings.</p>
 <h4>User Lockout</h4>
 <p>As seen in the previous section, you can configure user lockout settings. 
@@ -1306,6 +1305,12 @@ property must be true if it's deleted.</p>
 <a href="http://www.codeproject.com/Articles/871786/Unit-testing-in-Csharp-using-xUnit-Entity-Framewor">
 this article</a> to understand unit testing better.</p>
 <h3>Publishing</h3>
+<div class="bs-callout bs-callout-warning">
+	<p><strong>Email Settings</strong></p>
+<p>
+If you don't configure email settings, some functions may not work (Like new tenant registration).</p>
+</div>
+
 <p>Publishing ASP.NET Zero is not different than any other solution. You can use 
 Visual Studio as normally you do.</p>
 <h4>Configuration</h4>
