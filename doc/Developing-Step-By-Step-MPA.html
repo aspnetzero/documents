@@ -29,12 +29,12 @@ solution in Visual Studio, we see an NLayered solution that consists of six proj
 <img class="img-thumbnail" alt="Solution Overall" height="166" src="images/solution-overall.png" width="249" /></p>
 <p>
 
-Also, run database migrations, create the database, switch to MPA version and login to the application 
+Also, run database migrations, create the database and login to the application 
 as described in <a href="Getting-Started.html">Getting Started</a> document. After all completed and logged in to the application, we see a dashboard as 
 shown below:</p>
 <p>
 
-<img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard2.png" width="800" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard.png" width="800" /></p>
 <p>
 
 Logout from the application for now.
@@ -52,12 +52,6 @@ public class PhoneBookCoreModule : AbpModule
         //Configuration.MultiTenancy.IsEnabled = true;
     }
 }</pre>
-
-<div class="bs-callout bs-callout-warning">
-	<h4>Switch to MPA</h4>
-	<p>Do not skip to switch default application to the MPA version 
-	(described in <a href="Getting-Started.html">Getting Started</a> document).</p>
-</div>
 
 <h3>Adding a New Page</h3>
 <p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
@@ -1624,16 +1618,6 @@ login as trio <strong>tenant admin</strong>:</p>
 add people here, logout and login as different teants (you can login as default 
 tenant for example). You will see that each tenant 
 has an isolated phone book and can not see other's people.</p>
-<h3>Delete the SPA</h3>
-<p>If you develop MPA, then you will want to delete SPA related files from the 
-project. It's easy: In the .Web project, delete the following files and folders:</p>
-<ul>
-	<li>Delete <strong>App</strong> folder which contains the Angularjs SPA.</li>
-	<li>Delete <strong>AppBundleConfig</strong> and <strong>
-	AppNavigationProvider</strong> classes and usages.</li>
-	<li>Also, optionally, you can delete ApplicationController class and change 
-	redirections from AccountController to HomeController of Mpa.</li>
-</ul>
 <h3>Conclusion</h3>
 <p>In this document, we built a complete example that covers most parts of the 
 ASP.NET Zero system. We hope that it will help you to build your own 
