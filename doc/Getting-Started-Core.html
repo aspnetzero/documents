@@ -22,13 +22,13 @@ password. Then you will see <a href="/Download">Download</a> link on the main me
 <p>Go to the <a href="/Download">download</a> page. You will see a form as shown 
 below:</p>
 <p>
-<img class="img-thumbnail" alt="Create project" src="images/download-core-jquery-1.png" /></p>
+<img class="img-thumbnail" alt="Create project" src="images/download-core-jquery-2.png" /></p>
 <p>Select <strong>ASP.NET Core &amp; jQuery</strong> as Project Type and fill 
 other required fields. Click to the Download button, your project will be ready 
 in one minute. Open the solution in <strong>Visual Studio 2017+</strong>:</p>
 
 <p>
-<img class="img-thumbnail" alt="ASP.NET Core solution" src="images/solution-overall-core-4.png" /></p>
+<img class="img-thumbnail" alt="ASP.NET Core solution" src="images/solution-overall-core-5.png" /></p>
 <p>
 Right click the 
 <strong>.Web.Mvc</strong> project and select "<strong>Set as StartUp project</strong>": Then <strong>
@@ -36,6 +36,25 @@ build</strong> the solution. It make take longer time in first build since all
 <strong>nuget </strong>packages will be restored.</p>
 
 <h3 id="DocConfigureProject">Configure The Project</h3>
+
+
+<div class="alert alert-warning">
+    <strong>Important Notice:</strong><br>
+    <p>Installing client side npm dependencies using <strong>yarn</strong> before opening the solution will increase project opening &amp; building time dramatically.</p>
+</div>
+
+<p>Before opening the solution open a command prompt, navigate to root directory of <strong>*.Web.Mvc</strong> project and run "<strong>yarn</strong>" command to install client side dependencies.</p>
+
+<h3 id="DocPrerequirements">Prerequirements</h3>
+
+<p>MVC application needs to following tools be installed:</p>
+
+<ul>
+	<li><a href="https://nodejs.org/en/download/" target="_blank">nodejs</a> 
+	6.9+ with npm 3.10+</li>
+	<li><a href="https://www.npmjs.com/package/gulp">gulp (must be installed globally)</a></li>
+	<li><a href="https://yarnpkg.com/">yarn</a></li>
+</ul>
 
 <h4 id="DocConfigureDbConn">Database Connection</h4>
 
@@ -76,16 +95,17 @@ multi tenant applications.</p>
 Multi-tenancy is <strong>enabled by default</strong>. If you don't have idea 
 about multi-tenancy or don't want to create a multi-tenant application, you can
 <strong>disable</strong> it by setting <strong>
-AbpZeroTemplateConsts.MultiTenancyEnabled</strong> to false in the .Core 
+AbpZeroTemplateConsts.MultiTenancyEnabled</strong> to false in the .Core.Shared 
 project.</p>
 
 <h3 id="DocRunProject">Run The Project</h3>
 
-<p>All ready.. just run your solution. It will open home page of your web site. 
-You can click login link at top right corner to <strong>login</strong> to the 
-application:</p>
+<p>Before running the project, we need to run gulp to bundle and minify our css and javascript files. In order to do that, we can open Visual Studio's task runner and run the default task.</p>
+<img class="img-thumbnail" alt="install npm dependencies" src="images/taskrunner-gulp-core-1.png" />
+<p>or, we can open a command prompt, navigate to root directory of <strong>*.Web.Mvc</strong> project and run "<strong>gulp</strong>" command (gulp must be installed globally for this option)</p>
+<p>Now we are ready.. just run your solution. It will open login page of your web site. </p>
 <p>
-<img class="img-thumbnail" alt="Login page" height="511" src="images/login-screen-2.png" width="424" /></p>
+<img class="img-thumbnail" alt="Login page" src="images/login-screen-3.png" /></p>
 <p>If multi-tenancy is enabled, you will see the current tenant and a change 
 link. If so, click to Change and enter <strong>default</strong> as tenant name. 
 If you leave it empty, you login as the host admin user. Then enter
@@ -93,7 +113,7 @@ If you leave it empty, you login as the host admin user. Then enter
 should change password at first login. After login to the application, you will 
 see the sample dashboard screen:</p>
 <p>
-<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV2.png" width="1235" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV3.png" width="1235" /></p>
 <h3 id="DocMore">More</h3>
 
 <p>Your solution is up and working.
