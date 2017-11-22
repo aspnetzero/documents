@@ -5,6 +5,11 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
 <title>Developing an Application Step By Step</title>
+<style type="text/css">
+.auto-style1 {
+	background-color: #F5F5F5;
+}
+</style>
 </head>
 
 <body>
@@ -16,12 +21,12 @@ based on ASP.NET Zero (ASP.NET Core version) step by step. After all steps, we w
 multi-tenant, localized, authorized, configurable, testable... application.</p>
 
 <h3>Creating The Project</h3>
-<p>We're creating and downloading the solution named "<strong>Acme.PhoneBook</strong>" as described in
+<p>We're creating and downloading the solution named "<strong>Acme.PhoneBookDemo</strong>" as described in
 <a href="Getting-Started.html">Getting Started</a> document. After opening 
 solution in Visual Studio, we see an NLayered solution that consists of eight projects:</p>
 <p>
 
-<img class="img-thumbnail" alt="Solution Overall" src="images/solution-overall-core-1.png" /></p>
+<img class="img-thumbnail" alt="Solution Overall" src="images/solution-overall-core-5.png" /></p>
 <p>
 
 Also, run database migrations, create the database and login to the application 
@@ -29,20 +34,22 @@ as described in <a href="Getting-Started.html">Getting Started</a> document. Aft
 shown below:</p>
 <p>
 
-<img class="img-thumbnail" alt="Dashboard" height="594" src="images/default-dashboard2.png" width="800" /></p>
+<img class="img-thumbnail" alt="Dashboard"  src="images/default-dashboard3.png"  /></p>
 <p>
 
 Logout from the application for now.
 
 We will make our application <strong>single-tenant</strong> (we will convert it 
-to multi-tenant later). So, we open PhoneBookConsts class in the Acme.PhoneBook.Core project and disable multi-tenancy as shown below:</p>
-<pre lang="cs">public class PhoneBookConsts
+to multi-tenant later). So, we open PhoneBookDemoConsts class in the Acme.PhoneBookDemo.Core project and disable multi-tenancy as shown below:</p>
+<pre lang="cs">public class PhoneBookDemoConsts
 {
-    public const string LocalizationSourceName = "PhoneBook";
+    public const string LocalizationSourceName = "PhoneBookDemo";
 
     public const string ConnectionStringName = "Default";
 
 <strong>    public const bool MultiTenancyEnabled = false;</strong>
+
+    public const int PaymentCacheDurationInMinutes = 30;
 }</pre>
 
 <h3>Adding a New Page</h3>
@@ -73,14 +80,14 @@ AppNavigationProvider class).</p>
 .Core</strong> 
 project as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Localization files" src="images/localization-files-3.png" /></p>
+<img class="img-thumbnail" alt="Localization files" src="images/localization-files-5.png" /></p>
 <p>Open PhoneBook.xml (the <strong>default</strong>, <strong>English</strong> 
 localization dictionary) and add the following line:</p>
-<pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Phone book&quot; /&gt;</pre>
+<pre lang="xml">&lt;text name=&quot;PhoneBook&quot;&gt;Phone book&lt;/text&gt;</pre>
 <p>If we don't define "PhoneBook"s value for other localization dictionaries, 
 default value is shown in all languages. We can define it also for Turkish in 
 PhoneBook-tr.xml file:</p>
-<pre lang="xml">&lt;text name=&quot;PhoneBook&quot; value=&quot;Telefon rehberi&quot; /&gt;</pre>
+<pre lang="xml">&lt;text name=&quot;PhoneBook&quot;&gt;<span lang="tr">T<span class="auto-style1">elefon Rehberi</span></span>&lt;/text&gt;</pre>
 <h4>Other menu item properties</h4>
 <p><strong>url</strong> can be a URL (it's URL of an <strong>MVC Action</strong> 
 here) that will be 
@@ -97,7 +104,7 @@ navigation document</a> for more information on menu definitions.</p>
 Areas/App/Controllers</strong> folder in the Web project:</p>
 <pre lang="cs">
 [Area("App")]
-public class PhoneBookController : PhoneBookControllerBase
+public class PhoneBookController : PhoneBookDemoControllerBase
 {
     public ActionResult Index()
     {
@@ -105,46 +112,43 @@ public class PhoneBookController : PhoneBookControllerBase
     }
 }
 </pre>
-<p>We inherited from <strong>PhoneBookControllerBase</strong> (will be <em>
+<p>We inherited from <strong>PhoneBookDemoControllerBase</strong> (will be <em>
 YourProjectName</em>ControllerBase for your projects) instead of MVC's standard 
-Controller class. While it will work if we derive from the standard Controller, PhoneBookControllerBase 
-provides very useful base properties and methods. So, always inherit from this 
+Controller class. While it will work if we derive from the standard Controller, 
+PhoneBookDemoControllerBase provides very useful base properties and methods. So, always inherit from this 
 class unless it has a disadvantage for your case.</p>
 <h4>View</h4>
 <p>Creating an empty view, <strong>Index.cshtml</strong> under <strong>Areas/App/Views/PhoneBook</strong> 
 folder:</p>
 <pre lang="xml">
 @using System.Threading.Tasks
-@using Acme.PhoneBook.Web.Areas.App.Startup
+@using Acme.PhoneBookDemo.Web.Areas.App.Startup
 
 @{
-    ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
+ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
 }
 
-&lt;div class="row margin-bottom-5"&gt;
-    &lt;div class="col-xs-12"&gt;
-        &lt;div class="page-head"&gt;
-            &lt;div class="page-title"&gt;
-                &lt;h1&gt;
-                    &lt;span&gt;@L("PhoneBook")&lt;/span&gt;
-                &lt;/h1&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
+&lt;div class=&quot;m-subheader&quot;&gt;
+<span lang="tr">	</span>&lt;div class=&quot;d-flex align-items-center&quot;&gt;
+<span lang="tr">		</span>&lt;div class=&quot;mr-auto&quot;&gt;
+<span lang="tr">			</span>&lt;h3 class=&quot;m-subheader__title m-subheader__title--separator&quot;&gt;
+<span lang="tr">				</span>&lt;span&gt;@L(&quot;PhoneBook&quot;)&lt;/span&gt;
+<span lang="tr">			</span>&lt;/h3&gt;
+<span lang="tr">			</span>&lt;span class=&quot;m-section__sub&quot;&gt;
+<span lang="tr">				</span>@L(&quot;PhoneBookInfo&quot;)
+<span lang="tr">			</span>&lt;/span&gt;
+<span lang="tr">		</span>&lt;/div&gt;
+<span lang="tr">	</span>&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="portlet light"&gt;
-    &lt;div class="portlet-body"&gt;
-
-        &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
-
-    &lt;/div&gt;
+&lt;div class=&quot;m-content&quot;&gt;
+<span lang="tr">	</span>&lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
 &lt;/div&gt;
 </pre>
 <p>We set ViewBag.CurrentPageName to the current page's name to automatically 
 highlight the related menu item when this page is active. Now, it's time to run application and see the new phone book page:</p>
 <p>
-<img class="img-thumbnail" alt="Phone book empty screen" height="255" src="images/phonebook-empty-mpa.png" width="974" /></p>
+<img class="img-thumbnail" alt="Phone book empty screen" src="images/phonebook-empty-mpa2.png" /></p>
 <p>Menu item display name and page title are localized. Try to change UI 
 language to see difference.</p>
 <h3>Creating Person Entity</h3>
@@ -178,16 +182,16 @@ and <a href="https://aspnetboilerplate.com/Pages/Documents/Data-Filters">data
 filters</a> documentations for more information). We created consts for <strong>
 MaxLength</strong> properties. This is a good practice since we will use same 
 values later.</p>
-<p>We add a DbSet property for Person entity to <strong>PhoneBookDbContext</strong> 
+<p>We add a DbSet property for Person entity to <strong>PhoneBookDemoDbContext</strong> 
 class defined in <strong>.EntityFrameworkCore</strong> project.</p>
 
-<pre lang="cs">public class PhoneBookDbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
+<pre lang="cs">public class PhoneBook<span lang="tr">Demo</span>DbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
 {
 <strong>    public virtual DbSet&lt;Person&gt; Persons { get; set; }
 </strong>        
     //...other entities
 
-    public PhoneBookDbContext()
+    public PhoneBook<span lang="tr">Demo</span>DbContext()
         : base(&quot;Default&quot;)
     {
 
@@ -254,13 +258,13 @@ classes to fill initial data for users and settings:</p>
 <p>So, we can add a seperated class to fill some people to database 
 as shown below:</p>
 <pre lang="cs">
-namespace Acme.PhoneBook.Migrations.Seed.Host
+namespace Acme.PhoneBookDemo.Migrations.Seed.Host
 {
     public class InitialPeopleCreator
     {
-        private readonly PhoneBookDbContext _context;
+        private readonly PhoneBookDemoDbContext _context;
 
-        public InitialPeopleCreator(PhoneBookDbContext context)
+        public InitialPeopleCreator(PhoneBookDemoDbContext context)
         {
             _context = context;
         }
@@ -358,7 +362,7 @@ application service</a> and
 <a href="https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
 DTO</a> documentations for more information.</p>
 <p>After defining interface, we can implement it as shown below:</p>
-<pre lang="cs">public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
+<pre lang="cs">public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
 {
     private readonly IRepository&lt;Person&gt; _personRepository;
 
@@ -508,7 +512,7 @@ parameters and it's executed in 134 ms.</p>
 <p>It's time to open <strong>PhoneBookController</strong> and get people to show on the view:</p>
 <pre lang="cs">
 [Area(&quot;App&quot;)]
-public class PhoneBookController : PhoneBookControllerBase
+public class PhoneBookController : PhoneBook<span lang="tr">Demo</span>ControllerBase
 {
     private readonly IPersonAppService _personAppService;
 
@@ -567,35 +571,35 @@ AutoMapFrom attribute to be able to make mapping.</p>
 <h3>Rendering People In MVC View</h3>
 <p>We show people on the page is most basic form. See the changed view below:</p>
 <pre lang="xml">...
-@model Acme.PhoneBook.Web.Areas.App.Models.PhoneBook.IndexViewModel
+@model Acme.PhoneBook<span lang="tr">Demo</span>.Web.Areas.App.Models.PhoneBook.IndexViewModel
 ...
-        &lt;h3&gt;<strong>@L(&quot;AllPeople&quot;)</strong>&lt;/h3&gt;
+        &lt;h5 class=&quot;m-subheader__title m-subheader&quot;&gt;@L(&quot;AllPeople&quot;)&lt;/h5&gt;
 
-        &lt;div class=&quot;list-group&quot;&gt;
-            <strong>@foreach (var person in Model.Items)</strong>
-            {
-                &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot;&gt;
-                    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
-                        <strong>@person.Name @person.Surname</strong>
-                    &lt;/h4&gt;
-                    &lt;p class=&quot;list-group-item-text&quot;&gt;
-                        <strong>@person.EmailAddress</strong>
-                    &lt;/p&gt;
-                &lt;/a&gt;
-            }
-        &lt;/div&gt;
+<span lang="tr">	</span>&lt;div class=&quot;list-group&quot;&gt;
+<span lang="tr">	</span>@foreach (var person in Model.Items)
+<span lang="tr">	</span>{
+<span lang="tr">		</span>&lt;a href=&quot;javascript:;&quot; style=&quot;color: black&quot; class=&quot;list-group-item&quot;&gt;
+<span lang="tr">			</span>&lt;h5 class=&quot;list-group-item-heading&quot; style=&quot;font-weight: lighter&quot;&gt;
+<span lang="tr">				</span>@person.Name @person.Surname
+<span lang="tr">			</span>&lt;/h5&gt;
+<span lang="tr">			</span>&lt;p class=&quot;list-group-item-text&quot;&gt;
+<span lang="tr">				</span>@person.EmailAddress
+<span lang="tr">			</span>&lt;/p&gt;
+<span lang="tr">		</span>&lt;/a&gt;
+<span lang="tr">	</span>}
+<span lang="tr">	</span>&lt;/div&gt;
 ...</pre>
 <p>We declared the <strong>@model</strong> and used a foreach loop to render 
 people. See the result:</p>
 <p>
-<img class="img-thumbnail" alt="Phonebook peoples" height="285" src="images/phonebook-people-view-1.png" width="790" /></p>
+<img class="img-thumbnail" alt="Phonebook peoples" height="354" src="images/phonebook-people-view-3.png" width="954" /></p>
 <p>We successfully retrieved list of people from database to the page.</p>
 
 <div class="bs-callout bs-callout-info">
 	<h4>About Showing Tabular Data</h4>
 	<p>We normally use a javascript based rich table/grid library to show 
 	tabular data, instead of manually rendering data like that. For example, we 
-	used <a href="http://jtable.org/" target="_blank">jTable</a> library to show 
+	used to use <a href="http://jtable.org/" target="_blank">jTable</a> library to show 
 	users on the Users page of AspNet Zero. Always use such components since 
 	they make things much more easier and provides a much better user 
 	experience.</p>
@@ -702,8 +706,8 @@ them here.</p>
 Areas/App/Views/Common/Modals/Empty</strong> folder as a base for a new modal to <strong>Areas/App/Views/PhoneBook/_CreatePersonModal.cshtml</strong>.</p>
 <p>Copied and modifined the view code as shown below (_CreatePersonModal.cshtml):&nbsp;</p>
 <pre lang="xml">
-@using Acme.PhoneBook.People
-@using Acme.PhoneBook.Web.Areas.App.Models.Common.Modals
+@using Acme.PhoneBook<span lang="tr">Demo</span>.People
+@using Acme.PhoneBook<span lang="tr">Demo</span>.Web.Areas.App.Models.Common.Modals
 
 @Html.Partial(&quot;~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml&quot;, new ModalHeaderViewModel(L(&quot;CreateNewPerson&quot;)))
 
@@ -784,7 +788,7 @@ some javascript code to open the modal when clicked to the button.</p>
     &lt;/div&gt;
     
     &lt;div class=&quot;col-xs-6 text-right&quot;&gt;
-<strong>        &lt;button id=&quot;CreateNewPersonButton&quot; class=&quot;btn btn-primary blue&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;</strong>
+<strong>        &lt;button id=&quot;CreateNewPersonButton&quot; class=&quot;btn btn-primary&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; @L(&quot;CreateNewPerson&quot;)&lt;/button&gt;</strong>
     &lt;/div&gt;
 &lt;/div&gt;
 
@@ -840,7 +844,7 @@ So, open the <strong>PhoneBookController</strong> again and add the following ac
 }</pre>
 <p>Now, we can run the application and open the modal by clicking the 'Create 
 New Person' button:</p>
-<p><img class="img-thumbnail" alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
+<p><img class="img-thumbnail" alt="Create Person Dialog" src="images/phonebook-create-person-dialog2.png" /></p>
 <h4>Saving The Person</h4>
 <p>Finally, we can save the person when user clicks the the save button. We 
 implement it in the _CreatePersonModal.js file:</p>
@@ -940,7 +944,7 @@ easy, open <strong>AppNavigationProvider</strong> and add requiredPermissionName
 <p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
 page and edit <strong>admin</strong> role:</p>
 <p>
-<img class="img-thumbnail" alt="Role permissions" height="574" src="images/role-permissions-with-phonebook.png" width="617" /></p>
+<img class="img-thumbnail" alt="Role permissions" height="898" src="images/role-permissions-with-phonebook2.png" width="839" /></p>
 <p>We see that a <strong>new permission</strong> named "<strong>Phone book</strong>" 
 added to <strong>permissions</strong> tab. So, we can check it and save the 
 role. After saving, we need to <strong>refresh </strong>the whole page to 
@@ -987,7 +991,7 @@ not see this button.</p>
 <p>To see the button again, we can go to role or user manager and grant related 
 permission as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
+<img class="img-thumbnail" alt="User specific permissions"  src="images/user-permissions-phonebook2.png"  /></p>
 <p>As shown above, <strong>Create new person</strong> permission is a child 
 permission of the <strong>Phone book</strong>.</p>
 <h4>Authorization for MVC Controllers</h4>
@@ -1017,7 +1021,7 @@ authorization documentation</a> for more information on authorization.</p>
 <h3>Deleting a Person</h3>
 <p>Let's add a delete button in people list as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Delete person" height="409" src="images/phonebook-people-delete-button.png" width="768" /></p>
+<img class="img-thumbnail" alt="Delete person" src="images/phonebook-people-delete-button3.png"/></p>
 <p>
 We're starting from UI in this case.</p>
 <h4>View</h4>
@@ -1029,12 +1033,12 @@ here):</p>
         &lt;a href=&quot;javascript:;&quot; class=&quot;list-group-item&quot; <strong>data-person-id="@person.Id"</strong>&gt;
             &lt;h4 class=&quot;list-group-item-heading&quot;&gt;
                 @person.Name @person.Surname
-<strong>                @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
-                {
-                    &lt;button title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red delete-person&quot; href=&quot;javascript:;&quot;&gt;
-                        &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
-                    &lt;/button&gt;
-                }
+ <span lang="tr">		</span>@if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
+<span lang="tr">		</span>{
+<span lang="tr">			</span>&lt;button title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only btn-danger delete-person&quot; href=&quot;javascript:;&quot;&gt;
+<span lang="tr">				</span>&lt;i class=&quot;la la-trash&quot;&gt;&lt;/i&gt;
+<span lang="tr">			</span>&lt;/button&gt;
+<span lang="tr">		</span>}<strong>
 </strong>            &lt;/h4&gt;
             &lt;p class=&quot;list-group-item-text&quot;&gt;
                 @person.EmailAddress
@@ -1089,7 +1093,7 @@ $(&#39;#AllPeopleList button.delete-person&#39;).click(function (e) {
 });</pre>
 <p>It first shows a confirmation message when we click the delete button:</p>
 <p>
-<img class="img-thumbnail" alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
+<img class="img-thumbnail" alt="Confirmation message" src="images/confirmation-delete-person2.png" /></p>
 <p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
 <strong>PersonAppService</strong> and shows a 
 <strong>
@@ -1114,27 +1118,25 @@ AppAuthorizationProvider</strong>.</p>
 <p>Now, we will implement <strong>search</strong> functionality of <strong>
 GetPeople</strong> method. UI is shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Searching people" height="328" src="images/search-people.png" width="770" /></p>
+<img class="img-thumbnail" alt="Searching people" height="328" src="images/search-people2.png" width="770" /></p>
 <p>We added a search input to filter people (showing the related part of the 
 code):</p>
 <pre lang="xml">&lt;div class=&quot;portlet light&quot;&gt;
 <strong>    &lt;div class=&quot;portlet-title portlet-title-filter&quot;&gt;
-
-        &lt;h3&gt;@L(&quot;AllPeople&quot;) (@Model.Items.Count)&lt;/h3&gt;
-
+        &lt;h5 class=&quot;m-subheader__title m-subheader&quot;&gt;@L(&quot;AllPeople&quot;) (@Model.Items.Count)&lt;/h5&gt;
         &lt;div class=&quot;inputs inputs-full-width&quot;&gt;
             &lt;div class=&quot;portlet-input&quot;&gt;
                 &lt;form action=&quot;@Url.Action(&quot;Index&quot;)&quot; method=&quot;GET&quot;&gt;
                     &lt;div class=&quot;input-group&quot;&gt;
                         &lt;input id=&quot;FilterPeopleText&quot; name=&quot;Filter&quot; value=&quot;@Model.Filter&quot; class=&quot;form-control&quot; placeholder=&quot;@L(&quot;SearchWithThreeDot&quot;)&quot; type=&quot;text&quot;&gt;
                         &lt;span class=&quot;input-group-btn&quot;&gt;
-                            &lt;button id=&quot;FilterPeopleButton&quot; class=&quot;btn default&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;icon-magnifier&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+                            &lt;button id=&quot;FilterPeopleButton&quot; class=&quot;btn default btn-success&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;la la-search-plus&quot;&gt;&lt;/i&gt;&lt;/button&gt;
                         &lt;/span&gt;
                     &lt;/div&gt;
                 &lt;/form&gt;
             &lt;/div&gt;
         &lt;/div&gt;
-    &lt;/div&gt;
+<span lang="tr">    </span>&lt;/div&gt;
 </strong>
     &lt;div class=&quot;portlet-body&quot;&gt;
 
@@ -1262,7 +1264,7 @@ InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):</p>
 
     public void Create()
     {
-        var douglas = _context.Persons.FirstOrDefault(p =&gt; p.EmailAddress == &quot;douglas.adams@fortytwo.net&quot;);
+        var douglas = _context.Persons.FirstOrDefault(p =&gt; p.EmailAddress == &quot;douglas.adams@fortytwo.com&quot;);
         if (douglas == null)
         {
             _context.Persons.Add(
@@ -1407,7 +1409,7 @@ different pros and cons. It's your choice.</p>
 <h3>Edit Mode For Phone Numbers</h3>
 <p>Final UI is shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Phone book edit mode" height="642" src="images/phone-book-edit-mode.png" width="762" /></p>
+<img class="img-thumbnail" alt="Phone book edit mode" height="642" src="images/phone-book-edit-mode2.png" width="762" /></p>
 <p>When we click the <strong>green edit icon</strong> for a person, it's row is 
 expanded and all phone numbers are shown. Then we can delete any number by 
 clicking the icon at left. We can add a new phone from the inputs at last line.</p>
@@ -1422,12 +1424,12 @@ clicking the icon at left. We can add a new phone from the inputs at last line.<
 
                 &lt;span class=&quot;person-buttons&quot;&gt;
 <strong>                    &lt;button title=&quot;@L(&quot;Edit&quot;)&quot; class=&quot;btn btn-circle btn-icon-only green edit-person&quot;&gt;
-                        &lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;
+                        &lt;i class=&quot;la la-pencil&quot;&gt;&lt;/i&gt;
                     &lt;/button&gt;
 </strong>                    @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
                     {
                         &lt;button title=&quot;@L(&quot;Delete&quot;)&quot; class=&quot;btn btn-circle btn-icon-only red delete-person&quot; href=&quot;javascript:;&quot;&gt;
-                            &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+                            &lt;i class=&quot;la la-trash&quot;&gt;&lt;/i&gt;
                         &lt;/button&gt;
                     }
                 &lt;/span&gt;
@@ -1452,7 +1454,7 @@ clicking the icon at left. We can add a new phone from the inputs at last line.<
                         &lt;tr&gt;
                             &lt;td&gt;
                                 &lt;button class=&quot;btn btn-sm green button-save-phone&quot;&gt;
-                                    &lt;i class=&quot;fa fa-floppy-o&quot;&gt;&lt;/i&gt;
+                                    &lt;i class=&quot;la la-floppy-o&quot;&gt;&lt;/i&gt;
                                 &lt;/button&gt;
                             &lt;/td&gt;
                             &lt;td&gt;
@@ -1480,11 +1482,11 @@ view when we create a new phone. The
 <strong>            _PhoneRowInPersonList
 </strong>        partial view is here:</p>
 <pre lang="xml">
-@model Acme.PhoneBook.Web.Areas.App.Models.PhoneBook.PhoneRowInPersonListViewModel
+@model Acme.PhoneBookDemo.Web.Areas.App.Models.PhoneBook.PhoneRowInPersonListViewModel
 &lt;tr data-phone-id=&quot;@Model.Phone.Id&quot;&gt;
     &lt;td&gt;
         &lt;button class=&quot;btn btn-sm default button-delete-phone&quot;&gt;
-            &lt;i class=&quot;icon-trash&quot;&gt;&lt;/i&gt;
+            &lt;i class=&quot;la la-trash&quot;&gt;&lt;/i&gt;
         &lt;/button&gt;
     &lt;/td&gt;
     &lt;td&gt;@Model.GetPhoneTypeAsString()&lt;/td&gt;
@@ -1503,7 +1505,7 @@ view when we create a new phone. The
 
     public string GetPhoneTypeAsString()
     {
-        return LocalizationHelper.GetString(PhoneBookConsts.LocalizationSourceName, &quot;PhoneType_&quot; + Phone.Type);
+        return LocalizationHelper.GetString(PhoneBookDemoConsts.LocalizationSourceName, &quot;PhoneType_&quot; + Phone.Type);
     }
 }</pre>
 <h4>Styles</h4>
@@ -1677,8 +1679,7 @@ and e-mail. Then create the functions in PersonAppService for editing people:<br
 
 <pre lang="cs" >
 using Abp.AutoMapper;
-using Acme.PhoneBook.Localization.Dto;
-using Acme.PhoneBook.PhoneBook.Dto;
+using Acme.PhoneBookDemo.PhoneBook;
 
 namespace Acme.PhoneBook.Web.Areas.App.Models.PhoneBook
 {
@@ -1765,7 +1766,8 @@ namespace Acme.PhoneBook.Web.Areas.App.Models.PhoneBook
 <p>We have built a fully functional application until here. Now, we will see how 
 to convert it to a multi-tenant application easily.</p>
 <h4>Enable Multi Tenancy</h4>
-<p>We disabled multi-tenancy at the begginning of this document. Now, re-enabling it in PhoneBookConsts class:</p>
+<p>We disabled multi-tenancy at the begginning of this document. Now, re-enabling it in 
+PhoneBookDemoConsts class:</p>
 <pre lang="cs">public const bool MultiTenancyEnabled = true;</pre>
 <h4>Make Entities Multi Tenant</h4>
 <p>In a multi-tenant application, a tenant's entities should be isolated by 
@@ -1800,23 +1802,23 @@ current people are automatically assigned to <strong>default tenant</strong>
 <p><strong>It's finished</strong>! We can test the application. Run the project, <strong>login</strong> as 
 the <strong>host admin</strong> (click Change link and clear tenancy name) shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Login as host" height="506" src="images/login-as-host-2.png" width="416" /></p>
+<img class="img-thumbnail" alt="Login as host" src="images/login-as-host-5.png"  /></p>
 <p>Default <strong>admin</strong> password is <strong>123qwe</strong>. After login, we see the <strong>tenant list</strong> which only contains a <strong>default</strong> 
 tenant. We can create a new tenant:</p>
 <p>
-<img class="img-thumbnail" alt="Creating tenant" height="655" src="images/create-tenant-5.png" width="619" /></p>
+<img class="img-thumbnail" alt="Creating tenant"  src="images/create-tenant-7.png" /></p>
 <p>I created a new tenant named <strong>trio</strong>. Now, tenant list has two 
 tenants:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant list" src="images/tenant-list-with-2-tenant-1.png" /></p>
+<img class="img-thumbnail" alt="Tenant list" src="images/tenant-list-with-2-tenant-2.png" /></p>
 <p>&nbsp;I can <strong>logout</strong> and 
 login as <strong>trio</strong> tenant <strong>admin</strong> (Change current 
 tenant to trio):</p>
 <p>
-<img class="img-thumbnail" alt="Login as tenant admin" height="509" src="images/login-as-trio.png" width="416" /></p>
+<img class="img-thumbnail" alt="Login as tenant admin" src="images/login-as-trio3.png"  /></p>
 <p>After login, we see that phone book is empty:</p>
 <p>
-<img alt="Empty phonebook of new tenant" height="210" src="images/phonebook-empty.png" width="791" /></p>
+<img alt="Empty phonebook of new tenant" src="images/phonebook-empty2.png" /></p>
 <p>It's empty because trio tenant has a completely islolated people list. You can 
 add people here, logout and login as different teants (you can login as default 
 tenant for example). You will see that each tenant 
