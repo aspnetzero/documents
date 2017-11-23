@@ -9,6 +9,9 @@
 .auto-style1 {
 	background-color: #F5F5F5;
 }
+.auto-style2 {
+	text-decoration: underline;
+}
 </style>
 </head>
 
@@ -17,32 +20,34 @@
 <h3>Introduction</h3>
 
 <p>In this document, we will create a sample <strong>phonebook application</strong> 
-based on ASP.NET Zero (ASP.NET Core &amp; Angular 2+ version) step by step. After all steps, we will have a 
+based on ASP.NET Zero (ASP.NET Core &amp; Angular 5 version) step by step. After all steps, we will have a 
 multi-tenant, localized, authorized, configurable, testable... appliaction.</p>
 
 <h3>Creating And Running The Project</h3>
-<p>We're creating and downloading the solution named "<strong>Acme.PhoneBook</strong>" as described in
+<p>We're creating and downloading the solution named "<strong>Acme.PhoneBookDemo</strong>" as described in
 <a href="Getting-Started-Angular.html">Getting Started</a> document. Please 
 follow the getting started document, run the application, login as default 
 tenant admin (select Default as tenancy name, use admin as username and 123qwe 
 as password) and see the dashboard below:</p>
-<p><img alt="Dashboard" height="870" src="images/dashboard.png" width="1339" /></p>
+<p><img alt="Dashboard" height="auto" src="images/dashboard1.png" width="100%" /></p>
 <p>
 
 Logout from the application for now.
 
 We will make our application <strong>single-tenant</strong> (we will convert it 
 to multi-tenant later). So, we 
-open <strong>PhoneBookConsts</strong> class in the Acme.PhoneBook.Core project and disable multi-tenancy as 
+open <strong>PhoneBookDemoConsts</strong> class in the <strong>Acme.PhoneBookDemo.Core</strong> project and disable multi-tenancy as 
 shown below:</p>
 <pre lang="cs">
-public class PhoneBookConsts
+public class PhoneBook<span lang="tr">Demo</span>Consts
 {
-    public const string LocalizationSourceName = "PhoneBook";
+    public const string LocalizationSourceName = "PhoneBook<span lang="tr">Demo</span>";
 
     public const string ConnectionStringName = "Default";
 
 <strong>    public const bool MultiTenancyEnabled = false;</strong>
+
+    public const int PaymentCacheDurationInMinutes = 30;
 }
 </pre>
 
@@ -52,30 +57,30 @@ public class PhoneBookConsts
 <h3>Adding a New Menu Item</h3>
 <p>Let's begin from UI and create a new page named "<strong>Phone book</strong>".</p>
 <h4>Defining a Menu Item</h4>
-<p>Open app\shared\layout\<strong>side-bar.component.ts</strong> in the client 
-side which defines menu items in the application. Create new menu item as shown below (You can add it right after the dashboard 
+<p>Open <strong>src\app\shared\layout\nav\app-navigation.service.ts</strong> in the client 
+side (<strong>Acme.PhoneBookDemo.AngularUI</strong>) which defines menu items in the application. Create new menu item as shown below (You can add it right after the dashboard 
 menu item).</p>
-<pre lang="js">new SideBarMenuItem("PhoneBook", null, "icon-notebook", "/app/main/phonebook")</pre>
+<pre lang="js">new <span lang="tr">App</span>MenuItem("PhoneBook", null, "<span lang="tr">flat</span>icon-book", "/app/main/phonebook")</pre>
 <p><strong>PhoneBook</strong> is the menu name (will localize below), <strong>
-null</strong> is for permission name (will set it later), <strong>icon-notebook</strong> 
+null</strong> is for permission name (will set it later), <strong>flaticon-book</strong> 
 is just an arbitrary icon class (from
-<a href="http://keenthemes.com/preview/metronic/theme/admin_4_material_design/ui_icons.html" target="_blank">
+<a href="http://keenthemes.com/metronic/preview/?page=components/icons/flaticon&demo=default" target="_blank">
 this set</a>) and <strong>/phonebook</strong> is the angular route.</p>
 <p>If you run the application, you can see a new menu item on the left menu, but 
-it won't work if you click to the menu item, since we haven't defined the 
+it won't work (it redirect to default route) if you click to the menu item, since we haven't defined the 
 Angular route yet.</p>
 <h4>Localize Menu Item Display Name</h4>
 <p>Localization strings are defined in <strong>XML</strong> files in <strong>
 .Core</strong> 
 project (in server side) as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Localization files" height="151" src="images/localization-files-2.png" width="202" /></p>
-<p>Open PhoneBook.xml (the <strong>default</strong>, <strong>English</strong> 
+<img class="img-thumbnail" alt="Localization files" height="auto" src="images/localization-files-4.png" width="auto" /></p>
+<p>Open PhoneBookDemo.xml (the <strong>default</strong>, <strong>English</strong> 
 localization dictionary) and add the following line:</p>
 <pre lang="xml">&lt;text name="<strong>PhoneBook</strong>"&gt;Phone Book&lt;/text&gt;</pre>
 <p>If we don't define "PhoneBook"s value for other localization dictionaries, 
 default value is shown in all languages. For example, we can define it also for Turkish in 
-PhoneBook-tr.xml file:</p>
+PhoneBookDmo-tr.xml file:</p>
 <pre lang="xml">&lt;text name="PhoneBook"&gt;Telefon Rehberi&lt;/text&gt;</pre>
 <p>Note: Any change in server side (including change localization texts) requires recycle of the server application.
 We suggest to use Ctrl+F5 if you don't need to debugging for a faster startup. In that case, it's enough to make a re-build to recycle the application.</p>
@@ -83,13 +88,13 @@ We suggest to use Ctrl+F5 if you don't need to debugging for a faster startup. I
 <p>Angular has a powerful URL routing system. AspNet Zero has defined routes in 
 a few places (for modularity, see <a href="Development-Guide-Angular.html">dev 
 guide</a>). We want to add phone book page to the main module. So, open 
-app\main\<strong>main-routing.module.ts</strong> (in the client side) and add a new route just 
+<strong>src\app\main\main-routing.module.ts</strong> (in the client side) and add a new route just 
 below to the dashboard:</p>
 <pre lang="js">{ path: '<strong>phonebook</strong>', component: <strong>PhoneBookComponent</strong> }</pre>
 <p>We get an error since we haven't defined PhoneBookComponent yet. Also, we 
 ignored permission for now (will implement later).</p>
 <h3>Creating the PhoneBookComponent</h3>
-<p>Create a <strong>phonebook</strong> folder inside app/main folder and add a 
+<p>Create a <strong>phonebook</strong> folder inside <strong>src/app/main</strong> folder and add a 
 new typescript file (<strong>phonebook.component.ts</strong>) in the phonebook 
 folder as shown below:</p>
 <pre lang="js">import { Component, Injector } from '@angular/core';
@@ -100,14 +105,13 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
     templateUrl: '<strong>./phonebook.component.html</strong>',
     animations: [appModuleAnimation()]
 })
-export class <strong>PhoneBookComponent</strong> extends <strong>AppComponentBase</strong> {
 
+export class <strong>PhoneBookComponent</strong> extends <strong>AppComponentBase</strong> {
     constructor(
         injector: Injector
     ) {
         super(injector);
     }
-
 }</pre>
 <p>We inherited from <strong>AppComponentBase</strong> which provides some 
 common functions and fields (like localization and access control) for us. It's 
@@ -117,26 +121,24 @@ and add import statement for the newly created PhoneBookComponent class:</p>
 <p>As we declared in <strong>phonebook.component.ts</strong> we should create a <strong>phonebook.component.html</strong> view 
 in the same phonebook folder:</p>
 <pre lang="xml">&lt;div <strong>[@routerTransition]</strong>&gt;
-    &lt;div class="row margin-bottom-5"&gt;
-        &lt;div class="col-xs-12"&gt;
-            &lt;div class="page-head"&gt;
-                &lt;div class="page-title"&gt;
-                    &lt;h1&gt;
-                        &lt;span&gt;<strong>{{l("PhoneBook")}}</strong>&lt;/span&gt;
-                    &lt;/h1&gt;
-                &lt;/div&gt;
+    &lt;div class=&quot;m-subheader &quot;&gt;
+        &lt;div class=&quot;d-flex align-items-center&quot;&gt;
+            &lt;div class=&quot;mr-auto col-sm-6&quot;&gt;
+                &lt;h3 class=&quot;m-subheader__title m-subheader__title--separator&quot;&gt;
+                    <strong>&lt;span&gt;{{l(&quot;PhoneBook&quot;)}}&lt;/span&gt;</strong>
+                &lt;/h3&gt;
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-   
-    &lt;div class="portlet light margin-bottom-0"&gt;
-        &lt;div class="portlet-body"&gt;
-            
-            &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
-
+    &lt;div class=&quot;m-content&quot;&gt;
+        &lt;div class=&quot;m-portlet m-portlet--mobile&quot;&gt;
+            &lt;div class=&quot;m-portlet__body&quot;&gt;
+                &lt;p&gt;PHONE BOOK CONTENT COMES HERE!&lt;/p&gt;
+            &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;</pre>
+
 <p><strong>l</strong> (lower case 'L') function comes from <strong>AppComponentBase</strong> 
 and used to easily localize texts. <strong>[@routerTransition]</strong> 
 attribute is required for page transition animation.</p>
@@ -177,7 +179,7 @@ export class MainModule { }
 <strong>declarations</strong> array. Now, we can refresh the page to see the new 
 added page:</p>
 <p>
-<img class="img-thumbnail" alt="Phonebook empty" height="256" src="images/phonebook-empty-ng.png" width="976" /></p>
+<img class="img-thumbnail" alt="Phonebook empty" height="auto" src="images/phonebook-empty-ng2.png" width="100%" /></p>
 <p>Note: Angular-cli automatically re-compiles and refreshes the page when any 
 changes made to any file in the application.</p>
 <h3>Creating Person Entity</h3>
@@ -189,7 +191,7 @@ in in a new folder/namespace named People):</p>
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
 
-namespace Acme.PhoneBook.People
+namespace Acme.PhoneBook<span lang="tr">Demo</span>.People
 {
     <strong>[Table("PbPersons")]</strong>
     public class Person : FullAuditedEntity
@@ -220,10 +222,10 @@ and <a href="https://aspnetboilerplate.com/Pages/Documents/Data-Filters">data
 filters</a> documentations for more information). We created consts for <strong>
 MaxLength</strong> properties. This is a good practice since we will use same 
 values later.</p>
-<p>We add a DbSet property for Person entity to <strong>PhoneBookDbContext</strong> 
+<p>We add a DbSet property for Person entity to <strong>PhoneBookDemoDbContext</strong> 
 class defined in <strong>.EntityFrameworkCore</strong> project.</p>
 
-<pre lang="cs">public class PhoneBookDbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
+<pre lang="cs">public class PhoneBook<span lang="tr">Demo</span>DbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
 {
 <strong>    public virtual DbSet&lt;Person&gt; Persons { get; set; }
 </strong>        
@@ -280,20 +282,20 @@ suggested to have a basic understanding of migrations. In the same Package Manag
 apply the new migration to database. After updating, we can see that <strong>PbPersons 
 table</strong> is added to database.</p>
 <p>
-<img class="img-thumbnail" alt="Phonebook tables" height="370" src="images/phonebook-tables-mpa.png" width="192" /></p>
+<img class="img-thumbnail" alt="Phonebook tables" height="auto" src="images/phonebook-tables-spa.png" width="auto" /></p>
 <p>But this new table is empty. In ASP.NET Zero, there are some 
 classes to fill initial data for users and settings:</p>
 <p>
 <img class="img-thumbnail" alt="Seed folders" src="images/aspnet-core-ef-seed-1.png" /></p>
 <p>So, we can add a seperated class to fill some people to database 
 as shown below:</p>
-<pre lang="cs">namespace Acme.PhoneBook.Migrations.Seed.Host
+<pre lang="cs">namespace Acme.PhoneBook<span lang="tr">Demo</span>.Migrations.Seed.Host
 {
     public class InitialPeopleCreator
     {
-        private readonly PhoneBookDbContext _context;
+        private readonly PhoneBook<span lang="tr">Demo</span>DbContext _context;
 
-        public InitialPeopleCreator(PhoneBookDbContext context)
+        public InitialPeopleCreator(PhoneBook<span lang="tr">Demo</span>DbContext context)
         {
             _context = context;
         }
@@ -361,7 +363,7 @@ to create it):</p>
 <pre lang="cs">using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 
-namespace Acme.PhoneBook.People
+namespace Acme.PhoneBook<span lang="tr">Demo</span>.People
 {
     public interface IPersonAppService : IApplicationService
     {
@@ -397,7 +399,7 @@ application service</a> and
 DTO</a> documentations for more information.</p>
 <p>After defining interface, we can implement it as shown below:</p>
 <pre lang="cs">
-public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
+public class PersonAppService : PhoneBook<span lang="tr">Demo</span>AppServiceBase, IPersonAppService
 {
     private readonly IRepository&lt;Person&gt; _personRepository;
 
@@ -453,17 +455,17 @@ method without creating a user interface. We write unit test in .<strong>Tests</
 <div class="bs-callout bs-callout-warning">
 	<h4>MultiTenancy In Tests</h4>
 <p>Since we disabled multitenancy, we should disable it for unit tests 
-too. Open <strong>PhoneBookConsts</strong> class in the Acme.PhoneBook.Core project and set "<strong>MultiTenancyEnabled</strong>" to 
+too. Open <strong>PhoneBookDemoConsts</strong> class in the Acme.PhoneBook.Core project and set "<strong>MultiTenancyEnabled</strong>" to 
 false. After a rebuild and run unit tests, you will see that some tests are skipped (those are related to multitenancy).</p>
 </div>
 <p>Let's 
 create first test to verify getting people without any filter:</p>
-<pre lang="cs">using Acme.PhoneBook.People;
-using Acme.PhoneBook.People.Dtos;
+<pre lang="cs">using Acme.PhoneBook<span lang="tr">Demo</span>.People;
+using Acme.PhoneBook<span lang="tr">Demo</span>.People.Dtos;
 using Shouldly;
 using Xunit;
 
-namespace Acme.PhoneBook.Tests.People
+namespace Acme.PhoneBook<span lang="tr">Demo</span>.Tests.People
 {
     public class PersonAppService_Tests : AppTestBase
     {
@@ -505,7 +507,7 @@ people</strong> in the returned list as we know that there were 2 people in
 <p>Let's run the <strong>all unit tests</strong> in Test Explorer and see if it 
 works:</p>
 <p>
-<img class="img-thumbnail" alt="xUnit unit test success" height="40" src="images/phone-book-unit-test-success-1.png" width="750" /></p>
+<img class="img-thumbnail" alt="xUnit unit test success" height="auto" src="images/phone-book-unit-test-success-2.png" width="auto" /></p>
 <p>As you see, it worked <strong>successfully</strong>. Now, we know that 
 PersonAppService works properly without any filter. Let's add a new unit test to 
 get filtered people:</p>
@@ -541,10 +543,10 @@ of people on the UI.</p>
 (.Web.Host project). Then run <strong>nswag/refresh.bat</strong> file on the 
 client side to re-generate service proxy classes (they are used to call server 
 side service methods).</p>
-<p>Since we added a new service, we should add it to shared/service-proxies/<strong>service-proxy.module.ts</strong>. 
-Just open it and add <strong>ApiServiceProxies.PersonServiceProxy</strong> to 
+<p>Since we added a new service, we should add it to <strong>src/shared/service-proxies/service-proxy.module.ts</strong>. 
+<span class="auto-style2">Just open it and add <strong>ApiServiceProxies.PersonServiceProxy</strong> to 
 the providers array. This step is only required when we add a new service. If we 
-change an existing service, it's not needed.</p>
+change an existing service, it's not needed.</span></p>
 <div class="bs-callout bs-callout-warning">
 	<h4>Angular-Cli Watcher</h4>
 <p>Sometimes angular-cli can not understand the file changes. In that case, stop it and re-run
@@ -592,41 +594,39 @@ interface). Assigned returned items to the <strong>people</strong> class member.
 <p>Now, we can use this people member from the view, <strong>
 phonebook.component.html</strong>:</p>
 <pre lang="xml">&lt;div [@routerTransition]&gt;
-    &lt;div class="row margin-bottom-5"&gt;
-        &lt;div class="col-xs-12"&gt;
-            &lt;div class="page-head"&gt;
-                &lt;div class="page-title"&gt;
-                    &lt;h1&gt;
-                        &lt;span&gt;{{l("PhoneBook")}}&lt;/span&gt;
-                    &lt;/h1&gt;
-                &lt;/div&gt;
+    &lt;div class=&quot;m-subheader &quot;&gt;
+        &lt;div class=&quot;d-flex align-items-center&quot;&gt;
+            &lt;div class=&quot;mr-auto col-sm-6&quot;&gt;
+                &lt;h3 class=&quot;m-subheader__title m-subheader__title--separator&quot;&gt;
+                    &lt;span&gt;{{l(&quot;PhoneBook&quot;)}}&lt;/span&gt;
+                &lt;/h3&gt;
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-   
-    &lt;div class="portlet light margin-bottom-0"&gt;
-        &lt;div class="portlet-body"&gt;
-            
-<strong>            &lt;h3&gt;{{l("AllPeople")}}&lt;/h3&gt;
-
-            &lt;div class="list-group"&gt;
-                &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"&gt;
-                    &lt;h4 class="list-group-item-heading"&gt;
-                        {{person.name + ' ' + person.surname}}
-                    &lt;/h4&gt;
-                    &lt;p class="list-group-item-text"&gt;
-                        {{person.emailAddress}}
-                    &lt;/p&gt;
-                &lt;/a&gt;
-            &lt;/div&gt;</strong>
-
+    &lt;div class=&quot;m-content&quot;&gt;
+        &lt;div class=&quot;m-portlet m-portlet--mobile&quot;&gt;
+            &lt;div class=&quot;m-portlet__body&quot;&gt;
+            <strong>
+                &lt;h3&gt;{{l(&quot;AllPeople&quot;)}}&lt;/h3&gt;
+                &lt;div class=&quot;m-widget1&quot;&gt;
+                    &lt;div class=&quot;m-widget1__item&quot; *ngFor=&quot;let person of people&quot;&gt;
+                        &lt;div class=&quot;row m-row--no-padding align-items-center&quot;&gt;
+                            &lt;div class=&quot;col&quot;&gt;
+                                &lt;h3 class=&quot;m-widget1__title&quot;&gt;{{person.name + ' ' + person.surname}}&lt;/h3&gt;
+                                &lt;span class=&quot;m-widget1__desc&quot;&gt;{{person.emailAddress}}&lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                </strong>
+            &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;</pre>
 <p>We simply used <strong>ngFor</strong> directive to loop and render 
 people data. See the result:</p>
 <p>
-<img class="img-thumbnail" alt="Phonebook peoples" height="285" src="images/phonebook-people-view-1.png" width="790" /></p>
+<img class="img-thumbnail" alt="Phonebook peoples" height="auto" src="images/phonebook-people-view-2.png" width="auto" /></p>
 <p>We successfully retrieved list of people from database to the page.</p>
 
 <div class="bs-callout bs-callout-info">
@@ -737,7 +737,7 @@ Bootstrap Modal to create a new person. AspNet Zero uses
 <a href="https://github.com/valor-software/ngx-bootstrap" target="_blank">
 ngx-bootstrap</a> library to create modals (you can use another library, but we 
 will use it in this sample too). Final modal will be like below:</p>
-<p><img class="img-thumbnail" alt="Create Person Dialog" height="380" src="images/phonebook-create-person-dialog.png" width="620" /></p>
+<p><img class="img-thumbnail" alt="Create Person Dialog" height="auto" src="images/phonebook-create-person-dialog1.png" width="auto" /></p>
 <p>First of all, we should use <strong>nswag/refresh.bat</strong> to re-generate 
 service-proxies. This will generate the code that is needed to call 
 PersonAppService.<strong>CreatePerson</strong> 
@@ -821,43 +821,42 @@ documentation</a>).</p>
 <p>As declared in the component, we are creating the <strong>
 create-person-modal.component.html</strong> file in the same folder as shown 
 below:</p>
-<pre lang="xml">&lt;div bsModal <strong>#modal="bs-modal" (onShown)="onShown()"</strong> class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}"&gt;
-    &lt;div class="modal-dialog"&gt;
-        &lt;div class="modal-content"&gt;
-            &lt;form *ngIf="active" #personForm="ngForm" novalidate <strong>(ngSubmit)="save()"</strong>&gt;
-                &lt;div class="modal-header"&gt;
-                    &lt;button type="button" class="close" <strong>(click)="close()"</strong> aria-label="Close"&gt;
-                        &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
-                    &lt;/button&gt;
-                    &lt;h4 class="modal-title"&gt;
-                        &lt;span&gt;{{l("CreateNewPerson")}}&lt;/span&gt;
+<pre lang="xml">
+&lt;div bsModal <strong>#modal=&quot;bs-modal&quot; (onShown)=&quot;onShown()&quot;</strong> class=&quot;modal fade&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot; aria-labelledby=&quot;modal&quot; aria-hidden=&quot;true&quot; [config]=&quot;{backdrop: 'static'}&quot;&gt;
+    &lt;div class=&quot;modal-dialog modal-lg&quot;&gt;
+        &lt;div class=&quot;modal-content&quot;&gt;
+            &lt;form *ngIf=&quot;active&quot; #personForm=&quot;ngForm&quot; novalidate <strong>(ngSubmit)=&quot;save()&quot;&gt;</strong>
+                &lt;div class=&quot;modal-header&quot;&gt;
+                    &lt;h4 class=&quot;modal-title&quot;&gt;
+                        &lt;span&gt;{{l(&quot;CreateNewPerson&quot;)}}&lt;/span&gt;
                     &lt;/h4&gt;
+                    &lt;button type=&quot;button&quot; class=&quot;close&quot; (click)=&quot;close()&quot; aria-label=&quot;Close&quot;&gt;
+                        &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+                    &lt;/button&gt;
                 &lt;/div&gt;
-                &lt;div class="modal-body"&gt;
-                    
-                    &lt;div class="form-group form-md-line-input form-md-floating-label no-hint"&gt;
-                        &lt;input <strong>#nameInput</strong> class="form-control" type="text" name="name" <strong>[(ngModel)]="person.name"</strong> required maxlength="32"&gt;
-                        &lt;label&gt;{{l("Name")}}&lt;/label&gt;
+                &lt;div class=&quot;modal-body&quot;&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label&gt;{{l(&quot;Name&quot;)}}&lt;/label&gt;
+                        &lt;input <strong>#nameInput</strong> class=&quot;form-control&quot; type=&quot;text&quot; name=&quot;name&quot; <strong>[(ngModel)]=&quot;person.name&quot;</strong> required maxlength=&quot;32&quot;&gt;
                     &lt;/div&gt;
-
-                    &lt;div class="form-group form-md-line-input form-md-floating-label no-hint"&gt;
-                        &lt;input class="form-control" type="email" name="surname" <strong>[(ngModel)]="person.surname"</strong> required maxlength="32"&gt;
-                        &lt;label&gt;{{l("Surname")}}&lt;/label&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label&gt;{{l(&quot;Surname&quot;)}}&lt;/label&gt;
+                        &lt;input class=&quot;form-control&quot; type=&quot;email&quot; name=&quot;surname&quot; <strong>[(ngModel)]=&quot;person.surname&quot;</strong> required maxlength=&quot;32&quot;&gt;
                     &lt;/div&gt;
-
-                    &lt;div class="form-group form-md-line-input form-md-floating-label no-hint"&gt;
-                        &lt;input class="form-control" type="email" name="emailAddress" <strong>[(ngModel)]="person.emailAddress"</strong> required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"&gt;                        &lt;label&gt;{{l("EmailAddress")}}&lt;/label&gt;
+                    &lt;div class=&quot;form-group&quot;&gt;
+                        &lt;label&gt;{{l(&quot;EmailAddress&quot;)}}&lt;/label&gt;
+                        &lt;input class=&quot;form-control&quot; type=&quot;email&quot; name=&quot;emailAddress&quot; <strong>[(ngModel)]=&quot;person.emailAddress&quot;</strong> required maxlength=&quot;255&quot; pattern=&quot;^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$&quot;&gt;
                     &lt;/div&gt;
-
                 &lt;/div&gt;
-                &lt;div class="modal-footer"&gt;
-                    &lt;button [disabled]="saving" type="button" class="btn btn-default" <strong>(click)="close()"</strong>&gt;{{l("Cancel")}}&lt;/button&gt;
-                    &lt;button type="submit" class="btn btn-primary blue" [disabled]="!personForm.form.valid" <strong>[buttonBusy]="saving"</strong> <strong>[busyText]="l('SavingWithThreeDot')"</strong>&gt;&lt;i class="fa fa-save"&gt;&lt;/i&gt; &lt;span&gt;{{l("Save")}}&lt;/span&gt;&lt;/button&gt;
+                &lt;div class=&quot;modal-footer&quot;&gt;
+                    &lt;button [disabled]=&quot;saving&quot; type=&quot;button&quot; class=&quot;btn btn-secondary&quot; (click)=&quot;close()&quot;&gt;{{l(&quot;Cancel&quot;)}}&lt;/button&gt;
+                    &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot; [disabled]=&quot;!personForm.form.valid&quot; <strong>[buttonBusy]=&quot;saving&quot; [busyText]=&quot;l('SavingWithThreeDot')&quot;</strong>&gt;&lt;i class=&quot;fa fa-save&quot;&gt;&lt;/i&gt; &lt;span&gt;{{l(&quot;Save&quot;)}}&lt;/span&gt;&lt;/button&gt;
                 &lt;/div&gt;
             &lt;/form&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;</pre>
+&lt;/div&gt;
+</pre>
 <p>Most of this code is similar for all modals. The important part is how we 
 binded model to the view using ngModel directive. As like all components, 
 Angular requires to relate it to a module. We should it to <strong>declarations</strong> array of 
@@ -878,42 +877,40 @@ Angular requires to relate it to a module. We should it to <strong>declarations<
 export class MainModule { }</pre>
 <p>We need to put a "Create new person" button to the 'people list page' to open the modal when clicked to the button. 
 To do that, we made the following changes in <strong>phonebook.component.html</strong>:</p>
-<pre lang="xml">&lt;div [@routerTransition]&gt;
-    &lt;div class="row margin-bottom-5"&gt;
-        &lt;div class="<strong>col-xs-6</strong>"&gt;
-            &lt;div class="page-head"&gt;
-                &lt;div class="page-title"&gt;
-                    &lt;h1&gt;
-                        &lt;span&gt;{{l("PhoneBook")}}&lt;/span&gt;
-                    &lt;/h1&gt;
+<pre lang="xml">
+&lt;div [@routerTransition]&gt;
+    &lt;div class=&quot;m-subheader &quot;&gt;
+        &lt;div class=&quot;d-flex align-items-center&quot;&gt;
+            &lt;div class=&quot;mr-auto col-sm-6&quot;&gt;
+                &lt;h3 class=&quot;m-subheader__title m-subheader__title--separator&quot;&gt;
+                    &lt;span&gt;{{l(&quot;PhoneBook&quot;)}}&lt;/span&gt;
+                &lt;/h3&gt;
+            &lt;/div&gt;<strong>
+            &lt;div class=&quot;col-sm-6 text-right&quot;&gt;
+                &lt;button class=&quot;btn btn-primary&quot; (click)=&quot;createPersonModal.show()&quot;&gt;&lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt; {{l(&quot;CreateNewPerson&quot;)}}&lt;/button&gt;
+            &lt;/div&gt;</strong>
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;m-content&quot;&gt;
+        &lt;div class=&quot;m-portlet m-portlet--mobile&quot;&gt;
+            &lt;div class=&quot;m-portlet__body&quot;&gt;
+                &lt;h3&gt;{{l(&quot;AllPeople&quot;)}}&lt;/h3&gt;
+                &lt;div class=&quot;m-widget1&quot;&gt;
+                    &lt;div class=&quot;m-widget1__item&quot; *ngFor=&quot;let person of people&quot;&gt;
+                        &lt;div class=&quot;row m-row--no-padding align-items-center&quot;&gt;
+                            &lt;div class=&quot;col&quot;&gt;
+                                &lt;h3 class=&quot;m-widget1__title&quot;&gt;{{person.name + ' ' + person.surname}}&lt;/h3&gt;
+                                &lt;span class=&quot;m-widget1__desc&quot;&gt;{{person.emailAddress}}&lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
-<strong>        &lt;div class="col-xs-6 text-right"&gt;
-            &lt;button class="btn btn-primary blue" (click)="createPersonModal.show()"&gt;&lt;i class="fa fa-plus"&gt;&lt;/i&gt; {{l("CreateNewPerson")}}&lt;/button&gt;
-        &lt;/div&gt;
-</strong>    &lt;/div&gt;
-
-    &lt;div class="portlet light margin-bottom-0"&gt;
-        &lt;div class="portlet-body"&gt;
-
-            &lt;h3&gt;{{l("AllPeople")}}&lt;/h3&gt;
-
-            &lt;div class="list-group"&gt;
-                &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"&gt;
-                    &lt;h4 class="list-group-item-heading"&gt;
-                        {{person.name + ' ' + person.surname}}
-                    &lt;/h4&gt;
-                    &lt;p class="list-group-item-text"&gt;
-                        {{person.emailAddress}}
-                    &lt;/p&gt;
-                &lt;/a&gt;
-            &lt;/div&gt;
-
-        &lt;/div&gt;
     &lt;/div&gt;
-<strong>    &lt;createPersonModal #createPersonModal (modalSave)="getPeople()"&gt;&lt;/createPersonModal&gt;
-</strong>&lt;/div&gt;</pre>
+    <strong>&lt;createPersonModal #createPersonModal (modalSave)=&quot;getPeople()&quot;&gt;&lt;/createPersonModal&gt;</strong>
+&lt;/div&gt;
+</pre>
 <p>Made some minor changes in the view; Added a <strong>button</strong> to open 
 the modal and the <strong>createPersonModal</strong> component as like another 
 HTML tag (which matches to the selector in the <strong>
@@ -966,14 +963,14 @@ Try to click Phone Book menu!</p>
 <h5>Hide Unauthorized Menu Item</h5>
 <p>While user can not enter to the page, the menu item still there! We should also <strong>hide</strong> the Phone book 
 <strong>menu item</strong>. It's 
-easy, open <strong>side-bar.component.ts</strong> and add change PhoneBook menu 
+easy, open <strong>app-navigation-service.ts</strong> and add change PhoneBook menu 
 definition as shown below:</p>
-<pre lang="js">new SideBarMenuItem("PhoneBook", <strong>'Pages.Tenant.PhoneBook'</strong>, "icon-notebook", "/phonebook")</pre>
+<pre lang="js">new <span lang="tr">App</span>MenuItem("PhoneBook", <strong>'Pages.Tenant.PhoneBook'</strong>, "<span lang="tr">flat</span>icon-book", "<span lang="tr">/app/main</span>/phonebook")</pre>
 <h5>Grant permission</h5>
 <p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
 page and edit <strong>admin</strong> role:</p>
 <p>
-<img class="img-thumbnail" alt="Role permissions" height="574" src="images/role-permissions-with-phonebook.png" width="617" /></p>
+<img class="img-thumbnail" alt="Role permissions" height="auto" src="images/role-permissions-with-phonebook1.png" width="auto" /></p>
 <p>We see that a <strong>new permission</strong> named "<strong>Phone book</strong>" 
 added to <strong>permissions</strong> tab. So, we can check it and save the 
 role. After saving, we need to <strong>refresh </strong>the whole page to 
@@ -1010,41 +1007,42 @@ Create New Person button</strong> if we don't have the permission. It's very
 simple:</p>
 <p>Open the <strong>phonebook.component.html</strong> view and use
 <strong>isGranted</strong> condition as shown below:</p>
-<pre lang="xml">&lt;button <strong>*ngIf="isGranted('Pages.Tenant.PhoneBook.CreatePerson')"</strong> class="btn btn-primary blue" (click)="createPersonModal.show()"&gt;&lt;i class="fa fa-plus"&gt;&lt;/i&gt; {{l("CreateNewPerson")}}&lt;/button&gt;</pre>
+<pre lang="xml">&lt;button <strong>*ngIf="isGranted('Pages.Tenant.PhoneBook.CreatePerson')"</strong> class="btn btn-primary" (click)="createPersonModal.show()"&gt;&lt;i class="fa fa-plus"&gt;&lt;/i&gt; {{l("CreateNewPerson")}}&lt;/button&gt;</pre>
 <p>In this way, the "Create New Person" button does not rendered in server and user can 
 not see this button.</p>
 <h5>Grant permission</h5>
 <p>To see the button again, we can go to role or user manager and grant related 
 permission as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="User specific permissions" height="527" src="images/user-permissions-phonebook.png" width="617" /></p>
+<img class="img-thumbnail" alt="User specific permissions" height="auto" src="images/user-permissions-phonebook1.png" width="auto" /></p>
 <p>As shown above, <strong>Create new person</strong> permission is a child 
 permission of the <strong>Phone book</strong>. Remember to refresh page to get 
 permissions updated.</p>
 <h3>Deleting a Person</h3>
 <p>Let's add a delete button in people list as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Delete person" height="409" src="images/phonebook-people-delete-button.png" width="768" /></p>
+<img class="img-thumbnail" alt="Delete person" height="auto" src="images/phonebook-people-delete-button1.png" width="auto" /></p>
 <p>
 We're starting from UI in this case.</p>
 <h4>View</h4>
 <p>We're changing <strong>phonebook.component.html</strong> view to add a delete button (related part is shown 
 here):</p>
 <pre lang="xml">...
-&lt;h3&gt;{{l("AllPeople")}}&lt;/h3&gt;
-
-&lt;div class="list-group"&gt;
-    &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"&gt;
-        &lt;h4 class="list-group-item-heading"&gt;
-            {{person.name + ' ' + person.surname}}
-<strong>            &lt;button (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-circle btn-icon-only red delete-person" href="javascript:;"&gt;
-                &lt;i class="icon-trash"&gt;&lt;/i&gt;
-            &lt;/button&gt;</strong>
-        &lt;/h4&gt;
-        &lt;p class="list-group-item-text"&gt;
-            {{person.emailAddress}}
-        &lt;/p&gt;
-    &lt;/a&gt;
+&lt;h3&gt;{{l(&quot;AllPeople&quot;)}}&lt;/h3&gt;
+&lt;div class=&quot;m-widget1&quot;&gt;
+    &lt;div class=&quot;m-widget1__item&quot; *ngFor=&quot;let person of people&quot;&gt;
+        &lt;div class=&quot;row m-row--no-padding align-items-center&quot;&gt;
+            &lt;div class=&quot;col&quot;&gt;
+                &lt;h3 class=&quot;m-widget1__title&quot;&gt;{{person.name + ' ' + person.surname}}&lt;/h3&gt;
+                &lt;span class=&quot;m-widget1__desc&quot;&gt;{{person.emailAddress}}&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;col m--align-right&quot;&gt;
+               <strong> &lt;button<span lang="tr"> id="deletePerson"</span> (click)=&quot;deletePerson(person)&quot; title=&quot;{{l('Delete')}}&quot; class=&quot;btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot; href=&quot;javascript:;&quot;&gt;
+                    &lt;i class=&quot;<span lang="tr">fa fa-times</span>&quot;&gt;&lt;/i&gt;
+                &lt;/button&gt;</strong>
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 ...</pre>
 <p>We simply added a button which calls <strong>deletePerson</strong> method 
@@ -1054,9 +1052,9 @@ person' above.</p>
 <p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to take 
 the button right. Created 
 a file named <strong>phonebook.component.less</strong> (in phonebook folder) and added following lines:</p>
-<pre lang="css">.list-group-item-heading {
-    button<strong>.delete-person</strong> {
-        float: right;
+<pre lang="css">.<span lang="tr">m<span class="auto-style1">-widget1__item</span></span> {
+    button<span lang="tr">#</span><strong>delete<span lang="tr">P</span>erson</strong> {
+        <span lang="tr">/* styles */</span>
     }
 }
 </pre>
@@ -1101,7 +1099,7 @@ did before.</p>
 }&nbsp;</pre>
 <p>It first shows a confirmation message when we click the delete button:</p>
 <p>
-<img class="img-thumbnail" alt="Confirmation message" height="338" src="images/confirmation-delete-person.png" width="493" /></p>
+<img class="img-thumbnail" alt="Confirmation message" height="auto" src="images/confirmation-delete-person1.png" width="auto" /></p>
 <p>If we click Yes, it simply calls <strong>deletePerson</strong> method of 
 <strong>PersonAppService</strong> and shows a 
 <strong>
@@ -1114,45 +1112,44 @@ an import statement before the @Component declaration:</p>
 <p>Now, we will implement <strong>search</strong> functionality of <strong>
 GetPeople</strong> method. UI is shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Searching people" height="328" src="images/search-people.png" width="770" /></p>
+<img class="img-thumbnail" alt="Searching people" height="auto" src="images/search-people1.png" width="auto" /></p>
 <p>We added a search input to <strong>phonebook.component.html</strong> view (showing the related part of the 
 code):</p>
-<pre lang="xml">&lt;h3&gt;{{l("AllPeople")}} <strong>({{people.length}})</strong>&lt;/h3&gt;
-
-<strong>&lt;div class="form"&gt;
-    &lt;form class="horizontal-form"&gt;
-        &lt;div class="form-body"&gt;
-            &lt;div class="row margin-bottom-10"&gt;
-                &lt;div class="col-md-12"&gt;
-                    &lt;div class="inputs inputs-full-width"&gt;
-                        &lt;div class="portlet-input"&gt;
-                            &lt;div class="input-group"&gt;
-                                &lt;input [(ngModel)]="filter" name="filter" autoFocus class="form-control" [placeholder]="l('SearchWithThreeDot')" type="text"&gt;
-                                &lt;span class="input-group-btn"&gt;
-                                    &lt;button (click)="getPeople()" class="btn default" type="submit"&gt;&lt;i class="icon-magnifier"&gt;&lt;/i&gt;&lt;/button&gt;
-                                &lt;/span&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
+<pre lang="xml">
+&lt;h3&gt;{{l(&quot;AllPeople&quot;)}} <strong>({{people.length}})</strong>&lt;/h3&gt;
+<strong>&lt;form autocomplete=&quot;off&quot;&gt;
+    &lt;div class=&quot;m-form m-form--label-align-right&quot;&gt;
+        &lt;div class=&quot;row align-items-center m--margin-bottom-10&quot;&gt;
+            &lt;div class=&quot;col-xl-12&quot;&gt;
+                &lt;div class=&quot;form-group m-form__group align-items-center&quot;&gt;
+                    &lt;div class=&quot;input-group&quot;&gt;
+                        &lt;input [(ngModel)]=&quot;filterText&quot; name=&quot;filter&quot; autoFocus class=&quot;form-control m-input&quot; [placeholder]=&quot;l('SearchWithThreeDot')&quot; type=&quot;text&quot;&gt;
+                        &lt;span class=&quot;input-group-btn&quot;&gt;
+                            &lt;button (click)=&quot;getPeople()&quot; class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;&lt;i class=&quot;flaticon-search-1&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+                        &lt;/span&gt;
                     &lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
-    &lt;/form&gt;
-&lt;/div&gt;</strong>
+    &lt;/div&gt;
+&lt;/form&gt;</strong>
 
-&lt;div class="list-group"&gt;
-    &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"&gt;
-        &lt;h4 class="list-group-item-heading"&gt;
-            {{person.name + ' ' + person.surname}}
-            &lt;button (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-circle btn-icon-only red delete-person" href="javascript:;"&gt;
-                &lt;i class="icon-trash"&gt;&lt;/i&gt;
-            &lt;/button&gt;
-        &lt;/h4&gt;
-        &lt;p class="list-group-item-text"&gt;
-            {{person.emailAddress}}
-        &lt;/p&gt;
-    &lt;/a&gt;
-&lt;/div&gt;</pre>
+&lt;div class=&quot;m-widget1&quot;&gt;
+    &lt;div class=&quot;m-widget1__item&quot; *ngFor=&quot;let person of people&quot;&gt;
+        &lt;div class=&quot;row m-row--no-padding align-items-center&quot;&gt;
+            &lt;div class=&quot;col&quot;&gt;
+                &lt;h3 class=&quot;m-widget1__title&quot;&gt;{{person.name + ' ' + person.surname}}&lt;/h3&gt;
+                &lt;span class=&quot;m-widget1__desc&quot;&gt;{{person.emailAddress}}&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;col m--align-right&quot;&gt;
+                &lt;button id=&quot;deletePerson&quot; (click)=&quot;deletePerson(person)&quot; title=&quot;{{l('Delete')}}&quot; class=&quot;btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot; href=&quot;javascript:;&quot;&gt;
+                    &lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
 <p>We also added currently filtered people count (people.length) in the header. 
 Since we have already defined and used the filter property in <strong>
 phonebook.component.ts</strong> and implemented in the server side, this new 
@@ -1400,100 +1397,72 @@ different pros and cons. It's your choice.</p>
 <h3>Edit Mode For Phone Numbers</h3>
 <p>Final UI is shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Phone book edit mode" height="642" src="images/phone-book-edit-mode.png" width="762" /></p>
-<p>When we click the <strong>green edit icon</strong> for a person, it's row is 
+<img class="img-thumbnail" alt="Phone book edit mode" height="auto" src="images/phone-book-edit-mode1.png" width="auto" /></p>
+<p>When we click the <strong>edit icon</strong> for a person, it's row is 
 expanded and all phone numbers are shown. Then we can delete any phone by 
 clicking the icon at left. We can add a new phone from the inputs at last line.</p>
 <h4>View</h4>
 <p>Changes in view are shown below:</p>
-<pre lang="xml">&lt;div class="list-group"&gt;
-                &lt;a *ngFor="let person of people" href="javascript:;" class="list-group-item"<strong> [ngClass]="{'person-editing': person===editingPerson}"</strong>&gt;
-                    &lt;h4 class="list-group-item-heading"&gt;
-                        {{person.name + ' ' + person.surname}}
-
-<strong>                        &lt;span class="person-buttons"&gt;
-                            &lt;button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-circle btn-icon-only green edit-person"&gt;
-                                &lt;i class="icon-pencil"&gt;&lt;/i&gt;
+<pre lang="xml">
+&lt;div class=&quot;m-widget1__item&quot; *ngFor=&quot;let person of people&quot; <strong>[ngClass]=&quot;{'bg-secondary m--padding-10': person===editingPerson}&quot;</strong>&gt;
+    &lt;div class=&quot;row m-row--no-padding align-items-center&quot;&gt;
+        &lt;div class=&quot;col&quot;&gt;
+            &lt;h3 class=&quot;m-widget1__title&quot;&gt;{{person.name + ' ' + person.surname}}&lt;/h3&gt;
+            &lt;span class=&quot;m-widget1__desc&quot;&gt;{{person.emailAddress}}&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;col m--align-right&quot;&gt;
+            &lt;button (click)=&quot;editPerson(person)&quot; title=&quot;{{l('Edit')}}&quot; class=&quot;btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot;&gt;
+                &lt;i class=&quot;fa fa-pencil&quot;&gt;&lt;/i&gt;
+            &lt;/button&gt;
+            &lt;button id=&quot;deletePerson&quot; (click)=&quot;deletePerson(person)&quot; title=&quot;{{l('Delete')}}&quot; class=&quot;btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot; href=&quot;javascript:;&quot;&gt;
+                &lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    <strong>&lt;div class=&quot;row&quot;&gt;
+        &lt;div class=&quot;col-sm-12 m--margin-top-20&quot; *ngIf=&quot;person===editingPerson&quot;&gt;
+            &lt;table class=&quot;table table-hover&quot;&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th style=&quot;width:10%&quot;&gt;&lt;/th&gt;
+                        &lt;th style=&quot;width:15%&quot;&gt;{{l(&quot;Type&quot;)}}&lt;/th&gt;
+                        &lt;th style=&quot;width:75%&quot;&gt;{{l(&quot;PhoneNumber&quot;)}}&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    &lt;tr *ngFor=&quot;let phone of person.phones&quot;&gt;
+                        &lt;td&gt;
+                            &lt;button (click)=&quot;deletePhone(phone, person)&quot; class=&quot;btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot;&gt;
+                                &lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;
                             &lt;/button&gt;
-                            &lt;button (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-circle btn-icon-only red delete-person" href="javascript:;"&gt;
-                                &lt;i class="icon-trash"&gt;&lt;/i&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;{{getPhoneTypeAsString(phone.type)}}&lt;/td&gt;
+                        &lt;td&gt;{{phone.number}}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;
+                            &lt;button (click)=&quot;savePhone()&quot; class=&quot;btn btn-sm btn-success&quot;&gt;
+                                &lt;i class=&quot;fa fa-floppy-o&quot;&gt;&lt;/i&gt;
                             &lt;/button&gt;
-                        &lt;/span&gt;</strong>
-
-                    &lt;/h4&gt;
-                    &lt;p class="list-group-item-text"&gt;
-                        {{person.emailAddress}}
-                    &lt;/p&gt;
-<strong>                    &lt;div class="table-scrollable" *ngIf="person===editingPerson"&gt;
-                        &lt;table class="table table-hover"&gt;
-                            &lt;thead&gt;
-                                &lt;tr&gt;
-                                    &lt;th style="width:10%"&gt;&lt;/th&gt;
-                                    &lt;th style="width:15%"&gt;{{l("Type")}}&lt;/th&gt;
-                                    &lt;th style="width:75%"&gt;{{l("PhoneNumber")}}&lt;/th&gt;
-                                &lt;/tr&gt;
-                            &lt;/thead&gt;
-                            &lt;tbody&gt;
-                                &lt;tr *ngFor="let phone of person.phones"&gt;
-                                    &lt;td&gt;
-                                        &lt;button (click)="deletePhone(phone, person)" class="btn btn-sm btn-default"&gt;
-                                            &lt;i class="icon-trash"&gt;&lt;/i&gt;
-                                        &lt;/button&gt;
-                                    &lt;/td&gt;
-                                    &lt;td&gt;{{getPhoneTypeAsString(phone.type)}}&lt;/td&gt;
-                                    &lt;td&gt;{{phone.number}}&lt;/td&gt;
-                                &lt;/tr&gt;
-                                &lt;tr&gt;
-                                    &lt;td&gt;
-                                        &lt;button (click)="savePhone()" class="btn btn-sm green"&gt;
-                                            &lt;i class="fa fa-floppy-o"&gt;&lt;/i&gt;
-                                        &lt;/button&gt;
-                                    &lt;/td&gt;
-                                    &lt;td&gt;
-                                        &lt;select name="Type" [(ngModel)]="newPhone.type"&gt;
-                                            &lt;option value="0"&gt;{{l("PhoneType_Mobile")}}&lt;/option&gt;
-                                            &lt;option value="1"&gt;{{l("PhoneType_Home")}}&lt;/option&gt;
-                                            &lt;option value="2"&gt;{{l("PhoneType_Business")}}&lt;/option&gt;
-                                        &lt;/select&gt;
-                                    &lt;/td&gt;
-                                    &lt;td&gt;&lt;input type="text" name="number" [(ngModel)]="newPhone.number" /&gt;&lt;/td&gt;
-                                &lt;/tr&gt;
-                            &lt;/tbody&gt;
-                        &lt;/table&gt;
-                    &lt;/div&gt;</strong>
-                &lt;/a&gt;
-            &lt;/div&gt;</pre>
+                        &lt;/td&gt;
+                        &lt;td&gt;
+                            &lt;select name=&quot;Type&quot; [(ngModel)]=&quot;newPhone.type&quot;class=&quot;form-control&quot;&gt;
+                                &lt;option value=&quot;0&quot;&gt;{{l(&quot;PhoneType_Mobile&quot;)}}&lt;/option&gt;
+                                &lt;option value=&quot;1&quot;&gt;{{l(&quot;PhoneType_Home&quot;)}}&lt;/option&gt;
+                                &lt;option value=&quot;2&quot;&gt;{{l(&quot;PhoneType_Business&quot;)}}&lt;/option&gt;
+                            &lt;/select&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;number&quot; [(ngModel)]=&quot;newPhone.number&quot; class=&quot;form-control&quot; /&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;</strong>
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
 <p>We added an edit button for each person. Then added a table for each person that shows phones of the related person 
 and allows adding a new phone. Phones table is only shown if we click the edit 
 button.</p>
-<h4>Styles</h4>
-<p>Changed <strong>phonebook.component.less</strong> to adapt to the changed view:</p>
-<pre>.list-group-item-heading {
-    span.person-buttons {
-        float: right;
-    }
-}
-
-.table-phones {
-    display: none;
-}
-
-.person-editing {
-    background-color: #ccffcc;
-
-    h4 {
-        font-weight: bold;
-    }
-
-    .table-phones {
-        display: table;
-    }
-
-    &amp;:hover {
-        background-color: #ccffcc;
-    }
-}
-</pre>
 <h4>PhoneBook Component Class</h4>
 
 <p>Before changing PhoneBookComponent, we should re-generate service-proxies 
@@ -1605,7 +1574,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
 
 <p>Now we want to edit name, surname and e-mail of people: </p>
 
-<img class="img-thumbnail" alt="Edit Person" height="333" src="images/edit-person-core.png" width="548" /><br />
+<img class="img-thumbnail" alt="Edit Person" height="auto" src="images/edit-person-core1.png" width="auto" /><br />
 <br />
 First of all, we create needed Dto&#39;s that transfers people&#39;s id, name, surname 
 and e-mail. Then create the functions in PersonAppService for editing people:<br />
@@ -1627,44 +1596,43 @@ and e-mail. Then create the functions in PersonAppService for editing people:<br
             person.EmailAddress = input.EmailAddress;
             await _personRepository.UpdateAsync(person);
         }</pre>
-</p>
-
 
 <h4>View</h4>
 Create edit-person-modal.component.html:
 <pre lang="html">
 &lt;div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}"&gt;
-  &lt;div class="modal-dialog"&gt;
+  &lt;div class="modal-dialog modal-lg"&gt;
     &lt;div class="modal-content"&gt;
       &lt;form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()"&gt;
         &lt;div class="modal-header"&gt;
-          &lt;button type="button" class="close" (click)="close()" aria-label="Close"&gt;
-            &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
-          &lt;/button&gt;
-          &lt;h4 class="modal-title"&gt;
+            &lt;h4 class="modal-title"&gt;
             &lt;span&gt;{{l("EditPerson")}}&lt;/span&gt;
           &lt;/h4&gt;
+          &lt;button type="button" class="close" (click)="close()" aria-label="Close"&gt;
+            &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+          &lt;/button&gt;          
         &lt;/div&gt;
         &lt;div class="modal-body"&gt;
                     
-          &lt;div class="form-group form-md-line-input no-hint"&gt;
-            &lt;input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32"&gt;
+          &lt;div class="form-group"&gt;
             &lt;label&gt;{{l("Name")}}&lt;/label&gt;
+            &lt;input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32"&gt;            
           &lt;/div&gt;
 
-          &lt;div class="form-group form-md-line-input no-hint"&gt;
-            &lt;input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32"&gt;
+          &lt;div class="form-group"&gt;
             &lt;label&gt;{{l("Surname")}}&lt;/label&gt;
+            &lt;input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32"&gt;
           &lt;/div&gt;
 
-          &lt;div class="form-group form-md-line-input no-hint"&gt;
-            &lt;input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"&gt;                        &lt;label&gt;{{l("EmailAddress")}}&lt;/label&gt;
+          &lt;div class="form-group"&gt;
+          &lt;label&gt;{{l("EmailAddress")}}&lt;/label&gt;
+            &lt;input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"&gt;                        
           &lt;/div&gt;
 
         &lt;/div&gt;
         &lt;div class="modal-footer"&gt;
-          &lt;button [disabled]="saving" type="button" class="btn btn-default" (click)="close()"&gt;{{l("Cancel")}}&lt;/button&gt;
-          &lt;button type="submit" class="btn btn-primary blue" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"&gt;&lt;i class="fa fa-save"&gt;&lt;/i&gt; &lt;span&gt;{{l("Save")}}&lt;/span&gt;&lt;/button&gt;
+          &lt;button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()"&gt;{{l("Cancel")}}&lt;/button&gt;
+          &lt;button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"&gt;&lt;i class="fa fa-save"&gt;&lt;/i&gt; &lt;span&gt;{{l("Save")}}&lt;/span&gt;&lt;/button&gt;
         &lt;/div&gt;
       &lt;/form&gt;
     &lt;/div&gt;
@@ -1673,16 +1641,22 @@ Create edit-person-modal.component.html:
 </pre>
 <p>Add those lines to <strong>phonebook.component.html:</strong>:</p>
 <pre lang="cs">
-	<span lang="tr">     </span>&lt;button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson')}}" class="btn btn-circle btn-icon-only green edit-person-info"&gt;
-                &lt;i class="icon-pencil"&gt;&lt;/i&gt;
-              &lt;/button&gt;
-
+	    &lt;button (click)=&quot;editPerson(person)&quot; title=&quot;{{l('Edit')}}&quot; class=&quot;btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot;&gt;
+	        &lt;i class=&quot;fa fa-plus&quot;&gt;&lt;/i&gt;
+	    &lt;/button&gt;
+	   <strong> &lt;button *ngIf=&quot;isGranted('Pages.Tenant.PhoneBook.EditPerson')&quot; (click)=&quot;editPersonModal.show(person.id)&quot; title=&quot;{{l('EditPerson')}}&quot; class=&quot;btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot;&gt;
+	        &lt;i class=&quot;fa fa-pencil&quot;&gt;&lt;/i&gt;
+	    &lt;/button&gt;
+</strong>	    &lt;button id=&quot;deletePerson&quot; (click)=&quot;deletePerson(person)&quot; title=&quot;{{l('Delete')}}&quot; class=&quot;btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot; href=&quot;javascript:;&quot;&gt;
+	        &lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;
+	    &lt;/button&gt;
 				.
 				.
 				.
 				.
 				.
-	  &lt;editPersonModal #editPersonModal (modalSave)="getPeople()"&gt;&lt;/editPersonModal&gt;
+&lt;createPersonModal #createPersonModal(modalSave)="getPeople()"&gt;&lt;/createPersonModal&gt;
+<strong>&lt;editPersonModal #editPersonModal (modalSave)="getPeople()"&gt;&lt;/editPersonModal&gt;</strong>
 </pre>
 
 <h4>Controller</h4>
@@ -1699,7 +1673,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 })
 export class EditPersonModalComponent extends AppComponentBase {
 
-  @Output() modalSave: EventEmitter&lt;any&gt; = new EventEmitter&lt;any&gt;);
+  @Output() modalSave: EventEmitter&lt;any&gt; = new EventEmitter&lt;any&gt;<span lang="tr">(</span>);
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('nameInput') nameInput: ElementRef;
@@ -1773,7 +1747,7 @@ export class EditPersonModalComponent extends AppComponentBase {
 to convert it to a multi-tenant application easily. Logout from the application 
 before any change.</p>
 <h4>Enable Multi Tenancy</h4>
-<p>We disabled multi-tenancy at the begginning of this document. Now, re-enabling it in <strong>PhoneBookConsts</strong> class:</p>
+<p>We disabled multi-tenancy at the begginning of this document. Now, re-enabling it in <strong>PhoneBookDemoConsts</strong> class:</p>
 <pre lang="cs">public const bool MultiTenancyEnabled = true;</pre>
 <h4>Make Entities Multi Tenant</h4>
 <p>In a multi-tenant application, a tenant's entities should be isolated by 
@@ -1808,23 +1782,23 @@ current people are automatically assigned to <strong>default tenant</strong>
 <p><strong>It's finished</strong>! We can test the application. Run the project, <strong>login</strong> as 
 the <strong>host admin</strong> (click Change link and clear tenancy name) shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Login as host" height="506" src="images/login-as-host-2.png" width="416" /></p>
+<img class="img-thumbnail" alt="Login as host" height="auto" src="images/login-as-host-3.png" width="100%" /></p>
 <p>After login, we see the <strong>tenant list</strong> which only contains a <strong>default</strong> 
 tenant. We can create a new tenant:</p>
 <p>
-<img class="img-thumbnail" alt="Creating tenant" height="655" src="images/create-tenant-2.png" width="619" /></p>
+<img class="img-thumbnail" alt="Creating tenant" height="auto" src="images/create-tenant-6.png" width="auto" /></p>
 <p>I created a new tenant named <strong>trio</strong>. Now, tenant list has two 
 tenants:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant management page" src="images/tenant-management-phonebook-1.png" /></p>
+<img class="img-thumbnail" alt="Tenant management page" height="auto" src="images/tenant-management-phonebook-2.png" width="100%" /></p>
 <p>&nbsp;I can <strong>logout</strong> and 
 login as <strong>trio</strong> tenant <strong>admin</strong> (Change current 
 tenant to trio):</p>
 <p>
-<img class="img-thumbnail" alt="Login as tenant admin" height="509" src="images/login-as-trio.png" width="416" /></p>
+<img class="img-thumbnail" alt="Login as tenant admin" height="auto" src="images/login-as-trio1.png" width="100%" /></p>
 <p>After login, we see that phone book is empty:</p>
 <p>
-<img class="img-thumbnail" alt="Empty phonebook of new tenant" height="210" src="images/phonebook-empty.png" width="791" /></p>
+<img class="img-thumbnail" alt="Empty phonebook of new tenant" height="auto" src="images/phonebook-empty1.png" width="auto" /></p>
 <p>It's empty because trio tenant has a completely islolated people list. You can 
 add people here, logout and login as different teants (you can login as default 
 tenant for example). You will see that each tenant 
