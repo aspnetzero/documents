@@ -17,7 +17,6 @@ div.image-container > p {
     font-weight: 300;
     }
 </style>
-
 <h3>Introduction</h3>
 <p>Xamarin is a cross-platform UI toolkit that allows developers to efficiently 
 create native cross platform user interface layouts.<br>
@@ -66,8 +65,8 @@ you can continue to support devices that use Android 4.0.3 and newer. </p>
 <img class="img-thumbnail" alt="Xamarin Android Options" src="images/options-android-vs-sml.png" />
 <h4>Mac System Requirements</h4>
 <p>You can use Visual Studio for Mac to develop Xamarin.Forms apps on OS X El Capitan 
-(10.11) or newer. To develop iOS apps, it is <span lang="EN-US">recommended</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
-</span>having at least the iOS 10 SDK and Xcode latest installed.</p>
+(10.11) or newer. To develop iOS apps, it is recommended Having at least the iOS 
+10 SDK and Xcode latest installed.</p>
 <h4>Windows System Requirements</h4>
 <p>Xamarin.Forms apps for iOS and Android can be built on any Windows installation 
 that supports Xamarin development. A networked Mac is required for iOS development.
@@ -81,21 +80,18 @@ of solutions;</p>
 	<li><strong>.All</strong> All the projects included.</li>
 </ul>
 <p>For Xamarin development, you can open <b>.Mobile.sln</b>.</p>
-
 <div class="image-container">
-<img class="img-thumbnail" alt="ASP.NET Zero Xamarin Architecture" src="images/xamarin-architecture.png" />
-<p>Xamarin Architecture</p>
+	<img class="img-thumbnail" alt="ASP.NET Zero Xamarin Architecture" src="images/xamarin-architecture.png" />
+	<p>Xamarin Architecture</p>
 </div>
-
 <div class="image-container">
 	<img class="img-thumbnail" alt="ASP.NET Zero Mobile Solution" src="images/mobile-solution-overview.png" />
 	<p>Mobile Solution</p>
 </div>
-
 <p>There are 6 projects in the mobile solution:</p>
 <ul>
-	<li><strong>Core.Shared</strong> project basic <span lang="EN-US">primitive</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 107%; font-family: 'Times New Roman',serif">
-	</span>types as consts, enums used in all layers of the solution.</li>
+	<li><strong>Core.Shared</strong> project basic primitive types as consts, enums 
+	used in all layers of the solution.</li>
 	<li><strong>Application.Shared</strong> project contains data transfer objects 
 	(DTOs) and interfaces of application services shared with application layer 
 	of the backend.</li>
@@ -106,6 +102,7 @@ of solutions;</p>
 	<li><strong>Mobile.iOS</strong> project contains IOS specific classes.</li>
 	<li><strong>Mobile.Droid</strong> project contains Android specific classes.</li>
 </ul>
+<h3>Debugging</h3>
 <h4>Host</h4>
 <p>To start debugging Xamarin app you need to configure host settings. You can use 
 either <b>Web.Mvc</b> or <b>Web.Host </b>to feed the Xamarin app.<br>
@@ -137,7 +134,7 @@ below;</p>
 		Do not start Web.Mvc or Web.Host project via Visual Studio. Default settings 
 		of Visual Studio does not allow connections except localhost.</div>
 </div>
-<p><font color="#339933"><i class="fa fa-info-circle"></i>We have successfully started 
+<p><font color="#339933"><i class="fa fa-info-circle"></i> We have successfully started 
 host. Now we can configure Xamarin app to connect this host.</font></p>
 <h4>Debugging Xamarin App</h4>
 <p>To start debugging you need to change the IP address in <b>DebugServerIpAddresses</b> 
@@ -164,8 +161,7 @@ Xamarin.Android.</p>
 	<p>To start debugging Android app, you have to install Xamarin.Android. It&#39;s 
 	highly recommended you to read the
 	<a href="https://developer.xamarin.com/guides/android/getting_started/installation/">
-	Xamarin Android Setup and Deployment document</a> for <span lang="EN-US">necessary</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
-	</span>setups.<br>
+	Xamarin Android Setup and Deployment document</a> for necessary setups.<br>
 	</p>
 </div>
 <p>After successful setup, set <strong>Mobile.Droid</strong> as startup project. 
@@ -193,7 +189,7 @@ from list and press start button.</p>
 <br>
 <br>
 <div class="bs-callout bs-callout-warning">
-	<p><i class="fa fa-warning"></i> <a href="https://www.xamarin.com/live/">Xamarin 
+	<p><i class="fa fa-warning"></i><a href="https://www.xamarin.com/live/">Xamarin 
 	Live Player</a> currently does not support some of the key features. Thus Asp.Net 
 	Zero Xamarin application cannot be debugged on Xamarin Live Player. Further 
 	information read
@@ -201,20 +197,19 @@ from list and press start button.</p>
 	Xamarin Live Player limitations.</a></p>
 </div>
 <div class="bs-callout bs-callout-info">
-	<p><i class="fa fa-info-circle"></i> <a href="https://www.livexaml.com/">LiveXAML</a> 
-	is a Xaml previewer runs while you are debugging your application inside 
-	an emulator. Whenever you save any XAML file, it automatically updates the running 
+	<p><i class="fa fa-info-circle"></i><a href="https://www.livexaml.com/">LiveXAML</a> 
+	is a Xaml previewer runs while you are debugging your application inside an 
+	emulator. Whenever you save any XAML file, it automatically updates the running 
 	application. If you want to purchase LiveXAML, Asp.Net Zero customers get %30 
 	discount. </p>
 </div>
 <h3>Xamarin.Forms</h3>
 <p>A key component of building cross-platform applications is being able to share 
 code across various platform-specific projects. Asp.Net Zero Xamarin is using Xamarin.Forms 
-to maximize code sharing between two end platforms (IOS &amp; Android). It is
-<span lang="EN-US">expected</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
-</span>to write shared codes in Mobile.Shared project so that it will be used in 
-both IOS and Android. If you need platform specific development then try to use 
-class abstractions in shared project and implement/extend in end platforms. </p>
+to maximize code sharing between two end platforms (IOS &amp; Android). It is expected 
+to write shared codes in Mobile.Shared project so that it will be used in both IOS 
+and Android. If you need platform specific development then try to use class abstractions 
+in shared project and implement/extend in end platforms. </p>
 <h4>Mobile.Droid</h4>
 <p>Xamarin Android project has a very basic structure. Asp.Net Zero adds or modifies 
 these files in the default project; </p>
@@ -330,12 +325,11 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		for a view is automatically set when <b>AutoWireViewModel</b> flag set to 
 		true. There&#39;s a naming convention between ViewModels and Views. A xaml filename 
 		must end with View postfix and the binding context of the xaml filename 
-		must end with ViewModel postfix. <span lang="EN-US">For example </span>&nbsp;if 
-		xaml filename is <i>ProductView.xaml </i>the corresponding view model filename 
-		must be <i>ProductViewModel.cs.</i></p>
-		<p>There&#39;s an <span lang="EN-US">empty </span>sample view called <i>_SampleView.xaml</i> 
-		and binding context as <i>_SampleViewModel.cs</i>. You can copy paste these 
-		empty templates to add a new blank page.</p>
+		must end with ViewModel postfix. For example if xaml filename is <i>ProductView.xaml</i> 
+		the corresponding view model filename must be <i>ProductViewModel.cs.</i></p>
+		<p>There&#39;s an empty sample view called <i>_SampleView.xaml</i> and binding 
+		context as <i>_SampleViewModel.cs</i>. You can copy paste these empty templates 
+		to add a new blank page.</p>
 		<pre>&lt;ContentPage 
    ...
    <span style="background-color: #FFFF00">base:ViewManager.AutoWireViewModel=&quot;true&quot;</span>
@@ -416,16 +410,14 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		</ul>
 		<h6>Exception Handling</h6>
 		<p>All exceptions are globally handled in<i> ExceptionHandler LogException()</i> 
-		method. <span class="pl-c">Subscription to app wide unhandled exceptions 
-		is done in <i>MainActivity</i> class for Android and in <i>AppDelegate</i> 
-		class for IOS. However be aware that when an unhandled exception occurs, 
-		typically Android will be destroying the process. So there&#39;s not a lot can 
-		be done on the Android side, but your Xamarin code should still be able 
-		to work. So you can log the error message with a third party tool like
-		<a href="https://hockeyapp.net/">HockeyApp Crash Reporting</a>. Beside it&#39;s
-		</span><span lang="EN-US">advised </span><span class="pl-c">to put a breakpoint 
-		in <i>LogException() </i></span>method. This is useful to see the exception 
-		before app crashes.</p>
+		method. Subscription to app wide unhandled exceptions is done in <i>MainActivity</i> 
+		class for Android and in <i>AppDelegate</i> class for IOS. However be aware 
+		that when an unhandled exception occurs, typically Android will be destroying 
+		the process. So there&#39;s not a lot can be done on the Android side, but your 
+		Xamarin code should still be able to work. So you can log the error message 
+		with a third party tool like <a href="https://hockeyapp.net/">HockeyApp 
+		Crash Reporting</a>. Beside it&#39;s advised to put a breakpoint in <i>LogException()</i> 
+		method. This is useful to see the exception before app crashes. </p>
 		<h5>Pages</h5>
 		<h6>InitialView</h6>
 		<p>InitialView is a transition page that checks whether user has any granted 
