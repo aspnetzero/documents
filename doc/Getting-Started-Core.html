@@ -25,8 +25,11 @@ below:</p>
 <img class="img-thumbnail" alt="Create project" src="images/download-core-jquery-2.png" /></p>
 <p>Select <strong>ASP.NET Core &amp; jQuery</strong> as Project Type and fill 
 other required fields. Click to the Download button, your project will be ready 
-in one minute. Open the solution in <strong>Visual Studio 2017+</strong>:</p>
-
+in one minute. Open the <strong>*.Web.sln</strong> solution in <strong>Visual Studio 2017+</strong>:</p>
+<div class="alert alert-warning">
+    <p>If you want to work on only Xamarin project, open <strong>*.Mobile.sln</strong> solution. If you want to work on both Xamarin and Web projects, open 
+	<strong>*.All.sln</strong> solution.</p>
+</div>
 <p>
 <img class="img-thumbnail" alt="ASP.NET Core solution" src="images/solution-overall-core-5.png" /></p>
 <p>
@@ -40,34 +43,33 @@ build</strong> the solution. It make take longer time in first build since all
 
 <div class="alert alert-warning">
     <strong>Important Notice:</strong><br>
-    <p>Installing client side npm dependencies using <strong>yarn</strong> before opening the solution will increase project opening &amp; building time dramatically.</p>
+    <p>Installing client side npm dependencies using <strong>yarn</strong> before opening the solution will decrease project opening &amp; building time dramatically.</p>
 </div>
 
 <p>Before opening the solution open a command prompt, navigate to root directory of <strong>*.Web.Mvc</strong> project and run "<strong>yarn</strong>" command to install client side dependencies.</p>
 
 <h3 id="DocPrerequirements">Prerequirements</h3>
 
-<p>MVC application needs to following tools be installed:</p>
+<p>MVC application needs the following tools to be installed:</p>
 
 <ul>
-	<li><a href="https://nodejs.org/en/download/" target="_blank">nodejs</a> 
-	6.9+ with npm 3.10+</li>
-	<li><a href="https://www.npmjs.com/package/gulp">gulp (must be installed globally)</a></li>
-	<li><a href="https://yarnpkg.com/">yarn</a></li>
+	<li><a href="https://nodejs.org/en/download/" target="_blank">nodejs</a> 6.9+ with npm 3.10+</li>
+	<li><a href="https://www.npmjs.com/package/gulp" target="_blank">gulp (must be installed globally)</a></li>
+	<li><a href="https://yarnpkg.com/" target="_blank">yarn</a></li>
 </ul>
 
 <h4 id="DocConfigureDbConn">Database Connection</h4>
 
 		<p>Open <strong>appsettings.json</strong> in <strong>.Web.Mvc</strong> project and change the  <strong>Default</strong> connection string if you want:</p>
 		<pre lang="js">"ConnectionStrings": {
-    "Default": "Server=localhost; Database=<strong>PhoneBookDb</strong>; Trusted_Connection=True;"
+    "Default": "Server=localhost; Database=<strong>PhoneBookDemoDb</strong>; Trusted_Connection=True;"
 }</pre>
 
 <h4 id="DocConfigureMigrations">Database Migrations</h4>
 <p>We have two options to create and migrate database to the latest version.</p>
 <h5>AspNet Zero Migrator Application</h5>
 <p>AspNet Zero solution includes a <strong>.Migrator</strong> (like 
-Acme.PhoneBook.Migrator) project in the solution. You can run 
+Acme.PhoneBookDemo.Migrator) project in the solution. You can run 
 this tool for database migrations on development and production (see
 <a href="Development-Guide-Core.html">development guide</a> for more information).</p>
 
@@ -118,7 +120,7 @@ see the sample dashboard screen:</p>
 
 <p>Your solution is up and working.
 See
-<a href="Development-Guide-Core.html"><span class="text-primary">development guide</span></a> document for more 
+<a href="Getting-Started-Xamarin.html"><span class="text-primary">getting started</span></a> for Xamarin application, <a href="Development-Guide-Core.html"><span class="text-primary">development guide</span></a> document for more 
 information.</p>
 
 <script src="libs/jquery/jquery-3.1.0.min.js" type="text/javascript"></script>

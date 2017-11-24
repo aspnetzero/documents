@@ -22,7 +22,7 @@ password. Then you will see <a href="/Download">Download</a> link on the main me
 <p>Go to the <a href="/Download">download</a> page. You will see a form as shown 
 below:</p>
 <p>
-<img class="img-thumbnail" alt="Download angular" src="images/download-angular-2.png" /></p>
+<img class="img-thumbnail" alt="Download angular" src="images/download-angular-3.png" /></p>
 <p>Select <strong>ASP.NET Core &amp; Angular</strong> as Project Type and fill 
 other required fields. Your project will be ready 
 in one minute. When you open the downloaded zip file, you will see two folders:</p>
@@ -42,10 +42,16 @@ in one minute. When you open the downloaded zip file, you will see two folders:<
 	Client and Server solutions are designed to work separately by default but if you want to work on a single Visual Studio solution, you can select "One Solution" checkbox while downloading your project.
 </p>
 <h3>ASP.NET Core Application</h3>
-<p>When you open Server side solution in <strong>Visual Studio 2017+</strong>, you will see the 
+<p>When you open Server side solution
+<strong>*.Web.sln</strong> in <strong>Visual Studio 2017+</strong>, you will see the 
 solution structure as like below:</p>
+<div class="alert alert-warning">
+    <p>If you want to work on only Xamarin project, open <strong>*.Mobile.sln</strong> solution. If you want to work on both Xamarin and Web projects, open 
+	<strong>*.All.sln</strong> solution.</p>
+</div>
+
 <p>
-<img class="img-thumbnail" alt="AspNet Core solution structure" src="images/aspnet-core-host-solution-3.png" /></p>
+<img class="img-thumbnail" alt="ASP.NET Core solution structure" src="images/aspnet-core-host-solution-4.png" /></p>
 <p>
 Right click the 
 <strong>.Web.Host</strong> project and select "<strong>Set as StartUp project</strong>": Then <strong>
@@ -55,14 +61,14 @@ build</strong> the solution. It make take longer time in first build since all
 
 		<p>Open <strong>appsettings.json</strong> in <strong>.Web.Host</strong> project and change the  <strong>Default</strong> connection string if you want:</p>
 		<pre lang="js">"ConnectionStrings": {
-    "Default": "Server=localhost; Database=<strong>PhoneBookDb</strong>; Trusted_Connection=True;"
+    "Default": "Server=localhost; Database=<strong>PhoneBookDemoDb</strong>; Trusted_Connection=True;"
 }</pre>
 
 <h4 id="DocConfigureMigrations">Database Migrations</h4>
 <p>We have two options to create and migrate database to the latest version.</p>
 <h5>AspNet Zero Migrator Application</h5>
 <p>AspNet Zero solution includes a <strong>.Migrator</strong> (like 
-Acme.PhoneBook.Migrator) project in the solution. You can run 
+Acme.PhoneBookDemo.Migrator) project in the solution. You can run 
 this tool for database migrations on development and production (see
 <a href="Development-Guide-Angular.html">development guide</a> for more information).</p>
 
@@ -90,7 +96,7 @@ multi tenant applications.</p>
 Multi-tenancy is <strong>enabled by default</strong>. If you don't have idea 
 about multi-tenancy or don't want to create a multi-tenant application, you can
 <strong>disable</strong> it by setting <strong>
-AbpZeroTemplateConsts.MultiTenancyEnabled</strong> to false in the .Core 
+AbpZeroTemplateConsts.MultiTenancyEnabled</strong> to false in the .Core.Shared 
 project.</p>
 <h4>Run API Host</h4>
 
@@ -98,7 +104,7 @@ project.</p>
 application only contains APIs. So, default page is a swagger UI which can be 
 used to investigate the API:</p>
 <p>
-<img class="img-thumbnail" alt="Swagger UI" height="837" src="images/swagger-ui-ng2.png" width="973" /></p>
+<img class="img-thumbnail" alt="Swagger UI" src="images/swagger-ui-ng2-1.png" /></p>
 <h3>Angular Application</h3>
 <h4>Prerequirements</h4>
 <p>Angular application needs to following tools be installed:</p>
@@ -131,7 +137,7 @@ following command (instead of npm start) to enable HMR on development time:</p>
 
 <p>All ready.. just run your solution to enter to the login page:</p>
 <p>
-<img class="img-thumbnail" alt="Login page" height="511" src="images/login-screen-2.png" width="424" /></p>
+<img class="img-thumbnail" alt="Login page" src="images/login-screen-3.png" /></p>
 <p>If multi-tenancy is enabled, you will see the current tenant and a change 
 link. If so, click to <strong>Change</strong> like and enter <strong>default</strong> as tenant name. 
 If you leave it empty, you login as the host admin user. Then enter
@@ -141,12 +147,12 @@ should change password at first login. </p>
 <p>After login to the application, you will 
 see the sample dashboard screen:</p>
 <p>
-<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV2.png" width="1235" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV3.png" width="1235" /></p>
 <h3 id="DocMore">More</h3>
 
 <p>Your solution is up and working.
 See
-<a href="Development-Guide-Angular.html"><span class="text-primary">development guide</span></a> document for more 
+<a href="Getting-Started-Xamarin.html"><span class="text-primary">getting started</span></a> for Xamarin application, <a href="Development-Guide-Angular.html"><span class="text-primary">development guide</span></a> document for more 
 information.</p>
 
 <script src="libs/jquery/jquery-3.1.0.min.js" type="text/javascript"></script>

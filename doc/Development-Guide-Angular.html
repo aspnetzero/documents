@@ -156,7 +156,7 @@ application.</p>
 <h4>Login</h4>
 <p>Default route for AccountModule is the login/<strong>login.component</strong>:</p>
 <p>
-<img class="img-thumbnail" alt="Login page" src="images/login-screen-1.png" /></p>
+<img class="img-thumbnail" alt="Login page" src="images/login-screen-3.png" /></p>
 <p>The <strong>tenant selection</strong> section above login section is shown only in a 
 <strong>multi-tenant</strong> application and if "tenancy name detection" is 
 <strong>not possible from url</strong> (for example, if you use subdomain as 
@@ -167,7 +167,7 @@ in the initial database.&nbsp;Leave tenancy name input as blank to login as <str
 password in first run the application. At first login, we should change admin 
 password since 123qwe is not very secure:</p>
 <p>
-<img class="img-thumbnail" alt="Change password" height="304" src="images/account-change-password.png" width="422" /></p>
+<img class="img-thumbnail" alt="Change password" src="images/account-change-password-1.png" /></p>
 <p>
 After changing password we are redirected to the 
 <strong>application</strong> (app.module).</p>
@@ -183,7 +183,7 @@ Angular2 application. Microsoft and Twitter logins are on the road map.</p>
 <p>ASP.NET Zero is ready to provide two factor login, but it's disabled as 
 default. You can easily enable it in host settings page (in Security tab):</p>
 <p>
-<img class="img-thumbnail" alt="" height="405" src="images/lockout-two-factor-settings.png" width="490" /></p>
+<img class="img-thumbnail" alt="" src="images/lockout-two-factor-settings-1.png" /></p>
 <p>
 Note: In a multi-tenant application, two factor authentication is available to 
 tenants only if it's enabled in the host settings. Also, email verification and 
@@ -193,12 +193,12 @@ design.</p>
 When it's enabled, user is asked to select a verification provider after 
 entering user name and password:</p>
 <p>
-<img class="img-thumbnail" alt="Send security code" height="313" src="images/send-security-code.png" width="421" /></p>
+<img class="img-thumbnail" alt="Send security code" src="images/send-security-code-1.png" /></p>
 <p>
 Then a <strong>confirmation code</strong> is sent to the selected provider and 
 user enters the code in the next page:</p>
 <p>
-<img class="thumbnail" alt="Verify security code" height="360" src="images/verify-security-code-ng2.png" width="410" /></p>
+<img class="thumbnail" alt="Verify security code" src="images/verify-security-code-1.png" /></p>
 <h5>
 Email Verification</h5>
 <p>
@@ -224,7 +224,7 @@ duration.</p>
 available for tenants for multitenant applications) in the login page, a 
 registration form is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Registration form" height="840" src="images/registration-form-ng2.png" width="411" /></p>
+<img class="img-thumbnail" alt="Registration form" src="images/registration-form-small-1.png" /></p>
 <p><strong>Recaptcha</strong> (security question) is optional. It uses Google's recaptcha 
 service. Recaptcha service works per domain. So, to make it properly work, you 
 should create your own private and public keys for your domain on
@@ -237,25 +237,25 @@ appconfig.json</strong> in the client side.</p>
 his email address. If user did not receive this email for some reason, they can 
 click Email activation and re-send the confirmation code.</p>
 <p>
-<img class="img-thumbnail" alt="Email activation" height="335" src="images/email-activation-2.png" width="413" /></p>
+<img class="img-thumbnail" alt="Email activation" src="images/email-activation-1.png" /></p>
 <h4>Forgot Password</h4>
 <p>If a user forgots his password, he can click the "Forgot Password" link to 
 get an email to reset the password.</p>
 <p>
-<img class="img-thumbnail" alt="Forgot password" height="333" src="images/forgot-password-2.png" width="414" /></p>
+<img class="img-thumbnail" alt="Forgot password" src="images/forgot-password-1.png" /></p>
 <h4>
 Tenant Registration</h4>
 <p>
 Tenant registration link is shown on the login form only if you are in the host 
 context. When you click to the link, a registration form is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant registration form" height="663" src="images/ng2-tenant-registration.png" width="412" /></p>
+<img class="img-thumbnail" alt="Tenant registration form" src="images/tenant-signup-v3.png" /></p>
 <h3>AppModule</h3>
 <p>This is the actual application module which is entered by username and password. You 
 will mostly work on this application to add your business requirements. A 
 screenshot from the application:</p>
 <p>
-<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV2.png" width="1235" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV3.png" width="1235" /></p>
 <p>Folder structure of the source code is like that:</p>
 <p>
 <img class="img-thumbnail" alt="Angular app module files" height="450" src="images/ng2-app-module.png" width="223" /></p>
@@ -264,7 +264,7 @@ is the root component for all views.</p>
 <h4>Main Menu and Layout</h4>
 <p>Menu and Layout files located under shared folder:</p>
 <p>
-<img class="img-thumbnail" alt="Angular layout files" height="287" src="images/ng2-layout-files.png" width="286" /></p>
+<img class="img-thumbnail" alt="Angular layout files" src="images/ng2-layout-files-1.png" /></p>
 <p>Main menu is defined and rendered in <strong>side-bar.component</strong>. You 
 can add new menu items here. You generally relate a menu item to an Angular 
 route. Angular routes are defined in several modules:</p>
@@ -284,11 +284,11 @@ section.</em></p>
 page</strong> (available in host login)<strong> </strong>is used to manage 
 application's editions:</p>
 <p>
-<img  class="img-thumbnail" alt="Editions Page" height="277" src="images/editions-page-core-3.png" width="1277" /></p>
+<img  class="img-thumbnail" alt="Editions Page" src="images/editions-page-core-4.png" /></p>
 <p>Editions are used to group feature values and assign to tenants. When we 
 click Actions/Edit for an edition, we can see it&#39;s poperties:</p>
 <p>
-<img class="img-thumbnail" alt="Edit Edition" height="882" src="images/edition-edit.png" width="595" /></p>
+<img class="img-thumbnail" alt="Edit Edition" src="images/edition-edit-1.png" /></p>
 <p>
 An edition can be free or paid. If it&#39;s a paid edition then you should enter 
 monthly and annual prices. You can allow tenants to use trial version of this 
@@ -298,7 +298,7 @@ And finally, you can deactivate tenant or assign to a free edition if they don&#
 extend their subscription.</p>
 <p>Features tab is used to determing features available for the edition:</p>
 <p>
-<img class="img-thumbnail" alt="Edit edition features" height="343" src="images/edition-feature-editing-core.png" width="615" /></p>
+<img class="img-thumbnail" alt="Edit edition features" src="images/edition-feature-editing-core-1.png" /></p>
 <p>See
 <a href="https://aspnetboilerplate.com/Pages/Documents/Feature-Management">
 feature management</a> and
@@ -315,7 +315,7 @@ section.</em></p>
 <p>If this is a multi-tenant application and you logged in as a host user, then 
 tenants page is shown:</p>
 <p>
-<img class="img-thumbnail"  alt="Tenant management page" height="438" src="images/tenant-management-core-2.png" width="1277" /></p>
+<img class="img-thumbnail"  alt="Tenant management page" src="images/tenant-management-core-3.png" /></p>
 <p>A tenant is represented by <strong>Tenant</strong> class. Tenant class 
 <a href="Extending-Existing-Entities.html">can be 
 extended</a> by adding new properties. There is an only 
@@ -326,7 +326,7 @@ If it's passive, no user of this tenant can login to the application.</p>
 <p>When we 
 click the "<strong>Create New Tenant</strong>" button, a dialog is shown:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant Creation Modal" height="771" src="images/tenant-create-modal.png" width="596" /></p>
+<img class="img-thumbnail" alt="Tenant Creation Modal" src="images/tenant-create-modal-1.png" /></p>
 <p><strong>Tenancy name</strong> should be unique and can not contain spaces or 
 other special chars since it may be used as subdomain name (like 
 tenancyname.mydomain.com). <strong>Name</strong> can be anything. <strong>Admin email</strong> 
@@ -352,7 +352,7 @@ edition, but we can also override features and values for a tenant. Click
 <strong>actions/change features</strong> for a tenant to <strong>customize</strong> 
 it's features:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant features" height="239" src="images/tenant-features-core.png" width="615" /></p>
+<img class="img-thumbnail" alt="Tenant features" src="images/tenant-features-core-1.png" /></p>
 <h5>Tenant User Impersonation</h5>
 <p>As a host user, we may want to perform operations in behalf of a tenant. In 
 this case, we can click the "<strong>Login 
@@ -369,7 +369,7 @@ See application configuration section.</p>
 <p>Host dashboard is used to show some statistics about tenants, editions and 
 income:</p>
 <p>
-<img class="img-thumbnail" alt="Host dashboard" height="495" src="images/host-dashboard%20-%20Copy.jpg" width="600" /></p>
+<img class="img-thumbnail" alt="Host dashboard" height="495" src="images/host-dashboard-1.png" width="1200" /></p>
 <p>This is a fully implemented dashboard except two sample statistics (sample 
 statistics 1 &amp; 2) those are placeholders for your own statistics.</p>
 <h4>Organization Units</h4>
@@ -377,7 +377,7 @@ statistics 1 &amp; 2) those are placeholders for your own statistics.</p>
 Then you can get user or entities based on their OUs. When we click 
 Administration/Organization units, we enter the related page:</p>
 <p>
-<img class="img-thumbnail" alt="Organization units page" height="485" src="images/organization-units-page-core-2.png" width="1277" /></p>
+<img class="img-thumbnail" alt="Organization units page" src="images/organization-units-page-core-3.png" /></p>
 <p>Here, we can manage OUs (create, edit, delele, move) and members 
 (add/remove).</p>
 <p>In the left OU tree, we can <strong>right click</strong> to an OU (or left click to
@@ -385,7 +385,7 @@ Administration/Organization units, we enter the related page:</p>
 OU operations. We can also add new members with the upper right button of 
 members area.</p>
 <p>
-<img class="img-thumbnail" alt="Select a user dialog" height="686" src="images/select-user-lookup-core-2.png" width="614" /></p>
+<img class="img-thumbnail" alt="Select a user dialog" src="images/select-user-lookup-core-3.png" /></p>
 <p>This is actually a <strong>generic lookup modal</strong> and can be used to 
 select any type of entity (see app/shared/common/lookup/<strong>common-lookup-modal.component</strong>).</p>
 <p>See
@@ -395,7 +395,7 @@ organization unit management document</a> for more information.</p>
 
 <p>When we click Administration/Roles menu, we enter to the role management page:</p>
 <p>
-<img class="img-thumbnail" alt="Role management page" height="325" src="images/role-management-core-2.png" width="852" /></p>
+<img class="img-thumbnail" alt="Role management page" src="images/role-management-core-3.png" /></p>
 <p>Roles are used to <strong>group permissions</strong>. When a user has a 
 role, then they will have all permissions of that role.</p>
 <p>A role is represented by the <strong>Role</strong> class. Role class 
@@ -429,7 +429,7 @@ permission by default. These can be changed easily in the
 <p>Since roles are used to group permissions, we can set permissions of a role 
 while creating or editing as shown below:</p>
 <p>
-<img class="img-thumbnail" alt="Role Permissions" height="823" src="images/role-permissions-core.png" width="614" /></p>
+<img class="img-thumbnail" alt="Role Permissions" src="images/role-permissions-core-1.png" /></p>
 <p>(not all permissions shown in the figure above)</p>
 <p>Every tenant has it's <strong>own roles</strong> and any change in roles for a tenant does not effect other 
 tenants. Also, host has also it's own isolated roles.</p>
@@ -437,7 +437,7 @@ tenants. Also, host has also it's own isolated roles.</p>
 
 <p>When we click Administration/Users menu, we enter to the user management page:</p>
 <p>
-<img class="img-thumbnail" alt="User management" height="585" src="images/user-management-core-2.png" width="1328" /></p>
+<img class="img-thumbnail" alt="User management" src="images/user-management-core-3.png" /></p>
 
 <p><strong>Users</strong> are people who can <strong>login </strong>to the application and 
 perform some operations based on their <strong>permissions</strong>.</p>
@@ -448,11 +448,11 @@ permissions of all these roles. Also, we can set <strong>user-specific permissio
 A user specific permission setting overrides role settings for this permission. 
 A screenshot of user permission dialog:</p>
 <p>
-<img class="img-thumbnail" alt="User Permissions" height="481" src="images/user-permissions.png" width="620" /></p>
+<img class="img-thumbnail" alt="User Permissions" src="images/user-permissions-1.png" /></p>
 <p>(not all permissions shown in the figure above)</p>
 <p>A dialog is used to create/edit a user:</p>
 <p>
-<img class="img-thumbnail" alt="Editing User" src="images/edit-user-2.png" /></p>
+<img class="img-thumbnail" alt="Editing User" src="images/edit-user-3.png" /></p>
 <p>We can change user's <strong>password</strong>, make her <strong>
 active/passive</strong> and so on... A user can have a <strong>profile picture</strong>. 
 It can be changed by the user (See User Menu section). <strong>Admin</strong> 
@@ -465,7 +465,7 @@ icon in the actions of a user, we are automatically redirected and logged in as 
 This is called as "<strong>user impersonation</strong>". When we impersonate a user, a "<strong>back to 
 my account</strong>" option is added to the user profile menu:</p>
 <p>
-<img class="img-thumbnail" alt="Back to my account link" height="368" src="images/back-to-my-account-link-2.png" width="211" /></p>
+<img class="img-thumbnail" alt="Back to my account link" src="images/back-to-my-account-link-3.png" /></p>
 <p>In an impersonated account, we can only perform operations allowed to that 
 user. That means, everything <strong>exactly</strong> works as same as this user 
 logged in himself. The only difference is shown in audit logs which indicates 
@@ -476,14 +476,14 @@ impersonated account.</p>
 <p>Language management page is used to manage (add/edit/delete) <strong>application 
 languages</strong> and change <strong>localized texts</strong>:</p>
 <p>
-<img class="img-thumbnail" alt="Language management" height="583" src="images/language-list-core-2.png" width="1333" /></p>
+<img class="img-thumbnail" alt="Language management" src="images/language-list-core-3.png" /></p>
 <p>We can create new language, edit/delete an existing language and <strong>set a 
 language as default</strong>. Note that; tenants can not edit/delete default 
 languages, but host users can do.</p>
 <p>When we click to <strong>Change text</strong> for any language, we are 
 redirected to a new view to edit language texts:</p>
 <p>
-<img class="img-thumbnail" alt="Language texts" height="661" src="images/language-change-text-modal-core-2.png" width="1286" /></p>
+<img class="img-thumbnail" alt="Language texts" src="images/language-change-text-modal-core-3.png" /></p>
 <p>We can select any language as a <strong>base</strong> (reference) and change 
 <strong>target</strong> language's 
 texts. Base language is just to help the translation progress. Since there maybe different
@@ -491,7 +491,7 @@ texts. Base language is just to help the translation progress. Since there maybe
 localization sources</a>, we select the source to translate. When we click the 
 edit icon, we can see the edit modal for the selected text:</p>
 <p>
-<img class="img-thumbnail" alt="Language text editing" height="409" src="images/language-change-text-modal-core.png" width="608" /></p>
+<img class="img-thumbnail" alt="Language text editing" src="images/language-change-text-modal-core-1.png" /></p>
 <p><strong>Host</strong> users (if allowed) can edit languages and localized 
 texts. These languages will be default for all tenants for a multi-tenant application.
 <strong>Tenants</strong> inherit languages and localized texts and can <strong>
@@ -503,14 +503,14 @@ localization</a> documents for more information.</p>
 <h4>Audit Logs</h4>
 <p>In audit logs page, we can see all user interactions with the application:</p>
 <p>
-<img class="img-thumbnail" alt="Audit logs"  height="593" src="images/audit-logs-core-2.png" width="1330" /></p>
+<img class="img-thumbnail" alt="Audit logs" src="images/audit-logs-core-3.png" /></p>
 <p>All application service methods and MVC controller actions are automatically logged and can be viewed 
 here. See
 <a href="https://aspnetboilerplate.com/Pages/Documents/Audit-Logging">audit 
 logs documentation</a> to learn how to configure it. When we click the magnifier 
 icon, we can see all details an audit log:</p>
 <p>
-<img class="img-thumbnail" alt="Audit Log" height="827" src="images/audit-logs-detail.png" width="620" /></p>
+<img class="img-thumbnail" alt="Audit Log" src="images/audit-logs-detail-1.png" /></p>
 <p>
 Audit log report is provided by <strong>AuditLogAppService</strong> class.</p>
 <h4>
@@ -518,11 +518,38 @@ Subscription</h4>
 <p>
 Tenants can manage (show, extend or upgrade) their edition/plan subscriptions using this page:</p>
 <p>
-<img class="img-thumbnail" alt="Subscription" height="300" src="images/subscription.png" width="413" /></p>
+<img class="img-thumbnail" alt="Subscription" src="images/subscription-1.png" /></p>
+<p>All payment records for extending/upgrading current licenses are kept in the system. These records can be seen on "Payment History" tab on subscription page.</p>
+<p>
+<img class="img-thumbnail" alt="Payment History" src="images/subscription-payment-history-core.png" />
+</p>
+<p>
+Tenants can also create &amp; print invoices for these payments by clicking the "Show Invoice" button. System will automatically generate an invoice number and show the generated invoice.
+In order to use this function, both Host &amp; Tenant must set invoice informations on host setting/tenant setting page.
+</p>
+<p>
+<img class="img-thumbnail" alt="Tenant Invoice Settings" src="images/host-settings-invoice.png" />
+</p>
+<p>After all, invoices for payments related to subscription can be generated. You can see a sample invoice below:</p>
+<p>
+<img class="img-thumbnail" alt="Sample Invoice" src="images/sample-invoice-core.png" />
+</p>
+<h4>Visual Settings</h4>
+<p>AspNet Zero's look of UI can be modified in visual settings page. This page is used to modify look of UI both for system and personal user accounts. If a user doesn't have permission to see this page, then user will see an item named "Visual Settings" in his personal menu.</p>
+<p>
+<img class="img-thumbnail" alt="User visual settings" src="images/user-menu-visual-settings-core.png" />
+</p>
+<p>Users who have permission to see this page will see the same item in the application menu.</p>
+<p>In this page, users can change visual settings for Layout, Header, Menu and 
+Footer of the application.</p>
+<p>
+<img class="img-thumbnail" alt="Visual settings" src="images/visual-settings-core.png" />
+</p>
+
 <h4>Host Settings</h4>
 <p>Host settings page is used to configure some system settings:</p>
 <p>
-<img class="img-thumbnail" alt="General Host Settings" src="images/host-settings-general-4.png" /></p>
+<img class="img-thumbnail" alt="General Host Settings" src="images/host-settings-general-6.png" /></p>
 <p><strong>Timezone</strong> is an important setting in this page. AspNet 
 Zero can work in multiple zones. Each user can see dates and times in their own time zone. Timezone setting in this 
 page allows you to set default time zone for the application including all 
@@ -531,11 +558,11 @@ Timezone setting is available only if you are using UTC clock.
 <a href="https://aspnetboilerplate.com/Pages/Documents/Timing" target="_blank">
 See documentation</a> to switch to UTC.</p>
 <p><strong>Security</strong> tab in host settings page contains password complexity settings. Host can define system wide password complexity settings in this tab. Each tenant can override this setting in tenant settings page.</p>
-<img class="img-thumbnail" alt="Tenant settings" src="images/host-settings-security.png" />
+<img class="img-thumbnail" alt="Tenant settings" src="images/host-settings-security-3.png" />
 <h4>Tenant Settings</h4>
 <p>In a multi-tenant application, tenant settings are shown as below:</p>
 <p>
-<img class="img-thumbnail" alt="Tenant settings" height="421" src="images/tenant-settings-core.png" width="762" /></p>
+<img class="img-thumbnail" alt="Tenant settings" src="images/tenant-settings-core-1.png" /></p>
 <p>If we disable multi-tenancy, some host settings are also shown in this page (since 
 there is no host setting page). Tenants can also define password complexity settings for their users or they can use password complexity settings defined by host user.</p>
 <h5>Enabling LDAP (Active Directory) Authentication</h5>
@@ -545,7 +572,7 @@ used in a multi-tenant system normally. See
 <a href="Development-Guide-Core.html">server side</a> to enable LDAP. Once we 
 enable, we can see <strong>LDAP settings</strong> section in the settings page:</p>
 <p>
-<img class="img-thumbnail" alt="LDAP Settings" height="569" src="images/tenant-settings-ldap.png" width="764" /></p>
+<img class="img-thumbnail" alt="LDAP Settings" src="images/tenant-settings-ldap-1.png" /></p>
 <p>We can check "<strong>Enable LDAP Authentication</strong>" to enable it. If 
 the server works in domain and application runs with a domain user or local 
 system, then generally even <strong>no need</strong> to set Domain name, user and password. You 
@@ -562,13 +589,13 @@ available, otherwise it will be disabled.</p>
 applications (for single tenant applications it's shown in tenant side) and shown as 
 below:</p>
 <p>
-<img class="img-thumbnail" alt="Maintenance cache" height="525" src="images/maintenance-cache.png" width="729" /></p>
+<img class="img-thumbnail" alt="Maintenance cache" src="images/maintenance-cache-1.png" /></p>
 <p>In the <strong>Caches</strong> tab, we can clear some or all caches. Clearing 
 caches may be needed if you manually change database and want to refresh 
 application cache. <strong>Website Logs</strong> tab is used to see and download 
 logs: </p>
 <p>
-<img class="img-thumbnail" alt="Maintenance logs" height="561" src="images/maintenance-logs.png" width="727" /></p>
+<img class="img-thumbnail" alt="Maintenance logs" src="images/maintenance-logs-1.png" /></p>
 
 <h4>Tenant Dashboard</h4>
 <p>ASP.NET Zero startup project also includes a <strong>sample</strong> 
@@ -576,26 +603,29 @@ dashboard. It's just for demo purposes, you can make it as a start point for
 your actual dashboard. It's implemented with app/main/<strong>dashboard.component</strong> 
 in <strong>main.module</strong>.</p>
 <p>
-<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV2.png" width="1235" /></p>
+<img class="img-thumbnail" alt="Dashboard" height="965" src="images/dashboardV3.png" width="1235" /></p>
 <p>Client gets all data from server, server generates random data.</p>
 <h4>Notifications</h4>
 <p>Notification icon is located next to the language selection button. The number in the red circle shows unread notification count.</p>
-<p><img alt="notifications" src="images/notifications-icon.png" width="189" class="img-thumbnail"/></p>
+<p>
+<img alt="notifications" src="images/notifications-icon-1.png" class="img-thumbnail"/></p>
 <p>User can see 3 recent notifications by clicking this icon. </p>
-<p><img alt="notifications" src="images/recent-notifications.png" width="320" class="img-thumbnail" style="height: 424px"/></p>
+<p>
+<img alt="notifications" src="images/recent-notifications-1.png" class="img-thumbnail"/></p>
 <p>User can marks all notifications as read by clicking the "Set all as read" link or can mark a single notification by clicking the "set as read" link next to each notification.</p>
 <p>Notifications are sent real-time using SignalR. In addition, a <strong>
 desktop push notification</strong> is shown when a notification is received.</p>
 <h5>Notification Settings</h5>
 <p>"Settings" link opens notification settings dialog.</p>
-<p><img alt="notifications" src="images/notification-settings.png" width="601" class="img-thumbnail" style="height: 311px"/></p>
+<p>
+<img alt="notifications" src="images/notification-settings-1.png" class="img-thumbnail"/></p>
 <p>In this dialog there is a global setting for user to enable/disable receiving notifications. If this setting is enabled, then user can enable/disable each notification individually.</p>
 <p>You can also define your custom notifications in the
 <a href="Development-Guide-Core.html">server side</a>. See <a href="https://aspnetboilerplate.com/Pages/Documents/Notification-System">notifications documentation</a> for detailed information.</p>
 <h5>Notification List</h5>
 <p>All notifications of the user are listed in this page.</p>
 <p>
-<img class="img-thumbnail" alt="Notification list" height="215" src="images/notifications-list-core-2.png" width="858" /></p>
+<img class="img-thumbnail" alt="Notification list" src="images/notifications-list-core-3.png" /></p>
 <div class="bs-callout bs-callout-warning">
 	<p><strong>.Net Core Compability</strong></p>
 <p>Since SignalR is not ready yet for .net core, real time notifications will 
@@ -604,18 +634,23 @@ not work if you select .net core as your base framework.</p>
 
 <h4>Chat</h4>
 <p>Chat icon is located next to user's profile image on top right corner of the page.  The number in the red circle shows total unread chat message count.</p>
-<p><img class="img-thumbnail" alt="User menu" src="images/chat-icon.png" /></p>
+<p><img class="img-thumbnail" alt="User menu" src="images/chat-icon-1.png" /></p>
 <p>When user clicks this icon, chat panel appears on the right of page. This panel contains friends of user and list of blocked users.</p>
-<img class="img-thumbnail" alt="User menu" src="images/chat-friends.png" />
+<img class="img-thumbnail" alt="User menu" src="images/chat-friends-1.png" />
 <p>User can add new friends by writing the username into username textbox above friend list. If "Chat with other tenants" feature is enabled for tenant, users of other tenants can be added as a friend by writing [tenancy name]\[user name] (ex: Default\admin). If "Chat with host users" feature is enabled, host users can be added as friend by writing .\[user name] in the same textbox.</p>
 <p>While online friends/users have a green circle on their profile image, offline friends/users 
 have a gray circle.</p>
 <p>User can pin or unpin the chat panel by clicking the pin icon on top right corner of the chat panel. Application tries to remember last state of chat panel and restores it when user login to application.</p>
 <p>When a friend/user is selected, conversation panel is opened.</p>
-<img class="img-thumbnail" alt="User menu" src="images/chat-conversation.png" />
+<img class="img-thumbnail" alt="User menu" src="images/chat-conversation-1.png" />
+<p>Chat system also allows sending images, files and link of current page to friends</p>
+<p>
+<img class="img-thumbnail" alt="Chat attachments" src="images/chat-attachments-core.png" />
+</p>
+
 <p>User can block or unblock friend/user in this area. There is a wrench icon right of the selected user's username. This icon opens an action menu and this menu contains block user or unblock user actions according to user's block status.</p>
 <h5>Chat Features</h5>
-<img class="img-thumbnail" alt="User menu" src="images/chat-features.png" />
+<img class="img-thumbnail" alt="User menu" src="images/chat-features-1.png" />
 <p>There are three chat features in the system. These are "Chat", "Chat with host", "Chat with other tenants". These features can be enabled/disabled 
 per edition/tenant. By using these features host can enable/disable chat with other tenant's users or host users.</p>
 <div class="bs-callout bs-callout-warning">
@@ -626,20 +661,22 @@ not work if you select .net core as your base framework.</p>
 <h4>User Menu</h4>
 <p>A user can click his name at top right corner to open user menu:</p>
 <p>
-<img class="img-thumbnail" alt="User menu" height="307" src="images/user-menu-3.png" width="382" /></p>
+<img class="img-thumbnail" alt="User menu" src="images/user-menu-4.png" /></p>
 <h5>Linked Accounts</h5>
 <p>Linked accounts are used to link multiple accounts to each other. In this 
 way, a user can easily navigate through his accounts using this feature.</p>
 <p>User can link new accounts or delete already linked accounts by clicking the 
 "Manage accounts" link.</p>
-<p><img class="img-thumbnail" alt="User menu" height="227" src="images/linked-accounts-2.png" width="466" /></p>
+<p>
+<img class="img-thumbnail" alt="User menu" src="images/linked-accounts-3.png" /></p>
 <p>
 In order to link a new account, user must enter login credentials of related account.</p>
-<p><img class="img-thumbnail" alt="link new account" height="353" src="images/link-new-account.png" width="599"/></p>
+<p>
+<img class="img-thumbnail" alt="link new account" src="images/link-new-account-1.png"/></p>
 <h5>Profile Settings</h5>
 <p>My settings is used to change user profile settings:</p>
 <p>
-<img class="img-thumbnail" alt="User settings" height="557" src="images/user-settings-2.png" width="614" /></p>
+<img class="img-thumbnail" alt="User settings" src="images/user-settings-3.png" /></p>
 <p>As shown here, <strong>admin</strong> user name can not be changed. It's 
 considered a special user name since it's used in database migration seed. Other 
 users can change their usernames.</p>
@@ -647,9 +684,18 @@ users can change their usernames.</p>
 <p>All login attempts (success of failed) are logged in the application. A user 
 can see last login attempts for his/her account.</p>
 <p>
-<img class="img-thumbnail" alt="Login attempts" height="538" src="images/login-attempts.png" width="611" /></p>
+<img class="img-thumbnail" alt="Login attempts" src="images/login-attempts-1.png" /></p>
 <h5>Change Picture</h5>
 <p>A user can change own profile picture. Currently, jpg/jpeg, gif and png files are supported, you can extend it.</p>
+<h4>Setup Page</h4>
+<p>
+AspNet Zero application can be set-up using install page. This page is developed to create initial database, apply migrations and configure the application according to user's input on this page.
+Setup page can be accessed via <strong>http://yourwebsite.com/Install</strong>.
+</p>
+<p>
+<img class="img-thumbnail" alt="install page" src="images/install-page-core.png" width="1200" />
+</p>
+
 <h3>Infrastructure</h3>
 <h4>NPM Packages</h4>
 <p>ASP.NET Zero solution supports both <a href="https://yarnpkg.com/" target="_blank">
@@ -698,7 +744,7 @@ localization.</p>
 <p>XML files are used as base translation for desired languages (defined in the
 <a href="Development-Guide-Core.html">server side</a>):</p>
 <p>
-<img class="img-thumbnail" alt="Localization XML files" height="217" src="images/localization-files-core.png" width="190" /></p>
+<img class="img-thumbnail" alt="Localization XML files" src="images/localization-files-core-1.png" /></p>
 <p>PhoneBook will be your ProjectName. You can add more XML files by copying one 
 XML file and translate to desired language. See
 <a href="http://www.csharp-examples.net/culture-names/" target="_blank">valid 
@@ -801,7 +847,7 @@ is <a href="Development-Guide-Core.html">server side</a> URL of the application.
 In this page (which is the default page of server side API application) you can 
 see all available API:</p>
 <p>
-<img class="img-thumbnail" alt="Swagger UI" height="837" src="images/swagger-ui-ng2.png" width="973" /></p>
+<img class="img-thumbnail" alt="Swagger UI" src="images/swagger-ui-ng2-1.png" /></p>
 <h3>
 Deployment</h3>
 <div class="bs-callout bs-callout-warning">
