@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
-<title>Development Guide</title>
+<title>Xamarin Development Guide</title>
 </head>
 
 <body>
@@ -21,15 +21,15 @@ div.image-container > p {
 <p>Xamarin is a cross-platform UI toolkit that allows developers to efficiently 
 create native cross platform user interface layouts.<br>
 This document is intended to show how to setup a Xamarin development environment 
-and introduce existing features, user interfaces on Asp.Net Zero Xamarin platform.<br>
+and introduce existing features and user interfaces on Asp.Net Zero Xamarin platform.
 For an overview of the Xamarin installation and setup practices see
 <a href="https://developer.xamarin.com/guides/xamarin-forms/getting-started/installation/">
 Xamarin.Forms Requirements</a> and
 <a href="https://developer.xamarin.com/guides/cross-platform/getting_started/installation/">
 Installation</a>. <br>
 For an overview of the Asp.Net Zero getting started see
-<a href="/Getting-Started-Core">Asp.Net Zero Getting Started.</a> The Asp.Net Zero 
-Xamarin is only available for Asp.Net Core! (Angular UI or Mvc UI)</p>
+<a href="Getting-Started-Core">Asp.Net Zero Getting Started.</a> The Asp.Net Zero 
+Xamarin is only available for Asp.Net Core included Angular UI and Mvc UI.</p>
 <h4>Prerequisites</h4>
 <p>Following tools are needed in order to develop ASP.NET Zero Xamarin:</p>
 <ul>
@@ -65,7 +65,7 @@ you can continue to support devices that use Android 4.0.3 and newer. </p>
 <img class="img-thumbnail" alt="Xamarin Android Options" src="images/options-android-vs-sml.png" />
 <h4>Mac System Requirements</h4>
 <p>You can use Visual Studio for Mac to develop Xamarin.Forms apps on OS X El Capitan 
-(10.11) or newer. To develop iOS apps, it is recommended Having at least the iOS 
+(10.11) or newer. To develop iOS apps, it is recommended having at least the iOS 
 10 SDK and Xcode latest installed.</p>
 <h4>Windows System Requirements</h4>
 <p>Xamarin.Forms apps for iOS and Android can be built on any Windows installation 
@@ -81,16 +81,17 @@ of solutions;</p>
 </ul>
 <p>For Xamarin development, you can open <b>.Mobile.sln</b>.</p>
 <div class="image-container">
-	<img class="img-thumbnail" alt="ASP.NET Zero Xamarin Architecture" src="images/xamarin-architecture.png" />
+   
+   <img class="img-thumbnail" alt="ASP.NET Zero Xamarin Architecture" src="images/xamarin-architecture.png"/>	
 	<p>Xamarin Architecture</p>
 </div>
 <div class="image-container">
-	<img class="img-thumbnail" alt="ASP.NET Zero Mobile Solution" src="images/mobile-solution-overview.png" />
+	<img class="img-thumbnail" alt="ASP.NET Zero Mobile Solution" src="images/mobile-solution-overview.png"/>
 	<p>Mobile Solution</p>
 </div>
 <p>There are 6 projects in the mobile solution:</p>
 <ul>
-	<li><strong>Core.Shared</strong> project basic primitive types as consts, enums 
+	<li><strong>Core.Shared</strong> project contains basic primitive types like consts, enums that
 	used in all layers of the solution.</li>
 	<li><strong>Application.Shared</strong> project contains data transfer objects 
 	(DTOs) and interfaces of application services shared with application layer 
@@ -114,9 +115,9 @@ SET ASPNETCORE_URLS=http://*:22742
 dotnet run</pre>
 <p>In order to every time write these lines, you can download the batch file below 
 and run it to host your web api.</p>
-<pre style="width:210px"><a href="etc/start-host.zip">Download start-host.zip</a></pre>
+<pre style="width:210px"><a href="https://github.com/aspnetzero/documents/tree/master/doc/etc/start-host.zip">Download start-host.zip</a></pre>
 <div class="bs-callout bs-callout-warning">
-	<strong><i class="fa fa-warning"></i>Warning</strong>
+	<strong><i class="fa fa-warning"></i> Warning</strong>
 	<div>
 		Before running the batch file, open it in notepad and replace the Web.Host 
 		or Web.Mvc directory path with yours!</div>
@@ -189,7 +190,7 @@ from list and press start button.</p>
 <br>
 <br>
 <div class="bs-callout bs-callout-warning">
-	<p><i class="fa fa-warning"></i><a href="https://www.xamarin.com/live/">Xamarin 
+	<p><i class="fa fa-warning"></i> <a href="https://www.xamarin.com/live/">Xamarin 
 	Live Player</a> currently does not support some of the key features. Thus Asp.Net 
 	Zero Xamarin application cannot be debugged on Xamarin Live Player. Further 
 	information read
@@ -197,7 +198,7 @@ from list and press start button.</p>
 	Xamarin Live Player limitations.</a></p>
 </div>
 <div class="bs-callout bs-callout-info">
-	<p><i class="fa fa-info-circle"></i><a href="https://www.livexaml.com/">LiveXAML</a> 
+	<p><i class="fa fa-info-circle"></i> <a href="https://www.livexaml.com/">LiveXAML</a> 
 	is a Xaml previewer runs while you are debugging your application inside an 
 	emulator. Whenever you save any XAML file, it automatically updates the running 
 	application. If you want to purchase LiveXAML, Asp.Net Zero customers get %30 
@@ -213,12 +214,12 @@ in shared project and implement/extend in end platforms. </p>
 <h4>Mobile.Droid</h4>
 <p>Xamarin Android project has a very basic structure. Asp.Net Zero adds or modifies 
 these files in the default project; </p>
-<table width="100%" cellspacing="1">
-	<tr valign="top">
-		<td width="487">
-		<img class="img-thumbnail" alt="Android Project Structure" src="images/xamarin-android-project-structure.png" />
-		</td>
-		<td>
+ 
+ <div class="image-container">
+ <img class="img-thumbnail" alt="Android Project Structure" src="images/xamarin-android-project-structure.png" />
+ <p>Android Project Structure</p>
+ </div>
+		
 		<ul>
 			<li><strong>SplashActivity </strong>There are time consuming background 
 			operations while starting up like bootstrapping ABP, retrieving configuration 
@@ -250,11 +251,9 @@ these files in the default project; </p>
 			and Android cultures.</li>
 		</ul>
 		</div>
-		</td>
-	</tr>
-</table>
+	 
 <div class="bs-callout bs-callout-info">
-	<strong><i class="fa fa-info-circle"></i>Information</strong>
+	<strong><i class="fa fa-info-circle"></i> Information</strong>
 	<p>Asp.Net Zero Xamarin changed the output path (bin) and intermediate output 
 	path (obj) of Android project to be shorter. The main reason of this is avoiding 
 	&quot;Path too long&quot; exceptions while compiling project. If you want to modify it, 
@@ -265,12 +264,12 @@ these files in the default project; </p>
 <h4>Mobile.iOS</h4>
 <p>Xamarin IOS project has a very simple structure. Asp.Net Zero adds or modifies 
 these files in the default project; </p>
-<table width="100%" cellspacing="1">
-	<tr valign="top">
-		<td width="306">
+ 
+ <div class="image-container">
 		<img class="img-thumbnail" alt="IOS Structure" src="images/xamarin-ios-project-structure.png" />
-		</td>
-		<td>
+<p>IOS Structure</p>
+	 </div>
+	 
 		<ul>
 			<li><strong>Locale </strong>This class is an adapter between .Net cultures 
 			and IOS cultures.</li>
@@ -287,9 +286,7 @@ these files in the default project; </p>
 			all the Icon*.png and Default*.png files files with yours based on the 
 			same sizes.</li>
 		</ul>
-		</td>
-	</tr>
-</table>
+	 
 <h4>Mobile.Shared</h4>
 <p>Shared project is a special type of project that can be used across disparate 
 CLI platforms including Mobile.iOS and Mobile.Android. That&#39;s why it&#39;s not been 
@@ -304,14 +301,15 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		Setting Up A Xamarin Cross Platform Solution</a></div>
 </div>
 <h5>Project structure</h5>
-<table width="100%" cellspacing="1">
-	<tr valign="top">
-		<td width="306">
+ <div class="image-container">
 		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-shared-project-structure.png" />
-		</td>
-		<td style="padding-left:10px">Mobile.Shared project consists of fundamentals 
+		<p>Shared Project Structure</p>
+		</div>
+		
+	<p>Mobile.Shared project consists of fundamentals 
 		of a Xamarin application like Behaviors, Commands, Controls, Converters, 
-		Extensions,Views and ViewModels.
+		Extensions,Views and ViewModels.</p>
+		
 		<h6>MVVM</h6>
 		<p>The Model-View-ViewModel (MVVM) architectural pattern was used in the 
 		shared project. The pattern enforces a separation between three software 
@@ -334,10 +332,7 @@ Shared project should implement as much non-UI functionality as is possible.</p>
    ...
    <span style="background-color: #FFFF00">base:ViewManager.AutoWireViewModel=&quot;true&quot;</span>
    ...&gt;</pre>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td colspan="2">
+		 
 		<h6>Dependency Injection</h6>
 		<p>Asp.Net Zero Xamarin uses Asp.Net Boilerplate framework dependency injection 
 		system. Hence it uses
@@ -507,9 +502,7 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		<p>This is for viewing user profile picture in full screen mode. When user 
 		taps the thumb profile image on top of the navigation menu, this view is 
 		shown.</p>
-		</td>
-	</tr>
-</table>
+	 
 <h3>Distribution</h3>
 <h4>Configuration</h4>
 <ul>
