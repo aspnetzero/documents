@@ -5,13 +5,18 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
 <title>Development Guide</title>
-<style type="text/css">
- 
-
-</style>
 </head>
 
 <body>
+
+<style type="text/css">
+div.image-container > p {
+    margin-top: -5px;
+    font-style: italic;
+    font-size: small;
+    font-weight: 300;
+    }
+</style>
 
 <h3>Introduction</h3>
 <p>Xamarin is a cross-platform UI toolkit that allows developers to efficiently 
@@ -71,37 +76,36 @@ that supports Xamarin development. A networked Mac is required for iOS developme
 <p>After you <a href="/Download">download</a> your project, you will see 3 types 
 of solutions;</p>
 <ul>
-	<li><strong>*.Mobile:</strong> Xamarin and related projects included.</li>
-	<li><strong>*.Web:</strong> Web and related projects included.</li>
-	<li><strong>*.All:</strong> All the projects included.</li>
+	<li><strong>.Mobile</strong> Xamarin and related projects included.</li>
+	<li><strong>.Web</strong> Web and related projects included.</li>
+	<li><strong>.All</strong> All the projects included.</li>
 </ul>
-<p>You can open <b>*.Mobile.sln</b> for Xamarin development.&nbsp; </p>
-<table width="100%" cellspacing="1">
-	<tr>
-		<td width="228">
-		<img class="img-thumbnail" alt="ASP.NET Zero Xamarin Architecture" src="images/xamarin-architecture.png" /></td>
-		<td valign="top">
-		<img class="img-thumbnail" alt="ASP.NET Zero Mobile Solution" src="images/mobile-solution-overview.png" /><p>&nbsp;</p>
-		<p>&nbsp;There are 6 projects in the mobile solution:</p>
-		<ul>
-			<li><strong>Core.Shared</strong> project basic <span lang="EN-US">primitive</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 107%; font-family: 'Times New Roman',serif">
-			</span>types as consts, enums used in all layers of the solution.</li>
-			<li><strong>Application.Shared</strong> project contains data transfer 
-			objects (DTOs) and interfaces of application services shared with application 
-			layer of the backend.</li>
-			<li><strong>Application.Client</strong> project contains Web Api client 
-			(bridge between mobile app and host) and proxy classes of Application 
-			Services.</li>
-			<li><strong>Mobile.Shared </strong>project houses the code shared by 
-			IOS and Android platforms, views, view models, localization and platform 
-			abstractions.</li>
-			<li><strong>Mobile.iOS</strong> project contains IOS specific classes.</li>
-			<li><strong>Mobile.Droid</strong> project contains Android specific 
-			classes.</li>
-		</ul>
-		</td>
-	</tr>
-</table>
+<p>For Xamarin development, you can open <b>.Mobile.sln</b>.</p>
+
+<div class="image-container">
+<img class="img-thumbnail" alt="ASP.NET Zero Xamarin Architecture" src="images/xamarin-architecture.png" />
+<p>Xamarin Architecture</p>
+</div>
+
+<div class="image-container">
+	<img class="img-thumbnail" alt="ASP.NET Zero Mobile Solution" src="images/mobile-solution-overview.png" />
+	<p>Mobile Solution</p>
+</div>
+
+<p>There are 6 projects in the mobile solution:</p>
+<ul>
+	<li><strong>Core.Shared</strong> project basic <span lang="EN-US">primitive</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 107%; font-family: 'Times New Roman',serif">
+	</span>types as consts, enums used in all layers of the solution.</li>
+	<li><strong>Application.Shared</strong> project contains data transfer objects 
+	(DTOs) and interfaces of application services shared with application layer 
+	of the backend.</li>
+	<li><strong>Application.Client</strong> project contains Web Api client (bridge 
+	between mobile app and host) and proxy classes of Application Services.</li>
+	<li><strong>Mobile.Shared </strong>project houses the code shared by IOS and 
+	Android platforms, views, view models, localization and platform abstractions.</li>
+	<li><strong>Mobile.iOS</strong> project contains IOS specific classes.</li>
+	<li><strong>Mobile.Droid</strong> project contains Android specific classes.</li>
+</ul>
 <h4>Host</h4>
 <p>To start debugging Xamarin app you need to configure host settings. You can use 
 either <b>Web.Mvc</b> or <b>Web.Host </b>to feed the Xamarin app.<br>
@@ -189,21 +193,19 @@ from list and press start button.</p>
 <br>
 <br>
 <div class="bs-callout bs-callout-warning">
-	<p><i class="fa fa-warning"></i><a href="https://www.xamarin.com/live/">Xamarin 
+	<p><i class="fa fa-warning"></i> <a href="https://www.xamarin.com/live/">Xamarin 
 	Live Player</a> currently does not support some of the key features. Thus Asp.Net 
 	Zero Xamarin application cannot be debugged on Xamarin Live Player. Further 
 	information read
 	<a href="https://developer.xamarin.com/guides/cross-platform/live/limitations/">
 	Xamarin Live Player limitations.</a></p>
-	<img class="img-thumbnail" alt="Debug IP Address" src="images/xamarin-api-url-config.png" />
 </div>
 <div class="bs-callout bs-callout-info">
-	<p><i class="fa fa-info-circle"></i><a href="https://www.livexaml.com/">LiveXAML</a> 
-	is a live Xaml previewer runs while you are debugging your application inside 
+	<p><i class="fa fa-info-circle"></i> <a href="https://www.livexaml.com/">LiveXAML</a> 
+	is a Xaml previewer runs while you are debugging your application inside 
 	an emulator. Whenever you save any XAML file, it automatically updates the running 
 	application. If you want to purchase LiveXAML, Asp.Net Zero customers get %30 
 	discount. </p>
-	<img class="img-thumbnail" alt="Debug IP Address" src="images/xamarin-api-url-config.png" />
 </div>
 <h3>Xamarin.Forms</h3>
 <p>A key component of building cross-platform applications is being able to share 
