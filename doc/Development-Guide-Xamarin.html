@@ -1,0 +1,554 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
+<title>Development Guide</title>
+<style type="text/css">
+ 
+
+</style>
+</head>
+
+<body>
+
+<h3>Introduction</h3>
+<p>Xamarin is a cross-platform UI toolkit that allows developers to efficiently 
+create native cross platform user interface layouts.<br>
+This document is intended to show how to setup a Xamarin development environment 
+and introduce existing features, user interfaces on Asp.Net Zero Xamarin platform.<br>
+For an overview of the Xamarin installation and setup practices see
+<a href="https://developer.xamarin.com/guides/xamarin-forms/getting-started/installation/">
+Xamarin.Forms Requirements</a> and
+<a href="https://developer.xamarin.com/guides/cross-platform/getting_started/installation/">
+Installation</a>. <br>
+For an overview of the Asp.Net Zero getting started see
+<a href="/Getting-Started-Core">Asp.Net Zero Getting Started.</a> The Asp.Net Zero 
+Xamarin is only available for Asp.Net Core! (Angular UI or Mvc UI)</p>
+<h4>Prerequisites</h4>
+<p>Following tools are needed in order to develop ASP.NET Zero Xamarin:</p>
+<ul>
+	<li><a href="https://www.visualstudio.com">Visual Studio 2017 v15.4.4</a>+</li>
+	<li>MAC for IOS simulator</li>
+</ul>
+<p>Asp.Net Zero Xamarin applications can be written for the following operating 
+systems:</p>
+<ul>
+	<li>iOS 8 or higher</li>
+	<li>Android 4.0.3 (API 15) or higher (<a href="https://developer.xamarin.com/guides/xamarin-forms/getting-started/installation/#android">more 
+	details</a>)</li>
+</ul>
+<h4>Android</h4>
+<p>You should have the latest Android SDK Tools and Android API platform installed. 
+You can update to the latest versions using the
+<a href="https://developer.xamarin.com/guides/android/application_fundamentals/using-the-sdk-manager/">
+Android SDK Manager</a>.</p>
+<p>Additionally, the target/compile version for Android projects <strong>
+<span style="font-weight: 400">must</span></strong> be set to <b><em>Use latest 
+installed platform</em></b>. However the minimum version can be set to API 15 so 
+you can continue to support devices that use Android 4.0.3 and newer. </p>
+<p>These values are set in the <strong>Project Options</strong>:</p>
+
+
+
+<ide name="vs" class="ide-show">
+
+<p><strong>Project Options &gt; Application &gt; Application Properties</strong></p>
+</ide>
+
+ 
+<img class="img-thumbnail" alt="Xamarin Android Options" src="images/options-android-vs-sml.png" />
+<h4>Mac System Requirements</h4>
+<p>You can use Visual Studio for Mac to develop Xamarin.Forms apps on OS X El Capitan 
+(10.11) or newer. To develop iOS apps, it is <span lang="EN-US">recommended</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
+</span>having at least the iOS 
+10 SDK and Xcode latest installed.</p>
+<h4>Windows System Requirements</h4>
+<p>Xamarin.Forms apps for iOS and Android can be built on any Windows installation 
+that supports Xamarin development. A networked Mac is required for iOS development.
+</p>
+<h4>Solution Structure (Layers)</h4>
+<p>After you <a href="/Download">download</a> your project, you will see 3 types 
+of solutions;</p>
+<ul>
+	<li><strong>*.Mobile:</strong> Xamarin and related projects included.</li>
+	<li><strong>*.Web:</strong> Web and related projects included.</li>
+	<li><strong>*.All:</strong> All the projects included.</li>
+</ul>
+<p>You can open <b>*.Mobile.sln</b> for Xamarin development.&nbsp; </p>
+<table width="100%" cellspacing="1">
+	<tr>
+		<td width="228">
+		<img class="img-thumbnail" alt="ASP.NET Zero Xamarin Architecture" src="images/xamarin-architecture.png" /></td>
+		<td valign="top">
+		<img class="img-thumbnail" alt="ASP.NET Zero Mobile Solution" src="images/mobile-solution-overview.png" /><p>&nbsp;</p>
+		<p>&nbsp;There are 6 projects in the mobile solution:</p>
+		<ul>
+			<li><strong>Core.Shared</strong> project basic <span lang="EN-US">
+			primitive</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 107%; font-family: 'Times New Roman',serif">
+			</span>types as consts, 
+			enums used in all layers of the solution.</li>
+			<li><strong>Application.Shared</strong> project contains data transfer 
+			objects (DTOs) and interfaces of application services shared with application 
+			layer of the backend.</li>
+			<li><strong>Application.Client</strong> project contains Web Api client 
+			(bridge between mobile app and host) and proxy classes of Application 
+			Services.</li>
+			<li><strong>Mobile.Shared </strong>project houses the code shared by 
+			IOS and Android platforms, views, view models, localization and platform 
+			abstractions.</li>
+			<li><strong>Mobile.iOS</strong> project contains IOS specific classes.</li>
+			<li><strong>Mobile.Droid</strong> project contains Android specific 
+			classes.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<h4>Host</h4>
+<p>To start debugging Xamarin app you need to configure host settings. You can use 
+either <b>Web.Mvc</b> or <b>Web.Host </b>to feed the Xamarin app.<br>
+Open Windows Command Prompt. Go to the folder where your Web.Host or Web.Mvc csproj 
+file is located.<br>
+Then run the commands below to start hosting your Web Api.</p>
+<pre lang="xml">SET ASPNETCORE_ENVIRONMENT=Development
+SET ASPNETCORE_URLS=http://*:22742
+dotnet run</pre>
+<p>In order to every time write these lines, you can download the batch file below 
+and run it to host your web api.</p>
+<pre style="width:210px"><a href="etc/start-host.zip">Download start-host.zip</a></pre>
+<div class="bs-callout bs-callout-warning">
+	<strong><i class="fa fa-warning"></i>Warning</strong>
+	<div>
+		Before running the batch file, open it in notepad and replace the Web.Host 
+		or Web.Mvc directory path with yours!</div>
+</div>
+<p>After you successfully run the host or mvc project you will see the output as 
+below;</p>
+<strong>Host started successfully:</strong><br>
+<img class="img-thumbnail" alt="Host Started" src="images/xamarin-host-started.png" /><p>
+<strong>Mvc started successfully:</strong><br>
+<img class="img-thumbnail" alt="MVC Started" src="images/xamarin-mvc-started.png" />
+</p>
+<div class="bs-callout bs-callout-warning">
+	<strong><i class="fa fa-warning"></i>Warning</strong>
+	<div>
+		Do not start Web.Mvc or Web.Host project via Visual Studio. Default settings 
+		of Visual Studio does not allow connections except localhost.</div>
+</div>
+<p><font color="#339933"><i class="fa fa-info-circle"></i>We have successfully started 
+host. Now we can configure Xamarin app to connect this host.</font></p>
+<h4>Debugging Xamarin App</h4>
+<p>To start debugging you need to change the IP address in <b>DebugServerIpAddresses</b> 
+class. In the below screen you see the IP address 192.168.1.39, this is the IP of 
+host computer. If you host Web.Mvc or Web.Host from your computer then change this 
+IP with your computer&#39;s LAN IP. <br>
+If you host Web.Mvc or Web.Host from another computer then you have to change this 
+IP address with that computer&#39;s IP address. </p>
+<img class="img-thumbnail" alt="Debug IP Address" src="images/xamarin-debug-server-ip-address.png" />
+<br>
+<br>
+<div class="bs-callout bs-callout-warning">
+	<strong><i class="fa fa-warning"></i>Warning</strong>
+	<div>
+		When you publish your Xamarin app for production you need to change <b>DefaultHostUrl
+		</b>in <b>ApiUrlConfig </b>class!</div>
+	<img class="img-thumbnail" alt="Debug IP Address" src="images/xamarin-api-url-config.png" />
+</div>
+<h4>Debugging Android</h4>
+<p>There are a few installation steps and configuration details required to install 
+Xamarin.Android.</p>
+<div class="bs-callout bs-callout-info">
+	<strong><i class="fa fa-info-circle"></i>Information</strong>
+	<p>To start debugging Android app, you have to install Xamarin.Android. It&#39;s 
+	highly recommended you to read the
+	<a href="https://developer.xamarin.com/guides/android/getting_started/installation/">
+	Xamarin Android Setup and Deployment document</a> for <span lang="EN-US">
+	necessary</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
+	</span>setups.<br>
+	</p>
+</div>
+<p>After successful setup, set <strong>Mobile.Droid</strong> as startup project. 
+Choose an Android emulator from list and press start button.</p>
+<img class="img-thumbnail" alt="Android Emulator Selection" src="images/xamarin-emulator-selection.png" />
+<br>
+<br>
+<h4>Debugging IOS</h4>
+<p>There are a few requirements that must be adhered to when developing for iOS 
+in Visual Studio. A Mac is required to compile IPA files. Applications cannot be 
+deployed to a device without Apple’s certificates and code-signing tools. Also, 
+the iOS simulator can be used only on a Mac.</p>
+<div class="bs-callout bs-callout-info">
+	<strong><i class="fa fa-info-circle"></i>Information</strong>
+	<p>There are a number of configuration options available to debug IOS app. It&#39;s 
+	highly recommended you to read the
+	<a href="https://developer.xamarin.com/guides/ios/getting_started/installation/windows/introduction_to_xamarin_ios_for_visual_studio/">
+	Xamarin IOS Getting started document</a> to build an iOS application and 
+	debug using a networked Mac to host Apple’s compiler and simulator.<br>
+	</p>
+</div>
+<p>After you successfully configure and connect to a Mac, choose an iPhone simulator 
+from list and press start button.</p>
+<img class="img-thumbnail" alt="IOS Simulator Selection" src="images/xamarin-simulator-selection.png" />
+<br>
+<br>
+<div class="bs-callout bs-callout-warning">
+	<p><i class="fa fa-warning"></i><a href="https://www.xamarin.com/live/">Xamarin 
+	Live Player</a> currently does not support some of the key features. Thus Asp.Net 
+	Zero Xamarin application cannot be debugged on Xamarin Live Player. Further 
+	information read
+	<a href="https://developer.xamarin.com/guides/cross-platform/live/limitations/">
+	Xamarin Live Player limitations.</a></p>
+	<img class="img-thumbnail" alt="Debug IP Address" src="images/xamarin-api-url-config.png" />
+</div>
+<div class="bs-callout bs-callout-info">
+	<p><i class="fa fa-info-circle"></i><a href="https://www.livexaml.com/">LiveXAML</a> 
+	is a live Xaml previewer runs while you are debugging your application inside 
+	an emulator. Whenever you save any XAML file, it automatically updates the running 
+	application. If you want to purchase LiveXAML, Asp.Net Zero customers get %30 
+	discount. </p>
+	<img class="img-thumbnail" alt="Debug IP Address" src="images/xamarin-api-url-config.png" />
+</div>
+<h3>Xamarin.Forms</h3>
+<p>A key component of building cross-platform applications is being able to share 
+code across various platform-specific projects. Asp.Net Zero Xamarin is using Xamarin.Forms 
+to maximize code sharing between two end platforms (IOS &amp; Android). It is 
+<span lang="EN-US">expected</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
+</span>to write shared codes in Mobile.Shared project so that it will be used in both IOS 
+and Android. If you need platform specific development then try to use class abstractions 
+in shared project and implement/extend in end platforms. </p>
+<h4>Mobile.Droid</h4>
+<p>Xamarin Android project has a very basic structure. Asp.Net Zero adds or modifies 
+these files in the default project; </p>
+<table width="100%" cellspacing="1">
+	<tr valign="top">
+		<td width="487">
+		<img class="img-thumbnail" alt="Android Project Structure" src="images/xamarin-android-project-structure.png" />
+		</td>
+		<td>
+		<ul>
+			<li><strong>SplashActivity </strong>There are time consuming background 
+			operations while starting up like bootstrapping ABP, retrieving configuration 
+			from host. Android does not have default way to show a splash screen 
+			on startup. SplashActivity class is the main launcher. It initializes 
+			Abp module (in AbpZeroTemplateXamarinAndroidModule class). As this app 
+			requires internet connection, first thing is checking whether device 
+			can connect to internet or not. If there&#39;s no internet connection, a 
+			confirmation dialog appears on the device to ask user enable internet. 
+			SplashActivity routes to MainActivity</li>
+			<li><strong>MainActivity </strong>This is the main startup Activity 
+			for the application. In this acitivty, platform specific intializations 
+			are done. Unobserved and Unhandled exceptions handlers here with ExceptionHandler 
+			class. MainActivity routes to App class which is in the shared project.</li>
+			<li><strong>CropViewRenderer</strong> Is a platform specific renderer 
+			to crop images for Android. It is used in profile picture change screen.</li>
+			<li><strong>Resources/drawable </strong>This directory stores images 
+			for Android. AppLogo.png is the logo while showing the splash screen 
+			in Android. So you should change AppLogo with your own logo file based 
+			on the same sizes. AppLogo.png is also located in drawable-mdpi folder 
+			with different size. Icon.png is a launcher icon shown in application 
+			drawer of the Android. It is located in drable, drawable-hdpi, drawable-xhdpi, 
+			drawable-xxhdpi with different sizes. You should change these icons 
+			with your own application icon files. There is splash_screen.xml which 
+			is used for defining a style called &quot;MyTheme.Splash&quot; in values/styles.xml.</li>
+			<li><strong>AbpZeroTemplateXamarinAndroidModule </strong>This is the 
+			Abp module. It depends on AbpZeroTemplateXamarinSharedModule.</li>
+			<li><strong>Locale </strong>This class is an adapter between .Net cultures 
+			and Android cultures.</li>
+		</ul>
+		</div>
+		</td>
+	</tr>
+</table>
+<div class="bs-callout bs-callout-info">
+	<strong><i class="fa fa-info-circle"></i>Information</strong>
+	<p>Asp.Net Zero Xamarin changed the output path (bin) and intermediate output 
+	path (obj) of Android project to be shorter. The main reason of this is avoiding 
+	&quot;Path too long&quot; exceptions while compiling project. If you want to modify it, 
+	you can open Mobile.iOS.csproj in notepad and find replace all occurrences of
+	<strong>OutputPath</strong> and <strong>IntermediateOutputPath</strong> tags.</p>
+	<img class="img-thumbnail" alt="Android Output Path" src="images/xamarin-android-output-path-csproj.png" />
+</div>
+<h4>Mobile.iOS</h4>
+<p>Xamarin IOS project has a very simple structure. Asp.Net Zero adds or modifies 
+these files in the default project; </p>
+<table width="100%" cellspacing="1">
+	<tr valign="top">
+		<td width="306">
+		<img class="img-thumbnail" alt="IOS Structure" src="images/xamarin-ios-project-structure.png" />
+		</td>
+		<td>
+		<ul>
+			<li><strong>Locale </strong>This class is an adapter between .Net cultures 
+			and IOS cultures.</li>
+			<li><strong>CropViewRenderer, CropViewDelegate </strong>These files 
+			are renderer for CropView in IOS.</li>
+			<li><strong>AbpZeroTemplateXamarinIosModule </strong>This is the Abp 
+			module. It depends on AbpZeroTemplateXamarinSharedModule.</li>
+			<li><strong>AppDelegate </strong>This is the main startup class for 
+			IOS like MainActivity in Android. All the IOS specific library initializations 
+			are done in this class. Unobserved and Unhandled exceptions handlers 
+			here with ExceptionHandler class. </li>
+			<li><strong>Resources </strong>In this folder basically 2 types of files 
+			are located; Application icon and splash screen images. You should change 
+			all the Icon*.png and Default*.png files files with yours based on the 
+			same sizes.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<h4>Mobile.Shared</h4>
+<p>Shared project is a special type of project that can be used across disparate 
+CLI platforms including Mobile.iOS and Mobile.Android. That&#39;s why it&#39;s not been 
+targeted to a specific framework version but targeted Netstandard 2.0. Shared code 
+project should only reference assemblies that are available across all platforms. 
+Shared project should implement as much non-UI functionality as is possible.</p>
+<div style="margin-bottom:15px;">
+	<img class="img-thumbnail" alt="Shared Project Architecture" src="images/xamarin-shared-conceptual-architecture.png" />
+	<div>
+		Further information read
+		<a href="https://developer.xamarin.com/guides/cross-platform/application_fundamentals/building_cross_platform_applications/part_3_-_setting_up_a_xamarin_cross_platform_solution/">
+		Setting Up A Xamarin Cross Platform Solution</a></div>
+</div>
+<h5>Project structure</h5>
+<table width="100%" cellspacing="1">
+	<tr valign="top">
+		<td width="306">
+		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-shared-project-structure.png" />
+		</td>
+		<td style="padding-left:10px">Mobile.Shared project consists of fundamentals 
+		of a Xamarin application like Behaviors, Commands, Controls, Converters, 
+		Extensions,Views and ViewModels.
+		<h6>MVVM</h6>
+		<p>The Model-View-ViewModel (MVVM) architectural pattern was used in the 
+		shared project. The pattern enforces a separation between three software 
+		layers the XAML user interface, stored in <b>Views</b> folder; the underlying 
+		data are stored in <b>Models</b> folder; and an intermediary between the 
+		View and the Model, are stored in <b>ViewModels</b> folder. The View and 
+		the ViewModel are often connected through data bindings defined in the XAML 
+		file. The BindingContext for the View is always an instance of the ViewModel.</p>
+		<p></p>
+		<p>Asp.Net Zero has a built-in feature that binds View with ModelView. BindingContext 
+		for a view is automatically set when <b>AutoWireViewModel</b> flag set to 
+		true. There&#39;s a naming convention between ViewModels and Views. A xaml filename 
+		must end with View postfix and the binding context of the xaml filename 
+		must end with ViewModel postfix. <span lang="EN-US">For example </span>&nbsp;if xaml filename is <i>ProductView.xaml
+		</i>the corresponding view model filename must be <i>ProductViewModel.cs.</i></p>
+		<p>There&#39;s an <span lang="EN-US">empty </span>sample view called <i>_SampleView.xaml</i> and binding 
+		context as <i>_SampleViewModel.cs</i>. You can copy paste these empty templates 
+		to add a new blank page.</p>
+		<pre>&lt;ContentPage 
+   ...
+   <span style="background-color: #FFFF00">base:ViewManager.AutoWireViewModel=&quot;true&quot;</span>
+   ...&gt;</pre>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td colspan="2">
+		<h6>Dependency Injection</h6>
+		<p>Asp.Net Zero Xamarin uses Asp.Net Boilerplate framework dependency injection 
+		system. Hence it uses
+		<a href="http://www.castleproject.org/projects/windsor/">Castle Windsor</a> 
+		as an Inversion of Control container. To resolve dependencies; you can use 
+		constructor or property injection, beside there&#39;s a shortcut class called
+		<i>DependencyResolver, </i>which can be used to resolve dependencies as 
+		well.
+		<span style="color: rgb(51, 51, 51); font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+		Asp.Net Boilerplate provides </span>
+		<strong style="box-sizing: border-box; color: rgb(51, 51, 51); font-family: Roboto, sans-serif; font-size: 16px; font-style: italic; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; font-weight: 400">
+		ITransientDependency</strong><span style="color: rgb(51, 51, 51); font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"> 
+		and</span><strong style="box-sizing: border-box; font-weight: bold; color: rgb(51, 51, 51); font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">
+		</strong>
+		<strong style="box-sizing: border-box; color: rgb(51, 51, 51); font-family: Roboto, sans-serif; font-size: 16px; font-style: italic; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; font-weight: 400">
+		ISingletonDependency</strong><strong style="box-sizing: border-box; font-weight: bold; color: rgb(51, 51, 51); font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">
+		</strong>
+		<span style="color: rgb(51, 51, 51); font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 300; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+		interfaces as a shortcut to register classes. See
+		<a href="https://aspnetboilerplate.com/Pages/Documents/Dependency-Injection/">
+		Asp.Net Boilerplate Dependency Injection</a></span></p>
+		<h6>Communicating with Host Api</h6>
+		<p><b><i>AbpApiClient</i></b> class is used to communicate with host. In 
+		this class, <i><a href="https://github.com/tmenier/Flurl">FlurlClient</a></i>&nbsp; 
+		is used as http client. The host address <i>DefaultHostUrl </i>is stored 
+		in <i>ApiUrlConfig </i>class. Before publishing application you need to 
+		change this address with your production host server address. In development 
+		time, it&#39;s important to change <i>LocalhostIp</i> as your computer&#39;s LAN 
+		IP in <i>DebugServerIpAdresses.cs. </i></p>
+		<p><i><b>WebRequestExecuter</b> </i>class handles http web requests in a 
+		safe manner. When the request fails, it handles different types of exceptions. 
+		So if it&#39;s a timeout exception, it asks user to retry the same request. 
+		Or if it&#39;s a user friendly exception thrown by ABP it shows an alert and 
+		so on... You have to write a success and a fail callback to handle the result. 
+		In fail callback exception can be retrieved and in success callback result 
+		of the request can be retrieved.</p>
+		<p><i><b>SetBusyAsync</b> </i>method is in <i>XamarinViewModel </i>class. 
+		Whenever a long lasting operation is required it should be wrapped with 
+		SetBusyAsync method in view model so that user can see a busy indicator.
+		</p>
+		<h6>Navigation Service</h6>
+		<p>Navigation service implementation is done in <i>NavigationService</i> 
+		class. It&#39;s initialized in App.xaml.cs, OnStart() method. If user is not 
+		signed in LoginView is shown as initial view, if user is already signed 
+		in then MainView is shown. MainView is
+		<a href="https://developer.xamarin.com/api/type/Xamarin.Forms.NavigationPage/">
+		NavigationPage</a>, pages from menu are opened as detail page. In navigation 
+		service you can use these methods;</p>
+		<ul>
+			<li><strong>SetMainPage </strong>sets main page as
+			<a href="https://developer.xamarin.com/api/type/Xamarin.Forms.NavigationPage/">
+			NavigationPage</a>. You can pass a parameter object to the new page, 
+			the parameter can be retrieved in<i> InitializeAsync() </i>method in 
+			ViewModel. And you can set <i>clearNavigationHistory </i>parameter as 
+			true, to overwrite MainPage. It is useful when you want users not to 
+			see previous page with back button. Otherwise pages are being pushed 
+			into a stack and can be navigated with back button.</li>
+			<li><b>SetDetailPageAsync </b>sets detail page when current page is
+			<a href="https://developer.xamarin.com/guides/xamarin-forms/application-fundamentals/navigation/master-detail-page/">
+			MasterDetailPage</a>.</li>
+			<li><b>GoBack</b> removes the top
+			<a class="cref" style="font-weight: 400; font-style: normal; text-decoration: none; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; border: 0px none; margin: 0px; padding: 0px" href="https://developer.xamarin.com/api/type/Xamarin.Forms.Page/">
+			Page</a> from the navigation stack.</li>
+			<li><b>ShowModalAsync</b> presents a
+			<a class="cref" style="font-weight: 400; font-style: normal; text-decoration: none; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; border: 0px none; margin: 0px; padding: 0px" href="https://developer.xamarin.com/api/type/Xamarin.Forms.Page/">
+			Page</a> modally.</li>
+			<li><b>CloseModalAsync</b> dismisses the most recent modally presented
+			<a class="cref" style="font-weight: 400; font-style: normal; text-decoration: none; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; border: 0px none; margin: 0px; padding: 0px" href="https://developer.xamarin.com/api/type/Xamarin.Forms.Page/">
+			Page</a>.</li>
+		</ul>
+		<h6>Exception Handling</h6>
+		<p>All exceptions are globally handled in<i> ExceptionHandler LogException()</i> 
+		method. <span class="pl-c">Subscription to app wide unhandled exceptions 
+		is done in <i>MainActivity</i> class for Android and in <i>AppDelegate</i> 
+		class for IOS. However be aware that when an unhandled exception occurs, 
+		typically Android will be destroying the process. So there&#39;s not a lot can 
+		be done on the Android side, but your Xamarin code should still be able 
+		to work. So you can log the error message with a third party tool like
+		<a href="https://hockeyapp.net/">HockeyApp Crash Reporting</a>. Beside it&#39;s 
+		</span><span lang="EN-US">advised </span><span class="pl-c">to put a breakpoint in <i>LogException() </i></span>method. This 
+		is useful to see the exception before app crashes.</p>
+		<h5>Pages</h5>
+		<h6>InitialView</h6>
+		<p>InitialView is a transition page that checks whether user has any granted 
+		menu permission or not. If user has no permissions then a message will be 
+		shown on the screen. But if user has at least one granted menu permission, 
+		it is automatically being navigated to the first authorized menu item. InitialView 
+		is being created in MainView.xaml. </p>
+		<h6>Login</h6>
+		<p>When user enters credentials AccessTokenManager authenticates user stores 
+		access token in memory. For authentication needed Api calls, this token 
+		is being added to the request as bearer token. There&#39;s a timer in AccessTokenManager 
+		class that renews token before it expires. If an error occurs while communication with host, client tries to reconnect within an exponentiation increasing 
+		time. After successful login user credentials are stored in device for 
+		auto login (password is stored as encrypted). User information is being set 
+		in <i>ApplicationContext </i>so if current logon account information is 
+		needed it can be retrieved with injecting <i>IApplicationContext</i>.</p>
+		<h6>MainView</h6>
+		<p>MainView is responsible for navigation service. Xamarin.Forms provides 
+		a number of different page navigation experiences, in this project
+		<a href="https://developer.xamarin.com/guides/xamarin-forms/application-fundamentals/navigation/master-detail-page/">
+		MasterDetailPage</a> is used. The Xamarin.Forms
+		<a href="https://developer.xamarin.com/api/type/Xamarin.Forms.MasterDetailPage/">
+		<code>MasterDetailPage</code></a> is a page that manages two pages of related 
+		information – a master page that presents items, and a detail page that 
+		presents details about items on the master page. When user taps hamburger 
+		menu icon a popover is shown with menu items, logout button and profile 
+		picture. User profile picture is shown as circle image that uses
+		<a href="https://github.com/jamesmontemagno/ImageCirclePlugin">ImageCirclePlugin</a>. 
+		There is camera icon on the bottom right of the image. The icon button is 
+		an implementation of
+		<a href="https://github.com/jsmarcus/Xamarin.Plugins/tree/master/Iconize">
+		Xamarin.Plugins.Iconize</a>. When user taps the camera icon a dialog is 
+		shown to ask user whether choosing an image from gallery or taking a photo. 
+		After image retrieved, it&#39;s being routed to CropView. After cropping/rotating 
+		image is being sent to server.</p>
+		<p>Menu items are stored in <i>MenuProvider </i>class. A menu item is shown 
+		if only user has granted required permission. The menu items are being created 
+		in <i>MainViewModel </i>class with <i>BuildMenuItems()</i> method.</p>
+		<h6>TenantsView</h6>
+		<p>This page is shown if only user is a tenant owner. Page lists all tenants 
+		with a list view. There is HideableToolbarItem to create a new tenant. This 
+		toolbar item is extended control of a toolbar item that can be hidden if 
+		user has no tenant creation permission. The view model of this page is
+		<i>TenantsViewModel</i> class. There is a search bar on the top that filters 
+		tenants on keypress. A limited information is shown in the list view item 
+		template. When user taps any item it navigates to the TenantDetailsView 
+		with the selected tenant object.</p>
+		<h6>TenantDetailsView</h6>
+		<p>This page shows information about the selected tenant. Selected tenant 
+		model is being retrieved with navigationData object in <i>InitializeAsync(object 
+		navigationData). </i>There are action buttons on the bottom of the page 
+		which can be hidden if user has no permission. The permission is checked 
+		with an extension in xaml like below;</p>
+		<pre> IsVisible=&quot;{extensions:HasPermission Text={x:Static permission:PermissionKey.TenantEdit}}&quot;</pre>
+		<p>Checking permission in c# classes can be done with <i>IPermissionService</i> 
+		class. It can be injected to the class and usage is like below;</p>
+		<pre>_permissionService.HasPermission(PermissionKey.TenantDelete)</pre>
+		<p>Before sending the tenant object to server, it&#39;s being validated <i>DataAnnotationsValidator
+		</i>class. If any validation error occurs, a warning is being shown to user. 
+		After tenant object is saved or deleted, tenants page is being refreshed 
+		by <i>MessagingCenter </i>class. Further information read
+		<a href="https://developer.xamarin.com/guides/xamarin-forms/application-fundamentals/messaging-center/">
+		Xamarin MessasingCenter.</a> Lastly <i>TenantDetailsView</i> is being popped 
+		with <i>GoBackAsync()</i> method of <i>NavigationService</i>.</p>
+		<h6>UsersView</h6>
+		<p>This page lists users of the tenant or tenant owner. It is only shown 
+		if the user has permission to this page. Same as tenants view, there&#39;s a 
+		search bar and a new user creation toolbar item. List view is used to list 
+		users. And pictures of users are shown in a circle image view using
+		<a href="https://github.com/jamesmontemagno/ImageCirclePlugin/">Xam.Plugins.Forms.ImageCircle</a> 
+		library. When a user is tapped, it&#39;s navigated to UserDetailsView with the 
+		selected user. </p>
+		<h6>UserDetailsView</h6>
+		<p>This page shows information about the selected user. If the logon user 
+		has no permission to edit then action buttons will be hidden and all inputs 
+		will be readonly. This is done in xaml with the following code;</p>
+		<pre>IsEnabled=&quot;{extensions:HasPermission Text={x:Static permission:PermissionKey.UserEdit}}&quot;</pre>
+		<h6>ProfilePictureView</h6>
+		<p>This is for viewing user profile picture in full screen mode. When user 
+		taps the thumb profile image on top of the navigation menu, this view is 
+		shown.</p>
+		</td>
+	</tr>
+</table>
+<h3>Distribution</h3>
+<h4>Configuration</h4>
+<ul>
+	<li>Before publishing the application change the <b>DefaultHostUrl</b> in <b>
+	ApiUrlConfig</b> class. You can read<a href="https://developer.xamarin.com/guides/ios/deployment,_testing,_and_metrics/app_distribution/"> 
+	how to distribute Xamarin application.</a></li>
+	<li>Change all application icon files with your own app icon.</li>
+	<li>Change all AppLogo.png files with your own app logo.</li>
+	<li>Version your application for future updates.</li>
+</ul>
+<h4>Publishing</h4>
+<p>If you want to publish your application to the related application store you 
+can read the Xamarin official guides;</p>
+<ul>
+	<li>
+	<a href="https://developer.xamarin.com/guides/ios/deployment,_testing,_and_metrics/app_distribution/app-store-distribution/publishing_to_the_app_store/">
+	Publishing to the App Store</a></li>
+	<li>
+	<a href="https://developer.xamarin.com/guides/android/deployment,_testing,_and_metrics/publishing_an_application/part_3_-_publishing_an_application_on_google_play/">
+	Publishing to the Google Play</a></li>
+</ul>
+<h3>Used Libraries &amp; Frameworks</h3>
+<p>List of libraries are used to build ASP.NET Zero Xamarin project;</p>
+<ul>
+	<li><a href="https://aspnetboilerplate.com/">Asp.Net Boilerplate</a></li>
+	<li><a href="https://github.com/aritchie/userdialogs">Acr.UserDialogs</a></li>
+	<li><a href="https://github.com/paulcbetts/ModernHttpClient">ModernHttpClient</a></li>
+	<li><a href="https://github.com/dsplaisted/PCLStorage">PCLStorage</a></li>
+	<li><a href="https://github.com/jamesmontemagno/mvvm-helpers">Refractored.MvvmHelpers</a></li>
+	<li>
+	<a href="https://github.com/jsmarcus/Xamarin.Plugins/tree/master/Iconize">Xamarin.Plugins.Iconize</a></li>
+	<li><a href="https://github.com/jamesmontemagno/ConnectivityPlugin">Xam.Plugin.Connectivity</a></li>
+	<li><a href="https://github.com/jamesmontemagno/MediaPlugin">Xam.Plugin.Media</a></li>
+	<li><a href="https://github.com/jamesmontemagno/ImageCirclePlugin">Xam.Plugins.Forms.ImageCircle</a></li>
+	<li><a href="https://github.com/luberda-molinet/FFImageLoading">Xamarin.FFImageLoading.Forms</a></li>
+	<li><a href="https://github.com/OYIon/LiveXAML">LiveXAML</a></li>
+</ul>
+</div>
+
+</body>
+
+</html>
