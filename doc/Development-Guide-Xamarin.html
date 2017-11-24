@@ -62,8 +62,7 @@ you can continue to support devices that use Android 4.0.3 and newer. </p>
 <h4>Mac System Requirements</h4>
 <p>You can use Visual Studio for Mac to develop Xamarin.Forms apps on OS X El Capitan 
 (10.11) or newer. To develop iOS apps, it is <span lang="EN-US">recommended</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
-</span>having at least the iOS 
-10 SDK and Xcode latest installed.</p>
+</span>having at least the iOS 10 SDK and Xcode latest installed.</p>
 <h4>Windows System Requirements</h4>
 <p>Xamarin.Forms apps for iOS and Android can be built on any Windows installation 
 that supports Xamarin development. A networked Mac is required for iOS development.
@@ -85,10 +84,8 @@ of solutions;</p>
 		<img class="img-thumbnail" alt="ASP.NET Zero Mobile Solution" src="images/mobile-solution-overview.png" /><p>&nbsp;</p>
 		<p>&nbsp;There are 6 projects in the mobile solution:</p>
 		<ul>
-			<li><strong>Core.Shared</strong> project basic <span lang="EN-US">
-			primitive</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 107%; font-family: 'Times New Roman',serif">
-			</span>types as consts, 
-			enums used in all layers of the solution.</li>
+			<li><strong>Core.Shared</strong> project basic <span lang="EN-US">primitive</span><span lang="EN-US" style="font-size: 12.0pt; line-height: 107%; font-family: 'Times New Roman',serif">
+			</span>types as consts, enums used in all layers of the solution.</li>
 			<li><strong>Application.Shared</strong> project contains data transfer 
 			objects (DTOs) and interfaces of application services shared with application 
 			layer of the backend.</li>
@@ -163,8 +160,7 @@ Xamarin.Android.</p>
 	<p>To start debugging Android app, you have to install Xamarin.Android. It&#39;s 
 	highly recommended you to read the
 	<a href="https://developer.xamarin.com/guides/android/getting_started/installation/">
-	Xamarin Android Setup and Deployment document</a> for <span lang="EN-US">
-	necessary</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
+	Xamarin Android Setup and Deployment document</a> for <span lang="EN-US">necessary</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
 	</span>setups.<br>
 	</p>
 </div>
@@ -183,8 +179,8 @@ the iOS simulator can be used only on a Mac.</p>
 	<p>There are a number of configuration options available to debug IOS app. It&#39;s 
 	highly recommended you to read the
 	<a href="https://developer.xamarin.com/guides/ios/getting_started/installation/windows/introduction_to_xamarin_ios_for_visual_studio/">
-	Xamarin IOS Getting started document</a> to build an iOS application and 
-	debug using a networked Mac to host Apple’s compiler and simulator.<br>
+	Xamarin IOS Getting started document</a> to build an iOS application and debug 
+	using a networked Mac to host Apple’s compiler and simulator.<br>
 	</p>
 </div>
 <p>After you successfully configure and connect to a Mac, choose an iPhone simulator 
@@ -212,11 +208,11 @@ from list and press start button.</p>
 <h3>Xamarin.Forms</h3>
 <p>A key component of building cross-platform applications is being able to share 
 code across various platform-specific projects. Asp.Net Zero Xamarin is using Xamarin.Forms 
-to maximize code sharing between two end platforms (IOS &amp; Android). It is 
+to maximize code sharing between two end platforms (IOS &amp; Android). It is
 <span lang="EN-US">expected</span><span lang="EN-US" style="font-size: 10.5pt; line-height: 107%; font-family: open_sans,serif; color: #4E4E4E; letter-spacing: .75pt">
-</span>to write shared codes in Mobile.Shared project so that it will be used in both IOS 
-and Android. If you need platform specific development then try to use class abstractions 
-in shared project and implement/extend in end platforms. </p>
+</span>to write shared codes in Mobile.Shared project so that it will be used in 
+both IOS and Android. If you need platform specific development then try to use 
+class abstractions in shared project and implement/extend in end platforms. </p>
 <h4>Mobile.Droid</h4>
 <p>Xamarin Android project has a very basic structure. Asp.Net Zero adds or modifies 
 these files in the default project; </p>
@@ -332,11 +328,12 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		for a view is automatically set when <b>AutoWireViewModel</b> flag set to 
 		true. There&#39;s a naming convention between ViewModels and Views. A xaml filename 
 		must end with View postfix and the binding context of the xaml filename 
-		must end with ViewModel postfix. <span lang="EN-US">For example </span>&nbsp;if xaml filename is <i>ProductView.xaml
-		</i>the corresponding view model filename must be <i>ProductViewModel.cs.</i></p>
-		<p>There&#39;s an <span lang="EN-US">empty </span>sample view called <i>_SampleView.xaml</i> and binding 
-		context as <i>_SampleViewModel.cs</i>. You can copy paste these empty templates 
-		to add a new blank page.</p>
+		must end with ViewModel postfix. <span lang="EN-US">For example </span>&nbsp;if 
+		xaml filename is <i>ProductView.xaml </i>the corresponding view model filename 
+		must be <i>ProductViewModel.cs.</i></p>
+		<p>There&#39;s an <span lang="EN-US">empty </span>sample view called <i>_SampleView.xaml</i> 
+		and binding context as <i>_SampleViewModel.cs</i>. You can copy paste these 
+		empty templates to add a new blank page.</p>
 		<pre>&lt;ContentPage 
    ...
    <span style="background-color: #FFFF00">base:ViewManager.AutoWireViewModel=&quot;true&quot;</span>
@@ -423,9 +420,10 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		typically Android will be destroying the process. So there&#39;s not a lot can 
 		be done on the Android side, but your Xamarin code should still be able 
 		to work. So you can log the error message with a third party tool like
-		<a href="https://hockeyapp.net/">HockeyApp Crash Reporting</a>. Beside it&#39;s 
-		</span><span lang="EN-US">advised </span><span class="pl-c">to put a breakpoint in <i>LogException() </i></span>method. This 
-		is useful to see the exception before app crashes.</p>
+		<a href="https://hockeyapp.net/">HockeyApp Crash Reporting</a>. Beside it&#39;s
+		</span><span lang="EN-US">advised </span><span class="pl-c">to put a breakpoint 
+		in <i>LogException() </i></span>method. This is useful to see the exception 
+		before app crashes.</p>
 		<h5>Pages</h5>
 		<h6>InitialView</h6>
 		<p>InitialView is a transition page that checks whether user has any granted 
@@ -434,15 +432,18 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		it is automatically being navigated to the first authorized menu item. InitialView 
 		is being created in MainView.xaml. </p>
 		<h6>Login</h6>
+		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-login.png" />
 		<p>When user enters credentials AccessTokenManager authenticates user stores 
 		access token in memory. For authentication needed Api calls, this token 
 		is being added to the request as bearer token. There&#39;s a timer in AccessTokenManager 
-		class that renews token before it expires. If an error occurs while communication with host, client tries to reconnect within an exponentiation increasing 
-		time. After successful login user credentials are stored in device for 
-		auto login (password is stored as encrypted). User information is being set 
-		in <i>ApplicationContext </i>so if current logon account information is 
-		needed it can be retrieved with injecting <i>IApplicationContext</i>.</p>
+		class that renews token before it expires. If an error occurs while communication 
+		with host, client tries to reconnect within an exponentiation increasing 
+		time. After successful login user credentials are stored in device for auto 
+		login (password is stored as encrypted). User information is being set in
+		<i>ApplicationContext </i>so if current logon account information is needed 
+		it can be retrieved with injecting <i>IApplicationContext</i>.</p>
 		<h6>MainView</h6>
+		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-menu.png" />
 		<p>MainView is responsible for navigation service. Xamarin.Forms provides 
 		a number of different page navigation experiences, in this project
 		<a href="https://developer.xamarin.com/guides/xamarin-forms/application-fundamentals/navigation/master-detail-page/">
@@ -465,6 +466,7 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		if only user has granted required permission. The menu items are being created 
 		in <i>MainViewModel </i>class with <i>BuildMenuItems()</i> method.</p>
 		<h6>TenantsView</h6>
+		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-tenants.png" />
 		<p>This page is shown if only user is a tenant owner. Page lists all tenants 
 		with a list view. There is HideableToolbarItem to create a new tenant. This 
 		toolbar item is extended control of a toolbar item that can be hidden if 
@@ -474,6 +476,7 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		template. When user taps any item it navigates to the TenantDetailsView 
 		with the selected tenant object.</p>
 		<h6>TenantDetailsView</h6>
+		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-tenant-details.png" />
 		<p>This page shows information about the selected tenant. Selected tenant 
 		model is being retrieved with navigationData object in <i>InitializeAsync(object 
 		navigationData). </i>There are action buttons on the bottom of the page 
@@ -491,6 +494,7 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		Xamarin MessasingCenter.</a> Lastly <i>TenantDetailsView</i> is being popped 
 		with <i>GoBackAsync()</i> method of <i>NavigationService</i>.</p>
 		<h6>UsersView</h6>
+		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-users.png" />
 		<p>This page lists users of the tenant or tenant owner. It is only shown 
 		if the user has permission to this page. Same as tenants view, there&#39;s a 
 		search bar and a new user creation toolbar item. List view is used to list 
@@ -499,11 +503,13 @@ Shared project should implement as much non-UI functionality as is possible.</p>
 		library. When a user is tapped, it&#39;s navigated to UserDetailsView with the 
 		selected user. </p>
 		<h6>UserDetailsView</h6>
+		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-user-details.png" />
 		<p>This page shows information about the selected user. If the logon user 
 		has no permission to edit then action buttons will be hidden and all inputs 
 		will be readonly. This is done in xaml with the following code;</p>
 		<pre>IsEnabled=&quot;{extensions:HasPermission Text={x:Static permission:PermissionKey.UserEdit}}&quot;</pre>
 		<h6>ProfilePictureView</h6>
+		<img class="img-thumbnail" alt="Shared Project Structure" src="images/xamarin-profile-picture.png" />
 		<p>This is for viewing user profile picture in full screen mode. When user 
 		taps the thumb profile image on top of the navigation menu, this view is 
 		shown.</p>
