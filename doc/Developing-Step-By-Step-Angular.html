@@ -186,12 +186,12 @@ changes made to any file in the application.</p>
 <p>We define entities in <strong>.Core</strong> (domain) project (in server 
 side). We can define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
 table in database) to represent a person in phone book as shown below (I created 
-in in a new folder/namespace named People):</p>
+in in a new folder/namespace named PhoneBook):</p>
 <pre lang="cs">using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
 
-namespace Acme.PhoneBook<span lang="tr">Demo</span>.People
+namespace Acme.PhoneBook<span lang="tr">Demo</span>.<span lang="tr">P<span class="auto-style1">honeBook</span></span>
 {
     <strong>[Table("PbPersons")]</strong>
     public class Person : FullAuditedEntity
@@ -355,15 +355,15 @@ seed and adds two people to PbPersons table:</p>
 <h3>Creating Person Application Service</h3>
 <p>An Application Service is used from client (presentation layer) to perform 
 operations (use cases) of the application.</p>
-<p>Application services are located in
-<strong>.Application</strong> project. We creating an application service to 
+<p>Application service interface and DTOs are located in
+<strong>.Application.Shared</strong> project. We creating an application service to 
 get people from server. So, we're first creating an <strong>interface</strong> to define 
 the person application service (while this interface is optional, we suggest you 
 to create it):</p>
 <pre lang="cs">using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 
-namespace Acme.PhoneBook<span lang="tr">Demo</span>.People
+namespace Acme.PhoneBook<span lang="tr">Demo</span>.<span lang="tr">P<span class="auto-style1">honeBook</span></span>
 {
     public interface IPersonAppService : IApplicationService
     {
@@ -380,7 +380,6 @@ are defined as shown below:</p>
     public string Filter { get; set; }
 }
 
-[<strong>AutoMapFrom(typeof(Person))</strong>]
 public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 {
     public string Name { get; set; }
@@ -389,15 +388,24 @@ public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 
     public string EmailAddress { get; set; }
 }</pre>
-<p><strong>AutoMapFrom</strong> attribute is used to configure 
-<strong>AutoMapper</strong> to create mapping from 
+<p><strong>CustomDtoMapper.cs</strong> is used to create mapping from 
 <strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> used to inherit audit properties 
 automatically. See
 <a href="https://aspnetboilerplate.com/Pages/Documents/Application-Services">
 application service</a> and
 <a href="https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
-DTO</a> documentations for more information.</p>
-<p>After defining interface, we can implement it as shown below:</p>
+DTO</a> documentations for more information. We are adding following mappings.</p>
+<pre lang="cs">
+...
+//PhoneBook (we will comment out <span lang="tr">other lines while added new DTOs added</span>)
+configuration.CreateMap&lt;Person, PersonListDto&gt;();
+<span lang="tr">//</span>configuration.CreateMap&lt;AddPhoneInput, Phone&gt;();
+<span lang="tr">//</span>configuration.CreateMap&lt;CreatePersonInput, Person&gt;();
+<span lang="tr">//</span>configuration.CreateMap&lt;Person, GetPersonForEditOutput&gt;();
+<span lang="tr">//</span>configuration.CreateMap&lt;Phone, PhoneInPersonListDto&gt;();
+</pre>
+<p>After defining interface, we can implement it as shown below: (in <strong>.Application </strong>
+project)</p>
 <pre lang="cs">
 public class PersonAppService : PhoneBook<span lang="tr">Demo</span>AppServiceBase, IPersonAppService
 {
@@ -433,8 +441,10 @@ here (defined in Abp.Linq.Extensions namespace). It performs Where condition, on
 <strong>IsNullOrEmpty</strong> is also an extension method (defined in 
 Abp.Extensions namespace). ABP has 
 many similar 
-shortcut extension methods. <strong>MapTo</strong> method automatically 
-converts list of Person entities to list of PersonListDto entities using <strong>AutoMapper</strong> library.</p>
+shortcut extension methods. <strong>ObjectMapper.Map</strong> method 
+automatically converts list of Person entities to list of PersonListDto entities 
+with using configurations in <strong>CustomDtoMapper.cs </strong>in <strong>
+.Application</strong> project.</p>
 <h4>Connection &amp; Transaction Management</h4>
 <p>We don't manually open database connection or start/commit transactions 
 manually. It's automatically done with ABP framework's Unit Of Work system. See
@@ -647,8 +657,7 @@ people data. See the result:</p>
 <p>We first define <strong>CreatePerson</strong> method in <strong>IPersonAppService</strong> interface:</p>
 <pre lang="cs">Task CreatePerson(CreatePersonInput input);</pre>
 <p>Then we create <strong>CreatePersonInput</strong> DTO that defines parameters of the method:</p>
-<pre lang="cs">[AutoMapTo(typeof(Person))]
-public class CreatePersonInput
+<pre lang="cs">public class CreatePersonInput
 {
     [Required]
     [MaxLength(Person.MaxNameLength)]
@@ -663,7 +672,7 @@ public class CreatePersonInput
     public string EmailAddress { get; set; }
 }</pre>
 <p><strong>CreatePersonInput</strong> is mapped to <strong>Person</strong> 
-entity (we will use mapping below). All properties are decorated by <strong>data 
+entity (comment out related line in CustomDtoMapper.cs and we will use mapping below). All properties are decorated by <strong>data 
 annotation attributes</strong> to provide automatic <strong>
 <a href="https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">validation</a></strong>. 
 Notice that we use same consts defined in Person entity for <strong>MaxLength</strong> 
@@ -1297,8 +1306,7 @@ people table) and re-create it. I did this.</p>
 include</strong> phone numbers of people into return value.</p>
 <p>First, we're 
 changing <strong>PersonListDto</strong> to contain a list of phones:</p>
-<pre lang="cs">[AutoMapFrom(typeof(Person))]
-public class PersonListDto : FullAuditedEntityDto
+<pre lang="cs">public class PersonListDto : FullAuditedEntityDto
 {
     public string Name { get; set; }
 
@@ -1308,8 +1316,7 @@ public class PersonListDto : FullAuditedEntityDto
 
 <strong>    public Collection&lt;PhoneInPersonListDto&gt; Phones { get; set; }
 </strong>}
-
-<strong>[AutoMapFrom(typeof(Phone))]
+<strong>
 public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
 </strong>{<strong>
     public PhoneType Type { get; set; }
@@ -1344,8 +1351,7 @@ Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input);</pre>
 <p>We could create a new, seperated IPhoneAppService. It's your choice. But, we 
 can consider Person as an aggregate and add phone related methods here. AddPhoneInput 
 DTO is shown below:</p>
-<pre lang="cs">[AutoMapTo(typeof(Phone))]
-public class AddPhoneInput
+<pre lang="cs">public class AddPhoneInput
 {
     [Range(1, int.MaxValue)]
     public int PersonId { get; set; }
@@ -1580,22 +1586,22 @@ First of all, we create needed Dto&#39;s that transfers people&#39;s id, name, s
 and e-mail. Then create the functions in PersonAppService for editing people:<br />
 
 <pre lang="cs" >
-       [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
-        public async Task&lt;GetPersonForEditOutput&gt; GetPersonForEdit(GetPersonForEditInput input)
-        {
-            var person = await _personRepository.GetAsync(input.Id);
-            return ObjectMapper.Map&lt;GetPersonForEditOutput&gt;(person);
-        }
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
+public async Task&lt;GetPersonForEditOutput&gt; GetPersonForEdit(GetPersonForEditInput input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    return ObjectMapper.Map&lt;GetPersonForEditOutput&gt;(person);
+}
 
-        [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
-        public async Task EditPerson(EditPersonInput input)
-        {
-            var person = await _personRepository.GetAsync(input.Id);
-            person.Name = input.Name;
-            person.Surname = input.Surname;
-            person.EmailAddress = input.EmailAddress;
-            await _personRepository.UpdateAsync(person);
-        }</pre>
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
+public async Task EditPerson(EditPersonInput input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    person.Name = input.Name;
+    person.Surname = input.Surname;
+    person.EmailAddress = input.EmailAddress;
+    await _personRepository.UpdateAsync(person);
+}</pre>
 
 <h4>View</h4>
 Create edit-person-modal.component.html:
