@@ -157,19 +157,15 @@ table in database) to represent a person in phone book as shown below:</p>
 <pre lang="cs">[Table(&quot;PbPersons&quot;)]
 public class Person : FullAuditedEntity
 {
-    public const int MaxNameLength = 32;
-    public const int MaxSurnameLength = 32;
-    public const int MaxEmailAddressLength = 255;
-
     [Required]
-    [MaxLength(MaxNameLength)]
+    [MaxLength(PersonConsts.MaxNameLength)]
     public virtual string Name { get; set; }
 
     [Required]
-    [MaxLength(MaxSurnameLength)]
+    [MaxLength(PersonConsts.MaxSurnameLength)]
     public virtual string Surname { get; set; }
 
-    [MaxLength(MaxEmailAddressLength)]
+    [MaxLength(PersonConsts.MaxEmailAddressLength)]
     public virtual string EmailAddress { get; set; }
 }</pre>
 <p>Person's <strong>primary key</strong> 
@@ -179,9 +175,17 @@ deletion </strong>audit properties. It's also <strong>soft-delete</strong>. When
 we delete a person, it's not deleted by database but marked as deleted (see
 <a href="https://aspnetboilerplate.com/Pages/Documents/Entities">entity</a> 
 and <a href="https://aspnetboilerplate.com/Pages/Documents/Data-Filters">data 
-filters</a> documentations for more information). We created consts for <strong>
+filters</a> documentations for more information). We created <strong>PersonConsts</strong> in 
+<strong>Core.Shared</strong> project for <strong>
 MaxLength</strong> properties. This is a good practice since we will use same 
 values later.</p>
+<pre lang="cs">public class PersonConsts
+{
+<span lang="tr">	</span>public const int MaxNameLength = 32;
+<span lang="tr">	</span>public const int MaxSurnameLength = 32; 
+<span lang="tr">	</span>public const int MaxEmailAddressLength = 255;
+}</pre>
+
 <p>We add a DbSet property for Person entity to <strong>PhoneBookDemoDbContext</strong> 
 class defined in <strong>.EntityFrameworkCore</strong> project.</p>
 
@@ -326,7 +330,9 @@ seed and adds two people to PbPersons table:</p>
 <p>An Application Service is used from client (presentation layer) to perform 
 operations (use cases) in the application.</p>
 <p>Application services are located in
-<strong>.Application</strong> project. We create first application service to 
+<strong>.Application</strong> project and their interfaces are located in
+<b style="color: rgb(34, 34, 34); font-family: Calibri, sans-serif; font-size: 14.6667px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;">
+Application.Shared</b> project. We create first application service to 
 get people from server. We're creating an <strong>interface</strong> to define 
 the person application service (while this interface is optional, we suggest you 
 to create it):</p>
@@ -334,7 +340,9 @@ to create it):</p>
 {
     ListResultDto&lt;PersonListDto&gt; GetPeople(GetPeopleInput input);
 }</pre>
-<p>An application service method gets/returns <strong>DTO</strong>s. <strong>ListResultDto</strong> is a 
+<p>An application service method gets/returns <strong>DTO</strong>s. We Place 
+them in
+<strong>Application.Shared</strong> project. <strong>ListResultDto</strong> is a 
 pre-build helper DTO to return a list of another DTO. <strong>GetPeopleInput</strong> is a DTO to pass 
 request parameters to <strong>GetPeople</strong> method. So, GetPeopleIntput and PersonListDto 
 are defined as shown below:</p>
@@ -617,15 +625,15 @@ people. See the result:</p>
 public class CreatePersonInput
 {
     [Required]
-    [MaxLength(Person.MaxNameLength)]
+    [MaxLength(PersonConsts..MaxNameLength)]
     public string Name { get; set; }
 
     [Required]
-    [MaxLength(Person.MaxSurnameLength)]
+    [MaxLength(PersonConsts..MaxSurnameLength)]
     public string Surname { get; set; }
 
     [EmailAddress]
-    [MaxLength(Person.MaxEmailAddressLength)]
+    [MaxLength(PersonConsts..MaxEmailAddressLength)]
     public string EmailAddress { get; set; }
 }</pre>
 <p><strong>CreatePersonInput</strong> is mapped to <strong>Person</strong> 
@@ -714,17 +722,17 @@ Areas/App/Views/Common/Modals/Empty</strong> folder as a base for a new modal to
 &lt;div class=&quot;modal-body&quot;&gt;
     &lt;form role=&quot;form&quot; novalidate class=&quot;form-validation&quot;&gt;
         &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
-            &lt;input class=&quot;form-control&quot; type=&quot;text&quot; name=&quot;Name&quot; required maxlength=&quot;@Person.MaxNameLength&quot;&gt;
+            &lt;input class=&quot;form-control&quot; type=&quot;text&quot; name=&quot;Name&quot; required maxlength=&quot;@PersonConsts.MaxNameLength&quot;&gt;
             &lt;label&gt;@L(&quot;Name&quot;)&lt;/label&gt;
         &lt;/div&gt;
 
         &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
-            &lt;input type=&quot;text&quot; name=&quot;Surname&quot; class=&quot;form-control&quot; required maxlength=&quot;@Person.MaxSurnameLength&quot;&gt;
+            &lt;input type=&quot;text&quot; name=&quot;Surname&quot; class=&quot;form-control&quot; required maxlength=&quot;@PersonConsts.MaxSurnameLength&quot;&gt;
             &lt;label&gt;@L(&quot;Surname&quot;)&lt;/label&gt;
         &lt;/div&gt;
 
         &lt;div class=&quot;form-group form-md-line-input form-md-floating-label no-hint&quot;&gt;
-            &lt;input type=&quot;email&quot; name=&quot;EmailAddress&quot; class=&quot;form-control&quot; maxlength=&quot;@Person.MaxEmailAddressLength&quot;&gt;
+            &lt;input type=&quot;email&quot; name=&quot;EmailAddress&quot; class=&quot;form-control&quot; maxlength=&quot;@PersonConsts.MaxEmailAddressLength&quot;&gt;
             &lt;label&gt;@L(&quot;EmailAddress&quot;)&lt;/label&gt;
         &lt;/div&gt;
     &lt;/form&gt;
@@ -1176,7 +1184,6 @@ project:</p>
 <pre lang="cs">[Table(&quot;PbPhones&quot;)]
 public class Phone : CreationAuditedEntity&lt;long&gt;
 {
-    public const int MaxNumberLength = 16;
 
     [ForeignKey(&quot;PersonId&quot;)]
     public virtual Person Person { get; set; }
@@ -1186,9 +1193,15 @@ public class Phone : CreationAuditedEntity&lt;long&gt;
     public virtual PhoneType Type { get; set; }
 
     [Required]
-    [MaxLength(MaxNumberLength)]
+    [MaxLength(PhoneConsts.MaxNumberLength)]
     public virtual string Number { get; set; }
 }</pre>
+<p>And <strong>PhoneConsts</strong> in <strong>Core.Shared</strong> project: </p>
+<pre lang="cs">public class P<span lang="tr">hone</span>Consts
+{
+<span lang="tr">	</span>public const int MaxNumberLength = 16;
+}</pre>
+
 <p>Phone entities are stored in <strong>PbPhones</strong> table. It's primary key is <strong>long</strong> 
 and inherits creation auditing properties. It has a reference to <strong>Person</strong> entity which owns the phone 
 number.</p>
@@ -1200,7 +1213,8 @@ public class Person : FullAuditedEntity
 
     <strong>public virtual ICollection&lt;Phone&gt; Phones { get; set; }</strong>
 }</pre>
-<p>We have a <strong>PhoneType</strong> enum as shown below:</p>
+<p>We have a <strong>PhoneType</strong> enum in <strong>.Core.Shared</strong> 
+project as shown below:</p>
 <pre lang="cs">public enum PhoneType : byte
 {
     Mobile,
@@ -1367,7 +1381,7 @@ public class AddPhoneInput
     public PhoneType Type { get; set; }
 
     [Required]
-    [MaxLength(Phone.MaxNumberLength)]
+    [MaxLength(PhoneConsts.MaxNumberLength)]
     public string Number { get; set; }
 }</pre>
 <p>Now, we can implement these methods:</p>
@@ -1658,16 +1672,16 @@ and e-mail. Then create the functions in PersonAppService for editing people:<br
         &lt;input type="hidden" name="Id" value="@Model.Id" /&gt;
 
         &lt;div class="form-group form-md-line-input  no-hint"&gt;
-            &lt;input class="form-control" type="text" name="Name" value="@Model.Name" required maxlength="@Person.MaxNameLength"&gt;
+            &lt;input class="form-control" type="text" name="Name" value="@Model.Name" required maxlength="@PersonConsts.MaxNameLength"&gt;
             &lt;label&gt;@L("Name")&lt;/label&gt;
         &lt;/div&gt;
         &lt;div class="form-group form-md-line-input  no-hint"&gt;
-            &lt;input type="text" name="Surname" value="@Model.Surname" class="form-control" required maxlength="@Person.MaxSurnameLength"&gt;
+            &lt;input type="text" name="Surname" value="@Model.Surname" class="form-control" required maxlength="@PersonConsts.MaxSurnameLength"&gt;
             &lt;label&gt;@L("Surname")&lt;/label&gt;
         &lt;/div&gt;
 
         &lt;div class="form-group form-md-line-input  no-hint"&gt;
-            &lt;input type="email" name="EmailAddress" value="@Model.EmailAddress" class="form-control"  maxlength="@Person.MaxEmailAddressLength"&gt;
+            &lt;input type="email" name="EmailAddress" value="@Model.EmailAddress" class="form-control"  maxlength="@PersonConsts.MaxEmailAddressLength"&gt;
             &lt;label&gt;@L("EmailAddress")&lt;/label&gt;
         &lt;/div&gt;
     &lt;/form&gt;
