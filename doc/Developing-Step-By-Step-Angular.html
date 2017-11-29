@@ -660,23 +660,36 @@ people data. See the result:</p>
 <pre lang="cs">public class CreatePersonInput
 {
     [Required]
-    [MaxLength(Person.MaxNameLength)]
+    [MaxLength(Person<span lang="tr">Consts</span>.MaxNameLength)]
     public string Name { get; set; }
 
     [Required]
-    [MaxLength(Person.MaxSurnameLength)]
+    [MaxLength(Person<span lang="tr">Consts</span>.MaxSurnameLength)]
     public string Surname { get; set; }
 
     [EmailAddress]
-    [MaxLength(Person.MaxEmailAddressLength)]
+    [MaxLength(Person<span lang="tr">Consts</span>.MaxEmailAddressLength)]
     public string EmailAddress { get; set; }
 }</pre>
 <p><strong>CreatePersonInput</strong> is mapped to <strong>Person</strong> 
 entity (comment out related line in CustomDtoMapper.cs and we will use mapping below). All properties are decorated by <strong>data 
 annotation attributes</strong> to provide automatic <strong>
 <a href="https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">validation</a></strong>. 
-Notice that we use same consts defined in Person entity for <strong>MaxLength</strong> 
-properties.</p>
+Notice that we use same consts defined in <strong>PersonConsts.cs</strong> in 
+<strong>.Core.Shared</strong> 
+project for <strong>MaxLength</strong> 
+properties. After adding this class, you can remove consts from <strong>Person</strong> 
+entity and use this new consts class. </p>
+
+<pre lang="cs">
+public class PersonConsts
+{
+    public const int MaxNameLength = 32;
+    public const int MaxSurnameLength = 32;
+    public const int MaxEmailAddressLength = 255;
+}
+</pre>
+
 <p>Here, the implementation of CreatePerson method:</p>
 <pre lang="cs">public async Task CreatePerson(CreatePersonInput input)
 {
@@ -1196,7 +1209,8 @@ public class Person : FullAuditedEntity
 
     <strong>public virtual ICollection&lt;Phone&gt; Phones { get; set; }</strong>
 }</pre>
-<p>We have a <strong>PhoneType</strong> enum as shown below:</p>
+<p>We have a <strong>PhoneType</strong> enum as shown below: (in <strong>
+.Application.Shared </strong>project)</p>
 <pre lang="cs">public enum PhoneType : byte
 {
     Mobile,
@@ -1360,9 +1374,18 @@ DTO is shown below:</p>
     public PhoneType Type { get; set; }
 
     [Required]
-    [MaxLength(Phone.MaxNumberLength)]
+    [MaxLength(Phone<span lang="tr">Consts</span>.MaxNumberLength)]
     public string Number { get; set; }
 }</pre>
+<p>We used PhoneConsts.MaxNumberLength for Number field. You should create this 
+consts in <strong>.Core.Shared</strong>. </p>
+<pre lang="cs">
+public class PhoneConsts
+{
+    public const int MaxNumberLength = 16;
+}
+</pre>
+
 <p>Now, we can implement these methods:</p>
 <pre lang="cs">public async Task DeletePhone(EntityDto&lt;long&gt; input)
 {
