@@ -39,9 +39,9 @@ to multi-tenant later). So, we
 open <strong>PhoneBookDemoConsts</strong> class in the <strong>Acme.PhoneBookDemo.Core</strong> project and disable multi-tenancy as 
 shown below:</p>
 <pre lang="cs">
-public class PhoneBook<span lang="tr">Demo</span>Consts
+public class PhoneBookDemoConsts
 {
-    public const string LocalizationSourceName = "PhoneBook<span lang="tr">Demo</span>";
+    public const string LocalizationSourceName = "PhoneBookDemo";
 
     public const string ConnectionStringName = "Default";
 
@@ -60,7 +60,7 @@ public class PhoneBook<span lang="tr">Demo</span>Consts
 <p>Open <strong>src\app\shared\layout\nav\app-navigation.service.ts</strong> in the client 
 side (<strong>Acme.PhoneBookDemo.AngularUI</strong>) which defines menu items in the application. Create new menu item as shown below (You can add it right after the dashboard 
 menu item).</p>
-<pre lang="js">new <span lang="tr">App</span>MenuItem("PhoneBook", null, "<span lang="tr">flat</span>icon-book", "/app/main/phonebook")</pre>
+<pre lang="js">new AppMenuItem("PhoneBook", null, "flaticon-book", "/app/main/phonebook")</pre>
 <p><strong>PhoneBook</strong> is the menu name (will localize below), <strong>
 null</strong> is for permission name (will set it later), <strong>flaticon-book</strong> 
 is just an arbitrary icon class (from
@@ -117,7 +117,7 @@ export class <strong>PhoneBookComponent</strong> extends <strong>AppComponentBas
 common functions and fields (like localization and access control) for us. It's 
 not required, but makes our job easier. Now, we can return back to <strong>main-routing.module.ts</strong> 
 and add import statement for the newly created PhoneBookComponent class:</p>
-<pre lang="js">import { <strong>PhoneBookComponent</strong> } from './phonebook/phonebook<span lang="tr">.</span>component';</pre>
+<pre lang="js">import { <strong>PhoneBookComponent</strong> } from './phonebook/phonebook.component';</pre>
 <p>As we declared in <strong>phonebook.component.ts</strong> we should create a <strong>phonebook.component.html</strong> view 
 in the same phonebook folder:</p>
 <pre lang="xml">&lt;div <strong>[@routerTransition]</strong>&gt;
@@ -186,12 +186,12 @@ changes made to any file in the application.</p>
 <p>We define entities in <strong>.Core</strong> (domain) project (in server 
 side). We can define a <strong>Person</strong> entity (mapped to <strong>PbPersons</strong> 
 table in database) to represent a person in phone book as shown below (I created 
-in in a new folder/namespace named People):</p>
+in in a new folder/namespace named PhoneBook):</p>
 <pre lang="cs">using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
 
-namespace Acme.PhoneBook<span lang="tr">Demo</span>.People
+namespace Acme.PhoneBookDemo.PhoneBook
 {
     <strong>[Table("PbPersons")]</strong>
     public class Person : FullAuditedEntity
@@ -225,11 +225,11 @@ values later.</p>
 <p>We add a DbSet property for Person entity to <strong>PhoneBookDemoDbContext</strong> 
 class defined in <strong>.EntityFrameworkCore</strong> project.</p>
 
-<pre lang="cs">public class PhoneBook<span lang="tr">Demo</span>DbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
+<pre lang="cs">public class PhoneBookDemoDbContext : AbpZeroDbContext&lt;Tenant, Role, User&gt;
 {
 <strong>    public virtual DbSet&lt;Person&gt; Persons { get; set; }
 </strong>        
-    //...other <span lang="tr">c<span class="auto-style1">ode</span></span>
+    //...other code
 }</pre>
 
 <h3>Database Migrations</h3>
@@ -289,13 +289,13 @@ classes to fill initial data for users and settings:</p>
 <img class="img-thumbnail" alt="Seed folders" src="images/aspnet-core-ef-seed-1.png" /></p>
 <p>So, we can add a seperated class to fill some people to database 
 as shown below:</p>
-<pre lang="cs">namespace Acme.PhoneBook<span lang="tr">Demo</span>.Migrations.Seed.Host
+<pre lang="cs">namespace Acme.PhoneBookDemo.Migrations.Seed.Host
 {
     public class InitialPeopleCreator
     {
-        private readonly PhoneBook<span lang="tr">Demo</span>DbContext _context;
+        private readonly PhoneBookDemoDbContext _context;
 
-        public InitialPeopleCreator(PhoneBook<span lang="tr">Demo</span>DbContext context)
+        public InitialPeopleCreator(PhoneBookDemoDbContext context)
         {
             _context = context;
         }
@@ -355,15 +355,15 @@ seed and adds two people to PbPersons table:</p>
 <h3>Creating Person Application Service</h3>
 <p>An Application Service is used from client (presentation layer) to perform 
 operations (use cases) of the application.</p>
-<p>Application services are located in
-<strong>.Application</strong> project. We creating an application service to 
+<p>Application service interface and DTOs are located in
+<strong>.Application.Shared</strong> project. We creating an application service to 
 get people from server. So, we're first creating an <strong>interface</strong> to define 
 the person application service (while this interface is optional, we suggest you 
 to create it):</p>
 <pre lang="cs">using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 
-namespace Acme.PhoneBook<span lang="tr">Demo</span>.People
+namespace Acme.PhoneBookDemo.PhoneBook
 {
     public interface IPersonAppService : IApplicationService
     {
@@ -380,7 +380,6 @@ are defined as shown below:</p>
     public string Filter { get; set; }
 }
 
-[<strong>AutoMapFrom(typeof(Person))</strong>]
 public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 {
     public string Name { get; set; }
@@ -389,17 +388,26 @@ public class PersonListDto : <strong>FullAuditedEntityDto</strong>
 
     public string EmailAddress { get; set; }
 }</pre>
-<p><strong>AutoMapFrom</strong> attribute is used to configure 
-<strong>AutoMapper</strong> to create mapping from 
+<p><strong>CustomDtoMapper.cs</strong> is used to create mapping from 
 <strong>Person</strong> to <strong>PersonListDto</strong>. <strong>FullAuditedEntityDto</strong> used to inherit audit properties 
 automatically. See
 <a href="https://aspnetboilerplate.com/Pages/Documents/Application-Services">
 application service</a> and
 <a href="https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects">
-DTO</a> documentations for more information.</p>
-<p>After defining interface, we can implement it as shown below:</p>
+DTO</a> documentations for more information. We are adding following mappings.</p>
 <pre lang="cs">
-public class PersonAppService : PhoneBook<span lang="tr">Demo</span>AppServiceBase, IPersonAppService
+...
+//PhoneBook (we will comment out other lines while added new DTOs added)
+configuration.CreateMap&lt;Person, PersonListDto&gt;();
+//configuration.CreateMap&lt;AddPhoneInput, Phone&gt;();
+//configuration.CreateMap&lt;CreatePersonInput, Person&gt;();
+//configuration.CreateMap&lt;Person, GetPersonForEditOutput&gt;();
+//configuration.CreateMap&lt;Phone, PhoneInPersonListDto&gt;();
+</pre>
+<p>After defining interface, we can implement it as shown below: (in <strong>.Application </strong>
+project)</p>
+<pre lang="cs">
+public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
 {
     private readonly IRepository&lt;Person&gt; _personRepository;
 
@@ -433,8 +441,10 @@ here (defined in Abp.Linq.Extensions namespace). It performs Where condition, on
 <strong>IsNullOrEmpty</strong> is also an extension method (defined in 
 Abp.Extensions namespace). ABP has 
 many similar 
-shortcut extension methods. <strong>MapTo</strong> method automatically 
-converts list of Person entities to list of PersonListDto entities using <strong>AutoMapper</strong> library.</p>
+shortcut extension methods. <strong>ObjectMapper.Map</strong> method 
+automatically converts list of Person entities to list of PersonListDto entities 
+with using configurations in <strong>CustomDtoMapper.cs </strong>in <strong>
+.Application</strong> project.</p>
 <h4>Connection &amp; Transaction Management</h4>
 <p>We don't manually open database connection or start/commit transactions 
 manually. It's automatically done with ABP framework's Unit Of Work system. See
@@ -460,12 +470,12 @@ false. After a rebuild and run unit tests, you will see that some tests are skip
 </div>
 <p>Let's 
 create first test to verify getting people without any filter:</p>
-<pre lang="cs">using Acme.PhoneBook<span lang="tr">Demo</span>.People;
-using Acme.PhoneBook<span lang="tr">Demo</span>.People.Dtos;
+<pre lang="cs">using Acme.PhoneBookDemo.People;
+using Acme.PhoneBookDemo.People.Dtos;
 using Shouldly;
 using Xunit;
 
-namespace Acme.PhoneBook<span lang="tr">Demo</span>.Tests.People
+namespace Acme.PhoneBookDemo.Tests.People
 {
     public class PersonAppService_Tests : AppTestBase
     {
@@ -544,9 +554,9 @@ of people on the UI.</p>
 client side to re-generate service proxy classes (they are used to call server 
 side service methods).</p>
 <p>Since we added a new service, we should add it to <strong>src/shared/service-proxies/service-proxy.module.ts</strong>. 
-<span class="auto-style2">Just open it and add <strong>ApiServiceProxies.PersonServiceProxy</strong> to 
+Just open it and add <strong>ApiServiceProxies.PersonServiceProxy</strong> to 
 the providers array. This step is only required when we add a new service. If we 
-change an existing service, it's not needed.</span></p>
+change an existing service, it's not needed.</p>
 <div class="bs-callout bs-callout-warning">
 	<h4>Angular-Cli Watcher</h4>
 <p>Sometimes angular-cli can not understand the file changes. In that case, stop it and re-run
@@ -647,27 +657,39 @@ people data. See the result:</p>
 <p>We first define <strong>CreatePerson</strong> method in <strong>IPersonAppService</strong> interface:</p>
 <pre lang="cs">Task CreatePerson(CreatePersonInput input);</pre>
 <p>Then we create <strong>CreatePersonInput</strong> DTO that defines parameters of the method:</p>
-<pre lang="cs">[AutoMapTo(typeof(Person))]
-public class CreatePersonInput
+<pre lang="cs">public class CreatePersonInput
 {
     [Required]
-    [MaxLength(Person.MaxNameLength)]
+    [MaxLength(PersonConsts.MaxNameLength)]
     public string Name { get; set; }
 
     [Required]
-    [MaxLength(Person.MaxSurnameLength)]
+    [MaxLength(PersonConsts.MaxSurnameLength)]
     public string Surname { get; set; }
 
     [EmailAddress]
-    [MaxLength(Person.MaxEmailAddressLength)]
+    [MaxLength(PersonConsts.MaxEmailAddressLength)]
     public string EmailAddress { get; set; }
 }</pre>
 <p><strong>CreatePersonInput</strong> is mapped to <strong>Person</strong> 
-entity (we will use mapping below). All properties are decorated by <strong>data 
+entity (comment out related line in CustomDtoMapper.cs and we will use mapping below). All properties are decorated by <strong>data 
 annotation attributes</strong> to provide automatic <strong>
 <a href="https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects">validation</a></strong>. 
-Notice that we use same consts defined in Person entity for <strong>MaxLength</strong> 
-properties.</p>
+Notice that we use same consts defined in <strong>PersonConsts.cs</strong> in 
+<strong>.Core.Shared</strong> 
+project for <strong>MaxLength</strong> 
+properties. After adding this class, you can remove consts from <strong>Person</strong> 
+entity and use this new consts class. </p>
+
+<pre lang="cs">
+public class PersonConsts
+{
+    public const int MaxNameLength = 32;
+    public const int MaxSurnameLength = 32;
+    public const int MaxEmailAddressLength = 255;
+}
+</pre>
+
 <p>Here, the implementation of CreatePerson method:</p>
 <pre lang="cs">public async Task CreatePerson(CreatePersonInput input)
 {
@@ -965,7 +987,7 @@ Try to click Phone Book menu!</p>
 <strong>menu item</strong>. It's 
 easy, open <strong>app-navigation-service.ts</strong> and add change PhoneBook menu 
 definition as shown below:</p>
-<pre lang="js">new <span lang="tr">App</span>MenuItem("PhoneBook", <strong>'Pages.Tenant.PhoneBook'</strong>, "<span lang="tr">flat</span>icon-book", "<span lang="tr">/app/main</span>/phonebook")</pre>
+<pre lang="js">new AppMenuItem("PhoneBook", <strong>'Pages.Tenant.PhoneBook'</strong>, "flaticon-book", "/app/main/phonebook")</pre>
 <h5>Grant permission</h5>
 <p>So, how we can enter the page now? Simple, go to <strong>Role Management</strong> 
 page and edit <strong>admin</strong> role:</p>
@@ -1037,8 +1059,8 @@ here):</p>
                 &lt;span class=&quot;m-widget1__desc&quot;&gt;{{person.emailAddress}}&lt;/span&gt;
             &lt;/div&gt;
             &lt;div class=&quot;col m--align-right&quot;&gt;
-               <strong> &lt;button<span lang="tr"> id="deletePerson"</span> (click)=&quot;deletePerson(person)&quot; title=&quot;{{l('Delete')}}&quot; class=&quot;btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot; href=&quot;javascript:;&quot;&gt;
-                    &lt;i class=&quot;<span lang="tr">fa fa-times</span>&quot;&gt;&lt;/i&gt;
+               <strong> &lt;button id="deletePerson" (click)=&quot;deletePerson(person)&quot; title=&quot;{{l('Delete')}}&quot; class=&quot;btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill&quot; href=&quot;javascript:;&quot;&gt;
+                    &lt;i class=&quot;fa fa-times&quot;&gt;&lt;/i&gt;
                 &lt;/button&gt;</strong>
             &lt;/div&gt;
         &lt;/div&gt;
@@ -1052,9 +1074,9 @@ person' above.</p>
 <p>We're using a <strong><a href="http://lesscss.org/" target="_blank">LESS</a></strong> style here to take 
 the button right. Created 
 a file named <strong>phonebook.component.less</strong> (in phonebook folder) and added following lines:</p>
-<pre lang="css">.<span lang="tr">m<span class="auto-style1">-widget1__item</span></span> {
-    button<span lang="tr">#</span><strong>delete<span lang="tr">P</span>erson</strong> {
-        <span lang="tr">/* styles */</span>
+<pre lang="css">.m-widget1__item{
+    button#<strong>deletePerson</strong> {
+        /* styles */
     }
 }
 </pre>
@@ -1187,7 +1209,8 @@ public class Person : FullAuditedEntity
 
     <strong>public virtual ICollection&lt;Phone&gt; Phones { get; set; }</strong>
 }</pre>
-<p>We have a <strong>PhoneType</strong> enum as shown below:</p>
+<p>We have a <strong>PhoneType</strong> enum as shown below: (in <strong>
+.Application.Shared </strong>project)</p>
 <pre lang="cs">public enum PhoneType : byte
 {
     Mobile,
@@ -1297,8 +1320,7 @@ people table) and re-create it. I did this.</p>
 include</strong> phone numbers of people into return value.</p>
 <p>First, we're 
 changing <strong>PersonListDto</strong> to contain a list of phones:</p>
-<pre lang="cs">[AutoMapFrom(typeof(Person))]
-public class PersonListDto : FullAuditedEntityDto
+<pre lang="cs">public class PersonListDto : FullAuditedEntityDto
 {
     public string Name { get; set; }
 
@@ -1308,8 +1330,7 @@ public class PersonListDto : FullAuditedEntityDto
 
 <strong>    public Collection&lt;PhoneInPersonListDto&gt; Phones { get; set; }
 </strong>}
-
-<strong>[AutoMapFrom(typeof(Phone))]
+<strong>
 public class PhoneInPersonListDto : CreationAuditedEntityDto&lt;long&gt;
 </strong>{<strong>
     public PhoneType Type { get; set; }
@@ -1344,8 +1365,7 @@ Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input);</pre>
 <p>We could create a new, seperated IPhoneAppService. It's your choice. But, we 
 can consider Person as an aggregate and add phone related methods here. AddPhoneInput 
 DTO is shown below:</p>
-<pre lang="cs">[AutoMapTo(typeof(Phone))]
-public class AddPhoneInput
+<pre lang="cs">public class AddPhoneInput
 {
     [Range(1, int.MaxValue)]
     public int PersonId { get; set; }
@@ -1354,9 +1374,18 @@ public class AddPhoneInput
     public PhoneType Type { get; set; }
 
     [Required]
-    [MaxLength(Phone.MaxNumberLength)]
+    [MaxLength(PhoneConsts.MaxNumberLength)]
     public string Number { get; set; }
 }</pre>
+<p>We used PhoneConsts.MaxNumberLength for Number field. You should create this 
+consts in <strong>.Core.Shared</strong>. </p>
+<pre lang="cs">
+public class PhoneConsts
+{
+    public const int MaxNumberLength = 16;
+}
+</pre>
+
 <p>Now, we can implement these methods:</p>
 <pre lang="cs">public async Task DeletePhone(EntityDto&lt;long&gt; input)
 {
@@ -1580,22 +1609,22 @@ First of all, we create needed Dto&#39;s that transfers people&#39;s id, name, s
 and e-mail. Then create the functions in PersonAppService for editing people:<br />
 
 <pre lang="cs" >
-       [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
-        public async Task&lt;GetPersonForEditOutput&gt; GetPersonForEdit(GetPersonForEditInput input)
-        {
-            var person = await _personRepository.GetAsync(input.Id);
-            return ObjectMapper.Map&lt;GetPersonForEditOutput&gt;(person);
-        }
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
+public async Task&lt;GetPersonForEditOutput&gt; GetPersonForEdit(GetPersonForEditInput input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    return ObjectMapper.Map&lt;GetPersonForEditOutput&gt;(person);
+}
 
-        [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
-        public async Task EditPerson(EditPersonInput input)
-        {
-            var person = await _personRepository.GetAsync(input.Id);
-            person.Name = input.Name;
-            person.Surname = input.Surname;
-            person.EmailAddress = input.EmailAddress;
-            await _personRepository.UpdateAsync(person);
-        }</pre>
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
+public async Task EditPerson(EditPersonInput input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    person.Name = input.Name;
+    person.Surname = input.Surname;
+    person.EmailAddress = input.EmailAddress;
+    await _personRepository.UpdateAsync(person);
+}</pre>
 
 <h4>View</h4>
 Create edit-person-modal.component.html:
@@ -1673,7 +1702,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 })
 export class EditPersonModalComponent extends AppComponentBase {
 
-  @Output() modalSave: EventEmitter&lt;any&gt; = new EventEmitter&lt;any&gt;<span lang="tr">(</span>);
+  @Output() modalSave: EventEmitter&lt;any&gt; = new EventEmitter&lt;any&gt;();
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('nameInput') nameInput: ElementRef;
@@ -1772,7 +1801,7 @@ project, it's not needed.</p>
 adds an annotation this is needed for automatic filtering. We don't have to know 
 what it is since it's done automatically. It also adds a <strong>TenantId</strong> column to 
 PbPersons table as shown below:</p>
-<pre lang="cs"><span lang="tr">m</span>igrationBuilder.AddColumn&lt;int&gt;(name: "TenantId",table: "PbPersons",nullable: false,<strong>defaultValue: 1</strong>);</pre>
+<pre lang="cs">migrationBuilder.AddColumn&lt;int&gt;(name: "TenantId",table: "PbPersons",nullable: false,<strong>defaultValue: 1</strong>);</pre>
 <p>I added <strong>defaultValue as 1</strong> to AddColumn options. Thus, 
 current people are automatically assigned to <strong>default tenant</strong> 
 (default tenant's id is always 1).</p>
