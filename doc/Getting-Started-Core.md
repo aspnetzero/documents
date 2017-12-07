@@ -64,10 +64,7 @@ version.
 
 ##### AspNet Zero Migrator Application
 
-AspNet Zero solution includes a **.Migrator** (like
-Acme.PhoneBookDemo.Migrator) project in the solution. You can run this
-tool for database migrations on development and production (see
-[development guide](Development-Guide-Core.html) for more information).
+AspNet Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production (see [development guide](Development-Guide-Core.md) for more information).
 
 ##### Entity Framework Migration Command
 
@@ -125,9 +122,4 @@ see the sample dashboard screen:
 
 ### More
 
-Your solution is up and working. See [<span
-class="text-primary">development
-guide</span>](Development-Guide-Xamarin.html) for Xamarin application,
-[<span class="text-primary">development
-guide</span>](Development-Guide-Core.html) document for more
-information.
+Your solution is up and working. See [<span class="text-primary">development guide</span>](Development-Guide-Xamarin.md) for Xamarin application, [<span class="text-primary">development guide</span>](Development-Guide-Core.md) document for more information.

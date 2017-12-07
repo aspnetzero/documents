@@ -1,15 +1,15 @@
 ### ASP.NET ZERO
 
-#### [GETTING STARTED](Getting-Started.html)
+#### [GETTING STARTED](Getting-Started.md)
 
 This document is aimed to **create** and **run** an ASP.NET Zero based
 project **in a few minutes**.
 
-#### [DEVELOPMENT GUIDE](Development-Guide.html)
+#### [DEVELOPMENT GUIDE](Development-Guide.md)
 
 Comprehensive guide to **understand solution structure** and **start development**.
 
-#### [STEP BY STEP DEVELOPMENT](Developing-Step-By-Step.html)
+#### [STEP BY STEP DEVELOPMENT](Developing-Step-By-Step.md)
 
 Developing a multi-tenant, localized, authorized, configurable and
 testable phone book application **step by step** based on ASP.NET Zero
@@ -17,13 +17,13 @@ startup project.
 
 #### OTHER TUTORIALS
 
--   [Extending Existing Entities](Extending-Existing-Entities.html)
+-   [Extending Existing Entities](Extending-Existing-Entities.md)
 
-#### [CHANGE LOGS](Change-Logs.html)
+#### [CHANGE LOGS](Change-Logs.md)
 
 Change logs and relase notes.
 
-#### [ROAD MAP](Road-Map.html)
+#### [ROAD MAP](Road-Map.md)
 
 Some planned features for next releases.
 

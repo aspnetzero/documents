@@ -1,6 +1,6 @@
 ### Introduction
 
-In the [Getting Started](Getting-Started.html) document, a new sample
+In the [Getting Started](Getting-Started.md) document, a new sample
 project is created named "**Acme.PhoneBook**". This document is a guide
 while developing your project. You should definitely read this document
 before starting your custom development. Since ASP.NET Zero is built on

@@ -1,6 +1,6 @@
 ### Introduction
 
-In [Getting Started](Getting-Started-Core.html) document, a new sample
+In [Getting Started](Getting-Started-Core.md) document, a new sample
 project is created named "**Acme.PhoneBookDemo**". This document is a
 complete guide while developing your project. We definitely suggest to
 read this document before starting to the development. Since ASP.NET
@@ -140,7 +140,7 @@ There may be other ways of doing it but this is the simplest.
 Similar to "WebSiteRootAddress", "ServerRootAddress" setting is also
 exists in appsettings.json in .Web.Host project. In addition, .Web.Host
 application contains "**ClientRootAddress**" which is used if this API
-is used by the [Angular](Developing-Step-By-Step-Angular.html) UI. If
+is used by the [Angular](Developing-Step-By-Step-Angular.md) UI. If
 you are not using Angular UI, you can ignore it. Finally,
 "**CorsOrigins**" setting is used to allow some domains for cross origin
 requests. This is also useful when you are hosting your Angular UI in a
@@ -328,7 +328,7 @@ requirements.
 
 Backend application is built in a dedicated area, named "**App**" by
 default, but can be determined while you are [creating the
-solution](Getting-Started.html). So, all controllers, views and models
+solution](Getting-Started.md). So, all controllers, views and models
 are located under **Areas/App** folder. Also, related script and style
 files are located under **wwwroot/view-resources/Areas/App** folder, as
 shown below:
@@ -401,7 +401,7 @@ then tenants page is shown:
 <img src="images/tenant-management-core-3.png" alt="Tenant management page" class="img-thumbnail" />
 
 A tenant is represented by **Tenant** class. Tenant class [can be
-extended](Extending-Existing-Entities.html) by adding new properties.
+extended](Extending-Existing-Entities.md) by adding new properties.
 There is an only one tenant, named **Default** as initial. **Tenancy
 Name** (code name) is the **unique** name of a tenant. A tenant can be
 **active** or **passive**. If it's passive, no user of this tenant can
@@ -577,7 +577,7 @@ page:
 some operations based on their **permissions**.
 
 **User** class represents a user. User class [can be
-extended](Extending-Existing-Entities.html) by adding new properties.
+extended](Extending-Existing-Entities.md) by adding new properties.
 
 **UserManager** is used to perform domain logic, **UserAppService** is
 used to perform application logic for users.
@@ -1023,7 +1023,7 @@ The difference is that Web.Mvc project has also MVC Controllers, Views,
 scripts and so on. If you just want to deploy API without UI, you can
 use Web.Host project. Otherwise, you can even delete it. We are using
 Web.Host project to provide server side API to [Angular
-SPA](Development-Guide-Angular.html).
+SPA](Development-Guide-Angular.md).
 
 A few notes on Web.Host project:
 

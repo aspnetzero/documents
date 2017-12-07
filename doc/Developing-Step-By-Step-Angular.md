@@ -9,7 +9,7 @@ configurable, testable... appliaction.
 
 We're creating and downloading the solution named
 "**Acme.PhoneBookDemo**" as described in [Getting
-Started](Getting-Started-Angular.html) document. Please follow the
+Started](Getting-Started-Angular.md) document. Please follow the
 getting started document, run the application, login as default tenant
 admin (select Default as tenancy name, use admin as username and 123qwe
 as password) and see the dashboard below:
@@ -86,7 +86,7 @@ enough to make a re-build to recycle the application.
 
 Angular has a powerful URL routing system. AspNet Zero has defined
 routes in a few places (for modularity, see [dev
-guide](Development-Guide-Angular.html)). We want to add phone book page
+guide](Development-Guide-Angular.md)). We want to add phone book page
 to the main module. So, open **src\\app\\main\\main-routing.module.ts**
 (in the client side) and add a new route just below to the dashboard:
 
@@ -1115,7 +1115,7 @@ We see that a **new permission** named "**Phone book**" added to
 **permissions** tab. So, we can check it and save the role. After
 saving, we need to **refresh** the whole page to refresh permissions for
 the current user. We could also grant this permission for a specific
-user (see [development guide document](Development-Guide.html) for
+user (see [development guide document](Development-Guide.md) for
 details about roles and users).
 
 Now, we can enter the Phone book page again.

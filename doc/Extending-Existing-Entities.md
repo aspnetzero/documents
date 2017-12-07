@@ -8,7 +8,7 @@ In AspNet Zero, **Tenant**, **User** and **Role** entities are
 differences between them. So, we seperated it into two sections.
 
 *Note: We assume that you created your project as described in the
-[Getting Started](Getting-Started.html) document.*
+[Getting Started](Getting-Started.md) document.*
 
 ### Extending Abstract Entities
 

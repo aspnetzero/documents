@@ -43,7 +43,7 @@ version.
 AspNet Zero solution includes a **.Migrator** (like
 Acme.PhoneBook.Migrator) project in the solution. You can run this tool
 for database migrations on development and production (see [development
-guide](Development-Guide-Mvc-Angularjs.html) for more information).
+guide](Development-Guide-Mvc-Angularjs.md) for more information).
 
 ##### Entity Framework Migration Command
 
@@ -98,5 +98,5 @@ as password to login as **host admin**.
 
 Your solution is up and working. See [<span
 class="text-primary">development
-guide</span>](Development-Guide-Mvc-Angularjs.html) document for more
+guide</span>](Development-Guide-Mvc-Angularjs.md) document for more
 information.

@@ -9,14 +9,14 @@ testable... application.
 
 We're creating and downloading the solution named
 "**Acme.PhoneBookDemo**" as described in [Getting
-Started](Getting-Started.html) document. After opening solution in
+Started](Getting-Started.md) document. After opening solution in
 Visual Studio, we see an NLayered solution that consists of eight
 projects:
 
 <img src="images/solution-overall-core-5.png" alt="Solution Overall" class="img-thumbnail" />
 
 Also, run database migrations, create the database and login to the
-application as described in [Getting Started](Getting-Started.html)
+application as described in [Getting Started](Getting-Started.md)
 document. After all completed and logged in to the application, we see a
 dashboard as shown below:
 
@@ -1087,7 +1087,7 @@ We see that a **new permission** named "**Phone book**" added to
 **permissions** tab. So, we can check it and save the role. After
 saving, we need to **refresh** the whole page to refresh permissions for
 the current user. We could also grant this permission for a specific
-user (see [development guide document](Development-Guide.html) for
+user (see [development guide document](Development-Guide.md) for
 details about roles and users).
 
 Now, we can enter the Phone book page again.

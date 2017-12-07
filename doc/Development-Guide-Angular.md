@@ -2,7 +2,7 @@
 
 #### About This Document
 
-In [Getting Started](Getting-Started.html) document, a new sample
+In [Getting Started](Getting-Started.md) document, a new sample
 project is created named "**Acme.PhoneBook**". This document is a guide
 while developing your project. We definitely suggest to read this
 document before starting to the development. Since ASP.NET Zero is built
@@ -17,7 +17,7 @@ understanding of concepts defined here.
 About Server Side
 
 This document is only for the **Angular** application. For **server
-side**, see [ASP.NET Core documentation](Development-Guide-Core.html)
+side**, see [ASP.NET Core documentation](Development-Guide-Core.md)
 too.
 
 #### Pre Requirements
@@ -28,7 +28,7 @@ Following tools are needed in order to use the solution:
 -   [Typescript 2.0+](https://www.typescriptlang.org/)
 -   [Yarn](https://yarnpkg.com/lang/en/)
 
-In addition, see [AspNet Core](Development-Guide-Core.html)
+In addition, see [AspNet Core](Development-Guide-Core.md)
 documentation for server side requirements and other server side
 features.
 
@@ -177,7 +177,7 @@ After changing password we are redirected to the **application**
 #### Social Logins
 
 Social logins can be enabled and configured from
-[backend](Development-Guide-Core.html). Once they are properly
+[backend](Development-Guide-Core.md). Once they are properly
 configured, they are automatically shown in the user interface.
 login/**login.service** implements client side logic for social logins.
 Note that currently only **Facebook** and **Google** authentication is
@@ -212,7 +212,7 @@ enters the code in the next page:
 This is available if user has a confirmed email address. Since email
 sending is disabled in debug mode, you can see the code in logs. In
 release mode, email will be sent (You can change this from [server
-side](Development-Guide-Core.html)).
+side](Development-Guide-Core.md)).
 
 ##### SMS Verification
 
@@ -220,7 +220,7 @@ This is available if user has a confirmed phone number. SMS sending is
 not implemented actually (because it requires an integration to an SMS
 vendor). Current implementation just writes security code to logs. You
 should complete **SmsSender** class in the [server
-side](Development-Guide-Core.html) to make it usable. Otherwise, disable
+side](Development-Guide-Core.md) to make it usable. Otherwise, disable
 SMS verification in the settings.
 
 #### User Lockout
@@ -241,7 +241,7 @@ form is shown:
 recaptcha service. Recaptcha service works per domain. So, to make it
 properly work, you should create your own private and public keys for
 your domain on <https://www.google.com/recaptcha> and replace keys in
-**appsettings.json** file in the [server side](Development-Guide-Core.html) and in the **appconfig.json** in the
+**appsettings.json** file in the [server side](Development-Guide-Core.md) and in the **appconfig.json** in the
 client side.
 
 #### Email Activation
@@ -344,7 +344,7 @@ then tenants page is shown:
 <img src="images/tenant-management-core-3.png" alt="Tenant management page" class="img-thumbnail" />
 
 A tenant is represented by **Tenant** class. Tenant class [can be
-extended](Extending-Existing-Entities.html) by adding new properties.
+extended](Extending-Existing-Entities.md) by adding new properties.
 There is an only one tenant, named **Default** as initial. **Tenancy
 Name** (code name, which can be used as subdomain) is the **unique**
 name of a tenant. A tenant can be **active** or **passive**. If it's
@@ -446,7 +446,7 @@ Roles are used to **group permissions**. When a user has a role, then
 they will have all permissions of that role.
 
 A role is represented by the **Role** class. Role class [can be
-extended](Extending-Existing-Entities.html) by adding new properties.
+extended](Extending-Existing-Entities.md) by adding new properties.
 
 Roles can be dynamic or static:
 
@@ -468,7 +468,7 @@ multi-tenant apps). Also, we have static **admin** and **user** roles
 for tenants. **Admin** roles have all permissions granted by default.
 **User** role is the **default** role for new users and has no
 permission by default. These can be changed easily in the [server
-side](Development-Guide-Core.html).
+side](Development-Guide-Core.md).
 
 ##### Role Permissions
 
@@ -663,7 +663,7 @@ complexity settings defined by host user.
 LDAP (Active Directory) Authentication is disabled by default. To make
 it work, we should **disable multi-tenancy** since LDAP auth is not used
 in a multi-tenant system normally. See [server
-side](Development-Guide-Core.html) to enable LDAP. Once we enable, we
+side](Development-Guide-Core.md) to enable LDAP. Once we enable, we
 can see **LDAP settings** section in the settings page:
 
 <img src="images/tenant-settings-ldap-1.png" alt="LDAP Settings" class="img-thumbnail" />
@@ -735,7 +735,7 @@ receiving notifications. If this setting is enabled, then user can
 enable/disable each notification individually.
 
 You can also define your custom notifications in the [server
-side](Development-Guide-Core.html). See [notifications
+side](Development-Guide-Core.md). See [notifications
 documentation](https://aspnetboilerplate.com/Pages/Documents/Notification-System)
 for detailed information.
 
@@ -916,7 +916,7 @@ ASP.NET Zero **User Interface** is completely localized. AspNet Zero
 uses **dynamic, database based, per-tenant** localization.
 
 XML files are used as base translation for desired languages (defined in
-the [server side](Development-Guide-Core.html)):
+the [server side](Development-Guide-Core.md)):
 
 <img src="images/localization-files-core-1.png" alt="Localization XML files" class="img-thumbnail" />
 
@@ -928,7 +928,7 @@ When you are adding a new localizable text, add it to the XML file of
 the default language then use in your application (Also, add translated
 values to corresponding XML files). No need to add it to database
 migration code since value in the XML file will be used as default. See
-[server side](Development-Guide-Core.html) documentation for more.
+[server side](Development-Guide-Core.md) documentation for more.
 
 See
 [localization](https://aspnetboilerplate.com/Pages/Documents/Localization)
@@ -949,7 +949,7 @@ appropriate message is shown to the user.
 You can inject and use PermissionCheckerService to check user
 permissions. It's pre injected for AppComponentBase (permission field)
 and also you can use shortcut isGranted function. Permissions are
-defined in [server side](Development-Guide-Core.html). See authorization
+defined in [server side](Development-Guide-Core.md). See authorization
 [documentation](https://aspnetboilerplate.com/Pages/Documents/Authorization)
 for more.
 
@@ -957,7 +957,7 @@ for more.
 
 You can inject and use FeatureCheckerService to check tenant features.
 It's pre injected for AppComponentBase (feature field). Features are
-defined in [server side](Development-Guide-Core.html). See feature
+defined in [server side](Development-Guide-Core.md). See feature
 management
 [documentation](https://aspnetboilerplate.com/Pages/Documents/Feature-Management)
 for more.
@@ -966,7 +966,7 @@ for more.
 
 You can inject and use SettingService to check settings. It's pre
 injected for AppComponentBase (setting field). Settings are defined in
-[server side](Development-Guide-Core.html). See setting management
+[server side](Development-Guide-Core.md). See setting management
 [documentation](https://aspnetboilerplate.com/Pages/Documents/Setting-Management)
 for more.
 
@@ -993,7 +993,7 @@ disabled if you select .net core as your base framework.
 ### Token Based Authentication
 
 AspNet Zero Angular UI uses the [server
-side](Development-Guide-Core.html) via token based authentication. Any
+side](Development-Guide-Core.md) via token based authentication. Any
 application can authenticate and use any functionality in the
 application as API. For instance, you can create a mobile application
 consumes the same API. In this section, we'll demonstrate usage of the
@@ -1042,7 +1042,7 @@ Returning JSON contains the list of users.
 [Swagger UI](http://swagger.io/swagger-ui/) is **integrated** to ASP.NET
 Zero **by default**. You can browse **swagger ui** from
 http://localhost:22742**/swagger/ui/** URL. Notice that this is [server
-side](Development-Guide-Core.html) URL of the application. In this page
+side](Development-Guide-Core.md) URL of the application. In this page
 (which is the default page of server side API application) you can see
 all available API:
 

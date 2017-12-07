@@ -20,6 +20,6 @@ Notes:
 
 -    Major features are only being developed for ASP.NET Core + jQuery
     and ASP.NET Core + Angular versions beginning from v4.1. See
-    [version comparison table](Version-Differences.html) for more.
+    [version comparison table](Version-Differences.md) for more.
 -   The items on road map are subject to change based on customer
     feedbacks and our internal decisions.
