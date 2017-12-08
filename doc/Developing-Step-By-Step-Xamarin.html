@@ -1,0 +1,1285 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
+<title>Developing an Application Step By Step</title>
+<style type="text/css">
+.auto-style1 {
+	background-color: #F5F5F5;
+}
+</style>
+</head>
+
+<body>
+
+<h3>Introduction</h3>
+
+<p>In this document, we will create a sample <strong>Xamarin phonebook application</strong> 
+step by step integrated with ASP.NET Zero website. Be aware that only ASP.NET Core version 
+is supported.</p>
+ 
+
+<h3>Downloading Phonebook-Core Sample</h3>
+<p>In the <a href="Developing-Step-By-Step-Core.html">Developing Step By Step 
+Phonebook documentation</a> we&#39;ve already completed how to create a phonebook on 
+server side and web client. To resume this project, download the solution
+<strong>
+<a href="https://github.com/aspnetzero/aspnet-zero-samples/tree/master/PhoneBook-Core">Acme.PhoneBookDemo</a> </strong>
+and open the <b>Acme.PhoneBookDemo.Mobile.sln</b> file.</p>
+<p>&nbsp; </p>
+<h3>Configuring Host Address</h3>
+<img class="img-thumbnail" alt="Configuring Host Address" src="images/xamarin-phonebook-my-local-ip.png" />
+<p>&nbsp;</p>
+<p>If you are using an emulator you can use the <strong>emulator's loopback address</strong> to reach your local computer. Eg: for Android emulator, it's <strong>10.0.2.2</strong></p>
+<img class="img-thumbnail" alt="Configuring Host Address for Android Emulator" src="images/xamarin-phonebook-android-emulator-ip.png" /> 
+
+
+
+<h3>Creating Phonebook Application Service Proxy</h3>
+<p>To consume server Api methods we need to implement the <b>IPersonAppService</b> 
+application service over http transmission. Create a new folder called <b>PhoneBook</b> in <b>
+Acme.PhoneBookDemo.Application.Client</b> project.</p>
+<p>Then create a new class called <b>ProxyPersonAppService </b>in the <b>
+PhoneBook </b>folder. Derive ProxyPersonAppService from <b>ProxyAppServiceBase</b>,
+<b>IPersonAppService</b> base. Visual Studio will help us to add all 
+unimplemented methods from IPersonAppService at once.</p>
+<p>Add <b>async</b> keyword to all methods to be able to benefit multi-tasking.</p>
+<p>
+<img class="img-thumbnail" alt="Creating Person App Service Client" src="images/xamarin-phonebook-person-app-service-client.png" /></p>
+<p>&nbsp;</p>
+<h4>Implementing App Service Methods</h4>
+<p>In the ProxyAppServiceBase class you&#39;ll see <i>ApiClient</i> which is being used to 
+call host web Api methods. We&#39;ll use <i>ApiClient</i> to transfer data with 
+host.</p>
+<h5>ApiClient has <b>post, put, get, delete </b>http methods. To decide which 
+needs to be called for the corresponding method you can read
+<a href="https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers">
+Asp.Net Boilerplate Application Services as Controllers</a></h5>
+<p>To summarize that document; Asp.Net Boilerplate framework uses <strong>
+ConventionalHttpVerbs </strong>by default.<strong> </strong>This means there&#39;s a naming 
+convention while implementing app service methods. </p>
+
+
+<div class="bs-callout bs-callout-info">
+	<strong><i class="fa fa-info-circle"></i> About Naming Convention</strong>
+	<div>When method name starts with;</div>
+	<ul>
+		<li><b>Get</b> =&gt; ApiClient.GetAsync&lt;T&gt;(...);</li>
+		<li><b>Put or Update</b> =&gt; ApiClient.PutAsync&lt;T&gt;(...);</li>
+		<li><b>Delete or Remove</b> =&gt; ApiClient.DeleteAsync&lt;T&gt;(...);</li>
+		<li><b>Post, Create or Insert </b>=&gt; ApiClient.PostAync&lt;T&gt;();</li>
+		<li><b>If none of the above</b> =&gt; Post is used as default.</li>
+	</ul>
+</div>
+  
+<p>Based on the above information we will implement the methods.The first method is <b>GetPeople</b>, it starts with <b>Get</b> prefix, so we have to use <i>ApiClient.GetAsync(...)</i> method.</p>
+<p><b>GetEndPoint(...)</b> adds the method name as a segment for the target host 
+web Api url. You have to pass the name of the application service method to <b>GetEndPoint(...)</b></p>
+<pre lang="cs">
+public async Task&lt;ListResultDto&lt;PersonListDto&gt;&gt; GetPeople(GetPeopleInput input)
+{
+    return await ApiClient.GetAsync&lt;ListResultDto&lt;PersonListDto&gt;&gt;(GetEndpoint(nameof(GetPeople)), input);
+}</pre>
+<p>Do the same for other methods.<span id="result_box" class="short_text" lang="en">The final view 
+of <b>ProxyPersonAppService</b> class should be like this;</span></p>
+<pre lang="cs">public class ProxyPersonAppService : ProxyAppServiceBase, IPersonAppService
+{
+    public async Task&lt;ListResultDto&lt;PersonListDto&gt;&gt; GetPeople(GetPeopleInput input)
+    {
+        return await ApiClient.GetAsync&lt;ListResultDto&lt;PersonListDto&gt;&gt;(GetEndpoint(nameof(GetPeople)), input);
+    }
+
+    public async Task CreatePerson(CreatePersonInput input)
+    {
+        await ApiClient.PostAync(GetEndpoint(nameof(CreatePerson)), input);
+    }
+
+    public async Task DeletePerson(EntityDto input)
+    {
+        await ApiClient.DeleteAsync(GetEndpoint(nameof(DeletePerson)), input);
+    }
+
+    public async Task DeletePhone(EntityDto&lt;long&gt; input)
+    {
+        await ApiClient.DeleteAsync(GetEndpoint(nameof(DeletePhone)), input);
+    }
+
+    public async Task&lt;PhoneInPersonListDto&gt; AddPhone(AddPhoneInput input)
+    {
+        return await ApiClient.PostAync&lt;PhoneInPersonListDto&gt;(GetEndpoint(nameof(AddPhone)), input);
+    }
+
+    public async Task EditPerson(EditPersonInput input)
+    {
+        await ApiClient.PostAync(GetEndpoint(nameof(EditPerson)), input);
+    }
+
+    public async Task&lt;GetPersonForEditOutput&gt; GetPersonForEdit(IEntityDto input)
+    {
+        return await ApiClient.GetAsync&lt;GetPersonForEditOutput&gt;(GetEndpoint(nameof(GetPersonForEdit)), input);
+    }
+}
+</pre>
+<p>When we complete the communication phase with the host service we can start to 
+create person and person detail view for mobile. </p>
+<p>Note that &quot;<b>Page</b>&quot; and &quot;<b>View</b>&quot; words are used 
+for same meaning and purposed for pointing <b>XAML</b> files. </p>
+<p>Firstly we&#39;ll create view, then view-model. But it&#39;s up to you which of the 
+side you start. Let&#39;s create <b>PeopleView.xaml</b>...</p>
+<h3>Creating People Page</h3>
+<h4>Creating PeopleView</h4>
+
+<p>PeopleView is going to list all the persons. When we tap one of the person 
+we&#39;ll navigate to person details. The person details page will contain 
+personal information and phone numbers of person.<br>
+In <b>Acme.PhoneBookDemo.Mobile.Shared </b>project, there&#39;s <b>Views</b> 
+folder. All the pages must be located in <b>Views</b> folder.<br>
+You can create a new empty <b>Content Page </b>as below but in this example we&#39;ll 
+copy and paste 
+<b>_SampleView.xaml</b> file.</p>
+
+<img class="img-thumbnail" alt="Adding New Content Page" src="images/xamarin-phonebook-add-contentpage.png"/>
+
+<p>&nbsp;</p>
+<p>Copy and paste <b>_SampleView.xaml</b> into the same 
+folder. We&#39;ll rename the file. All the views <u>must</u> end with<b> &quot;<u>View</u>&quot;</b> postfix. This is 
+mandatory for auto matching related view model. So rename <b>_SampleView - 
+Copy.xaml</b> to&nbsp; <b>PeopleView.xaml.</b></p>
+<p>After copy/paste you have to rename the followings for PeopleView.xaml as 
+well</p>
+<ul>
+	<li><b>The class name in xaml:</b>&nbsp; x:Class=&quot;Acme.PhoneBookDemo.Views._SampleView&quot; <b>
+	<font size="4" color="#808080">»</font></b> 
+	x:Class=&quot;Acme.PhoneBookDemo.Views.PeopleView&quot;</li>
+	<li><b>The class name in xaml.cs:</b> public partial class _SampleView <b><font size="4" color="#808080">»</font></b> 
+	public partial class PeopleView</li>
+	<li><b>The constructor of xaml.cs:</b> public _SampleView() <b><font size="4" color="#808080">»</font></b> 
+	public PeopleView() </li>
+</ul><p>
+<img class="img-thumbnail" alt="Creating Person App Service Client" src="images/xamarin-phonebook-copy-paste-sample-view-to-people-view.png"/></p>
+<p>
+We have created an empty view. To control this view we have to create view-model 
+for this view. Next step is creating view-model of PeopleView.xaml</p>
+<h4>Creating PeopleViewModel</h4>
+<p>Asp.Net Zero Xamarin app uses 
+<a href="https://developer.xamarin.com/guides/xamarin-forms/enterprise-application-patterns/mvvm/">MVVM</a> 
+pattern. So each view should have a view-model. According to 
+conventional view-model binding, view-model file names <u>must</u> end with <b>
+&quot;<u>ViewModel</u>&quot;</b> postfix. </p>
+<p>So the view-model name for <i>PeopleView</i> must be <b>PeopleViewModel</b>. All view 
+models <u>must</u> be located in <b>ViewModels</b> folder.</p>
+<p>You can create a new class called <b>PeopleViewModel</b> in <b>ViewModels</b> folder. 
+But as we did for the view we&#39;ll use the empy template view-model called <b>_SampleViewModel.cs.</b></p>
+<p>Copy and paste <b>_SampleViewModel.cs</b> and rename the followings;</p>
+<ul>
+	<li><b>The view-model filename:</b> _SampleViewModel - Copy.cs <b><font size="4" color="#808080">»</font></b> 
+	PeopleViewModel.cs</li>
+	<li><b>The constructor of view-model:</b> public class _SampleViewModel : XamarinViewModel <b><font size="4" color="#808080">»</font></b> 
+	public class PeopleViewModel : XamarinViewModel</li>
+</ul>
+<p>Thus far we have implemented the proxy class for <i>PersonAppService</i>, created
+<i>People</i> view 
+and create view-model <i>PeopleViewModel</i>.</p>
+<p>To be able to see the new view in the app, there&#39;s one more thing to do... Adding this page 
+to the navigation menu.</p>
+<h4>Adding People Page to Navigation Menu</h4>
+<p>To add a new menu item, open <b>MenuProvider</b> class in <b>
+Acme.PhoneBookDemo.Mobile.Shared </b>project. The navigation menu items are 
+stored in a 
+<a href="https://developer.xamarin.com/api/type/System.Collections.ObjectModel.ObservableCollection`1/">ObservableRangeCollection</a>. 
+This is for notifying view whenever an item changes in the collection.</p>
+<p>Add the new <i>NavigationMenuItem</i> in the list like below;</p>
+<pre lang="cs">
+public class MenuProvider : ISingletonDependency, IMenuProvider
+{
+	private readonly ObservableRangeCollection&lt;NavigationMenuItem&gt; _menuItems = new ObservableRangeCollection&lt;NavigationMenuItem&gt;
+	{
+		new NavigationMenuItem
+		{
+			Title = L.Localize(&quot;Tenants&quot;),
+			Icon = &quot;Tenants.png&quot;,
+			ViewType = typeof(TenantsView),
+			RequiredPermissionName = PermissionKey.Tenants,
+		},
+		new NavigationMenuItem
+		{
+			Title = L.Localize(&quot;Users&quot;),
+			Icon = &quot;UserList.png&quot;,
+			ViewType = typeof(UsersView),
+			RequiredPermissionName = PermissionKey.Users,
+		},
+<span style="background-color: #FFFF00">		new NavigationMenuItem
+		{
+			Title = L.Localize(&quot;PhoneBook&quot;),
+			Icon = &quot;ic_contact_phone_black_24dp.png&quot;,
+			ViewType = typeof(PeopleView),
+			RequiredPermissionName = PermissionKey.Phonebook
+		}</span>
+		...
+ };
+
+</pre> 
+<p>Let&#39;s set the properties of the new <i>NavigationMenuItem</i>;</p>
+
+<ol>
+	<li><strong>Title:</strong> It&#39;s already localized in the <a href="Developing-Step-By-Step-Core.html">Developing Step By Step Phonebook documentation</a>. We just set localization key with<i> </i>this shortcut:<b><i> </i>L.Localize(&quot;PhoneBook&quot;).</b> 
+	And it localizes menu text.</li>
+		<li><strong>Icon:</strong> Download a related png icon file. For this example go to <a href="https://material.io/icons/#ic_contact_phone">
+		https://material.io/icons/#ic_contact_phone</a> and download PNGS. Then 
+		extract the download zip file. <br/>
+		You can use<i> 
+		ic_contact_phone_black_24dp\android\drawable-xxhdpi\ic_contact_phone_black_24dp.png</i> 
+		as the icon.<br/>
+		Copy and paste the file into <b>UI\Assets\Images </b>folder in the <b>
+		Acme.PhoneBookDemo.Mobile.Shared</b> project. <br/>
+		Right click the png file and go to properties. In the <b>
+		Advanced<span style="font-weight: 400"> </span></b>section set <b>Build 
+		Action</b> as <u> <b>Embedded resource</b></u>.<br/>
+ 	This is mandatory! This will help to share the icon file across platforms.<br/>
+		Now set Icon property of <i>NavigationMenuItem</i> to <b>&quot;ic_contact_phone_black_24dp.png&quot;</b><br/>
+  <img class="img-thumbnail" alt="Add PhoneBook Menu Item to Menu" src="images/xamarin-phonebook-set-menu-icon-as-embedded-resource.png"/>
+		
+		</li>
+</ol>
+
+
+
+<ol>
+	<li><strong>ViewType:</strong> Must be the class name of the view in the 
+	<b>View</b> folder. The view name is <i>PeopleView</i> let&#39;s set view type to <b>
+	typeof(PeopleView).</b></li>
+	<li><strong>RequiredPermissioName:</strong> A permission key has to be 
+	assigned to be able to show/hide the new 
+	menu according to the user&#39;s permission. In the previous document it&#39;s already 
+	declared in &quot;<a href="https://www.aspnetzero.com/Documents/Developing-Step-By-Step-Core#define-the-permission">Define 
+	the permission</a>&quot; section as &quot;<b>Pages.Tenant.PhoneBook</b>&quot;. We need 
+	to use the same string for permission key. So what you have to do is add the 
+	below line to <b>PermissionKey</b> class like below<br>
+	 <pre lang="cs">public const string Phonebook = "Pages.Tenant.PhoneBook";</pre>
+	 <br/>
+	</li>	
+	<img class="img-thumbnail" alt="Adding PhoneBook Permission" src="images/xamarin-phonebook-add-permission-key.png"/>	
+</ol>
+<p>&nbsp;</p>
+<p>Let&#39;s run the application to see the new menu item. In 
+this example we&#39;ll use Android platform to test the sample. Hence set the 
+startup project to <b>
+Acme.PhoneBookDemo.Mobile.Droid</b>.</p>
+<p>If you&#39;ve already started Android emulator, you can directly run the project. 
+But if you&#39;ve not started the emulator yet, it&#39;s adviced to you to start the emulator first 
+from the Visual Studio Toolbar like shown below... The reason of initializing emulator 
+is; sometimes Visual Studio cannot make initial connection to the emulator 
+for the first run. So it&#39;s better to run it and wait until it starts up 
+successfully. When you see the emulator home screen, you can run the project 
+(F5).</p>
+ 
+<img class="img-thumbnail" alt="Adding PhoneBook Permission" src="images/xamarin-phonebook-start-emulator.png"/>	
+
+<p>You will see a splash screen while initializing. After that you&#39;ll see the 
+app login 
+page. The PhoneBook is defined on tenant side. You have to switch to a tenant to see the PhoneBook menu 
+item. On the right 
+top of the screen there&#39;s a toolbar button called <b>Change Tenant</b>. Tab that 
+button and enter <b>default </b>into the textbox. If the tenant <b>
+default</b>&nbsp;is available you will see <b>&quot;Current 
+Tenant: default&quot;</b> label. If the tenant is not active or does not exist then 
+you&#39;ll get an alert about that.</p>
+ 
+<img class="img-thumbnail" alt="Adding PhoneBook Permission" src="images/xamarin-phonebook-android-emulator-login-screen.png"/>
+
+<p>Enter your credentials and tab <b>Log In</b> button. If you see an alert says 
+&quot;<i>You must change your password before logging on!</i>&quot;&nbsp; you need to 
+login and change your password for the first time on the website. (Currently Xamarin app 
+doesn&#39;t have password change screen and will be added in the next releases.)</p>
+<p>When you successfully login, you can see the below screen with new <b>Phone 
+book</b> menu item.</p>
+
+<img class="img-thumbnail" alt="Adding PhoneBook Permission" src="images/xamarin-phonebook-empty-phonebook.png"/>
+
+<p>Up to here we successfully added an empty People page. Let&#39;s populate the view with data...</p>
+<h4>Populating People View with Data</h4>
+<p>The first function is listing people in PeopleView. To list repeating items 
+we use
+<a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/">ListView</a>. Open 
+<b>PeopleView.xaml</b> and set title of the view;</p>
+ 
+	 
+	<h5>Setting Page Title</h5>
+	<p>Add title tag and namespace into <b>ContentPage</b> tag like below;<br/></p>
+	<pre>&lt;ContentPage
+ ...
+<span style="background-color: #FFFF00"> xmlns:extensions=&quot;clr-namespace:Acme.PhoneBookDemo.Extensions.MarkupExtensions;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+ Title=&quot;{extensions:Translate PhoneBook}&quot;</span>
+ ...&gt;</pre> 
+ 
+
+<h5>Adding ListView Item</h5>
+<p>There&#39;s a placeholder label in <b>&lt;ContentPage.Content&gt;</b> tag. Remove that Label from and add the below ListView definition in <b>
+ContentPage.Content</b> tags. In the below code; we populate the listview with 
+<b>Persons</b> data.
+So in the view-model we need a public property <b>Persons.&nbsp; Persons </b>
+property must be IEnumarable and contain <b>
+FullName</b> and <b>EmailAddress</b> string properties. All properties that will 
+be binded to view must be public.
+<a href="https://developer.xamarin.com/api/property/Xamarin.Forms.ListView.HasUnevenRows/">
+HasUnevenRows</a> property automatically sizes list view rows for content. The 
+main reason we 
+used <b>TextCell</b> in DataTemplate is performance. Xamarin docs say <b>
+<a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/performance/#Improving_ListView_Performance">
+<span style="font-weight: 400">Use 
+the built-in cells (like TextCell / SwitchCell ) instead of ViewCell whenever 
+you can</span></a>.</b></p>
+<pre lang="cs">
+&lt;ContentPage.Content&gt;   
+<span style="background-color: #FFFF00">&lt;ListView HasUnevenRows=&quot;True&quot;
+	 SeparatorVisibility=&quot;None&quot;
+	 ItemsSource=&quot;{Binding Persons}&quot;
+	 SelectedItem=&quot;{Binding SelectedPerson, Mode=TwoWay}&quot;&gt;
+	&lt;ListView.ItemTemplate&gt;
+		&lt;DataTemplate&gt;
+			&lt;TextCell Text=&quot;{Binding FullName}&quot;  Detail=&quot;{Binding EmailAddress}&quot; /&gt;
+		&lt;/DataTemplate&gt;
+	&lt;/ListView.ItemTemplate&gt;
+&lt;/ListView&gt;</span>
+&lt;/ContentPage.Content&gt;
+</pre>
+<p>Persons data needs to be binded in appearing event of page. To achieve this we 
+add a behavior to the page. Add append the below code into the ContentPage tag in 
+<b>PeopeView.xaml</b>. This behaviour will execute <b>PageAppearingCommand</b> in view-model. 
+PageAppearingCommand will fetch data from server. For the best user experience 
+and smooth navigation it&#39;s better to start long lasting operations after you 
+show the view. Never wait the main. Do not run blocking procedures in 
+constructor.</p>
+<pre lang="cs">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage ...
+    <span style="background-color: #FFFF00">xmlns:behaviors="clr-namespace:Acme.PhoneBookDemo.Behaviors;assembly=Acme.PhoneBookDemo.Mobile.Shared"</span>
+ ...&gt;
+
+    &lt;ContentPage.Content&gt;
+       &lt;ListView HasUnevenRows=&quot;True&quot;
+	 SeparatorVisibility=&quot;None&quot;
+	 ItemsSource=&quot;{Binding Persons}&quot;
+	 SelectedItem=&quot;{Binding SelectedPerson, Mode=TwoWay}&quot;&gt;
+	&lt;ListView.ItemTemplate&gt;
+		&lt;DataTemplate&gt;
+			&lt;TextCell Text=&quot;{Binding FullName}&quot;  Detail=&quot;{Binding EmailAddress}&quot; /&gt;
+		&lt;/DataTemplate&gt;
+	&lt;/ListView.ItemTemplate&gt;
+       &lt;/ListView&gt;      
+    &lt;/ContentPage.Content&gt;
+
+<span style="background-color: #FFFF00">    &lt;ContentPage.Behaviors&gt;
+        &lt;behaviors:EventHandlerBehavior EventName=&quot;Appearing&quot;&gt;
+            &lt;behaviors:InvokeCommandAction Command=&quot;{Binding PageAppearingCommand}&quot; /&gt;
+        &lt;/behaviors:EventHandlerBehavior&gt;
+    &lt;/ContentPage.Behaviors&gt;</span>
+
+&lt;/ContentPage&gt;</pre>
+ 
+<p>The final look of <b>PeopleView.xaml</b> is like below;</p>
+<pre lang="cs">
+&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             x:Name=&quot;PeoplePage&quot;
+             xmlns:base=&quot;clr-namespace:Acme.PhoneBookDemo.ViewModels.Base;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             xmlns:behaviors=&quot;clr-namespace:Acme.PhoneBookDeehaviors;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             xmlns:extensions=&quot;clr-namespace:Acme.PhoneBookDemo.Extensions.MarkupExtensions;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             x:Class=&quot;Acme.PhoneBookDemo.Views.PeopleView&quot;
+             Title=&quot;{extensions:Translate PhoneBook}&quot;
+             base:ViewManager.AutoWireViewModel=&quot;true&quot;&gt;
+
+    &lt;ContentPage.Content&gt;
+        &lt;StackLayout&gt;
+            &lt;ListView HasUnevenRows=&quot;True&quot;
+                      SeparatorVisibility=&quot;None&quot;
+                      ItemsSource=&quot;{Binding Persons}&quot;
+                      SelectedItem=&quot;{Binding SelectedPerson, Mode=TwoWay}&quot;&gt;
+                &lt;ListView.ItemTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;TextCell Text=&quot;{Binding FullName}&quot;  Detail=&quot;{Binding EmailAddress}&quot; /&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/ListView.ItemTemplate&gt;
+            &lt;/ListView&gt;
+        &lt;/StackLayout&gt;
+    &lt;/ContentPage.Content&gt;
+
+    &lt;ContentPage.Behaviors&gt;
+        &lt;behaviors:EventHandlerBehavior EventName=&quot;Appearing&quot;&gt;
+            &lt;behaviors:InvokeCommandAction Command=&quot;{Binding PageAppearingCommand}&quot; /&gt;
+        &lt;/behaviors:EventHandlerBehavior&gt;
+    &lt;/ContentPage.Behaviors&gt;
+
+&lt;/ContentPage&gt;
+</pre>
+<h5>Creating People View Model</h5>
+
+<p>In the <b>PeopleView</b> we have used Persons as items source of ListView. So <b>PeopleViewModel</b> class needs to have a property 
+called <b>Persons</b> and a command called <b>PageAppearingCommand</b>. </p>
+
+
+<p>The <b>ProxyPersonAppService GetPeople </b>method returns <b>
+ListResultDto&lt;PersonListDto&gt;.</b> It is not conveniant to directly use the DTO 
+object from server. The main reason is DTO doesn&#39;t implement <b>
+INotifyPropertyChanged</b> interface. To overcome this issue, we create a new 
+mapping class. This mapping class is used to name as Model. Additional advantage of this model class is, 
+you can add extra properties to use in your view. Forexample you can add 
+FullName that combines name and surname. This increases app performance by 
+rendering less elements. So let&#39;s define the <b>
+PersonListModel</b> class. Create a new folder called <b>Models </b>in <b>
+Acme.PhoneBookDemo.Mobile.Shared</b> project. Add a a new class <b>
+PersonListModel.cs</b> into <b>Models</b> folder.&nbsp; Not to add all properties from the <b>
+PersonListDto</b> class, inherit the model class from <b>
+PersonListDto</b> . We need a full name in view, that&#39;s why 
+add a new property called <b>FullName</b> that joins <i>Name</i> and <i>
+Surname</i>. Additionally add a <b>[AutoMapFrom(typeof(PersonListDto))]</b> attribute to map <i>
+PersonListDto</i> to <i>PersonListModel</i>. Then add <b>Phones</b> property 
+with type <b>ObservableRangeCollection&lt;PhoneInPersonListDto&gt;. </b>As there&#39;s 
+Phones property in PersonListDto add <b>new </b>keyword to the property. The 
+complete definition of <b>PersonListModel</b> 
+is like below;</p>
+<pre lang="cs">
+[AutoMapFrom(typeof(PersonListDto))]
+public class PersonListModel : PersonListDto, INotifyPropertyChanged
+{
+	public string FullName =&gt; Name + &quot; &quot; + Surname;
+
+	public new ObservableRangeCollection&lt;PhoneInPersonListDto&gt; Phones { get; set; }
+
+	public event PropertyChangedEventHandler PropertyChanged;
+
+	[NotifyPropertyChangedInvocator]
+	protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+</pre>
+<h5>Listing People</h5>
+<p>Open <b>PeopleViewModel</b> class. We&#39;ll retrieve data from <b>ProxyPersonAppService</b>. The base class of 
+ProxyPersonAppService is <b>IPersonAppService</b>. We use constructor injection to 
+resolve <b>IPersonAppService</b>. Create a new async method called <b>FetchDataAsync</b> with 
+<i>FilterText</i> parameter. Later we&#39;ll use <i>FilterText</i> for searching people. Try to add postfix 
+<i>Async</i> to async method names. To show an indicator while we are retrieving data from server, there&#39;s a method in view-model&#39;s base class called
+<b>SetBusyAsync</b>. You can wrap your method with <b>SetBusyAsync</b> to show an 
+indicator that a 
+background job is going on.You can create an async commands by using <b>HttpRequestCommand.Create()</b>. This is a shortcut 
+extension to create an async command. The final look of <b>PeopleViewModel.cs</b> is like below;</p>
+<pre class="cs">public class PeopleViewModel : XamarinViewModel
+{
+    public ICommand PageAppearingCommand =&gt; HttpRequestCommand.Create(PageAppearingAsync);
+    private readonly IPersonAppService _personAppService;
+    private ObservableRangeCollection&lt;PersonListModel&gt; _persons = new ObservableRangeCollection&lt;PersonListModel&gt;();
+    
+    public PeopleViewModel(IPersonAppService personAppService)
+    {
+        _personAppService = personAppService;
+    }
+
+    public ObservableRangeCollection&lt;PersonListModel&gt; Persons
+    {
+        get =&gt; _persons;
+        set
+        {
+            _persons = value;
+            RaisePropertyChanged(() =&gt; Persons);
+        }
+    }
+
+    public async Task PageAppearingAsync()
+    {
+        await FetchDataAsync(FilterText);
+    }
+
+    public async Task FetchDataAsync(string filterText = null)
+    {
+        await SetBusyAsync(async () =&gt;
+        {
+            var result = await _personAppService.GetPeople(new GetPeopleInput
+            {
+                Filter = filterText
+            });
+            
+	   var personListModels = ObjectMapper.Map&lt;IEnumerable&lt;PersonListModel&gt;&gt;(result.Items);
+            Persons.ReplaceRange(personListModels);
+        });
+    }
+} 
+</pre>
+<p>When you run the app, you&#39;ll see the below screen. <font color="#808080">
+(You may see no data if you&#39;ve not inserted data in database. The listed data is 
+already inserted to database.)</font></p>
+<img class="img-thumbnail" alt="People Page With Populated Data" src="images/xamarin-phonebook-people-view-populated-data.png"/>
+<h5>Searching People</h5>
+<p>To search and filter people we&#39;ll use
+<a href="https://developer.xamarin.com/api/type/Xamarin.Forms.SearchBar/">
+SearchBar</a> which is Xamarin built-in control that provides a search textbox. Open <b>PeopleView.xaml </b>
+and&nbsp;add the <b>SearchBar</b> before the ListView control.
+We&#39;ll 
+bind <b>FilterText</b> property to the SearchBar. If <b>FilterText</b> changes it&#39;ll start 
+to filter from server.</p>
+<pre lang="cs">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage  ...&gt;
+ ...
+    &lt;ContentPage.Content&gt;
+        &lt;StackLayout&gt;
+            <span style="background-color: #FFFF00">&lt;SearchBar Text=&quot;{Binding FilterText}&quot; Placeholder=&quot;{extensions:Translate SearchWithThreeDot}&quot;/&gt;</span>
+            &lt;ListView HasUnevenRows=&quot;True&quot; 
+                      ItemsSource=&quot;{Binding Persons}&quot;
+                      SelectedItem=&quot;{Binding SelectedPerson, Mode=TwoWay}&quot;&gt;
+                &lt;ListView.ItemTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;TextCell Text=&quot;{Binding FullName}&quot;  Detail=&quot;{Binding EmailAddress}&quot; /&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/ListView.ItemTemplate&gt;
+            &lt;/ListView&gt;
+        &lt;/StackLayout&gt;
+    &lt;/ContentPage.Content&gt;
+...
+&lt;/ContentPage&gt;
+</pre>
+
+<p>Now open <b>PeopleViewModel.cs </b>and add the below code... In setter of 
+<b>FilterText</b> property, we execute <b>SearchWithDelayAsync()</b> method. As we cannot run 
+async method in property setter, we use <b>AsyncRunner</b> to make it sync. In 
+<b>SearchWithDelayAsync</b> method, Task.Delay is used for waiting user for new 
+key press. If user changes the filter text within the delay duration then 
+fetching will stop for new key press. We&#39;ve specified the delay in <b>
+PageDefaults.SearchDelayMilliseconds</b> as 1 second. If no new keypress in 1 
+second, it&#39;ll start to search.</p>
+<pre lang="cs">
+private string _filterText;
+ 
+public string FilterText
+{
+	get => _filterText;
+	set
+	{
+		_filterText = value;
+		AsyncRunner.Run(SearchWithDelayAsync(_filterText));
+	}
+}
+
+private async Task SearchWithDelayAsync(string filterText)
+{
+	if (!string.IsNullOrEmpty(filterText))
+	{
+		await Task.Delay(PageDefaults.SearchDelayMilliseconds);
+		if (filterText != _filterText)
+		{
+			return;
+		}
+	}
+
+	await FetchDataAsync(filterText);
+}
+</pre>
+<p>Final look of the filtered list view is like below;</p>
+<img class="img-thumbnail" alt="Search People" src="images/xamarin-phonebook-search-people.png"/>
+
+ 
+ 
+<p>&nbsp;</p>
+<h3>Creating Person Details Page</h3>
+<p>Person details page will show personal information and phone numbers of 
+selected person. We will be editing personal information, adding and removing phone numbers 
+of the person. Also we&#39;ll use the same page for creating new person and 
+deleting existing person.To be able to navigate to this page, user will tap on a person in 
+the PeopleView.<br>
+We&#39;ll first create view, then view-model of the page. Let&#39;s start with 
+creating the 
+<b>PersonDetailsView.xaml</b>.</p>
+<h4>Creating Person Details View</h4>
+<p>Basically we&#39;ll do the same steps as we did for <b>PeopleView</b> page. </p>
+<ul>
+	<li>Copy/paste <b>_SampleView.xaml</b> and rename the file as <b>PersonDetailsView.xaml</b>. </li>
+	<li>Open <b>PersonDetailsView.xaml</b> and replace all <b>_SampleView </b>to<b> 
+	PersonDetailsView</b>.</li>
+	<li>Delete the <b>&lt;Label&gt;</b> in <b>PeopleDetails.xaml.</b></li>
+	<li>Go to code behind (<i><b><span style="font-weight: 400">PersonDetailsView.xaml.cs</span></b></i>) and rename all <b>
+	_SampleView</b> to <b>PersonDetailsView.</b></li>
+</ul>
+<p>Now we have an empty view. Let&#39;s put controls inside the 
+<b>PersonDetailsView.xaml</b>.</p>
+<h5>Creating Personal Information Section</h5>
+<p>The view will have 2 main sections. Personal information on the top and&nbsp; 
+phone numbers on the bottom. Let&#39;s create personal information section!</p>
+<ul>
+	<li>Add highlighted rows to <b>ContentPage </b>tag.
+<ul>
+	<li><b>xmlns:extensions</b>: To use <i>Translate</i> extension.</li>
+	<li><b>xmlns:controls</b>: To use <i>CardView</i> control.</li>
+	<li><b>x:Name</b>: To use as reference.</li>
+	<li><b>Title</b>: To show a page title. It&#39;ll dynamically change. For new 
+	person creation 
+	we&#39;ll write &quot;Create New Person&quot;, for existing person edit we&#39;ll write the name of 
+	person here.</li>
+</ul>
+<pre lang="cs">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:base=&quot;clr-namespace:Acme.PhoneBookDemo.ViewModels.Base;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             x:Class=&quot;Acme.PhoneBookDemo.Views.PersonDetailsView&quot;
+	    base:ViewManager.AutoWireViewModel=&quot;true&quot;
+             <span style="background-color: #FFFF00">xmlns:extensions=&quot;clr-namespace:Acme.PhoneBookDemo.Extensions.MarkupExtensions;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;</span>
+             <span style="background-color: #FFFF00">xmlns:controls=&quot;clr-namespace:Acme.PhoneBookDemo.Controls;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;</span>
+             <span style="background-color: #FFFF00">x:Name=&quot;PersonDetailsPage&quot;</span>
+             <span style="background-color: #FFFF00">Title=&quot;{Binding Title}&quot;</span>&gt;
+    &lt;ContentPage.Content&gt;
+       ...
+    &lt;/ContentPage.Content&gt;
+&lt;/ContentPage&gt;</pre>
+	
+	</li>
+	
+	<li>Then add the <b>ListView</b> as root item in <b>&lt;ContentPage.Content&gt;</b> as shown below.&nbsp;
+	  <pre lang="cs">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:base=&quot;clr-namespace:Acme.PhoneBookDemo.ViewModels.Base;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             x:Class=&quot;Acme.PhoneBookDemo.Views.PersonDetailsView&quot;
+             base:ViewManager.AutoWireViewModel=&quot;true&quot;
+             xmlns:extensions=&quot;clr-namespace:Acme.PhoneBookDemo.Extensions.MarkupExtensions;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             xmlns:controls=&quot;clr-namespace:Acme.PhoneBookDemo.Controls;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             x:Name=&quot;PersonDetailsPage&quot;
+             Title=&quot;{Binding Title}&quot;&gt;
+    &lt;ContentPage.Content&gt;
+<span style="background-color: #FFFF00">        &lt;ListView HasUnevenRows=&quot;True&quot;&gt;
+            &lt;ListView.Header&gt;
+              
+                    &lt;controls:CardView Margin=&quot;0,10&quot; &gt;
+                        &lt;StackLayout Padding=&quot;10&quot; Spacing=&quot;0&quot; &gt;
+                            &lt;controls:LabelSection Text=&quot;{extensions:Translate PersonalInformations}&quot;/&gt;
+                            &lt;controls:Divider Margin=&quot;0,0,0,5&quot;/&gt;
+
+                            &lt;Label Text=&quot;{extensions:Translate Name}&quot;&gt;&lt;/Label&gt;
+                            &lt;Entry Text=&quot;{Binding Model.Name, Mode=TwoWay}&quot;/&gt;
+
+                            &lt;Label Text=&quot;{extensions:Translate Surname}&quot;&gt;&lt;/Label&gt;
+                            &lt;Entry Text=&quot;{Binding Model.Surname, Mode=TwoWay}&quot;/&gt;
+
+                            &lt;Label Text=&quot;{extensions:Translate EmailAddress}&quot;&gt;&lt;/Label&gt;
+                            &lt;Entry Text=&quot;{Binding Model.EmailAddress, Mode=TwoWay}&quot; Margin=&quot;0,0,0,10&quot;/&gt;
+
+                        &lt;/StackLayout&gt;
+                    &lt;/controls:CardView&gt;
+
+            &lt;/ListView.Header&gt;
+        &lt;/ListView&gt;</span>
+    &lt;/ContentPage.Content&gt;
+&lt;/ContentPage&gt;</pre>
+	ListView works best when it&#39;s root element (otherwise you may have scrolling 
+	issues). That&#39;s why we put ListView in the first place. ListView consists of 
+	3 parts; Header, Items, Footer...&nbsp; We&#39;ll use header to show personal 
+	information and items to list phone numbers. Footer will not be used.<p>We 
+	set ListView <b>
+	<a href="https://developer.xamarin.com/api/property/Xamarin.Forms.ListView.HasUnevenRows/">
+	HasUnevenRows=&quot;True&quot;</a>.</b> This is for automatically sizing list view 
+	rows. </p>
+	<p>In the <b>ListView.Header </b>tag we place a <b>CardView</b>. This is a 
+	custom control that draws a border to
+	<span id="result_box0" class="short_text" lang="en"><span class>highlight 
+	section.<br></span></span><b>LabelSection</b> is another custom control that 
+	shows label as a title.<br><b>Divider</b> is a custom conrol as well that 
+	draws a horizontal line.</p>
+	<p>In <b>CardView,</b> add a <b>&lt;StackLayout&gt;</b> to show elements 
+	vertically. Put labels, entries for <b>Name</b>, <b>Surname</b> and <b>
+	EmailAddress</b> fields. All the entries are
+	<a href="https://developer.xamarin.com/api/field/Xamarin.Forms.BindingMode.TwoWay/">
+	TwoWay</a> binding. Because we propagate value in both directions.<br>&nbsp;</p>
+	<div class="bs-callout bs-callout-info">
+		<p><i class="fa fa-info-circle"></i>ListView control seems to be an easy but complicated control. We recommend to use ListView in this circumtances;</p>
+		<ul>
+			<li>Try to use ListView as root item of the Page. </li>
+			<li>Do not use nested ListViews (ListView in ListView) </li>
+			<li>Use
+			<a href="https://developer.xamarin.com/api/type/Xamarin.Forms.TextCell/">TextCell</a> and
+			<a href="https://developer.xamarin.com/api/type/Xamarin.Forms.SwitchCell/">SwitchCell</a> wherever you can</li>
+			<li>Avoid placing a ListView inside a
+			<a href="https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/scroll-view/">ScrollView</a></li>
+		</ul></div>
+	</li>
+</ul>
+<p>&nbsp;</p>
+<h4>Creating PersonDetailsViewModel</h4>
+<p>The view-model name for PersonDetailsView must be <b>PersonDetailsViewModel</b>. 
+Copy<b> _SampleViewModel.cs</b> in <b>ViewModels</b> folder and paste into the 
+same folder. Then rename the new file as 
+<b>PersonDetailsViewModel.cs</b>. Open the file and rename <b>_SampleViewModel</b> class name to 
+<b>PersonDetailsViewModel. </b>Now we have an empty view model. Do the 
+followings steps in <b>PersonDetailsViewModel</b> 
+class;</p>
+<ul>
+	<li>Inject <b>IPersonAppService</b> to the constructor.&nbsp; This is for 
+	data transfer with server.<pre lang="cs">
+private readonly IPersonAppService _personAppService;
+
+public PersonDetailsViewModel(IPersonAppService personAppService)
+{
+	_personAppService = personAppService;
+}	</pre>
+	</li>
+	<li>To save user, create an async method called <b>SavePersonAsync()</b>. 
+	This method will update existing person or create new person and it&#39;ll be 
+	used in the command of save button. <pre lang="cs">private async Task SavePersonAsync()
+{
+	if (IsExistingPerson)
+	{
+		await UpdateExistingPersonAsync();
+	}
+	else
+	{
+		await CreateNewPersonAsync();
+	}
+
+	await NavigationService.GoBackAsync();
+}
+
+private async Task UpdateExistingPersonAsync()
+{
+	var editPersonInput = new EditPersonInput
+	{
+		EmailAddress = Model.EmailAddress,
+		Name = Model.Name,
+		Surname = Model.Surname,
+		Id = Model.Id
+	};
+
+	await _personAppService.EditPerson(editPersonInput);
+}
+
+private async Task CreateNewPersonAsync()
+{
+	var createPersonInput = new CreatePersonInput
+	{
+		EmailAddress = Model.EmailAddress,
+		Name = Model.Name,
+		Surname = Model.Surname,
+	};
+
+	await _personAppService.CreatePerson(createPersonInput);
+}
+</pre></li>
+<li>Create a command for save button.
+	<pre>
+public ICommand SavePersonCommand => AsyncCommand.Create(SavePersonAsync);
+</pre></li>
+
+	<li>Another important property is the model. Create a public property with 
+	name Model.
+	RaisePropertyChanged event helps to notify view that model is changed.<pre lang="cs">
+private PersonListDto _model;
+public PersonListDto Model
+{
+	get => _model;
+	set
+	{
+		_model = value;
+		RaisePropertyChanged(() => Model);
+	}
+}
+</pre>
+	</li>
+	
+	<li>To retrieve the selected person from PeopleView we&#39;ll use the <b>
+	InitializeAsync(object navigationData)</b>&nbsp; method. This method is 
+	located in the base class of view model and is being executed by navigation 
+	service. You need to cast navigationData to your specified type. We&#39;ll&nbsp; 
+	use the same view model for new person creation. So if 
+	navigationData is null it means it&#39;s a new person. Create a private bool property 
+	called <b>IsExistingPerson</b> for new person or existing person discrimination. 
+	And add <b>IsAddPhoneButtonEnabled</b> to disable AddPhoneNumber button if 
+	input is not valid.<pre lang="cs">
+private bool _isExistingPerson;
+public bool IsExistingPerson
+{
+	get => _isExistingPerson;
+	set
+	{
+		_isExistingPerson = value;
+		RaisePropertyChanged(() => IsExistingPerson);
+	}
+}
+
+private bool _isAddPhoneButtonEnabled;
+public bool IsAddPhoneButtonEnabled
+{
+	get => _isAddPhoneButtonEnabled;
+	set
+	{
+		_isAddPhoneButtonEnabled = value;
+		RaisePropertyChanged(() => IsAddPhoneButtonEnabled);
+	}
+}
+
+public override async Task InitializeAsync(object navigationData)
+{
+	IsExistingPerson = navigationData != null;
+	IsAddPhoneButtonEnabled = false;
+
+	if (IsExistingPerson)
+	{
+		Model = (PersonListModel)navigationData;
+	}
+	else
+	{
+		Model = new PersonListModel();
+	}
+}</pre></li>
+</ul>
+<p>Up to here, we listed people and update one of them by tapping on the 
+person item. Now let&#39;s implement new user creation functionality. We&#39;ve already 
+covered create person in PersonDetailsViewModel. We&#39;ll just need to navigate to 
+PersonDetailsView with an empty navigationData. The rest will work fine.</p>
+<h5>Add Person Creation Functionality</h5>
+<ul>
+	<li>Creating new person needs permission. Open <b>PermissionKey</b> class 
+	and add the below line for shortcut. We&#39;ll use it to hide/show Create Person button. <pre lang="cs">
+public const string PhoneBookCreatePerson = "Pages.Tenant.PhoneBook.CreatePerson";
+</pre></li><li>Open PeopleView.xaml and add the lines to the <b>ContentPage</b> 
+	tag. The x:Name gives a name to the page. It&#39;ll be needed for being 
+	reference in toolbar item. And we import <b>permission</b> namespace to use 
+	PermissionKey class.<pre lang="pre">
+&lt;ContentPage ...
+	x:Name="PeoplePage"
+	xmlns:permission="clr-namespace:Acme.PhoneBookDemo.Services.Permission;assembly=Acme.PhoneBookDemo.Mobile.Shared"
+...&gt;	</pre>
+<li>Adding a toolbar item is easy! Insert toolbar item into <b>
+ContentPage.ToolbarItems </b>as a child. We used a special toolbar item which is 
+derived from ToolbarItem. This extended toolbar item can be visible/hidden by 
+binding property. The default ToolbarItem has no such feature. In the IsVisible 
+property we used <b>HasPermission</b> extension. This extension is located in<i> 
+Extensions\MarkupExtensions</i>. It&#39;s returns true/false according to the Text 
+property. And as a Text property we pass <b>PermissionKey.PhoneBookCreatePerson.</b> 
+The command property is being executed when button is tapped. We binded <b>
+CreateNewPersonCommand</b>. In the next step this command will be added to the 
+view model.<pre>&lt;ContentPage.ToolbarItems&gt; 
+	&lt;controls:HideableToolbarItem 
+		Text=&quot;{extensions:Translate CreateNewPerson}&quot; 
+		Command=&quot;{Binding CreateNewPersonCommand}&quot; 
+		IsVisible=&quot;{extensions:HasPermission Text={x:Static permission:PermissionKey.PhoneBookCreatePerson}}&quot;
+		ParentPage=&quot;{x:Reference PeoplePage}&quot; /&gt;
+&lt;/ContentPage.ToolbarItems&gt;
+    </pre></li>
+	<li>Now open PeopleViewModel.cs and add the below code... We navigate to 
+	PersonDetailsView with null parameter because we handle the null case as new 
+	person creation.<pre lang="cs">
+public ICommand CreateNewPersonCommand => HttpRequestCommand.Create(CreateNewPersonAsync);
+public async Task CreateNewPersonAsync()
+{
+    await GotoPersonDetailsAsync(null);
+}
+
+private async Task GotoPersonDetailsAsync(PersonListModel person)
+{
+    await NavigationService.SetDetailPageAsync(typeof(PersonDetailsView), person, pushToStack: true);
+}
+
+</pre></li>
+</ul>
+
+<h5>Input Validation</h5>
+We&#39;ve implemented create and update person functions but we didn&#39;t 
+validate input Validating an object before sending to server is very easy. Open 
+<b>PersonDetailsViewModel.cs&nbsp; </b>and add <b>Validate()</b> method.<pre lang="cs">
+private static bool Validate(object input)
+{
+    var validationResult = DataAnnotationsValidator.Validate(input);
+    if (validationResult.IsValid)
+    {
+        return true;
+    }
+
+    UserDialogHelper.Warn(validationResult.ConsolidatedMessage);
+    return false;
+}
+
+</pre>
+
+<p>Then use <strong>Validate()</strong> method in <b>UpdateExistingPersonAsync()</b> 
+and in <b>CreateNewPersonAsync()</b><strong> </strong>&nbsp;methods like below </p>
+<pre lang="cs">
+private async Task UpdateExistingPersonAsync()
+{
+	var editPersonInput = new EditPersonInput
+	{
+		EmailAddress = Model.EmailAddress,
+		Name = Model.Name,
+		Surname = Model.Surname,
+		Id = Model.Id
+	};
+
+<span style="background-color: #FFFF00">	if (!Validate(editPersonInput))
+	{
+		return;
+	}</span>
+
+	await _personAppService.EditPerson(editPersonInput);
+}
+
+private async Task CreateNewPersonAsync()
+{
+	var createPersonInput = new CreatePersonInput
+	{
+		EmailAddress = Model.EmailAddress,
+		Name = Model.Name,
+		Surname = Model.Surname,
+	};
+
+<span style="background-color: #FFFF00">	if (!Validate(createPersonInput))
+	{
+		return;
+	}</span>
+
+	await _personAppService.CreatePerson(createPersonInput);
+}
+</pre>
+
+<p>To test it run the app and try to <b>create a person</b> with an<b> invalid 
+email address</b>. </p>
+<h5>Deleting Person</h5>
+<ul>
+	<li>Add the delete permission key in <strong>PermissionKey.cs</strong>. <pre lang="cs">
+public const string PhoneBookDeletePerson = "Pages.Tenant.PhoneBook.DeletePerson"; </pre></li>
+<li>
+<p>We&#39;ll place a delete button inside the person details view. 
+So open the <b>PersonDetailsView.xaml</b> and add the button as highighted 
+below.</p>
+<p>In the next step we&#39;ll add <b>DeletePersonCommand</b> in view model as it&#39;s 
+used as button&#39;s command. And visibility of button is being binded to 
+<b>IsDeleteButtonVisible</b> property. The reason is we&#39;ll hide the button if user has 
+no delete permission or it&#39;s a new user creation page.</p>
+<pre lang="cs">
+&lt;ContentPage.Content&gt;
+	&lt;ListView HasUnevenRows=&quot;True&quot;   
+			  ItemsSource=&quot;{Binding Model.Phones}&quot; Margin=&quot;10&quot;&gt;
+
+		&lt;ListView.Header&gt;
+			&lt;StackLayout&gt;
+			   
+				&lt;controls:CardView Margin=&quot;0,10&quot; &gt;
+					&lt;StackLayout Padding=&quot;10&quot; Spacing=&quot;0&quot; &gt;
+						&lt;controls:LabelSection Text=&quot;{extensions:Translate PersonalInformations}&quot;/&gt;
+						&lt;controls:Divider Margin=&quot;0,0,0,5&quot;/&gt;
+
+						&lt;Label Text=&quot;{extensions:Translate Name}&quot;&gt;&lt;/Label&gt;
+						&lt;Entry Text=&quot;{Binding Model.Name, Mode=TwoWay}&quot;/&gt;
+
+						&lt;Label Text=&quot;{extensions:Translate Surname}&quot;&gt;&lt;/Label&gt;
+						&lt;Entry Text=&quot;{Binding Model.Surname, Mode=TwoWay}&quot;/&gt;
+
+						&lt;Label Text=&quot;{extensions:Translate EmailAddress}&quot;&gt;&lt;/Label&gt;
+						&lt;Entry Text=&quot;{Binding Model.EmailAddress, Mode=TwoWay}&quot; Margin=&quot;0,0,0,10&quot;/&gt;
+
+						&lt;!-- SAVE BUTTON  --&gt;
+						&lt;Button Margin=&quot;{StaticResource ActionButtonMargin}&quot; 
+									Style=&quot;{StaticResource ActionButton}&quot; 
+									Text=&quot;{extensions:Translate Save}&quot;
+									Command=&quot;{Binding SavePersonCommand}&quot;/&gt;
+
+<span style="background-color: #FFFF00">						&lt;!--  DELETE BUTTON  --&gt;
+						&lt;Button Margin=&quot;{StaticResource ActionButtonMargin}&quot; 
+									IsVisible=&quot;{Binding IsDeleteButtonVisible}&quot;
+									Style=&quot;{StaticResource DangerButton}&quot; 
+									Text=&quot;{extensions:Translate Delete}&quot;  
+									Command=&quot;{Binding DeletePersonCommand}&quot;/&gt;</span>
+					&lt;/StackLayout&gt;
+				&lt;/controls:CardView&gt;
+		...
+</pre>
+
+</li>
+
+<li>
+<p>Open PersonDetailsViewModel.cs and add the highlighted codes.</p>
+<p>We inject <b>IPermissionService</b> to check wheter user has delete permission. The 
+delete button will be visible if user has permission. The delete button is binded to <b>IsDeleteButtonVisible</b> property. We 
+create the <b>DeletePersonCommand</b>. In this command we ask user for a 
+confirmation with <b>UserDialogs.Instance.ConfirmAsync(...).</b> If user accepts 
+we make request to server with <b>_personAppService.DeletePerson(...) </b>then 
+we leave the screen with <b>NavigationService.GoBackAsync() </b>method.</p>
+<pre lang="tr">using System.Threading.Tasks;
+using System.Windows.Input;
+<span style="background-color: #FFFF00">using Abp.Application.Services.Dto;</span>
+using Acme.PhoneBookDemo.Core.Threading;
+using Acme.PhoneBookDemo.PhoneBook;
+using Acme.PhoneBookDemo.PhoneBook.Dto;
+<span style="background-color: #FFFF00">using Acme.PhoneBookDemo.Services.Permission;</span>
+using Acme.PhoneBookDemo.UI;
+using Acme.PhoneBookDemo.Validations;
+using Acme.PhoneBookDemo.ViewModels.Base;
+
+namespace Acme.PhoneBookDemo.ViewModels
+{
+    public class PersonDetailsViewModel : XamarinViewModel
+    {
+        private readonly IPersonAppService _personAppService;
+       <span style="background-color: #FFFF00"> private readonly IPermissionService _permissionService;</span>
+        private bool _isNewPerson;
+        <span style="background-color: #FFFF00">private bool _isDeleteButtonVisible;
+</span>
+        public ICommand SavePersonCommand =&gt; AsyncCommand.Create(SavePersonAsync);
+        <span style="background-color: #FFFF00">public ICommand DeletePersonCommand =&gt; AsyncCommand.Create(DeletePersonAsync);</span>
+
+	<span style="background-color: #FFFF00">private async Task DeletePersonAsync()
+</span>	<span style="background-color: #FFFF00">{
+</span>	<span style="background-color: #FFFF00">	var accepted = await UserDialogs.Instance.ConfirmAsync(L.Localize("UserDeleteWarningMessage", Model.FullName),
+</span>	<span style="background-color: #FFFF00">		L.Localize("AreYouSure"), L.Localize("YesDelete"), L.Localize("Cancel"));
+</span>	<span style="background-color: #FFFF00">
+</span>	<span style="background-color: #FFFF00">	if (!accepted)
+</span>	<span style="background-color: #FFFF00">	{
+</span>	<span style="background-color: #FFFF00">		return;
+</span>	<span style="background-color: #FFFF00">	}
+</span>	<span style="background-color: #FFFF00">
+</span>	<span style="background-color: #FFFF00">	await SetBusyAsync(async () =>
+</span>	<span style="background-color: #FFFF00">	{
+</span>	<span style="background-color: #FFFF00">		await _personAppService.DeletePerson(new EntityDto(Model.Id));
+</span>	<span style="background-color: #FFFF00">		await NavigationService.GoBackAsync();
+</span>	<span style="background-color: #FFFF00">	});
+</span>	<span style="background-color: #FFFF00">}</span>
+
+       ...
+        public PersonDetailsViewModel(IPersonAppService personAppService, <span style="background-color: #FFFF00">IPermissionService permissionService</span>)
+        {
+            _personAppService = personAppService;
+            <span style="background-color: #FFFF00">_permissionService = permissionService;</span>
+        }
+
+        public override async Task InitializeAsync(object navigationData)
+        {
+            IsExistingPerson = navigationData != null;
+            IsAddPhoneButtonEnabled = false;
+
+            if (IsExistingPerson)
+            {
+                Model = (PersonListModel)navigationData;
+<span style="background-color: #FFFF00">                IsDeleteButtonVisible = _permissionService.HasPermission(PermissionKey.PhoneBookDeletePerson);
+            }
+            else
+            {
+                Model = new PersonListModel();
+                IsDeleteButtonVisible = false;
+            }</span>
+        }
+    }
+}
+</pre>
+
+</li>
+
+</ul>
+ 
+<img class="img-thumbnail" alt="People with Phone Numbers" src="images/xamarin-phonebook-phones-listed.png"/>
+
+
+
+<p>&nbsp;</p>
+
+<h6>Deleting Phone Number</h6>
+<p>To delete a phone number, we put Iconize button. This control uses font 
+	awesome to create a button with icon. The only disadvantage of the control 
+	is; you cannot use text and icon at the same time! For more information 
+	about iconize library you can checkout
+	<a href="https://github.com/jsmarcus/Xamarin.Plugins/tree/master/Iconize/">
+	https://github.com/jsmarcus/Xamarin.Plugins/tree/master/Iconize/</a>. </p>
+<p>Add the below namespace to the <b>ContentPage</b> tag</p>
+<pre lang="cs">
+xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+</pre>
+<p>Add delete button after phone number label. See the highlighted section below</p>
+<pre lang="cs">
+&lt;ListView.ItemTemplate&gt;
+	&lt;DataTemplate&gt;
+		&lt;ViewCell&gt;
+			&lt;StackLayout Orientation=&quot;Horizontal&quot; BackgroundColor=&quot;White&quot; Padding=&quot;10,0,10,0&quot; &gt;
+				&lt;Label Text=&quot;{Binding Type}&quot; VerticalOptions=&quot;Center&quot; FontAttributes=&quot;Bold&quot;/&gt;
+				&lt;Label Text=&quot;{Binding Number}&quot; Style=&quot;{StaticResource ActiveLabel}&quot; VerticalOptions=&quot;Center&quot;/&gt;
+<span style="background-color: #FFFF00">				&lt;iconize:IconButton  Margin=&quot;3&quot;
+							Command=&quot;{Binding Source={x:Reference PersonDetailsPage}, Path=BindingContext.DeletePhoneNumberCommand}&quot;
+							CommandParameter=&quot;{Binding .}&quot;
+							Text=&quot;fa-trash&quot; 
+							TextColor=&quot;White&quot;
+							BackgroundColor=&quot;Red&quot;
+							HeightRequest=&quot;{StaticResource SmallActionButtonSize}&quot;
+							WidthRequest=&quot;{StaticResource SmallActionButtonSize}&quot;
+							VerticalOptions=&quot;CenterAndExpand&quot;            
+							HorizontalOptions=&quot;EndAndExpand&quot;&gt;
+				&lt;/iconize:IconButton&gt;</span>
+			&lt;/StackLayout&gt;
+		&lt;/ViewCell&gt;
+	&lt;/DataTemplate&gt;
+&lt;/ListView.ItemTemplate&gt;
+</pre>The text of button is fa-trash. This 
+is a font-awesome text. You can find other font-awesome icons here
+<a href="http://fontawesome.io/icons/">http://fontawesome.io/icons/</a>
+
+<p>The command property of <b>IconButton</b> is a bit different then usual binding. 
+	The reason is <b>DeletePhoneNumberCommand</b> is not in <b>
+	PhoneInPersonListDto</b>. But it&#39;s a root property located in viiew-model. 
+	That&#39;s why we set <b>Source</b> of command to <b>PersonDetailsPage</b> and
+	<b>Path</b> to <b>BindingContext.DeletePhoneNumberCommand</b>. Setting <b>
+	CommandParameter</b> to<b> &quot;.&quot;</b> refers to <b>PhoneInPersonListDto</b>. So 
+	we&#39;ll be sending <b>PhoneInPersonListDto</b> as parameter to <b>
+	DeletePhoneNumberCommand</b> in the view-model.<br>
+&nbsp;</p>
+
+<p>et&#39;s create <b>DeletePhoneNumberCommand</b> in the view model. Open <b>PeopleViewModel.cs
+</b>and add these methods and property.</p>
+<pre lang="cs">
+public ICommand DeletePhoneNumberCommand =&gt; new Command&lt;PhoneInPersonListDto&gt;(async phone =&gt; await DeletePhoneNumberAsync(phone));
+
+private async Task DeletePhoneNumberAsync(PhoneInPersonListDto phone)
+{
+	await SetBusyAsync(async () =&gt;
+	{
+		await _personAppService.DeletePhone(new EntityDto&lt;long&gt;(phone.Id));
+		Model.Phones.Remove(phone);
+	});
+}
+
+</pre>
+
+<p>The delete button will look like below</p>
+<img class="img-thumbnail" alt="Delete Phone Numbers" src="images/xamarin-phonebook-phones-delete.png"/>
+
+
+<h6>Adding Phone Numbers</h6>
+<p>To add new phone numbers, add a new CardView to <b>PersonDetailsView.xaml.&nbsp;
+</b> </p>
+
+<pre lang="cs">
+ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:base=&quot;clr-namespace:Acme.PhoneBookDemo.ViewModels.Base;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             x:Class=&quot;Acme.PhoneBookDemo.Views.PersonDetailsView&quot;
+             base:ViewManager.AutoWireViewModel=&quot;true&quot;
+             xmlns:extensions=&quot;clr-namespace:Acme.PhoneBookDemo.Extensions.MarkupExtensions;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             xmlns:controls=&quot;clr-namespace:Acme.PhoneBookDemo.Controls;assembly=Acme.PhoneBookDemo.Mobile.Shared&quot;
+             xmlns:iconize=&quot;clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize&quot;
+             x:Name=&quot;PersonDetailsPage&quot;
+             Title=&quot;{Binding Title}&quot;&gt;
+    &lt;ContentPage.Content&gt;
+        &lt;ListView HasUnevenRows=&quot;True&quot;   
+                  ItemsSource=&quot;{Binding Model.Phones}&quot; Margin=&quot;10&quot;&gt;
+
+            &lt;ListView.Header&gt;
+                &lt;StackLayout&gt;
+                   
+                    &lt;controls:CardView Margin=&quot;0,10&quot; &gt;
+                        &lt;StackLayout Padding=&quot;10&quot; Spacing=&quot;0&quot; &gt;
+                            &lt;controls:LabelSection Text=&quot;{extensions:Translate PersonalInformations}&quot;/&gt;
+                            &lt;controls:Divider Margin=&quot;0,0,0,5&quot;/&gt;
+
+                            &lt;Label Text=&quot;{extensions:Translate Name}&quot;&gt;&lt;/Label&gt;
+                            &lt;Entry Text=&quot;{Binding Model.Name, Mode=TwoWay}&quot;/&gt;
+
+                            &lt;Label Text=&quot;{extensions:Translate Surname}&quot;&gt;&lt;/Label&gt;
+                            &lt;Entry Text=&quot;{Binding Model.Surname, Mode=TwoWay}&quot;/&gt;
+
+                            &lt;Label Text=&quot;{extensions:Translate EmailAddress}&quot;&gt;&lt;/Label&gt;
+                            &lt;Entry Text=&quot;{Binding Model.EmailAddress, Mode=TwoWay}&quot; Margin=&quot;0,0,0,10&quot;/&gt;
+
+                            &lt;!-- SAVE BUTTON  --&gt;
+                            &lt;Button Margin=&quot;{StaticResource ActionButtonMargin}&quot; 
+                                        Style=&quot;{StaticResource ActionButton}&quot; 
+                                        Text=&quot;{extensions:Translate Save}&quot;
+                                        Command=&quot;{Binding SavePersonCommand}&quot;/&gt;
+
+                            &lt;!--  DELETE BUTTON  --&gt;
+                            &lt;Button Margin=&quot;{StaticResource ActionButtonMargin}&quot; 
+                                        IsVisible=&quot;{Binding IsDeleteButtonVisible}&quot;
+                                        Style=&quot;{StaticResource DangerButton}&quot; 
+                                        Text=&quot;{extensions:Translate Delete}&quot;  
+                                        Command=&quot;{Binding DeletePersonCommand}&quot;/&gt;
+                        &lt;/StackLayout&gt;
+                    &lt;/controls:CardView&gt;
+
+<span style="background-color: #FFFF00">                    &lt;controls:CardView Margin=&quot;0&quot; IsVisible=&quot;{Binding IsExistingPerson}&quot; &gt;
+                        &lt;StackLayout Padding=&quot;10&quot; Spacing=&quot;0&quot;&gt;
+
+                            &lt;controls:LabelSection Text=&quot;{extensions:Translate PhoneNumber}&quot;/&gt;
+                            &lt;controls:Divider Margin=&quot;0,0,0,5&quot;/&gt;
+
+                            &lt;Grid&gt;
+                                &lt;Grid.ColumnDefinitions&gt;
+                                    &lt;ColumnDefinition Width=&quot;0.3*&quot;/&gt;
+                                    &lt;ColumnDefinition Width=&quot;0.7*&quot;/&gt;
+                                &lt;/Grid.ColumnDefinitions&gt;
+
+                                &lt;Picker Title=&quot;{extensions:Translate Type}&quot;
+                                        ItemsSource=&quot;{Binding PhoneTypes}&quot; 
+                                        HorizontalOptions=&quot;FillAndExpand&quot;
+                                        SelectedItem=&quot;{Binding SelectedPhoneType}&quot;/&gt;
+                                &lt;Entry Text=&quot;{Binding NewPhoneNumber, Mode=TwoWay}&quot; 
+                                       Grid.Column=&quot;1&quot;
+                                       Placeholder=&quot;{extensions:Translate PhoneNumber}&quot;/&gt;
+                            &lt;/Grid&gt;
+
+                            &lt;!-- ADD PHONE BUTTON  --&gt;
+                            &lt;Button Margin=&quot;{StaticResource ActionButtonMargin}&quot; 
+                                Style=&quot;{StaticResource ActionButton}&quot; 
+                                Text=&quot;{extensions:Translate Add}&quot;
+                                Command=&quot;{Binding AddPhoneNumberCommand}&quot; 
+                                CommandParameter=&quot;{Binding Model.Id}&quot;  
+                                IsEnabled=&quot;{Binding IsAddPhoneButtonEnabled}&quot;/&gt;
+
+                        &lt;/StackLayout&gt;
+                    &lt;/controls:CardView&gt;</span>
+
+                &lt;/StackLayout&gt;
+            &lt;/ListView.Header&gt;
+</pre>
+
+ <p>And we will add the view-model codes to the <strong>PeopleViewModel.cs</strong></p>
+ 
+ 
+ <pre lang="cs">public List&lt;string&gt; PhoneTypes { get; } = Enum.GetNames(typeof(PhoneType)).ToList();
+public ICommand AddPhoneNumberCommand =&gt; new Command&lt;int&gt;(async personId =&gt; await AddPhoneNumberAsync(personId) , _ =&gt; IsAddPhoneButtonEnabled);
+
+private string _selectedPhoneType = PhoneType.Mobile.ToString();
+public string SelectedPhoneType
+{
+    get => _selectedPhoneType;
+    set
+    {
+        _selectedPhoneType = value;
+        RaisePropertyChanged(() => SelectedPhoneType);
+    }
+}
+
+private async Task AddPhoneNumberAsync(int personId)
+{
+	var input = new AddPhoneInput
+	{
+		Number = NewPhoneNumber,
+		PersonId = personId,
+		Type = (PhoneType)Enum.Parse(typeof(PhoneType), SelectedPhoneType)
+	};
+
+	if (!Validate(input))
+	{
+		return;
+	}
+
+	await SetBusyAsync(async () =&gt;
+	{
+		var phone = await _personAppService.AddPhone(input);
+		Model.Phones.Add(phone);
+		NewPhoneNumber = &quot;&quot;;
+		RaisePropertyChanged(() =&gt; Model.Phones);
+	});
+}
+ </pre>
+ 
+
+
+<h3>Conclusion</h3><p>In this document, we built a complete example that covers most parts of the 
+ASP.NET Zero Xamarin development. </p><p>We intentionally used different approaches for similar tasks to show you 
+different styles of development. AspNet Zero provides an architecture but does 
+not restrict you. You can make your own style development.</p><h4>Source Code</h4><p>You should <a href="/Prices">purchase</a> ASP.NET Zero in order to get
+<strong>source code</strong>. After purchasing, you can get the sample project 
+from private Github repository:
+<a href="https://github.com/aspnetzero/aspnet-zero-samples">https://github.com/aspnetzero/aspnet-zero-samples</a></p></body></html>
