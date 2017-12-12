@@ -18,7 +18,7 @@ available for ASP.NET Core included Angular UI and Mvc UI.
 Following tools are needed in order to develop ASP.NET Zero Xamarin:
 
 -   [Visual Studio 2017 v15.4.4](https://www.visualstudio.com)+
--   Mac for IOS simulator
+-   Mac for iOS simulator
 
 ASP.NET Zero Xamarin applications can be written for the following
 operating systems:
@@ -85,10 +85,10 @@ There are 6 projects in the mobile solution:
 -   **Application.Client** project contains Web Api client (bridge
     between mobile app and host) and proxy classes of Application
     Services.
--   **Mobile.Shared** project houses the code shared by IOS and Android
+-   **Mobile.Shared** project houses the code shared by iOS and Android
     platforms, views, view models, localization and platform
     abstractions.
--   **Mobile.iOS** project contains IOS specific classes.
+-   **Mobile.iOS** project contains iOS specific classes.
 -   **Mobile.Droid** project contains Android specific classes.
 
 ### Debugging
@@ -171,7 +171,7 @@ Choose an Android emulator from list and press start button.
 <img src="images/xamarin-emulator-selection.png" alt="Android Emulator Selection" class="img-thumbnail" />  
   
 
-#### Debugging IOS
+#### Debugging iOS
 
 There are a few requirements that must be adhered to when developing for
 iOS in Visual Studio. A Mac is required to compile IPA files.
@@ -181,16 +181,16 @@ Mac.
 
 ** Information**
 
-There are a number of configuration options available to debug IOS app.
-It's highly recommended you to read the [Xamarin IOS Getting started
-document](https://developer.xamarin.com/guides/ios/getting_started/installation/windows/introduction_to_xamarin_ios_for_visual_studio/)
+There are a number of configuration options available to debug iOS app.
+It's highly recommended you to read the [Xamarin iOS Getting started
+document](https://developer.xamarin.com/guides/iOS/getting_started/installation/windows/introduction_to_xamarin_iOS_for_visual_studio/)
 to build an iOS application and debug using a networked Mac to host
 Apple's compiler and simulator.  
 
 After you successfully configure and connect to a Mac, choose an iPhone
 simulator from list and press start button.
 
-<img src="images/xamarin-simulator-selection.png" alt="IOS Simulator Selection" class="img-thumbnail" />  
+<img src="images/xamarin-simulator-selection.png" alt="iOS Simulator Selection" class="img-thumbnail" />  
   
 
  [Xamarin Live Player](https://www.xamarin.com/live/) currently does not
@@ -210,8 +210,8 @@ product. If you want to purchase LiveXAML, ASP.NET Zero customers get
 A key component of building cross-platform applications is being able to
 share code across various platform-specific projects. ASP.NET Zero
 Xamarin is using Xamarin.Forms to maximize code sharing between two end
-platforms (IOS & Android). It is expected to write shared codes in
-Mobile.Shared project so that it will be used in both IOS and Android.
+platforms (iOS & Android). It is expected to write shared codes in
+Mobile.Shared project so that it will be used in both iOS and Android.
 If you need platform specific development then try to use class
 abstractions in shared project and implement/extend in end platforms.
 
@@ -270,21 +270,21 @@ Mobile.iOS.csproj in notepad and find replace all occurrences of
 
 #### Mobile.iOS
 
-<img src="images/xamarin-ios-project-structure.png" alt="IOS Structure" class="img-thumbnail" />
+<img src="images/xamarin-iOS-project-structure.png" alt="iOS Structure" class="img-thumbnail" />
 
-IOS Structure
+iOS Structure
 
-Xamarin IOS project has a very simple structure. ASP.NET Zero adds or
+Xamarin iOS project has a very simple structure. ASP.NET Zero adds or
 modifies these files in the default project;
 
--   **Locale** This class is an adapter between .Net cultures and IOS
+-   **Locale** This class is an adapter between .Net cultures and iOS
     cultures.
 -   **CropViewRenderer, CropViewDelegate** These files are renderer for
-    CropView in IOS.
--   **AbpZeroTemplateXamarinIosModule** This is the Abp module. It
+    CropView in iOS.
+-   **AbpZeroTemplateXamariniOSModule** This is the Abp module. It
     depends on AbpZeroTemplateXamarinSharedModule.
--   **AppDelegate** This is the main startup class for IOS like
-    MainActivity in Android. All the IOS specific library
+-   **AppDelegate** This is the main startup class for iOS like
+    MainActivity in Android. All the iOS specific library
     initializations are done in this class. Unobserved and Unhandled
     exceptions handlers are registered here with *ExceptionHandler*
     class.
@@ -415,7 +415,7 @@ use these methods;
 All exceptions are globally handled in *ExceptionHandler* class,
 LogException() method. Subscription to app wide unhandled exceptions is
 done in *MainActivity* class for Android and in *AppDelegate* class for
-IOS. However be aware that when an unhandled exception occurs, typically
+iOS. However be aware that when an unhandled exception occurs, typically
 Android will be destroying the process. So there's not a lot can be done
 on the Android side, but your Xamarin code should still be able to work.
 So you can log the error message with a third party tool like [HockeyApp
@@ -561,7 +561,7 @@ If you want to publish your application to the related application store
 you can read the Xamarin official guides;
 
 -   [Publishing to the App
-    Store](https://developer.xamarin.com/guides/ios/deployment,_testing,_and_metrics/app_distribution/app-store-distribution/publishing_to_the_app_store/)
+    Store](https://developer.xamarin.com/guides/iOS/deployment,_testing,_and_metrics/app_distribution/app-store-distribution/publishing_to_the_app_store/)
 -   [Publishing to the Google
     Play](https://developer.xamarin.com/guides/android/deployment,_testing,_and_metrics/publishing_an_application/part_3_-_publishing_an_application_on_google_play/)
 
