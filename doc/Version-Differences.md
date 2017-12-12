@@ -12,10 +12,10 @@ ASP.NET Core is Microsoft's new ASP.NET version. That means our new
 major features will be implemented for ASP.NET Core version (.NET Core &
 full .net framework).
 
-#### Angular v.s. Angularjs 1.x
+#### Angular v.s. AngularJS 1.x
 
 Beginning from [v4.1](Change-Logs.md), we are more focused to
-**Angular** based solutions (rather than Angularjs 1.x) since Angular is
+**Angular** based solutions (rather than AngularJS 1.x) since Angular is
 Google's new SPA framework. That means our new major features will be
 implemented for Angular framework.
 
@@ -23,7 +23,7 @@ implemented for Angular framework.
 
 The table below shows **only the differences, not all features**.
 
-| Feature                                  | ASP.NET Core & Angular  | ASP.NET Core & JQuery   | ASP.NET MVC 5.x & Angularjs | ASP.NET MVC 5.x & JQuery |
+| Feature                                  | ASP.NET Core & Angular  | ASP.NET Core & JQuery   | ASP.NET MVC 5.x & AngularJS | ASP.NET MVC 5.x & JQuery |
 | ---------------------------------------- | ----------------------- | ----------------------- | --------------------------- | ------------------------ |
 | User Interface (theme)                   | Metronic v5.x           | Metronic v5.x           | Metronic v4.6.x             | Metronic v4.6.x          |
 | ORM                                      | EF Core                 | EF Core                 | EF 6.x                      | EF 6.x                   |
@@ -45,4 +45,4 @@ different versions:
 -   [ASP.NET Core & jQuery](Development-Guide-Core.md)
 -   [ASP.NET Core & Angular](Development-Guide-Angular.md)
 -   [ASP.NET MVC 5.x & jQuery](Development-Guide-Mvc-Angularjs.md)
--   [ASP.NET MVC 5.x & Angularjs 1.x](Development-Guide-Mvc-Angularjs.md)
+-   [ASP.NET MVC 5.x & AngularJS 1.x](Development-Guide-Mvc-Angularjs.md)

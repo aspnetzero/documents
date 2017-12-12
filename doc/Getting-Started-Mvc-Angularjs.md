@@ -14,7 +14,7 @@ below:
 
 <img src="images/download-mvc5-jquery.png" alt="Create project" class="img-thumbnail" width="572" height="534" />
 
-Select "**ASP.NET MVC 5.x & jQuery**" or "**ASP.NET MVC 5.x & Angularjs 1.x**" based on your preference. Your project will be ready in one
+Select "**ASP.NET MVC 5.x & jQuery**" or "**ASP.NET MVC 5.x & AngularJS 1.x**" based on your preference. Your project will be ready in one
 minute. After extacting the downloaded zip file and opening solution in
 **Visual Studio**, you will see solution structure as shown below:
 

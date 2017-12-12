@@ -110,8 +110,8 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
     -   Added URL rewrite configuration to deploy under IIS.
     -   Upgraded to latest Angular and Angular CLI.
 -   Angular 1.x UI
-    -   Upgraded to Angularjs v1.6.2.
-    -   Upgraded other angularjs related packages to latest versions.
+    -   Upgraded to AngularJS v1.6.2.
+    -   Upgraded other AngularJS related packages to latest versions.
 -   Common
     -   Added French translation.
     -   Upgraded to ABP v1.4.2.
@@ -170,7 +170,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 -   Upgraded to metronic v4.6
 -   Upgraded to SignalR v2.2.1
 -   Upgraded to angular-ui-grid v3.2.1
--   Upgraded to angularjs v1.5.6 and angular-ui-bootstrap v1.3.3.
+-   Upgraded to AngularJS v1.5.6 and angular-ui-bootstrap v1.3.3.
 -   Other minor improvements and fixes
 
 ### v1.10.1 (2016-05-18)
@@ -332,10 +332,10 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
     logs.
 -   Added Chinese localization.
 -   Upgraded to Metronic v4.0.
--   Upgraded to AngularJs v1.4.
+-   Upgraded to AngularJS v1.4.
 -   Upgraded to latest ABP.
 -   Disabled audit logging for some actions.
--   Added Bootstrap DateTimePicker javascript library and it's AngularJs
+-   Added Bootstrap DateTimePicker javascript library and it's AngularJS
     directive.
 -   Minor fix and improvements.
 

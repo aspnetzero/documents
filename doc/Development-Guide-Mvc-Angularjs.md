@@ -60,10 +60,10 @@ ASP.NET Zero solution contains **four** applications:
     web site or a landing page for your application.
 -   **Angular Back End Single-Page** **Application**. This is the
     application which is entered by username and password. It's built as
-    a SPA with AngularJs.
+    a SPA with AngularJS.
 -   **MVC Back End Multi-Page Application**: This has identical
     functionality with the Angular application but is built using MVC
-    and jQuery (no AngularJs).
+    and jQuery (no AngularJS).
 -   **Migrator**: Console application that runs database migrations.
 
 Thus, the back-end application is built in two different architectures
@@ -343,7 +343,7 @@ link and will then be sent an email to reset their password.
 
 ### Angular Back End Single-Page Application
 
-The backend in ASP.NET Zero is a **single page AngularJs application**.
+The backend in ASP.NET Zero is a **single page AngularJS application**.
 When you login, you are redirected to the **ApplicationController**. It
 returns the layout view of the application.
 

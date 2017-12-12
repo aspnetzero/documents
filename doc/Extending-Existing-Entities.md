@@ -110,7 +110,7 @@ open the **users page**:
 
 <img src="images/extend-entities-user-address-in-table.png" alt="Address in table" class="img-thumbnail" width="802" height="527" />
 
-This was for SPA (Single Page Application with Angularjs). It's similar
+This was for SPA (Single Page Application with AngularJS). It's similar
 for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Users\\index.js and add
 Address field to the table as like Surname.
 
@@ -312,7 +312,7 @@ users, not tenant users):
 
 <img src="images/extend-entities-editions-ui-table.png" alt="UI table for editions" class="img-thumbnail" width="810" height="174" />
 
-This was for SPA (Single Page Application with Angularjs). It's similar
+This was for SPA (Single Page Application with AngularJS). It's similar
 for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Editions\\**index.js**
 and add Price field to the table.
 

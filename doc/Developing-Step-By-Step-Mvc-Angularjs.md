@@ -88,7 +88,7 @@ also for Turkish in PhoneBook-tr.xml file:
 
 #### Other menu item properties
 
-**url** can be a URL or **AngularJs route** (state in Angular
+**url** can be a URL or **AngularJS route** (state in Angular
 **ui-router** used in ASP.NET Zero) that will be activated when we click
 the menu item. We will define this route below.
 
@@ -100,7 +100,7 @@ See [navigation
 document](https://aspnetboilerplate.com/Pages/Documents/Navigation) for
 more information on menu definitions.
 
-### Creating AngularJs Route
+### Creating AngularJS Route
 
 Angular routes are defined in **app.js**. We're adding a new route
 definition as shown below:
@@ -119,12 +119,12 @@ Note that 'tenant.phonebook' is a **second level state** (child of
 information on defining states. But, in most cases, you can define it
 easily by taking existing routes as reference.
 
-### Creating AngularJs View and Controller
+### Creating AngularJS View and Controller
 
-The last step to see our new page is to create an Angularjs view and
+The last step to see our new page is to create an AngularJS view and
 controller for it:
 
-<img src="images/phonebook-controller-views-files.png" alt="Phonebook AngularJs controller and view" class="img-thumbnail" width="171" height="198" />
+<img src="images/phonebook-controller-views-files.png" alt="Phonebook AngularJS controller and view" class="img-thumbnail" width="171" height="198" />
 
 We can use **empty** controller and view located under
 **common/views/\_empty** folder to simplify creating a new view.
@@ -587,9 +587,9 @@ There are some other fields not shown here. So, we see that User with
 Id=2 called GetPeople method of the PersonAppService in recorded time
 with the shown parameters and it' executed in 134 ms.
 
-### Calling GetPeople Method From Angularjs Controller
+### Calling GetPeople Method From AngularJS Controller
 
-It's time to open phonebook Angularjs **controller** and get people to
+It's time to open phonebook AngularJS **controller** and get people to
 show on the view.
 
     (function() {
@@ -636,7 +636,7 @@ below:
     ...
     </div>
 
-We used **ng-repeat** directive of Angularjs to render the array of
+We used **ng-repeat** directive of AngularJS to render the array of
 people (vm.persons). See the result:
 
 <img src="images/phonebook-people-view-1.png" alt="Phonebook peoples" class="img-thumbnail" width="790" height="285" />
@@ -801,7 +801,7 @@ View code is shown below: 
     </div>
 
 We have a form with three input (name, surname and email address)
-**validated** using Angularjs. We're using **Person** entity's const
+**validated** using AngularJS. We're using **Person** entity's const
 values in view to set same **maxlength** to input controls.
 
 **Save** button is **disabled** if the form is **invalid**.
@@ -810,7 +810,7 @@ submitting form:
 
 <img src="images/modal-buttons-busy.png" alt="Modal button busy animation" class="img-thumbnail" width="208" height="59" />
 
-Angularjs **controller** of this view is shown below:
+AngularJS **controller** of this view is shown below:
 
     (function () {
         appModule.controller('tenant.views.phonebook.createPersonModal', [
@@ -974,7 +974,7 @@ permission to enter this page, he can not activate the route:
 
 We wrapper route definition by an if block that checks related
 permission. Now, user can not open the page without the permission. He
-is redirected to default route by Angularjs.
+is redirected to default route by AngularJS.
 
 ##### Grant permission
 
@@ -1038,7 +1038,7 @@ In this way, the Create New Person does not rendered in server and user
 can not see this button.
 
 As an alternative, we can check permission on **client side**. First, we
-declare a variable in Angularjs controller:
+declare a variable in AngularJS controller:
 
     vm.permissions = {
         createPerson: abp.auth.hasPermission('Pages.Tenant.PhoneBook.CreatePerson')
@@ -1110,7 +1110,7 @@ layout.
 
 #### Controller
 
-Now, creating a **deletePerson** function in Angularjs controller (that
+Now, creating a **deletePerson** function in AngularJS controller (that
 was called from view above):
 
     vm.deletePerson = function (person) {
@@ -1533,7 +1533,7 @@ related person and allows adding a new phone.
 
 #### Controller
 
-Added following codes into the Angularjs controller:
+Added following codes into the AngularJS controller:
 
     vm.editingPerson = null;
 
