@@ -28,7 +28,7 @@ Following tools are needed in order to use the solution:
 -   [Typescript 2.0+](https://www.typescriptlang.org/)
 -   [Yarn](https://yarnpkg.com/lang/en/)
 
-In addition, see [AspNet Core](Development-Guide-Core.md)
+In addition, see [ASP.NET Core](Development-Guide-Core.md)
 documentation for server side requirements and other server side
 features.
 
@@ -45,7 +45,7 @@ any OS you like (MacOS/Linux/Windows).
 
 The diagram below shows the overall architecture:
 
-<img src="images/angular2-core-overall-architecture.png" alt="Angular AspNet Core Architecture Overall" class="thumbnail" width="683" height="163" />
+<img src="images/angular2-core-overall-architecture.png" alt="Angular ASP.NET Core Architecture Overall" class="thumbnail" width="683" height="163" />
 
 -   **Angular** project is designed so it can be **deployed separately**
     from the backend ASP.NET Core solution, to a different port in same

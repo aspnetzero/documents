@@ -11,7 +11,7 @@ and
 [Installation](https://developer.xamarin.com/guides/cross-platform/getting_started/installation/).  
 For an overview of the Asp.Net Zero getting started see [Asp.Net Zero
 Getting Started.](Getting-Started-Core) The Asp.Net Zero Xamarin is only
-available for Asp.Net Core included Angular UI and Mvc UI.
+available for ASP.NET Core included Angular UI and Mvc UI.
 
 #### Prerequisites
 
