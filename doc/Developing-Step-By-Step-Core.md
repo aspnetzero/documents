@@ -614,7 +614,7 @@ declared AutoMapFrom attribute to be able to make mapping.
 We created an **Application Service** (PersonAppService) and used it
 from the **Controller**. Instead, we could access **Repository**
 directly from Controller and completely discard the application service.
-AspNet Zero does not enforce any architecture here. In AspNet Zero, we
+ASP.NET Zero does not enforce any architecture here. In ASP.NET Zero, we
 use the application layer (application services and DTOs). Therefore, we
 implemented it **independent** from ASP.NET MVC. This makes application
 layer re-usable from different presentation layers. But if you will only
@@ -666,7 +666,7 @@ We successfully retrieved list of people from database to the page.
 We normally use a javascript based rich table/grid library to show
 tabular data, instead of manually rendering data like that. For example,
 we used to use [jTable](http://jtable.org/) library to show users on the
-Users page of AspNet Zero. Always use such components since they make
+Users page of ASP.NET Zero. Always use such components since they make
 things much more easier and provides a much better user experience.
 
 We did not use a table component here, because we want to show basics of
@@ -2106,7 +2106,7 @@ the ASP.NET Zero system. We hope that it will help you to build your own
 application.
 
 We intentionally used different approaches for similar tasks to show you
-different styles of development. AspNet Zero provides an architecture
+different styles of development. ASP.NET Zero provides an architecture
 but does not restrict you. You can make your own style development.
 
 #### Source Code

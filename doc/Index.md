@@ -35,6 +35,6 @@ documentation.
 
 ### [METRONIC THEME](http://www.keenthemes.com/preview/metronic/)
 
-AspNet Zero is based on beautiful and powerful metronic **theme**. You
+ASP.NET Zero is based on beautiful and powerful metronic **theme**. You
 can see all metronic **pages, components**, change logs and more in it's
 official web site.

@@ -1384,7 +1384,7 @@ In this document, we built a complete example that covers most parts of
 the ASP.NET Zero Xamarin development.
 
 We intentionally used different approaches for similar tasks to show you
-different styles of development. AspNet Zero provides an architecture
+different styles of development. ASP.NET Zero provides an architecture
 but does not restrict you. You can make your own style development.
 
 #### Source Code

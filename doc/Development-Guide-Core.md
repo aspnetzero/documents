@@ -126,7 +126,7 @@ of tenancy name like:
 
     "WebSiteRootAddress": "http://{TENANCY_NAME}.mydomain.com/"
 
-Thus, AspNet Zero can automatically detect current tenant from URLs. If
+Thus, ASP.NET Zero can automatically detect current tenant from URLs. If
 you configure it as above, you should also redirect all subdomains to
 your application. To do that;
 
@@ -424,7 +424,7 @@ When we create a new tenant, we should select/create a database to store
 new tenant's data. We can select '**Use host database**' to store tenant
 data in host database (can be used for single database approach) or we
 can specify a connection string to create/use a **dedicated database**
-for new tenant. AspNet Zero supports **hybrid** approach. That means you
+for new tenant. ASP.NET Zero supports **hybrid** approach. That means you
 can use host database for some tenants and create dedicated databases
 for some other tenants. Even you can **group** some tenants in a
 separated database.
@@ -708,7 +708,7 @@ generated. You can see a sample invoice below:
 
 #### Visual Settings
 
-AspNet Zero's look of UI can be modified in visual settings page. This
+ASP.NET Zero's look of UI can be modified in visual settings page. This
 page is used to modify look of UI both for system and personal user
 accounts. If a user doesn't have permission to see this page, then user
 will see an item named "Visual Settings" in his personal menu.
@@ -729,7 +729,7 @@ Host settings page is used to configure some system settings:
 
 <img src="images/host-settings-general-6.png" alt="General Host Settings" class="img-thumbnail" />
 
-**Timezone** is an important setting in this page. AspNet Zero can work
+**Timezone** is an important setting in this page. ASP.NET Zero can work
 in multiple zones. Each user can see dates and times in their own time
 zone. Timezone setting in this page allows you to set default time zone
 for the application including all tenants and users. Tenants and users
@@ -1015,7 +1015,7 @@ page.
 
 ### Web.Host Application
 
-AspNet Zero solution contains an extra project, **Web.Host**, which just
+ASP.NET Zero solution contains an extra project, **Web.Host**, which just
 exposes all application functionality as **remote API**. Thus, you can
 consume your application as API from any device. Actually, Web.Mvc
 project also does it, provides API for all application functionality.
@@ -1038,7 +1038,7 @@ A few notes on Web.Host project:
 
 ### Migrator Console Application
 
-AspNet Zero includes a tool, Migrator.exe, to easily migrate your
+ASP.NET Zero includes a tool, Migrator.exe, to easily migrate your
 databases. You can run this application to create/migrate host and
 tenant databases.
 
@@ -1133,7 +1133,7 @@ should change them when you publish your project.
 
 #### Setup Page
 
-AspNet Zero application can be set-up using install page. This page is
+ASP.NET Zero application can be set-up using install page. This page is
 developed to create initial database, apply migrations and configure the
 application according to user's input on this page. Setup page can be
 accessed via **http://yourwebsite.com/Install**.
@@ -1192,7 +1192,7 @@ create regular MVC API Controllers as we always do.
 
 #### Localization
 
-ASP.NET Zero **User Interface** is completely localized. AspNet Zero
+ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero
 uses **dynamic, database based, per-tenant** localization (See the
 related section above).
 
@@ -1457,7 +1457,7 @@ you like.
 
 **.Net Core Compability**
 
-Since .net core does not support smpt client, AspNet Zero uses
+Since .net core does not support smpt client, ASP.NET Zero uses
 [MailKit](https://github.com/jstedfast/MailKit) to send emails.
 
 #### BinaryObjectManager
@@ -1535,7 +1535,7 @@ easier.
 #### CSRF/XSRF Protection
 
 ABP framework simplifies and automates CSRF protection as much as
-possible. AspNet Zero template comes with pre-configured and working out
+possible. ASP.NET Zero template comes with pre-configured and working out
 of the box. For more information please see ABP's [XSRF-CSRF-Protection
 documentation](https://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection#aspnet-core)
 

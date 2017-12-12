@@ -3,7 +3,7 @@
 This tutorial is a step by step guide to learn **how to add new
 properties to existing entities**, from database layer to UI layer.
 
-In AspNet Zero, **Tenant**, **User** and **Role** entities are
+In ASP.NET Zero, **Tenant**, **User** and **Role** entities are
 **abstract** in the framework, others are not. There are some
 differences between them. So, we seperated it into two sections.
 
@@ -337,7 +337,7 @@ We also added **auto mapping** for **MyEdition** entity. We could
 directly replace Edition by MyEdition if we will never use the Edition
 class. We left it like that to show different usages.
 
-Since AspNet Zero **does not** use auto mapping for creating (in
+Since ASP.NET Zero **does not** use auto mapping for creating (in
 CreateEditionAsync method) and updating (in UpdateEditionAsync method)
 editions, we should change these code too:
 

@@ -84,7 +84,7 @@ enough to make a re-build to recycle the application.
 
 #### Angular Route
 
-Angular has a powerful URL routing system. AspNet Zero has defined
+Angular has a powerful URL routing system. ASP.NET Zero has defined
 routes in a few places (for modularity, see [dev
 guide](Development-Guide-Angular.md)). We want to add phone book page
 to the main module. So, open **src\\app\\main\\main-routing.module.ts**
@@ -707,7 +707,7 @@ We successfully retrieved list of people from database to the page.
 We normally use a javascript based rich table/grid library to show
 tabular data, instead of manually rendering data like that. For example,
 we used [jTable](http://jtable.org/) library to show users on the Users
-page of AspNet Zero. Always use such components since they make things
+page of ASP.NET Zero. Always use such components since they make things
 much more easier and provides a much better user experience.
 
 We did not use a table component here, because we want to show basics of
@@ -838,7 +838,7 @@ for more information.
 
 #### Creating a Modal
 
-We will create a Bootstrap Modal to create a new person. AspNet Zero
+We will create a Bootstrap Modal to create a new person. ASP.NET Zero
 uses [ngx-bootstrap](https://github.com/valor-software/ngx-bootstrap)
 library to create modals (you can use another library, but we will use
 it in this sample too). Final modal will be like below:
@@ -2065,7 +2065,7 @@ the ASP.NET Zero system. We hope that it will help you to build your own
 application.
 
 We intentionally used different approaches for similar tasks to show you
-different styles of development. AspNet Zero provides an architecture
+different styles of development. ASP.NET Zero provides an architecture
 but does not restrict you. You can make your own style development.
 
 #### Source Code

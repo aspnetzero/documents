@@ -112,7 +112,7 @@ of tenancy name like:
 
     <add key="WebSiteRootAddress" value="http://{TENANCY_NAME}.mydomain.com/" />
 
-Thus, AspNet Zero can automatically detect current tenant from URLs. If
+Thus, ASP.NET Zero can automatically detect current tenant from URLs. If
 you configure it as above, you should also redirect all subdomains to
 your application. To do that;
 
@@ -483,7 +483,7 @@ When you create a new tenant, you should select/create a database to
 store the new tenant's data. You can select '**Use host database**' to
 store tenant data in host database (can be used for single database
 approach) or you can specify a connection string to create/use a
-**dedicated database** for the new tenant. AspNet Zero supports a
+**dedicated database** for the new tenant. ASP.NET Zero supports a
 **hybrid** approach. That means you can use host database for some
 tenants and create dedicated databases for other tenants. You can even
 **group** some tenants in a separated database.
@@ -734,7 +734,7 @@ The host settings page is used to configure some system settings:
 
 <img src="images/host-settings-general-5.png" alt="General host settings" class="img-thumbnail" width="737" height="243" />
 
-**Timezone** is an important setting on this page. AspNet Zero can work
+**Timezone** is an important setting on this page. ASP.NET Zero can work
 in multiple timezones. While it's easy to change, default startup
 solution does not enable UTC datetimes. See [timing
 document](https://aspnetboilerplate.com/Pages/Documents/Timing) to know
@@ -1045,7 +1045,7 @@ The header, footer and siderbar are developed as partial views.
 
 ### Migrator Console Application
 
-AspNet Zero includes a tool, Migrator.exe, to easily migrate your
+ASP.NET Zero includes a tool, Migrator.exe, to easily migrate your
 databases. You can run this application to create/migrate host and
 tenant databases.
 
@@ -1090,7 +1090,7 @@ regular Web API Controllers as you might normally do. 
 
 #### Localization
 
-The ASP.NET Zero **User Interface** is completely localized. AspNet Zero
+The ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero
 uses **dynamic, database based, per-tenant** localization (see the
 related section above).
 
@@ -1373,7 +1373,7 @@ really make Logging, Localization, Authorization, etc. easier.
 #### CSRF/XSRF Protection
 
 ABP framework simplifies and automates CSRF protection as much as
-possible. AspNet Zero template comes with CSRF protection pre-configured
+possible. ASP.NET Zero template comes with CSRF protection pre-configured
 and working out of the box. For more information please see ABP's
 [XSRF-CSRF-Protection
 documentation](https://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection)
@@ -1389,10 +1389,10 @@ application version.
 
 ### Token Based Authentication
 
-AspNet Zero uses cookie based authentication for browsers. However, if
+ASP.NET Zero uses cookie based authentication for browsers. However, if
 you want to consume Web APIs or application services (those are exposed
 via dynamic web api) from a mobile application, you probably want a
-token based authentication mechanism. AspNet Zero includes bearer token
+token based authentication mechanism. ASP.NET Zero includes bearer token
 authentication infrastructure. **AccountController** in **.WebApi**
 project contains an **Authenticate** action to get the token. Then you
 can use the token for subsequent requests.
@@ -1458,7 +1458,7 @@ project. Open Test Explorer (Test\\Windows\\Test Explorer in VS main
 menu) to run unit tests:
 
 A new setting named **MultiTenancyEnabled** is introduced for unit test
-project with AspNet Zero v2.2. If you disable multi tenancy in your Core
+project with ASP.NET Zero v2.2. If you disable multi tenancy in your Core
 module, you also need to change this setting's value to false in unit
 test project's App.config. In this way, test related to multi tenancy
 will not be executed. Because some unit tests (tenant creation, edition
