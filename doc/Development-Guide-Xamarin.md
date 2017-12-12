@@ -235,7 +235,7 @@ Android Project Structure
     ask user for enabling internet. Finally *SplashActivity* directly
     routes to *MainActivity*.
 -   **MainActivity** This is the main startup Activity for the
-    application. In this activity, platform specific intializations are
+    application. In this activity, platform specific initializations are
     done. Unobserved and Unhandled exceptions handlers are registered
     here with *ExceptionHandler* class. Finally *MainActivity* routes to
     App class which is in the shared project.
