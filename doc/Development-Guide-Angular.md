@@ -26,7 +26,7 @@ Following tools are needed in order to use the solution:
 
 -   [Nodejs 6.9+ and Npm 3.10+](https://nodejs.org)
 -   [Typescript 2.0+](https://www.typescriptlang.org/)
--   [Yarn](https://yarnpkg.com/lang/en/)
+-   [yarn](https://yarnpkg.com/)
 
 In addition, see [ASP.NET Core](Development-Guide-Core.md)
 documentation for server side requirements and other server side
