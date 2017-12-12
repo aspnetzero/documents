@@ -348,15 +348,15 @@ empty templates to add a new blank page.
 
 ###### Dependency Injection
 
-ASP.NET Zero Xamarin uses Asp.Net Boilerplate Framework's dependency
+ASP.NET Zero Xamarin uses ASP.NET Boilerplate Framework's dependency
 injection system. Therefore it uses [Castle
 Windsor](http://www.castleproject.org/projects/windsor/) as an Inversion
 of Control container. To resolve dependencies; you can use constructor
 or property injection, beside there's a shortcut class called
 *DependencyResolver,* which can be used to resolve dependencies as well.
-Asp.Net Boilerplate provides *ITransientDependency* and
+ASP.NET Boilerplate provides *ITransientDependency* and
 *ISingletonDependency* interfaces as a shortcut to register classes. See
-[Asp.Net Boilerplate Dependency
+[ASP.NET Boilerplate Dependency
 Injection](https://aspnetboilerplate.com/Pages/Documents/Dependency-Injection/)
 
 ###### Communicating with Host Api
@@ -569,7 +569,7 @@ you can read the Xamarin official guides;
 
 List of libraries are used to build ASP.NET Zero Xamarin project;
 
--   [Asp.Net Boilerplate](https://aspnetboilerplate.com/)
+-   [ASP.NET Boilerplate](https://aspnetboilerplate.com/)
 -   [Acr.UserDialogs](https://github.com/aritchie/userdialogs)
 -   [ModernHttpClient](https://github.com/paulcbetts/ModernHttpClient)
 -   [PCLStorage](https://github.com/dsplaisted/PCLStorage)

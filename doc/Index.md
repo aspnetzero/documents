@@ -27,7 +27,7 @@ Change logs and relase notes.
 
 Some planned features for next releases.
 
-### [ASP.NET BOILERPLATE](https://aspnetboilerplate.com/Pages/Documents)
+### [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents)
 
 ASP.NET Zero is based on ASP.NET Boilerplate **application framework**.
 You can learn all it's features from it's compherensive official

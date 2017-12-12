@@ -43,9 +43,9 @@ In the ProxyAppServiceBase class you'll see *ApiClient* which is being
 used to call host web Api methods. We'll use *ApiClient* to transfer
 data with host.
 
-##### ApiClient has **post, put, get, delete** http methods. To decide which needs to be called for the corresponding method you can read [Asp.Net Boilerplate Application Services as Controllers](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers)
+##### ApiClient has **post, put, get, delete** http methods. To decide which needs to be called for the corresponding method you can read [ASP.NET Boilerplate Application Services as Controllers](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers)
 
-To summarize that document; Asp.Net Boilerplate framework uses
+To summarize that document; ASP.NET Boilerplate framework uses
 **ConventionalHttpVerbs** by default. This means there's a naming
 convention while implementing app service methods.
 
