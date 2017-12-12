@@ -169,7 +169,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 -   Upgraded to ABP v0.10.1.3.
 -   Upgraded to metronic v4.6
 -   Upgraded to SignalR v2.2.1
--   Upgraded to angular ui grid v3.2.1
+-   Upgraded to angular-ui-grid v3.2.1
 -   Upgraded to angularjs v1.5.6 and Angular.UI.Bootstrap v1.3.3.
 -   Other minor improvements and fixes
 
@@ -211,7 +211,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 ### v1.8.2 (2016-02-29)
 
--   Localization support for ui-grid.
+-   Localization support for angular-ui-grid.
 -   New cache maintenance page.
 -   Local fallback for google fonts.
 -   Upgraded to ABP v0.8.2.
