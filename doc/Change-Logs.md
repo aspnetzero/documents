@@ -71,7 +71,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 ### v4.0.0 (2017-04-24)
 
--   **.net core** support to create cross platform web solutions.
+-   **.NET Core** support to create cross platform web solutions.
 -   Moved to **Entity Framework Core** and **ASP.NET Core Identity**.
 -   **Docker** files included to deploy as containers.
 -   Spanish (Mexico) localization.

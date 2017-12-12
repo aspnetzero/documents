@@ -782,9 +782,9 @@ system, then generally even **no need** to set Domain name, user and
 password. You can logout and then login with your **domain user name and
 password**. If not, you should set these credentials.
 
-**.Net Core Compability**
+**.NET Core Compability**
 
-LDAP Authentication is not supportted by .net core yet. Thus, it's
+LDAP Authentication is not supportted by .NET Core yet. Thus, it's
 designed to be conditional. If you are using .Net Framework (4.6+) then
 it will be available, otherwise it will be disabled.
 
@@ -873,10 +873,10 @@ All notifications of user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.Net Core Compability**
+**.NET Core Compability**
 
-Since SignalR is not ready yet for .net core, real time notifications
-will not work if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, real time notifications
+will not work if you select .NET Core as your base framework.
 
 #### Chat
 
@@ -939,10 +939,10 @@ online users and unread message count from each friend.
 friends cache up to date. In order to do that, it watches some events of
 Friendship and ChatMessage entities.
 
-**.Net Core Compability**
+**.NET Core Compability**
 
-Since SignalR is not ready yet for .net core, chat feature will not work
-if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, chat feature will not work
+if you select .NET Core as your base framework.
 
 ##### Chat Features
 
@@ -1376,10 +1376,10 @@ use SignalR in the application. See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information on SignalR.
 
-**.Net Core Compability**
+**.NET Core Compability**
 
-Since SignalR is not ready yet for .net core, SignalR integration is
-disabled if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, SignalR integration is
+disabled if you select .NET Core as your base framework.
 
 #### Logging
 
@@ -1455,9 +1455,9 @@ enable it if you want. It's enabled in RELEASE mode. Check
 *YourProjectName*CoreModule class's PreInitialize method to change it if
 you like.
 
-**.Net Core Compability**
+**.NET Core Compability**
 
-Since .net core does not support smpt client, ASP.NET Zero uses
+Since .NET Core does not support smpt client, ASP.NET Zero uses
 [MailKit](https://github.com/jstedfast/MailKit) to send emails.
 
 #### BinaryObjectManager

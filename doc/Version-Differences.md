@@ -9,7 +9,7 @@ this document, we will highlight these differences.
 Beginning from [v4.1](Change-Logs.md), we are more focused to
 **ASP.NET Core** based solutions (rather than ASP.NET MVC 5.x) since
 ASP.NET Core is Microsoft's new ASP.NET version. That means our new
-major features will be implemented for ASP.NET Core version (.net core &
+major features will be implemented for ASP.NET Core version (.NET Core &
 full .net framework).
 
 #### Angular v.s. Angularjs 1.x
