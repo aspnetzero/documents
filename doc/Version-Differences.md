@@ -23,7 +23,7 @@ implemented for Angular framework.
 
 The table below shows **only the differences, not all features**.
 
-| Feature                                  | ASP.NET Core & Angular  | ASP.NET Core & JQuery   | ASP.NET MVC 5.x & AngularJS | ASP.NET MVC 5.x & JQuery |
+| Feature                                  | ASP.NET Core & Angular  | ASP.NET Core & jQuery   | ASP.NET MVC 5.x & AngularJS | ASP.NET MVC 5.x & jQuery |
 | ---------------------------------------- | ----------------------- | ----------------------- | --------------------------- | ------------------------ |
 | User Interface (theme)                   | Metronic v5.x           | Metronic v5.x           | Metronic v4.6.x             | Metronic v4.6.x          |
 | ORM                                      | EF Core                 | EF Core                 | EF 6.x                      | EF 6.x                   |

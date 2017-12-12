@@ -1152,7 +1152,7 @@ We suggest you to start by checking this class. It is also integrated to
 #### NPM & Front End Dependencies
 
 ASP.NET Zero solution uses [npm](https://www.npmjs.com/) package manager
-to obtain front end library dependencies (like Bootstrap and jquery).
+to obtain front end library dependencies (like Bootstrap and jQuery).
 So, you can easily add new packages or update existing packages on
 command line interface. You can see all installed npm packages in
 **package.json** of the .Web.Mvc project.

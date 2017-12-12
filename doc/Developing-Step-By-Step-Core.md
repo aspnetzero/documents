@@ -1839,7 +1839,7 @@ will see PhoneBookController.AddPhone action in the next section).
 
 Lastly, we deleting the phone when clicking to the '**delete phone**'
 button and remove the related phone row (tr) from DOM. Notice the event
-registration here. We used **on** function of jQuery. Thus, the selector
+registration here. We used **on** function of jquery. Thus, the selector
 becomes **live**. That means, if we add new elements to the page and any
 element matches to the selector, it's click event is automatically
 binded.

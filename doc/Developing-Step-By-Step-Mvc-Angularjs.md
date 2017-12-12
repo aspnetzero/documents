@@ -38,7 +38,7 @@ disable multi-tenancy as shown below:
 #### Switch to MPA
 
 Do not skip to switch default application to the MPA version (click "See
-Demo for Multi-Page Application version with ASP.NET MVC and JQuery").
+Demo for Multi-Page Application version with ASP.NET MVC and jQuery").
 
 ### Adding a New Page
 

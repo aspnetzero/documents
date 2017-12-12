@@ -45,7 +45,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 -   Show **payment history** to tenants.
 -   Implement **phone number confirmation**.
 -   Change all data tables by [**datatables**](https://datatables.net/)
-    jquery plugin for ASP.NET Core & jQuery version.
+    jQuery plugin for ASP.NET Core & jQuery version.
 -   Change all data tables by
     [**PrimeNg**](https://www.primefaces.org/primeng/) for ASP.NET Core
     & Angular version.
