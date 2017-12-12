@@ -18,7 +18,7 @@ available for ASP.NET Core included Angular UI and Mvc UI.
 Following tools are needed in order to develop ASP.NET Zero Xamarin:
 
 -   [Visual Studio 2017 v15.4.4](https://www.visualstudio.com)+
--   MAC for IOS simulator
+-   Mac for IOS simulator
 
 ASP.NET Zero Xamarin applications can be written for the following
 operating systems:
