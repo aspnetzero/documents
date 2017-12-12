@@ -162,7 +162,7 @@ PeopleView.xaml
 
 #### Creating PeopleViewModel
 
-Asp.Net Zero Xamarin app uses
+ASP.NET Zero Xamarin app uses
 [MVVM](https://developer.xamarin.com/guides/xamarin-forms/enterprise-application-patterns/mvvm/)
 pattern. So each view should have a view-model. According to
 conventional view-model binding, view-model file names <span

@@ -4,13 +4,13 @@ Xamarin is a cross-platform UI toolkit that allows developers to
 efficiently create native cross platform user interface layouts.  
 This document is intended to show how to setup a Xamarin development
 environment and introduce existing features and user interfaces on
-Asp.Net Zero Xamarin platform. For an overview of the Xamarin
+ASP.NET Zero Xamarin platform. For an overview of the Xamarin
 installation and setup practices see [Xamarin.Forms
 Requirements](https://developer.xamarin.com/guides/xamarin-forms/getting-started/installation/)
 and
 [Installation](https://developer.xamarin.com/guides/cross-platform/getting_started/installation/).  
-For an overview of the Asp.Net Zero getting started see [Asp.Net Zero
-Getting Started.](Getting-Started-Core) The Asp.Net Zero Xamarin is only
+For an overview of the ASP.NET Zero getting started see [ASP.NET Zero
+Getting Started.](Getting-Started-Core) The ASP.NET Zero Xamarin is only
 available for ASP.NET Core included Angular UI and Mvc UI.
 
 #### Prerequisites
@@ -20,7 +20,7 @@ Following tools are needed in order to develop ASP.NET Zero Xamarin:
 -   [Visual Studio 2017 v15.4.4](https://www.visualstudio.com)+
 -   MAC for IOS simulator
 
-Asp.Net Zero Xamarin applications can be written for the following
+ASP.NET Zero Xamarin applications can be written for the following
 operating systems:
 
 -   iOS 8 or higher
@@ -194,7 +194,7 @@ simulator from list and press start button.
   
 
  [Xamarin Live Player](https://www.xamarin.com/live/) currently does not
-support some of the key features. Thus Asp.Net Zero Xamarin application
+support some of the key features. Thus ASP.NET Zero Xamarin application
 cannot be debugged on Xamarin Live Player. Further information read
 [Xamarin Live Player
 limitations.](https://developer.xamarin.com/guides/cross-platform/live/limitations/)
@@ -202,13 +202,13 @@ limitations.](https://developer.xamarin.com/guides/cross-platform/live/limitatio
  [LiveXAML](https://www.livexaml.com/) is a Xaml previewer runs while
 you are debugging your application. Whenever you save any XAML file, it
 automatically updates the running application. LiveXAML is a paid
-product. If you want to purchase LiveXAML, Asp.Net Zero customers get
+product. If you want to purchase LiveXAML, ASP.NET Zero customers get
 %30 discount.
 
 ### Xamarin.Forms
 
 A key component of building cross-platform applications is being able to
-share code across various platform-specific projects. Asp.Net Zero
+share code across various platform-specific projects. ASP.NET Zero
 Xamarin is using Xamarin.Forms to maximize code sharing between two end
 platforms (IOS & Android). It is expected to write shared codes in
 Mobile.Shared project so that it will be used in both IOS and Android.
@@ -217,7 +217,7 @@ abstractions in shared project and implement/extend in end platforms.
 
 #### Mobile.Droid
 
-Xamarin Android project has a very basic structure. Asp.Net Zero adds or
+Xamarin Android project has a very basic structure. ASP.NET Zero adds or
 modifies these files in the default project;
 
 <img src="images/xamarin-android-project-structure.png" alt="Android Project Structure" class="img-thumbnail" />
@@ -258,7 +258,7 @@ Android Project Structure
 
 ** Information**
 
-Asp.Net Zero Xamarin changed the output path (bin) and intermediate
+ASP.NET Zero Xamarin changed the output path (bin) and intermediate
 output path (obj) of Android project to be shorter. The main reason of
 this is avoiding "[Path too long
 exception](https://developer.xamarin.com/api/type/System.IO.PathTooLongException/)"
@@ -274,7 +274,7 @@ Mobile.iOS.csproj in notepad and find replace all occurrences of
 
 IOS Structure
 
-Xamarin IOS project has a very simple structure. Asp.Net Zero adds or
+Xamarin IOS project has a very simple structure. ASP.NET Zero adds or
 modifies these files in the default project;
 
 -   **Locale** This class is an adapter between .Net cultures and IOS
@@ -328,7 +328,7 @@ View and the ViewModel are often connected through data bindings defined
 in the XAML file. The BindingContext for the View is always an instance
 of the ViewModel.
 
-Asp.Net Zero has a built-in feature that binds View with ViewModel.
+ASP.NET Zero has a built-in feature that binds View with ViewModel.
 BindingContext for a view is automatically set when
 **AutoWireViewModel** flag set to true in xaml. There's a naming
 convention between ViewModels and Views. A xaml filename must end with
@@ -348,7 +348,7 @@ empty templates to add a new blank page.
 
 ###### Dependency Injection
 
-Asp.Net Zero Xamarin uses Asp.Net Boilerplate Framework's dependency
+ASP.NET Zero Xamarin uses Asp.Net Boilerplate Framework's dependency
 injection system. Therefore it uses [Castle
 Windsor](http://www.castleproject.org/projects/windsor/) as an Inversion
 of Control container. To resolve dependencies; you can use constructor
@@ -454,7 +454,7 @@ it can be retrieved with injecting *IApplicationContext*.
 <img src="images/xamarin-menu.png" alt="Shared Project Structure" class="img-thumbnail" />
 
 MainView is responsible for navigation service. Xamarin.Forms provides a
-number of different page navigation experiences, Asp.Net Zero Xamarin
+number of different page navigation experiences, ASP.NET Zero Xamarin
 uses
 [MasterDetailPage](https://developer.xamarin.com/guides/xamarin-forms/application-fundamentals/navigation/master-detail-page/).
 The Xamarin.Forms

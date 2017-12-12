@@ -1,4 +1,4 @@
-### ASP.NET ZERO
+### ASP.NET Zero
 
 #### [GETTING STARTED](Getting-Started.md)
 
