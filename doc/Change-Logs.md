@@ -170,14 +170,14 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 -   Upgraded to metronic v4.6
 -   Upgraded to SignalR v2.2.1
 -   Upgraded to angular-ui-grid v3.2.1
--   Upgraded to angularjs v1.5.6 and Angular.UI.Bootstrap v1.3.3.
+-   Upgraded to angularjs v1.5.6 and angular-ui-bootstrap v1.3.3.
 -   Other minor improvements and fixes
 
 ### v1.10.1 (2016-05-18)
 
 -   Upgraded to ABP v0.9.1.
 -   Upgraded to Angular v1.5.5.
--   Upgraded to Angular-UI bootstrap v1.3.2.
+-   Upgraded to angular-ui-bootstrap v1.3.2.
 -   Minor improvements and fixes.
 
 ### v1.10.0 (2016-05-10)
@@ -240,7 +240,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 ### v1.7.1 (2016-01-08)
 
--   Changed deprecated angular ui-bootstrap components to new ones.
+-   Changed deprecated angular-ui-bootstrap components to new ones.
 -   Upgraded ABP and other nuget packages.
 -   Minor bugfix and and improvements.
 
