@@ -279,7 +279,7 @@ we'll use Android platform to test the sample. Hence set the startup
 project to **Acme.PhoneBookDemo.Mobile.Droid**.
 
 If you've already started Android emulator, you can directly run the
-project. But if you've not started the emulator yet, it's adviced to you
+project. But if you've not started the emulator yet, it's advised to you
 to start the emulator first from the Visual Studio Toolbar like shown
 below... The reason of initializing emulator is; sometimes Visual Studio
 cannot make initial connection to the emulator for the first run. So
@@ -435,7 +435,7 @@ So **PeopleViewModel** class needs to have a property called **Persons**
 and a command called **PageAppearingCommand**.
 
 The **ProxyPersonAppService GetPeople** method returns
-**ListResultDto&lt;PersonListDto&gt;.** It is not conveniant to directly
+**ListResultDto&lt;PersonListDto&gt;.** It is not convenient to directly
 use the DTO object from server. The main reason is DTO doesn't implement
 **INotifyPropertyChanged** interface. To overcome this issue, we create
 a new mapping class. This mapping class is used to name as Model.
@@ -1063,7 +1063,7 @@ email address**.
 
 -   Open **PersonDetailsViewModel.cs** and add the highlighted codes.
 
-    We inject **IPermissionService** to check wheter user has delete
+    We inject **IPermissionService** to check whether user has delete
     permission. The delete button will be visible if user has
     permission. The delete button is binded to **IsDeleteButtonVisible**
     property. We create the **DeletePersonCommand**. In this command we

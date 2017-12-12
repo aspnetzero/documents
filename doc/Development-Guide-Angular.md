@@ -305,7 +305,7 @@ section.*
 
 Most **SaaS** (multi-tenant) applications have **editions** (packages)
 those have different **features**. Thus, they can provide different
-**price and feature options** to thier tenants (customers). **Editions
+**price and feature options** to their tenants (customers). **Editions
 page** (available in host login) is used to manage application's
 editions:
 
@@ -323,7 +323,7 @@ expire strategy: How many days to allow a tenant to use the application
 after subscription expires. And finally, you can deactivate tenant or
 assign to a free edition if they don't extend their subscription.
 
-Features tab is used to determing features available for the edition:
+Features tab is used to determining features available for the edition:
 
 <img src="images/edition-feature-editing-core-1.png" alt="Edit edition features" class="img-thumbnail" />
 
@@ -674,7 +674,7 @@ system, then generally even **no need** to set Domain name, user and
 password. You can logout and then login with your **domain user name and
 password**. If not, you should set these credentials.
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 LDAP Authentication is not supportted by .NET Core yet. Thus, it's
 designed to be conditional. If you are using .Net Framework (4.6+) then
@@ -745,7 +745,7 @@ All notifications of the user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 Since SignalR is not ready yet for .NET Core, real time notifications
 will not work if you select .NET Core as your base framework.
@@ -800,7 +800,7 @@ with host", "Chat with other tenants". These features can be
 enabled/disabled per edition/tenant. By using these features host can
 enable/disable chat with other tenant's users or host users.
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 Since SignalR is not ready yet for .NET Core, chat feature will not work
 if you select .NET Core as your base framework.
@@ -941,7 +941,7 @@ documentations for more information on localization.
 ASP.NET Zero uses ABP's [exception
 handling](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#exception-filter)
 system. Thus, you don't need to handle & care about exceptions in most
-time. All server side exceptions are gracefuly handled and an
+time. All server side exceptions are gracefully handled and an
 appropriate message is shown to the user.
 
 #### Authorization
@@ -985,7 +985,7 @@ See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information.
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 Since SignalR is not ready yet for .NET Core, SignalR integration is
 disabled if you select .NET Core as your base framework.

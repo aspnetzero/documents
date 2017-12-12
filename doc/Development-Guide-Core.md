@@ -66,7 +66,7 @@ There are 12 projects in the solution:
     device can consume your application as API.
 -   **Web.Common** project contains common classes used by Mvc and Host
     projects.
--   **Web.Public** project is a seperated web application that can be
+-   **Web.Public** project is a separated web application that can be
     used to create a public web site or a landing page for your
     application.
 -   **Migrator** project is a console application that runs database
@@ -92,7 +92,7 @@ ASP.NET Zero solution contains **four** applications:
 #### Multi tenancy
 
 Multi-tenancy is used to build **SaaS** (Software as a Service)
-applications easily. Wtih this technique, we can deploy **single
+applications easily. With this technique, we can deploy **single
 application** to serve to **multiple customers**. Each Tenant will have
 it's own **roles**, **users** and **settings**.
 
@@ -144,7 +144,7 @@ is used by the [Angular](Developing-Step-By-Step-Angular.md) UI. If
 you are not using Angular UI, you can ignore it. Finally,
 "**CorsOrigins**" setting is used to allow some domains for cross origin
 requests. This is also useful when you are hosting your Angular UI in a
-seperated server/domain.
+separated server/domain.
 
 ### Account Controller
 
@@ -153,7 +153,7 @@ password** and **email activation** pages.
 
 #### Layout
 
-Account management pages have a seperated **\_Layout** view under
+Account management pages have a separated **\_Layout** view under
 **Views/Account** folder:
 
 <img src="images/account-views-core-v2.png" alt="Account Views" class="img-thumbnail" width="216" height="214" />
@@ -362,7 +362,7 @@ section.*
 
 Most **SaaS** (multi-tenant) applications have **editions** (packages)
 those have different **features**. Thus, they can provide different
-**price and feature options** to thier tenants (customers). **Editions
+**price and feature options** to their tenants (customers). **Editions
 page** (available in host login) is used to manage application's
 editions:
 
@@ -380,7 +380,7 @@ expire strategy: How many days to allow a tenant to use the application
 after subscription expires. And finally, you can deactivate tenant or
 assign to a free edition if they don't extend their subscription.
 
-Features tab is used to determing features available for the edition:
+Features tab is used to determining features available for the edition:
 
 <img src="images/edition-feature-editing-core-1.png" alt="Edit edition features" class="img-thumbnail" />
 
@@ -782,7 +782,7 @@ system, then generally even **no need** to set Domain name, user and
 password. You can logout and then login with your **domain user name and
 password**. If not, you should set these credentials.
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 LDAP Authentication is not supportted by .NET Core yet. Thus, it's
 designed to be conditional. If you are using .Net Framework (4.6+) then
@@ -873,7 +873,7 @@ All notifications of user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 Since SignalR is not ready yet for .NET Core, real time notifications
 will not work if you select .NET Core as your base framework.
@@ -919,7 +919,7 @@ icon right of the selected user's username. This icon opens an action
 menu and this menu contains block user or unblock user actions according
 to user's block status.
 
-Chat messages are distrubited over **ChatHub** signalR hub class which
+Chat messages are distributed over **ChatHub** signalR hub class which
 uses **ChatMessageManager** domain class.
 
 **ChatUserStateWatcher** class is responsible for watching
@@ -939,7 +939,7 @@ online users and unread message count from each friend.
 friends cache up to date. In order to do that, it watches some events of
 Friendship and ChatMessage entities.
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 Since SignalR is not ready yet for .NET Core, chat feature will not work
 if you select .NET Core as your base framework.
@@ -1046,7 +1046,7 @@ tenant databases.
 
 This application gets host connection string from it's **own
 appsettings.json file**. It will be same as in the appsettings.json in
-.Web project at the beggining. Be sure that the connection string in
+.Web project at the beginning. Be sure that the connection string in
 config file is the database you want. After getting **host**
 **connection sring**, it first creates the host database or apply
 migrations if it does already exists. Then it gets connection strings of
@@ -1062,7 +1062,7 @@ single database in one run).
 
 ### Public Web Site
 
-ASP.NET Zero contains a seperated application that can be a starting
+ASP.NET Zero contains a separated application that can be a starting
 point for your public web site or a landing page for your application.
 Set **Web.Public** as **Startup Project** and run the application:
 
@@ -1376,7 +1376,7 @@ use SignalR in the application. See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information on SignalR.
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 Since SignalR is not ready yet for .NET Core, SignalR integration is
 disabled if you select .NET Core as your base framework.
@@ -1455,7 +1455,7 @@ enable it if you want. It's enabled in RELEASE mode. Check
 *YourProjectName*CoreModule class's PreInitialize method to change it if
 you like.
 
-**.NET Core Compability**
+**.NET Core Compatibility**
 
 Since .NET Core does not support smpt client, ASP.NET Zero uses
 [MailKit](https://github.com/jstedfast/MailKit) to send emails.
@@ -1473,7 +1473,7 @@ A general-purpose binary saving mechanism built in ASP.NET Zero.
 user profile pictures are saved here.
 
 **IBinaryObjectManager** interface defines methods to save, get and
-delete binary objects. **DbBinaryObjectManager** implementes it to save
+delete binary objects. **DbBinaryObjectManager** implements it to save
 binary object in database. For example, **ProfileController** uses
 IBinaryObjectManager to get current user's profile picture from
 database.
@@ -1485,7 +1485,7 @@ interface to store files in another destination.
 
 It's common to use the **soft-delete** pattern which is used to not
 delete an entity from database but only mark it as 'deleted'. So, if an
-entity is soft-deleted, it should not be accidently retrieved into the
+entity is soft-deleted, it should not be accidentally retrieved into the
 application. ABP's **data filters** make this automatically.
 
 In ASP.NET Zero, most entities are soft-deleted. See ABP's [data filter
@@ -1771,7 +1771,7 @@ should be independently configured.
     cache
     provider](https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration).
 -   "**App:WebSiteRootAddress**": Root URL of this application.
--   "**App:RedirectAllowedExternalWebSites**": A comma seperated list of
+-   "**App:RedirectAllowedExternalWebSites**": A comma separated list of
     root URLs those are allowed to be redirected once user logins. For
     security reasons, ASP.NET Zero only redirects to local URLs except
     this list. If you will use the public web site, you should add it's

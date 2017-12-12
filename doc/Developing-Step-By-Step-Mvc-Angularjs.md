@@ -152,7 +152,7 @@ Creating an empty Controller file, **index.js** under
 This is the minimum controller definition that creates a controller
 named '**tenant.views.phonebook.index**' and triggers Metronic's init
 method for this page. Controller name is completely arbitrary. You can
-set any string. We use this naming **as convention** and it's adviced to
+set any string. We use this naming **as convention** and it's advised to
 follow this convention when developing applications based on ASP.NET
 Zero.
 
@@ -317,7 +317,7 @@ some classes to fill initial data for users and settings:
 
 <img src="images/phonebook-seed-files-1.png" alt="Entity Framework seed data" class="img-thumbnail" />
 
-So, we can add a seperated class to fill some people to database as
+So, we can add a separated class to fill some people to database as
 shown below:
 
     public class InitialPeopleCreator
@@ -690,7 +690,7 @@ Here, the implementation of CreatePerson method:
 
 A Person entity is created by mapping given input, then inserted to
 database. We used **async/await** pattern here. All methods in ASP.NET
-Zero startup project is **async**. It's adviced to use async/await
+Zero startup project is **async**. It's advised to use async/await
 wherever possible.
 
 #### Test CreatePerson Method
@@ -1391,7 +1391,7 @@ entity. Now, we can change GetPeople method to get Phones from database:
 We only added **Include** extension method to the query. Rest of the
 codes remains same. Furthermore, it would work without adding this, but
 much slower (since it will lazy load phone numbers for every person
-seperately).
+separately).
 
 ### AddPhone and DeletePhone Methods
 
@@ -1401,7 +1401,7 @@ below:
     Task DeletePhone(EntityDto<long> input);
     Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
 
-We could create a new, seperated IPhoneAppService. It's your choice.
+We could create a new, separated IPhoneAppService. It's your choice.
 But, we can consider Person as an aggregate and add phone related
 methods here. AddPhoneInput DTO is shown below:
 

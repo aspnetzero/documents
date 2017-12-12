@@ -62,7 +62,7 @@ ASP.NET Zero solution contains **four** applications:
     application which is entered by username and password. It's built as
     a SPA with AngularJs.
 -   **MVC Back End Multi-Page Application**: This has identical
-    functionallity with the Angular application but is built using MVC
+    functionality with the Angular application but is built using MVC
     and jQuery (no AngularJs).
 -   **Migrator**: Console application that runs database migrations.
 
@@ -74,7 +74,7 @@ project, or vice versa.
 #### Multi tenancy
 
 Multi-tenancy is used to build **SaaS** (Software as a Service)
-applications easily. Wtih this technique, we can deploy **single
+applications easily. With this technique, we can deploy **single
 application** to serve to **multiple customers**. Each Tenant will have
 it's own **roles**, **users** and **settings**.
 
@@ -178,7 +178,7 @@ password** and **email activation** pages.
 
 #### Layout
 
-Account management pages have a seperate **\_Layout** view under
+Account management pages have a separate **\_Layout** view under
 **Views/Account** folder:
 
 <img src="images/account-views.png" alt="Account Controller Views" class="img-thumbnail" width="214" height="324" />
@@ -909,7 +909,7 @@ When a friend/user is selected, the conversation panel is opened.
 
 <img src="images/chat-conversation.png" alt="User menu" class="img-thumbnail" />
 
-A user can block or unblock thier friends/other users in this area.
+A user can block or unblock their friends/other users in this area.
 There is a wrench icon to the right of the selected user's username.
 This icon opens an action menu that contains "block user" or "unblock
 user" actions according to the target user's block status.
@@ -1008,13 +1008,13 @@ Login page.
 ### MVC Back End Multi Page Application
 
 The same backend application is also available as a **MPA** using
-ASP.NET **MVC**, **Web API** and **jQuery**. All functionallity is
+ASP.NET **MVC**, **Web API** and **jQuery**. All functionality is
 identical with the SPA Angular application. It uses the same application
 services to perform actions. This is a screenshot from the application:
 
 <img src="images/mpa-screenshot.png" alt="Multi Page Application Screenshot" class="img-thumbnail" width="1056" height="805" />
 
-Since all functionallity is identical, you can read the SPA section
+Since all functionality is identical, you can read the SPA section
 above to understand the application. A few differences in setup are
 explained below.
 
@@ -1323,7 +1323,7 @@ destination.
 
 It's common to use the **soft-delete** pattern which is used to not
 delete an entity from the database but only mark it as 'deleted.' Thus,
-if an entity is soft-deleted, it will not be accidently retrieved into
+if an entity is soft-deleted, it will not be accidentally retrieved into
 the application. ABP's **data filters** make this happen automatically.
 
 In ASP.NET Zero, most entities are soft-deleted. See ABP's [data filter
@@ -1358,7 +1358,7 @@ There are some useful base classes used in the application:
 -   PhoneBook**WebViewPageBase** can be used as a base class for ASP.NET
     **MVC Views**. Actually, all views will automatically inherit this
     since it is defined in the web.config files. You can add some common
-    properties/methods htere to use it in all views.
+    properties/methods there to use it in all views.
 -   PhoneBook**ServiceBase** can be used as a base class for other
     service-like classes. UserEmailer class inherits it, for instance.
 -   PhoneBook**RepositoryBase** can be used as a base class for [custom

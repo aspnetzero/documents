@@ -62,7 +62,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 -   **Paypal** integration for tenant subscriptions.
 -   **IdentityServer4** integration.
 -   **Host dashboard** for edition, tenant & income statistics.
--   **Public web site** is moved to a seperated project (and
+-   **Public web site** is moved to a separated project (and
     authentication integrated to the main application).
 -   Renewed sample **tenant dashboard**.
 -   Converted **unit tests** to use **SQLite in memory** database.

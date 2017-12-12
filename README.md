@@ -6,7 +6,7 @@ ASP.NET Zero is a starting point for new web applications with a modern UI and s
 
 ![A screenshot from ASP.NET Zero](doc/images/dashboardV3.png)
 
-* Read the documentation from the offical web site: http://aspnetzero.com/Documents
+* Read the documentation from the official web site: http://aspnetzero.com/Documents
 
 ### Contribution
 

@@ -5,7 +5,7 @@ properties to existing entities**, from database layer to UI layer.
 
 In ASP.NET Zero, **Tenant**, **User** and **Role** entities are
 **abstract** in the framework, others are not. There are some
-differences between them. So, we seperated it into two sections.
+differences between them. So, we separated it into two sections.
 
 *Note: We assume that you created your project as described in the
 [Getting Started](Getting-Started.md) document.*

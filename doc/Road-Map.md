@@ -5,7 +5,7 @@ versions:
 -   **RAD** (Rapid Application Development) tooling.
 -   Tenant **subscription enhancements** (like recurring payments).
 -   Sending **mass notifications/emails** to users.
--   **Calander** module.
+-   **Calendar** module.
 -   Session timeout & **lock screen**.
 -   Enhancements on **public web site** (like newsletter and contact
     pages).
