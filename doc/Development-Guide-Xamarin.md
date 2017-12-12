@@ -239,7 +239,7 @@ Android Project Structure
     done. Unobserved and Unhandled exceptions handlers are registered
     here with *ExceptionHandler* class. Finally *MainActivity* routes to
     App class which is in the shared project.
--   **CropViewRenderer** Is a platform specific renderer to crop images
+-   **CropViewRenderer** This is a platform specific renderer to crop images
     for Android. It is used in profile picture change screen.
 -   **Resources/drawable** This directory stores images for Android.
     AppLogo.png is the logo while showing the splash screen in Android.
