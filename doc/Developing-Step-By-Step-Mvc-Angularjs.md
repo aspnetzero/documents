@@ -115,7 +115,7 @@ definition as shown below:
 path for this route.
 
 Note that 'tenant.phonebook' is a **second level state** (child of
-'tenant' abstract state). See Angular-UI's route document for more
+'tenant' abstract state). See Angular UI's route document for more
 information on defining states. But, in most cases, you can define it
 easily by taking existing routes as reference.
 

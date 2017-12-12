@@ -221,7 +221,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 -   Integrated Swagger UI.
 -   Upgraded to Angular v1.5.
--   Upgraded to Angular-UI v1.1.2.
+-   Upgraded to Angular UI v1.1.2.
 -   Upgraded to ABP v0.8.1.
 -   Minor bug fix and enhancements.
 
