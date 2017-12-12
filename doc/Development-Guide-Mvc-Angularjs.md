@@ -58,11 +58,11 @@ ASP.NET Zero solution contains **four** applications:
 
 -   **Front End MVC Application**: This can be used to create a public
     web site or a landing page for your application.
--   **Angular Back End Single-Page** **Application**. This is the
+-   **AngularJS Back End Single-Page** **Application**. This is the
     application which is entered by username and password. It's built as
     a SPA with AngularJS.
 -   **MVC Back End Multi-Page Application**: This has identical
-    functionality with the Angular application but is built using MVC
+    functionality with the AngularJS application but is built using MVC
     and jQuery (no AngularJS).
 -   **Migrator**: Console application that runs database migrations.
 
@@ -341,7 +341,7 @@ link and will then be sent an email to reset their password.
 
 <img src="images/forgot-password.png" alt="Forgot password" class="img-thumbnail" width="421" height="359" />
 
-### Angular Back End Single-Page Application
+### AngularJS Back End Single-Page Application
 
 The backend in ASP.NET Zero is a **single page AngularJS application**.
 When you login, you are redirected to the **ApplicationController**. It
@@ -356,7 +356,7 @@ document).
 All view, script and styles files are located in **App** folder (not all
 folders/files are not shown here):
 
-<img src="images/app-folders.png" alt="Angular App folder structure" class="img-thumbnail" width="152" height="413" />
+<img src="images/app-folders.png" alt="AngularJS App folder structure" class="img-thumbnail" width="152" height="413" />
 
 There are three main folders here:
 
@@ -381,7 +381,7 @@ to get a deep understanding on creating menus.
 #### Routes
 
 **app.js** is the entrance point of the application. You define the
-**app** Angular module and Angular **routes** in this file. Angular
+**app** AngularJS module and AngularJS **routes** in this file. Angular
 **ui-router** is used for routing. Routes (states in ui-router) are
 dynamically defined based on the current user's permissions (see
 authorization section). Example:
@@ -990,7 +990,7 @@ user can see the last login attempts for his/her account. The
 ##### Change Picture
 
 A user can change their own profile picture. **ProfileController** is
-used to upload and get user profile pictures. The [Angular file
+used to upload and get user profile pictures. The [AngularJS file
 upload](https://github.com/nervgh/angular-file-upload) module used to
 select and upload a profile picture to the server. Currently, jpg/jpeg,
 gif and png files are supported, you can extend this to allow additional
@@ -1009,7 +1009,7 @@ Login page.
 
 The same backend application is also available as a **MPA** using
 ASP.NET **MVC**, **Web API** and **jQuery**. All functionality is
-identical with the SPA Angular application. It uses the same application
+identical with the SPA AngularJS application. It uses the same application
 services to perform actions. This is a screenshot from the application:
 
 <img src="images/mpa-screenshot.png" alt="Multi Page Application Screenshot" class="img-thumbnail" width="1056" height="805" />
@@ -1169,7 +1169,7 @@ to learn how to create and use settings.
 
 Menus are automatically generated using definitions in the
 **AppNavigationProvider** class. You have two menus: **Main** (the main
-menu in the Angular application) and **FrontEnd** (main menu in the
+menu in the AngularJS application) and **FrontEnd** (main menu in the
 front-end web site).
 
 See [navigation

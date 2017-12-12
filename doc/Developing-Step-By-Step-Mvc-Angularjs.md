@@ -102,7 +102,7 @@ more information on menu definitions.
 
 ### Creating AngularJS Route
 
-Angular routes are defined in **app.js**. We're adding a new route
+AngularJS routes are defined in **app.js**. We're adding a new route
 definition as shown below:
 
     $stateProvider.state('tenant.phonebook', {
@@ -614,7 +614,7 @@ documentation to know how this service is automatically created). Then
 we call **getPeople** method and create a **success** handler to get
 **result** of the **AJAX** request. That's all!
 
-### Rendering People In Angular View
+### Rendering People In AngularJS View
 
 We show people on the page is most basic form. See the changed view
 below:
@@ -759,8 +759,8 @@ for more information.
 
 #### Creating a Modal
 
-We will create a [Angular Bootstrap
-Ui-Modal](https://angular-ui.github.io/bootstrap/#/modal) to create a
+We will create a [Angular UI-Bootstrap
+modal](https://angular-ui.github.io/bootstrap/#/modal) to create a
 new person as shown below:
 
 <img src="images/phonebook-create-person-dialog.png" alt="Create Person Dialog" class="img-thumbnail" width="620" height="380" />
@@ -953,7 +953,7 @@ requiredPermissionName as shown below:
         requiredPermissionName: AppPermissions.Pages_Tenant_PhoneBook
     )
 
-##### Disable Angular Route
+##### Disable AngularJS route
 
 While hiding menu item prevents user to enter the page by clicking it,
 he can still enter the page by entering the following URL directly to
@@ -961,7 +961,7 @@ address bar of browsers:
 
     http://localhost:6234/Application#/tenant/phonebook
 
-We should also conditionally define Angular routes. Thus, if user has no
+We should also conditionally define AngularJS routes. Thus, if user has no
 permission to enter this page, he can not activate the route:
 
     if (abp.auth.hasPermission('Pages.Tenant.PhoneBook')) {
