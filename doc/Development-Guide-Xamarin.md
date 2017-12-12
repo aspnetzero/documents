@@ -203,7 +203,7 @@ limitations.](https://developer.xamarin.com/guides/cross-platform/live/limitatio
 you are debugging your application. Whenever you save any XAML file, it
 automatically updates the running application. LiveXAML is a paid
 product. If you want to purchase LiveXAML, ASP.NET Zero customers get
-%30 discount.
+30% discount.
 
 ### Xamarin.Forms
 
