@@ -182,7 +182,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 ### v1.10.0 (2016-05-10)
 
--   Database per tenant support for multi-tenanct applications.
+-   Database per tenant support for multi-tenant applications.
 -   Multiple time zone support and UTC DateTime improvements.
 -   Created a Migrator tool (exe) to easily migrate host and tenant
     databases.
