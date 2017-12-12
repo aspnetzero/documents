@@ -1,19 +1,13 @@
 ### Introduction
 
-In this document, we will create a sample **Xamarin phonebook
-application** step by step integrated with ASP.NET Zero website. Be
-aware that only ASP.NET Core version is supported.
+In this document, we will create a sample **Xamarin phonebook application** step by step integrated with ASP.NET Zero website. Be aware that only ASP.NET Core version is supported.
 
 ### Downloading Phonebook-Core Sample
 
 In the [Developing Step By Step Phonebook
 documentation](Developing-Step-By-Step-Core.html) we've already
 completed how to create a phonebook on server side and web client. To
-resume this project, download the solution
-**[Acme.PhoneBookDemo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/PhoneBook-Core)**
-and open the **Acme.PhoneBookDemo.Mobile.sln** file.
-
- 
+resume this project, download the solution **Acme.PhoneBookDemo](https://github.com/aspnetzero/as net-zero-samples/tree/master/PhoneBook-Core)** and open the **Acme.PhoneBookDemo.Mobile.sln** file. 
 
 ### Configuring Host Address
 
@@ -21,8 +15,7 @@ and open the **Acme.PhoneBookDemo.Mobile.sln** file.
 
  
 
-If you are using an emulator you can use the **emulator's loopback
-address** to reach your local computer. Eg: for Android emulator, it's
+If you are using an emulator you can use the **emulator's loopback address** to reach your local computer. Eg: for Android emulator, it's
 **10.0.2.2**
 
 <img src="images/xamarin-phonebook-android-emulator-ip.png" alt="Configuring Host Address for Android Emulator" class="img-thumbnail" />
@@ -42,9 +35,7 @@ help us to add all unimplemented methods from IPersonAppService at once.
 Add **async** keyword to all methods to be able to benefit
 multi-tasking.
 
-<img src="images/xamarin-phonebook-person-app-service-client.png" alt="Creating Person App Service Client" class="img-thumbnail" />
-
- 
+<img src="images/xamarin-phonebook-person-app-service-client.png" alt="Creating Person App Service Client" class="img-thumbnail" /> 
 
 #### Implementing App Service Methods
 
@@ -58,7 +49,7 @@ To summarize that document; Asp.Net Boilerplate framework uses
 **ConventionalHttpVerbs** by default. This means there's a naming
 convention while implementing app service methods.
 
-** About Naming Convention**
+**About Naming Convention**
 
 When method name starts with;
 
@@ -91,32 +82,32 @@ like this;</span>
         {
             return await ApiClient.GetAsync<ListResultDto<PersonListDto>>(GetEndpoint(nameof(GetPeople)), input);
         }
-
+    
         public async Task CreatePerson(CreatePersonInput input)
         {
             await ApiClient.PostAync(GetEndpoint(nameof(CreatePerson)), input);
         }
-
+    
         public async Task DeletePerson(EntityDto input)
         {
             await ApiClient.DeleteAsync(GetEndpoint(nameof(DeletePerson)), input);
         }
-
+    
         public async Task DeletePhone(EntityDto<long> input)
         {
             await ApiClient.DeleteAsync(GetEndpoint(nameof(DeletePhone)), input);
         }
-
+    
         public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
         {
             return await ApiClient.PostAync<PhoneInPersonListDto>(GetEndpoint(nameof(AddPhone)), input);
         }
-
+    
         public async Task EditPerson(EditPersonInput input)
         {
             await ApiClient.PostAync(GetEndpoint(nameof(EditPerson)), input);
         }
-
+    
         public async Task<GetPersonForEditOutput> GetPersonForEdit(IEntityDto input)
         {
             return await ApiClient.GetAsync<GetPersonForEditOutput>(GetEndpoint(nameof(GetPersonForEdit)), input);
@@ -144,9 +135,7 @@ folder. All the pages must be located in **Views** folder.
 You can create a new empty **Content Page** as below but in this example
 we'll copy and paste **\_SampleView.xaml** file.
 
-<img src="images/xamarin-phonebook-add-contentpage.png" alt="Adding New Content Page" class="img-thumbnail" />
-
- 
+<img src="images/xamarin-phonebook-add-contentpage.png" alt="Adding New Content Page" class="img-thumbnail" /> 
 
 Copy and paste **\_SampleView.xaml** into the same folder. We'll rename
 the file. All the views <span class="underline">must</span> end with
@@ -277,13 +266,15 @@ Let's set the properties of the new *NavigationMenuItem*;
     string for permission key. So what you have to do is add the below
     line to **PermissionKey** class like below  
 
-        public const string Phonebook = "Pages.Tenant.PhoneBook";
+    ```c#
+    public const string Phonebook = "Pages.Tenant.PhoneBook";
+    ```
 
-      
 
- 
+
 
 Let's run the application to see the new menu item. In this example
+
 we'll use Android platform to test the sample. Hence set the startup
 project to **Acme.PhoneBookDemo.Mobile.Droid**.
 
@@ -380,7 +371,7 @@ Never wait the main. Do not run blocking procedures in constructor.
     <ContentPage ...
         xmlns:behaviors="clr-namespace:Acme.PhoneBookDemo.Behaviors;assembly=Acme.PhoneBookDemo.Mobile.Shared"
      ...>
-
+    
         <ContentPage.Content>
            <ListView HasUnevenRows="True"
          SeparatorVisibility="None"
@@ -393,13 +384,13 @@ Never wait the main. Do not run blocking procedures in constructor.
         </ListView.ItemTemplate>
            </ListView>      
         </ContentPage.Content>
-
+    
         <ContentPage.Behaviors>
             <behaviors:EventHandlerBehavior EventName="Appearing">
                 <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
             </behaviors:EventHandlerBehavior>
         </ContentPage.Behaviors>
-
+    
     </ContentPage>
 
 The final look of **PeopleView.xaml** is like below;
@@ -413,7 +404,7 @@ The final look of **PeopleView.xaml** is like below;
                  x:Class="Acme.PhoneBookDemo.Views.PeopleView"
                  Title="{extensions:Translate PhoneBook}"
                  base:ViewManager.AutoWireViewModel="true">
-
+    
         <ContentPage.Content>
             <StackLayout>
                 <ListView HasUnevenRows="True"
@@ -428,13 +419,13 @@ The final look of **PeopleView.xaml** is like below;
                 </ListView>
             </StackLayout>
         </ContentPage.Content>
-
+    
         <ContentPage.Behaviors>
             <behaviors:EventHandlerBehavior EventName="Appearing">
                 <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
             </behaviors:EventHandlerBehavior>
         </ContentPage.Behaviors>
-
+    
     </ContentPage>
 
 ##### Creating People View Model
@@ -469,11 +460,11 @@ The complete definition of **PersonListModel** is like below;
     public class PersonListModel : PersonListDto, INotifyPropertyChanged
     {
         public string FullName => Name + " " + Surname;
-
+    
         public new ObservableRangeCollection<PhoneInPersonListDto> Phones { get; set; }
-
+    
         public event PropertyChangedEventHandler PropertyChanged;
-
+    
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -507,7 +498,7 @@ extension to create an async command. The final look of
         {
             _personAppService = personAppService;
         }
-
+    
         public ObservableRangeCollection<PersonListModel> Persons
         {
             get => _persons;
@@ -517,12 +508,12 @@ extension to create an async command. The final look of
                 RaisePropertyChanged(() => Persons);
             }
         }
-
+    
         public async Task PageAppearingAsync()
         {
             await FetchDataAsync();
         }
-
+    
         public async Task FetchDataAsync(string filterText = null)
         {
             await SetBusyAsync(async () =>
@@ -583,7 +574,7 @@ We've specified the delay in **PageDefaults.SearchDelayMilliseconds** as
 1 second. If no new keypress in 1 second, it'll start to search.
 
     private string _filterText;
-     
+
     public string FilterText
     {
         get => _filterText;
@@ -593,7 +584,7 @@ We've specified the delay in **PageDefaults.SearchDelayMilliseconds** as
             AsyncRunner.Run(SearchWithDelayAsync(_filterText));
         }
     }
-
+    
     private async Task SearchWithDelayAsync(string filterText)
     {
         if (!string.IsNullOrEmpty(filterText))
@@ -604,7 +595,7 @@ We've specified the delay in **PageDefaults.SearchDelayMilliseconds** as
                 return;
             }
         }
-
+    
         await FetchDataAsync(filterText);
     }
 
@@ -674,87 +665,87 @@ phone numbers on the bottom. Let's create personal information section!
 -   Then add the **ListView** as root item in
     **&lt;ContentPage.Content&gt;** as shown below. 
 
-        <?xml version="1.0" encoding="utf-8" ?>
-        <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:base="clr-namespace:Acme.PhoneBookDemo.ViewModels.Base;assembly=Acme.PhoneBookDemo.Mobile.Shared"
-                     x:Class="Acme.PhoneBookDemo.Views.PersonDetailsView"
-                     base:ViewManager.AutoWireViewModel="true"
-                     xmlns:extensions="clr-namespace:Acme.PhoneBookDemo.Extensions.MarkupExtensions;assembly=Acme.PhoneBookDemo.Mobile.Shared"
-                     xmlns:controls="clr-namespace:Acme.PhoneBookDemo.Controls;assembly=Acme.PhoneBookDemo.Mobile.Shared"
-                     x:Name="PersonDetailsPage"
-                     Title="{Binding Title}">
-            <ContentPage.Content>
-                <ListView HasUnevenRows="True">
-                    <ListView.Header>
-                      
-                            <controls:CardView Margin="0,10" >
-                                <StackLayout Padding="10" Spacing="0" >
-                                    <controls:LabelSection Text="{extensions:Translate PersonalInformations}"/>
-                                    <controls:Divider Margin="0,0,0,5"/>
+````xml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Acme.PhoneBookDemo.ViewModels.Base;assembly=Acme.PhoneBookDemo.Mobile.Shared"
+             x:Class="Acme.PhoneBookDemo.Views.PersonDetailsView"
+             base:ViewManager.AutoWireViewModel="true"
+             xmlns:extensions="clr-namespace:Acme.PhoneBookDemo.Extensions.MarkupExtensions;assembly=Acme.PhoneBookDemo.Mobile.Shared"
+             xmlns:controls="clr-namespace:Acme.PhoneBookDemo.Controls;assembly=Acme.PhoneBookDemo.Mobile.Shared"
+             x:Name="PersonDetailsPage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <ListView HasUnevenRows="True">
+            <ListView.Header>
+              
+                    <controls:CardView Margin="0,10" >
+                        <StackLayout Padding="10" Spacing="0" >
+                            <controls:LabelSection Text="{extensions:Translate PersonalInformations}"/>
+                            <controls:Divider Margin="0,0,0,5"/>
 
-                                    <Label Text="{extensions:Translate Name}"></Label>
-                                    <Entry Text="{Binding Model.Name, Mode=TwoWay}"/>
+                            <Label Text="{extensions:Translate Name}"></Label>
+                            <Entry Text="{Binding Model.Name, Mode=TwoWay}"/>
 
-                                    <Label Text="{extensions:Translate Surname}"></Label>
-                                    <Entry Text="{Binding Model.Surname, Mode=TwoWay}"/>
+                            <Label Text="{extensions:Translate Surname}"></Label>
+                            <Entry Text="{Binding Model.Surname, Mode=TwoWay}"/>
 
-                                    <Label Text="{extensions:Translate EmailAddress}"></Label>
-                                    <Entry Text="{Binding Model.EmailAddress, Mode=TwoWay}" Margin="0,0,0,10"/>
+                            <Label Text="{extensions:Translate EmailAddress}"></Label>
+                            <Entry Text="{Binding Model.EmailAddress, Mode=TwoWay}" Margin="0,0,0,10"/>
 
-                                    <!-- SAVE BUTTON  -->
-                                    <Button Margin="{StaticResource ActionButtonMargin}" 
-                                            Style="{StaticResource ActionButton}" 
-                                            Text="{extensions:Translate Save}"
-                                            Command="{Binding SavePersonCommand}"/>
+                            <!-- SAVE BUTTON  -->
+                            <Button Margin="{StaticResource ActionButtonMargin}" 
+                                    Style="{StaticResource ActionButton}" 
+                                    Text="{extensions:Translate Save}"
+                                    Command="{Binding SavePersonCommand}"/>
 
 
-                                </StackLayout>
-                            </controls:CardView>
+                        </StackLayout>
+                    </controls:CardView>
 
-                    </ListView.Header>
-                </ListView>
-            </ContentPage.Content>
-        </ContentPage>
+            </ListView.Header>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>
+````
 
-    ListView works best when it's root element (otherwise you may have
-    scrolling issues). That's why we put ListView in the first place.
-    ListView consists of 3 parts; Header, Items, Footer...  We'll use
-    header to show personal information and items to list phone numbers.
-    Footer will not be used.
+ListView works best when it's root element (otherwise you may have
+scrolling issues). That's why we put ListView in the first place.
+ListView consists of 3 parts; Header, Items, Footer...  We'll use
+header to show personal information and items to list phone numbers.
+Footer will not be used.
 
-    We set ListView
-    **[HasUnevenRows="True"](https://developer.xamarin.com/api/property/Xamarin.Forms.ListView.HasUnevenRows/).**
-    This is for automatically sizing list view rows.
+We set ListView
+**[HasUnevenRows="True"](https://developer.xamarin.com/api/property/Xamarin.Forms.ListView.HasUnevenRows/).**
+This is for automatically sizing list view rows.
 
-    In the **ListView.Header** tag we place a **CardView**. This is a
-    custom control that draws a border to <span id="result_box0"
-    class="short_text" lang="en">highlight section.  
-    </span>**LabelSection** is another custom control that shows label
-    as a title.  
-    **Divider** is a custom conrol as well that draws a horizontal line.
+In the **ListView.Header** tag we place a **CardView**. This is a
+custom control that draws a border to highlight section.  
+**LabelSection** is another custom control that shows label
+as a title.  
+**Divider** is a custom conrol as well that draws a horizontal line.
 
-    In **CardView,** add a **&lt;StackLayout&gt;** to show elements
-    vertically. Put labels, entries for **Name**, **Surname** and
-    **EmailAddress** fields. All the entries are
-    [TwoWay](https://developer.xamarin.com/api/field/Xamarin.Forms.BindingMode.TwoWay/)
-    binding. Because we propagate value in both directions.  
-     
+In **CardView,** add a **&lt;StackLayout&gt;** to show elements
+vertically. Put labels, entries for **Name**, **Surname** and
+**EmailAddress** fields. All the entries are
+[TwoWay](https://developer.xamarin.com/api/field/Xamarin.Forms.BindingMode.TwoWay/) binding. Because we propagate value in both directions.  
 
-    ListView control seems to be an easy but complicated control. We
-    recommend to use ListView in this circumtances;
+ListView control seems to be an easy but complicated control. We
 
-    -   Try to use ListView as root item of the Page.
-    -   Do not use nested ListViews (ListView in ListView)
-    -   Use
-        [TextCell](https://developer.xamarin.com/api/type/Xamarin.Forms.TextCell/)
-        and
-        [SwitchCell](https://developer.xamarin.com/api/type/Xamarin.Forms.SwitchCell/)
-        wherever you can
-    -   Avoid placing a ListView inside a
-        [ScrollView](https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/scroll-view/)
 
- 
+recommend to use ListView in this circumtances;
+
+-   Try to use ListView as root item of the Page.
+-   Do not use nested ListViews (ListView in ListView)
+-   Use
+    [TextCell](https://developer.xamarin.com/api/type/Xamarin.Forms.TextCell/)
+    and
+    [SwitchCell](https://developer.xamarin.com/api/type/Xamarin.Forms.SwitchCell/)
+    wherever you can
+-   Avoid placing a ListView inside a [ScrollView](https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/scroll-view/)
+
+
 
 #### Creating PersonDetailsViewModel
 
@@ -790,10 +781,10 @@ have an empty view model. Do the followings steps in
             {
                 await CreateNewPersonAsync();
             }
-
+        
             await NavigationService.GoBackAsync();
         }
-
+        
         private async Task UpdateExistingPersonAsync()
         {
             var editPersonInput = new EditPersonInput
@@ -803,10 +794,10 @@ have an empty view model. Do the followings steps in
                 Surname = Model.Surname,
                 Id = Model.Id
             };
-
+        
             await _personAppService.EditPerson(editPersonInput);
         }
-
+        
         private async Task CreateNewPersonAsync()
         {
             var createPersonInput = new CreatePersonInput
@@ -815,7 +806,7 @@ have an empty view model. Do the followings steps in
                 Name = Model.Name,
                 Surname = Model.Surname,
             };
-
+        
             await _personAppService.CreatePerson(createPersonInput);
         }
 
@@ -859,7 +850,7 @@ have an empty view model. Do the followings steps in
                 RaisePropertyChanged(() => IsExistingPerson);
             }
         }
-
+        
         private bool _isAddPhoneButtonEnabled;
         public bool IsAddPhoneButtonEnabled
         {
@@ -870,12 +861,12 @@ have an empty view model. Do the followings steps in
                 RaisePropertyChanged(() => IsAddPhoneButtonEnabled);
             }
         }
-
+        
         public override async Task InitializeAsync(object navigationData)
         {
             IsExistingPerson = navigationData != null;
             IsAddPhoneButtonEnabled = false;
-
+        
             if (IsExistingPerson)
             {
                 Model = (PersonListModel)navigationData;
@@ -931,7 +922,6 @@ will work fine.
                 IsVisible="{extensions:HasPermission Text={x:Static permission:PermissionKey.PhoneBookCreatePerson}}"
                 ParentPage="{x:Reference PeoplePage}" />
         </ContentPage.ToolbarItems>
-            
 
 -   Now open **PeopleViewModel.cs** and add the below code... We
     navigate to PersonDetailsView with null parameter because we handle
@@ -942,7 +932,7 @@ will work fine.
         {
             await GotoPersonDetailsAsync(null);
         }
-
+        
          public PersonListModel SelectedPerson
                 {
                     get => _selectedPerson;
@@ -953,7 +943,7 @@ will work fine.
                         AsyncRunner.Run(GotoPersonDetailsAsync(_selectedPerson));
                     }
                 }
-
+        
         private async Task GotoPersonDetailsAsync(PersonListModel person)
         {
             await NavigationService.SetDetailPageAsync(typeof(PersonDetailsView), person, pushToStack: true);
@@ -963,7 +953,7 @@ will work fine.
 
 We've implemented create and update person functions but we didn't
 validate input Validating an object before sending to server is very
-easy. Open **PersonDetailsViewModel.cs ** and add **Validate()** method.
+easy. Open **PersonDetailsViewModel.cs** and add **Validate()** method.
 
     private static bool Validate(object input)
     {
@@ -972,7 +962,7 @@ easy. Open **PersonDetailsViewModel.cs ** and add **Validate()** method.
         {
             return true;
         }
-
+    
         UserDialogHelper.Warn(validationResult.ConsolidatedMessage);
         return false;
     }
@@ -989,15 +979,15 @@ Then use **Validate()** method in **UpdateExistingPersonAsync()** and in
             Surname = Model.Surname,
             Id = Model.Id
         };
-
+    
         if (!Validate(editPersonInput))
         {
             return;
         }
-
+    
         await _personAppService.EditPerson(editPersonInput);
     }
-
+    
     private async Task CreateNewPersonAsync()
     {
         var createPersonInput = new CreatePersonInput
@@ -1006,12 +996,12 @@ Then use **Validate()** method in **UpdateExistingPersonAsync()** and in
             Name = Model.Name,
             Surname = Model.Surname,
         };
-
+    
         if (!Validate(createPersonInput))
         {
             return;
         }
-
+    
         await _personAppService.CreatePerson(createPersonInput);
     }
 
@@ -1037,7 +1027,7 @@ email address**.
         <ContentPage.Content>
             <ListView HasUnevenRows="True"   
                       ItemsSource="{Binding Model.Phones}" Margin="10">
-
+        
                 <ListView.Header>
                     <StackLayout>
                        
@@ -1045,22 +1035,22 @@ email address**.
                             <StackLayout Padding="10" Spacing="0" >
                                 <controls:LabelSection Text="{extensions:Translate PersonalInformations}"/>
                                 <controls:Divider Margin="0,0,0,5"/>
-
+        
                                 <Label Text="{extensions:Translate Name}"></Label>
                                 <Entry Text="{Binding Model.Name, Mode=TwoWay}"/>
-
+        
                                 <Label Text="{extensions:Translate Surname}"></Label>
                                 <Entry Text="{Binding Model.Surname, Mode=TwoWay}"/>
-
+        
                                 <Label Text="{extensions:Translate EmailAddress}"></Label>
                                 <Entry Text="{Binding Model.EmailAddress, Mode=TwoWay}" Margin="0,0,0,10"/>
-
+        
                                 <!-- SAVE BUTTON  -->
                                 <Button Margin="{StaticResource ActionButtonMargin}" 
                                             Style="{StaticResource ActionButton}" 
                                             Text="{extensions:Translate Save}"
                                             Command="{Binding SavePersonCommand}"/>
-
+        
                                 <!--  DELETE BUTTON  -->
                                 <Button Margin="{StaticResource ActionButtonMargin}" 
                                             IsVisible="{Binding IsDeleteButtonVisible}"
@@ -1092,7 +1082,7 @@ email address**.
         using Acme.PhoneBookDemo.UI;
         using Acme.PhoneBookDemo.Validations;
         using Acme.PhoneBookDemo.ViewModels.Base;
-
+        
         namespace Acme.PhoneBookDemo.ViewModels
         {
             public class PersonDetailsViewModel : XamarinViewModel
@@ -1101,7 +1091,7 @@ email address**.
                 private readonly IPermissionService _permissionService;
                 private bool _isNewPerson;
                 private bool _isDeleteButtonVisible;
-
+        
                 public ICommand SavePersonCommand => AsyncCommand.Create(SavePersonAsync);
                 public ICommand DeletePersonCommand => AsyncCommand.Create(DeletePersonAsync);
 
@@ -1133,19 +1123,19 @@ email address**.
                  await NavigationService.GoBackAsync();
              });
          }
-
+    
                ...
                 public PersonDetailsViewModel(IPersonAppService personAppService, IPermissionService permissionService)
                 {
                     _personAppService = personAppService;
                     _permissionService = permissionService;
                 }
-
+    
                 public override async Task InitializeAsync(object navigationData)
                 {
                     IsExistingPerson = navigationData != null;
                     IsAddPhoneButtonEnabled = false;
-
+    
                     if (IsExistingPerson)
                     {
                         Model = (PersonListModel)navigationData;
@@ -1160,9 +1150,7 @@ email address**.
             }
         }
 
-<img src="images/xamarin-phonebook-phones-listed.png" alt="People with Phone Numbers" class="img-thumbnail" />
 
- 
 
 ###### Listing Phone Numbers
 
@@ -1232,9 +1220,9 @@ viiew-model. That's why we set **Source** of command to
 **CommandParameter** to **"."** refers to **PhoneInPersonListDto**. So
 we'll be sending **PhoneInPersonListDto** as parameter to
 **DeletePhoneNumberCommand** in the view-model.  
- 
 
-et's create **DeletePhoneNumberCommand** in the view model. Open
+
+Let's create **DeletePhoneNumberCommand** in the view model. Open
 **PersonDetailsViewModel.cs** and add these methods and property.
 
     public ICommand DeletePhoneNumberCommand => new Command<PhoneInPersonListDto>(async phone => await DeletePhoneNumberAsync(phone));
@@ -1270,7 +1258,7 @@ To add new phone numbers, add a new CardView to
         <ContentPage.Content>
             <ListView HasUnevenRows="True"   
                       ItemsSource="{Binding Model.Phones}" Margin="10">
-
+    
                 <ListView.Header>
                     <StackLayout>
                        
@@ -1278,22 +1266,22 @@ To add new phone numbers, add a new CardView to
                             <StackLayout Padding="10" Spacing="0" >
                                 <controls:LabelSection Text="{extensions:Translate PersonalInformations}"/>
                                 <controls:Divider Margin="0,0,0,5"/>
-
+    
                                 <Label Text="{extensions:Translate Name}"></Label>
                                 <Entry Text="{Binding Model.Name, Mode=TwoWay}"/>
-
+    
                                 <Label Text="{extensions:Translate Surname}"></Label>
                                 <Entry Text="{Binding Model.Surname, Mode=TwoWay}"/>
-
+    
                                 <Label Text="{extensions:Translate EmailAddress}"></Label>
                                 <Entry Text="{Binding Model.EmailAddress, Mode=TwoWay}" Margin="0,0,0,10"/>
-
+    
                                 <!-- SAVE BUTTON  -->
                                 <Button Margin="{StaticResource ActionButtonMargin}" 
                                             Style="{StaticResource ActionButton}" 
                                             Text="{extensions:Translate Save}"
                                             Command="{Binding SavePersonCommand}"/>
-
+    
                                 <!--  DELETE BUTTON  -->
                                 <Button Margin="{StaticResource ActionButtonMargin}" 
                                             IsVisible="{Binding IsDeleteButtonVisible}"
@@ -1302,19 +1290,19 @@ To add new phone numbers, add a new CardView to
                                             Command="{Binding DeletePersonCommand}"/>
                             </StackLayout>
                         </controls:CardView>
-
+    
                         <controls:CardView Margin="0" IsVisible="{Binding IsExistingPerson}" >
                             <StackLayout Padding="10" Spacing="0">
-
+    
                                 <controls:LabelSection Text="{extensions:Translate PhoneNumber}"/>
                                 <controls:Divider Margin="0,0,0,5"/>
-
+    
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="0.3*"/>
                                         <ColumnDefinition Width="0.7*"/>
                                     </Grid.ColumnDefinitions>
-
+    
                                     <Picker Title="{extensions:Translate Type}"
                                             ItemsSource="{Binding PhoneTypes}" 
                                             HorizontalOptions="FillAndExpand"
@@ -1323,7 +1311,7 @@ To add new phone numbers, add a new CardView to
                                            Grid.Column="1"
                                            Placeholder="{extensions:Translate PhoneNumber}"/>
                                 </Grid>
-
+    
                                 <!-- ADD PHONE BUTTON  -->
                                 <Button Margin="{StaticResource ActionButtonMargin}" 
                                     Style="{StaticResource ActionButton}" 
@@ -1331,10 +1319,10 @@ To add new phone numbers, add a new CardView to
                                     Command="{Binding AddPhoneNumberCommand}" 
                                     CommandParameter="{Binding Model.Id}"  
                                     IsEnabled="{Binding IsAddPhoneButtonEnabled}"/>
-
+    
                             </StackLayout>
                         </controls:CardView>
-
+    
                     </StackLayout>
                 </ListView.Header>
 
@@ -1354,7 +1342,7 @@ And we will add the view-model codes to the
             RaisePropertyChanged(() => SelectedPhoneType);
         }
     }
-
+    
     public string NewPhoneNumber
     {
         get => _newPhoneNumber;
@@ -1365,7 +1353,7 @@ And we will add the view-model codes to the
             IsAddPhoneButtonEnabled = !string.IsNullOrWhiteSpace(_newPhoneNumber);
         }
     }
-
+    
     private async Task AddPhoneNumberAsync(int personId)
     {
         var input = new AddPhoneInput
@@ -1374,12 +1362,12 @@ And we will add the view-model codes to the
             PersonId = personId,
             Type = (PhoneType)Enum.Parse(typeof(PhoneType), SelectedPhoneType)
         };
-
+    
         if (!Validate(input))
         {
             return;
         }
-
+    
         await SetBusyAsync(async () =>
         {
             var phone = await _personAppService.AddPhone(input);
@@ -1388,7 +1376,7 @@ And we will add the view-model codes to the
             RaisePropertyChanged(() => Model.Phones);
         });
     }
-     
+
 
 ### Conclusion
 
