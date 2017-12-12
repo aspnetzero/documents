@@ -88,7 +88,7 @@ also for Turkish in PhoneBook-tr.xml file:
 
 #### Other menu item properties
 
-**url** can be a URL or **AngularJs route** (state in angular
+**url** can be a URL or **AngularJs route** (state in Angular
 **ui-router** used in ASP.NET Zero) that will be activated when we click
 the menu item. We will define this route below.
 
@@ -961,7 +961,7 @@ address bar of browsers:
 
     http://localhost:6234/Application#/tenant/phonebook
 
-We should also conditionally define angular routes. Thus, if user has no
+We should also conditionally define Angular routes. Thus, if user has no
 permission to enter this page, he can not activate the route:
 
     if (abp.auth.hasPermission('Pages.Tenant.PhoneBook')) {

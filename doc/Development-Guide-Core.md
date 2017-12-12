@@ -1805,7 +1805,7 @@ Web.Host Application
     provider](https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration).
 -   "**App:**<span class="auto-style3">ServerRootAddress</span>": Root
     URL of this application.
--   "**App:ClientRootAddress**": Root URL of the angular application (if
+-   "**App:ClientRootAddress**": Root URL of the Angular application (if
     you are using Angular as UI).
 -   "**App:CorsOrigins**": Allowed origins for cross origin requests
     (splitted by comma).

@@ -53,7 +53,7 @@ right after the dashboard menu item).
 permission name (will set it later), **flaticon-book** is just an
 arbitrary icon class (from [this
 set](http://keenthemes.com/metronic/preview/?page=components/icons/flaticon&demo=default))
-and **/phonebook** is the angular route.
+and **/phonebook** is the Angular route.
 
 If you run the application, you can see a new menu item on the left
 menu, but it won't work (it redirect to default route) if you click to
@@ -925,7 +925,7 @@ Let me explain some parts of this class:
 -   It focuses to **name** input when modal is shown.
 
 The code is simple and easy to understand except a small hack: an active
-flag is used to reset validation for angular view (explained in
+flag is used to reset validation for Angular view (explained in
 angular's
 [documentation](https://angular.io/docs/ts/latest/cookbook/form-validation.html)).
 

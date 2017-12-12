@@ -864,7 +864,7 @@ accessed via **http://yourwebsite.com/app/admin/install**.
 
 ASP.NET Zero solution supports both [yarn](https://yarnpkg.com/) and
 [npm](https://www.npmjs.com/) to obtain front end library dependencies
-(like angular and bootstrap). We suggest to use yarn because npm has
+(like Angular and bootstrap). We suggest to use yarn because npm has
 some problems, yarn solves those problems and it is compatible with npm
 as well. You can easily add, update or remove packages on yarn's command
 line interface.

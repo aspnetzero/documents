@@ -381,7 +381,7 @@ to get a deep understanding on creating menus.
 #### Routes
 
 **app.js** is the entrance point of the application. You define the
-**app** angular module and angular **routes** in this file. Angular
+**app** Angular module and Angular **routes** in this file. Angular
 **ui-router** is used for routing. Routes (states in ui-router) are
 dynamically defined based on the current user's permissions (see
 authorization section). Example:
