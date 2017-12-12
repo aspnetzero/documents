@@ -7,7 +7,7 @@ In this document, we will create a sample **Xamarin phonebook application** step
 In the [Developing Step By Step Phonebook
 documentation](Developing-Step-By-Step-Core.html) we've already
 completed how to create a phonebook on server side and web client. To
-resume this project, download the solution **Acme.PhoneBookDemo](https://github.com/aspnetzero/as net-zero-samples/tree/master/PhoneBook-Core)** and open the **Acme.PhoneBookDemo.Mobile.sln** file. 
+resume this project, download the solution **Acme.PhoneBookDemo](https://github.com/aspnetzero/as net-zero-samples/tree/master/PhoneBook-Core)** and open the **Acme.PhoneBookDemo.Mobile.sln** file.
 
 ### Configuring Host Address
 
