@@ -111,7 +111,7 @@ which stores root URL of the web application:</p>
 this on deployment. For multi-tenant applications, this URL can contain dynamic 
 tenancy name. In that case, put {TENANCY_NAME} instead of tenancy name like:</p>
 <pre lang="xml">&lt;add key="WebSiteRootAddress" value="http://<strong>{TENANCY_NAME}</strong>.mydomain.com/" /&gt;</pre>
-<p>Thus, AspNet Zero can automatically detect current tenant from URLs. If you 
+<p>Thus, ASP.NET Zero can automatically detect current tenant from URLs. If you 
 configure it as above, you should also redirect all subdomains to your 
 application. To do that;</p>
 <ol>
@@ -410,7 +410,7 @@ password.</p>
 tenant's data. You can select '<strong>Use host database</strong>' to store 
 tenant data in host database (can be used for single database approach) or you 
 can specify a connection string to create/use a <strong>dedicated database
-</strong>for the new tenant. AspNet Zero supports a <strong>hybrid </strong>approach. 
+</strong>for the new tenant. ASP.NET Zero supports a <strong>hybrid </strong>approach. 
 That means you can use host database for some tenants and create dedicated 
 databases for other tenants. You can even <strong>group</strong> some 
 tenants in a separated database.</p>
@@ -790,7 +790,7 @@ folder.</p>
 <img class="img-thumbnail" alt="MPA layout files" height="245" src="images/mpa-layout-files.png" width="162" /></p>
 <p>The header, footer and siderbar are developed as partial views.</p>
 <h3>Migrator Console Application</h3>
-<p>AspNet Zero includes a tool, Migrator.exe, to easily migrate your databases. 
+<p>ASP.NET Zero includes a tool, Migrator.exe, to easily migrate your databases. 
 You can run this application to create/migrate host and tenant databases.</p>
 <p>
 <img class="img-thumbnail" alt="Database Migrator" height="230" src="images/database-migrator.png" width="659" /></p>
@@ -822,7 +822,7 @@ dynamic Web API layer documentation</a> for more information.</p>
 Web API Controllers as you might normally do.&nbsp;</p>
 <h4>Localization</h4>
 <p>The ASP.NET Zero <strong>User Interface</strong> is completely
-localized. AspNet Zero uses <strong>dynamic, database based, per-tenant</strong> 
+localized. ASP.NET Zero uses <strong>dynamic, database based, per-tenant</strong> 
 localization (see the related section above).</p>
 <p>XML files are used as the base translation for desired languages:</p>
 <p>
@@ -1027,7 +1027,7 @@ constants for locations of JS and CSS files.</p>
 <p>It's strongly recommended to inherit one of these classes 
 since they really make Logging, Localization, Authorization, etc. easier.</p>
 <h4>CSRF/XSRF Protection</h4>
-<p>ABP framework simplifies and automates CSRF protection as much as possible. AspNet Zero template comes with CSRF protection pre-configured and working out of the box. For more information please see ABP's 
+<p>ABP framework simplifies and automates CSRF protection as much as possible. ASP.NET Zero template comes with CSRF protection pre-configured and working out of the box. For more information please see ABP's 
 <a href="https://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection">XSRF-CSRF-Protection documentation</a></p>
 <h4>Versioning</h4>
 <p>The <strong>AppVersionHelper</strong> class is used to define the <strong>current version</strong> of the 
@@ -1035,10 +1035,10 @@ application in a single place. When you change the <strong>Version</strong> here
 projects in the application will be verisoned. Also, the version and release date 
 are automatically shown in the bottom left corner on the application pages. That way you can always see the running application version.</p>
 <h3>Token Based Authentication</h3>
-<p>AspNet Zero uses cookie based authentication for browsers. However, if you 
+<p>ASP.NET Zero uses cookie based authentication for browsers. However, if you 
 want to consume Web APIs or application services (those are exposed via dynamic 
 web api) from a mobile application, you probably want a token based 
-authentication mechanism. AspNet Zero includes bearer token authentication 
+authentication mechanism. ASP.NET Zero includes bearer token authentication 
 infrastructure. <strong>AccountController</strong> in <strong>.WebApi</strong> 
 project contains an <strong>Authenticate</strong> action to get the token. Then you 
 can use the token for subsequent requests.</p>
@@ -1092,7 +1092,7 @@ under &quot;/<strong>swagger/ui/index</strong>&quot;. </p>
 layers of the project. Open Test Explorer (Test\Windows\Test Explorer in VS main 
 menu) to run unit tests:</p>
 <div class="bs-callout bs-callout-warning">
-A new setting named <strong>MultiTenancyEnabled </strong>is introduced for unit test project with AspNet Zero v2.2. If you disable multi tenancy in your Core module, you also need to change this setting's value to false in unit test project's App.config.
+A new setting named <strong>MultiTenancyEnabled </strong>is introduced for unit test project with ASP.NET Zero v2.2. If you disable multi tenancy in your Core module, you also need to change this setting's value to false in unit test project's App.config.
 In this way, test related to multi tenancy will not be executed. Because some unit tests (tenant creation, edition creation etc.) are only valid in multi tenancy concept.
 </div>
 <p>

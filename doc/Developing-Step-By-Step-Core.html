@@ -507,7 +507,7 @@ not an MVC Controller, just a plain C# class) from
 javascript like calling a javascript method? This is provided by ASP.NET 
 Boilerplate. See
 <a href="https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers" target="_blank">
-AspNet Core</a> documentation for more information. You can always 
+ASP.NET Core</a> documentation for more information. You can always 
 call application services from console to debug or see returned JSON structure.</p>
 <p>We can also check Audit Logs to see the request. Open <strong>AbpAuditLogs</strong> 
 table in PhoneBook database to see the call information:</p>
@@ -559,8 +559,8 @@ AutoMapFrom attribute to be able to make mapping.</p>
 	<p>We created an <strong>Application Service</strong> (PersonAppService) and 
 	used it from the <strong>Controller</strong>. Instead, we could access
 	<strong>Repository</strong> directly from Controller and completely discard 
-	the application service. AspNet Zero does not enforce any architecture here. 
-	In AspNet Zero, we use the application layer (application services and DTOs). Therefore, we 
+	the application service. ASP.NET Zero does not enforce any architecture here. 
+	In ASP.NET Zero, we use the application layer (application services and DTOs). Therefore, we 
 	implemented it <strong>independent</strong> 
 	from ASP.NET MVC. This makes application layer re-usable from different 
 	presentation layers. But if you will only develop ASP.NET MVC, you can 
@@ -608,7 +608,7 @@ people. See the result:</p>
 	<p>We normally use a javascript based rich table/grid library to show 
 	tabular data, instead of manually rendering data like that. For example, we 
 	used to use <a href="http://jtable.org/" target="_blank">jTable</a> library to show 
-	users on the Users page of AspNet Zero. Always use such components since 
+	users on the Users page of ASP.NET Zero. Always use such components since 
 	they make things much more easier and provides a much better user 
 	experience.</p>
 	<p>We did not use a table component here, because we want to show basics of 
@@ -708,7 +708,7 @@ validation document</a> for more information.</p>
 <h4>Creating a Modal</h4>
 <p>We will create a 
 Bootstrap Modal to create a new person. First of all, you can create modal and save as you already know and like. But 
-AspNet Zero has some helper scripts to make it easier if you use it. We will use 
+ASP.NET Zero has some helper scripts to make it easier if you use it. We will use 
 them here.</p>
 <p>We can <strong>copy </strong>cshtml and js files from <strong>
 Areas/App/Views/Common/Modals/Empty</strong> folder as a base for a new modal to <strong>Areas/App/Views/PhoneBook/_CreatePersonModal.cshtml</strong>.</p>
@@ -838,7 +838,7 @@ some javascript code to open the modal when clicked to the button.</p>
 })();
 </pre>
 <p><strong>ModalManager </strong>is a predefined modal helper javascript class 
-of AspNet Zero. It accepts a <strong>viewUrl</strong> (which is actually an MVC 
+of ASP.NET Zero. It accepts a <strong>viewUrl</strong> (which is actually an MVC 
 action to load the view), a <strong>scriptUrl</strong> (javascript file of the 
 modal) and a <strong>modalClass</strong> (which is set when we define the modal 
 above).</p>
@@ -1843,7 +1843,7 @@ has an isolated phone book and can not see other's people.</p>
 ASP.NET Zero system. We hope that it will help you to build your own 
 application.</p>
 <p>We intentionally used different approaches for similar tasks to show you 
-different styles of development. AspNet Zero provides an architecture but does 
+different styles of development. ASP.NET Zero provides an architecture but does 
 not restrict you. You can make your own style development.</p>
 <h4>Source Code</h4>
 <p>You should <a href="/Prices">purchase</a> ASP.NET Zero in order to get

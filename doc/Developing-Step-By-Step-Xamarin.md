@@ -43,9 +43,9 @@ In the ProxyAppServiceBase class you'll see *ApiClient* which is being
 used to call host web Api methods. We'll use *ApiClient* to transfer
 data with host.
 
-##### ApiClient has **post, put, get, delete** http methods. To decide which needs to be called for the corresponding method you can read [Asp.Net Boilerplate Application Services as Controllers](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers)
+##### ApiClient has **post, put, get, delete** http methods. To decide which needs to be called for the corresponding method you can read [ASP.NET Boilerplate Application Services as Controllers](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers)
 
-To summarize that document; Asp.Net Boilerplate framework uses
+To summarize that document; ASP.NET Boilerplate framework uses
 **ConventionalHttpVerbs** by default. This means there's a naming
 convention while implementing app service methods.
 
@@ -162,7 +162,7 @@ PeopleView.xaml
 
 #### Creating PeopleViewModel
 
-Asp.Net Zero Xamarin app uses
+ASP.NET Zero Xamarin app uses
 [MVVM](https://developer.xamarin.com/guides/xamarin-forms/enterprise-application-patterns/mvvm/)
 pattern. So each view should have a view-model. According to
 conventional view-model binding, view-model file names <span
@@ -279,7 +279,7 @@ we'll use Android platform to test the sample. Hence set the startup
 project to **Acme.PhoneBookDemo.Mobile.Droid**.
 
 If you've already started Android emulator, you can directly run the
-project. But if you've not started the emulator yet, it's adviced to you
+project. But if you've not started the emulator yet, it's advised to you
 to start the emulator first from the Visual Studio Toolbar like shown
 below... The reason of initializing emulator is; sometimes Visual Studio
 cannot make initial connection to the emulator for the first run. So
@@ -435,7 +435,7 @@ So **PeopleViewModel** class needs to have a property called **Persons**
 and a command called **PageAppearingCommand**.
 
 The **ProxyPersonAppService GetPeople** method returns
-**ListResultDto&lt;PersonListDto&gt;.** It is not conveniant to directly
+**ListResultDto&lt;PersonListDto&gt;.** It is not convenient to directly
 use the DTO object from server. The main reason is DTO doesn't implement
 **INotifyPropertyChanged** interface. To overcome this issue, we create
 a new mapping class. This mapping class is used to name as Model.
@@ -1063,7 +1063,7 @@ email address**.
 
 -   Open **PersonDetailsViewModel.cs** and add the highlighted codes.
 
-    We inject **IPermissionService** to check wheter user has delete
+    We inject **IPermissionService** to check whether user has delete
     permission. The delete button will be visible if user has
     permission. The delete button is binded to **IsDeleteButtonVisible**
     property. We create the **DeletePersonCommand**. In this command we
@@ -1384,7 +1384,7 @@ In this document, we built a complete example that covers most parts of
 the ASP.NET Zero Xamarin development.
 
 We intentionally used different approaches for similar tasks to show you
-different styles of development. AspNet Zero provides an architecture
+different styles of development. ASP.NET Zero provides an architecture
 but does not restrict you. You can make your own style development.
 
 #### Source Code

@@ -58,12 +58,12 @@ ASP.NET Zero solution contains **four** applications:
 
 -   **Front End MVC Application**: This can be used to create a public
     web site or a landing page for your application.
--   **Angular Back End Single-Page** **Application**. This is the
+-   **AngularJS Back End Single-Page** **Application**. This is the
     application which is entered by username and password. It's built as
-    a SPA with AngularJs.
+    a SPA with AngularJS.
 -   **MVC Back End Multi-Page Application**: This has identical
-    functionallity with the Angular application but is built using MVC
-    and jQuery (no AngularJs).
+    functionality with the AngularJS application but is built using MVC
+    and jQuery (no AngularJS).
 -   **Migrator**: Console application that runs database migrations.
 
 Thus, the back-end application is built in two different architectures
@@ -74,7 +74,7 @@ project, or vice versa.
 #### Multi tenancy
 
 Multi-tenancy is used to build **SaaS** (Software as a Service)
-applications easily. Wtih this technique, we can deploy **single
+applications easily. With this technique, we can deploy **single
 application** to serve to **multiple customers**. Each Tenant will have
 it's own **roles**, **users** and **settings**.
 
@@ -112,7 +112,7 @@ of tenancy name like:
 
     <add key="WebSiteRootAddress" value="http://{TENANCY_NAME}.mydomain.com/" />
 
-Thus, AspNet Zero can automatically detect current tenant from URLs. If
+Thus, ASP.NET Zero can automatically detect current tenant from URLs. If
 you configure it as above, you should also redirect all subdomains to
 your application. To do that;
 
@@ -178,7 +178,7 @@ password** and **email activation** pages.
 
 #### Layout
 
-Account management pages have a seperate **\_Layout** view under
+Account management pages have a separate **\_Layout** view under
 **Views/Account** folder:
 
 <img src="images/account-views.png" alt="Account Controller Views" class="img-thumbnail" width="214" height="324" />
@@ -341,9 +341,9 @@ link and will then be sent an email to reset their password.
 
 <img src="images/forgot-password.png" alt="Forgot password" class="img-thumbnail" width="421" height="359" />
 
-### Angular Back End Single-Page Application
+### AngularJS Back End Single-Page Application
 
-The backend in ASP.NET Zero is a **single page AngularJs application**.
+The backend in ASP.NET Zero is a **single page AngularJS application**.
 When you login, you are redirected to the **ApplicationController**. It
 returns the layout view of the application.
 
@@ -356,7 +356,7 @@ document).
 All view, script and styles files are located in **App** folder (not all
 folders/files are not shown here):
 
-<img src="images/app-folders.png" alt="Angular App folder structure" class="img-thumbnail" width="152" height="413" />
+<img src="images/app-folders.png" alt="AngularJS App folder structure" class="img-thumbnail" width="152" height="413" />
 
 There are three main folders here:
 
@@ -381,7 +381,7 @@ to get a deep understanding on creating menus.
 #### Routes
 
 **app.js** is the entrance point of the application. You define the
-**app** angular module and angular **routes** in this file. Angular
+**app** AngularJS module and AngularJS **routes** in this file. Angular
 **ui-router** is used for routing. Routes (states in ui-router) are
 dynamically defined based on the current user's permissions (see
 authorization section). Example:
@@ -483,7 +483,7 @@ When you create a new tenant, you should select/create a database to
 store the new tenant's data. You can select '**Use host database**' to
 store tenant data in host database (can be used for single database
 approach) or you can specify a connection string to create/use a
-**dedicated database** for the new tenant. AspNet Zero supports a
+**dedicated database** for the new tenant. ASP.NET Zero supports a
 **hybrid** approach. That means you can use host database for some
 tenants and create dedicated databases for other tenants. You can even
 **group** some tenants in a separated database.
@@ -734,7 +734,7 @@ The host settings page is used to configure some system settings:
 
 <img src="images/host-settings-general-5.png" alt="General host settings" class="img-thumbnail" width="737" height="243" />
 
-**Timezone** is an important setting on this page. AspNet Zero can work
+**Timezone** is an important setting on this page. ASP.NET Zero can work
 in multiple timezones. While it's easy to change, default startup
 solution does not enable UTC datetimes. See [timing
 document](https://aspnetboilerplate.com/Pages/Documents/Timing) to know
@@ -909,7 +909,7 @@ When a friend/user is selected, the conversation panel is opened.
 
 <img src="images/chat-conversation.png" alt="User menu" class="img-thumbnail" />
 
-A user can block or unblock thier friends/other users in this area.
+A user can block or unblock their friends/other users in this area.
 There is a wrench icon to the right of the selected user's username.
 This icon opens an action menu that contains "block user" or "unblock
 user" actions according to the target user's block status.
@@ -990,7 +990,7 @@ user can see the last login attempts for his/her account. The
 ##### Change Picture
 
 A user can change their own profile picture. **ProfileController** is
-used to upload and get user profile pictures. The [Angular file
+used to upload and get user profile pictures. The [AngularJS file
 upload](https://github.com/nervgh/angular-file-upload) module used to
 select and upload a profile picture to the server. Currently, jpg/jpeg,
 gif and png files are supported, you can extend this to allow additional
@@ -1008,13 +1008,13 @@ Login page.
 ### MVC Back End Multi Page Application
 
 The same backend application is also available as a **MPA** using
-ASP.NET **MVC**, **Web API** and **jQuery**. All functionallity is
-identical with the SPA Angular application. It uses the same application
+ASP.NET **MVC**, **Web API** and **jQuery**. All functionality is
+identical with the SPA AngularJS application. It uses the same application
 services to perform actions. This is a screenshot from the application:
 
 <img src="images/mpa-screenshot.png" alt="Multi Page Application Screenshot" class="img-thumbnail" width="1056" height="805" />
 
-Since all functionallity is identical, you can read the SPA section
+Since all functionality is identical, you can read the SPA section
 above to understand the application. A few differences in setup are
 explained below.
 
@@ -1045,7 +1045,7 @@ The header, footer and siderbar are developed as partial views.
 
 ### Migrator Console Application
 
-AspNet Zero includes a tool, Migrator.exe, to easily migrate your
+ASP.NET Zero includes a tool, Migrator.exe, to easily migrate your
 databases. You can run this application to create/migrate host and
 tenant databases.
 
@@ -1090,7 +1090,7 @@ regular Web API Controllers as you might normally do. 
 
 #### Localization
 
-The ASP.NET Zero **User Interface** is completely localized. AspNet Zero
+The ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero
 uses **dynamic, database based, per-tenant** localization (see the
 related section above).
 
@@ -1169,7 +1169,7 @@ to learn how to create and use settings.
 
 Menus are automatically generated using definitions in the
 **AppNavigationProvider** class. You have two menus: **Main** (the main
-menu in the Angular application) and **FrontEnd** (main menu in the
+menu in the AngularJS application) and **FrontEnd** (main menu in the
 front-end web site).
 
 See [navigation
@@ -1323,7 +1323,7 @@ destination.
 
 It's common to use the **soft-delete** pattern which is used to not
 delete an entity from the database but only mark it as 'deleted.' Thus,
-if an entity is soft-deleted, it will not be accidently retrieved into
+if an entity is soft-deleted, it will not be accidentally retrieved into
 the application. ABP's **data filters** make this happen automatically.
 
 In ASP.NET Zero, most entities are soft-deleted. See ABP's [data filter
@@ -1358,7 +1358,7 @@ There are some useful base classes used in the application:
 -   PhoneBook**WebViewPageBase** can be used as a base class for ASP.NET
     **MVC Views**. Actually, all views will automatically inherit this
     since it is defined in the web.config files. You can add some common
-    properties/methods htere to use it in all views.
+    properties/methods there to use it in all views.
 -   PhoneBook**ServiceBase** can be used as a base class for other
     service-like classes. UserEmailer class inherits it, for instance.
 -   PhoneBook**RepositoryBase** can be used as a base class for [custom
@@ -1373,7 +1373,7 @@ really make Logging, Localization, Authorization, etc. easier.
 #### CSRF/XSRF Protection
 
 ABP framework simplifies and automates CSRF protection as much as
-possible. AspNet Zero template comes with CSRF protection pre-configured
+possible. ASP.NET Zero template comes with CSRF protection pre-configured
 and working out of the box. For more information please see ABP's
 [XSRF-CSRF-Protection
 documentation](https://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection)
@@ -1389,10 +1389,10 @@ application version.
 
 ### Token Based Authentication
 
-AspNet Zero uses cookie based authentication for browsers. However, if
+ASP.NET Zero uses cookie based authentication for browsers. However, if
 you want to consume Web APIs or application services (those are exposed
 via dynamic web api) from a mobile application, you probably want a
-token based authentication mechanism. AspNet Zero includes bearer token
+token based authentication mechanism. ASP.NET Zero includes bearer token
 authentication infrastructure. **AccountController** in **.WebApi**
 project contains an **Authenticate** action to get the token. Then you
 can use the token for subsequent requests.
@@ -1458,7 +1458,7 @@ project. Open Test Explorer (Test\\Windows\\Test Explorer in VS main
 menu) to run unit tests:
 
 A new setting named **MultiTenancyEnabled** is introduced for unit test
-project with AspNet Zero v2.2. If you disable multi tenancy in your Core
+project with ASP.NET Zero v2.2. If you disable multi tenancy in your Core
 module, you also need to change this setting's value to false in unit
 test project's App.config. In this way, test related to multi tenancy
 will not be executed. Because some unit tests (tenant creation, edition

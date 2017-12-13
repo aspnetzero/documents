@@ -280,7 +280,7 @@ fill initial data for users and settings:
 
 <img src="images/aspnet-core-ef-seed-1.png" alt="Seed folders" class="img-thumbnail" />
 
-So, we can add a seperated class to fill some people to database as
+So, we can add a separated class to fill some people to database as
 shown below:
 
     namespace Acme.PhoneBookDemo.Migrations.Seed.Host
@@ -614,7 +614,7 @@ declared AutoMapFrom attribute to be able to make mapping.
 We created an **Application Service** (PersonAppService) and used it
 from the **Controller**. Instead, we could access **Repository**
 directly from Controller and completely discard the application service.
-AspNet Zero does not enforce any architecture here. In AspNet Zero, we
+ASP.NET Zero does not enforce any architecture here. In ASP.NET Zero, we
 use the application layer (application services and DTOs). Therefore, we
 implemented it **independent** from ASP.NET MVC. This makes application
 layer re-usable from different presentation layers. But if you will only
@@ -666,7 +666,7 @@ We successfully retrieved list of people from database to the page.
 We normally use a javascript based rich table/grid library to show
 tabular data, instead of manually rendering data like that. For example,
 we used to use [jTable](http://jtable.org/) library to show users on the
-Users page of AspNet Zero. Always use such components since they make
+Users page of ASP.NET Zero. Always use such components since they make
 things much more easier and provides a much better user experience.
 
 We did not use a table component here, because we want to show basics of
@@ -719,7 +719,7 @@ Here, the implementation of CreatePerson method:
 
 A Person entity is created by mapping given input, then inserted to
 database. We used **async/await** pattern here. All methods in ASP.NET
-Zero startup project is **async**. It's adviced to use async/await
+Zero startup project is **async**. It's advised to use async/await
 wherever possible.
 
 #### Test CreatePerson Method
@@ -1154,7 +1154,7 @@ call** actions of PhoneBookController actions. Since PhoneBookController
 uses PersonAppService, they will get authorization exception and can not
 use the service. But we can also secure MVC Controllers. This is
 suggested since some MVC actions may not use application services. Also,
-it's better to prevent unauthorized attemps at the very beginning.
+it's better to prevent unauthorized attempts at the very beginning.
 
 We use **AbpMvcAuthorize** attribute for MVC Controllers as shown below:
 
@@ -1224,7 +1224,7 @@ right. Created a file named **index.less** and added following lines:
         }
     }
 
-And add the sytle to your Index.cshtml page (You can also add minified
+And add the style to your Index.cshtml page (You can also add minified
 versions of styles for other environmets like production and staging):
 
     @section Styles
@@ -1570,7 +1570,7 @@ entity. Now, we can change GetPeople method to get Phones from database:
 We only added **Include** extension method to the query. Rest of the
 codes remains same. Furthermore, it would work without adding this, but
 much slower (since it will lazy load phone numbers for every person
-seperately).
+separately).
 
 ### AddPhone and DeletePhone Methods
 
@@ -1580,7 +1580,7 @@ below:
     Task DeletePhone(EntityDto<long> input);
     Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
 
-We could create a new, seperated IPhoneAppService. It's your choice.
+We could create a new, separated IPhoneAppService. It's your choice.
 But, we can consider Person as an aggregate and add phone related
 methods here. AddPhoneInput DTO is shown below:
 
@@ -1839,7 +1839,7 @@ will see PhoneBookController.AddPhone action in the next section).
 
 Lastly, we deleting the phone when clicking to the '**delete phone**'
 button and remove the related phone row (tr) from DOM. Notice the event
-registration here. We used **on** function of jQuery. Thus, the selector
+registration here. We used **on** function of jquery. Thus, the selector
 becomes **live**. That means, if we add new elements to the page and any
 element matches to the selector, it's click event is automatically
 binded.
@@ -2106,7 +2106,7 @@ the ASP.NET Zero system. We hope that it will help you to build your own
 application.
 
 We intentionally used different approaches for similar tasks to show you
-different styles of development. AspNet Zero provides an architecture
+different styles of development. ASP.NET Zero provides an architecture
 but does not restrict you. You can make your own style development.
 
 #### Source Code

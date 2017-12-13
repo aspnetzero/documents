@@ -53,7 +53,7 @@ right after the dashboard menu item).
 permission name (will set it later), **flaticon-book** is just an
 arbitrary icon class (from [this
 set](http://keenthemes.com/metronic/preview/?page=components/icons/flaticon&demo=default))
-and **/phonebook** is the angular route.
+and **/phonebook** is the Angular route.
 
 If you run the application, you can see a new menu item on the left
 menu, but it won't work (it redirect to default route) if you click to
@@ -84,7 +84,7 @@ enough to make a re-build to recycle the application.
 
 #### Angular Route
 
-Angular has a powerful URL routing system. AspNet Zero has defined
+Angular has a powerful URL routing system. ASP.NET Zero has defined
 routes in a few places (for modularity, see [dev
 guide](Development-Guide-Angular.md)). We want to add phone book page
 to the main module. So, open **src\\app\\main\\main-routing.module.ts**
@@ -310,7 +310,7 @@ fill initial data for users and settings:
 
 <img src="images/aspnet-core-ef-seed-1.png" alt="Seed folders" class="img-thumbnail" />
 
-So, we can add a seperated class to fill some people to database as
+So, we can add a separated class to fill some people to database as
 shown below:
 
     namespace Acme.PhoneBookDemo.Migrations.Seed.Host
@@ -707,7 +707,7 @@ We successfully retrieved list of people from database to the page.
 We normally use a javascript based rich table/grid library to show
 tabular data, instead of manually rendering data like that. For example,
 we used [jTable](http://jtable.org/) library to show users on the Users
-page of AspNet Zero. Always use such components since they make things
+page of ASP.NET Zero. Always use such components since they make things
 much more easier and provides a much better user experience.
 
 We did not use a table component here, because we want to show basics of
@@ -769,7 +769,7 @@ Here, the implementation of CreatePerson method:
 
 A Person entity is created by mapping given input, then inserted to
 database. We used **async/await** pattern here. All methods in ASP.NET
-Zero startup project is **async**. It's adviced to use async/await
+Zero startup project is **async**. It's advised to use async/await
 wherever possible.
 
 #### Test CreatePerson Method
@@ -838,7 +838,7 @@ for more information.
 
 #### Creating a Modal
 
-We will create a Bootstrap Modal to create a new person. AspNet Zero
+We will create a Bootstrap Modal to create a new person. ASP.NET Zero
 uses [ngx-bootstrap](https://github.com/valor-software/ngx-bootstrap)
 library to create modals (you can use another library, but we will use
 it in this sample too). Final modal will be like below:
@@ -925,7 +925,7 @@ Let me explain some parts of this class:
 -   It focuses to **name** input when modal is shown.
 
 The code is simple and easy to understand except a small hack: an active
-flag is used to reset validation for angular view (explained in
+flag is used to reset validation for Angular view (explained in
 angular's
 [documentation](https://angular.io/docs/ts/latest/cookbook/form-validation.html)).
 
@@ -1547,7 +1547,7 @@ entity. Now, we can change GetPeople method to get Phones from database:
 We only added **Include** extension method to the query. Rest of the
 codes remains same. Furthermore, it would work without adding this, but
 much slower (since it will lazy load phone numbers for every person
-seperately).
+separately).
 
 ### AddPhone and DeletePhone Methods
 
@@ -1557,7 +1557,7 @@ below:
     Task DeletePhone(EntityDto<long> input);
     Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
 
-We could create a new, seperated IPhoneAppService. It's your choice.
+We could create a new, separated IPhoneAppService. It's your choice.
 But, we can consider Person as an aggregate and add phone related
 methods here. AddPhoneInput DTO is shown below:
 
@@ -2065,7 +2065,7 @@ the ASP.NET Zero system. We hope that it will help you to build your own
 application.
 
 We intentionally used different approaches for similar tasks to show you
-different styles of development. AspNet Zero provides an architecture
+different styles of development. ASP.NET Zero provides an architecture
 but does not restrict you. You can make your own style development.
 
 #### Source Code

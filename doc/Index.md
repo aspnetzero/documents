@@ -1,4 +1,4 @@
-### ASP.NET ZERO
+### ASP.NET Zero
 
 #### [GETTING STARTED](Getting-Started.md)
 
@@ -27,7 +27,7 @@ Change logs and relase notes.
 
 Some planned features for next releases.
 
-### [ASP.NET BOILERPLATE](https://aspnetboilerplate.com/Pages/Documents)
+### [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents)
 
 ASP.NET Zero is based on ASP.NET Boilerplate **application framework**.
 You can learn all it's features from it's compherensive official
@@ -35,6 +35,6 @@ documentation.
 
 ### [METRONIC THEME](http://www.keenthemes.com/preview/metronic/)
 
-AspNet Zero is based on beautiful and powerful metronic **theme**. You
+ASP.NET Zero is based on beautiful and powerful metronic **theme**. You
 can see all metronic **pages, components**, change logs and more in it's
 official web site.

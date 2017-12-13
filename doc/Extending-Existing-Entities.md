@@ -3,9 +3,9 @@
 This tutorial is a step by step guide to learn **how to add new
 properties to existing entities**, from database layer to UI layer.
 
-In AspNet Zero, **Tenant**, **User** and **Role** entities are
+In ASP.NET Zero, **Tenant**, **User** and **Role** entities are
 **abstract** in the framework, others are not. There are some
-differences between them. So, we seperated it into two sections.
+differences between them. So, we separated it into two sections.
 
 *Note: We assume that you created your project as described in the
 [Getting Started](Getting-Started.md) document.*
@@ -110,7 +110,7 @@ open the **users page**:
 
 <img src="images/extend-entities-user-address-in-table.png" alt="Address in table" class="img-thumbnail" width="802" height="527" />
 
-This was for SPA (Single Page Application with Angularjs). It's similar
+This was for SPA (Single Page Application with AngularJS). It's similar
 for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Users\\index.js and add
 Address field to the table as like Surname.
 
@@ -312,7 +312,7 @@ users, not tenant users):
 
 <img src="images/extend-entities-editions-ui-table.png" alt="UI table for editions" class="img-thumbnail" width="810" height="174" />
 
-This was for SPA (Single Page Application with Angularjs). It's similar
+This was for SPA (Single Page Application with AngularJS). It's similar
 for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Editions\\**index.js**
 and add Price field to the table.
 
@@ -337,7 +337,7 @@ We also added **auto mapping** for **MyEdition** entity. We could
 directly replace Edition by MyEdition if we will never use the Edition
 class. We left it like that to show different usages.
 
-Since AspNet Zero **does not** use auto mapping for creating (in
+Since ASP.NET Zero **does not** use auto mapping for creating (in
 CreateEditionAsync method) and updating (in UpdateEditionAsync method)
 editions, we should change these code too:
 

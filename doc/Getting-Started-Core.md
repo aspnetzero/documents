@@ -62,9 +62,9 @@ Open **appsettings.json** in **.Web.Mvc** project and change the
 We have two options to create and migrate database to the latest
 version.
 
-##### AspNet Zero Migrator Application
+##### ASP.NET Zero Migrator Application
 
-AspNet Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production (see [development guide](Development-Guide-Core.md) for more information).
+ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production (see [development guide](Development-Guide-Core.md) for more information).
 
 ##### Entity Framework Migration Command
 
@@ -78,7 +78,7 @@ You can also use Entity Framework's built-in tools for migrations. Open
 This command will create your database and fill initial data. You can
 open SQL Server Management Studio to check if database is created:
 
-<img src="images/created-database-tables-4.png" alt="AspNet Zero Database Tables" class="img-thumbnail" />
+<img src="images/created-database-tables-4.png" alt="ASP.NET Zero Database Tables" class="img-thumbnail" />
 
 You can use EF console commands for development and Migrator.exe for
 production. But notice that; Migrator.exe supports running migrations in

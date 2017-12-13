@@ -45,7 +45,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 -   Show **payment history** to tenants.
 -   Implement **phone number confirmation**.
 -   Change all data tables by [**datatables**](https://datatables.net/)
-    jquery plugin for ASP.NET Core & jQuery version.
+    jQuery plugin for ASP.NET Core & jQuery version.
 -   Change all data tables by
     [**PrimeNg**](https://www.primefaces.org/primeng/) for ASP.NET Core
     & Angular version.
@@ -62,7 +62,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 -   **Paypal** integration for tenant subscriptions.
 -   **IdentityServer4** integration.
 -   **Host dashboard** for edition, tenant & income statistics.
--   **Public web site** is moved to a seperated project (and
+-   **Public web site** is moved to a separated project (and
     authentication integrated to the main application).
 -   Renewed sample **tenant dashboard**.
 -   Converted **unit tests** to use **SQLite in memory** database.
@@ -71,7 +71,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 ### v4.0.0 (2017-04-24)
 
--   **.net core** support to create cross platform web solutions.
+-   **.NET Core** support to create cross platform web solutions.
 -   Moved to **Entity Framework Core** and **ASP.NET Core Identity**.
 -   **Docker** files included to deploy as containers.
 -   Spanish (Mexico) localization.
@@ -110,8 +110,8 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
     -   Added URL rewrite configuration to deploy under IIS.
     -   Upgraded to latest Angular and Angular CLI.
 -   Angular 1.x UI
-    -   Upgraded to Angularjs v1.6.2.
-    -   Upgraded other angularjs related packages to latest versions.
+    -   Upgraded to AngularJS v1.6.2.
+    -   Upgraded other AngularJS related packages to latest versions.
 -   Common
     -   Added French translation.
     -   Upgraded to ABP v1.4.2.
@@ -169,20 +169,20 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 -   Upgraded to ABP v0.10.1.3.
 -   Upgraded to metronic v4.6
 -   Upgraded to SignalR v2.2.1
--   Upgraded to angular ui grid v3.2.1
--   Upgraded to angularjs v1.5.6 and Angular.UI.Bootstrap v1.3.3.
+-   Upgraded to angular-ui-grid v3.2.1
+-   Upgraded to AngularJS v1.5.6 and angular-ui-bootstrap v1.3.3.
 -   Other minor improvements and fixes
 
 ### v1.10.1 (2016-05-18)
 
 -   Upgraded to ABP v0.9.1.
 -   Upgraded to Angular v1.5.5.
--   Upgraded to Angular-UI bootstrap v1.3.2.
+-   Upgraded to angular-ui-bootstrap v1.3.2.
 -   Minor improvements and fixes.
 
 ### v1.10.0 (2016-05-10)
 
--   Database per tenant support for multi-tenanct applications.
+-   Database per tenant support for multi-tenant applications.
 -   Multiple time zone support and UTC DateTime improvements.
 -   Created a Migrator tool (exe) to easily migrate host and tenant
     databases.
@@ -211,7 +211,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 ### v1.8.2 (2016-02-29)
 
--   Localization support for ui-grid.
+-   Localization support for angular-ui-grid.
 -   New cache maintenance page.
 -   Local fallback for google fonts.
 -   Upgraded to ABP v0.8.2.
@@ -221,7 +221,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 -   Integrated Swagger UI.
 -   Upgraded to Angular v1.5.
--   Upgraded to Angular-UI v1.1.2.
+-   Upgraded to Angular UI v1.1.2.
 -   Upgraded to ABP v0.8.1.
 -   Minor bug fix and enhancements.
 
@@ -240,7 +240,7 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 ### v1.7.1 (2016-01-08)
 
--   Changed deprecated angular ui-bootstrap components to new ones.
+-   Changed deprecated angular-ui-bootstrap components to new ones.
 -   Upgraded ABP and other nuget packages.
 -   Minor bugfix and and improvements.
 
@@ -332,10 +332,10 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
     logs.
 -   Added Chinese localization.
 -   Upgraded to Metronic v4.0.
--   Upgraded to AngularJs v1.4.
+-   Upgraded to AngularJS v1.4.
 -   Upgraded to latest ABP.
 -   Disabled audit logging for some actions.
--   Added Bootstrap DateTimePicker javascript library and it's AngularJs
+-   Added Bootstrap DateTimePicker javascript library and it's AngularJS
     directive.
 -   Minor fix and improvements.
 

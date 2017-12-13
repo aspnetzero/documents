@@ -66,7 +66,7 @@ There are 12 projects in the solution:
     device can consume your application as API.
 -   **Web.Common** project contains common classes used by Mvc and Host
     projects.
--   **Web.Public** project is a seperated web application that can be
+-   **Web.Public** project is a separated web application that can be
     used to create a public web site or a landing page for your
     application.
 -   **Migrator** project is a console application that runs database
@@ -92,7 +92,7 @@ ASP.NET Zero solution contains **four** applications:
 #### Multi tenancy
 
 Multi-tenancy is used to build **SaaS** (Software as a Service)
-applications easily. Wtih this technique, we can deploy **single
+applications easily. With this technique, we can deploy **single
 application** to serve to **multiple customers**. Each Tenant will have
 it's own **roles**, **users** and **settings**.
 
@@ -126,7 +126,7 @@ of tenancy name like:
 
     "WebSiteRootAddress": "http://{TENANCY_NAME}.mydomain.com/"
 
-Thus, AspNet Zero can automatically detect current tenant from URLs. If
+Thus, ASP.NET Zero can automatically detect current tenant from URLs. If
 you configure it as above, you should also redirect all subdomains to
 your application. To do that;
 
@@ -144,7 +144,7 @@ is used by the [Angular](Developing-Step-By-Step-Angular.md) UI. If
 you are not using Angular UI, you can ignore it. Finally,
 "**CorsOrigins**" setting is used to allow some domains for cross origin
 requests. This is also useful when you are hosting your Angular UI in a
-seperated server/domain.
+separated server/domain.
 
 ### Account Controller
 
@@ -153,7 +153,7 @@ password** and **email activation** pages.
 
 #### Layout
 
-Account management pages have a seperated **\_Layout** view under
+Account management pages have a separated **\_Layout** view under
 **Views/Account** folder:
 
 <img src="images/account-views-core-v2.png" alt="Account Views" class="img-thumbnail" width="216" height="214" />
@@ -362,7 +362,7 @@ section.*
 
 Most **SaaS** (multi-tenant) applications have **editions** (packages)
 those have different **features**. Thus, they can provide different
-**price and feature options** to thier tenants (customers). **Editions
+**price and feature options** to their tenants (customers). **Editions
 page** (available in host login) is used to manage application's
 editions:
 
@@ -380,7 +380,7 @@ expire strategy: How many days to allow a tenant to use the application
 after subscription expires. And finally, you can deactivate tenant or
 assign to a free edition if they don't extend their subscription.
 
-Features tab is used to determing features available for the edition:
+Features tab is used to determining features available for the edition:
 
 <img src="images/edition-feature-editing-core-1.png" alt="Edit edition features" class="img-thumbnail" />
 
@@ -424,7 +424,7 @@ When we create a new tenant, we should select/create a database to store
 new tenant's data. We can select '**Use host database**' to store tenant
 data in host database (can be used for single database approach) or we
 can specify a connection string to create/use a **dedicated database**
-for new tenant. AspNet Zero supports **hybrid** approach. That means you
+for new tenant. ASP.NET Zero supports **hybrid** approach. That means you
 can use host database for some tenants and create dedicated databases
 for some other tenants. Even you can **group** some tenants in a
 separated database.
@@ -708,7 +708,7 @@ generated. You can see a sample invoice below:
 
 #### Visual Settings
 
-AspNet Zero's look of UI can be modified in visual settings page. This
+ASP.NET Zero's look of UI can be modified in visual settings page. This
 page is used to modify look of UI both for system and personal user
 accounts. If a user doesn't have permission to see this page, then user
 will see an item named "Visual Settings" in his personal menu.
@@ -729,7 +729,7 @@ Host settings page is used to configure some system settings:
 
 <img src="images/host-settings-general-6.png" alt="General Host Settings" class="img-thumbnail" />
 
-**Timezone** is an important setting in this page. AspNet Zero can work
+**Timezone** is an important setting in this page. ASP.NET Zero can work
 in multiple zones. Each user can see dates and times in their own time
 zone. Timezone setting in this page allows you to set default time zone
 for the application including all tenants and users. Tenants and users
@@ -782,9 +782,9 @@ system, then generally even **no need** to set Domain name, user and
 password. You can logout and then login with your **domain user name and
 password**. If not, you should set these credentials.
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-LDAP Authentication is not supportted by .net core yet. Thus, it's
+LDAP Authentication is not supportted by .NET Core yet. Thus, it's
 designed to be conditional. If you are using .Net Framework (4.6+) then
 it will be available, otherwise it will be disabled.
 
@@ -873,10 +873,10 @@ All notifications of user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-Since SignalR is not ready yet for .net core, real time notifications
-will not work if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, real time notifications
+will not work if you select .NET Core as your base framework.
 
 #### Chat
 
@@ -919,7 +919,7 @@ icon right of the selected user's username. This icon opens an action
 menu and this menu contains block user or unblock user actions according
 to user's block status.
 
-Chat messages are distrubited over **ChatHub** signalR hub class which
+Chat messages are distributed over **ChatHub** signalR hub class which
 uses **ChatMessageManager** domain class.
 
 **ChatUserStateWatcher** class is responsible for watching
@@ -939,10 +939,10 @@ online users and unread message count from each friend.
 friends cache up to date. In order to do that, it watches some events of
 Friendship and ChatMessage entities.
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-Since SignalR is not ready yet for .net core, chat feature will not work
-if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, chat feature will not work
+if you select .NET Core as your base framework.
 
 ##### Chat Features
 
@@ -1015,7 +1015,7 @@ page.
 
 ### Web.Host Application
 
-AspNet Zero solution contains an extra project, **Web.Host**, which just
+ASP.NET Zero solution contains an extra project, **Web.Host**, which just
 exposes all application functionality as **remote API**. Thus, you can
 consume your application as API from any device. Actually, Web.Mvc
 project also does it, provides API for all application functionality.
@@ -1038,7 +1038,7 @@ A few notes on Web.Host project:
 
 ### Migrator Console Application
 
-AspNet Zero includes a tool, Migrator.exe, to easily migrate your
+ASP.NET Zero includes a tool, Migrator.exe, to easily migrate your
 databases. You can run this application to create/migrate host and
 tenant databases.
 
@@ -1046,7 +1046,7 @@ tenant databases.
 
 This application gets host connection string from it's **own
 appsettings.json file**. It will be same as in the appsettings.json in
-.Web project at the beggining. Be sure that the connection string in
+.Web project at the beginning. Be sure that the connection string in
 config file is the database you want. After getting **host**
 **connection sring**, it first creates the host database or apply
 migrations if it does already exists. Then it gets connection strings of
@@ -1062,7 +1062,7 @@ single database in one run).
 
 ### Public Web Site
 
-ASP.NET Zero contains a seperated application that can be a starting
+ASP.NET Zero contains a separated application that can be a starting
 point for your public web site or a landing page for your application.
 Set **Web.Public** as **Startup Project** and run the application:
 
@@ -1133,7 +1133,7 @@ should change them when you publish your project.
 
 #### Setup Page
 
-AspNet Zero application can be set-up using install page. This page is
+ASP.NET Zero application can be set-up using install page. This page is
 developed to create initial database, apply migrations and configure the
 application according to user's input on this page. Setup page can be
 accessed via **http://yourwebsite.com/Install**.
@@ -1152,7 +1152,7 @@ We suggest you to start by checking this class. It is also integrated to
 #### NPM & Front End Dependencies
 
 ASP.NET Zero solution uses [npm](https://www.npmjs.com/) package manager
-to obtain front end library dependencies (like bootstrap and jquery).
+to obtain front end library dependencies (like Bootstrap and jQuery).
 So, you can easily add new packages or update existing packages on
 command line interface. You can see all installed npm packages in
 **package.json** of the .Web.Mvc project.
@@ -1192,7 +1192,7 @@ create regular MVC API Controllers as we always do.
 
 #### Localization
 
-ASP.NET Zero **User Interface** is completely localized. AspNet Zero
+ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero
 uses **dynamic, database based, per-tenant** localization (See the
 related section above).
 
@@ -1376,10 +1376,10 @@ use SignalR in the application. See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information on SignalR.
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-Since SignalR is not ready yet for .net core, SignalR integration is
-disabled if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, SignalR integration is
+disabled if you select .NET Core as your base framework.
 
 #### Logging
 
@@ -1455,9 +1455,9 @@ enable it if you want. It's enabled in RELEASE mode. Check
 *YourProjectName*CoreModule class's PreInitialize method to change it if
 you like.
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-Since .net core does not support smpt client, AspNet Zero uses
+Since .NET Core does not support smpt client, ASP.NET Zero uses
 [MailKit](https://github.com/jstedfast/MailKit) to send emails.
 
 #### BinaryObjectManager
@@ -1473,7 +1473,7 @@ A general-purpose binary saving mechanism built in ASP.NET Zero.
 user profile pictures are saved here.
 
 **IBinaryObjectManager** interface defines methods to save, get and
-delete binary objects. **DbBinaryObjectManager** implementes it to save
+delete binary objects. **DbBinaryObjectManager** implements it to save
 binary object in database. For example, **ProfileController** uses
 IBinaryObjectManager to get current user's profile picture from
 database.
@@ -1485,7 +1485,7 @@ interface to store files in another destination.
 
 It's common to use the **soft-delete** pattern which is used to not
 delete an entity from database but only mark it as 'deleted'. So, if an
-entity is soft-deleted, it should not be accidently retrieved into the
+entity is soft-deleted, it should not be accidentally retrieved into the
 application. ABP's **data filters** make this automatically.
 
 In ASP.NET Zero, most entities are soft-deleted. See ABP's [data filter
@@ -1535,7 +1535,7 @@ easier.
 #### CSRF/XSRF Protection
 
 ABP framework simplifies and automates CSRF protection as much as
-possible. AspNet Zero template comes with pre-configured and working out
+possible. ASP.NET Zero template comes with pre-configured and working out
 of the box. For more information please see ABP's [XSRF-CSRF-Protection
 documentation](https://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection#aspnet-core)
 
@@ -1771,7 +1771,7 @@ should be independently configured.
     cache
     provider](https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration).
 -   "**App:WebSiteRootAddress**": Root URL of this application.
--   "**App:RedirectAllowedExternalWebSites**": A comma seperated list of
+-   "**App:RedirectAllowedExternalWebSites**": A comma separated list of
     root URLs those are allowed to be redirected once user logins. For
     security reasons, ASP.NET Zero only redirects to local URLs except
     this list. If you will use the public web site, you should add it's
@@ -1805,7 +1805,7 @@ Web.Host Application
     provider](https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration).
 -   "**App:**<span class="auto-style3">ServerRootAddress</span>": Root
     URL of this application.
--   "**App:ClientRootAddress**": Root URL of the angular application (if
+-   "**App:ClientRootAddress**": Root URL of the Angular application (if
     you are using Angular as UI).
 -   "**App:CorsOrigins**": Allowed origins for cross origin requests
     (splitted by comma).

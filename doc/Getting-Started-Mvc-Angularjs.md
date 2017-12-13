@@ -14,7 +14,7 @@ below:
 
 <img src="images/download-mvc5-jquery.png" alt="Create project" class="img-thumbnail" width="572" height="534" />
 
-Select "**ASP.NET MVC 5.x & jQuery**" or "**ASP.NET MVC 5.x & Angularjs 1.x**" based on your preference. Your project will be ready in one
+Select "**ASP.NET MVC 5.x & jQuery**" or "**ASP.NET MVC 5.x & AngularJS 1.x**" based on your preference. Your project will be ready in one
 minute. After extacting the downloaded zip file and opening solution in
 **Visual Studio**, you will see solution structure as shown below:
 
@@ -38,9 +38,9 @@ connection string if you want:
 You have two options to create and migrate database to the latest
 version.
 
-##### AspNet Zero Migrator Application
+##### ASP.NET Zero Migrator Application
 
-AspNet Zero solution includes a **.Migrator** (like
+ASP.NET Zero solution includes a **.Migrator** (like
 Acme.PhoneBook.Migrator) project in the solution. You can run this tool
 for database migrations on development and production (see [development
 guide](Development-Guide-Mvc-Angularjs.md) for more information).
@@ -59,7 +59,7 @@ project** and run **Update-Database** command.
 This command will create your database and fill initial data. You can
 open SQL Server Management Studio to check if database is created:
 
-<img src="images/created-database-tables-3.png" alt="AspNet Zero Database Tables" class="img-thumbnail" width="243" height="507" />
+<img src="images/created-database-tables-3.png" alt="ASP.NET Zero Database Tables" class="img-thumbnail" width="243" height="507" />
 
 You can use EF console commands for development and Migrator.exe for
 production. But notice that; Migrator.exe supports running migrations in

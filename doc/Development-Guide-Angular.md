@@ -24,11 +24,11 @@ too.
 
 Following tools are needed in order to use the solution:
 
--   [Nodejs 6.9+ and Npm 3.10+](https://nodejs.org)
+-   [nodejs 6.9+ and Npm 3.10+](https://nodejs.org)
 -   [Typescript 2.0+](https://www.typescriptlang.org/)
--   [Yarn](https://yarnpkg.com/lang/en/)
+-   [yarn](https://yarnpkg.com/)
 
-In addition, see [AspNet Core](Development-Guide-Core.md)
+In addition, see [ASP.NET Core](Development-Guide-Core.md)
 documentation for server side requirements and other server side
 features.
 
@@ -45,7 +45,7 @@ any OS you like (MacOS/Linux/Windows).
 
 The diagram below shows the overall architecture:
 
-<img src="images/angular2-core-overall-architecture.png" alt="Angular AspNet Core Architecture Overall" class="thumbnail" width="683" height="163" />
+<img src="images/angular2-core-overall-architecture.png" alt="Angular ASP.NET Core Architecture Overall" class="thumbnail" width="683" height="163" />
 
 -   **Angular** project is designed so it can be **deployed separately**
     from the backend ASP.NET Core solution, to a different port in same
@@ -305,7 +305,7 @@ section.*
 
 Most **SaaS** (multi-tenant) applications have **editions** (packages)
 those have different **features**. Thus, they can provide different
-**price and feature options** to thier tenants (customers). **Editions
+**price and feature options** to their tenants (customers). **Editions
 page** (available in host login) is used to manage application's
 editions:
 
@@ -323,7 +323,7 @@ expire strategy: How many days to allow a tenant to use the application
 after subscription expires. And finally, you can deactivate tenant or
 assign to a free edition if they don't extend their subscription.
 
-Features tab is used to determing features available for the edition:
+Features tab is used to determining features available for the edition:
 
 <img src="images/edition-feature-editing-core-1.png" alt="Edit edition features" class="img-thumbnail" />
 
@@ -366,7 +366,7 @@ When we create a new tenant, we should select/create a database to store
 new tenant's data. We can select '**Use host database**' to store tenant
 data in host database (can be used for single database approach) or we
 can specify a connection string to create/use a **dedicated database**
-for new tenant. AspNet Zero supports **hybrid** approach. That means you
+for new tenant. ASP.NET Zero supports **hybrid** approach. That means you
 can use host database for some tenants and create dedicated databases
 for some other tenants. Even you can **group** some tenants in a
 separated database.
@@ -611,7 +611,7 @@ generated. You can see a sample invoice below:
 
 #### Visual Settings
 
-AspNet Zero's look of UI can be modified in visual settings page. This
+ASP.NET Zero's look of UI can be modified in visual settings page. This
 page is used to modify look of UI both for system and personal user
 accounts. If a user doesn't have permission to see this page, then user
 will see an item named "Visual Settings" in his personal menu.
@@ -632,7 +632,7 @@ Host settings page is used to configure some system settings:
 
 <img src="images/host-settings-general-6.png" alt="General Host Settings" class="img-thumbnail" />
 
-**Timezone** is an important setting in this page. AspNet Zero can work
+**Timezone** is an important setting in this page. ASP.NET Zero can work
 in multiple zones. Each user can see dates and times in their own time
 zone. Timezone setting in this page allows you to set default time zone
 for the application including all tenants and users. Tenants and users
@@ -674,9 +674,9 @@ system, then generally even **no need** to set Domain name, user and
 password. You can logout and then login with your **domain user name and
 password**. If not, you should set these credentials.
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-LDAP Authentication is not supportted by .net core yet. Thus, it's
+LDAP Authentication is not supportted by .NET Core yet. Thus, it's
 designed to be conditional. If you are using .Net Framework (4.6+) then
 it will be available, otherwise it will be disabled.
 
@@ -745,10 +745,10 @@ All notifications of the user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-Since SignalR is not ready yet for .net core, real time notifications
-will not work if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, real time notifications
+will not work if you select .NET Core as your base framework.
 
 #### Chat
 
@@ -800,10 +800,10 @@ with host", "Chat with other tenants". These features can be
 enabled/disabled per edition/tenant. By using these features host can
 enable/disable chat with other tenant's users or host users.
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-Since SignalR is not ready yet for .net core, chat feature will not work
-if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, chat feature will not work
+if you select .NET Core as your base framework.
 
 #### User Menu
 
@@ -851,7 +851,7 @@ files are supported, you can extend it.
 
 #### Setup Page
 
-AspNet Zero application can be set-up using install page. This page is
+ASP.NET Zero application can be set-up using install page. This page is
 developed to create initial database, apply migrations and configure the
 application according to user's input on this page. Setup page can be
 accessed via **http://yourwebsite.com/app/admin/install**.
@@ -864,14 +864,14 @@ accessed via **http://yourwebsite.com/app/admin/install**.
 
 ASP.NET Zero solution supports both [yarn](https://yarnpkg.com/) and
 [npm](https://www.npmjs.com/) to obtain front end library dependencies
-(like angular and bootstrap). We suggest to use yarn because npm has
+(like Angular and Bootstrap). We suggest to use yarn because npm has
 some problems, yarn solves those problems and it is compatible with npm
 as well. You can easily add, update or remove packages on yarn's command
 line interface.
 
 #### Angular CLI & WebPack
 
-AspNet Zero uses [angular-cli](https://cli.angular.io/) for the
+ASP.NET Zero uses [angular-cli](https://cli.angular.io/) for the
 development and deployment. It's properly configured for angular-cli and
 already working. To run the application, open command line and type
 "**npm start**" command (or "npm run hmr" to enable hot module
@@ -884,7 +884,7 @@ replacement feature). Once it's compiled and ready, you can go to
 Since all communication to server made via AJAX requests, we are using a
 client side javascript layer to call server API. It's automatically
 generated by [nswag](https://github.com/NSwag/NSwag) tool using
-[swagger](http://swagger.io/). AspNet Zero solution is properly
+[swagger](http://swagger.io/). ASP.NET Zero solution is properly
 configured for nswag. When you change your server side services, all you
 need to do is to run **nswag/refresh.bat** file (or run the command
 inside it for a non-Windows OS) while server side (.Host project) is
@@ -912,7 +912,7 @@ pre-built components for example usages.
 
 #### Localization
 
-ASP.NET Zero **User Interface** is completely localized. AspNet Zero
+ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero
 uses **dynamic, database based, per-tenant** localization.
 
 XML files are used as base translation for desired languages (defined in
@@ -941,7 +941,7 @@ documentations for more information on localization.
 ASP.NET Zero uses ABP's [exception
 handling](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#exception-filter)
 system. Thus, you don't need to handle & care about exceptions in most
-time. All server side exceptions are gracefuly handled and an
+time. All server side exceptions are gracefully handled and an
 appropriate message is shown to the user.
 
 #### Authorization
@@ -985,14 +985,14 @@ See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information.
 
-**.Net Core Compability**
+**.NET Core Compatibility**
 
-Since SignalR is not ready yet for .net core, SignalR integration is
-disabled if you select .net core as your base framework.
+Since SignalR is not ready yet for .NET Core, SignalR integration is
+disabled if you select .NET Core as your base framework.
 
 ### Token Based Authentication
 
-AspNet Zero Angular UI uses the [server
+ASP.NET Zero Angular UI uses the [server
 side](Development-Guide-Core.md) via token based authentication. Any
 application can authenticate and use any functionality in the
 application as API. For instance, you can create a mobile application
@@ -1086,7 +1086,7 @@ request and naturally can not find the requested path and returns a HTTP
 404 error. We should configure IIS to redirect all requests to the
 index.html page (or, to the root path).
 
-AspNet Zero Angular UI contains a **web.config** file. You can copy it
+ASP.NET Zero Angular UI contains a **web.config** file. You can copy it
 to the web site's root folder to overcome the problem described above.
 
 ### Used Library & Frameworks
