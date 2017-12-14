@@ -6,36 +6,27 @@ In this document, we will create a sample **Xamarin phonebook application** step
 
 In the [Developing Step By Step Phonebook
 documentation](Developing-Step-By-Step-Core.html) we've already
-completed how to create a phonebook on server side and web client. To
-resume this project, download the solution **Acme.PhoneBookDemo](https://github.com/aspnetzero/as net-zero-samples/tree/master/PhoneBook-Core)** and open the **Acme.PhoneBookDemo.Mobile.sln** file.
+completed how to create a phonebook on server side and web client. To resume this project, download the solution **Acme.PhoneBookDemo](https://github.com/aspnetzero/as net-zero-samples/tree/master/PhoneBook-Core)** and open the **Acme.PhoneBookDemo.Mobile.sln** file.
 
 ### Configuring Host Address
 
 <img src="images/xamarin-phonebook-my-local-ip.png" alt="Configuring Host Address" class="img-thumbnail" />
 
- 
-
-If you are using an emulator you can use the **emulator's loopback address** to reach your local computer. Eg: for Android emulator, it's
-**10.0.2.2**
+ If you are using an emulator you can use the **emulator's loopback address** to reach your local computer. Eg: for Android emulator, it's **10.0.2.2**
 
 <img src="images/xamarin-phonebook-android-emulator-ip.png" alt="Configuring Host Address for Android Emulator" class="img-thumbnail" />
 
 ### Creating Phonebook Application Service Proxy
 
-To consume server Api methods we need to implement the
-**IPersonAppService** application service over http transmission. Create
-a new folder called **PhoneBook** in
+To consume server Api methods we need to implement the **IPersonAppService** application service over http transmission. Create a new folder called **PhoneBook** in 
 **Acme.PhoneBookDemo.Application.Client** project.
 
-Then create a new class called **ProxyPersonAppService** in the
-**PhoneBook** folder. Derive ProxyPersonAppService from
-**ProxyAppServiceBase**, **IPersonAppService** base. Visual Studio will
+Then create a new class called **ProxyPersonAppService** in the **PhoneBook** folder. Derive ProxyPersonAppService from **ProxyAppServiceBase**, **IPersonAppService** base. Visual Studio will
 help us to add all unimplemented methods from IPersonAppService at once.
 
-Add **async** keyword to all methods to be able to benefit
-multi-tasking.
+Add **async** keyword to all methods to be able to benefit multi-tasking.
 
-<img src="images/xamarin-phonebook-person-app-service-client.png" alt="Creating Person App Service Client" class="img-thumbnail" /> 
+<img src="images/xamarin-phonebook-person-app-service-client.png" alt="Creating Person App Service Client" class="img-thumbnail" />
 
 #### Implementing App Service Methods
 
