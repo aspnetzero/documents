@@ -12,7 +12,7 @@ completed how to create a phonebook on server side and web client. To resume thi
 
 <img src="images/xamarin-phonebook-my-local-ip.png" alt="Configuring Host Address" class="img-thumbnail" />
 
- If you are using an emulator you can use the **emulator's loopback address** to reach your local computer. Eg: for Android emulator, it's **10.0.2.2**
+If you are using an emulator you can use the **emulator's loopback address** to reach your local computer. Eg: for Android emulator, it's **10.0.2.2**
 
 <img src="images/xamarin-phonebook-android-emulator-ip.png" alt="Configuring Host Address for Android Emulator" class="img-thumbnail" />
 
