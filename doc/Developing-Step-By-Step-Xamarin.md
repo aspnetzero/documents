@@ -126,12 +126,12 @@ folder. All the pages must be located in **Views** folder.
 You can create a new empty **Content Page** as below but in this example
 we'll copy and paste **\_SampleView.xaml** file.
 
-<img src="images/xamarin-phonebook-add-contentpage.png" alt="Adding New Content Page" class="img-thumbnail" /> 
+<img src="images/xamarin-phonebook-add-contentpage.png" alt="Adding New Content Page" class="img-thumbnail" />
 
 Copy and paste **\_SampleView.xaml** into the same folder. We'll rename
 the file. All the views <span class="underline">must</span> end with
 **"<span class="underline">View</span>"** postfix. This is mandatory for
-auto matching related view model. So rename **\_SampleView - Copy.xaml** to **PeopleView.xaml.**
+auto matching related view model. So rename **\_SampleView - Copy.xaml** to **PeopleView.xaml.**
 
 After copy/paste you have to rename the followings for PeopleView.xaml
 as well
@@ -167,11 +167,8 @@ view-model called **\_SampleViewModel.cs.**
 
 Copy and paste **\_SampleViewModel.cs** and rename the followings;
 
--   **The view-model filename:** \_SampleViewModel - Copy.cs **»**
-    PeopleViewModel.cs
--   **The constructor of view-model:** public class \_SampleViewModel :
-    XamarinViewModel **»** public class PeopleViewModel :
-    XamarinViewModel
+-   **The view-model filename:** \_SampleViewModel - Copy.cs **»** PeopleViewModel.cs
+-   **The constructor of view-model:** public class \_SampleViewModel : XamarinViewModel **»** public class PeopleViewModel : XamarinViewModel
 
 Thus far we have implemented the proxy class for *PersonAppService*,
 created *People* view and create view-model *PeopleViewModel*.
@@ -221,27 +218,22 @@ Let's set the properties of the new *NavigationMenuItem*;
 
 1.  **Title:** It's already localized in the [Developing Step By Step
     Phonebook documentation](Developing-Step-By-Step-Core.html). We just
-    set localization key with this shortcut: **
-    L.Localize("PhoneBook").** And it localizes menu text.
+    set localization key with this shortcut: **L.Localize("PhoneBook").** And it localizes menu text.
 2.  **Icon:** Download a related png icon file. For this example go to
     <https://material.io/icons/#ic_contact_phone> and download PNGS.
-    Then extract the download zip file.  
-    You can use
+    Then extract the download zip file. You can use
     *ic\_contact\_phone\_black\_24dp\\android\\drawable-xxhdpi\\ic\_contact\_phone\_black\_24dp.png*
     as the icon.  
     Copy and paste the file into **UI\\Assets\\Images** folder in the
     **Acme.PhoneBookDemo.Mobile.Shared** project.  
     Right click the png file and go to properties. In the
-    **Advanced<span style="font-weight: 400"> </span>**section set
-    **Build Action** as <span class="underline">**Embedded
-    resource**</span>.  
+    **Advanced** section set **Build Action** as **Embedded resource**.  
     This is mandatory! This will help to share the icon file across
     platforms.  
     Now set Icon property of *NavigationMenuItem* to
     **"ic\_contact\_phone\_black\_24dp.png"**  
     <img src="images/xamarin-phonebook-set-menu-icon-as-embedded-resource.png" alt="Add PhoneBook Menu Item to Menu" class="img-thumbnail" />
-
-<!-- -->
+ 
 
 1.  **ViewType:** Must be the class name of the view in the **View**
     folder. The view name is *PeopleView* let's set view type to
@@ -280,15 +272,14 @@ You will see a splash screen while initializing. After that you'll see
 the app login page. The PhoneBook is defined on tenant side. You have to
 switch to a tenant to see the PhoneBook menu item. On the right top of
 the screen there's a toolbar button called **Change Tenant**. Tab that
-button and enter **default** into the textbox. If the tenant
-**default** is available you will see **"Current Tenant: default"**
+button and enter **default** into the textbox. If the tenant **default** is available you will see **"Current Tenant: default"**
 label. If the tenant is not active or does not exist then you'll get an
 alert about that.
 
 <img src="images/xamarin-phonebook-android-emulator-login-screen.png" alt="Adding PhoneBook Permission" class="img-thumbnail" />
 
 Enter your credentials and tab **Log In** button. If you see an alert
-says "*You must change your password before logging on!*"  you need to
+says "*You must change your password before logging on!*" you need to
 login and change your password for the first time on the website.
 (Currently Xamarin app doesn't have password change screen and will be
 added in the next releases.)
@@ -323,8 +314,7 @@ Add title tag and namespace into **ContentPage** tag like below;
 There's a placeholder label in **&lt;ContentPage.Content&gt;** tag.
 Remove that Label from and add the below ListView definition in
 **ContentPage.Content** tags. In the below code; we populate the
-listview with **Persons** data. So in the view-model we need a public
-property **Persons.  Persons** property must be IEnumarable and contain
+listview with **Persons** data. So in the view-model we need a public property **Persons**. Persons property must be IEnumarable and contain
 **FullName** and **EmailAddress** string properties. All properties that
 will be binded to view must be public.
 [HasUnevenRows](https://developer.xamarin.com/api/property/Xamarin.Forms.ListView.HasUnevenRows/)
@@ -433,7 +423,7 @@ combines name and surname. This increases app performance by rendering
 less elements. So let's define the **PersonListModel** class. Create a
 new folder called **Models/PhoneBook** in
 **Acme.PhoneBookDemo.Mobile.Shared** project. Add a a new class
-**PersonListModel.cs** into **Models/PhoneBook** folder.  Not to add all
+**PersonListModel.cs** into **Models/PhoneBook** folder. Not to add all
 properties from the **PersonListDto** class, inherit the model class
 from **PersonListDto** . We need a full name in view, that's why add a
 new property called **FullName** that joins *Name* and *Surname*.
@@ -527,9 +517,7 @@ inserted to database.)
 
 To search and filter people we'll use
 [SearchBar](https://developer.xamarin.com/api/type/Xamarin.Forms.SearchBar/)
-which is Xamarin built-in control that provides a search textbox. Open
-**PeopleView.xaml** and add the **SearchBar** before the ListView
-control. We'll bind **FilterText** property to the SearchBar. If
+which is Xamarin built-in control that provides a search textbox. Open **PeopleView.xaml** and add the **SearchBar** before the ListView control. We'll bind **FilterText** property to the SearchBar. If
 **FilterText** changes it'll start to filter from server.
 
     <?xml version="1.0" encoding="utf-8" ?>
@@ -588,10 +576,7 @@ We've specified the delay in **PageDefaults.SearchDelayMilliseconds** as
     }
 
 Final look of the filtered list view is like below;
-
 <img src="images/xamarin-phonebook-search-people.png" alt="Search People" class="img-thumbnail" />
-
- 
 
 ### Creating Person Details Page
 
@@ -621,8 +606,7 @@ Now we have an empty view. Let's put controls inside the
 
 ##### Creating Personal Information Section
 
-The view will have 2 main sections. Personal information on the top and 
-phone numbers on the bottom. Let's create personal information section!
+The view will have 2 main sections. Personal information on the top and phone numbers on the bottom. Let's create personal information section!
 
 -   Add highlighted rows to **ContentPage** tag.
 
@@ -651,9 +635,8 @@ phone numbers on the bottom. Let's create personal information section!
         </ContentPage>
 
 -   Then add the **ListView** as root item in
-    **&lt;ContentPage.Content&gt;** as shown below. 
-
-````xml
+    **&lt;ContentPage.Content&gt;** as shown below.
+	````xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -700,7 +683,7 @@ phone numbers on the bottom. Let's create personal information section!
 
 ListView works best when it's root element (otherwise you may have
 scrolling issues). That's why we put ListView in the first place.
-ListView consists of 3 parts; Header, Items, Footer...  We'll use
+ListView consists of 3 parts; Header, Items, Footer... We'll use
 header to show personal information and items to list phone numbers.
 Footer will not be used.
 
@@ -745,7 +728,7 @@ new file as **PersonDetailsViewModel.cs**. Open the file and rename
 have an empty view model. Do the followings steps in
 **PersonDetailsViewModel** class;
 
--   Inject **IPersonAppService** to the constructor.  This is for data
+-   Inject **IPersonAppService** to the constructor. This is for data
     transfer with server.
 
         private readonly IPersonAppService _personAppService;
@@ -818,10 +801,10 @@ have an empty view model. Do the followings steps in
         }
 
 -   To retrieve the selected person from PeopleView we'll use the
-    **InitializeAsync(object navigationData)**  method. This method is
+    **InitializeAsync(object navigationData)** method. This method is
     located in the base class of view model and is being executed by
     navigation service. You need to cast navigationData to your
-    specified type. We'll  use the same view model for new person
+    specified type. We'll use the same view model for new person
     creation. So if navigationData is null it means it's a new person.
     Create a private bool property called **IsExistingPerson** for new
     person or existing person discrimination. And add
@@ -956,7 +939,7 @@ easy. Open **PersonDetailsViewModel.cs** and add **Validate()** method.
     }
 
 Then use **Validate()** method in **UpdateExistingPersonAsync()** and in
-**CreateNewPersonAsync()**  methods like below
+**CreateNewPersonAsync()** methods like below
 
     private async Task UpdateExistingPersonAsync()
     {
@@ -1231,7 +1214,7 @@ The delete button will look like below
 ###### Adding Phone Numbers
 
 To add new phone numbers, add a new CardView to
-**PersonDetailsView.xaml. **
+**PersonDetailsView.xaml.**
 
     ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
