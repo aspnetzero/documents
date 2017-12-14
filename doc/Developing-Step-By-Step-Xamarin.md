@@ -131,13 +131,12 @@ we'll copy and paste **\_SampleView.xaml** file.
 Copy and paste **\_SampleView.xaml** into the same folder. We'll rename
 the file. All the views <span class="underline">must</span> end with
 **"<span class="underline">View</span>"** postfix. This is mandatory for
-auto matching related view model. So rename **\_SampleView - Copy.xaml**
-to  **PeopleView.xaml.**
+auto matching related view model. So rename **\_SampleView - Copy.xaml** to **PeopleView.xaml.**
 
 After copy/paste you have to rename the followings for PeopleView.xaml
 as well
 
--   **The class name in xaml:** 
+-**The class name in xaml:**
     x:Class="Acme.PhoneBookDemo.Views.\_SampleView" **»**
     x:Class="Acme.PhoneBookDemo.Views.PeopleView"
 -   **The class name in xaml.cs:** public partial class \_SampleView
