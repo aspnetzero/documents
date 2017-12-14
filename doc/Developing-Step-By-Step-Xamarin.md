@@ -136,11 +136,9 @@ auto matching related view model. So rename **\_SampleView - Copy.xaml** to **P
 After copy/paste you have to rename the followings for PeopleView.xaml
 as well
 
--**The class name in xaml:**
-    x:Class="Acme.PhoneBookDemo.Views.\_SampleView" **»**
-    x:Class="Acme.PhoneBookDemo.Views.PeopleView"
--   **The class name in xaml.cs:** public partial class \_SampleView
-    **»** public partial class PeopleView
+-   **The class name in xaml:**
+-   x:Class="Acme.PhoneBookDemo.Views.\_SampleView" **»** x:Class="Acme.PhoneBookDemo.Views.PeopleView"
+-   **The class name in xaml.cs:** public partial class \_SampleView **»** public partial class PeopleView
 -   **The constructor of xaml.cs:** public \_SampleView() **»** public
     PeopleView()
 
