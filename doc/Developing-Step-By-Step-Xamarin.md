@@ -1349,6 +1349,9 @@ And we will add the view-model codes to the
     }
 
 
+Final look on IOS platform
+<img src="images/xamarin-phonebook-phones-delete.png" alt="Delete Phone Numbers" class="img-thumbnail" />
+	
 ### Conclusion
 
 In this document, we built a complete example that covers most parts of
