@@ -134,10 +134,9 @@ the file. All the views <span class="underline">must</span> end with
 auto matching related view model. So rename **\_SampleView - Copy.xaml** to **PeopleView.xaml.**
 
 After copy/paste you have to rename the followings for **PeopleView.xaml** as well
--   **The class name in xaml:** x:Class="Acme.PhoneBookDemo.Views.\_SampleView"&nbsp;**Â»** x:Class="Acme.PhoneBookDemo.Views.PeopleView"
--   **The class name in xaml.cs:** public partial class \_SampleView **Â»** public partial class PeopleView
--   **The constructor of xaml.cs:** public \_SampleView() **Â»** public
-    PeopleView()
+-   **The class name in xaml:** x:Class="Acme.PhoneBookDemo.Views.\_SampleView" **»** x:Class="Acme.PhoneBookDemo.Views.PeopleView"
+-   **The class name in xaml.cs:** public partial class \_SampleView **»** public partial class PeopleView
+-   **The constructor of xaml.cs:** public \_SampleView() **»** public PeopleView()
 
 <img src="images/xamarin-phonebook-copy-paste-sample-view-to-people-view.png" alt="Creating Person App Service Client" class="img-thumbnail" />
 
@@ -164,8 +163,8 @@ view-model called **\_SampleViewModel.cs.**
 
 Copy and paste **\_SampleViewModel.cs** and rename the followings;
 
--   **The view-model filename:** \_SampleViewModel - Copy.cs**Â»** PeopleViewModel.cs
--   **The constructor of view-model:** public class \_SampleViewModel : XamarinViewModel**Â»** public class PeopleViewModel : XamarinViewModel
+-   **The view-model filename:** \_SampleViewModel - Copy.cs** »** PeopleViewModel.cs
+-   **The constructor of view-model:** public class \_SampleViewModel : XamarinViewModel** »** public class PeopleViewModel : XamarinViewModel
 
 Thus far we have implemented the proxy class for *PersonAppService*,
 created *People* view and create view-model *PeopleViewModel*.
