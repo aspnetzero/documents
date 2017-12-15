@@ -136,7 +136,7 @@ auto matching related view model. So rename **\_SampleView - Copy.xaml** to **Pe
 After copy/paste you have to rename the followings for PeopleView.xaml
 as well
 
--   **The class name in xaml:** x:Class="Acme.PhoneBookDemo.Views.\_SampleView" **»** x:Class="Acme.PhoneBookDemo.Views.PeopleView"
+-   **The class name in xaml:** x:Class="Acme.PhoneBookDemo.Views.\_SampleView"**»** x:Class="Acme.PhoneBookDemo.Views.PeopleView"
 -   **The class name in xaml.cs:** public partial class \_SampleView **»** public partial class PeopleView
 -   **The constructor of xaml.cs:** public \_SampleView() **»** public
     PeopleView()
@@ -166,8 +166,8 @@ view-model called **\_SampleViewModel.cs.**
 
 Copy and paste **\_SampleViewModel.cs** and rename the followings;
 
--   **The view-model filename:** \_SampleViewModel - Copy.cs **»** PeopleViewModel.cs
--   **The constructor of view-model:** public class \_SampleViewModel : XamarinViewModel **»** public class PeopleViewModel : XamarinViewModel
+-   **The view-model filename:** \_SampleViewModel - Copy.cs**»** PeopleViewModel.cs
+-   **The constructor of view-model:** public class \_SampleViewModel : XamarinViewModel**»** public class PeopleViewModel : XamarinViewModel
 
 Thus far we have implemented the proxy class for *PersonAppService*,
 created *People* view and create view-model *PeopleViewModel*.
