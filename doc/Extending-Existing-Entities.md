@@ -395,13 +395,6 @@ You can see this Github
 [commit](https://github.com/aspnetzero/aspnet-zero-samples/commit/ecf25b60bda72166d41ad7605000d7dc7556e8bf)
 for all changes applied.
 
-### A Note about EF Core 2.0
-
-In EntityFramework Core 2.0, OnModelCrreating must be used to configure
-extended entity if base entity contains a self reference (see
-<https://github.com/aspnet/EntityFrameworkCore/issues/9704>). An example
-of this case is extending OrganizationUnit entity.
-
 ### Source Code
 
 You can get the full source code of this sample from the Github
