@@ -1,51 +1,225 @@
-| Feature                                  | Free Startup Templates                   | ASP.NET Zero                             |
-| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
-| **Base Infrastructure**                  |                                          |                                          |
-| Abp framework features                   | <img src="images/icons/check.png" style="width: 32px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Abp.Zero module integration              | <img src="images/icons/check.png" style="width: 32px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Multi Tenancy                            | <img src="images/icons/check.png" style="width: 32px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| **User Interface (Account / Login)**     |                                          |                                          |
-| Login                                    | <img src="images/icons/check.png" style="width: 32px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Register                                 | <img src="images/icons/check.png" style="width: 32px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Token Based Authentication               | <img src="images/icons/check.png" style="width: 32px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Social Logins                            | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| LDAP (Active Directory) / ADFS Login     | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Forgot Password                          | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Email Address & Phone Number Confirmation | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Password Reset                           | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Two Factor Authentication                | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| OpenId Connect Login                     | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| User Lockout                             | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| User Profile / Profile Image / Change Password | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Account Linking                          | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Show Login Attempts                      | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Tenant Registration                      | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Identity Server 4 Integration            | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Password Complexity Settings             | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| **User Interface (Application)**         |                                          |                                          |
-| User Management                          | Basic                                    | Advanced                                 |
-| Role Management                          | Basic                                    | Advanced                                 |
-| Tenant Management                        | Basic                                    | Advanced                                 |
-| Permission Management                    | Role based (Simple)                      | Role & User based                        |
-| Sample Tenant Dashboard                  | Client side only                         | Server side integrated                   |
-| Edition & Feature Management for SaaS applications | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Tenant Subscription & Payment System     | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Tenant & User Impersonation              | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Organization Unit Management             | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Language (localization) Management       | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Audit Logs                               | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Real Time Notifications                  | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Chat (with SignalR)                      | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Host Dashboard                           | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Application Settings                     | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| RTL Support                              | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Show logs / Clear caches                 | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Custom Tenant Logo & CSS                 | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Time zone selection                      | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| UI Theme                                 | BSB Admin (free theme)                   | Metronic (premium theme)                 |
-| **User Interface (Public Web Site)**     |                                          |                                          |
-| Simple Public Web Site                   | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| **Support**                              |                                          |                                          |
-| Community support (Stackoverflow)        | <img src="images/icons/check.png" style="width: 32px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-| Premium forum support                    | <img src="images/icons/dash.png" style="width: 16px"/> | <img src="images/icons/check.png" style="width: 32px"/> |
-|                                          | <a href="https://aspnetboilerplate.com/Templates" class="btn btn-default btn-sm">Download</a> | <a href="/#pricing" class="btn btn-default btn-sm">Pricing</a> |
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
+<title>ASP.NET Zero vs Free Template</title>
+</head>
+
+<body>
+
+<table class="table" id="TemplateComparisonTable">
+<thead>
+<tr>
+	<th>Feature</th>
+	<th>Free Startup Templates</th>
+	<th>ASP.NET Zero</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="3"><strong>Base Infrastructure</strong></td>
+</tr>
+
+<tr>
+<td>Abp framework features</td>
+<td><i class="fa fa-check"></i></td><td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Abp.Zero module integration</td>
+<td><i class="fa fa-check"></i></td><td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Multi Tenancy</td>
+<td><i class="fa fa-check"></i></td><td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td colspan="3"><strong>User Interface (Account / Login)</strong></td>
+</tr>
+<tr>
+<td>Login</td>
+<td><i class="fa fa-check"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Register</td>
+<td><i class="fa fa-check"></i></td>
+<td><i class="fa fa-check"></i></td>
+</tr>
+<tr>
+<td>Token Based Authentication</td>
+<td><i class="fa fa-check"></i></td>
+<td><i class="fa fa-check"></i></td>
+</tr>
+<tr>
+<td>Social Logins</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td>	
+</tr>
+<tr>
+<td>LDAP (Active Directory) / ADFS Login</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td>	</tr>
+<tr>
+<td>Forgot Password</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Email Address &amp; Phone Number Confirmation</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Password Reset</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Two Factor Authentication</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>OpenId Connect Login</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>User Lockout</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>User Profile / Profile Image / Change Password</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Account Linking</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Show Login Attempts</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Tenant Registration</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Identity Server 4 Integration</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Password Complexity Settings</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td colspan="3"><strong>User Interface (Application)</strong></td>
+</tr>
+	<tr>
+<td>User Management</td>
+<td>Basic</td>
+<td>Advanced</td>
+	</tr>
+	<tr>
+<td>Role Management</td>
+<td>Basic</td>
+<td>Advanced</td>
+	</tr>
+	<tr>
+<td>Tenant Management</td>
+<td>Basic</td>
+<td>Advanced</td>
+	</tr>
+	<tr>
+<td>Permission Management</td>
+<td>Role based (Simple)</td>
+<td>Role &amp; User based</td>
+	</tr>
+	<tr>
+<td>Sample Tenant Dashboard</td>
+<td>Client side only</td>
+<td>Server side integrated</td>
+	</tr>
+<tr>
+<td>Edition &amp; Feature Management for SaaS applications</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+	<tr>
+<td>Tenant Subscription &amp; Payment System</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td>	</tr>
+<tr>
+<td>Tenant &amp; User Impersonation</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Organization Unit Management</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Language (localization) Management</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Audit Logs</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+	<tr>
+<td>Real Time Notifications</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td>	</tr>
+	<tr>
+<td>Chat (with SignalR)</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td>	</tr>
+	<tr>
+<td>Host Dashboard</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td>	</tr>
+<tr>
+<td>Application Settings</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>RTL Support</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Show logs / Clear caches</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Custom Tenant Logo &amp; CSS</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Time zone selection</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+	<tr>
+<td>UI Theme</td>
+<td>BSB Admin (free theme)</td>
+<td>Metronic (premium theme)</td>
+	</tr>
+<tr>
+<td colspan="3"><strong>User Interface (Public Web Site)</strong></td>
+</tr>
+<tr>
+<td>Simple Public Web Site</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td colspan="3"><strong>Support</strong></td>
+</tr>
+<tr>
+<td>Community support (Stackoverflow)</td>
+<td><i class="fa fa-check"></i></td><td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>Premium forum support</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>&nbsp;</td>
+<td><a class="btn btn-default btn-sm" href="https://aspnetboilerplate.com/Templates" target="_blank">Download</a></td>
+<td><a class="btn btn-default btn-sm" href="/#pricing">Pricing</a></td>
+</tr>
+</tbody>
+</table>
+
+
+</body>
+
+</html>
