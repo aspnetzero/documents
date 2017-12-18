@@ -14,13 +14,13 @@
 there are still some differences between different versions. In this document, 
 we will highlight these differences.</p>
 <h4>ASP.NET Core v.s. ASP.NET MVC 5.x</h4>
-<p>Beginning from <a href="Change-Logs.html">v4.1</a>, we are more focused to
+<p>Beginning from [v4.1](Change-Logs.md), we are more focused to
 <strong>ASP.NET Core</strong> based solutions (rather than ASP.NET MVC 5.x) 
 since ASP.NET Core is Microsoft&#39;s new ASP.NET version. That means our new major 
 features will be implemented for ASP.NET Core version (.net core &amp; full .net 
 framework).</p>
 <h4>Angular v.s. Angularjs 1.x</h4>
-<p>Beginning from <a href="Change-Logs.html">v4.1</a>, we are more focused to 
+<p>Beginning from [v4.1](Change-Logs.md), we are more focused to 
 <strong>Angular</strong> based solutions (rather than Angularjs 1.x) since Angular is Google&#39;s 
 new SPA framework. That means our new major features will be implemented for 
 Angular framework. </p>
@@ -127,12 +127,10 @@ Angular framework. </p>
 
 <p>See <strong>development guide</strong> documents for details of all features 
 in different versions:</p>
-<ul>
-	<li><a href="Development-Guide-Core.html">ASP.NET Core &amp; jQuery</a></li>
-	<li><a href="Development-Guide-Angular.html">ASP.NET Core &amp; Angular</a></li>
-	<li><a href="Development-Guide-Mvc-Angularjs.html">ASP.NET MVC 5.x &amp; jQuery</a></li>
-	<li><a href="Development-Guide-Mvc-Angularjs.html">ASP.NET MVC 5.x &amp; Angularjs 1.x</a></li>
-</ul>
+-   [ASP.NET Core & jQuery](Development-Guide-Core.md)
+-   [ASP.NET Core & Angular](Development-Guide-Angular.md)
+-   [ASP.NET MVC 5.x & jQuery](Development-Guide-Mvc-Angularjs.md)
+-   [ASP.NET MVC 5.x & AngularJS 1.x](Development-Guide-Mvc-Angularjs.md)
 
 </body>
 
