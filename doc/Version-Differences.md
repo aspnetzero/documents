@@ -127,11 +127,12 @@ Angular framework. </p>
 
 <p>See <strong>development guide</strong> documents for details of all features 
 in different versions:</p>
--   [ASP.NET Core & jQuery](Development-Guide-Core.md)
--   [ASP.NET Core & Angular](Development-Guide-Angular.md)
--   [ASP.NET MVC 5.x & jQuery](Development-Guide-Mvc-Angularjs.md)
--   [ASP.NET MVC 5.x & AngularJS 1.x](Development-Guide-Mvc-Angularjs.md)
-
+<ul>
+	<li><a href="Development-Guide-Core.md">ASP.NET Core &amp; jQuery</a></li>
+	<li><a href="Development-Guide-Angular.md">ASP.NET Core &amp; Angular</a></li>
+	<li><a href="Development-Guide-Mvc-Angularjs.md">ASP.NET MVC 5.x &amp; jQuery</a></li>
+	<li><a href="Development-Guide-Mvc-Angularjs.md">ASP.NET MVC 5.x &amp; Angularjs 1.x</a></li>
+</ul>
 </body>
 
 </html>
