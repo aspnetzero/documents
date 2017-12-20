@@ -108,7 +108,7 @@ Then run the commands below to start hosting your Web Api.
 In order to every time write these lines, you can download the batch
 file below and run it to host your web api.
 
-    Download Start-Host.zip
+[Download Start-Host.zip](https://github.com/aspnetzero/documents/tree/master/doc/etc/start-host.zip)
 
 ** Warning**
 
@@ -148,7 +148,7 @@ change this IP address with that computer's IP address.
      Info If you are using an emulator and the emulator is running on the same computer with host, you have to use loopback IP addresses. Eg: Android emulator loopback IP address is 10.0.2.2
 
 <img src="images/xamarin-debug-server-ip-address.png" alt="Debug IP Address" class="img-thumbnail" />  
-  
+
 
 ** Warning**
 
@@ -169,7 +169,7 @@ After successful setup, set **\*.Mobile.Droid** as startup project.
 Choose an Android emulator from list and press start button.
 
 <img src="images/xamarin-emulator-selection.png" alt="Android Emulator Selection" class="img-thumbnail" />  
-  
+
 
 #### Debugging iOS
 
@@ -191,7 +191,7 @@ After you successfully configure and connect to a Mac, choose an iPhone
 simulator from list and press start button.
 
 <img src="images/xamarin-simulator-selection.png" alt="iOS Simulator Selection" class="img-thumbnail" />  
-  
+
 
  [Xamarin Live Player](https://www.xamarin.com/live/) currently does not
 support some of the key features. Thus ASP.NET Zero Xamarin application
@@ -337,7 +337,7 @@ View postfix and the binding context of the xaml filename must end with
 *ProductView.xaml* the corresponding view model filename must be
 *ProductViewModel.cs.*
 
-    <ContentPage 
+    <ContentPage
        ...
        base:ViewManager.AutoWireViewModel="true"
        ...>
