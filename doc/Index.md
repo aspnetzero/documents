@@ -21,7 +21,7 @@ startup project.
 
 #### [CHANGE LOGS](Change-Logs.md)
 
-Change logs and relase notes.
+Change logs and release notes.
 
 #### [ROAD MAP](Road-Map.md)
 
@@ -30,7 +30,7 @@ Some planned features for next releases.
 ### [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents)
 
 ASP.NET Zero is based on ASP.NET Boilerplate **application framework**.
-You can learn all it's features from it's compherensive official
+You can learn all it's features from it's comprehensive official
 documentation.
 
 ### [METRONIC THEME](http://www.keenthemes.com/preview/metronic/)
