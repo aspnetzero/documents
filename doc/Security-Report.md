@@ -33,7 +33,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
     * Evidence: `etc`
 
 
-  When we inspect the below response, it returns **etc** only in comments. And this is exactly not a path.  ![Path Traversal](/images/security-report-path-traversal.png)
+  When we inspect the below response, it returns **etc** only in comments. And this is exactly not a path.  ![Path Traversal](images/security-report-path-traversal.png)
 
   
 
@@ -50,7 +50,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   When we inspect the below response it returns **[drivers]** as array. And this is not a path as well!
 
-  ![Path Traversal 2](/images/security-report-path-traversal-2.png)
+  ![Path Traversal 2](images/security-report-path-traversal-2.png)
 
   ​  ​
 
@@ -67,7 +67,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   `{"result":null,"targetUrl":"/App","success":true,"error":null,"unAuthorizedRequest":false,"__abp":true}`
 
-   ![Path Traversal 3](/images/security-report-path-traversal-3.png)
+   ![Path Traversal 3](images/security-report-path-traversal-3.png)
 
 
 ### Recommendation 
@@ -234,7 +234,7 @@ If a page contains an error/warning message that may disclose sensitive informat
 
   This is false-positive alert. As seen in the below screenshot, Asp.Net Zero returns a HTPP 500 Internal Server Error without any sensitive information. While the error detail is not being sent to the client, it is logged on the server.
 
-  ![Application Error Disclosure](/images/security-report-application-error-disclosure.png)
+  ![Application Error Disclosure](images/security-report-application-error-disclosure.png)
 
   ​
 
@@ -289,7 +289,7 @@ Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool repo
 
   This is a false-positive too because set cookie is removing `Identity.TwoFactorUserId` with an empty value.
 
-  ![HttpOnly Cookie for Identity.TwoFactorUserId](/images/security-report-http-only-identity-two-factor-user-id.png)
+  ![HttpOnly Cookie for Identity.TwoFactorUserId](images/security-report-http-only-identity-two-factor-user-id.png)
 
 
 * URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)
@@ -303,7 +303,7 @@ Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool repo
 
   This is also false-positive because it removes the cookie with an empty value.
 
-  ![HttpOnly Identity External](/images/security-report-http-only-identity-external.png)
+  ![HttpOnly Identity External](images/security-report-http-only-identity-external.png)
 
   ​
 * URL: [http://localhost:62114/Account/Logout](http://localhost:62114/Account/Logout)
@@ -359,7 +359,7 @@ A private IP (such as 10.x.x.x, 172.x.x.x, 192.168.x.x) or an Amazon EC2 private
 
   Asp.Net Zero has a feature that shows login attempts to the authenticated user. This is a modal dialog which can be reached by clicking profile picture at the top-right of the page. In the login attempt dialog it's shown last 10 logins with IP addresses.  This private information can be seen if only the user is logged-in. And users can only see their own records!
 
-  ![IP Disclosure](/images/security-report-ip-disclousure.png)
+  ![IP Disclosure](images/security-report-ip-disclousure.png)
 
 
 
@@ -369,4 +369,4 @@ A private IP (such as 10.x.x.x, 172.x.x.x, 192.168.x.x) or an Amazon EC2 private
 
 For all the other OWASP standardizations download the OWASP sheet.
 
-[Open Web Application Security Project (OWASP) - Application Security Verification Standard 3.0 PDF sheet ](https://www.owasp.org/images/6/67/OWASPApplicationSecurityVerificationStandard3.0.pdf) 
+[Open Web Application Security Project (OWASP) - Application Security Verification Standard 3.0 PDF sheet ](https://www.owasp.orgimages/6/67/OWASPApplicationSecurityVerificationStandard3.0.pdf) 
