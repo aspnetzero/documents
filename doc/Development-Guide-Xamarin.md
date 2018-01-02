@@ -270,7 +270,7 @@ Mobile.iOS.csproj in notepad and find replace all occurrences of
 
 #### Mobile.iOS
 
-<img src="images/xamarin-iOS-project-structure.png" alt="iOS Structure" class="img-thumbnail" />
+<img src="images/xamarin-ios-project-structure.png" alt="iOS Structure" class="img-thumbnail" />
 
 iOS Structure
 
