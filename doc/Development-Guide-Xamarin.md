@@ -179,7 +179,7 @@ Applications cannot be deployed to a device without Apple's certificates
 and code-signing tools. Also, the iOS simulator can be used only on a
 Mac.
 
-** Information**
+**Information**
 
 There are a number of configuration options available to debug iOS app.
 It's highly recommended you to read the [Xamarin iOS Getting started
@@ -256,7 +256,7 @@ Android Project Structure
 -   **Locale** This class is an adapter between .Net cultures and
     Android cultures.
 
-** Information**
+**Information**
 
 ASP.NET Zero Xamarin changed the output path (bin) and intermediate
 output path (obj) of Android project to be shorter. The main reason of
