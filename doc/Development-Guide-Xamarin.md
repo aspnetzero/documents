@@ -110,7 +110,7 @@ file below and run it to host your web api.
 
 [Download Start-Host.zip](https://github.com/aspnetzero/documents/tree/master/doc/etc/start-host.zip)
 
-** Warning**
+**Warning**
 
 Before running the batch file, open it in notepad and replace the
 Web.Host or Web.Mvc directory path with yours!
@@ -124,7 +124,7 @@ output as below;
 **Mvc started successfully:**  
 <img src="images/xamarin-mvc-started.png" alt="MVC Started" class="img-thumbnail" />
 
-** Warning**
+**Warning**
 
 Do not start Web.Mvc or Web.Host project via Visual Studio. Default
 settings of Visual Studio does not allow external connections. For more
@@ -150,7 +150,7 @@ change this IP address with that computer's IP address.
 <img src="images/xamarin-debug-server-ip-address.png" alt="Debug IP Address" class="img-thumbnail" />  
 
 
-** Warning**
+**Warning**
 
 When you publish your Xamarin app for production you need to change
 **DefaultHostUrl** in **ApiUrlConfig** class!
