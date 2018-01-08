@@ -64,7 +64,7 @@ There are 12 projects in the solution:
 -   **Web.Host** project does not contain any view/css/js files.
     Instead, it just serves the application as remote API. So, any
     device can consume your application as API.
--   **Web.Common** project contains common classes used by Mvc and Host
+-   **Web.Core** project contains common classes used by Mvc and Host
     projects.
 -   **Web.Public** project is a separated web application that can be
     used to create a public web site or a landing page for your
