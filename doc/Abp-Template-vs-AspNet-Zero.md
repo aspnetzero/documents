@@ -44,121 +44,126 @@
 <td><i class="fa fa-check"></i></td>
 </tr>
 <tr>
-<td>Token Based Authentication</td>
+<td>Token based authentication</td>
 <td><i class="fa fa-check"></i></td>
 <td><i class="fa fa-check"></i></td>
 </tr>
 <tr>
-<td>Social Logins</td>
+<td>Social logins</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td>	
 </tr>
 <tr>
-<td>LDAP (Active Directory) / ADFS Login</td>
+<td>LDAP (Active Directory) / ADFS login</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td>	</tr>
 <tr>
-<td>Forgot Password</td>
+<td>Forgot password</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Email Address &amp; Phone Number Confirmation</td>
+<td>Email address &amp; phone number confirmation</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Password Reset</td>
+<td>Password reset</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Two Factor Authentication</td>
+<td>Two Factor authentication</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>OpenId Connect Login</td>
+<td>OpenId Connect login</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>User Lockout</td>
+<td>User lockout</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>User Profile / Profile Image / Change Password</td>
+<td>User profile / profile image / change password</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Account Linking</td>
+<td>Account linking</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Show Login Attempts</td>
+<td>Show login attempts</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Tenant Registration</td>
+<td>Tenant registration</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Identity Server 4 Integration</td>
+<td>Identity Server 4 integration</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Password Complexity Settings</td>
+<td>Password complexity settings</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
 <td colspan="3"><strong>User Interface (Application)</strong></td>
 </tr>
 	<tr>
-<td>User Management</td>
+<td>User management</td>
 <td>Basic</td>
 <td>Advanced</td>
 	</tr>
 	<tr>
-<td>Role Management</td>
+<td>Role management</td>
 <td>Basic</td>
 <td>Advanced</td>
 	</tr>
 	<tr>
-<td>Tenant Management</td>
+<td>Tenant management</td>
 <td>Basic</td>
 <td>Advanced</td>
 	</tr>
 	<tr>
-<td>Permission Management</td>
+<td>Permission management</td>
 <td>Role based (Simple)</td>
 <td>Role &amp; User based</td>
 	</tr>
 	<tr>
-<td>Sample Tenant Dashboard</td>
+<td>Sample tenant dashboard</td>
 <td>Client side only</td>
 <td>Server side integrated</td>
 	</tr>
+	<tr>
+<td>Setup screen</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td>
+	</tr>
 <tr>
-<td>Edition &amp; Feature Management for SaaS applications</td>
+<td>Edition &amp; feature management for SaaS applications</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 	<tr>
-<td>Tenant Subscription &amp; Payment System</td>
+<td>Tenant subscription, payment &amp; billing system</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td>	</tr>
 <tr>
-<td>Tenant &amp; User Impersonation</td>
+<td>Tenant &amp; user Impersonation</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Organization Unit Management</td>
+<td>Organization Unit management</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Language (localization) Management</td>
+<td>Language (localization) management</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Audit Logs</td>
+<td>Audit log report</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 	<tr>
-<td>Real Time Notifications</td>
+<td>Real time notifications</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td>	</tr>
 	<tr>
@@ -166,27 +171,31 @@
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td>	</tr>
 	<tr>
-<td>Host Dashboard</td>
+<td>Host dashboard</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td>	</tr>
 <tr>
-<td>Application Settings</td>
+<td>Application settings</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>RTL Support</td>
+<td>RTL support</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Show logs / Clear caches</td>
+<td>Show website logs / clear caches</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
-<td>Custom Tenant Logo &amp; CSS</td>
+<td>Custom tenant logo &amp; CSS</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
 <td>Time zone selection</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<td>UI personalization (top/left menu, dark/light skin... options)</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 	<tr>
@@ -198,7 +207,15 @@
 <td colspan="3"><strong>User Interface (Public Web Site)</strong></td>
 </tr>
 <tr>
-<td>Simple Public Web Site</td>
+<td>Simple public web site</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
+<tr>
+<td colspan="3"><strong>Mobile Application</strong></td>
+</tr>
+<tr>
+<td>Xamarin mobile application</td>
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
