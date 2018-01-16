@@ -1031,7 +1031,7 @@ A few notes on Web.Host project:
     possibility). No form based authentication (because there is no UI).
 -   It does **not** implement **CSRF** protection since it's not a
     security concern in token based auth.
--    It enables **CORS**. So, cross origin requests are allowed. It only
+-   It enables **CORS**. So, cross origin requests are allowed. It only
     allows to **http://localhost:4200** by default (see Startup class
     for the configuration).
 -   Configured and enabled **Swagger UI** by default.
@@ -1123,7 +1123,7 @@ their URLs. There are two configuration for that:
 1.   In the **appsettings.json** of the **Web.**<span
     class="auto-style3">Public</span> project, set
     "**AdminWebSiteRootAddress**" to root URL of the main application.
-2.  In the **appsettings.json** of the **Web.**<span
+2.   In the **appsettings.json** of the **Web.**<span
     class="auto-style3">Mvc</span> project, set
     "**RedirectAllowedExternalWebSites**" to root URL of the public web
     site.
@@ -1170,12 +1170,14 @@ necessary files from **\*.Web.Mvc/node\_modules** to
 project, **bundle.config.js** and **gulpfile.js**. **bundle.config.js**
 contains necessary mapping definitions from node\_modules to lib folder
 and it also contains bundling & minification definitions. You can see
-respectively in below screenshots mapping and nundling/minification
+respectively in below screenshots mapping and bundling/minification
 configurations from bundle.config.js.
 
 <img src="images/gulp-bundle-config-mappings.png" alt="Gulp mappings" class="img-thumbnail" />
 
 <img src="images/gulp-bundle-config-bundles.png" alt="Gulp bundling minification" class="img-thumbnail" />
+
+In order to create css and javascript bundles "gulp" command must be runned in the root directory of ***.Web.Mvc** solution using a command prompt. This can be done using Visual Studio's Task Runner Explorer. Default gulp task doesn't end and it watches for changes in the css & javascript files used in **bundle.config.js** file. If ""--prod" argument is not passed to gulp command, css and javascript bundles will not be minified in order to provide developers a better debug experience. Running "**gulp --prod**" command will minify output css and javascript files. For Continuous Integration pipelines "gulp build:prod" command can be used, because this task ends with an exit code so, CI environments can understand.
 
 #### Application Services as MVC API Controllers
 
@@ -1409,11 +1411,11 @@ editing information:
         [Required]
         [StringLength(Tenant.MaxTenancyNameLength)]
         public string TenancyName { get; set; }
-
+    
         [Required]
         [StringLength(Tenant.MaxNameLength)]
         public string Name { get; set; }
-
+    
         public bool IsActive { get; set; }
     }
 
@@ -1720,13 +1722,13 @@ Here, a sample unit test in the application:
         {
             //Arrange
             CreateTestUsers();
-
+    
             var user = await GetUserByUserNameOrNullAsync("artdent");
             user.ShouldNotBe(null);
-
+    
             //Act
             await UserAppService.DeleteUser(new IdInput<long>(user.Id));
-
+    
             //Assert
             user = await GetUserByUserNameOrNullAsync("artdent");
             user.IsDeleted.ShouldBe(true);
