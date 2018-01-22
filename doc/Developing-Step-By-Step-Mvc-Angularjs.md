@@ -237,7 +237,7 @@ class defined in **.EntityFramework** project.
     public class PhoneBookDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         public virtual IDbSet<Person> Persons { get; set; }
-            
+
         //...other entities
 
         public PhoneBookDbContext()
@@ -245,7 +245,7 @@ class defined in **.EntityFramework** project.
         {
 
         }
-        
+
         //...other codes
     }
 
@@ -290,9 +290,9 @@ This command will add a **migration class** named
                     { "DynamicFilter_Person_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
                 })
                 .PrimaryKey(t => t.Id);
-                
+
         }
-            
+
         public override void Down()
         {
             DropTable("dbo.PbPersons",
@@ -496,7 +496,7 @@ first test to verify getting people without any filter:
         {
             //Act
             var persons = _personAppService.GetPeople(new GetPeopleInput());
-                
+
             //Assert
             persons.Items.Count.ShouldBe(2);
         }
@@ -776,7 +776,7 @@ View code is shown below: 
                 </h4>
             </div>
             <div class="modal-body">
-                
+
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                     <input class="form-control" type="text" name="Name" ng-model="vm.person.name" required maxlength="@Person.MaxNameLength">
                     <label>@L("Name")</label>
@@ -786,7 +786,7 @@ View code is shown below: 
                     <input type="text" name="Surname" class="form-control" ng-model="vm.person.surname" required maxlength="@Person.MaxSurnameLength">
                     <label>@L("Surname")</label>
                 </div>
-                
+
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                     <input type="email" name="EmailAddress" class="form-control" ng-model="vm.person.emailAddress" maxlength="@Person.MaxEmailAddressLength">
                     <label>@L("EmailAddress")</label>
@@ -817,7 +817,7 @@ AngularJS **controller** of this view is shown below:
             '$scope', '$uibModalInstance', 'abp.services.app.person',
             function ($scope, $uibModalInstance, personService) {
                 var vm = this;
-                
+
                 vm.saving = false;
                 vm.person = {};
 
@@ -865,7 +865,7 @@ We return to phone book view and add a **button** to open this modal:
                         vm.persons = result.data.items;
                     });
                 }
-                
+
                 vm.openCreatePersonModal = function () {
                     var modalInstance = $uibModal.open({
                         templateUrl: '~/App/tenant/views/phonebook/createPersonModal.cshtml',
@@ -1275,9 +1275,9 @@ table:
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PbPersons", t => t.PersonId, cascadeDelete: true)
                 .Index(t => t.PersonId);
-                
+
         }
-            
+
         public override void Down()
         {
             DropForeignKey("dbo.PbPhones", "PersonId", "dbo.PbPersons");
@@ -1432,7 +1432,7 @@ Now, we can implement these methods:
 
         var phone = input.MapTo<Phone>();
         person.Phones.Add(phone);
-                
+
         await CurrentUnitOfWork.SaveChangesAsync();
 
         return phone.MapTo<PhoneInPersonListDto>();

@@ -202,7 +202,7 @@ class defined in **.EntityFramework** project.
     public class PhoneBookDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         public virtual IDbSet<Person> Persons { get; set; }
-            
+
         //...other entities
 
         public PhoneBookDbContext()
@@ -210,7 +210,7 @@ class defined in **.EntityFramework** project.
         {
 
         }
-        
+
         //...other codes
     }
 
@@ -255,9 +255,9 @@ This command will add a **migration class** named
                     { "DynamicFilter_Person_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
                 })
                 .PrimaryKey(t => t.Id);
-                
+
         }
-            
+
         public override void Down()
         {
             DropTable("dbo.PbPersons",
@@ -461,7 +461,7 @@ first test to verify getting people without any filter:
         {
             //Act
             var persons = _personAppService.GetPeople(new GetPeopleInput());
-                
+
             //Assert
             persons.Items.Count.ShouldBe(2);
         }
@@ -1124,13 +1124,13 @@ We use **AbpMvcAuthorize** attribute for MVC Controllers as shown below:
     public class PhoneBookController : PhoneBookControllerBase
     {
         ...
-        
+
         [AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
         public PartialViewResult CreatePersonModal()
         {
             ...
         }
-        
+
         ...
     }
 
@@ -1202,7 +1202,7 @@ Now, adding code to delete person (to Index.js):
 
     $('#AllPeopleList button.delete-person').click(function (e) {
         e.preventDefault();
-        
+
         var $listItem = $(this).closest('.list-group-item');
         var personId = $listItem.attr('data-person-id');
 
@@ -1394,9 +1394,9 @@ table:
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PbPersons", t => t.PersonId, cascadeDelete: true)
                 .Index(t => t.PersonId);
-                
+
         }
-            
+
         public override void Down()
         {
             DropForeignKey("dbo.PbPhones", "PersonId", "dbo.PbPersons");
@@ -1551,7 +1551,7 @@ Now, we can implement these methods:
 
         var phone = input.MapTo<Phone>();
         person.Phones.Add(phone);
-                
+
         await CurrentUnitOfWork.SaveChangesAsync();
 
         return phone.MapTo<PhoneInPersonListDto>();
@@ -1736,7 +1736,7 @@ Added following codes into **Index.js**:
     //Save phone button
     $('#AllPeopleList .button-save-phone').click(function (e) {
         e.preventDefault();
-                
+
         var $phoneEditorRow = $(this).closest('tr');
 
         abp.ajax({

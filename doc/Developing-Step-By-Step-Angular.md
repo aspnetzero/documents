@@ -244,7 +244,7 @@ class defined in **.EntityFrameworkCore** project.
     public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         public virtual DbSet<Person> Persons { get; set; }
-            
+
         //...other code
     }
 
@@ -363,7 +363,7 @@ important, just for a good code organization (see source codes).
     public class InitialHostDbBuilder
     {
         //existing codes...
-        
+
         public void Create()
         {
             //existing code...
@@ -677,7 +677,7 @@ Now, we can use this people member from the view,
         <div class="m-content">
             <div class="m-portlet m-portlet--mobile">
                 <div class="m-portlet__body">
-                
+
                     <h3>{{l("AllPeople")}}</h3>
                     <div class="m-widget1">
                         <div class="m-widget1__item" *ngFor="let person of people">
@@ -689,7 +689,7 @@ Now, we can use this people member from the view,
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -1596,7 +1596,7 @@ Now, we can implement these methods:
 
         var phone = ObjectMapper.Map<Phone>(input);
         person.Phones.Add(phone);
-        
+
         //Get auto increment Id of the new Phone by saving to database
         await CurrentUnitOfWork.SaveChangesAsync();
 
@@ -1754,7 +1754,7 @@ PhoneBookComponent as shown below:
                 }
             );
         }
-        
+
         editPerson(person: PersonListDto): void {
             if (person === this.editingPerson) {
                 this.editingPerson = null;
@@ -1792,7 +1792,7 @@ PhoneBookComponent as shown below:
                 this.message.warn('Please enter a number!');
                 return;
             }
-            
+
             this._personService.addPhone(this.newPhone).subscribe(result => {
                 this.editingPerson.phones.push(result);
                 this.newPhone.number = '';
@@ -1807,7 +1807,7 @@ PhoneBookComponent as shown below:
 Now we want to edit name, surname and e-mail of people:
 
 <img src="images/edit-person-core1.png" alt="Edit Person" class="img-thumbnail" />  
-  
+
 First of all, we create needed Dto's that transfers people's id, name,
 surname and e-mail. Then create the functions in PersonAppService for
 editing people:  
@@ -1846,7 +1846,7 @@ Create edit-person-modal.component.html:
               </button>          
             </div>
             <div class="modal-body">
-                        
+
               <div class="form-group">
                 <label>{{l("Name")}}</label>
                 <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">            
@@ -1966,11 +1966,11 @@ Add those lines to **main.module.ts:**:
           DashboardComponent,
           PhoneBookComponent,
           CreatePersonModalComponent,
-          EditPersonModalComponent 
+          EditPersonModalComponent
         ]
     .
     .
-        
+
 
 ### Multi Tenancy
 
