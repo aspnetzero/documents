@@ -64,7 +64,7 @@ constant: "**PhoneBook**".
 #### Localizing Menu Item Display Name
 
 A menu item should also have a **localizable shown name**. It's used to
-display menu item on the page. **L("PhoneBook")** is localized name of
+display menu item on the page. **L("PhoneBook")** is the localized name of
 our new menu. **L** method is a helper method gets a localization key
 and simply returns a **LocalizableString** object (see
 AppNavigationProvider class).
@@ -196,7 +196,7 @@ practice since we will use same values later.
     public class PersonConsts
     {
         public const int MaxNameLength = 32;
-        public const int MaxSurnameLength = 32; 
+        public const int MaxSurnameLength = 32;
         public const int MaxEmailAddressLength = 255;
     }
 
@@ -206,7 +206,7 @@ class defined in **.EntityFrameworkCore** project.
     public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         public virtual DbSet<Person> Persons { get; set; }
-            
+
         //...other entities
 
         public PhoneBookDemoDbContext()
@@ -214,14 +214,14 @@ class defined in **.EntityFrameworkCore** project.
         {
 
         }
-        
+
         //...other codes
     }
 
 ### Database Migrations
 
 We use **EntityFramework Code-First migrations** to migrate database
-schema. Since we added **Person entitiy**, our DbContext model is
+schema. Since we added **Person entity**, our DbContext model is
 changed. So, we should create a **new migration** to create the new
 table in the database.
 
@@ -333,7 +333,7 @@ important, just for a good code organization (see source codes).
     public class InitialHostDbBuilder
     {
         //existing codes...
-        
+
         public void Create()
         {
             //existing codes...
@@ -385,15 +385,15 @@ PersonListDto are defined as shown below:
     }
 
 **CustomDtoMapper.cs** is used to create mapping from **Person** to
-**PersonListDto**. **FullAuditedEntityDto** used to inherit audit
-properties automatically. See [application
+**PersonListDto**. **FullAuditedEntityDto** is inherited to
+implement audit properties automatically. See [application
 service](https://aspnetboilerplate.com/Pages/Documents/Application-Services)
 and
 [DTO](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
-documentations for more information. We are adding following mappings.
+documentations for more information. We are adding the following mappings.
 
     ...
-    //PhoneBook (we will comment out other lines while added new DTOs added)
+    // PhoneBook (we will comment out other lines when the new DTOs are added)
     configuration.CreateMap<Person, PersonListDto>();
     //configuration.CreateMap<AddPhoneInput, Phone>();
     //configuration.CreateMap<CreatePersonInput, Person>();
@@ -437,7 +437,7 @@ namespace). It performs Where condition, only if filter is not null or
 empty. **IsNullOrEmpty** is also an extension method (defined in
 Abp.Extensions namespace). ABP has many similar shortcut extension
 methods. **ObjectMapper.Map** method automatically converts list of
-Person entities to list of PersonListDto entities with using
+Person entities to list of PersonListDto objects with using
 configurations in **CustomDtoMapper.cs** in **.Application** project.
 
 #### Connection & Transaction Management
@@ -484,7 +484,7 @@ first test to verify getting people without any filter:
         {
             //Act
             var persons = _personAppService.GetPeople(new GetPeopleInput());
-                
+
             //Assert
             persons.Items.Count.ShouldBe(2);
         }
@@ -494,7 +494,7 @@ We derived test class from **AppTestBase**. AppTestBase class
 initializes all system, creates an in-memory fake database, seeds
 initial data (that we created before) to database and logins to
 application as admin. So, this is actually an **integration test** since
-it tests all server-side codes from entitiy framework mapping to
+it tests all server-side codes from entity framework mapping to
 application services, validation and authorization.
 
 In constructor, we get (resolve) an **IPersonAppService** from
@@ -534,7 +534,7 @@ test to get filtered people:
 Again, since we know initial database, we can check returned results
 easily. Here, initial test data is important. When we change initial
 data, our test may fail even if our services are correct. So, it's
-better to write unit tests independed of initial data as much as
+better to write unit tests independent of initial data as much as
 possible. We could check incoming data to see if every people contains
 "adams" in his/her name, surname or email. Thus, if we add new people to
 initial data, our tests remain working.
@@ -599,7 +599,7 @@ view:
         }
     }
 
-We inject **IPersonAppService** and call it's **GetPeople** method
+We inject **IPersonAppService** and call its **GetPeople** method
 (which is created and tested before) to get list of people. Then we
 created a ViewModel object and passes to the view. Let's see the
 **IndexViewModel** class:
@@ -612,8 +612,8 @@ created a ViewModel object and passes to the view. Let's see the
         }
     }
 
-Here, we're extending output of PersonAppService.GetPeople method's
-output. Getting the output from constructor and map to this object.
+Here, we're extending the output of the PersonAppService.GetPeople method.
+We get the output from the constructor and map it to this object.
 
 #### Application Services and ViewModels
 
@@ -708,8 +708,9 @@ method:
     }
 
 **CreatePersonInput** is mapped to **Person** entity (comment out
-related line in CustomDtoMapper.cs and we will use mapping below). All properties are decorated by **data annotation
-attributes** to provide automatic
+related line in CustomDtoMapper.cs and we will use mapping below).
+All properties are decorated with **data annotation attributes**
+to provide automatic
 **[validation](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)**.
 Notice that we use same consts defined in Person entity for
 **MaxLength** properties.
@@ -782,11 +783,11 @@ Let's try to create a test for **invalid arguments**:
                     });
     }
 
-We did not set **Surname** property of CreatePersonInput despite of it's
+We did not set **Surname** property of CreatePersonInput despite it being
 **required**. So, it throws **AbpValidationException** automatically.
 Also, we can not send null to CreatePerson method since validation
 system also checks it. This test calls CreatePerson with invalid
-arguments and asserts that it thows AbpValidationException. See
+arguments and asserts that it throws AbpValidationException. See
 [validation
 document](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)
 for more information.
@@ -802,7 +803,7 @@ We can **copy** cshtml and js files from
 **Areas/App/Views/Common/Modals/Empty** folder as a base for a new modal
 to **Areas/App/Views/PhoneBook/\_CreatePersonModal.cshtml**.
 
-Copied and modifined the view code as shown below
+Copied and modified the view code as shown below
 (\_CreatePersonModal.cshtml): 
 
     @using Acme.PhoneBookDemo.People
@@ -897,7 +898,7 @@ So, changing the **Index.cshtml** view header as shown below:
                 </div>
             </div>
         </div>
-        
+
         <div class="col-xs-6 text-right">
             <button id="CreateNewPersonButton" class="btn btn-primary"><i class="fa fa-plus"></i> @L("CreateNewPerson")</button>
         </div>
@@ -1040,10 +1041,10 @@ string:
     public const string Pages_Tenant_PhoneBook = "Pages.Tenant.PhoneBook";
 
 Unique name of this permission is "**Pages.Tenant.PhoneBook**". While
-you can set any string (as long as it's unique), it's suggested this
-convention. A permission can have a localizable display name:
-"**PhoneBook**" here. (see "Adding a New Page" section for more about
-localization, since it's very similar). Lastly, we set that this is a
+you can set any string (as long as it's unique), it's suggested to use
+this convention. A permission can have a localizable display name:
+"**PhoneBook**" here. (See "Adding a New Page" section for more about
+localization, since it's very similar). Lastly, we set this as a
 **tenant** level permission.
 
 ##### Add AbpAuthorize attribute
@@ -1153,7 +1154,7 @@ of the **Phone book**.
 
 #### Authorization for MVC Controllers
 
-We added Authorize attrbiutes to PersonAppService. This prevents
+We added Authorize attributes to PersonAppService. This prevents
 unauthorized calls to this service. But unauthorized clients **still can
 call** actions of PhoneBookController actions. Since PhoneBookController
 uses PersonAppService, they will get authorization exception and can not
@@ -1167,13 +1168,13 @@ We use **AbpMvcAuthorize** attribute for MVC Controllers as shown below:
     public class PhoneBookController : PhoneBookControllerBase
     {
         ...
-        
+
         [AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
         public PartialViewResult CreatePersonModal()
         {
             ...
         }
-        
+
         ...
     }
 
@@ -1230,7 +1231,7 @@ right. Created a file named **index.less** and added following lines:
     }
 
 And add the style to your Index.cshtml page (You can also add minified
-versions of styles for other environmets like production and staging):
+versions of styles for other environments like production and staging):
 
     @section Styles
     {
@@ -1247,7 +1248,7 @@ Now, adding code to delete person (to Index.js):
 
     $('#AllPeopleList button.delete-person').click(function (e) {
         e.preventDefault();
-        
+
         var $listItem = $(this).closest('.list-group-item');
         var personId = $listItem.attr('data-person-id');
 
@@ -1392,8 +1393,8 @@ And **PhoneConsts** in **Core.Shared** project:
         public const int MaxNumberLength = 16;
     }
 
-Phone entities are stored in **PbPhones** table. It's primary key is
-**long** and inherits creation auditing properties. It has a reference
+Phone entities are stored in **PbPhones** table. Its primary key is
+**long** and it inherits creation auditing properties. It has a reference
 to **Person** entity which owns the phone number.
 
 We added a **Phones** collection to the People:
@@ -1513,12 +1514,11 @@ InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):
         }
     }
 
-We added two phone number to Douglas, one phone number to Isaac. But if
+We added two phone numbers to Douglas, one phone number to Isaac. But if
 we run "dotnet ef database update" now, phones are not inserted since
-this seed code checks if people exists, and does not insert if it's
-already exists. What's solution? Since we haven't deployed yet, we can
-delete database (or at lease truncate people table) and re-create it. I
-do it.
+this seed code checks if person exists, and does not insert if it
+already exists. Since we haven't deployed yet, we can delete database
+(or remove entries from people table) and re-create it.
 
 Now, we are running our application to re-create database and seed it.
 You can check database to see **PbPhones** table and rows.
@@ -1613,7 +1613,7 @@ Now, we can implement these methods:
 
         var phone = ObjectMapper.Map<Phone>(input);
         person.Phones.Add(phone);
-                
+
         await CurrentUnitOfWork.SaveChangesAsync();
 
         return ObjectMapper.Map<PhoneInPersonListDto>(phone);
@@ -1626,13 +1626,13 @@ and set to \_personRepository field)
 
 **AddPhone** method **gets** the person from database and add new phone
 to person.Phones collection. Then is **save changes**. Saving changes
-causes inserting new added phone to database and get it's **Id**.
+causes inserting new added phone to database and get its **Id**.
 Because, we are returning a DTO that contains newly created phone
 informations including Id. So, it should be assigned before mapping in
 the last line. (Notice that; normally it's not needed to call
 CurrentUnitOfWork.SaveChangesAsync. It's automatically called at the end
 of the method. We called it in the method since we need to save entity
-and get it's Id immediately. See [UOW
+and get its Id immediately. See [UOW
 document](https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work#DocAutoSaveChanges)
 for more.)
 
@@ -1646,7 +1646,7 @@ Final UI is shown below:
 
 <img src="images/phone-book-edit-mode2.png" alt="Phone book edit mode" class="img-thumbnail" width="762" height="642" />
 
-When we click the **green edit icon** for a person, it's row is expanded
+When we click the **green edit icon** for a person, its row is expanded
 and all phone numbers are shown. Then we can delete any number by
 clicking the icon at left. We can add a new phone from the inputs at
 last line.
@@ -1798,7 +1798,7 @@ Added following codes into **Index.js**:
     //Save phone button
     $('#AllPeopleList .button-save-phone').click(function (e) {
         e.preventDefault();
-                
+
         var $phoneEditorRow = $(this).closest('tr');
 
         abp.ajax({
@@ -1842,7 +1842,7 @@ Lastly, we deleting the phone when clicking to the '**delete phone**'
 button and remove the related phone row (tr) from DOM. Notice the event
 registration here. We used **on** function of jquery. Thus, the selector
 becomes **live**. That means, if we add new elements to the page and any
-element matches to the selector, it's click event is automatically
+element matches to the selector, its click event is automatically
 binded.
 
 #### AddPhone Action
@@ -1881,8 +1881,8 @@ do.
 Now we want to edit name, surname and e-mail of people:
 
 <img src="images/edit-person-core.png" alt="Edit Person" class="img-thumbnail" width="548" height="333" />  
-  
-First of all, we create needed Dto's that transfers people's id, name,
+
+First of all, we create the necessary DTOs to transfer people's id, name,
 surname and e-mail. Then create the functions in PersonAppService for
 editing people:  
 
@@ -1911,7 +1911,7 @@ editing people:
 
     <div class="modal-body">
         <form role="form" novalidate class="form-validation">
-            
+
             <input type="hidden" name="Id" value="@Model.Id" />
 
             <div class="form-group form-md-line-input  no-hint">
@@ -1948,7 +1948,7 @@ editing people:
         }
     }
 
-#### Scipts
+#### Scripts
 
 Create **\_editPersonModal.js**:
 
@@ -2020,7 +2020,7 @@ see how to convert it to a multi-tenant application easily.
 
 #### Enable Multi Tenancy
 
-We disabled multi-tenancy at the begginning of this document. Now,
+We disabled multi-tenancy at the beginning of this document. Now,
 re-enabling it in PhoneBookDemoConsts class:
 
     public const bool MultiTenancyEnabled = true;
@@ -2094,8 +2094,8 @@ After login, we see that phone book is empty:
 
 ![Empty phonebook of new tenant](images/phonebook-empty2.png)
 
-It's empty because trio tenant has a completely islolated people list.
-You can add people here, logout and login as different teants (you can
+It's empty because trio tenant has a completely isolated people list.
+You can add people here, logout and login as different tenants (you can
 login as default tenant for example). You will see that each tenant has
 an isolated phone book and can not see other's people.
 
