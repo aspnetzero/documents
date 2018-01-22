@@ -375,7 +375,6 @@ PersonListDto are defined as shown below:
         public string Filter { get; set; }
     }
 
-    [AutoMapFrom(typeof(Person))]
     public class PersonListDto : FullAuditedEntityDto
     {
         public string Name { get; set; }
@@ -385,13 +384,21 @@ PersonListDto are defined as shown below:
         public string EmailAddress { get; set; }
     }
 
-**AutoMapFrom** attribute is used to configure **AutoMapper** to create
-mapping from **Person** to **PersonListDto**. **FullAuditedEntityDto**
-used to inherit audit properties automatically. See [application
+**CustomDtoMapper.cs** is used to create mapping from **Person** to
+**PersonListDto**. **FullAuditedEntityDto** used to inherit audit
+properties automatically. See [application
 service](https://aspnetboilerplate.com/Pages/Documents/Application-Services)
 and
 [DTO](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
-documentations for more information.
+documentations for more information. We are adding following mappings.
+
+    ...
+    //PhoneBook (we will comment out other lines while added new DTOs added)
+    configuration.CreateMap<Person, PersonListDto>();
+    //configuration.CreateMap<AddPhoneInput, Phone>();
+    //configuration.CreateMap<CreatePersonInput, Person>();
+    //configuration.CreateMap<Person, GetPersonForEditOutput>();
+    //configuration.CreateMap<Phone, PhoneInPersonListDto>();
 
 After defining interface, we can implement it as shown below:
 
@@ -429,8 +436,9 @@ ABP) and using it to filter and get people from database.
 namespace). It performs Where condition, only if filter is not null or
 empty. **IsNullOrEmpty** is also an extension method (defined in
 Abp.Extensions namespace). ABP has many similar shortcut extension
-methods. **MapTo** method automatically converts list of Person entities
-to list of PersonListDto entities using **AutoMapper** library.
+methods. **ObjectMapper.Map** method automatically converts list of
+Person entities to list of PersonListDto entities with using
+configurations in **CustomDtoMapper.cs** in **.Application** project.
 
 #### Connection & Transaction Management
 
@@ -596,7 +604,6 @@ We inject **IPersonAppService** and call it's **GetPeople** method
 created a ViewModel object and passes to the view. Let's see the
 **IndexViewModel** class:
 
-    [AutoMapFrom(typeof (ListResultDto<PersonListDto>))]
     public class IndexViewModel : ListResultDto<PersonListDto>
     {
         public IndexViewModel(ListResultDto<PersonListDto> output)
@@ -606,8 +613,7 @@ created a ViewModel object and passes to the view. Let's see the
     }
 
 Here, we're extending output of PersonAppService.GetPeople method's
-output. Getting the output from constructor and map to this object. We
-declared AutoMapFrom attribute to be able to make mapping.
+output. Getting the output from constructor and map to this object.
 
 #### Application Services and ViewModels
 
@@ -686,7 +692,6 @@ interface:
 Then we create **CreatePersonInput** DTO that defines parameters of the
 method:
 
-    [AutoMapTo(typeof(Person))]
     public class CreatePersonInput
     {
         [Required]
@@ -702,8 +707,8 @@ method:
         public string EmailAddress { get; set; }
     }
 
-**CreatePersonInput** is mapped to **Person** entity (we will use
-mapping below). All properties are decorated by **data annotation
+**CreatePersonInput** is mapped to **Person** entity (comment out
+related line in CustomDtoMapper.cs and we will use mapping below). All properties are decorated by **data annotation
 attributes** to provide automatic
 **[validation](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)**.
 Notice that we use same consts defined in Person entity for
@@ -1330,7 +1335,6 @@ the code):
 
 And added Filter property to the IndexViewModel:
 
-    [AutoMapFrom(typeof (ListResultDto<PersonListDto>))]
     public class IndexViewModel : ListResultDto<PersonListDto>
     {
         public string Filter { get; set; }
@@ -1526,7 +1530,6 @@ phone numbers of people into return value.
 
 First, we're changing **PersonListDto** to contain a list of phones:
 
-    [AutoMapFrom(typeof(Person))]
     public class PersonListDto : FullAuditedEntityDto
     {
         public string Name { get; set; }
@@ -1538,7 +1541,6 @@ First, we're changing **PersonListDto** to contain a list of phones:
         public Collection<PhoneInPersonListDto> Phones { get; set; }
     }
 
-    [AutoMapFrom(typeof(Phone))]
     public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
     {
         public PhoneType Type { get; set; }
@@ -1584,7 +1586,6 @@ We could create a new, separated IPhoneAppService. It's your choice.
 But, we can consider Person as an aggregate and add phone related
 methods here. AddPhoneInput DTO is shown below:
 
-    [AutoMapTo(typeof(Phone))]
     public class AddPhoneInput
     {
         [Range(1, int.MaxValue)]
@@ -1938,7 +1939,6 @@ editing people:
 
     namespace Acme.PhoneBook.Web.Areas.App.Models.PhoneBook
     {
-        [AutoMapFrom(typeof(GetPersonForEditOutput))]
         public class EditPersonModalViewModel : GetPersonForEditOutput
         {
             public EditPersonModalViewModel(GetPersonForEditOutput output)
