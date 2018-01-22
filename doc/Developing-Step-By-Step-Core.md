@@ -196,7 +196,7 @@ practice since we will use same values later.
     public class PersonConsts
     {
         public const int MaxNameLength = 32;
-        public const int MaxSurnameLength = 32; 
+        public const int MaxSurnameLength = 32;
         public const int MaxEmailAddressLength = 255;
     }
 
@@ -206,7 +206,7 @@ class defined in **.EntityFrameworkCore** project.
     public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         public virtual DbSet<Person> Persons { get; set; }
-            
+
         //...other entities
 
         public PhoneBookDemoDbContext()
@@ -214,7 +214,7 @@ class defined in **.EntityFrameworkCore** project.
         {
 
         }
-        
+
         //...other codes
     }
 
@@ -333,7 +333,7 @@ important, just for a good code organization (see source codes).
     public class InitialHostDbBuilder
     {
         //existing codes...
-        
+
         public void Create()
         {
             //existing codes...
@@ -484,7 +484,7 @@ first test to verify getting people without any filter:
         {
             //Act
             var persons = _personAppService.GetPeople(new GetPeopleInput());
-                
+
             //Assert
             persons.Items.Count.ShouldBe(2);
         }
@@ -897,7 +897,7 @@ So, changing the **Index.cshtml** view header as shown below:
                 </div>
             </div>
         </div>
-        
+
         <div class="col-xs-6 text-right">
             <button id="CreateNewPersonButton" class="btn btn-primary"><i class="fa fa-plus"></i> @L("CreateNewPerson")</button>
         </div>
@@ -1167,13 +1167,13 @@ We use **AbpMvcAuthorize** attribute for MVC Controllers as shown below:
     public class PhoneBookController : PhoneBookControllerBase
     {
         ...
-        
+
         [AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
         public PartialViewResult CreatePersonModal()
         {
             ...
         }
-        
+
         ...
     }
 
@@ -1247,7 +1247,7 @@ Now, adding code to delete person (to Index.js):
 
     $('#AllPeopleList button.delete-person').click(function (e) {
         e.preventDefault();
-        
+
         var $listItem = $(this).closest('.list-group-item');
         var personId = $listItem.attr('data-person-id');
 
@@ -1613,7 +1613,7 @@ Now, we can implement these methods:
 
         var phone = ObjectMapper.Map<Phone>(input);
         person.Phones.Add(phone);
-                
+
         await CurrentUnitOfWork.SaveChangesAsync();
 
         return ObjectMapper.Map<PhoneInPersonListDto>(phone);
@@ -1798,7 +1798,7 @@ Added following codes into **Index.js**:
     //Save phone button
     $('#AllPeopleList .button-save-phone').click(function (e) {
         e.preventDefault();
-                
+
         var $phoneEditorRow = $(this).closest('tr');
 
         abp.ajax({
@@ -1881,7 +1881,7 @@ do.
 Now we want to edit name, surname and e-mail of people:
 
 <img src="images/edit-person-core.png" alt="Edit Person" class="img-thumbnail" width="548" height="333" />  
-  
+
 First of all, we create needed Dto's that transfers people's id, name,
 surname and e-mail. Then create the functions in PersonAppService for
 editing people:  
@@ -1911,7 +1911,7 @@ editing people:
 
     <div class="modal-body">
         <form role="form" novalidate class="form-validation">
-            
+
             <input type="hidden" name="Id" value="@Model.Id" />
 
             <div class="form-group form-md-line-input  no-hint">
