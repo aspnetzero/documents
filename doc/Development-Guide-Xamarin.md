@@ -146,23 +146,20 @@ If you host Web.Mvc or Web.Host from another computer then you have to
 change this IP address with that computer's IP address.
 
 **Info**
-    If you are using an emulator and the emulator is running on the same computer with host, you can use loopback IP addresses. Eg: Android emulator loopback IP address is 10.0.2.2
+If you are using an emulator and the emulator is running on the same computer with host, you can use loopback IP addresses. Eg: Android emulator loopback IP address is 10.0.2.2
 
 <img src="images/xamarin-debug-server-ip-address.png" alt="Debug IP Address" class="img-thumbnail" />  
 
 
 **Warning**
-
-    When you publish your Xamarin app for production you need to change **DefaultHostUrl** in **ApiUrlConfig** class! 
+When you publish your Xamarin app for production you need to change **DefaultHostUrl** in **ApiUrlConfig** class! 
 
 **Important**
-    Be aware that connecting over WiFi needs both the device and the computer to be on the same WiFi network! (To avoid confusions to you can completely turn off your mobile data connection)
+Be aware that connecting over WiFi needs both the device and the computer to be on the same WiFi network! (To avoid confusions to you can completely turn off your mobile data connection)
 
 
 **Read Xamarin official document about how to set up device for development**
 https://developer.xamarin.com/guides/android/getting_started/installation/set_up_device_for_development/
-
-
 
 
 <img src="images/xamarin-api-url-config.png" alt="Debug IP Address" class="img-thumbnail" />
