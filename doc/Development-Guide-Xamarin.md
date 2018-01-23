@@ -159,6 +159,10 @@ When you publish your Xamarin app for production you need to change **DefaultHos
 Be aware that connecting over WiFi needs both the device and the computer to be on the same WiFi network! (To avoid confusions to you can completely turn off your mobile data connection)
 
 
+Read Xamarin official document about how to set up device for development 
+https://developer.xamarin.com/guides/android/getting_started/installation/set_up_device_for_development/
+
+
 <img src="images/xamarin-api-url-config.png" alt="Debug IP Address" class="img-thumbnail" />
 
 #### Debugging Android
