@@ -132,7 +132,7 @@ info you can read [External Network Access to Kestrel and IIS Express in
 ASP.NET
 Core](https://weblog.west-wind.com/posts/2016/Sep/28/External-Network-Access-to-Kestrel-and-IIS-Express-in-ASPNET-Core)
 
- We have successfully started host. Now we can configure Xamarin app to
+We have successfully started host. Now we can configure Xamarin app to
 connect this host.
 
 #### Debugging Xamarin App
@@ -153,14 +153,16 @@ change this IP address with that computer's IP address.
 
 **Warning**
 
-When you publish your Xamarin app for production you need to change **DefaultHostUrl** in **ApiUrlConfig** class! 
+    When you publish your Xamarin app for production you need to change **DefaultHostUrl** in **ApiUrlConfig** class! 
 
 **Important**
-Be aware that connecting over WiFi needs both the device and the computer to be on the same WiFi network! (To avoid confusions to you can completely turn off your mobile data connection)
+    Be aware that connecting over WiFi needs both the device and the computer to be on the same WiFi network! (To avoid confusions to you can completely turn off your mobile data connection)
 
 
-Read Xamarin official document about how to set up device for development 
+**Read Xamarin official document about how to set up device for development**
 https://developer.xamarin.com/guides/android/getting_started/installation/set_up_device_for_development/
+
+
 
 
 <img src="images/xamarin-api-url-config.png" alt="Debug IP Address" class="img-thumbnail" />
