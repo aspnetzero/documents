@@ -96,7 +96,7 @@ Angular framework. </p>
 </tr>
 <tr>
 	<td>Social Logins (Facebook, Twitter, Microsoft, Google+)</td>
-	<td>OK (Facebook, Twitter)</td>
+	<td>OK (Facebook, Google)</td>
 	<td>OK (all)</td>
 	<td>OK (all)</td>
 	<td>OK (all)</td>
