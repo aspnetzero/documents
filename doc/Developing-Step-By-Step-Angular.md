@@ -724,9 +724,10 @@ interface:
 
     Task CreatePerson(CreatePersonInput input);
 
-Then we create **CreatePersonInput** DTO that defines parameters of the
-method:
+Then we create **CreatePersonInput** DTO class that defines parameters of the
+method. We added **[AutoMapTo](https://aspnetboilerplate.com/Pages/Documents/v1.5.2/Data-Transfer-Objects#DocAutoMappingHelpers)** attribute to this class to define one way mapping:
 
+    [AutoMapTo(typeof(Person))]
     public class CreatePersonInput
     {
         [Required]
