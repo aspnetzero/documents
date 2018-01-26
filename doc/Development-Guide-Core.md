@@ -5,7 +5,9 @@ project is created named "**Acme.PhoneBookDemo**". This document is a
 complete guide while developing your project. We definitely suggest to
 read this document before starting to the development. Since ASP.NET
 Zero is built on [ASP.NET Boilerplate](https://aspnetboilerplate.com/)
-application framework, this document highly refers it's
+application framework, this document highly refers it
+
+s
 [documentation](https://aspnetboilerplate.com/Pages/Documents).
 
 Before reading this document, it's suggested to run the application and
@@ -1834,7 +1836,7 @@ your needs.
 
 #### Penetration Test
 
-Asp.Net Zero (v5) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.7.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world’s most popular security tools and is actively maintained by hundreds of international volunteers, see [Security-Report](Security-Report-Core.md) for details.
+Asp.Net Zero (v5) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.7.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world's most popular security tools and is actively maintained by hundreds of international volunteers, see [Security-Report](Security-Report-Core.md) for details.
 
 ### Used Library & Frameworks
 
