@@ -1,18 +1,8 @@
 ### Introduction
 
-In [Getting Started](Getting-Started-Core.md) document, a new sample
-project is created named "**Acme.PhoneBookDemo**". This document is a
-complete guide while developing your project. We definitely suggest to
-read this document before starting to the development. Since ASP.NET
-Zero is built on [ASP.NET Boilerplate](https://aspnetboilerplate.com/)
-application framework, this document highly refers it
+In [Getting Started](Getting-Started-Core.md) document, a new sample project is created named "**Acme.PhoneBookDemo**". This document is a complete guide while developing your project. We definitely suggest to read this document before starting to the development. Since ASP.NET Zero is built on [ASP.NET Boilerplate](https://aspnetboilerplate.com/) application framework, this document highly refers it's [documentation](https://aspnetboilerplate.com/Pages/Documents).
 
-s
-[documentation](https://aspnetboilerplate.com/Pages/Documents).
-
-Before reading this document, it's suggested to run the application and
-explore the user interface. This will help you to have a better
-understanding of concepts defined here.
+Before reading this document, it's suggested to run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
 
 #### Pre Requirements
 
@@ -32,12 +22,9 @@ Following tools are needed in order to use ASP.NET Zero Core solution:
 
 #### Solution Structure (Layers)
 
-After you create and [download](/Download) your project, you have a
-solution structure as shown below for **\*.Web.sln**:
+After you create and [download](/Download) your project, you have a solution structure as shown below for **\*.Web.sln**:
 
-There are two more solutions, **\*.Mobile.sln** contains only Xamarin
-application development projects and **\*.All.sln** contains both mobile
-and web development projects.
+There are two more solutions, **\*.Mobile.sln** contains only Xamarin application development projects and **\*.All.sln** contains both mobile and web development projects.
 
 <img src="images/solution-overall-core-5.png" alt="ASP.NET Core solution" class="img-thumbnail" />
 
