@@ -305,8 +305,7 @@ section.*
 
 Most **SaaS** (multi-tenant) applications have **editions** (packages)
 those have different **features**. Thus, they can provide different
-**price and feature options** to their tenants (customers). **Editions
-page** (available in host login) is used to manage application's
+**price and feature options** to their tenants (customers). **Editions page** (available in host login) is used to manage application's
 editions:
 
 <img src="images/editions-page-core-4.png" alt="Editions Page" class="img-thumbnail" />
