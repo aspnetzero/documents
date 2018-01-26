@@ -236,8 +236,7 @@ If a page contains an error/warning message that may disclose sensitive informat
 
   ![Application Error Disclosure](images/security-report-application-error-disclosure.png)
 
-  ​
-
+  
 Asp.Net Zero never returns error details, if only developer sends it deliberatively.  When the project runs on development, exceptions are being sent to client. But publishing application in release mode prevents exception details to be sent. While `MVC` project shows a custom error page, `Host` project sends a JSON with message "*An internal error occurred during your request!*"
 
 
@@ -305,7 +304,7 @@ Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool repo
 
   ![HttpOnly Identity External](images/security-report-http-only-identity-external.png)
 
-  ​
+
 * URL: [http://localhost:62114/Account/Logout](http://localhost:62114/Account/Logout)
 
     * Method: `GET`
@@ -317,7 +316,7 @@ Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool repo
 
   It's false-positive as well because same as above instances it's removing cookie with an empty value.
 
-  ​
+
 * URL: [http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard](http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard)
 
   - Method: `GET`
@@ -328,7 +327,6 @@ Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool repo
 
   As of **v3.4.X** of ASP.NET Boilerplate framework this cookie is being set as `HttpOnly`.
 
-  ​
 
 ### Web Browser XSS Protection Not Enabled
 ##### Low (Medium)
