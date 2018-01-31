@@ -14,63 +14,50 @@ The automated scanner has been reported several alerts.  Asp.Net Zero Team has f
 
 ##### High (Medium)
 
-
 #### Description
+
 The Path Traversal attack technique allows an attacker access to files, directories, and commands that potentially reside outside the web document root directory. 
 
-#### Comment 
+#### Comment
 
 The report has stated some CSS, JS links are open to path traversal attack. But these alerts are false-positive. You can see the reasons why they are evaluated as false-positive.
 
-* URL: [http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.css](http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.css)
+- URL: [http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.css](http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.css)
+  - Method: `GET`
+  - Parameter: `.AspNetCore.Antiforgery.DPAjufeZt_4`
+  - Attack: `c:/`
+  - Evidence: `etc`
 
-    * Method: `GET`
+  When we inspect the below response, it returns **etc** only in comments. And this is exactly not a path.  
 
-    * Parameter: `.AspNetCore.Antiforgery.DPAjufeZt_4`
-
-    * Attack: `c:/`
-
-    * Evidence: `etc`
+  <img src="images/security-report-path-traversal.png" alt="Path Traversal" class="img-thumbnail" />
 
 
-  When we inspect the below response, it returns **etc** only in comments. And this is exactly not a path.  ![Path Traversal](images/security-report-path-traversal.png)
-
-  
-
-* URL: [http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.js](http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.js)
-
-    * Method: `GET`
-
-    * Parameter: `.AspNetCore.Antiforgery.DPAjufeZt_4`
-
-    * Attack: `c:/Windows/system.ini`
-
-    * Evidence: `[drivers]`
-
+- URL: [http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.js](http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.js)
+  - Method: `GET`
+  - Parameter: `.AspNetCore.Antiforgery.DPAjufeZt_4`
+  - Attack: `c:/Windows/system.ini`
+  - Evidence: `[drivers]`
 
   When we inspect the below response it returns **[drivers]** as array. And this is not a path as well!
 
-  ![Path Traversal 2](images/security-report-path-traversal-2.png)
+  <img src="images/security-report-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
 
   ​  ​
 
-* URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
-
-    * Method: `POST`
-
-    * Parameter: `Expires`
-
-    * Attack: `/Login`
-
+- URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
+  - Method: `POST`
+  - Parameter: `Expires`
+  - Attack: `/Login`
 
   The **Expires** header contains date/time after which the response is considered stale. Invalid dates, like the value 0, represent a date in the past and mean that the resource is already expired. The attack request sends Expires parameter as **"/Login"**, this doesn't leak any information about paths and th response returns a valid JSON 
 
   `{"result":null,"targetUrl":"/App","success":true,"error":null,"unAuthorizedRequest":false,"__abp":true}`
 
-   ![Path Traversal 3](images/security-report-path-traversal-3.png)
+  <img src="images/security-report-path-traversal-3.png" alt="Path Traversal 3" class="img-thumbnail" />
 
 
-### Recommendation 
+### Recommendation
 
 If your application has to accept input file names, file paths, or URL paths, you need to validate that the path is in the correct format and that it points to a valid location within the context of your application. To prevent a malicious user manipulating your code's file operations, avoid writing code that accepts user-supplied file or path input. 
 
@@ -85,32 +72,26 @@ If you use **MapPath** to map a supplied virtual path to a physical path on the 
 
 ##### High (Medium)
 
-
-#### Description  
+#### Description
 
 SQL Injection refers to an injection attack wherein an attacker can execute malicious SQL statements (also commonly referred to as a  malicious *payload*) that control a web application’s database server.
 
-
 #### Comment
+
 Asp.Net Zero uses `Entity Framework`  as data access technology. And `Entity Framework` uses parameterized queries which prevents SQL injections by default. 
 
-* URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
-
-    * Method: `POST`
-
-    * Parameter: `User-Agent`
-
-    * Attack: `Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36 OR 1=1 -- `
+- URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
+  - Method: `POST`
+  - Parameter: `User-Agent`
+  - Attack: `Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36 OR 1=1 -- `
 
   This request is false-positive because the tool is checking whether the response is changed or not. The **.AspNetCore.Identity.Application** cookie value is changing in every post request, that's why tool suspects of SQL Injection. But it's clearly not a SQL Injection attack. (The other instances of Login page SQL Inject attacks are not listed as they are same.)
 
-
-### Recommendation 
+### Recommendation
 
 Do not trust client side input, even if there is client side validation in place.  Check all data on the server side. Always use parametrized queries  when you use directly T-SQLs or Stored Procedures. 
 
-* https://www.owasp.org/index.php/SQL_Injection_Prevention_Cheat_Sheet
-
+- https://www.owasp.org/index.php/SQL_Injection_Prevention_Cheat_Sheet
 
 
 
@@ -118,38 +99,45 @@ Do not trust client side input, even if there is client side validation in place
 
 ##### High (Low)
 
-
 #### Description
+
 Cross-site Scripting (XSS) is an attack technique that involves echoing attacker-supplied code into a user's browser instance. 
 
 #### Comment
 
 There are several attacks that are marked as suspicious. When it's inspected these attack instances, it can be seen that the response is JSON and reflected value is handled as string in alert dialogs. The scripts are not being evaluated by JavaScript. Therefore these instances are false-positive. 
 
+- URL: [http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
 
-* URL: [http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
+```
+* Method: `GET`
+```
 
+```
+* Parameter: `skipCount`
+```
 
-    * Method: `GET`
+```
+* Attack: `<script>alert(1);</script>`
+```
 
-    * Parameter: `skipCount`
+```
+* Evidence: `<script>alert(1);</script>`
+```
 
-    * Attack: `<script>alert(1);</script>`
-
-    * Evidence: `<script>alert(1);</script>`
 
 
 ### Recommendation
+
 When you return a HTML content page, be sure that you encode the response. Before putting untrusted data inside an HTML element ensure it is HTML encoded. 
 
-* Never put untrusted data into your HTML input, unless you follow the rest of the steps below. Untrusted data is any data that may be controlled by an attacker, HTML form inputs, query strings, HTTP headers, even data sourced from a database as an attacker may be able to breach your database even if they cannot breach your application.
-* Before putting untrusted data inside an HTML element ensure it is HTML encoded. HTML encoding takes characters such as < and changes them into a safe form like `&lt;`
-* Before putting untrusted data into an HTML attribute ensure it is HTML attribute encoded. HTML attribute encoding is a superset of HTML encoding and encodes additional characters such as " and '.
-* Before putting untrusted data into JavaScript place the data in an HTML element whose contents you retrieve at runtime. If this is not possible then ensure the data is JavaScript encoded. JavaScript encoding takes dangerous characters for JavaScript and replaces them with their hex, for example < would be encoded as `\u003C`.
-* Before putting untrusted data into a URL query string ensure it is URL encoded.
-  * http://projects.webappsec.org/Cross-Site-Scripting
-  * http://cwe.mitre.org/data/definitions/79.html
-
+- Never put untrusted data into your HTML input, unless you follow the rest of the steps below. Untrusted data is any data that may be controlled by an attacker, HTML form inputs, query strings, HTTP headers, even data sourced from a database as an attacker may be able to breach your database even if they cannot breach your application.
+- Before putting untrusted data inside an HTML element ensure it is HTML encoded. HTML encoding takes characters such as < and changes them into a safe form like `&lt;`
+- Before putting untrusted data into an HTML attribute ensure it is HTML attribute encoded. HTML attribute encoding is a superset of HTML encoding and encodes additional characters such as " and '.
+- Before putting untrusted data into JavaScript place the data in an HTML element whose contents you retrieve at runtime. If this is not possible then ensure the data is JavaScript encoded. JavaScript encoding takes dangerous characters for JavaScript and replaces them with their hex, for example < would be encoded as `\u003C`.
+- Before putting untrusted data into a URL query string ensure it is URL encoded.
+  - http://projects.webappsec.org/Cross-Site-Scripting
+  - http://cwe.mitre.org/data/definitions/79.html
 
 
 
@@ -157,8 +145,8 @@ When you return a HTML content page, be sure that you encode the response. Befor
 
 ##### Medium (Medium)
 
-
 #### Description
+
 The `X-Frame-Options` HTPP header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>`, `<iframe>` or `<object>` . Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
 
 #### Comment
@@ -178,7 +166,6 @@ public class Startup
 }
 ```
 
-
 #### Reference
 
 http://blogs.msdn.com/b/ieinternals/archive/2010/03/30/combating-clickjacking-with-x-frame-options.aspx
@@ -188,7 +175,6 @@ http://blogs.msdn.com/b/ieinternals/archive/2010/03/30/combating-clickjacking-wi
 ### X-Content-Type-Options Header Missing
 
 ##### Low (Medium)
-
 
 #### Description
 
@@ -204,8 +190,8 @@ ASP.NET Boilerplate framework **v3.4.X** adds the `X-Content-Type-Options` heade
 
 ##### Medium (Medium)
 
-
 #### Description
+
 A Format String error occurs when the submitted data of an input string is evaluated as a command by the application.
 
 #### Comment
@@ -222,21 +208,18 @@ https://www.owasp.org/index.php/Format_string_attack
 
 ##### Medium (Medium)
 
-
 #### Description
+
 If a page contains an error/warning message that may disclose sensitive information, this can be used to launch further attacks against the web application. 
 
-* URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
-
-    * Method: `POST`
-
-    * Evidence: `HTTP/1.1 500 Internal Server Error`
+- URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
+  - Method: `POST`
+  - Evidence: `HTTP/1.1 500 Internal Server Error`
 
   This is false-positive alert. As seen in the below screenshot, Asp.Net Zero returns a HTPP 500 Internal Server Error without any sensitive information. While the error detail is not being sent to the client, it is logged on the server.
 
-  ![Application Error Disclosure](images/security-report-application-error-disclosure.png)
+  <img src="images/security-report-application-error-disclosure.png" alt="Application Error Disclosure" class="img-thumbnail" />
 
-  
 Asp.Net Zero never returns error details, if only developer sends it deliberatively.  When the project runs on development, exceptions are being sent to client. But publishing application in release mode prevents exception details to be sent. While `MVC` project shows a custom error page, `Host` project sends a JSON with message "*An internal error occurred during your request!*"
 
 
@@ -245,94 +228,86 @@ Asp.Net Zero never returns error details, if only developer sends it deliberativ
 
 ##### Low (Medium)
 
-
 #### Description
+
 A cookie has been set without the `HttpOnly` flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.
 
 #### Comment
 
 Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool reports false-positive alerts. See the following instances to understand why they are false-positive.
 
-* URL: [http://localhost:62114/Account/SwitchToLinkedAccountSignIn?tokenId=86d58f40-1db2-4fc9-9ee7-56cf70cb7bd6](http://localhost:62114/Account/SwitchToLinkedAccountSignIn?tokenId=86d58f40-1db2-4fc9-9ee7-56cf70cb7bd6)
-
-    * Method: `GET`
-
-    * Parameter: `idsrv.session`
-
-    * Evidence: `Set-Cookie: idsrv.session`
-
+- URL: [http://localhost:62114/Account/SwitchToLinkedAccountSignIn?tokenId=86d58f40-1db2-4fc9-9ee7-56cf70cb7bd6](http://localhost:62114/Account/SwitchToLinkedAccountSignIn?tokenId=86d58f40-1db2-4fc9-9ee7-56cf70cb7bd6)
+  - Method: `GET`
+  - Parameter: `idsrv.session`
+  - Evidence: `Set-Cookie: idsrv.session`
 
   In the above request, `idsrv.session`  cookie is being set by [Microsoft Identity Server](https://github.com/IdentityServer/IdentityServer4). By design this is not `HttpOnly` . It is required by the OIDC session management spec for SPA clients. For the related spec see https://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification .
   ​
 
-* URL: [http://localhost:62114/App/Dashboard](http://localhost:62114/App/Dashboard)
-
-    * Method: `GET`
-
-    * Parameter: `XSRF-TOKEN`
-
-    * Evidence: `Set-Cookie: XSRF-TOKEN`
-
+- URL: [http://localhost:62114/App/Dashboard](http://localhost:62114/App/Dashboard)
+  - Method: `GET`
+  - Parameter: `XSRF-TOKEN`
+  - Evidence: `Set-Cookie: XSRF-TOKEN`
 
   Setting `XSRF-TOKEN` as `HttpOnly` is pointless because in Angular UI client must access this cookie. 
 
+- URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)
 
-* URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)
+```
+* Method: `POST`
+```
 
+```
+* Parameter: `Identity.TwoFactorUserId`
+```
 
-    * Method: `POST`
-
-    * Parameter: `Identity.TwoFactorUserId`
-
-    * Evidence: `Set-Cookie: Identity.TwoFactorUserId`
+```
+* Evidence: `Set-Cookie: Identity.TwoFactorUserId`
+```
 
   This is a false-positive too because set cookie is removing `Identity.TwoFactorUserId` with an empty value.
 
-  ![HttpOnly Cookie for Identity.TwoFactorUserId](images/security-report-http-only-identity-two-factor-user-id.png)
+  <img src="images/security-report-http-only-identity-two-factor-user-id.png" alt="HttpOnly Cookie for Identity.TwoFactorUserId" class="img-thumbnail" />
 
+- URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)
 
-* URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)
+```
+* Method: `POST`
+```
 
+```
+* Parameter: `Identity.External`
+```
 
-    * Method: `POST`
-
-    * Parameter: `Identity.External`
-
-    * Evidence: `Set-Cookie: Identity.External`
+```
+* Evidence: `Set-Cookie: Identity.External`
+```
 
   This is also false-positive because it removes the cookie with an empty value.
 
-  ![HttpOnly Identity External](images/security-report-http-only-identity-external.png)
+  <img src="images/security-report-http-only-identity-external.png" alt="HttpOnly Identity External" class="img-thumbnail" />
 
-
-* URL: [http://localhost:62114/Account/Logout](http://localhost:62114/Account/Logout)
-
-    * Method: `GET`
-
-    * Parameter: `.AspNetCore.Identity.Application`
-
-    * Evidence: `Set-Cookie: .AspNetCore.Identity.Application`
-
+- URL: [http://localhost:62114/Account/Logout](http://localhost:62114/Account/Logout)
+  - Method: `GET`
+  - Parameter: `.AspNetCore.Identity.Application`
+  - Evidence: `Set-Cookie: .AspNetCore.Identity.Application`
 
   It's false-positive as well because same as above instances it's removing cookie with an empty value.
 
-
-* URL: [http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard](http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard)
+- URL: [http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard](http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard)
 
   - Method: `GET`
-
     - Parameter: `.AspNetCore.Culture`
-
     - Evidence: `Set-Cookie: .AspNetCore.Culture`
 
   As of **v3.4.X** of ASP.NET Boilerplate framework this cookie is being set as `HttpOnly`.
 
-
 ### Web Browser XSS Protection Not Enabled
+
 ##### Low (Medium)
 
-
 #### Description
+
 Web Browser XSS Protection is not enabled, or is disabled by the configuration of the 'X-XSS-Protection' HTTP response header on the web server.
 
 #### Comment
@@ -341,23 +316,21 @@ Asp.Net Boilerplate framework **v3.4.X** adds the `X-XSS-Protection` header to a
 
 
 
-
 ### Private IP Disclosure
+
 ##### Low (Medium)
 
-
 #### Description
+
 A private IP (such as 10.x.x.x, 172.x.x.x, 192.168.x.x) or an Amazon EC2 private hostname (for example, ip-10-0-56-78) has been found in the HTTP response body. This information might be helpful for further attacks targeting internal systems.
 
-* URL: [http://localhost:62114/App/Users/LoginAttemptsModal](http://localhost:62114/App/Users/LoginAttemptsModal)
-
-    * Method: `POST`
-
-    * Evidence: `192.168.1.46`
+- URL: [http://localhost:62114/App/Users/LoginAttemptsModal](http://localhost:62114/App/Users/LoginAttemptsModal)
+  - Method: `POST`
+  - Evidence: `192.168.1.46`
 
   Asp.Net Zero has a feature that shows login attempts to the authenticated user. This is a modal dialog which can be reached by clicking profile picture at the top-right of the page. In the login attempt dialog it's shown last 10 logins with IP addresses.  This private information can be seen if only the user is logged-in. And users can only see their own records!
 
-  ![IP Disclosure](images/security-report-ip-disclousure.png)
+  <img src="images/security-report-ip-disclousure.png" alt="IP Disclosure" class="img-thumbnail" />
 
 
 
