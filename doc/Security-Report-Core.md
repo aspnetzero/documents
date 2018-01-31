@@ -43,8 +43,6 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   <img src="images/security-report-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
 
-  ​  ​
-
 - URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
   - Method: `POST`
   - Parameter: `Expires`
