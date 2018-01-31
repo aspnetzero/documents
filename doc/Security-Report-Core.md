@@ -1,6 +1,6 @@
-# ASP.NET ZERO Penetration Test Report
+QL Injection refersASP.NET ZERO Penetration Test Report
 
-Asp.Net Zero (v5) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.7.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world’s most popular security tools and is actively maintained by hundreds of international volunteers. 
+Asp.Net Zero (v5) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.7.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world's most popular security tools and is actively maintained by hundreds of international volunteers. 
 
 The automated scanner has been reported several alerts.  Asp.Net Zero Team has fixed the positive alerts regarding the report. On the other hand most of the alerts can be stated as false-positive. The reasons for the false-positive alerts that are subject to these issues are clearly stated below.
 
@@ -42,7 +42,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
   When we inspect the below response it returns **[drivers]** as array. And this is not a path as well!
 
   <img src="images/security-report-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
-  
+
 - URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
   - Method: `POST`
   - Parameter: `Expires`
@@ -72,7 +72,7 @@ If you use **MapPath** to map a supplied virtual path to a physical path on the 
 
 #### Description
 
-SQL Injection refers to an injection attack wherein an attacker can execute malicious SQL statements (also commonly referred to as a  malicious *payload*) that control a web application’s database server.
+SQL Injection refers to an injection attack wherein an attacker can execute malicious SQL statements (also commonly referred to as a  malicious *payload*) that control a web application's database server.
 
 #### Comment
 
@@ -107,21 +107,13 @@ There are several attacks that are marked as suspicious. When it's inspected the
 
 - URL: [http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
 
-```
-* Method: `GET`
-```
+  - Method: `GET`
 
-```
-* Parameter: `skipCount`
-```
+  - Parameter: `skipCount`
 
-```
-* Attack: `<script>alert(1);</script>`
-```
+  - Attack: `<script>alert(1);</script>`
 
-```
-* Evidence: `<script>alert(1);</script>`
-```
+  - Evidence: `<script>alert(1);</script>`
 
 
 
@@ -240,7 +232,6 @@ Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool repo
   - Evidence: `Set-Cookie: idsrv.session`
 
   In the above request, `idsrv.session`  cookie is being set by [Microsoft Identity Server](https://github.com/IdentityServer/IdentityServer4). By design this is not `HttpOnly` . It is required by the OIDC session management spec for SPA clients. For the related spec see https://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification .
-  ​
 
 - URL: [http://localhost:62114/App/Dashboard](http://localhost:62114/App/Dashboard)
   - Method: `GET`
