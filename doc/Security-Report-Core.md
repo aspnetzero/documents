@@ -264,8 +264,8 @@ This is a false-positive too because set cookie is removing `Identity.TwoFactorU
 - URL: [http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard](http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard)
 
   - Method: `GET`
-    - Parameter: `.AspNetCore.Culture`
-    - Evidence: `Set-Cookie: .AspNetCore.Culture`
+  - Parameter: `.AspNetCore.Culture`
+  - Evidence: `Set-Cookie: .AspNetCore.Culture`
 
   As of **v3.4.X** of ASP.NET Boilerplate framework this cookie is being set as `HttpOnly`.
 
