@@ -108,13 +108,9 @@ There are several attacks that are marked as suspicious. When it's inspected the
 - URL: [http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
 
   - Method: `GET`
-
   - Parameter: `skipCount`
-
   - Attack: `<script>alert(1);</script>`
-
   - Evidence: `<script>alert(1);</script>`
-
 
 
 ### Recommendation
@@ -240,37 +236,19 @@ Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool repo
 
   Setting `XSRF-TOKEN` as `HttpOnly` is pointless because in Angular UI client must access this cookie. 
 
-- URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)
+- URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)- 
+  - Method: `POST`
+  - Parameter: `Identity.TwoFactorUserId`
+  - Evidence: `Set-Cookie: Identity.TwoFactorUserId`
 
-```
-* Method: `POST`
-```
-
-```
-* Parameter: `Identity.TwoFactorUserId`
-```
-
-```
-* Evidence: `Set-Cookie: Identity.TwoFactorUserId`
-```
-
-  This is a false-positive too because set cookie is removing `Identity.TwoFactorUserId` with an empty value.
+This is a false-positive too because set cookie is removing `Identity.TwoFactorUserId` with an empty value.
 
   <img src="images/security-report-http-only-identity-two-factor-user-id.png" alt="HttpOnly Cookie for Identity.TwoFactorUserId" class="img-thumbnail" />
 
 - URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)
-
-```
-* Method: `POST`
-```
-
-```
-* Parameter: `Identity.External`
-```
-
-```
-* Evidence: `Set-Cookie: Identity.External`
-```
+  - Method: `POST`
+  - Parameter: `Identity.External`
+  - Evidence: `Set-Cookie: Identity.External`
 
   This is also false-positive because it removes the cookie with an empty value.
 
