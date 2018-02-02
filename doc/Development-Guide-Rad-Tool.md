@@ -20,4 +20,4 @@ This tool is developed to minimize the effort of creating a new table. It create
  
 ###  How It Works?
  
- Dll's, that is inside the folder mentioned above, do all the work. The extension contains just a user interface. This design is required, otherwise it would be available for only visual studio windows users. But since the tool is built on .Net Core platform, **mac** or **linux** users can safely use the tool. On these operation systems you have to manually do the work that is done by extension, which is just creating a short and basic json file as input.
+ Dll's, that is inside the folder mentioned above, do all the work. The extension contains just a user interface. This design is required, otherwise it would be available for only visual studio windows users. But since the tool is built on .Net Core platform, **mac** or **linux** users can safely use the tool. On these operation systems you have to manually do the work that is done by the extension, which is just creating a short and basic json file as input.
