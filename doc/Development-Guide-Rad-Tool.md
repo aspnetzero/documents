@@ -1,6 +1,6 @@
 ### Introduction
 
- In this document, we will introduce **ASP.NET Zero Power Tool** and expalin it. This tool is developed to minimize the effort of creating a new ebtity. It creates all related layers (including UI) by defining an entity.
+ In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new entity. It creates all related layers (including UI) by defining an entity.
 
 ### Download And Install
 
@@ -10,25 +10,25 @@
  
 ### How To Use It?
  
- Extension is inside **Tools** menu (tools-> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling the fields, press **Generate** button to start the code generation process. 
+ Extension is inside **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling the fields, press **Generate** button to start the code generation process. 
  
  <img src="images/RadToolUI.jpg" alt="Extension UI" class="img-thumbnail" width="507" height="440" />
  
- A simple console will appear and give you information about the process. If there is no warning and fail, run your project to see the results (Angular developers will have to run nswag manually). You probably won't see a new page, but don't worry and give yourself a **permission**.
+ A simple console will appear and give you information about the process. If there is no warning and fail, run your project to see the results (Angular developers will have to run NSwag manually). You probably won't see a new page, but don't worry and grant yourself the required **permissions**.
  
- Warning: Be sure that you have saved your works before running this tool, since it will add new files and modify some of the existing files. We strongly recommend to use a source control system (like Git). Otherwise, backup your project.
+ Warning: Be sure that you have saved your works before running this tool, since it will add new files and modify some of the existing files. We strongly recommend using a source control system (like Git). Otherwise, backup your project.
  
-###  How It Works?
+### How It Works?
  
- Dll's, that is inside the folder mentioned above, do all the work. The extension contains just a user interface. This design is required, otherwise it would be available for only visual studio windows users. But since the tool is built on .Net Core platform, **mac** or **linux** users can safely use the tool. On these operation systems you have to manually do the work that is done by the extension, which is just creating a short and basic json file as input.
+ DLLs, that is inside the folder mentioned above, do all the work. The extension contains just a user interface. This design is required, otherwise it would be available for only visual studio windows users. But since the tool is built on .NET Core platform, **Mac** or **Linux** users can safely use the tool. On these operating systems, you have to manually do the work that is done by the extension, which is just creating a short and basic JSON file as input.
  
 ### Generated Files
 	
- Here is the full list of the files that is created or modified by tool, if you give a basic "Cars" table as input.
+ Here is the full list of the files that are created or modified by the tool, if you give a basic "Cars" entity as input.
 
-####Server Side
+#### Server Side
 
-######Created:
+###### Created:
 
  -   Car.cs
  -   CarDto.cs
@@ -40,7 +40,7 @@
  -   ICarAppService
  -   CarAppService
  
-######Modified:
+###### Modified:
 
  -   AppAuthorizationProvider.cs
  -   AppPermissions.cs
@@ -50,27 +50,27 @@
  
  (also adds a database migration and updates the database, optionally.)
 
-####Client Side
+#### Client Side
 
-#####Angular
+##### Angular
 
-######Created:
+###### Created:
 
  -   cars.component.ts
  -   cars.component.html
  -   create-or-edit-car-modal.component.ts
  -   create-or-edit-car-modal.component.html
 
-######Modified:
+###### Modified:
 
  -   app-navigation.service.ts
  -   service-proxy.module.ts
  -   (Main or Admin)-routing.module.ts
  -   (Main or Admin).module.ts
 
-#####Mvc
+##### Mvc
 
-######Created:
+###### Created:
 
  -   CarsController.cs
  -   CarsViewModel.cs
@@ -80,7 +80,7 @@
  -   createOrEditModal.js
  -   createOrEditModal.cshtml
 
-######Modified:
+###### Modified:
 
  -   (AppArea)NavigationProvider.cs
  -   (AppArea)PageNames.cs
