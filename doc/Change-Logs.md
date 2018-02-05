@@ -6,7 +6,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 ### v5.1.0 (2018-02-05)
 
-* New [**Rapid Application Development Tool**](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools).
+* New [**Rapid Application Development Tool**](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) ([see in action](https://www.youtube.com/watch?v=lqu7AVBTepw)).
 * **Entity Change History**: Automatically write audit logs for all property changes of desired entities.
 * **Tested for security** and created a test [report](Security-Report-Core.md).
 * Many enhancements on current features.
