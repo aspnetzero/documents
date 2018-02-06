@@ -1088,6 +1088,12 @@ index.html page (or, to the root path).
 ASP.NET Zero Angular UI contains a **web.config** file. You can copy it
 to the web site's root folder to overcome the problem described above.
 
+### ASP.NET Zero Power Tools
+
+**ASP.NET Zero Power Tools** creates all related layers (including UI) by defining an entity.
+
+See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
+
 ### Used Library & Frameworks
 
 Many open source frameworks and libraries are used to build ASP.NET Zero

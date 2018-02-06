@@ -156,6 +156,12 @@ screen:
 
 <img src="images/dashboardV3.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
 
+### ASP.NET Zero Power Tools
+
+You can download our rapid application development tool from the following link:
+
+https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools
+
 ### More
 
 Your solution is up and working. See [<span class="text-primary">development guide</span>](Development-Guide-Xamarin.md) for Xamarin application, [<span class="text-primary">development guide</span>](Development-Guide-Angular.md) document for more information.

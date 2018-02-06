@@ -2058,6 +2058,12 @@ You can add people here, logout and login as different tenants (you can
 login as default tenant for example). You will see that each tenant has
 an isolated phone book and can not see other's people.
 
+### Code Generation
+
+Using new **ASP.NET Zero Power Tools**, you can speed up your development.
+
+See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
+
 ### Conclusion
 
 In this document, we built a complete example that covers most parts of
