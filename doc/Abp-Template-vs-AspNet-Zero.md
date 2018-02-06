@@ -219,6 +219,14 @@
 <td><i class="fa fa-minus"></i></td>
 <td><i class="fa fa-check"></i></td></tr>
 <tr>
+<tr>
+<td colspan="3"><strong>Rapid Application Development</strong></td>
+</tr>
+<tr>
+<td>Code generation extension</td>
+<td><i class="fa fa-minus"></i></td>
+<td><i class="fa fa-check"></i></td></tr>
+<tr>
 <td colspan="3"><strong>Support</strong></td>
 </tr>
 <tr>
