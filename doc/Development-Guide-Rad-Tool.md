@@ -1,3 +1,4 @@
+
 ### Introduction
 
  In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new entity. It creates all related layers (including UI) by defining an entity.
@@ -28,7 +29,7 @@
 
 #### Server Side
 
-###### Created:
+**Created**
 
  -   Car.cs
  -   CarDto.cs
@@ -40,7 +41,7 @@
  -   ICarAppService
  -   CarAppService
  
-###### Modified:
+**Modified**
 
  -   AppAuthorizationProvider.cs
  -   AppPermissions.cs
@@ -54,14 +55,14 @@
 
 ##### Angular
 
-###### Created:
+**Created**
 
  -   cars.component.ts
  -   cars.component.html
  -   create-or-edit-car-modal.component.ts
  -   create-or-edit-car-modal.component.html
 
-###### Modified:
+**Modified**
 
  -   app-navigation.service.ts
  -   service-proxy.module.ts
@@ -70,7 +71,7 @@
 
 ##### Mvc
 
-###### Created:
+**Created**
 
  -   CarsController.cs
  -   CarsViewModel.cs
@@ -80,7 +81,7 @@
  -   createOrEditModal.js
  -   createOrEditModal.cshtml
 
-###### Modified:
+**Modified**
 
  -   (AppArea)NavigationProvider.cs
  -   (AppArea)PageNames.cs
