@@ -22,6 +22,12 @@
  
  DLLs, that is inside the folder mentioned above, do all the work. The extension contains just a user interface. This design is required, otherwise it would be available for only visual studio windows users. But since the tool is built on .NET Core platform, **Mac** or **Linux** users can safely use the tool. On these operating systems, you have to manually do the work that is done by the extension, which is just creating a short and basic JSON file as input.
  
+### How It Works Without Visual Studio Extension?
+ 
+  Purpose of the extension is to create an input file for rad tool. So, in order to use the tool without extension, input file should be created manually. However, way too easier approach is running extension on a Windows installed machine, creating your entity and copying the YourEntityName.json file to your own project, under AspNetZeroRadTool folder.
+  
+   dotnet AspNetZeroRadTool.dll YourEntityName.json
+
 ### Generated Files
 	
  Here is the full list of the files that are created or modified by the tool, if you give a basic "Cars" entity as input.
