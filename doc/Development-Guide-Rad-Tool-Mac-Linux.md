@@ -84,5 +84,6 @@ You can use that command to run it on any device:
 
 ### Notes
 
-AspNetZeroRadTool folder is placed in your solution's directory. You have to place the json file and run the command in there.
-Also, please Keep in mind that JSON file is completely case sensitive. 
+ - AspNetZeroRadTool folder is placed in your solution's directory. You have to place the json file and run the command in there.
+ - Please Keep in mind that JSON file is completely case sensitive. 
+ - Auto add-migration and update-database functions are disabled.
