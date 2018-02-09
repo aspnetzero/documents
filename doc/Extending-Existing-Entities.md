@@ -175,6 +175,12 @@ project):
     {
         public virtual int Price { get; set; }
     }
+    
+#### Add to DBContext
+
+Now we add our new **MyEdition** entity to our DBContext (This is in the .EntityFrameworkCore project):
+
+    public virtual DbSet<MyEdition> MyEdition { get; set; }
 
 #### Add Migration
 
