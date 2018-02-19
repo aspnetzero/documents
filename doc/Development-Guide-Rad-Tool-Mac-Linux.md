@@ -21,30 +21,63 @@
       "UpdateDatabase": true,
       "CreateUserInterface": true,
       "PagePermission": {
-      "Host": true,
-      "Tenant": true
-       },
-       
+           "Host": true,
+           "Tenant": true
+      },
       "Properties": [
-        {
-          "Name": "Name",
-          "Type": "string",
-          "MaxLength": -1,
-          "MinLength": -1,
-          "Range": {
-            "IsRangeSet": false,
-            "MinimumValue": 0,
-            "MaximumValue": 0
-          },
-          "Required": false,
-          "Nullable": false,
-          "Regex": "",
-          "UserInterface": {
-            "List": true,
-            "CreateOrUpdate": true
-          }
-        }
-      ]
+                {
+                  "Name": "Name",
+                  "Type": "string",
+                  "MaxLength": 25,
+                  "MinLength": 2,
+                  "Range": {
+                    "IsRangeSet": false,
+                    "MinimumValue": 0,
+                    "MaximumValue": 0
+                  },
+                  "Required": true,
+                  "Nullable": false,
+                  "Regex": "",
+                  "UserInterface": {
+                    "List": true,
+                    "CreateOrUpdate": true
+                     }
+                },
+                {
+                  "Name": "Type",
+                  "Type": "ProductType",
+                  "MaxLength": 0,
+                  "MinLength": 0,
+                  "Range": {
+                    "IsRangeSet": false,
+                    "MinimumValue": 0,
+                    "MaximumValue": 0
+                  },
+                  "Required": false,
+                  "Nullable": false,
+                  "Regex": "",
+                  "UserInterface": {
+                    "List": true,
+                    "CreateOrUpdate": true
+                  }
+                }
+      ],
+      "EnumDefinitions": [
+                {
+                  "Name": "ProductType",
+                  "Namespace": "Volosoft.RadToolExplainer",
+                  "EnumProperties": [
+                            {
+                              "Name": "Liquid",
+                              "Value": 1
+                            },
+                            {
+                              "Name": "Solid",
+                              "Value": 2
+                            }
+                   ]
+                }
+       ]
     }
 
 ### Guide To Create A New Input File
