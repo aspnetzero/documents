@@ -129,6 +129,13 @@ Angular framework. </p>
 	<td>-</td>
 	<td>-</td>
 </tr>
+<tr>
+	<td>Code generation extension</td>
+	<td>OK</td>
+	<td>OK</td>
+	<td>-</td>
+	<td>-</td>
+</tr>
 </tbody>
 </table>
 
