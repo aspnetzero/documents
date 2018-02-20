@@ -22,6 +22,12 @@
  
  DLLs, that is inside the folder mentioned above, do all the work. The extension contains just a user interface. This design is required, otherwise it would be available for only visual studio windows users. But since the tool is built on .NET Core platform, **Mac** or **Linux** users can safely use the tool. On these operating systems, you have to manually do the work that is done by the extension, which is just creating a short and basic JSON file as input.
 
+### How To Edit Pre-defined Templates?
+
+ The templates are inside "/AspNetZeroRadTool/FileTemplates" directory. If you want to edit any template, just replicate it in same directory and change it's extension to ".custom.txt" from ".txt". 
+ 
+ (For example: you can create "EntityClassTemplate.custom.txt" to override "EntityClassTemplate.txt".)
+
 ### Generated Files
 	
  Here is the full list of the files that are created or modified by the tool, if you give a basic "Cars" entity as input.
