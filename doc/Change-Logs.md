@@ -4,6 +4,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+### v5.2.0 (2018-02-20)
+
+* Rad Tool Enum support is added
+* Rad Tool template support is added
+* Upgraded to angular v5.2.5 and angular-cli to v1.7
+* Bug fixes and enhancements
+
 ### v5.1.0 (2018-02-05)
 
 * New [**Rapid Application Development Tool**](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) ([see in action](https://www.youtube.com/watch?v=lqu7AVBTepw)).
