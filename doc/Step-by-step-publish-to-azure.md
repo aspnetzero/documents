@@ -45,4 +45,16 @@ Steps to publish **AngularUI** to the Azure
 
 ### Run Migrations on The Azure
 
+One of the best ways to run migrations on the Azure is running `update-database` command in the Visual Studio. 
+But this command won't run. Your client IP address should have access to the Azure. 
 
+#### Configuring the Firewall for Client Access 
+
+**The easiest way:** Open Management Studio and write the Azure database settings, then click connect. 
+If you are already logged in to the Azure, following info screen will be shown (if you aren't already logged in, a form will be displayed before the following screen to logging in):
+
+<img src="images/azure-publish-angular-allow-ip-to-azure.png">
+
+Now our client IP address have access to the Azure. Of cource, this operation can also be done via the [Azure Portal](https://portal.azure.com).
+
+- Change the ConnectionString in **appsettings.json** to connect the Azure Database.
