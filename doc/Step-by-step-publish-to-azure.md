@@ -73,7 +73,7 @@ Following screen will be shown:
 
 <img src="images/azure-publish-angular-new-publish-profile.png">
 
-Select "**azure-publish-demo-server**" and click "**OK**". Host application is now live:
+Select "**azure-publish-demo-server**" and click "**OK**". Host application is live now:
 
 <img src="images/azure-publish-angular-swagger-ui.png">
 
@@ -109,3 +109,8 @@ Configure the **angular/dist/assets/appconfig.json** like following:
 Files should be sent to the Azure via FTP. Transfer files from the **dist** to the **www** folder in the Azure. The folder structure should look like:
 
 <img src="images/azure-publish-angular-filezilla.png">
+
+Angular application is live now. Browse the http://azure-publish-demo-client.azurewebsites.net and see it works.
+
+<img src="images/azure-publish-angular-angular-ui.png">
+
