@@ -108,3 +108,4 @@ Configure the **angular/dist/assets/appconfig.json** like following:
 
 Files should be sent to the Azure via FTP. Upload files from under the **dist** to the **www** folder in the Azure. The folder structure should look like:
 
+<img src="images/azure-publish-angular-filezilla.png">
