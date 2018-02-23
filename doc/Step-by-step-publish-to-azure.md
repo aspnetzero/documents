@@ -34,7 +34,7 @@ The details will be explained in the next lines. Here are the quick steps to pub
 - Configure the **.Web.Host/appsettings.production.json**
 - Publish the application to Azure
 
-### Run The Migrations on The Azure
+### Run Migrations on The Azure
 
 One of the best ways to run migrations on the Azure is running `update-database` command in the Visual Studio. 
 But this command won't run. Your client IP address should have access to the Azure. 
