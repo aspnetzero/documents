@@ -67,3 +67,25 @@ Open Package Manager Console in Visual Studio, set **.EntityFrameworkCore** as t
 
 <img src="images/azure-publish-angular-update-database.png">
 
+### Configure the appsettings.production.json
+
+Azure is using **appsettings.production.json**, so this file should be configured like following:
+
+<img src="images/azure-publish-angular-appsttings-production.png">
+
+### Publish The Host Application to The Azure
+
+Right click the **Web.Host** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
+
+<img src="images/azure-publish-angular-new-publish-profile.png">
+
+Following screen will be shown:
+
+<img src="images/azure-publish-angular-new-publish-profile.png">
+
+Select "**azure-publish-demo-server**" and click "**OK**".
+
+
+
+
+
