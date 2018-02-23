@@ -1,5 +1,6 @@
+## Introduction
 
-
+Before reading this document, it's suggested to read [Getting Started](https://aspnetzero.com/Documents/Getting-Started-Angular) to run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
 
 ## Create The Azure Website
 
