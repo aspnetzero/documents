@@ -6,9 +6,9 @@ Before reading this document, it's suggested to read [Getting Started](https://a
 
 Create two website in Azure. 
 
-### Creating Website for Host
+### Creating an Azure Website for Host
 
-Select "**Web App + SQL**" for **Host**. 
+Select the "**Web App + SQL**" for **Host**. 
 
 <img src="images/azure-publish-angular-create-azure-host-website.png">
 
@@ -16,9 +16,9 @@ And configure it according to your needs. A sample setting is shown below:
 
 <img src="images/azure-publish-angular-create-azure-host-website-configuration.png">
 
-### Creating Website for AngularUI
+### Creating an Azure Website for AngularUI
 
-Select "**Web App**" for **AngularUI**.
+Select the "**Web App**" for **AngularUI**.
 
 <img src="images/azure-publish-angular-create-azure-angular-website.png">
 
@@ -34,7 +34,7 @@ The details will be explained in the next lines. Here are the quick steps to pub
 - Configure the **.Web.Host/appsettings.production.json**
 - Publish the application to Azure
 
-### Run Migrations on The Azure
+### Run The Migrations on The Azure
 
 One of the best ways to run migrations on the Azure is running `update-database` command in the Visual Studio. 
 But this command won't run. Your client IP address should have access to the Azure. 
