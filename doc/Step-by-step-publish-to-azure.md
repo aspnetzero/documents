@@ -25,23 +25,13 @@ And configure it according to your needs. A sample setting is shown below:
 
 <img src="images/azure-publish-angular-create-azure-angular-website-configuration.png">
 
-## Publish Applications (Host and AngularUI) to The Azure
+## Publish Host Application to The Azure
 
-The details will be explained in the next lines. Here are the quick steps to publish applications to the Azure.
-
-Steps to publish **Host Application** to the Azure.
+The details will be explained in the next lines. Here are the quick steps to publish the **Host Application** to the Azure.
 
 - Run the migrations on the Azure
 - Configure the **.Web.Host/appsettings.production.json**
 - Publish the application to Azure
-
-Steps to publish **AngularUI** to the Azure
-
-- Run the `yarn` command to restore packages
-- Run the `ng build -prod`
-- Copy the web.config file that is placed in **angular** folder root to dist folder
-- Configure the **angular/dist/assets/appconfig.json**
-- Send the required files to the Azure
 
 ### Run Migrations on The Azure
 
@@ -73,7 +63,7 @@ Azure is using **appsettings.production.json**, so this file should be configure
 
 <img src="images/azure-publish-angular-appsttings-production.png">
 
-### Publish The Host Application to The Azure
+### Publish
 
 Right click the **Web.Host** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
 
@@ -88,6 +78,33 @@ Select "**azure-publish-demo-server**" and click "**OK**". Host application is n
 <img src="images/azure-publish-angular-swagger-ui.png">
 
 
+## Publish AngularUI to The Azure
 
+The details will be explained in the next lines. Here are the quick steps to publish the **AngularUI** to the Azure
 
+- Run the `yarn` command to restore packages
+- Run the `ng build -prod`
+- Copy the web.config file that is placed in **angular** folder root to dist folder
+- Configure the **angular/dist/assets/appconfig.json**
+- Send the required files to the Azure
+
+### Prepare The Publish Folder
+
+Run the `yarn` command to restore packages and run the `ng build -prod` to create publish folder that named **dist**.
+
+<img src="images/azure-publish-angular-publish-angular.png">
+
+### Copy the web.config
+
+Copy the web.config file that is placed in **angular** folder to **angular/dist** folder.
+
+### Copy the appconfig.json
+
+Configure the **angular/dist/assets/appconfig.json** like following:
+
+<img src="images/azure-publish-angular-appconfig.png">
+
+### Send The Publish Files to The Azure
+
+Files should be sent to the Azure via FTP. Upload files from under the **dist** to the **www** folder in the Azure. The folder structure should look like:
 
