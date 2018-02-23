@@ -32,7 +32,7 @@ The details will be explained in the next lines. Here are the quick steps to pub
 Steps to publish **Host Application** to the Azure.
 
 - Run the migrations on the Azure
-- Configure the **\*.Web.Host/appsettings.production.json**
+- Configure the **.Web.Host/appsettings.production.json**
 - Publish the application to Azure
 
 Steps to publish **AngularUI** to the Azure
@@ -55,6 +55,15 @@ If you are already logged in to the Azure, following info screen will be shown (
 
 <img src="images/azure-publish-angular-allow-ip-to-azure.png">
 
-Now our client IP address have access to the Azure. Of cource, this operation can also be done via the [Azure Portal](https://portal.azure.com).
+Now our client IP address have access to the Azure. Of cource, this operation can also be done via the [Azure Portal](https://portal.azure.com). Check [here](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure) to learn how to configure the firewall for client access via Azure Portal.
 
-- Change the ConnectionString in **appsettings.json** to connect the Azure Database.
+#### Apply Migrations
+
+Open **appsettings.json** in **.Web.Host** project and change connection settings according to the Azure Database:
+
+<img src="images/azure-publish-angular-connection-string.png">
+
+Open Package Manager Console in Visual Studio, set **.EntityFrameworkCore** as the Default Project and run the `update-database` command as shown below:
+
+<img src="images/azure-publish-angular-update-database.png">
+
