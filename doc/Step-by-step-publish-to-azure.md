@@ -83,7 +83,9 @@ Following screen will be shown:
 
 <img src="images/azure-publish-angular-new-publish-profile.png">
 
-Select "**azure-publish-demo-server**" and click "**OK**".
+Select "**azure-publish-demo-server**" and click "**OK**". Host application is now live:
+
+<img src="images/azure-publish-angular-swagger-ui.png">
 
 
 
