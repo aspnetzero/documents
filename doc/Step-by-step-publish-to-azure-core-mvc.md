@@ -17,9 +17,9 @@ And configure it according to your needs. A sample setting is shown below:
 
 <img src="images/azure-publish-angular-create-azure-host-website-configuration.png">
 
-### Creating an Azure Website for Web.Public
+### Creating an Azure Website for Public Website
 
-Select the "**Web App**" for **Web.Public**.
+Select the "**Web App**" for the **Public Website**.
 
 <img src="images/azure-publish-angular-create-azure-angular-website.png">
 
@@ -68,7 +68,7 @@ Open Package Manager Console in Visual Studio, set **.EntityFrameworkCore** as t
 
 ### Configure the appsettings.production.json
 
-Azure is using **appsettings.production.json**, so this file should be configured like following:
+Azure is using **appsettings.production.json** that is placed in the **Web.Mvc**, so this file should be configured like following:
 
 <img src="images/azure-publish-core-mvc-appsttings-production.png">
 
@@ -99,7 +99,7 @@ Right click **Web.Public** project and select **Bundler & Minifier/Update Bundle
 
 ### Configure the appsettings.production.json
 
-Azure is using **appsettings.production.json**, so this file should be configured like following:
+Azure is using **appsettings.production.json** that is placed in the **Web.Public**, so this file should be configured like following:
 
 <img src="images/azure-publish-core-mvc-appsttings-production-public.png">
 
