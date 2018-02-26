@@ -1,15 +1,15 @@
 
 ## Introduction
 
-Before reading this document, it's suggested to read [Getting Started](https://aspnetzero.com/Documents/Getting-Started-Angular) to run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
+Before reading this document, it's suggested to read [Getting Started](https://aspnetzero.com/Documents/Getting-Started-Core) to run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
 
 ## Create The Azure Website
 
 Create two website in Azure. 
 
-### Creating an Azure Website for Host
+### Creating an Azure Website for Web.Mvc
 
-Select the "**Web App + SQL**" for **Host**. 
+Select the "**Web App + SQL**" for **Web.Mvc**. 
 
 <img src="images/azure-publish-angular-create-azure-host-website.png">
 
@@ -17,9 +17,9 @@ And configure it according to your needs. A sample setting is shown below:
 
 <img src="images/azure-publish-angular-create-azure-host-website-configuration.png">
 
-### Creating an Azure Website for AngularUI
+### Creating an Azure Website for Web.Public
 
-Select the "**Web App**" for **AngularUI**.
+Select the "**Web App**" for **Web.Public**.
 
 <img src="images/azure-publish-angular-create-azure-angular-website.png">
 
@@ -27,13 +27,20 @@ And configure it according to your needs. A sample setting is shown below:
 
 <img src="images/azure-publish-angular-create-azure-angular-website-configuration.png">
 
-## Publish Host Application to The Azure
+## Publish Web.Mvc Application to The Azure
 
-The details will be explained in the next lines. Here are the quick steps to publish the **Host Application** to the Azure.
+The details will be explained in the next lines. Here are the quick steps to publish the **Web.Mvc Application** to the Azure.
 
+- Run the `gulp -prod` to bundle and minify the js/css files
 - Run the migrations on the Azure
-- Configure the **.Web.Host/appsettings.production.json**
+- Configure the **.Web.Mvc/appsettings.production.json**
 - Publish the application to Azure
+
+### Run the `gulp -prod`
+
+Run the `gulp -prod` to bundle and minify the js/css files.
+
+<img src="images/azure-publish-core-mvc-gulp-prod.png">
 
 ### Run Migrations on The Azure
 
@@ -51,7 +58,7 @@ Now our client IP address have access to the Azure. Of cource, this operation ca
 
 #### Apply Migrations
 
-Open **appsettings.json** in **.Web.Host** project and change connection settings according to the Azure Database:
+Open **appsettings.json** in **.Web.Mvc** project and change connection settings according to the Azure Database:
 
 <img src="images/azure-publish-angular-connection-string.png">
 
@@ -67,14 +74,42 @@ Azure is using **appsettings.production.json**, so this file should be configure
 
 ### Publish
 
-Right click the **Web.Host** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
-
-<img src="images/azure-publish-angular-new-publish-profile.png">
-
+Right click the **Web.Mvc** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
 Following screen will be shown:
 
 <img src="images/azure-publish-angular-new-publish-profile.png">
 
-Select "**azure-publish-demo-server**" and click "**OK**". Host application is live now:
+Select "**azure-publish-demo-admin**" and click "**OK**". Web.Mvc application is live now:
 
-<img src="images/azure-publish-angular-swagger-ui.png">
+<img src="azure-publish-core-mvc-ui-admin.png">
+
+## Publish Public Website to The Azure
+
+The details will be explained in the next lines. Here are the quick steps to publish the **Web.Public** to the Azure
+
+- Update Bundles
+- Configure the **.Web.Public/appsettings.production.json**
+- Publish the application to Azure
+
+### Update Bundles
+
+Right click **Web.Public** project and select **Bundler & Minifier/Update Bundles**
+
+<img src="images/azure-publish-core-mvc-bundle-public.png">
+
+### Configure the appsettings.production.json
+
+Azure is using **appsettings.production.json**, so this file should be configured like following:
+
+<img src="images/azure-publish-angular-appsttings-production.png">
+
+### Publish
+
+Right click the **Web.Public** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
+Following screen will be shown:
+
+<img src="images/azure-publish-angular-new-publish-profile.png">
+
+Select "**azure-publish-demo-public**" and click "**OK**". Public website is live now:
+
+<img src="images/azure-publish-core-mvc-ui.png">
