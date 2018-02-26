@@ -82,9 +82,9 @@ Following screen will be shown:
 
 <img src="images/azure-publish-core-mvc-select-azure-website.png">
 
-Select "**azure-publish-demo-admin**" and click "**OK**". Web.Mvc application is live now:
+Select "**azure-publish-demo-admin**" and click "**OK**". **Web.Mvc** application is live now:
 
-<img src="azure-publish-core-mvc-ui-admin.png">
+<img src="images/azure-publish-core-mvc-ui-admin.png">
 
 ## Publish Public Website to The Azure
 
