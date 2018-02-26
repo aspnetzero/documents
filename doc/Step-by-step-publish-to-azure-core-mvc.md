@@ -70,7 +70,7 @@ Open Package Manager Console in Visual Studio, set **.EntityFrameworkCore** as t
 
 Azure is using **appsettings.production.json**, so this file should be configured like following:
 
-<img src="images/azure-publish-angular-appsttings-production.png">
+<img src="images/azure-publish-core-mvc-appsttings-production.png">
 
 ### Publish
 
@@ -101,7 +101,7 @@ Right click **Web.Public** project and select **Bundler & Minifier/Update Bundle
 
 Azure is using **appsettings.production.json**, so this file should be configured like following:
 
-<img src="images/azure-publish-angular-appsttings-production.png">
+<img src="images/azure-publish-core-mvc-appsttings-production-public.png">
 
 ### Publish
 
