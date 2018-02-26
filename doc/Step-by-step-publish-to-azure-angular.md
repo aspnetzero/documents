@@ -67,9 +67,12 @@ Azure is using **appsettings.production.json**, so this file should be configure
 ### Publish
 
 Right click the **Web.Host** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
-Following screen will be shown:
 
 <img src="images/azure-publish-angular-new-publish-profile.png">
+
+Following screen will be shown:
+
+<img src="images/azure-publish-angular-select-azure-website.png">
 
 Select "**azure-publish-demo-server**" and click "**OK**". Host application is live now:
 
