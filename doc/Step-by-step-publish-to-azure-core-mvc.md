@@ -75,9 +75,12 @@ Azure is using **appsettings.production.json** that is placed in the **Web.Mvc**
 ### Publish
 
 Right click the **Web.Mvc** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
-Following screen will be shown:
 
 <img src="images/azure-publish-angular-new-publish-profile.png">
+
+Following screen will be shown:
+
+<img src="images/azure-publish-core-mvc-select-azure-website.png">
 
 Select "**azure-publish-demo-admin**" and click "**OK**". Web.Mvc application is live now:
 
@@ -106,9 +109,12 @@ Azure is using **appsettings.production.json** that is placed in the **Web.Publi
 ### Publish
 
 Right click the **Web.Public** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
-Following screen will be shown:
 
 <img src="images/azure-publish-angular-new-publish-profile.png">
+
+Following screen will be shown:
+
+<img src="images/azure-publish-core-mvc-select-azure-website-public.png">
 
 Select "**azure-publish-demo-public**" and click "**OK**". Public website is live now:
 
