@@ -4,7 +4,7 @@ Before reading this document, it's suggested to read [Getting Started](https://a
 
 ## Create The Azure Website
 
-Create two website in Azure.  One for **Web.Host** and other for **AngularUI**
+Create two websites in Azure.  One for **Web.Host** and other for **AngularUI**
 
 ### Creating an Azure Website for Host
 
