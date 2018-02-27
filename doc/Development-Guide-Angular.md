@@ -1070,7 +1070,7 @@ This command uses **dist** folder as output. Just remember to change
 
 #### Publish to The Azure
 
-Read [this document](Step-by-step-publish-to-azure.md) to publish to the Azure.
+Read [this document](Step-by-step-publish-to-azure-angular.md) to publish to the Azure.
 
 #### AOT
 
