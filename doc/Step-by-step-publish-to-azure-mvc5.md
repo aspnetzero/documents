@@ -47,7 +47,7 @@ Open Package Manager Console in Visual Studio, set **.EntityFramework** as the D
 
 ### Publish
 
-Right click the **Web** project and select "**Publish**". Click "**Create new profile**" under **Publish** tab. Select "**Microsoft Azure App Service**" and check "**Select Existing**" then click "**Publish**" button.
+Right click the **Web** project and select "**Publish**". Select "**Microsoft Azure App Service**" and check "**Select Existing**". Click "**Create Profile**" button.
 
 <img src="images/azure-publish-angular-new-publish-profile.png">
 
@@ -55,6 +55,6 @@ Following screen will be shown:
 
 <img src="images/azure-publish-mvc5-select-azure-website.png">
 
-Select "**azure-publish-demo-website**" and click "**OK**". **Web** application is live now:
+Select "**azure-publish-demo-website**" and click "**OK**", then click "**Publish**" button. **Web** application is live now:
 
 <img src="images/azure-publish-mvc5-ui.png">
