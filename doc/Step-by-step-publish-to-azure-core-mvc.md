@@ -15,7 +15,7 @@ Select the "**Web App + SQL**" for **Web.Mvc**.
 
 And configure it according to your needs. A sample setting is shown below:
 
-<img src="images/azure-publish-angular-create-azure-host-website-configuration.png">
+<img src="images/azure-publish-core-mvc-create-azure-admin-website-configuration.png">
 
 ### Creating an Azure Website for Public Website
 
@@ -25,7 +25,7 @@ Select the "**Web App**" for the **Public Website**.
 
 And configure it according to your needs. A sample setting is shown below:
 
-<img src="images/azure-publish-angular-create-azure-angular-website-configuration.png">
+<img src="images/azure-publish-core-mvc-create-azure-public-website-configuration.png">
 
 ## Publish Web.Mvc Application to The Azure
 
