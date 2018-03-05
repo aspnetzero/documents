@@ -1519,6 +1519,10 @@ new tenant registration).
 Publishing ASP.NET Zero is not different than any other solution. You
 can use Visual Studio as normally you do.
 
+#### Publish to The Azure
+
+Read [this document](Step-by-step-publish-to-azure-mvc5.md) to publish to the Azure.
+
 ### Library & Frameworks Used
 
 Many open source frameworks and libraries are used to build ASP.NET Zero

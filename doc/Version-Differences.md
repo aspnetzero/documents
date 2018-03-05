@@ -60,6 +60,13 @@ Angular framework. </p>
 	<td>-</td>
 </tr>
 <tr>
+	<td>Rapid Application Development Tool</td>
+	<td>OK</td>
+	<td>OK</td>
+	<td>-</td>
+	<td>-</td>
+</tr>
+<tr>
 	<td style="height: 37px">Tenant Subscription Management &amp; Paypal Integration</td>
 	<td style="height: 37px">OK</td>
 	<td style="height: 37px">OK</td>
@@ -117,6 +124,13 @@ Angular framework. </p>
 </tr>
 <tr>
 	<td>Application Setup Screen</td>
+	<td>OK</td>
+	<td>OK</td>
+	<td>-</td>
+	<td>-</td>
+</tr>
+<tr>
+	<td>Code generation extension</td>
 	<td>OK</td>
 	<td>OK</td>
 	<td>-</td>

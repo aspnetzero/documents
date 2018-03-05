@@ -1068,6 +1068,10 @@ build your application:
 This command uses **dist** folder as output. Just remember to change
 **assets/appconfig.json** file with your own configuration.
 
+#### Publish to The Azure
+
+Read [this document](Step-by-step-publish-to-azure-angular.md) to publish to the Azure.
+
 #### AOT
 
 Angular CLI uses
@@ -1087,6 +1091,12 @@ index.html page (or, to the root path).
 
 ASP.NET Zero Angular UI contains a **web.config** file. You can copy it
 to the web site's root folder to overcome the problem described above.
+
+### ASP.NET Zero Power Tools
+
+**ASP.NET Zero Power Tools** creates all related layers (including UI) by defining an entity.
+
+See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
 
 ### Used Library & Frameworks
 
