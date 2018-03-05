@@ -2,7 +2,7 @@
 ### Introduction
 
  In this document, we will explain how to use **ASP.NET Zero Power Tools** without the Visual Studio extension.
- 
+
  Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file for the rad tool. So, in order to use it without extension, input file should be created manually. 
 
 ### Sample Input File
@@ -85,11 +85,11 @@
 You have to fill the fields of json file according to your entity. However, some of the fields must match our constants. Here is the list of them:
 
 - MenuPosition : "main" | "admin"
-     
+  
 - RelativeNamespace: Namespace of your new entity. Doesn't include your company and project name.
-     
+  
 - PrimaryKeyType: "int" | "long" | "Guid"
-     
+  
 - BaseClass: "Entity" | "AuditedEntity" | "CreationAuditedEntity" | "FullAuditedEntity"
 
 
@@ -120,3 +120,4 @@ You can use that command to run it on any device:
  - AspNetZeroRadTool folder is placed in your solution's directory. You have to place the json file and run the command in there.
  - Please Keep in mind that JSON file is completely case sensitive. 
  - Auto add-migration and update-database functions are disabled.
+ - If you are working on ASP.NET Core & Angular template, after generating the entity via Power Tools, run your ***.Web.Host** project and then run "**./angular/nswag/refresh.bat**" to update **service-proxies.ts**.
