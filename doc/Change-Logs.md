@@ -6,10 +6,9 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 ### v5.2.0 (2018-02-20)
 
-* Rad Tool Enum support is added
-* Rad Tool template support is added
-* Upgraded to angular v5.2.5 and angular-cli to v1.7
-* Bug fixes and enhancements
+* Enum and templating support for the RAD tool.
+* Upgraded to angular v5.2.5 and angular-cli to v1.7.
+* Bug fixes and enhancements.
 
 ### v5.1.0 (2018-02-05)
 

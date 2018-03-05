@@ -1744,6 +1744,10 @@ new tenant registration).
 Publishing ASP.NET Zero is not different than any other solution. You
 can use Visual Studio as normally you do.
 
+#### Publish to The Azure
+
+Read [this document](Step-by-step-publish-to-azure-core-mvc.md) to publish to the Azure.
+
 ### ASP.NET Zero Power Tools
 
 **ASP.NET Zero Power Tools** creates all related layers (including UI) by defining an entity.
