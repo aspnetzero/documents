@@ -96,10 +96,9 @@ There are 6 projects in the mobile solution:
 #### Host
 
 To start debugging Xamarin app you need to configure host settings. You
-can use either **Web.Mvc** or **Web.Host** to feed the Xamarin app.  
-Open Windows Command Prompt. Go to the folder where your Web.Host or
-Web.Mvc csproj file is located.  
-Then run the commands below to start hosting your Web Api.
+can use **Web.Host** to feed the Xamarin app.  
+Open Windows Command Prompt. Go to the folder where your **Web.Host csproj** file is located.  
+Then run the commands below to start hosting your Web API.
 
     SET ASPNETCORE_ENVIRONMENT=Development
     SET ASPNETCORE_URLS=http://*:22742
@@ -109,6 +108,8 @@ In order to every time write these lines, you can download the batch
 file below and run it to host your web api.
 
 [Download Start-Host.zip](https://github.com/aspnetzero/documents/tree/master/doc/etc/start-host.zip)
+
+Note that you can feed the Xamarin app with **Web.Mvc** project as well. If you want to use **Web.Mvc**, it runs on port **62114** (default). Don't forget to use the port **62114**  instead of 22742
 
 **Warning**
 
