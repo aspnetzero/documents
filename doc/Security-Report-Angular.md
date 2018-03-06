@@ -319,7 +319,7 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
   
   <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
 
-â€‹
+‹
 
   The other requests are same instances of different actions and marked as false-positive. 
 
