@@ -259,9 +259,7 @@ A XSS attack was reflected in a JSON response, this might leave content consumer
 
 #### Comment
 
-There are about 180 instances of this alert. AspNet Zero doesn't return any HTML response in `Web.Host` project. Thus all of the instances are raised with LOW confidence as the Content-Type is not HTML. In reflected XSS the it's important where this result is being evaluated. The responses are being evaluated by Angular. Angular has built-in protections against common web-application vulnerabilities including XSS attacks. We have used the tree library JsTree which was open to XSS. It is fixed by [this commit](https://github.com/aspnetzero/aspnet-zero-core/commit/b63b790aecdff6e9180b927351d5d6ceec735d1a). 
-
-  
+There are about 180 instances of this alert. AspNet Zero doesn't return any HTML response in `Web.Host` project. Thus all of the instances are raised with LOW confidence as the Content-Type is not HTML. In reflected XSS the it's important where this result is being evaluated. The responses are being evaluated by Angular. Angular has built-in protections against common web-application vulnerabilities including XSS attacks. We have used the tree library JsTree which was open to XSS. It is fixed by [this commit](https://github.com/aspnetzero/aspnet-zero-core/commit/b63b790aecdff6e9180b927351d5d6ceec735d1a).   
 
 - URL: [http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&onlyFreeItems=false](http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&onlyFreeItems=false)
 
@@ -269,7 +267,11 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
   - Parameter: `addAllItem`
   - Attack: `<script>alert(1);</script>`
 
-  **GetEditionComboboxItems** action returns data for edition combo box and these items are being rendered in drop down list. As seen in the below screenshot, scripts are not being evaluated.  <img src="images/security-report-angular-xss-1.png" alt="XSS" class="img-thumbnail" />
+  **GetEditionComboboxItems** action returns data for edition combo box and these items are being rendered in drop down list. As seen in the below screenshot, scripts are not being evaluated. 
+
+  <img src="images/security-report-angular-xss-1.png" alt="XSS" class="img-thumbnail" />
+
+  ​
 
 
 
