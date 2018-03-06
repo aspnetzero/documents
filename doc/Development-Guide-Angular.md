@@ -1098,6 +1098,10 @@ to the web site's root folder to overcome the problem described above.
 
 See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
 
+#### Penetration Test
+
+Asp.Net Zero (v5) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.7.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world's most popular security tools and is actively maintained by hundreds of international volunteers, see [Security-Report](Security-Report-Angular.md) for details.
+
 ### Used Library & Frameworks
 
 Many open source frameworks and libraries are used to build ASP.NET Zero
