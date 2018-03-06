@@ -64,8 +64,6 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   When we inspect the below request & response, **CreateOrganizationUnit** string is being sent in the request and it returns in response data. The tool thinks **CreateUnitOrganization** is a folder and is being traversed. But this is not a path as well!<img src="images/security-report-angular-path-traversal-4.png" alt="Path Traversal 2" class="img-thumbnail" />
 
-​
-
   The same pattern is valid for the following alerts. Same as above, the action name is being sent as a parameter and either the response size is changing or the action name itself is being taken part in the response. All of the following attacks are false-positive.
 
   - URL: [http://localhost:8082/api/services/app/TenantRegistration/RegisterTenant](http://localhost:8082/api/services/app/TenantRegistration/RegisterTenant)
