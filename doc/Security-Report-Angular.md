@@ -28,7 +28,9 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
   - Attack: `c:/`
   - Evidence: `etc`
 
-  When we inspect the below response, it returns **etc** in the code. And this is exactly not a path.<img src="images/security-report-angular-path-traversal-1.png" alt="Path Traversal" class="img-thumbnail" />
+  When we inspect the below response, it returns **etc** in the code. And this is exactly not a path.
+  
+  <img src="images/security-report-angular-path-traversal-1.png" alt="Path Traversal" class="img-thumbnail" />
 
 
 
@@ -41,7 +43,9 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
   - Attack: `c:/`
   - Evidence: `etc`
 
-  When we inspect the below response it returns **etc** in the comments. And this is not a path as well!<img src="images/security-report-angular-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
+  When we inspect the below response it returns **etc** in the comments. And this is not a path as well!
+  
+  <img src="images/security-report-angular-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
 
 
 
@@ -52,7 +56,9 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
   - Attack: `c:/`
   - Evidence: `etc`
 
-  When we inspect the below response it returns **etc** in the code. And this is not a path as well!  <img src="images/security-report-angular-path-traversal-3.png" alt="Path Traversal 2" class="img-thumbnail" />
+  When we inspect the below response it returns **etc** in the code. And this is not a path as well!  
+  
+  <img src="images/security-report-angular-path-traversal-3.png" alt="Path Traversal 2" class="img-thumbnail" />
 
 
 
@@ -62,7 +68,9 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
   - Parameter: `displayName`
   - Attack: `CreateOrganizationUnit`
 
-  When we inspect the below request & response, **CreateOrganizationUnit** string is being sent in the request and it returns in response data. The tool thinks **CreateUnitOrganization** is a folder and is being traversed. But this is not a path as well!<img src="images/security-report-angular-path-traversal-4.png" alt="Path Traversal 2" class="img-thumbnail" />
+  When we inspect the below request & response, **CreateOrganizationUnit** string is being sent in the request and it returns in response data. The tool thinks **CreateUnitOrganization** is a folder and is being traversed. But this is not a path as well!
+  
+  <img src="images/security-report-angular-path-traversal-4.png" alt="Path Traversal 2" class="img-thumbnail" />
 
   The same pattern is valid for the following alerts. Same as above, the action name is being sent as a parameter and either the response size is changing or the action name itself is being taken part in the response. All of the following attacks are false-positive.
 
@@ -107,7 +115,9 @@ If a page contains an error/warning message that may disclose sensitive informat
   - Method: `POST`
   - Evidence: `HTTP/1.1 500 Internal Server Error`
 
-  This is false-positive alert. As seen in the below screenshot, Asp.Net Zero returns a HTPP 500 Internal Server Error without any sensitive information. Actually it's not an exception result. While the error detail is not being sent to the client, it is logged on the server.<img src="images/security-report-angular-app-error-disclosure-1.png" alt="Application Error Disclosure" class="img-thumbnail" />
+  This is false-positive alert. As seen in the below screenshot, Asp.Net Zero returns a HTPP 500 Internal Server Error without any sensitive information. Actually it's not an exception result. While the error detail is not being sent to the client, it is logged on the server.
+  
+  <img src="images/security-report-angular-app-error-disclosure-1.png" alt="Application Error Disclosure" class="img-thumbnail" />
 
 
 
@@ -117,14 +127,18 @@ The following alerts are same as the above alert. No sensitive data is being exp
 
 - URL: [http://localhost:8082/api/services/app/UserLink/LinkToUser](http://localhost:8082/api/services/app/UserLink/LinkToUser)
   - Method: `POST`
-  - Evidence: `HTTP/1.1 500 Internal Server Error`<img src="images/security-report-angular-app-error-disclosure-2.png" alt="Application Error Disclosure" class="img-thumbnail" />
+  - Evidence: `HTTP/1.1 500 Internal Server Error`
+  
+  <img src="images/security-report-angular-app-error-disclosure-2.png" alt="Application Error Disclosure" class="img-thumbnail" />
 
 
 
 
 - URL: [http://localhost:8082/AbpUserConfiguration/GetAll](http://localhost:8082/AbpUserConfiguration/GetAll)
   - Method: `GET`
-  - Evidence: `internal error`<img src="images/security-report-angular-app-error-disclosure-3.png" alt="Application Error Disclosure" class="img-thumbnail" />
+  - Evidence: `internal error`
+  
+  <img src="images/security-report-angular-app-error-disclosure-3.png" alt="Application Error Disclosure" class="img-thumbnail" />
 
   There is "**internal error**" statement in the JSON response. This is only a translation file and not an exception message.
 
@@ -133,7 +147,9 @@ The following alerts are same as the above alert. No sensitive data is being exp
 - URL: [http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip](http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip)
 
   - Method: `GET`
-  - Evidence: `HTTP/1.1 500 Internal Server Error`  <img src="images/security-report-angular-app-error-disclosure-4.png" alt="Application Error Disclosure" class="img-thumbnail" />
+  - Evidence: `HTTP/1.1 500 Internal Server Error`  
+  
+  <img src="images/security-report-angular-app-error-disclosure-4.png" alt="Application Error Disclosure" class="img-thumbnail" />
 
 The response of "**File/DownloadTempFile**" resulted with Http-500, because there's no file to download. The action result returns empty data (Content-Length: 0) and does not disclose any information about the problem.
 
@@ -268,6 +284,7 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
   - Attack: `<script>alert(1);</script>`
 
   **GetEditionComboboxItems** action returns data for edition combo box and these items are being rendered in drop down list. As seen in the below screenshot, scripts are not being evaluated.
+  
   <img src="images/security-report-angular-xss-1.png" alt="XSS" class="img-thumbnail" />
 
 
@@ -289,6 +306,7 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
   - Attack: `<script>alert(1);</script>`
 
   This action is called after successful login. It retrieves the data for impersonating user. But even the request is poisoned with malicious script, it's not being evaluated as seen in the below screenshot. 
+  
   <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
 
 - URL: [http://localhost:8082/api/services/app/Tenant/GetTenants?Filter=&SubscriptionEndDateStart=2018-01-25T21%3A00%3A00.000Z&SubscriptionEndDateEnd=2018-02-25T20%3A59%3A59.999Z&CreationDateStart=2018-01-18T21%3A00%3A00.000Z&CreationDateEnd=2018-01-26T20%3A59%3A59.999Z&EditionId=1&EditionIdSpecified=true&MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:8082/api/services/app/Tenant/GetTenants?Filter=&SubscriptionEndDateStart=2018-01-25T21%3A00%3A00.000Z&SubscriptionEndDateEnd=2018-02-25T20%3A59%3A59.999Z&CreationDateStart=2018-01-18T21%3A00%3A00.000Z&CreationDateEnd=2018-01-26T20%3A59%3A59.999Z&EditionId=1&EditionIdSpecified=true&MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
@@ -297,7 +315,9 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
   - Parameter: `SkipCount`
   - Attack: `<script>alert(1);</script>`
 
-  This action is called in tenants page. When we alter the request and add script tags into SkipCount parameter, it's not being evaluated as seen in the below screenshot. <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
+  This action is called in tenants page. When we alter the request and add script tags into SkipCount parameter, it's not being evaluated as seen in the below screenshot. 
+  
+  <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
 
   ​
 
