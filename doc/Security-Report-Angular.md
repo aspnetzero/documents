@@ -37,12 +37,9 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 - URL: [http://localhost:8083/styles.1bb8c7ba47e327d9d46c.bundle.css?query=c%3A%2F](http://localhost:8083/styles.1bb8c7ba47e327d9d46c.bundle.css?query=c%3A%2F)
 
   - Method: `GET`
-
-    - Parameter: `query`
-
-    - Attack: `c:/`
-
-    - Evidence: `etc`
+  - Parameter: `query`
+  - Attack: `c:/`
+  - Evidence: `etc`
 
   When we inspect the below response it returns **etc** in the comments. And this is not a path as well!<img src="images/security-report-angular-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
 
@@ -51,12 +48,9 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 - URL: [http://localhost:8083/scripts.c971f5b7e715876e89e1.bundle.js?query=c%3A%2F](http://localhost:8083/scripts.c971f5b7e715876e89e1.bundle.js?query=c%3A%2F)
 
   - Method: `GET`
-
-    - Parameter: `query`
-
-    - Attack: `c:/`
-
-    - Evidence: `etc`
+  - Parameter: `query`
+  - Attack: `c:/`
+  - Evidence: `etc`
 
   When we inspect the below response it returns **etc** in the code. And this is not a path as well!  <img src="images/security-report-angular-path-traversal-3.png" alt="Path Traversal 2" class="img-thumbnail" />
 
@@ -74,19 +68,20 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   The same pattern is valid for the following alerts. Same as above, the action name is being sent as a parameter and either the response size is changing or the action name itself is being taken part in the response. All of the following attacks are false-positive.
 
-  * URL: [http://localhost:8082/api/services/app/TenantRegistration/RegisterTenant](http://localhost:8082/api/services/app/TenantRegistration/RegisterTenant)
-    * Method: `POST`
-    * Parameter: `tenancyName`
-    * Attack: `RegisterTenant`
-  * URL: [http://localhost:8082/api/services/app/Tenant/UpdateTenant](http://localhost:8082/api/services/app/Tenant/UpdateTenant)
+  - URL: [http://localhost:8082/api/services/app/TenantRegistration/RegisterTenant](http://localhost:8082/api/services/app/TenantRegistration/RegisterTenant)
+    - Method: `POST`
+    - Parameter: `tenancyName`
+    - Attack: `RegisterTenant`
 
+  - URL: [http://localhost:8082/api/services/app/Tenant/UpdateTenant](http://localhost:8082/api/services/app/Tenant/UpdateTenant)
     - Method: `PUT`
     - URL: [http://localhost:8082/api/services/app/User/CreateOrUpdateUser](http://localhost:8082/api/services/app/User/CreateOrUpdateUser)
     - Method: `POST`
-  * URL: [http://localhost:8082/api/services/app/Role/CreateOrUpdateRole](http://localhost:8082/api/services/app/Role/CreateOrUpdateRole)
-    * Method: `POST` 
-    *  Parameter: `displayName` 
-    * Attack: `CreateOrUpdateRole`
+
+  - URL: [http://localhost:8082/api/services/app/Role/CreateOrUpdateRole](http://localhost:8082/api/services/app/Role/CreateOrUpdateRole)
+    - Method: `POST` 
+    - Parameter: `displayName` 
+    - Attack: `CreateOrUpdateRole`
 
 
 
@@ -112,8 +107,6 @@ If a page contains an error/warning message that may disclose sensitive informat
 - URL: [http://localhost:8082/api/TokenAuth/Authenticate](http://localhost:8082/api/TokenAuth/Authenticate)
 
   - Method: `POST`
-
-
   - Evidence: `HTTP/1.1 500 Internal Server Error`
 
   This is false-positive alert. As seen in the below screenshot, Asp.Net Zero returns a HTPP 500 Internal Server Error without any sensitive information. Actually it's not an exception result. While the error detail is not being sent to the client, it is logged on the server.<img src="images/security-report-angular-app-error-disclosure-1.png" alt="Application Error Disclosure" class="img-thumbnail" />
@@ -124,26 +117,24 @@ Asp.Net Zero never returns error details, if only developer sends it deliberativ
 
 The following alerts are same as the above alert. No sensitive data is being exposed. 
 
-* URL: [http://localhost:8082/api/services/app/UserLink/LinkToUser](http://localhost:8082/api/services/app/UserLink/LinkToUser)
-  * Method: `POST`
-  * Evidence: `HTTP/1.1 500 Internal Server Error`<img src="images/security-report-angular-app-error-disclosure-2.png" alt="Application Error Disclosure" class="img-thumbnail" />
+- URL: [http://localhost:8082/api/services/app/UserLink/LinkToUser](http://localhost:8082/api/services/app/UserLink/LinkToUser)
+  - Method: `POST`
+  - Evidence: `HTTP/1.1 500 Internal Server Error`<img src="images/security-report-angular-app-error-disclosure-2.png" alt="Application Error Disclosure" class="img-thumbnail" />
 
 
 
 
-* URL: [http://localhost:8082/AbpUserConfiguration/GetAll](http://localhost:8082/AbpUserConfiguration/GetAll)
-  * Method: `GET`
-  * Evidence: `internal error`<img src="images/security-report-angular-app-error-disclosure-3.png" alt="Application Error Disclosure" class="img-thumbnail" />
+- URL: [http://localhost:8082/AbpUserConfiguration/GetAll](http://localhost:8082/AbpUserConfiguration/GetAll)
+  - Method: `GET`
+  - Evidence: `internal error`<img src="images/security-report-angular-app-error-disclosure-3.png" alt="Application Error Disclosure" class="img-thumbnail" />
 
   There is "**internal error**" statement in the JSON response. This is only a translation file and not an exception message.
 
 
 
-* URL: [http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip](http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip)
+- URL: [http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip](http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip)
 
   - Method: `GET`
-
-
   - Evidence: `HTTP/1.1 500 Internal Server Error`  <img src="images/security-report-angular-app-error-disclosure-4.png" alt="Application Error Disclosure" class="img-thumbnail" />
 
 The response of "**File/DownloadTempFile**" resulted with Http-500, because there's no file to download. The action result returns empty data (Content-Length: 0) and does not disclose any information about the problem.
@@ -162,15 +153,12 @@ If your website must return error then review the source code of the action and 
 
 The `X-Frame-Options` HTPP header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>`, `<iframe>` or `<object>` . Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
 
-* URL: [http://localhost:8082](http://localhost:8082)
-  * Method: `GET`
-  * Parameter: `X-Frame-Options`
-
-* URL: [http://localhost:8082/swagger/](http://localhost:8082/swagger/)
-
+- URL: [http://localhost:8082](http://localhost:8082)
   - Method: `GET`
+  - Parameter: `X-Frame-Options`
 
-
+- URL: [http://localhost:8082/swagger/](http://localhost:8082/swagger/)
+  - Method: `GET`
   - Parameter: `X-Frame-Options`
 
 
@@ -209,24 +197,19 @@ The `X-Content-Type-Options` HTTP header is a marker used by the server to indic
 - URL: [http://localhost:8082/api/services/app/Role/GetRoleForEdit](http://localhost:8082/api/services/app/Role/GetRoleForEdit)
 
   - Method: `GET`
-
-    - Parameter: `X-Content-Type-Options`
+  - Parameter: `X-Content-Type-Options`
 
 - URL: [http://localhost:8082/api/services/app/Language/GetLanguageTexts?MaxResultCount=10&SkipCount=0&SourceName=AbpZeroTemplate&BaseLanguageName=en&TargetLanguageName=de&TargetValueFilter=ALL&FilterText=](http://localhost:8082/api/services/app/Language/GetLanguageTexts?MaxResultCount=10&SkipCount=0&SourceName=AbpZeroTemplate&BaseLanguageName=en&TargetLanguageName=de&TargetValueFilter=ALL&FilterText=)
-
   - Method: `GET`
-
-    - Parameter: `X-Content-Type-Options`
+  - Parameter: `X-Content-Type-Options`
 
 - URL: [http://localhost:8082/api/services/app/Tenant/CreateTenant](http://localhost:8082/api/services/app/Tenant/CreateTenant)
-
   - Method: `POST`
+  - Parameter: `X-Content-Type-Options`
 
-    - Parameter: `X-Content-Type-Options`
 - URL: [http://localhost:8082/swagger/css/screen.css](http://localhost:8082/swagger/css/screen.css)
-    - Method: `GET`
-
-    - Parameter: `X-Content-Type-Options`
+  - Method: `GET`
+  - Parameter: `X-Content-Type-Options`
 
 #### Comment
 
@@ -249,14 +232,12 @@ Web Browser XSS Protection is not enabled, or is disabled by the configuration o
 - URL: [http://localhost:8082/swagger/](http://localhost:8082/swagger/)
 
   - Method: `GET`
-
-    - Parameter: `X-XSS-Protection`
+  - Parameter: `X-XSS-Protection`
 
 - URL: [http://localhost:8082](http://localhost:8082)
 
   - Method: `GET`
-
-    - Parameter: `X-XSS-Protection`
+  - Parameter: `X-XSS-Protection`
 
 #### Comment
 
@@ -287,10 +268,8 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
 - URL: [http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&onlyFreeItems=false](http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&onlyFreeItems=false)
 
   - Method: `GET`
-
-    - Parameter: `addAllItem`
-
-    - Attack: `<script>alert(1);</script>`
+  - Parameter: `addAllItem`
+  - Attack: `<script>alert(1);</script>`
 
   **GetEditionComboboxItems** action returns data for edition combo box and these items are being rendered in drop down list. As seen in the below screenshot, scripts are not being evaluated.  <img src="images/security-report-angular-xss-1.png" alt="XSS" class="img-thumbnail" />
 
@@ -299,10 +278,8 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
 - URL: [http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=true&onlyFreeItems=false](http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=true&onlyFreeItems=false)
 
   - Method: `GET`
-
-    - Parameter: `Origin`
-
-    - Attack: `<script>alert(1);</script>`
+  - Parameter: `Origin`
+  - Attack: `<script>alert(1);</script>`
 
   The same component as above with different parameters. It is false-positive too.
 
@@ -311,18 +288,16 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
 - URL: [http://localhost:8082/api/services/app/UserLink/GetLinkedUsers?MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:8082/api/services/app/UserLink/GetLinkedUsers?MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
 
   - Method: `GET`
-
-    - Parameter: `SkipCount`
-
-    - Attack: `<script>alert(1);</script>`
+  - Parameter: `SkipCount`
+  - Attack: `<script>alert(1);</script>`
 
   This action is called after successful login. It retrieves the data for impersonating user. But even the request is poisoned with malicious script, it's not being evaluated as seen in the below screenshot.  <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
 
 - URL: [http://localhost:8082/api/services/app/Tenant/GetTenants?Filter=&SubscriptionEndDateStart=2018-01-25T21%3A00%3A00.000Z&SubscriptionEndDateEnd=2018-02-25T20%3A59%3A59.999Z&CreationDateStart=2018-01-18T21%3A00%3A00.000Z&CreationDateEnd=2018-01-26T20%3A59%3A59.999Z&EditionId=1&EditionIdSpecified=true&MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:8082/api/services/app/Tenant/GetTenants?Filter=&SubscriptionEndDateStart=2018-01-25T21%3A00%3A00.000Z&SubscriptionEndDateEnd=2018-02-25T20%3A59%3A59.999Z&CreationDateStart=2018-01-18T21%3A00%3A00.000Z&CreationDateEnd=2018-01-26T20%3A59%3A59.999Z&EditionId=1&EditionIdSpecified=true&MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
 
   - Method: `GET`
-    - Parameter: `SkipCount`
-    - Attack: `<script>alert(1);</script>`
+  - Parameter: `SkipCount`
+  - Attack: `<script>alert(1);</script>`
 
   This action is called in tenants page. When we alter the request and add script tags into SkipCount parameter, it's not being evaluated as seen in the below screenshot. <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
 
