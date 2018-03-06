@@ -30,7 +30,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   When we inspect the below response, it returns **etc** in the code. And this is exactly not a path.<img src="images/security-report-angular-path-traversal-1.png" alt="Path Traversal" class="img-thumbnail" />
 
-  ​
+
 
 
 
@@ -46,7 +46,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   When we inspect the below response it returns **etc** in the comments. And this is not a path as well!<img src="images/security-report-angular-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
 
-  
+
 
 - URL: [http://localhost:8083/scripts.c971f5b7e715876e89e1.bundle.js?query=c%3A%2F](http://localhost:8083/scripts.c971f5b7e715876e89e1.bundle.js?query=c%3A%2F)
 
@@ -60,7 +60,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   When we inspect the below response it returns **etc** in the code. And this is not a path as well!  <img src="images/security-report-angular-path-traversal-3.png" alt="Path Traversal 2" class="img-thumbnail" />
 
-  ​
+
 
 - URL: [http://localhost:8082/api/services/app/OrganizationUnit/CreateOrganizationUnit](http://localhost:8082/api/services/app/OrganizationUnit/CreateOrganizationUnit)
 
@@ -70,7 +70,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   When we inspect the below request & response, **CreateOrganizationUnit** string is being sent in the request and it returns in response data. The tool thinks **CreateUnitOrganization** is a folder and is being traversed. But this is not a path as well!<img src="images/security-report-angular-path-traversal-4.png" alt="Path Traversal 2" class="img-thumbnail" />
 
-  ​
+​
 
   The same pattern is valid for the following alerts. Same as above, the action name is being sent as a parameter and either the response size is changing or the action name itself is being taken part in the response. All of the following attacks are false-positive.
 
@@ -137,7 +137,7 @@ The following alerts are same as the above alert. No sensitive data is being exp
 
   There is "**internal error**" statement in the JSON response. This is only a translation file and not an exception message.
 
-  ​
+
 
 * URL: [http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip](http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip)
 
@@ -173,7 +173,7 @@ The `X-Frame-Options` HTPP header can be used to indicate whether or not a brows
 
   - Parameter: `X-Frame-Options`
 
-  ​
+
 
 ASP.NET Zero uses [ASP.NET Boilerplate](https://aspnetboilerplate.com/) framework. After version **3.4.X**, the framework adds `X-Frame-Options` header to all responses with the value `SAMEORIGIN`. If you want to remove the header you can do it via `UseAbp()` options in `Configure ` method of `Startup` class.
 
@@ -272,7 +272,7 @@ Ensure that the web browser's XSS filter is enabled, by setting the X-XSS-Protec
 
 ##### Low (Low)
 
-  
+
 
 #### Description
 
@@ -294,7 +294,7 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
 
   **GetEditionComboboxItems** action returns data for edition combo box and these items are being rendered in drop down list. As seen in the below screenshot, scripts are not being evaluated.  <img src="images/security-report-angular-xss-1.png" alt="XSS" class="img-thumbnail" />
 
-  ​
+
 
 - URL: [http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=true&onlyFreeItems=false](http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=true&onlyFreeItems=false)
 
@@ -306,7 +306,7 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
 
   The same component as above with different parameters. It is false-positive too.
 
-  ​
+
 
 - URL: [http://localhost:8082/api/services/app/UserLink/GetLinkedUsers?MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:8082/api/services/app/UserLink/GetLinkedUsers?MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
 
@@ -326,7 +326,7 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
 
   This action is called in tenants page. When we alter the request and add script tags into SkipCount parameter, it's not being evaluated as seen in the below screenshot. <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
 
-  
+
 
 The other requests are same instances of different actions and marked as false-positive. 
 
@@ -340,7 +340,7 @@ To block XSS attacks, you must prevent malicious code from entering the DOM. Whe
 
 - http://cwe.mitre.org/data/definitions/79.html
 
-  ​
+
 
 
 ### Reference
