@@ -9,3 +9,8 @@ complete guide while developing your project.
 -   [ASP.NET MVC 5.x & jQuery](Development-Guide-Mvc-Angularjs.md)
 -   [ASP.NET MVC 5.x & AngularJS 1.x](Development-Guide-Mvc-Angularjs.md)
 -   [Mobile (Xamarin)](Development-Guide-Xamarin.md)
+
+### Power Tools
+
+-   [RAD Tool](Development-Guide-Rad-Tool.md)
+-   [RAD Tool for Mac/Linux](Development-Guide-Rad-Tool-Mac-Linux.md)

@@ -2,6 +2,22 @@ Notice that: Major features are only being developed for ASP.NET Core +
 jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 [version comparison table](Version-Differences.md) for more.
 
+The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
+
+### v5.2.0 (2018-02-20)
+
+* Enum and templating support for the RAD tool.
+* Upgraded to angular v5.2.5 and angular-cli to v1.7.
+* Bug fixes and enhancements.
+
+### v5.1.0 (2018-02-05)
+
+* New [**Rapid Application Development Tool**](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) ([see in action](https://www.youtube.com/watch?v=lqu7AVBTepw)).
+* **Entity Change History**: Automatically write audit logs for all property changes of desired entities.
+* **Tested for security** and created a test [report](Security-Report-Core.md).
+* Many enhancements on current features.
+* Upgraded Bootstrap to v4.0, Angular to v5.1.2, ABP to [v3.4](https://github.com/aspnetboilerplate/aspnetboilerplate/releases/tag/v3.4.0) and other packages.
+
 ### v5.0.0 (2017-11-24)
 
 -   New **Xamarin** mobile application (integrated to backend).

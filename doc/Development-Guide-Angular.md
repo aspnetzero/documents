@@ -1068,6 +1068,10 @@ build your application:
 This command uses **dist** folder as output. Just remember to change
 **assets/appconfig.json** file with your own configuration.
 
+#### Publish to The Azure
+
+Read [this document](Step-by-step-publish-to-azure-angular.md) to publish to the Azure.
+
 #### AOT
 
 Angular CLI uses
@@ -1093,6 +1097,10 @@ to the web site's root folder to overcome the problem described above.
 **ASP.NET Zero Power Tools** creates all related layers (including UI) by defining an entity.
 
 See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
+
+### Penetration Test
+
+Asp.Net Zero (v5) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.7.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world's most popular security tools and is actively maintained by hundreds of international volunteers, see [Security-Report](Security-Report-Angular.md) for details.
 
 ### Used Library & Frameworks
 
