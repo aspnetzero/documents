@@ -106,7 +106,7 @@ You have to fill the fields of json file according to your entity. However, some
      
 - RelationType: Only "single" is valid for now.
      
-- DuplicationNumber: A number post-fix that is added to end of variable names to prevent duplicate if there are more that one foreign key addressing to same entity. '0' means no post-fix.  
+- DuplicationNumber: A number post-fix that is added to end of variable names to prevent duplicate if there are more than one foreign key addressing to same entity. '0' means no post-fix.  
 
 
 #### Properties
