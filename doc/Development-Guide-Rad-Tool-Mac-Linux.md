@@ -62,6 +62,18 @@
                   }
                 }
       ],
+      "NavigationProperties": [
+				{
+                  "Namespace": "Volosoft.RadToolExplainer.Authorization.Users",
+                  "ForeignEntityName": "User",
+                  "IdType": "long",
+                  "IsNullable": true,
+                  "PropertyName": "UserId",
+                  "DisplayPropertyName": "Name",
+                  "DuplicationNumber": 0,
+                  "RelationType": "single"
+                }
+	   ],
       "EnumDefinitions": [
                 {
                   "Name": "ProductType",
@@ -91,6 +103,10 @@ You have to fill the fields of json file according to your entity. However, some
 - PrimaryKeyType: "int" | "long" | "Guid"
      
 - BaseClass: "Entity" | "AuditedEntity" | "CreationAuditedEntity" | "FullAuditedEntity"
+     
+- RelationType: Only "single" is valid for now.
+     
+- DuplicationNumber: A number post-fix that is added to end of variable names to prevent duplicate if there are more that one foreign key addressing to same entity. '0' means no post-fix.  
 
 
 #### Properties
@@ -103,11 +119,14 @@ A property should be one of those types:
  - byte
  - short 
  - DateTime
+ - decimal
  - double
  - Guid
  - int
  - long
  - string
+ 
+ or one of the enums you declared in "EnumDefinitions".
 
 ### How To Run Rad Tool
 
