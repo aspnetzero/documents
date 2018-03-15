@@ -89,7 +89,7 @@ development/production for multi tenant applications.
 #### Multi-Tenancy
 
 ASP.NET Zero supports multi-tenant and single-tenant applications.
-Multi-tenancy is **enabled by default**. If you don't have idea about
+Multi-tenancy is **enabled by default**. If you don't understand
 multi-tenancy or don't want to create a multi-tenant application, you
 can **disable** it by setting
 **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the
