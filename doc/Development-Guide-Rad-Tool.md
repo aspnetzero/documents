@@ -31,7 +31,7 @@ DLLs, that is inside the folder mentioned above, do all the work. The extension 
 
 ### How To Edit Pre-defined Templates Or Create A New Template?
 
- The templates are inside "/AspNetZeroRadTool/FileTemplates" directory. Every template is splitted into 3 file ("MainTemplate.txt", "PartialTemplates.txt","TemplateInfo.txt") . If you want to edit any file, just replicate it in same directory and change it's extension to ".custom.txt" from ".txt".  For example, you can create "MainTemplate.custom.txt" to override "MainTemplate.txt" in same directory. Plase don't make any change on orginal templates.
+ The templates are inside "/AspNetZeroRadTool/FileTemplates" directory in your project's root directory. Every template is splitted into 3 file ("MainTemplate.txt", "PartialTemplates.txt","TemplateInfo.txt") . If you want to edit any file, just replicate it in same directory and change it's extension to ".custom.txt" from ".txt".  For example, you can create "MainTemplate.custom.txt" to override "MainTemplate.txt" in same directory. Plase don't make any change on orginal templates.
  To create a new template, do it the way we do in pre-defined templates. Tool doesn't know any info about templates and explore them in "/FileTemplates" directory every time it is run. So your new template will be precessed like pre-defined ones. (".custom" extension is not needed for new templates.)
 
  You can request help from our support team on [github](github.com/aspnetzero/aspnet-zero-core)  or  [forum](https://forum.aspnetboilerplate.com/viewforum.php?f=5)  if you are struggling
