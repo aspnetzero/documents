@@ -89,7 +89,7 @@ development/production for multi tenant applications.
 #### Multi-Tenancy
 
 ASP.NET Zero supports multi-tenant and single-tenant applications.
-Multi-tenancy is **enabled by default**. If you don't have idea about
+Multi-tenancy is **enabled by default**. If you don't understand
 multi-tenancy or don't want to create a multi-tenant application, you
 can **disable** it by setting
 **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the
@@ -107,7 +107,7 @@ which can be used to investigate the API:
 
 #### Prerequirements
 
-Angular application needs to following tools be installed:
+Angular application needs the following tools to be installed:
 
 -   [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
 -   Typescript 2.0+
@@ -115,7 +115,7 @@ Angular application needs to following tools be installed:
 
 #### Restore Packages
 
-Locate to the Angular folder, open a command line and run the following
+Navigate to the Angular folder, open a command line and run the following
 command to restore packages:
 
     yarn
@@ -126,7 +126,7 @@ solves those problems and it is compatible to npm as well.
 
 #### Run The Application
 
-Open command line and run the following command:
+Open the command line and run the following command:
 
     npm start
 
@@ -147,11 +147,11 @@ If multi-tenancy is enabled, you will see the current tenant and a
 change link. If so, click to **Change** like and enter **default** as
 tenant name. If you leave it empty, you login as the host admin user.
 Then enter **admin** as user name and **123qwe** as password. You should
-change password at first login.
+change your password at first login.
 
 #### Application UI
 
-After login to the application, you will see the sample dashboard
+After you login to the application, you will see the sample dashboard
 screen:
 
 <img src="images/dashboardV3.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
