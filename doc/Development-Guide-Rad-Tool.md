@@ -9,7 +9,7 @@
 
  If your project is version 5.1.0+, all you have to do is just instal the **ASP.NET Zero Power Tools** extension on Visual Studio from https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools.
 
- If your project is below verion 5.1.0, you have to copy the AspNetZeroRadTool folder to your own project from a newly downloaded 5.1.0+ project.
+ If your project is below version 5.1.0, you have to copy the AspNetZeroRadTool folder to your own project from a newly downloaded 5.1.0+ project.
 
  This tool doesn't support versions before v5.0.0.
  
