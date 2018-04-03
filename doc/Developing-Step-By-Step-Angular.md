@@ -1604,7 +1604,7 @@ Now, we can implement these methods:
     }
 
 (Note: We injected **IRepository&lt;Phone, long&gt;** in the constructor
-and set to \_personRepository field, as similar to \_personRepository)
+and set to \_phoneRepository field, as similar to \_personRepository)
 
 **DeletePhone** method is simple. It only deletes phone with given id.
 
