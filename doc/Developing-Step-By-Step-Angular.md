@@ -1541,7 +1541,7 @@ entity. Now, we can change GetPeople method to get Phones from database:
             .ThenBy(p => p.Surname)
             .ToList();
 
-        return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
+        return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(persons));
     }
 
 We only added **Include** extension method to the query. Rest of the
