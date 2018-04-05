@@ -1307,7 +1307,7 @@ the related part of the code):
                 <div class="col-xl-12">
                     <div class="form-group m-form__group align-items-center">
                         <div class="input-group">
-                            <input [(ngModel)]="filterText" name="filter" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                            <input [(ngModel)]="filter" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
                             <span class="input-group-btn">
                                 <button (click)="getPeople()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
                             </span>
@@ -1604,7 +1604,7 @@ Now, we can implement these methods:
     }
 
 (Note: We injected **IRepository&lt;Phone, long&gt;** in the constructor
-and set to \_personRepository field, as similar to \_personRepository)
+and set to \_phoneRepository field, as similar to \_personRepository)
 
 **DeletePhone** method is simple. It only deletes phone with given id.
 

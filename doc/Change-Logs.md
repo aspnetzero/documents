@@ -4,6 +4,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+### v5.3.0 (2018-03-26)
+
+* Navigation property support for PowerTools.
+* Decimal property support for PowerTools.
+* RTL support for Metronic v5.
+* Added Authorize button to swagger UI.
+* Added LDAP settings to Angular UI.
+* Bug fixes and enhancements.
+
 ### v5.2.0 (2018-02-20)
 
 * Enum and templating support for the RAD tool.
