@@ -1454,7 +1454,7 @@ InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):
 
         public void Create()
         {
-            var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.net");
+            var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.com");
             if (douglas == null)
             {
                 _context.Persons.Add(
