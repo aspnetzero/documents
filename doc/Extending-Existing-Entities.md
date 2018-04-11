@@ -177,7 +177,7 @@ project):
     }
 
 
-Then we add a DbSet property for User entity to DbContext class defined in .EntityFrameworkCore project.
+Then we add a DbSet property for Edition entity to DbContext class defined in .EntityFrameworkCore project.
 
     public class ProjectNameDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
