@@ -20,6 +20,7 @@
       "AutoMigration": true,
       "UpdateDatabase": true,
       "CreateUserInterface": true,
+      "CreateViewOnly": true,
       "PagePermission": {
            "Host": true,
            "Tenant": true
@@ -40,6 +41,7 @@
                   "Regex": "",
                   "UserInterface": {
                     "List": true,
+                    "AdvancedFilter": true,
                     "CreateOrUpdate": true
                      }
                 },
@@ -58,6 +60,7 @@
                   "Regex": "",
                   "UserInterface": {
                     "List": true,
+                    "AdvancedFilter": true,
                     "CreateOrUpdate": true
                   }
                 }
