@@ -870,7 +870,7 @@ We are starting from creating a new component, named
         @ViewChild('modal') modal: ModalDirective;
         @ViewChild('nameInput') nameInput: ElementRef;
 
-        person: CreatePersonInput;
+        person: CreatePersonInput = new CreatePersonInput();
 
         active: boolean = false;
         saving: boolean = false;
