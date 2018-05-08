@@ -1014,13 +1014,11 @@ applications or if you want to work with host users):
 
 <img src="images/postman-ng2-auth-headers.png" alt="Postman auth headers" width="523" height="112" />
 
-Then we can send username and password as a **POST** request to
-http://localhost:22742**/api/TokenAuth/Authenticate**
+Then we can send username and password as a **POST** request to http://localhost:22742/api/TokenAuth/Authenticate
 
-[<img src="images/postman-ng2-auth.png" alt="Postman authentication" class="img-thumbnail" width="746" height="1040" />](http://localhost:22742/api/TokenAuth/Authenticate:)
-
-In the returning response, **accessToken** will be used to authorize for
-the API.
+<img src="images/postman-ng2-auth.png" alt="SPostman authentication" class="img-thumbnail" />
+ 
+In the returning response, **accessToken** will be used to authorize for the API.
 
 #### Using API
 

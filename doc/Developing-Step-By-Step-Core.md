@@ -2085,14 +2085,13 @@ I created a new tenant named **trio**. Now, tenant list has two tenants:
 
 <img src="images/tenant-list-with-2-tenant-2.png" alt="Tenant list" class="img-thumbnail" />
 
- I can **logout** and login as **trio** tenant **admin** (Change current
-tenant to trio):
+I can **logout** and login as **trio** tenant **admin** (Change current tenant to trio):
 
 <img src="images/login-as-trio3.png" alt="Login as tenant admin" class="img-thumbnail" />
 
 After login, we see that phone book is empty:
 
-![Empty phonebook of new tenant](images/phonebook-empty2.png)
+<img src="images/phonebook-empty2.png" alt="Empty phonebook of new tenant" class="img-thumbnail" />
 
 It's empty because trio tenant has a completely isolated people list.
 You can add people here, logout and login as different tenants (you can
