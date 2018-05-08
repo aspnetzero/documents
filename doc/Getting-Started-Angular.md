@@ -160,7 +160,7 @@ screen:
 
 You can download our rapid application development tool from the following link:
 
-https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools
+[https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
 
 ### More
 

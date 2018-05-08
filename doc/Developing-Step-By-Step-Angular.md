@@ -18,7 +18,7 @@ as password) and see the dashboard below:
 
 Logout from the application for now. We will make our application
 **single-tenant** (we will convert it to multi-tenant later). So, we
-open **PhoneBookDemoConsts** class in the **Acme.PhoneBookDemo.Core**
+open **PhoneBookDemoConsts** class in the **Acme.PhoneBookDemo.Core.Shared**
 project and disable multi-tenancy as shown below:
 
     public class PhoneBookDemoConsts
@@ -870,7 +870,7 @@ We are starting from creating a new component, named
         @ViewChild('modal') modal: ModalDirective;
         @ViewChild('nameInput') nameInput: ElementRef;
 
-        person: CreatePersonInput;
+        person: CreatePersonInput = new CreatePersonInput();
 
         active: boolean = false;
         saving: boolean = false;

@@ -176,6 +176,24 @@ project):
         public virtual int Price { get; set; }
     }
 
+
+Then we add a DbSet property for Edition entity to DbContext class defined in .EntityFrameworkCore project.
+
+    public class ProjectNameDbContext : AbpZeroDbContext<Tenant, Role, User>
+    {
+        public virtual DbSet<MyEdition> MyEditions { get; set; }
+
+        //...other entities
+
+        public ProjectNameDbContext()
+            : base("Default")
+        {
+
+        }
+
+        //...other codes
+    }
+
 #### Add Migration
 
 Since we added a new entity class, our database schema is changed.

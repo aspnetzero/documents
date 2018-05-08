@@ -181,8 +181,7 @@ application**.
 #### Social Logins
 
 ASP.NET Zero supports social media logins. To enable it, we should
-change the following settings in **a**<span
-class="auto-style3">ppsettings.json</span> file.
+change the following settings in **appsettings.json** file.
 
       "Authentication": {
         "Facebook": {
