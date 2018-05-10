@@ -4,6 +4,16 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+### v5.4.0 (2018-05-10)
+
+* Allow changing primary theme color.
+* Improved Accessibility.
+* Entity Change History User Interface.
+* Rad Tool: Regenerating an entity.
+* Rad Tool: Selecting an entity from database (SQL Server & MySql).
+* Upgraded to Angular v6.0. 
+* Bug fixes and enhancements.
+
 ### v5.3.0 (2018-03-26)
 
 * Navigation property support for PowerTools.
