@@ -547,7 +547,7 @@ changing static roles.
 Since roles are used to group permissions, we can set permissions of a
 role while creating or editing as shown below:
 
-![Role Permissions](images/role-permissions-core-1.png)
+<img src="images/role-permissions-core-1.png" alt="Role Permissions" class="img-thumbnail" />
 
 (not all permissions shown in the figure above)
 

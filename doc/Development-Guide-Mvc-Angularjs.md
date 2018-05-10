@@ -620,16 +620,13 @@ not affect other tenants. Also, host has its own isolated roles.
 When you click on the Administration/Users menu item, you go to the user
 management page:
 
-<img src="https://cdn.rawgit.com/aspnetzero/documents/master/doc/images/user-management.png" alt="User Management" class="img-thumbnail" width="720" height="315" />
+<img src="images/user-management.png" alt="User Management" class="img-thumbnail" />
 
-**Users** are people who can **login** to the application and perform
-some operations based on their **permissions**.
+**Users** are people who can **login** to the application and perform some operations based on their **permissions**.
 
-**User** class represents a user. User class can be extended by adding
-new properties.
+**User** class represents a user. User class can be extended by adding new properties.
 
-**UserManager** is used to perform domain logic; **UserAppService** is
-used to perform application logic for users.
+**UserManager** is used to perform domain logic; **UserAppService** is used to perform application logic for users.
 
 A user can have zero or more **roles**. If a user has more than one
 role, he inherits union of permissions of all the roles assigned to
