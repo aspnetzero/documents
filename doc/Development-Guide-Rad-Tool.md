@@ -19,7 +19,7 @@
 
  <img src="images/RadToolUI2.jpg" alt="Extension UI" class="img-thumbnail" width="508" height="441" />
 
- A simple console will appear and give you information about the process. If there is no warning or failure, run your project to see the results. You probably won't see a new page because you must first grant yourself the required **permissions** in the application.
+ A simple console will appear and give you information about the process. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
 
 Warning: If you are working on ASP.NET Core & Angular template, after generating the entity via Power Tools, run your ***.Web.Host** project and then run "**./angular/nswag/refresh.bat**" to update **service-proxies.ts**.
 
