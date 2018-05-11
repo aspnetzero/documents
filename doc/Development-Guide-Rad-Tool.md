@@ -1,5 +1,5 @@
 
-  <img src="images/RadToolCarsTable.jpg" alt="Generated User Interface" class="img-thumbnail" width="1371" height="445" />
+ <img src="images/RadToolCarsTable2.jpg" alt="Generated User Interface" class="img-thumbnail" width="1369" height="612" />
   
 ### Introduction
 
@@ -17,7 +17,7 @@
 
  The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
 
- <img src="images/RadToolUI.jpg" alt="Extension UI" class="img-thumbnail" width="507" height="440" />
+ <img src="images/RadToolUI2.jpg" alt="Extension UI" class="img-thumbnail" width="508" height="441" />
 
  A simple console will appear and give you information about the process. If there is no warning or failure, run your project to see the results. You probably won't see a new page because you must first grant yourself the required **permissions** in the application.
 
@@ -59,6 +59,8 @@ On Mac and Linux, you have to manually do some of the work that is done by the e
  -   CarConsts.cs
  -   ICarAppService
  -   CarAppService
+ -   CarsExcelExporter.cs
+ -   ICarsExcelExporter.cs
 
 **Modified**
 
@@ -115,4 +117,5 @@ On Mac and Linux, you have to manually do some of the work that is done by the e
   (Lookup files are created per foreign key.)
  
 
- <img src="images/RadToolCarsTable.jpg" alt="Generated User Interface" class="img-thumbnail" width="1371" height="445" />
+ <img src="images/RadToolCarsTable3.jpg" alt="Generated User Interface" class="img-thumbnail" width="1312" height="440" />
+ <img src="images/RadToolEditModal.jpg" alt="Generated User Interface" class="img-thumbnail" width="1192" height="677" />
