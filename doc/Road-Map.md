@@ -2,17 +2,16 @@ We are constantly getting feedbacks from our customers to improve our
 product. Here, **some** of the features will be implemented in next
 versions:
 
--   **RAD** (Rapid Application Development) tooling.
+-   Entity History UI (showing property based entity changes).
+-   Improvements for the **Rapid Application Development** tooling.
 -   Tenant **subscription enhancements** (like recurring payments).
 -   Sending **mass notifications/emails** to users.
 -   **Calendar** module.
 -   Session timeout & **lock screen**.
--   Enhancements on **public web site** (like newsletter and contact
-    pages).
 -   **Improvements** on current features.
 -   More **tutorials** and **examples**.
 
-We are adding new items here as we clearify them. All these features and
+We are adding new items here as we clarify them. All these features and
 **much more** will be available also for current customers in their
 upgrade period.
 
