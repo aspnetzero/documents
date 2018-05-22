@@ -2,9 +2,12 @@ We are constantly getting feedbacks from our customers to improve our
 product. Here, **some** of the features will be implemented in next
 versions:
 
--   Entity History UI (showing property based entity changes).
--   Improvements for the **Rapid Application Development** tooling.
+-   **Entity History** UI (showing property based entity changes).
+-   Integration to a popular provider for **sending SMS**.
+-   Improvements on the **Rapid Application Development** tooling.
+-   Improvements on the **Xamarin** mobile application.
 -   Tenant **subscription enhancements** (like recurring payments).
+-   More built-in **UI options**.
 -   Sending **mass notifications/emails** to users.
 -   **Calendar** module.
 -   Session timeout & **lock screen**.
