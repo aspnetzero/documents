@@ -82,6 +82,5 @@ dotnet AspNetZeroRadTool.dll YourEntity.Json
 (from https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux)
 
 
-
 If you want to use VS Code on Mac without Visual Studio for Mac, this might be useful to set Startup Project, although it already seems out of date...
   https://stackoverflow.com/questions/46705521/how-do-i-designate-a-startup-project-in-vs-code
