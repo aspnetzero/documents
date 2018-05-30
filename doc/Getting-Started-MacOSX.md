@@ -1,15 +1,15 @@
-Running ASP.NET Zero on Mac
+#Running ASP.NET Zero on Mac
 
-Install Visual Studio for Mac: https://www.microsoft.com/net/download/macos
-Install Visual Studio Code: https://code.visualstudio.com/
-Install .net core SDK: https://www.microsoft.com/net/download/macos
+ -Install Visual Studio for Mac: https://www.microsoft.com/net/download/macos
+ -Install Visual Studio Code: https://code.visualstudio.com/
+ -Install .net core SDK: https://www.microsoft.com/net/download/macos
 
 From ASP.Net Zero download the ASP.NET CORE & Angular latest project version (5.4.1 at this writing) with .NET Core 2.0 as chosen framework and do not check one solution.
 
 Install latest:
-	•  yarn, in my case version 1.6.0  (https://yarnpkg.com/lang/en/docs/install/#mac-stable, I used HomeBrew)
-	• and I use nvm with node version 8.11.1  (https://github.com/creationix/nvm
-	• and angular cli (https://cli.angular.io/)
+	•  yarn, in my case version 1.6.0  [link](https://yarnpkg.com/lang/en/docs/install/#mac-stable0, I used HomeBrew)
+	• and I use nvm with node version 8.11.1  [link](https://github.com/creationix/nvm)
+	• and angular cli [link](https://cli.angular.io/)
   
 Then, In the terminal, go to base_folder/angular and 
 > yarn
@@ -25,7 +25,7 @@ I used a SQL database on Azure, set up in Azure Portal, and there got connection
 	"ConnectionStrings": {
 	      "Default": "Server=tcp:research1server.database.windows.net,1433;Initial Catalog={my db name};Persist Security Info=False;User ID={my_id};Password={my password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"}, 
 	
-Note you have to get your IPv4 address (e.g. https://www.whatismyip.com/) and in Azure Portal  click on your database, then the "Set server firewall" button, then create a rule for your IP address (or range of addresses) and Save.  Otherwise when you start-up you will see a Connection Refused error in the browser console.
+Note you have to get your IPv4 address (e.g. [link](https://www.whatismyip.com/)) and in Azure Portal  click on your database, then the "Set server firewall" button, then create a rule for your IP address (or range of addresses) and Save.  Otherwise when you start-up you will see a Connection Refused error in the browser console.
 
 Next we open app in Visual Studio for Mac.  For starters, I opened the Web Solution only, under base_folder/aspnet-core
 
@@ -33,7 +33,7 @@ Set Web.Host project as Startup Project (right click on Web.Host project in Solu
 
 Now we want to get EF for dotnet. 
 
-Go here:  https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet and see Installing the Tools section. 
+Go here:  [link](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet) and see Installing the Tools section. 
 
 Edit the Web.Host project file (right click project name and there is an Tools->Edit File option) and add following:  
 	<ItemGroup> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" /> </ItemGroup>
@@ -79,9 +79,9 @@ For RAD tool on Mac, there is no Visual Studio extension to create the JSON inpu
 
 dotnet AspNetZeroRadTool.dll YourEntity.Json
 
-(from https://aspnetzero.com/Documents/Develo ... -Mac-Linux)
+(from [link](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux)
 
 
 
 If you want to use VS Code on Mac without Visual Studio for Mac, this might be useful to set Startup Project, although it already seems out of date...
-  https://stackoverflow.com/questions/467 ... in-vs-code
+  [link](https://stackoverflow.com/questions/46705521/how-do-i-designate-a-startup-project-in-vs-code)
