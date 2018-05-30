@@ -1,4 +1,4 @@
-Running ASP.NET Zero on Mac
+#Running ASP.NET Zero on Mac
 
 Install Visual Studio for Mac: https://www.microsoft.com/net/download/macos
 Install Visual Studio Code: https://code.visualstudio.com/
