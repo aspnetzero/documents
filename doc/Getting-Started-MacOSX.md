@@ -11,8 +11,9 @@ Install latest:
  -  and I use nvm with node version 8.11.1  (https://github.com/creationix/nvm)
  -  and angular cli (https://cli.angular.io/)
   
-Then, In the terminal, go to base_folder/angular and 
-> yarn
+Then, In the terminal, go to base_folder/angular and
+
+	> yarn
 
 Next open app in Visual Studio for Mac.  For starters, I opened the Web solution only, under base_folder/aspnet-core
 
@@ -76,12 +77,12 @@ Or Update-Database:
 	
 When you need to update service-proxies.ts then from angular directory after/while Web.Host project is up and running:
 
-/node_modules/.bin/nswag run
+	/node_modules/.bin/nswag run
 
 
 For RAD tool on Mac, there is no Visual Studio extension to create the JSON input file, you create it manually. Which can be faster actually than field by field in GUI. Then run:
 
-dotnet AspNetZeroRadTool.dll YourEntity.Json
+	> dotnet AspNetZeroRadTool.dll YourEntity.Json
 
 (from https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux)
 
