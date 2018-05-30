@@ -1,15 +1,15 @@
-#Running ASP.NET Zero on Mac
+### Running ASP.NET Zero on Mac
 
-Install Visual Studio for Mac: https://www.microsoft.com/net/download/macos
-Install Visual Studio Code: https://code.visualstudio.com/
-Install .net core SDK: https://www.microsoft.com/net/download/macos
+ -  Install Visual Studio for Mac: https://www.microsoft.com/net/download/macos
+ -  Install Visual Studio Code: https://code.visualstudio.com/
+ -  Install .net core SDK: https://www.microsoft.com/net/download/macos
 
 From ASP.Net Zero download the ASP.NET CORE & Angular latest project version (5.4.1 at this writing) with .NET Core 2.0 as chosen framework and do not check one solution.
 
 Install latest:
-	•  yarn, in my case version 1.6.0  [link](https://yarnpkg.com/lang/en/docs/install/#mac-stable0, I used HomeBrew)
-	• and I use nvm with node version 8.11.1  [link](https://github.com/creationix/nvm)
-	• and angular cli [link](https://cli.angular.io/)
+ -  yarn, in my case version 1.6.0  [link](https://yarnpkg.com/lang/en/docs/install/#mac-stable0, I used HomeBrew)
+ -  and I use nvm with node version 8.11.1  [link](https://github.com/creationix/nvm)
+ -  and angular cli [link](https://cli.angular.io/)
   
 Then, In the terminal, go to base_folder/angular and 
 > yarn
