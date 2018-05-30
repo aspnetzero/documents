@@ -37,7 +37,8 @@ Now we want to get EF for dotnet.
 Go here: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet and see Installing the Tools section. 
 
 Edit the Web.Host project file (right click project name and there is an Tools->Edit File option) and add following:
-	~~~~<ItemGroup> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" /> </ItemGroup>~~~~
+
+	<ItemGroup> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" /> </ItemGroup>
 	
 Then back in Terminal:
 
