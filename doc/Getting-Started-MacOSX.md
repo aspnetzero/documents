@@ -39,10 +39,12 @@ Edit the Web.Host project file (right click project name and there is an Tools->
 	<ItemGroup> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" /> </ItemGroup>
 	
 Then back in Terminal:
+
 	> dotnet add package Microsoft.EntityFrameworkCore.Design 
 	> dotnet restore
 
 Check your dotnet ef install:
+
 	> dotnet ef
 
 And you should see a nice ASCII unicorn.
@@ -51,6 +53,7 @@ And you should see a nice ASCII unicorn.
 Run the project in Visual Studio for Mac, it should take you to http://localhost:5000/swagger/ and that worked for me.
 
 Then go to base_folder/angular and:
+
 	> npm start
 	
 Then navigate in browser to http://localhost:4200/
@@ -68,6 +71,7 @@ There is no Package Manager Console in Visual Studio for Mac, so in Terminal you
 	> dotnet ef migrations add InitialCreate
 
 Or Update-Database:
+
 	> dotnet ef database update
 	
 When you need to update service-proxies.ts then from angular directory after/while Web.Host project is up and running:
