@@ -32,7 +32,7 @@ project and disable multi-tenancy as shown below:
         public const int PaymentCacheDurationInMinutes = 30;
     }
 
-**Note:** If you loggeg in before changing **MultiTenancyEnabled** to
+**Note:** If you log in before changing **MultiTenancyEnabled** to
 false, you might be get login error. To overcome this, you should remove
 cookies.
 
