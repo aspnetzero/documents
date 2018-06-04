@@ -42,8 +42,8 @@ solution. If you want to work on both Xamarin and Web projects, open
 <img src="images/aspnet-core-host-solution-4.png" alt="ASP.NET Core solution structure" class="img-thumbnail" />
 
 Right click the **.Web.Host** project and select "**Set as StartUp
-project**": Then **build** the solution. It make take longer time in
-first build since all **nuget** packages will be restored.
+project**": Then **build** the solution. It may take a longer time
+during the first build since all **nuget** packages will be restored.
 
 #### Database Connection
 
