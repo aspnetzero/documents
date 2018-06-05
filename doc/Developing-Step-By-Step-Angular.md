@@ -3,7 +3,7 @@
 In this document, we will create a sample **phonebook application**
 based on ASP.NET Zero (ASP.NET Core & Angular 5 version) step by step.
 After all steps, we will have a multi-tenant, localized, authorized,
-configurable, testable... appliaction.
+configurable, testable... application.
 
 ### Creating And Running The Project
 
@@ -199,7 +199,7 @@ any changes made to any file in the application.
 We define entities in **.Core** (domain) project (in server side). We
 can define a **Person** entity (mapped to **PbPersons** table in
 database) to represent a person in phone book as shown below (I created
-in in a new folder/namespace named PhoneBook):
+in a new folder/namespace named PhoneBook):
 
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -384,8 +384,8 @@ An Application Service is used from client (presentation layer) to
 perform operations (use cases) of the application.
 
 Application service interface and DTOs are located in
-**.Application.Shared** project. We creating an application service to
-get people from server. So, we're first creating an **interface** to
+**.Application.Shared** project. We are creating an application service to
+get people from the server. So, we're first creating an **interface** to
 define the person application service (while this interface is optional,
 we suggest you to create it):
 
@@ -497,7 +497,7 @@ for more.
 
 ### Creating Unit Tests For PersonAppService
 
-You can skip this section if you don't interest in **automated
+You can skip this section if you are not interested in **automated
 testing**.
 
 By writing unit test, we can test **PersonAppService.GetPeople** method
@@ -969,8 +969,8 @@ below:
     </div>
 
 Most of this code is similar for all modals. The important part is how
-we binded model to the view using ngModel directive. As like all
-components, Angular requires to relate it to a module. We should it to
+we binded model to the view using the ngModel directive. As like all
+components, Angular requires to relate it to a module. We should add it to
 **declarations** array of **main.module.ts** as like shown below:
 
     ...previous imports
@@ -1234,7 +1234,7 @@ declaration:
         animations: [appModuleAnimation()]
     })
 
-Now, we can now the buttons, but they don't work since we haven't
+Now, we can now see the buttons, but they don't work since we haven't
 defined the deletePerson method yet.
 
 #### Application Service
