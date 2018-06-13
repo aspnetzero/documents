@@ -99,7 +99,7 @@ can **disable** it by setting
 Before running the project, we need to run a npm task to bundle and minify our
 css and javascript files. In order to do that, we can open a command prompt, navigate to root directory of
 
-**\*.Web.Mvc** project and run "**npm run create-bundles**" command. This command must be runned when a new npm package is added to the solution. Otherwise, you can just build your solution and all bundles will be updated automatically.
+***.Web.Mvc** project and run "**npm run create-bundles**" command. This command must be runned when a new npm package is added to the solution. Otherwise, you can just build your solution and all bundles will be updated automatically.
 
 Now we are ready.. just run your solution. It will open login page of
 your web site.
