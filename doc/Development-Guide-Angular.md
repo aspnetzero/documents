@@ -891,14 +891,14 @@ running.
 
 Generated code is located in
 shared/service-proxies/**service-proxies**.ts file. You should not make
-manual change in this file since it will be overritten on the next code
+manual change in this file since it will be overwritten on the next code
 generation.
 
 **Refreshing Service Proxies**
 
 While Nswag automatically generate proxy files, it does not refresh
 **service-proxies.module**.ts. If you add a new service, you should
-**manually** add it to this file as like others. 
+**manually** add it to this file as like others.
 
 #### AppComponentBase
 
