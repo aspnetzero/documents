@@ -744,11 +744,6 @@ All notifications of the user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, real time notifications
-will not work if you select .NET Core as your base framework.
-
 #### Chat
 
 Chat icon is located next to user's profile image on top right corner of
@@ -798,11 +793,6 @@ There are three chat features in the system. These are "Chat", "Chat
 with host", "Chat with other tenants". These features can be
 enabled/disabled per edition/tenant. By using these features host can
 enable/disable chat with other tenant's users or host users.
-
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, chat feature will not work
-if you select .NET Core as your base framework.
 
 #### User Menu
 
@@ -983,11 +973,6 @@ use SignalR in the application.
 See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information.
-
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, SignalR integration is
-disabled if you select .NET Core as your base framework.
 
 ### Token Based Authentication
 
