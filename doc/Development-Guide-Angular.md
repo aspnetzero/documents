@@ -744,11 +744,6 @@ All notifications of the user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.NET Core Compatibility**
-
-Since SignalR is ready for .NET Core, real time notifications
-will work as well, if you select .NET Core as your base framework.
-
 #### Chat
 
 Chat icon is located next to user's profile image on top right corner of
