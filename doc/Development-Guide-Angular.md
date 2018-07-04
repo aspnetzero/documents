@@ -794,11 +794,6 @@ with host", "Chat with other tenants". These features can be
 enabled/disabled per edition/tenant. By using these features host can
 enable/disable chat with other tenant's users or host users.
 
-**.NET Core Compatibility**
-
-SignalR is ready to work with .NET Core, chat feature also will work
-if you select .NET Core as your base framework.
-
 #### User Menu
 
 A user can click his name at top right corner to open user menu:
@@ -978,11 +973,6 @@ use SignalR in the application.
 See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information.
-
-**.NET Core Compatibility**
-
-SignalR is ready to use with .NET Core, SignalR integration is
-enabled as well, if you select .NET Core as your base framework.
 
 ### Token Based Authentication
 
