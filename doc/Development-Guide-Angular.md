@@ -746,8 +746,8 @@ All notifications of the user are listed in this page.
 
 **.NET Core Compatibility**
 
-Since SignalR is not ready yet for .NET Core, real time notifications
-will not work if you select .NET Core as your base framework.
+Since SignalR is ready for .NET Core, real time notifications
+will work as well, if you select .NET Core as your base framework.
 
 #### Chat
 
@@ -801,7 +801,7 @@ enable/disable chat with other tenant's users or host users.
 
 **.NET Core Compatibility**
 
-Since SignalR is not ready yet for .NET Core, chat feature will not work
+SignalR is ready to work with .NET Core, chat feature also will work
 if you select .NET Core as your base framework.
 
 #### User Menu
@@ -986,8 +986,8 @@ document for more information.
 
 **.NET Core Compatibility**
 
-Since SignalR is not ready yet for .NET Core, SignalR integration is
-disabled if you select .NET Core as your base framework.
+SignalR is ready to use with .NET Core, SignalR integration is
+enabled as well, if you select .NET Core as your base framework.
 
 ### Token Based Authentication
 
