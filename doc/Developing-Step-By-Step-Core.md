@@ -1941,6 +1941,7 @@ editing people:
     {
         public class EditPersonModalViewModel : GetPersonForEditOutput
         {
+            [AutoMapFrom(typeof(GetPersonForEditOutput))]
             public EditPersonModalViewModel(GetPersonForEditOutput output)
             {
                 output.MapTo(this);
