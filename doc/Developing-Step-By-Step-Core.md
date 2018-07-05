@@ -604,6 +604,7 @@ We inject **IPersonAppService** and call its **GetPeople** method
 created a ViewModel object and passes to the view. Let's see the
 **IndexViewModel** class:
 
+    [AutoMapFrom(typeof(ListResultDto<PersonListDto>))]
     public class IndexViewModel : ListResultDto<PersonListDto>
     {
         public IndexViewModel(ListResultDto<PersonListDto> output)
