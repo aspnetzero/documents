@@ -1939,9 +1939,9 @@ editing people:
 
     namespace Acme.PhoneBook.Web.Areas.App.Models.PhoneBook
     {
+        [AutoMapFrom(typeof(GetPersonForEditOutput))]
         public class EditPersonModalViewModel : GetPersonForEditOutput
         {
-            [AutoMapFrom(typeof(GetPersonForEditOutput))]
             public EditPersonModalViewModel(GetPersonForEditOutput output)
             {
                 output.MapTo(this);
