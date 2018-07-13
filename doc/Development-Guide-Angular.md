@@ -1046,7 +1046,7 @@ We are using [angular-cli](https://cli.angular.io/) for development &
 deployment. Angular CLI has it's own build command that can be used to
 build your application:
 
-    ng build -prod
+    ng build --prod
 
 This command uses **dist** folder as output. Just remember to change
 **assets/appconfig.json** file with your own configuration.
