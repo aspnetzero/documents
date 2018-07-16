@@ -89,8 +89,8 @@ Angular framework. </p>
 </tr>
 <tr>
 	<td>Chat &amp; Real Time Notifications (SignalR integration)</td>
-	<td>OK (for .net framework)</td>
-	<td>OK (for .net framework)</td>
+	<td>OK</td>
+	<td>OK</td>
 	<td>OK</td>
 	<td>OK</td>
 </tr>

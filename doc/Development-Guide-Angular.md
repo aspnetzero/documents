@@ -744,11 +744,6 @@ All notifications of the user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, real time notifications
-will not work if you select .NET Core as your base framework.
-
 #### Chat
 
 Chat icon is located next to user's profile image on top right corner of
@@ -798,11 +793,6 @@ There are three chat features in the system. These are "Chat", "Chat
 with host", "Chat with other tenants". These features can be
 enabled/disabled per edition/tenant. By using these features host can
 enable/disable chat with other tenant's users or host users.
-
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, chat feature will not work
-if you select .NET Core as your base framework.
 
 #### User Menu
 
@@ -984,11 +974,6 @@ See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information.
 
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, SignalR integration is
-disabled if you select .NET Core as your base framework.
-
 ### Token Based Authentication
 
 ASP.NET Zero Angular UI uses the [server
@@ -1061,7 +1046,7 @@ We are using [angular-cli](https://cli.angular.io/) for development &
 deployment. Angular CLI has it's own build command that can be used to
 build your application:
 
-    ng build -prod
+    ng build --prod
 
 This command uses **dist** folder as output. Just remember to change
 **assets/appconfig.json** file with your own configuration.
