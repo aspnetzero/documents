@@ -1074,7 +1074,7 @@ all possibilities and components to build a richer web site.
 Menus are defined in **FrontEndNavigationProvider** class. When you add
 a new menu item here, it will be automatically shown in the menu. There
 is a **Login** link at the top right corner. This link takes us to the
-**Login page** to enter to the **backend** application. 
+**Login page** to enter to the **backend** application.
 
 #### Layout
 
