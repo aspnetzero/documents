@@ -8,17 +8,23 @@ Before reading this document, it's suggested to run the application and explore 
 
 Following tools are needed in order to use ASP.NET Zero Core solution:
 
--   [Visual Studio 2017 v15.3.5](https://www.visualstudio.com)+
--   Visual Studio Extensions:
-    -   [Web
-        Compiler](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebCompiler)
-    -   [Typescript](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
-        2.0+
--   [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
--   [gulp (must be installed
-    globally)](https://www.npmjs.com/package/gulp)
--   [yarn](https://yarnpkg.com/)
--   SQL Server
+- [Visual Studio 2017 v15.3.5](https://www.visualstudio.com)+
+
+- Visual Studio Extensions:
+  -   [Web
+      Compiler](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebCompiler)
+  -   [Typescript](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
+      2.0+
+
+- [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
+
+- [gulp (must be installed
+
+  globally)](https://www.npmjs.com/package/gulp)
+
+- [yarn](https://yarnpkg.com/)
+
+- SQL Server
 
 #### Solution Structure (Layers)
 
@@ -1068,7 +1074,7 @@ all possibilities and components to build a richer web site.
 Menus are defined in **FrontEndNavigationProvider** class. When you add
 a new menu item here, it will be automatically shown in the menu. There
 is a **Login** link at the top right corner. This link takes us to the
-**Login page** to enter to the **backend** application. 
+**Login page** to enter to the **backend** application.
 
 #### Layout
 
@@ -1154,18 +1160,13 @@ node\_modules folder will be very big (more than 250 MB) and we don't
 want to send all of those files to production when we publish our
 application. In order to overcome this, we have used gulp to move
 necessary files from **\*.Web.Mvc/node\_modules** to
-**\*.Web.Mvc/wwwroot/lib**. There are two related files in \*.Web.Mvc
-project, **bundle.config.js** and **gulpfile.js**. **bundle.config.js**
-contains necessary mapping definitions from node\_modules to lib folder
-and it also contains bundling & minification definitions. You can see
-respectively in below screenshots mapping and bundling/minification
-configurations from bundle.config.js.
+**\*.Web.Mvc/wwwroot/lib**. Mapping from node_modules to wwwroot/lib folder is defined in **package-mapping-config.js** file. So, when you add a new package to your solution, you also need to add a mapping to this file defining the files you want to move from node_modules to wwwroot/lib folder for newly added package. 
 
-<img src="images/gulp-bundle-config-mappings.png" alt="Gulp mappings" class="img-thumbnail" />
+Here is a sample **package-mapping-config.js** file;
 
-<img src="images/gulp-bundle-config-bundles.png" alt="Gulp bundling minification" class="img-thumbnail" />
+<img src="images/gulp-bundle-config-mappings.png-2.png" alt="Gulp mappings" class="img-thumbnail" />
 
-In order to create css and javascript bundles "gulp" command must be runned in the root directory of ***.Web.Mvc** solution using a command prompt. This can be done using Visual Studio's Task Runner Explorer. Default gulp task doesn't end and it watches for changes in the css & javascript files used in **bundle.config.js** file. If ""--prod" argument is not passed to gulp command, css and javascript bundles will not be minified in order to provide developers a better debug experience. Running "**gulp --prod**" command will minify output css and javascript files. For Continuous Integration pipelines "gulp build:prod" command can be used, because this task ends with an exit code so, CI environments can understand.
+In order to create css and javascript bundles https://www.nuget.org/packages/BundlerMinifier.Core/ package is used. Bundling definitions are stored in **bundleconfig.json** file. If you don't want to modify this file manually, you can use https://marketplace.visualstudio.com/items?itemName=MadsKristensen.BundlerMinifier Visual Studio extension to create bundling definitions for you.
 
 #### Application Services as MVC API Controllers
 

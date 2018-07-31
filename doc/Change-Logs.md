@@ -4,6 +4,27 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+### v5.6 (2018-07-30)
+
+* Implemented OpenId Connect for Angular.
+* Implemented wildcard CORS support
+* Upgraded to ABP v3.8.1, Angular 6.1, Typescript 2.9.2, Bootstrap 4.1.3 and Primeng 6.0.2.
+* Bug fixes and enhancements.
+
+### v5.5.1 (2018-06-28)
+
+* Created an Alert system to show alerts on UI for MVC application. 
+*  Upgraded to Metronic v5.3. 
+* Upgraded to PrimeNG v6. 
+* Bug fixes and enhancements.
+
+### v5.5.0 (2018-06-13)
+
+* Upgraded to AspNetCore 2.1, ASP.NET Core SignalR 1.0, EntityFramework Core 2.1
+* Chat is available for .NET Core.
+* WsFederation support for ASP.NET Core MVC & JQuery.
+* Bug fixes and enhancements.
+
 ### v5.4.0 (2018-05-10)
 
 * Allow changing primary theme color.

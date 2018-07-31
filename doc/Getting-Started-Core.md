@@ -68,11 +68,7 @@ ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy
 
 ### Run The Project
 
-Before running the project, we need to run gulp to bundle and minify the CSS and JavaScript files. In order to do that, we can open Visual Studio's task runner and run the default task.
-
-<img src="images/taskrunner-gulp-core-1.png" alt="install npm dependencies" class="img-thumbnail" />
-
-or, we can open a command prompt, navigate to root directory of **\*.Web.Mvc** project and run "**gulp**" command (gulp must be installed globally for this option)
+Before running the project, we need to run a npm task to bundle and minify the CSS and JavaScript files. In order to do that, we can open a command prompt, navigate to root directory of ***.Web.Mvc** project and run **npm run create-bundles** command. This command should be run when a new npm package is being added to the solution. Or you can just build your solution and all bundles will be updated automatically.
 
 Now we are ready.. just run your solution. It will open login page of your web site.
 
