@@ -31,16 +31,14 @@ And configure it according to your needs. A sample setting is shown below:
 
 The details will be explained in the next lines. Here are the quick steps to publish the **Web.Mvc Application** to the Azure.
 
-- Run the `gulp -prod` to bundle and minify the js/css files
+- Run the `npm run create-bundles` to bundle and minify the js/css files
 - Run the migrations on the Azure
 - Configure the **.Web.Mvc/appsettings.production.json**
 - Publish the application to Azure
 
-### Run the `gulp -prod`
+### Run the `npm run create-bundles`
 
-Run the `gulp -prod` to bundle and minify the js/css files.
-
-<img src="images/azure-publish-core-mvc-gulp-prod.png">
+Run the `npm run create-bundles` to bundle and minify the js/css files.
 
 ### Run Migrations on The Azure
 
