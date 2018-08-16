@@ -47,6 +47,8 @@ MVC application needs the following tools to be installed:
 -   [gulp (must be installed
     globally)](https://www.npmjs.com/package/gulp)
 -   [yarn](https://yarnpkg.com/)
+-   [Bundler & Minifier Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40)
+-   [Web Compiler Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/3b329021-cd7a-4a01-86fc-714c2d05bb6c)
 
 #### Database Connection
 
