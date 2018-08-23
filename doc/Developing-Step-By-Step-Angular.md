@@ -858,7 +858,8 @@ We are starting from creating a new component, named
     import { ModalDirective } from 'ngx-bootstrap';
     import { PersonServiceProxy, CreatePersonInput } from '@shared/service-proxies/service-proxies';
     import { AppComponentBase } from '@shared/common/app-component-base';
-
+    import { finalize } from 'rxjs/operators';
+    
     @Component({
         selector: 'createPersonModal',
         templateUrl: './create-person-modal.component.html'
@@ -895,7 +896,7 @@ We are starting from creating a new component, named
         save(): void {
             this.saving = true;
             this._personService.createPerson(this.person)
-                .finally(() => this.saving = false)
+                .pipe(finalize(() => this.saving = false))
                 .subscribe(() => {
                     this.notify.info(this.l('SavedSuccessfully'));
                     this.close();
