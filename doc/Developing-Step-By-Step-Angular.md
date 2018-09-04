@@ -1380,7 +1380,7 @@ We added a **Phones** collection to the People:
         public virtual ICollection<Phone> Phones { get; set; }
     }
 
-We have a **PhoneType** enum as shown below: (in **.Application.Shared**
+We have a **PhoneType** enum as shown below: (in **.Core**
 project)
 
     public enum PhoneType : byte
