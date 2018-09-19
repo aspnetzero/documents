@@ -858,7 +858,8 @@ We are starting from creating a new component, named
     import { ModalDirective } from 'ngx-bootstrap';
     import { PersonServiceProxy, CreatePersonInput } from '@shared/service-proxies/service-proxies';
     import { AppComponentBase } from '@shared/common/app-component-base';
-
+    import { finalize } from 'rxjs/operators';
+    
     @Component({
         selector: 'createPersonModal',
         templateUrl: './create-person-modal.component.html'
@@ -895,7 +896,7 @@ We are starting from creating a new component, named
         save(): void {
             this.saving = true;
             this._personService.createPerson(this.person)
-                .finally(() => this.saving = false)
+                .pipe(finalize(() => this.saving = false))
                 .subscribe(() => {
                     this.notify.info(this.l('SavedSuccessfully'));
                     this.close();
@@ -1379,7 +1380,7 @@ We added a **Phones** collection to the People:
         public virtual ICollection<Phone> Phones { get; set; }
     }
 
-We have a **PhoneType** enum as shown below: (in **.Application.Shared**
+We have a **PhoneType** enum as shown below: (in **.Core**
 project)
 
     public enum PhoneType : byte
