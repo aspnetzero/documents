@@ -1107,7 +1107,6 @@ project. Here, a list of all libraries:
 -   [jQuery Slimscroll](http://rocha.la/jQuery-slimScroll)
 -   [jQuery Sparkline](http://omnipotent.net/jquery.sparkline/)
 -   [jQuery Uniform](https://github.com/pixelmatrix/uniform)
--   [jQuery jTable](http://jtable.org/)
 -   [jQuery Timeago](https://github.com/rmm5t/jquery-timeago)
 -   [Js-Cookie](https://github.com/js-cookie/js-cookie)
 -   [Json2](https://github.com/douglascrockford/JSON-js)

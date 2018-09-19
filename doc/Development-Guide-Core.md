@@ -1877,7 +1877,7 @@ project. Here, a list of all libraries.
     -   [jQuery Sparkline](http://omnipotent.net/jquery.sparkline/)
     -   [jQuery Uniform](https://github.com/pixelmatrix/uniform)
     -   [jQuery Validation](http://jqueryvalidation.org/)
-    -   [jQuery jTable](http://jtable.org/)
+    -   [Datatables](https://datatables.net/)
     -   [jQuery Ajax Forms](http://malsup.com/jquery/form/)
     -   [jQuery Timeago](https://github.com/rmm5t/jquery-timeago)
     -   [Json2](https://github.com/douglascrockford/JSON-js)

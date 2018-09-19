@@ -672,7 +672,7 @@ We successfully retrieved list of people from database to the page.
 
 We normally use a javascript based rich table/grid library to show
 tabular data, instead of manually rendering data like that. For example,
-we used to use [jTable](http://jtable.org/) library to show users on the
+we used to use [datatables](https://datatables.net/) library to show users on the
 Users page of ASP.NET Zero. Always use such components since they make
 things much more easier and provides a much better user experience.
 
@@ -696,15 +696,15 @@ method:
     public class CreatePersonInput
     {
         [Required]
-        [MaxLength(PersonConsts..MaxNameLength)]
+        [MaxLength(PersonConsts.MaxNameLength)]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(PersonConsts..MaxSurnameLength)]
+        [MaxLength(PersonConsts.MaxSurnameLength)]
         public string Surname { get; set; }
 
         [EmailAddress]
-        [MaxLength(PersonConsts..MaxEmailAddressLength)]
+        [MaxLength(PersonConsts.MaxEmailAddressLength)]
         public string EmailAddress { get; set; }
     }
 

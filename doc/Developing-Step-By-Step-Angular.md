@@ -706,7 +706,7 @@ We successfully retrieved list of people from database to the page.
 
 We normally use a javascript based rich table/grid library to show
 tabular data, instead of manually rendering data like that. For example,
-we used [jTable](http://jtable.org/) library to show users on the Users
+we used [TurboTable](https://www.primefaces.org/primeng/#/table) library to show users on the Users
 page of ASP.NET Zero. Always use such components since they make things
 much more easier and provides a much better user experience.
 

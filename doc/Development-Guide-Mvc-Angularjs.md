@@ -1578,7 +1578,6 @@ project. Here is a list of all libraries:
     -   [jQuery Sparkline](http://omnipotent.net/jquery.sparkline/)
     -   [jQuery Uniform](https://github.com/pixelmatrix/uniform)
     -   [jQuery Validation](http://jqueryvalidation.org/)
-    -   [jQuery jTable](http://jtable.org/)
     -   [jQuery Ajax Forms](http://malsup.com/jquery/form/)
     -   [Js Cookie](https://github.com/js-cookie/js-cookie)
     -   [Modernizr](http://modernizr.com/)
