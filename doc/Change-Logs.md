@@ -4,6 +4,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+### v6.0 (2018-09-26)
+
+* Removed JQuery dependency for Angular version.
+* Upgraded to Metronic v5.5.5.
+* Implemented notification delete feature.
+* Bug fixes and enhancements.
+
 ### v5.6 (2018-07-30)
 
 * Implemented OpenId Connect for Angular.
