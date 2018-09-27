@@ -1934,7 +1934,7 @@ Create edit-person-modal.component.ts:
       }
 
       onShown(): void {
-       // $(this.nameInput.nativeElement).focus();
+       // this.nameInput.nativeElement.focus();
       }
 
       save(): void {
