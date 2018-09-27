@@ -50,7 +50,7 @@ The diagram below shows the overall architecture:
 -   **Angular** project is designed so it can be **deployed separately**
     from the backend ASP.NET Core solution, to a different port in same
     server or to a different server. When it's deployed, it's actually a
-    plan HTML+JS+CSS web application that can be served on any operating
+    plain HTML+JS+CSS web application that can be served on any operating
     system and any web server.
 -   **Angular** solution consists of 2 fundamental modules:
     -   **AccountModule** is for login, register, remember password and
@@ -274,7 +274,7 @@ This is the actual application module which is entered by username and
 password. You will mostly work on this application to add your business
 requirements. A screenshot from the application:
 
-<img src="images/dashboardV3.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
+<img src="images/dashboardV4.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
 
 Folder structure of the source code is like that:
 
@@ -701,7 +701,7 @@ just for demo purposes, you can make it as a start point for your actual
 dashboard. It's implemented with app/main/**dashboard.component** in
 **main.module**.
 
-<img src="images/dashboardV3.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
+<img src="images/dashboardV4.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
 
 Client gets all data from server, server generates random data.
 
@@ -727,7 +727,7 @@ push notification** is shown when a notification is received.
 
 "Settings" link opens notification settings dialog.
 
-<img src="images/notification-settings-1.png" alt="notifications" class="img-thumbnail" />
+<img src="images/notification-settings-2.png" alt="notifications" class="img-thumbnail" />
 
 In this dialog there is a global setting for user to enable/disable
 receiving notifications. If this setting is enabled, then user can
@@ -742,7 +742,7 @@ for detailed information.
 
 All notifications of the user are listed in this page.
 
-<img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
+<img src="images/notifications-list-core-4.png" alt="Notification list" class="img-thumbnail" />
 
 #### Chat
 
@@ -1002,7 +1002,7 @@ applications or if you want to work with host users):
 Then we can send username and password as a **POST** request to http://localhost:22742/api/TokenAuth/Authenticate
 
 <img src="images/postman-ng2-auth.png" alt="SPostman authentication" class="img-thumbnail" />
- 
+
 In the returning response, **accessToken** will be used to authorize for the API.
 
 #### Using API
@@ -1095,33 +1095,29 @@ project. Here, a list of all libraries:
 -   [Angular-cli](https://cli.angular.io/)
 -   [Typescript](http://typescriptlang.org/)
 -   [SignalR](http://asp.net/signalr)
--   [Metronic Theme](http://keenthemes.com/metronic-theme/)
+-   [Metronic Theme](http://keenthemes.com/metronic/)
 -   [Twitter Bootstrap](http://getbootstrap.com/)
--   [Bootstrap Date Range
-    Picker](https://github.com/dangrossman/bootstrap-daterangepicker)
--   [Bootstrap Switch](http://www.bootstrap-switch.org/)
--   [Bootstrap Select](http://silviomoreto.github.io/bootstrap-select)
--   [Ng2 Bootstrap](https://github.com/valor-software/ng2-bootstrap)
--   [jQuery](http://jquery.com/)
--   [jQuery UI](http://jqueryui.com/)
--   [jQuery BlockUI](http://malsup.com/jquery/block/)
--   [jQuery Slimscroll](http://rocha.la/jQuery-slimScroll)
--   [jQuery Sparkline](http://omnipotent.net/jquery.sparkline/)
--   [jQuery Uniform](https://github.com/pixelmatrix/uniform)
--   [jQuery Timeago](https://github.com/rmm5t/jquery-timeago)
--   [Js-Cookie](https://github.com/js-cookie/js-cookie)
--   [Json2](https://github.com/douglascrockford/JSON-js)
--   [Jcrop](https://github.com/tapmodo/Jcrop)
+-   [Ngx Bootstrap](https://github.com/valor-software/ngx-bootstrap)
+-   [primeng](https://github.com/primefaces/primeng)
 -   [LocalForage](https://github.com/localForage/localForage)
 -   [Moment.js](http://momentjs.com/)
 -   [Moment.js Timezone](http://momentjs.com/timezone/)
 -   [Lodash](https://lodash.com/)
--   [JsTree](https://www.jstree.com/)
--   [Morris](http://morrisjs.github.io/morris.js/)
--   [Raphael](http://dmitrybaranovskiy.github.io/raphael/)
 -   [Font-Awesome](http://fontawesome.io/)
 -   [Famfamfam flags](http://www.famfamfam.com/lab/icons/flags/)
 -   [Simple Line Icons](http://thesabbir.github.io/simple-line-icons/)
--   [SpinJs](http://fgnass.github.io/spin.js/)
--   [SweetAlert](http://t4t5.github.io/sweetalert/)
--   [Toastr](http://codeseven.github.io/toastr/)
+-   [SweetAlert](https://github.com/sweetalert2/sweetalert2)
+-   [ngx-charts](https://github.com/swimlane/ngx-charts)
+-   [angular-oauth2-oidc](https://github.com/manfredsteyer/angular-oauth2-oidc)
+-   [angular2-counto](https://github.com/izupet/angular2-counto)
+-   [angular2-text-mask](https://github.com/text-mask/text-mask/tree/master/angular2)
+-   [animate.css](https://github.com/daneden/animate.css/)
+-   [js-cookie](https://github.com/js-cookie/js-cookie)
+-   [ng-recaptcha](https://github.com/DethAriel/ng-recaptcha)
+-   [ng2-file-upload](https://github.com/valor-software/ng2-file-upload)
+-   [ngx-image-cropper](https://github.com/Mawi137/ngx-image-cropper)
+-   [ngx-perfect-scrollbar](https://github.com/zefoy/ngx-perfect-scrollbar)
+-   [push.js](https://github.com/Nickersoft/push.js)
+-   [rtl-detect](https://github.com/shadiabuhilal/rtl-detect)
+-   [spin.js](https://github.com/fgnass/spin.js)
+-   [text-mask-addons](https://github.com/text-mask/text-mask/tree/master/addons)
