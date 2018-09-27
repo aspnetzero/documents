@@ -890,7 +890,7 @@ We are starting from creating a new component, named
         }
 
         onShown(): void {
-            $(this.nameInput.nativeElement).focus();
+            this.nameInput.nativeElement.focus();
         }
 
         save(): void {
