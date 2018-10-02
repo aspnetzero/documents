@@ -9,7 +9,7 @@ Publishing ASP.NET Zero Core MVC project is no different to any other ASP.NET Co
 
 - Create a file on the server where **IIS** is located. (for example: `C:\inetpub\wwwroot\mywebsite`).
 - Copy extracted files to server. (from `\*.Web.Mvc/bin/Release/netcoreapp2.1/publish/` to `C:\inetpub\wwwroot\mywebsite`).
-- Change `appsettings.production.json` configurations to your settings.
+- Change `appsettings.production.json` configurations with your own settings.
 
 ### Create IIS Web Site
 
