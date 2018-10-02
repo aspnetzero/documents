@@ -7,7 +7,7 @@ Publishing ASP.NET Zero Core MVC project is no different to any other ASP.NET Co
 
 <img src="images/iis-core-publish-select-folder-and-publish.png">
 
-- Create a file on the server where **IIS** is located. (for example: `C:\inetpub\wwwroot\mywebsite`).
+- Create a folder on the server where **IIS** is located. (for example: `C:\inetpub\wwwroot\mywebsite`).
 - Copy extracted files to server. (from `\*.Web.Mvc/bin/Release/netcoreapp2.1/publish/` to `C:\inetpub\wwwroot\mywebsite`).
 - Change `appsettings.production.json` configurations with your own settings.
 
@@ -21,4 +21,4 @@ Publishing ASP.NET Zero Core MVC project is no different to any other ASP.NET Co
 
 <img src="images/iis-core-publish-configure-app-pool.png">
 
-Some configurations are needed to make before publishing. Check [Host ASP.NET Core on Windows with IIS](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/index?view=aspnetcore-2.1) document for more detail.
+Check [Host ASP.NET Core on Windows with IIS](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/index?view=aspnetcore-2.1) document for more detail.
