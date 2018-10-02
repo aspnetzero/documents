@@ -1820,8 +1820,7 @@ Web.Host Application
 
 #### Publishing to IIS
 
-If you want to publish your solution to IIS, then check Microsoft's
-[documentation](https://docs.microsoft.com/en-us/aspnet/core/publishing/iis).
+Read [this document](Step-by-step-core-publish-to-iis.md) to publish to the IIS.
 
 #### Publishing to Docker Containers
 
