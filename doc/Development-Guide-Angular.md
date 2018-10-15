@@ -1066,15 +1066,7 @@ significiant performance gain.
 
 #### IIS Deploy
 
-After ng build command, dist folder contains all necessary files to
-create a web site under IIS. One important thing is that; Angular uses
-client side routing. If you refresh a page (F5) then IIS will handle the
-request and naturally can not find the requested path and returns a HTTP
-404 error. We should configure IIS to redirect all requests to the
-index.html page (or, to the root path).
-
-ASP.NET Zero Angular UI contains a **web.config** file. You can copy it
-to the web site's root folder to overcome the problem described above.
+Read [this document](Step-by-step-angular-publish-to-iis.md) to publish to the IIS.
 
 ### ASP.NET Zero Power Tools
 

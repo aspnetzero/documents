@@ -890,7 +890,7 @@ We are starting from creating a new component, named
         }
 
         onShown(): void {
-            $(this.nameInput.nativeElement).focus();
+            this.nameInput.nativeElement.focus();
         }
 
         save(): void {
@@ -1934,7 +1934,7 @@ Create edit-person-modal.component.ts:
       }
 
       onShown(): void {
-       // $(this.nameInput.nativeElement).focus();
+       // this.nameInput.nativeElement.focus();
       }
 
       save(): void {

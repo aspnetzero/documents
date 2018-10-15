@@ -12,9 +12,9 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 ### v6.0 (2018-09-26)
 
-* Removed JQuery dependency for Angular version.
-* Upgraded to Metronic v5.5.5.
-* Implemented notification delete feature.
+* Angular UI is completely revised. JQuery and depended libraries are replaced by native angular libraries.
+* Allow users to delete notifications.
+* Upgraded to Metronic v5.5.5 and ABP v3.8.3.
 * Bug fixes and enhancements.
 
 ### v5.6 (2018-07-30)
