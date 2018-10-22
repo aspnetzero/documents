@@ -838,6 +838,21 @@ user can see last login attempts for his/her account.
 A user can change own profile picture. Currently, jpg/jpeg, gif and png
 files are supported, you can extend it.
 
+##### Change Password
+
+**ProfileAppService** is used to change password.
+
+##### Download Collected Data
+
+A user can download his/her collected data using this menu item.
+
+<img src="images/gdpr_download_item.png" alt="Login attempts" class="img-thumbnail" />
+
+##### Logout
+
+**AccountController** is used to logout the user and redirect to Login
+page.
+
 #### Setup Page
 
 ASP.NET Zero application can be set-up using install page. This page is

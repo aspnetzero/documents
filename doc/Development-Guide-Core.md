@@ -1002,6 +1002,12 @@ files are supported, you can extend it.
 
 **ProfileAppService** is used to change password.
 
+##### Download Collected Data
+
+A user can download his/her collected data using this menu item.
+
+<img src="D:/Github/documents/doc/images/gdpr_download_item.png" alt="Login attempts" class="img-thumbnail" />
+
 ##### Logout
 
 **AccountController** is used to logout the user and redirect to Login
