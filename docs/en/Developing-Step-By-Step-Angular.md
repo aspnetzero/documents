@@ -21,16 +21,18 @@ Logout from the application for now. We will make our application
 open **PhoneBookDemoConsts** class in the **Acme.PhoneBookDemo.Core.Shared**
 project and disable multi-tenancy as shown below:
 
-    public class PhoneBookDemoConsts
-    {
-        public const string LocalizationSourceName = "PhoneBookDemo";
-    
-        public const string ConnectionStringName = "Default";
-    
-        public const bool MultiTenancyEnabled = false;
-    
-        public const int PaymentCacheDurationInMinutes = 30;
-    }
+```c#
+public class PhoneBookDemoConsts
+{
+    public const string LocalizationSourceName = "PhoneBookDemo";
+
+    public const string ConnectionStringName = "Default";
+
+    public const bool MultiTenancyEnabled = false;
+
+    public const int PaymentCacheDurationInMinutes = 30;
+}
+```
 
 **Note:** If you log in before changing **MultiTenancyEnabled** to
 false, you might be get login error. To overcome this, you should remove
@@ -47,7 +49,9 @@ client side (**Acme.PhoneBookDemo.AngularUI**) which defines menu items
 in the application. Create new menu item as shown below (You can add it
 right after the dashboard menu item).
 
-    new AppMenuItem("PhoneBook", null, "flaticon-book", "/app/main/phonebook")
+```c#
+new AppMenuItem("PhoneBook", null, "flaticon-book", "/app/main/phonebook")
+```
 
 **PhoneBook** is the menu name (will localize below), **null** is for
 permission name (will set it later), **flaticon-book** is just an
@@ -69,13 +73,17 @@ Localization strings are defined in **XML** files in **.Core** project
 Open PhoneBookDemo.xml (the **default**, **English** localization
 dictionary) and add the following line:
 
-    <text name="PhoneBook">Phone Book</text>
+```xml
+<text name="PhoneBook">Phone Book</text>
+```
 
 If we don't define "PhoneBook"s value for other localization
 dictionaries, default value is shown in all languages. For example, we
 can define it also for Turkish in PhoneBookDmo-tr.xml file:
 
-    <text name="PhoneBook">Telefon Rehberi</text>
+```xml
+<text name="PhoneBook">Telefon Rehberi</text>
+```
 
 Note: Any change in server side (including change localization texts)
 requires recycle of the server application. We suggest to use Ctrl+F5 if
@@ -90,7 +98,9 @@ guide](Development-Guide-Angular.md)). We want to add phone book page
 to the main module. So, open **src\\app\\main\\main-routing.module.ts**
 (in the client side) and add a new route just below to the dashboard:
 
-    { path: 'phonebook', component: PhoneBookComponent }
+```json
+{ path: 'phonebook', component: PhoneBookComponent }
+```
 
 We get an error since we haven't defined PhoneBookComponent yet. Also,
 we ignored permission for now (will implement later).
@@ -101,22 +111,24 @@ Create a **phonebook** folder inside **src/app/main** folder and add a
 new typescript file (**phonebook.component.ts**) in the phonebook folder
 as shown below:
 
-    import { Component, Injector } from '@angular/core';
-    import { AppComponentBase } from '@shared/common/app-component-base';
-    import { appModuleAnimation } from '@shared/animations/routerTransition';
-    
-    @Component({
-        templateUrl: './phonebook.component.html',
-        animations: [appModuleAnimation()]
-    })
-    
-    export class PhoneBookComponent extends AppComponentBase {
-        constructor(
-            injector: Injector
-        ) {
-            super(injector);
-        }
+```javascript
+import { Component, Injector } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+
+@Component({
+    templateUrl: './phonebook.component.html',
+    animations: [appModuleAnimation()]
+})
+
+export class PhoneBookComponent extends AppComponentBase {
+    constructor(
+        injector: Injector
+    ) {
+        super(injector);
     }
+}
+```
 
 We inherited from **AppComponentBase** which provides some common
 functions and fields (like localization and access control) for us. It's
@@ -124,29 +136,33 @@ not required, but makes our job easier. Now, we can return back to
 **main-routing.module.ts** and add import statement for the newly
 created PhoneBookComponent class:
 
-    import { PhoneBookComponent } from './phonebook/phonebook.component';
+```javascript
+import { PhoneBookComponent } from './phonebook/phonebook.component';
+```
 
 As we declared in **phonebook.component.ts** we should create a
 **phonebook.component.html** view in the same phonebook folder:
 
-    <div [@routerTransition]>
-        <div class="m-subheader ">
-            <div class="d-flex align-items-center">
-                <div class="mr-auto col-sm-6">
-                    <h3 class="m-subheader__title m-subheader__title--separator">
-                        <span>{{l("PhoneBook")}}</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="m-content">
-            <div class="m-portlet m-portlet--mobile">
-                <div class="m-portlet__body">
-                    <p>PHONE BOOK CONTENT COMES HERE!</p>
-                </div>
+```html
+<div [@routerTransition]>
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto col-sm-6">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    <span>{{l("PhoneBook")}}</span>
+                </h3>
             </div>
         </div>
     </div>
+    <div class="m-content">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__body">
+                <p>PHONE BOOK CONTENT COMES HERE!</p>
+            </div>
+        </div>
+    </div>
+</div>
+```
 
 **l** (lower case 'L') function comes from **AppComponentBase** and used
 to easily localize texts. **\[@routerTransition\]** attribute is
@@ -155,35 +171,37 @@ required for page transition animation.
 And finally, Angular requires to relate every component to a **module**.
 So, we are making the following changes on the **main.module.ts**:
 
-    import { NgModule } from '@angular/core';
-    import { CommonModule } from '@angular/common';
-    import { FormsModule } from '@angular/forms';
-    
-    import { DashboardComponent } from './dashboard/dashboard.component';
-    import { PhoneBookComponent } from './phonebook/phonebook.component';
-    
-    import { ModalModule, TabsModule, TooltipModule } from 'ngx-bootstrap';
-    import { AppCommonModule } from '@app/shared/common/app-common.module';
-    import { UtilsModule } from '@shared/utils/utils.module';
-    import { MainRoutingModule } from './main-routing.module';
-    
-    @NgModule({
-        imports: [
-            CommonModule,
-            FormsModule,
-            ModalModule,
-            TabsModule,
-            TooltipModule,
-            AppCommonModule,
-            UtilsModule,
-            MainRoutingModule
-        ],
-        declarations: [
-          DashboardComponent,
-          PhoneBookComponent
-        ]
-    })
-    export class MainModule { }
+```javascript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PhoneBookComponent } from './phonebook/phonebook.component';
+
+import { ModalModule, TabsModule, TooltipModule } from 'ngx-bootstrap';
+import { AppCommonModule } from '@app/shared/common/app-common.module';
+import { UtilsModule } from '@shared/utils/utils.module';
+import { MainRoutingModule } from './main-routing.module';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        ModalModule,
+        TabsModule,
+        TooltipModule,
+        AppCommonModule,
+        UtilsModule,
+        MainRoutingModule
+    ],
+    declarations: [
+      DashboardComponent,
+      PhoneBookComponent
+    ]
+})
+export class MainModule { }
+```
 
 Added an **import** statement and added PhoneBookComponent to
 **declarations** array. Now, we can refresh the page to see the new
