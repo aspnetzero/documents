@@ -1,3 +1,5 @@
+# Extending Existing Entities
+
 ### Introduction
 
 This tutorial is a step by step guide to learn **how to add new
@@ -23,7 +25,7 @@ new property:
     public class User : AbpUser<User>
     {
         //...existing code
-
+    
         public virtual string Address { get; set; }
     }
 
@@ -78,7 +80,7 @@ UserListDto too:
     public class UserListDto : EntityDto<long>, IPassivable, IHasCreationTime
     {
         //...existing code
-
+    
         public string Address { get; set; }
     }
 
@@ -127,7 +129,7 @@ Address property on create/update:
     public class UserEditDto : IPassivable
     {
         //...existing code
-
+    
         public string Address { get; set; }
     }
 
@@ -182,15 +184,15 @@ Then we add a DbSet property for Edition entity to DbContext class defined in .E
     public class ProjectNameDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         public virtual DbSet<MyEdition> MyEditions { get; set; }
-
+    
         //...other entities
-
+    
         public ProjectNameDbContext()
             : base("Default")
         {
-
+    
         }
-
+    
         //...other codes
     }
 
@@ -232,11 +234,11 @@ This will create a new Entity Framework migration class as shown below:
                         new AnnotationValues(oldValue: null, newValue: "EntityFramework.DynamicFilters.DynamicFilterDefinition")
                     },
                 });
-
+    
             AddColumn("dbo.AbpEditions", "Price", c => c.Int(nullable: false, defaultValue: 0));
             AddColumn("dbo.AbpEditions", "Discriminator", c => c.String(nullable: false, maxLength: 128, defaultValue: "MyEdition"));
         }
-
+    
         public override void Down()
         {
             //...other code
@@ -300,7 +302,7 @@ EditionListDto too:
     public class EditionListDto : EntityDto, IHasCreationTime
     {
         //...existing code
-
+    
         public int Price { get; set; }
     }
 
@@ -347,7 +349,7 @@ should add Price property to EditionEditDto class:
     public class EditionEditDto
     {
         //...existing code
-
+    
         public int Price { get; set; }
     }
 
@@ -360,30 +362,30 @@ CreateEditionAsync method) and updating (in UpdateEditionAsync method)
 editions, we should change these code too:
 
     ///...
-
+    
     [AbpAuthorize(AppPermissions.Pages_Editions_Create)]
     protected virtual async Task CreateEditionAsync(CreateOrUpdateEditionDto input)
     {
         var edition = new MyEdition { DisplayName = input.Edition.DisplayName, Price = input.Edition.Price };
-
+    
         await _editionManager.CreateAsync(edition);
         await CurrentUnitOfWork.SaveChangesAsync(); //It's done to get Id of the edition.
-
+    
         await SetFeatureValues(edition, input.FeatureValues);
     }
-
+    
     [AbpAuthorize(AppPermissions.Pages_Editions_Edit)]
     protected virtual async Task UpdateEditionAsync(CreateOrUpdateEditionDto input)
     {
         Debug.Assert(input.Edition.Id != null, "input.Edition.Id should be set.");
-
+    
         var edition = (MyEdition)await _editionManager.GetByIdAsync(input.Edition.Id.Value);
         edition.DisplayName = input.Edition.DisplayName;
         edition.Price = input.Edition.Price;
-
+    
         await SetFeatureValues(edition, input.FeatureValues);
     }
-
+    
     //...
 
 Notice the highlighted areas. First, we should create **MyEdition**,

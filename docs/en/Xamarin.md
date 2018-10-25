@@ -1,4 +1,4 @@
-### Xamarin (Mobile) Application
+# Xamarin (Mobile) Application
 
 ASP.NET Zero includes a basic Xamarin application source code that is fully integrated to the web backend and uses same APIs, permissions, localizations, settings and so on. You can get it as the base for your integrated mobile solution for your application.
 

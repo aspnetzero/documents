@@ -1,4 +1,4 @@
-### ASP.NET Core & Angular
+# ASP.NET Core & Angular
 
 ASP.NET Zero uses the **latest ASP.NET Core & Angular** frameworks to build a **Single Page Application** (SPA). Use it to jump start your business application.
 

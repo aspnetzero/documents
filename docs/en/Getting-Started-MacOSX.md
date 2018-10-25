@@ -1,3 +1,5 @@
+# Getting Started
+
 ### Running ASP.NET Zero on Mac
 
  -  Install Visual Studio for Mac: https://www.microsoft.com/net/download/macos
@@ -10,7 +12,7 @@ Install latest:
  -  yarn, in my case version 1.6.0  (https://yarnpkg.com/lang/en/docs/install/#mac-stable0, I used HomeBrew)
  -  and I use nvm with node version 8.11.1  (https://github.com/creationix/nvm)
  -  and angular cli (https://cli.angular.io/)
-  
+
 Then, In the terminal, go to base_folder/angular and
 
 	> yarn
@@ -25,7 +27,7 @@ I used a SQL database on Azure, set up in Azure Portal, and there got connection
 
 	"ConnectionStrings": {
 	      "Default": "Server=tcp:research1server.database.windows.net,1433;Initial Catalog={my db name};Persist Security Info=False;User ID={my_id};Password={my password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"}, 
-	
+
 Note you have to get your IPv4 address (e.g. https://www.whatismyip.com/) and in Azure Portal  click on your database, then the "Set server firewall" button, then create a rule for your IP address (or range of addresses) and Save.  Otherwise when you start-up you will see a Connection Refused error in the browser console.
 
 Next we open app in Visual Studio for Mac.  For starters, I opened the Web Solution only, under base_folder/aspnet-core
@@ -39,7 +41,7 @@ Go here: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet and s
 Edit the Web.Host project file (right click project name and there is an Tools->Edit File option) and add following:
 
 	<ItemGroup> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" /> </ItemGroup>
-	
+
 Then back in Terminal:
 
 	> dotnet add package Microsoft.EntityFrameworkCore.Design 
@@ -57,7 +59,7 @@ Run the project in Visual Studio for Mac, it should take you to http://localhost
 Then go to base_folder/angular and:
 
 	> npm start
-	
+
 Then navigate in browser to http://localhost:4200/
 
 And first it did not work for me because I had to set up the firewall rule for Azure, as above.
@@ -75,7 +77,7 @@ There is no Package Manager Console in Visual Studio for Mac, so in Terminal you
 Or Update-Database:
 
 	> dotnet ef database update
-	
+
 When you need to update service-proxies.ts then from angular directory after/while Web.Host project is up and running:
 
 	/node_modules/.bin/nswag run

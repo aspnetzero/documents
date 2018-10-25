@@ -1,6 +1,7 @@
+# Development Guide
 
- <img src="images/RadToolCarsTable2.jpg" alt="Generated User Interface" class="img-thumbnail" width="1369" height="612" />
-  
+<img src="images/RadToolCarsTable2.jpg" alt="Generated User Interface" class="img-thumbnail" width="1369" height="612" />
+
 ### Introduction
 
  In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new entity. It creates all the related layers (including UI) by defining an entity.
@@ -12,7 +13,7 @@
  If your project version is below 5.1.0, you also have to copy the AspNetZeroRadTool folder to your own project from a newly downloaded 5.1.0+ project.
 
  This tool doesn't support versions before v5.0.0.
- 
+
 ### How To Use It?
 
  The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
@@ -34,7 +35,7 @@ On Mac and Linux, you have to manually do some of the work that is done by the e
 ### How To Edit Pre-defined Templates Or Create A New Template?
 
  The templates are inside "/AspNetZeroRadTool/FileTemplates" directory in your project's root directory. Every template is split into three files: "MainTemplate.txt", "PartialTemplates.txt" and "TemplateInfo.txt". If you want to edit any file, just copy it in same directory and change it's extension to ".custom.txt" from ".txt".  For example, you can create "MainTemplate.custom.txt" to override "MainTemplate.txt" in same directory. Please don't make any changes to the original templates.
- 
+
  To create a new template, do the same process as editing a pre-defined template. The tool doesn't know any info about templates and discovers them in the "/FileTemplates" directory every time it is run. This means your new template will be processed like the pre-defined ones. (".custom" extension is not needed for new templates.)
 
  You can request help from our support team on [github](github.com/aspnetzero/aspnet-zero-core)  or  [forum](https://forum.aspnetboilerplate.com/viewforum.php?f=5)  if you are struggling.
@@ -113,9 +114,9 @@ On Mac and Linux, you have to manually do some of the work that is done by the e
 
  -   (AppArea)NavigationProvider.cs
  -   (AppArea)PageNames.cs
- 
+
   (Lookup files are created per foreign key.)
- 
+
 
  <img src="images/RadToolCarsTable3.jpg" alt="Generated User Interface" class="img-thumbnail" width="1312" height="440" />
  <img src="images/RadToolEditModal.jpg" alt="Generated User Interface" class="img-thumbnail" width="1192" height="677" />

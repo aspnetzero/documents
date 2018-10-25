@@ -1,3 +1,5 @@
+# Step by Step Development
+
 ### Introduction
 
 In this document, we will create a sample **phonebook application**
@@ -139,11 +141,11 @@ Creating an empty Controller file, **index.js** under
             '$scope',
             function ($scope) {
                 var vm = this;
-
+    
                 $scope.$on('$viewContentLoaded', function () {
                     Metronic.initAjax();
                 });
-
+    
                 //...
             }
         ]);
@@ -175,9 +177,9 @@ Creating an empty view, **index.cshtml** under
         </div>
         <div class="portlet light">
             <div class="portlet-body">
-
+    
                 <p>PHONE BOOK CONTENT COMES HERE!</p>
-
+    
             </div>
         </div>
     </div>
@@ -207,15 +209,15 @@ represent a person in phone book as shown below:
         public const int MaxNameLength = 32;
         public const int MaxSurnameLength = 32;
         public const int MaxEmailAddressLength = 255;
-
+    
         [Required]
         [MaxLength(MaxNameLength)]
         public virtual string Name { get; set; }
-
+    
         [Required]
         [MaxLength(MaxSurnameLength)]
         public virtual string Surname { get; set; }
-
+    
         [MaxLength(MaxEmailAddressLength)]
         public virtual string EmailAddress { get; set; }
     }
@@ -237,15 +239,15 @@ class defined in **.EntityFramework** project.
     public class PhoneBookDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         public virtual IDbSet<Person> Persons { get; set; }
-
+    
         //...other entities
-
+    
         public PhoneBookDbContext()
             : base("Default")
         {
-
+    
         }
-
+    
         //...other codes
     }
 
@@ -290,9 +292,9 @@ This command will add a **migration class** named
                     { "DynamicFilter_Person_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
                 })
                 .PrimaryKey(t => t.Id);
-
+    
         }
-
+    
         public override void Down()
         {
             DropTable("dbo.PbPersons",
@@ -323,12 +325,12 @@ shown below:
     public class InitialPeopleCreator
     {
         private readonly PhoneBookDbContext _context;
-
+    
         public InitialPeopleCreator(PhoneBookDbContext context)
         {
             _context = context;
         }
-
+    
         public void Create()
         {
             var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.com");
@@ -342,7 +344,7 @@ shown below:
                         EmailAddress = "douglas.adams@fortytwo.com"
                     });
             }
-
+    
             var asimov = _context.Persons.FirstOrDefault(p => p.EmailAddress == "isaac.asimov@foundation.org");
             if (asimov == null)
             {
@@ -394,14 +396,14 @@ below:
     {
         public string Filter { get; set; }
     }
-
+    
     [AutoMapFrom(typeof(Person))]
     public class PersonListDto : FullAuditedEntityDto
     {
         public string Name { get; set; }
-
+    
         public string Surname { get; set; }
-
+    
         public string EmailAddress { get; set; }
     }
 
@@ -418,12 +420,12 @@ After defining interface, we can implement it as shown below:
     public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
     {
         private readonly IRepository<Person> _personRepository;
-
+    
         public PersonAppService(IRepository<Person> personRepository)
         {
             _personRepository = personRepository;
         }
-
+    
         public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
         {
             var persons = _personRepository
@@ -437,7 +439,7 @@ After defining interface, we can implement it as shown below:
                 .OrderBy(p => p.Name)
                 .ThenBy(p => p.Surname)
                 .ToList();
-
+    
             return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
         }
     }
@@ -485,18 +487,18 @@ first test to verify getting people without any filter:
     public class PersonAppService_Tests : AppTestBase
     {
         private readonly IPersonAppService _personAppService;
-
+    
         public PersonAppService_Tests()
         {
             _personAppService = Resolve<IPersonAppService>();
         }
-
+    
         [Fact]
         public void Should_Get_All_People_Without_Any_Filter()
         {
             //Act
             var persons = _personAppService.GetPeople(new GetPeopleInput());
-
+    
             //Assert
             persons.Items.Count.ShouldBe(2);
         }
@@ -536,7 +538,7 @@ test to get filtered people:
             {
                 Filter = "adams"
             });
-
+    
         //Assert
         persons.Items.Count.ShouldBe(1);
         persons.Items[0].Name.ShouldBe("Douglas");
@@ -597,9 +599,9 @@ show on the view.
             '$scope', 'abp.services.app.person',
             function($scope, personService) {
                 var vm = this;
-
+    
                 vm.persons = [];
-
+    
                 personService.getPeople({}).then(function(result) {
                     vm.persons = result.data.items;
                 });
@@ -622,7 +624,7 @@ below:
     <div ng-controller="tenant.views.phonebook.index as vm">
     ...            
                 <h3>@L("AllPeople")</h3>
-
+    
                 <div class="list-group">
                     <a href="javascript:;" class="list-group-item" ng-repeat="person in vm.persons">
                         <h4 class="list-group-item-heading">
@@ -663,11 +665,11 @@ method:
         [Required]
         [MaxLength(Person.MaxNameLength)]
         public string Name { get; set; }
-
+    
         [Required]
         [MaxLength(Person.MaxSurnameLength)]
         public string Surname { get; set; }
-
+    
         [EmailAddress]
         [MaxLength(Person.MaxEmailAddressLength)]
         public string EmailAddress { get; set; }
@@ -712,7 +714,7 @@ below:
                 Surname = "Nash",
                 EmailAddress = "john.nash@abeautifulmind.com"
             });
-
+    
         //Assert
         UsingDbContext(
             context =>
@@ -776,22 +778,22 @@ View code is shown below: 
                 </h4>
             </div>
             <div class="modal-body">
-
+    
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                     <input class="form-control" type="text" name="Name" ng-model="vm.person.name" required maxlength="@Person.MaxNameLength">
                     <label>@L("Name")</label>
                 </div>
-
+    
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                     <input type="text" name="Surname" class="form-control" ng-model="vm.person.surname" required maxlength="@Person.MaxSurnameLength">
                     <label>@L("Surname")</label>
                 </div>
-
+    
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                     <input type="email" name="EmailAddress" class="form-control" ng-model="vm.person.emailAddress" maxlength="@Person.MaxEmailAddressLength">
                     <label>@L("EmailAddress")</label>
                 </div>
-
+    
             </div>
             <div class="modal-footer">
                 <button ng-disabled="vm.saving" type="button" class="btn btn-default" ng-click="vm.cancel()">@L("Cancel")</button>
@@ -817,10 +819,10 @@ AngularJS **controller** of this view is shown below:
             '$scope', '$uibModalInstance', 'abp.services.app.person',
             function ($scope, $uibModalInstance, personService) {
                 var vm = this;
-
+    
                 vm.saving = false;
                 vm.person = {};
-
+    
                 vm.save = function () {
                     vm.saving = true;
                     personService.createPerson(vm.person).then(function () {
@@ -830,7 +832,7 @@ AngularJS **controller** of this view is shown below:
                         vm.saving = false;
                     });
                 };
-
+    
                 vm.cancel = function () {
                     $uibModalInstance.dismiss();
                 };
@@ -857,27 +859,27 @@ We return to phone book view and add a **button** to open this modal:
             '$scope', '$uibModal', 'abp.services.app.person',
             function ($scope, $uibModal, personService) {
                 var vm = this;
-
+    
                 vm.persons = [];
-
+    
                 function getPeople() {
                     personService.getPeople({}).then(function (result) {
                         vm.persons = result.data.items;
                     });
                 }
-
+    
                 vm.openCreatePersonModal = function () {
                     var modalInstance = $uibModal.open({
                         templateUrl: '~/App/tenant/views/phonebook/createPersonModal.cshtml',
                         controller: 'tenant.views.phonebook.createPersonModal as vm',
                         backdrop: 'static'
                     });
-
+    
                     modalInstance.result.then(function () {
                         getPeople();
                     });
                 };
-
+    
                 getPeople();
             }
         ]);
@@ -1208,14 +1210,14 @@ Let's start by creating a new Entity, **Phone** in **.Core** project:
     public class Phone : CreationAuditedEntity<long>
     {
         public const int MaxNumberLength = 16;
-
+    
         [ForeignKey("PersonId")]
         public virtual Person Person { get; set; }
         public virtual int PersonId { get; set; }
-
+    
         [Required]
         public virtual PhoneType Type { get; set; }
-
+    
         [Required]
         [MaxLength(MaxNumberLength)]
         public virtual string Number { get; set; }
@@ -1231,7 +1233,7 @@ We added a **Phones** collection to the People:
     public class Person : FullAuditedEntity
     {
         //...other properties
-
+    
         public virtual ICollection<Phone> Phones { get; set; }
     }
 
@@ -1275,9 +1277,9 @@ table:
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PbPersons", t => t.PersonId, cascadeDelete: true)
                 .Index(t => t.PersonId);
-
+    
         }
-
+    
         public override void Down()
         {
             DropForeignKey("dbo.PbPhones", "PersonId", "dbo.PbPersons");
@@ -1292,7 +1294,7 @@ example **phone numbers** for example people:
     public class InitialPeopleAndPhoneCreator
     {
         //...
-
+    
         public void Create()
         {
             var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.net");
@@ -1311,7 +1313,7 @@ example **phone numbers** for example people:
                                     }
                     });
             }
-
+    
             var asimov = _context.Persons.FirstOrDefault(p => p.EmailAddress == "isaac.asimov@foundation.org");
             if (asimov == null)
             {
@@ -1351,19 +1353,19 @@ First, we're changing **PersonListDto** to contain a list of phones:
     public class PersonListDto : FullAuditedEntityDto
     {
         public string Name { get; set; }
-
+    
         public string Surname { get; set; }
-
+    
         public string EmailAddress { get; set; }
-
+    
         public Collection<PhoneInPersonListDto> Phones { get; set; }
     }
-
+    
     [AutoMapFrom(typeof(Phone))]
     public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
     {
         public PhoneType Type { get; set; }
-
+    
         public string Number { get; set; }
     }
 
@@ -1384,7 +1386,7 @@ entity. Now, we can change GetPeople method to get Phones from database:
             .OrderBy(p => p.Name)
             .ThenBy(p => p.Surname)
             .ToList();
-
+    
         return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
     }
 
@@ -1410,10 +1412,10 @@ methods here. AddPhoneInput DTO is shown below:
     {
         [Range(1, int.MaxValue)]
         public int PersonId { get; set; }
-
+    
         [Required]
         public PhoneType Type { get; set; }
-
+    
         [Required]
         [MaxLength(Phone.MaxNumberLength)]
         public string Number { get; set; }
@@ -1425,16 +1427,16 @@ Now, we can implement these methods:
     {
         await _phoneRepository.DeleteAsync(input.Id);
     }
-
+    
     public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
     {
         var person = _personRepository.Get(input.PersonId);
-
+    
         var phone = input.MapTo<Phone>();
         person.Phones.Add(phone);
-
+    
         await CurrentUnitOfWork.SaveChangesAsync();
-
+    
         return phone.MapTo<PhoneInPersonListDto>();
     }
 
@@ -1536,7 +1538,7 @@ related person and allows adding a new phone.
 Added following codes into the AngularJS controller:
 
     vm.editingPerson = null;
-
+    
     vm.editPerson = function(person) {
         if (person == vm.editingPerson) {
             vm.editingPerson = null;
@@ -1544,7 +1546,7 @@ Added following codes into the AngularJS controller:
             vm.editingPerson = person;
         }
     };
-
+    
     vm.getPhoneTypeAsString = function(typeAsNumber) {
         switch (typeAsNumber) {
         case 0:
@@ -1557,7 +1559,7 @@ Added following codes into the AngularJS controller:
             return '?';
         }
     };
-
+    
     vm.deletePhone = function(phone, person) {
         personService.deletePhone({
             id: phone.id
@@ -1566,15 +1568,15 @@ Added following codes into the AngularJS controller:
             person.phones = _.without(person.phones, phone);
         });
     };
-
+    
     vm.addPhone = function(phone, person) {
         if (!phone || !phone.type || !phone.number) {
             abp.message.warn('Please select a phone type and enter a number!');
             return;
         }
-
+    
         phone.personId = person.id;
-
+    
         personService.addPhone(phone)
             .then(function(result) {
                 abp.notify.success(app.localize('SavedSuccessfully'));
@@ -1610,7 +1612,7 @@ should declare that Person entity must have a tenant using
     public class Person : FullAuditedEntity, IMustHaveTenant
     {
         public virtual int TenantId { get; set; }
-
+    
         //...other properties
     }
 

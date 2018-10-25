@@ -1,3 +1,5 @@
+# Step by Step Development
+
 ### Introduction
 
 In this document, we will create a sample **Xamarin phonebook application** step by step integrated with ASP.NET Zero website. Be aware that only ASP.NET Core version is supported.
@@ -68,32 +70,32 @@ like this:
         {
             return await ApiClient.GetAsync<ListResultDto<PersonListDto>>(GetEndpoint(nameof(GetPeople)), input);
         }
-
+    
         public async Task CreatePerson(CreatePersonInput input)
         {
             await ApiClient.PostAync(GetEndpoint(nameof(CreatePerson)), input);
         }
-
+    
         public async Task DeletePerson(EntityDto input)
         {
             await ApiClient.DeleteAsync(GetEndpoint(nameof(DeletePerson)), input);
         }
-
+    
         public async Task DeletePhone(EntityDto<long> input)
         {
             await ApiClient.DeleteAsync(GetEndpoint(nameof(DeletePhone)), input);
         }
-
+    
         public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
         {
             return await ApiClient.PostAync<PhoneInPersonListDto>(GetEndpoint(nameof(AddPhone)), input);
         }
-
+    
         public async Task EditPerson(EditPersonInput input)
         {
             await ApiClient.PostAync(GetEndpoint(nameof(EditPerson)), input);
         }
-
+    
         public async Task<GetPersonForEditOutput> GetPersonForEdit(IEntityDto input)
         {
             return await ApiClient.GetAsync<GetPersonForEditOutput>(GetEndpoint(nameof(GetPersonForEdit)), input);
@@ -331,7 +333,7 @@ Never wait the main. Do not run blocking procedures in constructor.
     <ContentPage ...
         xmlns:behaviors="clr-namespace:Acme.PhoneBookDemo.Behaviors;assembly=Acme.PhoneBookDemo.Mobile.Shared"
      ...>
-
+    
         <ContentPage.Content>
             <ListView HasUnevenRows="True"
                       SeparatorVisibility="None"
@@ -344,13 +346,13 @@ Never wait the main. Do not run blocking procedures in constructor.
                 </ListView.ItemTemplate>
             </ListView>
         </ContentPage.Content>
-
+    
         <ContentPage.Behaviors>
             <behaviors:EventHandlerBehavior EventName="Appearing">
                 <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
             </behaviors:EventHandlerBehavior>
         </ContentPage.Behaviors>
-
+    
     </ContentPage>
 
 The final look of **PeopleView.xaml** is like below:
@@ -364,7 +366,7 @@ The final look of **PeopleView.xaml** is like below:
                  x:Class="Acme.PhoneBookDemo.Views.PeopleView"
                  Title="{extensions:Translate PhoneBook}"
                  base:ViewManager.AutoWireViewModel="true">
-
+    
         <ContentPage.Content>
             <StackLayout>
                 <ListView HasUnevenRows="True"
@@ -379,13 +381,13 @@ The final look of **PeopleView.xaml** is like below:
                 </ListView>
             </StackLayout>
         </ContentPage.Content>
-
+    
         <ContentPage.Behaviors>
             <behaviors:EventHandlerBehavior EventName="Appearing">
                 <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
             </behaviors:EventHandlerBehavior>
         </ContentPage.Behaviors>
-
+    
     </ContentPage>
 
 ##### Creating People View-Model
@@ -420,11 +422,11 @@ The complete definition of **PersonListModel** is like below:
     public class PersonListModel : PersonListDto, INotifyPropertyChanged
     {
         public string FullName => Name + " " + Surname;
-
+    
         public new ObservableRangeCollection<PhoneInPersonListDto> Phones { get; set; }
-
+    
         public event PropertyChangedEventHandler PropertyChanged;
-
+    
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -453,12 +455,12 @@ extension to create an async command. The final look of
         public ICommand PageAppearingCommand => HttpRequestCommand.Create(PageAppearingAsync);
         private readonly IPersonAppService _personAppService;
         private ObservableRangeCollection<PersonListModel> _persons = new ObservableRangeCollection<PersonListModel>();
-
+    
         public PeopleViewModel(IPersonAppService personAppService)
         {
             _personAppService = personAppService;
         }
-
+    
         public ObservableRangeCollection<PersonListModel> Persons
         {
             get => _persons;
@@ -468,12 +470,12 @@ extension to create an async command. The final look of
                 RaisePropertyChanged(() => Persons);
             }
         }
-
+    
         public async Task PageAppearingAsync()
         {
             await FetchDataAsync();
         }
-
+    
         public async Task FetchDataAsync(string filterText = null)
         {
             await SetBusyAsync(async () =>
@@ -482,7 +484,7 @@ extension to create an async command. The final look of
                 {
                     Filter = filterText
                 });
-
+    
            var personListModels = ObjectMapper.Map<IEnumerable<PersonListModel>>(result.Items);
                 Persons.ReplaceRange(personListModels);
             });
@@ -532,7 +534,7 @@ We've specified the delay in **PageDefaults.SearchDelayMilliseconds** as
 1 second. If no new keypress in 1 second, it'll start to search.
 
     private string _filterText;
-
+    
     public string FilterText
     {
         get => _filterText;
@@ -542,7 +544,7 @@ We've specified the delay in **PageDefaults.SearchDelayMilliseconds** as
             AsyncRunner.Run(SearchWithDelayAsync(_filterText));
         }
     }
-
+    
     private async Task SearchWithDelayAsync(string filterText)
     {
         if (!string.IsNullOrEmpty(filterText))
@@ -553,7 +555,7 @@ We've specified the delay in **PageDefaults.SearchDelayMilliseconds** as
                 return;
             }
         }
-
+    
         await FetchDataAsync(filterText);
     }
 
@@ -711,7 +713,7 @@ have an empty view-model. Do the following steps in
     transfer with server.
 
         private readonly IPersonAppService _personAppService;
-
+    
         public PersonDetailsViewModel(IPersonAppService personAppService)
         {
             _personAppService = personAppService;
@@ -731,10 +733,10 @@ have an empty view-model. Do the following steps in
             {
                 await CreateNewPersonAsync();
             }
-
+    
             await NavigationService.GoBackAsync();
         }
-
+    
         private async Task UpdateExistingPersonAsync()
         {
             var editPersonInput = new EditPersonInput
@@ -744,10 +746,10 @@ have an empty view-model. Do the following steps in
                 Surname = Model.Surname,
                 Id = Model.Id
             };
-
+    
             await _personAppService.EditPerson(editPersonInput);
         }
-
+    
         private async Task CreateNewPersonAsync()
         {
             var createPersonInput = new CreatePersonInput
@@ -756,7 +758,7 @@ have an empty view-model. Do the following steps in
                 Name = Model.Name,
                 Surname = Model.Surname,
             };
-
+    
             await _personAppService.CreatePerson(createPersonInput);
         }
 
@@ -800,7 +802,7 @@ have an empty view-model. Do the following steps in
                 RaisePropertyChanged(() => IsExistingPerson);
             }
         }
-
+    
         private bool _isAddPhoneButtonEnabled;
         public bool IsAddPhoneButtonEnabled
         {
@@ -811,12 +813,12 @@ have an empty view-model. Do the following steps in
                 RaisePropertyChanged(() => IsAddPhoneButtonEnabled);
             }
         }
-
+    
         public override async Task InitializeAsync(object navigationData)
         {
             IsExistingPerson = navigationData != null;
             IsAddPhoneButtonEnabled = false;
-
+    
             if (IsExistingPerson)
             {
                 Model = (PersonListModel)navigationData;
@@ -882,7 +884,7 @@ will work fine.
         {
             await GotoPersonDetailsAsync(null);
         }
-
+    
          public PersonListModel SelectedPerson
                 {
                     get => _selectedPerson;
@@ -893,7 +895,7 @@ will work fine.
                         AsyncRunner.Run(GotoPersonDetailsAsync(_selectedPerson));
                     }
                 }
-
+    
         private async Task GotoPersonDetailsAsync(PersonListModel person)
         {
             await NavigationService.SetDetailPageAsync(typeof(PersonDetailsView), person, pushToStack: true);
@@ -912,7 +914,7 @@ easy. Open **PersonDetailsViewModel.cs** and add **Validate()** method.
         {
             return true;
         }
-
+    
         UserDialogHelper.Warn(validationResult.ConsolidatedMessage);
         return false;
     }
@@ -929,15 +931,15 @@ Then use **Validate()** method in **UpdateExistingPersonAsync()** and in
             Surname = Model.Surname,
             Id = Model.Id
         };
-
+    
         if (!Validate(editPersonInput))
         {
             return;
         }
-
+    
         await _personAppService.EditPerson(editPersonInput);
     }
-
+    
     private async Task CreateNewPersonAsync()
     {
         var createPersonInput = new CreatePersonInput
@@ -946,12 +948,12 @@ Then use **Validate()** method in **UpdateExistingPersonAsync()** and in
             Name = Model.Name,
             Surname = Model.Surname,
         };
-
+    
         if (!Validate(createPersonInput))
         {
             return;
         }
-
+    
         await _personAppService.CreatePerson(createPersonInput);
     }
 
@@ -977,30 +979,30 @@ email address**.
         <ContentPage.Content>
             <ListView HasUnevenRows="True"
                       ItemsSource="{Binding Model.Phones}" Margin="10">
-
+    
                 <ListView.Header>
                     <StackLayout>
-
+    
                         <controls:CardView Margin="0,10" >
                             <StackLayout Padding="10" Spacing="0" >
                                 <controls:LabelSection Text="{extensions:Translate PersonalInformations}"/>
                                 <controls:Divider Margin="0,0,0,5"/>
-
+    
                                 <Label Text="{extensions:Translate Name}"></Label>
                                 <Entry Text="{Binding Model.Name, Mode=TwoWay}"/>
-
+    
                                 <Label Text="{extensions:Translate Surname}"></Label>
                                 <Entry Text="{Binding Model.Surname, Mode=TwoWay}"/>
-
+    
                                 <Label Text="{extensions:Translate EmailAddress}"></Label>
                                 <Entry Text="{Binding Model.EmailAddress, Mode=TwoWay}" Margin="0,0,0,10"/>
-
+    
                                 <!-- SAVE BUTTON -->
                                 <Button Margin="{StaticResource ActionButtonMargin}"
                                             Style="{StaticResource ActionButton}"
                                             Text="{extensions:Translate Save}"
                                             Command="{Binding SavePersonCommand}"/>
-
+    
                                 <!-- DELETE BUTTON -->
                                 <Button Margin="{StaticResource ActionButtonMargin}"
                                             IsVisible="{Binding IsDeleteButtonVisible}"
@@ -1032,7 +1034,7 @@ email address**.
         using Acme.PhoneBookDemo.UI;
         using Acme.PhoneBookDemo.Validations;
         using Acme.PhoneBookDemo.ViewModels.Base;
-
+    
         namespace Acme.PhoneBookDemo.ViewModels
         {
             public class PersonDetailsViewModel : XamarinViewModel
@@ -1041,10 +1043,10 @@ email address**.
                 private readonly IPermissionService _permissionService;
                 private bool _isNewPerson;
                 private bool _isDeleteButtonVisible;
-
+    
                 public ICommand SavePersonCommand => AsyncCommand.Create(SavePersonAsync);
                 public ICommand DeletePersonCommand => AsyncCommand.Create(DeletePersonAsync);
-
+    
                 public bool IsDeleteButtonVisible
                 {
                     get => _isDeleteButtonVisible;
@@ -1054,36 +1056,36 @@ email address**.
                         RaisePropertyChanged(() => IsDeleteButtonVisible);
                     }
                 }
-
+    
                 private async Task DeletePersonAsync()
                 {
                     var accepted = await UserDialogs.Instance.ConfirmAsync(L.Localize("UserDeleteWarningMessage", Model.FullName),
                         L.Localize("AreYouSure"), L.Localize("YesDelete"), L.Localize("Cancel"));
-
+    
                     if (!accepted)
                     {
                         return;
                     }
-
+    
                     await SetBusyAsync(async () =>
                     {
                         await _personAppService.DeletePerson(new EntityDto(Model.Id));
                         await NavigationService.GoBackAsync();
                     });
                 }
-
+    
                 ...
                 public PersonDetailsViewModel(IPersonAppService personAppService, IPermissionService permissionService)
                 {
                     _personAppService = personAppService;
                     _permissionService = permissionService;
                 }
-
+    
                 public override async Task InitializeAsync(object navigationData)
                 {
                     IsExistingPerson = navigationData != null;
                     IsAddPhoneButtonEnabled = false;
-
+    
                     if (IsExistingPerson)
                     {
                         Model = (PersonListModel)navigationData;
@@ -1171,7 +1173,7 @@ Let's create **DeletePhoneNumberCommand** in the view-model. Open
 **PersonDetailsViewModel.cs** and add these methods and property.
 
     public ICommand DeletePhoneNumberCommand => new Command<PhoneInPersonListDto>(async phone => await DeletePhoneNumberAsync(phone));
-
+    
     private async Task DeletePhoneNumberAsync(PhoneInPersonListDto phone)
     {
         await SetBusyAsync(async () =>
@@ -1203,30 +1205,30 @@ To add new phone numbers, add a new CardView to
         <ContentPage.Content>
             <ListView HasUnevenRows="True"
                       ItemsSource="{Binding Model.Phones}" Margin="10">
-
+    
                 <ListView.Header>
                     <StackLayout>
-
+    
                         <controls:CardView Margin="0,10" >
                             <StackLayout Padding="10" Spacing="0" >
                                 <controls:LabelSection Text="{extensions:Translate PersonalInformations}"/>
                                 <controls:Divider Margin="0,0,0,5"/>
-
+    
                                 <Label Text="{extensions:Translate Name}"></Label>
                                 <Entry Text="{Binding Model.Name, Mode=TwoWay}"/>
-
+    
                                 <Label Text="{extensions:Translate Surname}"></Label>
                                 <Entry Text="{Binding Model.Surname, Mode=TwoWay}"/>
-
+    
                                 <Label Text="{extensions:Translate EmailAddress}"></Label>
                                 <Entry Text="{Binding Model.EmailAddress, Mode=TwoWay}" Margin="0,0,0,10"/>
-
+    
                                 <!-- SAVE BUTTON -->
                                 <Button Margin="{StaticResource ActionButtonMargin}"
                                         Style="{StaticResource ActionButton}"
                                         Text="{extensions:Translate Save}"
                                         Command="{Binding SavePersonCommand}"/>
-
+    
                                 <!-- DELETE BUTTON -->
                                 <Button Margin="{StaticResource ActionButtonMargin}"
                                         IsVisible="{Binding IsDeleteButtonVisible}"
@@ -1235,19 +1237,19 @@ To add new phone numbers, add a new CardView to
                                         Command="{Binding DeletePersonCommand}"/>
                             </StackLayout>
                         </controls:CardView>
-
+    
                         <controls:CardView Margin="0" IsVisible="{Binding IsExistingPerson}" >
                             <StackLayout Padding="10" Spacing="0">
-
+    
                                 <controls:LabelSection Text="{extensions:Translate PhoneNumber}"/>
                                 <controls:Divider Margin="0,0,0,5"/>
-
+    
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="0.3*"/>
                                         <ColumnDefinition Width="0.7*"/>
                                     </Grid.ColumnDefinitions>
-
+    
                                     <Picker Title="{extensions:Translate Type}"
                                             ItemsSource="{Binding PhoneTypes}"
                                             HorizontalOptions="FillAndExpand"
@@ -1256,7 +1258,7 @@ To add new phone numbers, add a new CardView to
                                            Grid.Column="1"
                                            Placeholder="{extensions:Translate PhoneNumber}"/>
                                 </Grid>
-
+    
                                 <!-- ADD PHONE BUTTON -->
                                 <Button Margin="{StaticResource ActionButtonMargin}"
                                         Style="{StaticResource ActionButton}"
@@ -1264,10 +1266,10 @@ To add new phone numbers, add a new CardView to
                                         Command="{Binding AddPhoneNumberCommand}"
                                         CommandParameter="{Binding Model.Id}"
                                         IsEnabled="{Binding IsAddPhoneButtonEnabled}"/>
-
+    
                             </StackLayout>
                         </controls:CardView>
-
+    
                     </StackLayout>
                 </ListView.Header>
 
@@ -1276,10 +1278,10 @@ And we will add the view-model codes to the
 
     public List<string> PhoneTypes { get; } = Enum.GetNames(typeof(PhoneType)).ToList();
     public ICommand AddPhoneNumberCommand => new Command<int>(async personId => await AddPhoneNumberAsync(personId) , _ => IsAddPhoneButtonEnabled);
-
+    
     private string _newPhoneNumber;
     private string _selectedPhoneType = PhoneType.Mobile.ToString();
-
+    
     public string SelectedPhoneType
     {
         get => _selectedPhoneType;
@@ -1289,7 +1291,7 @@ And we will add the view-model codes to the
             RaisePropertyChanged(() => SelectedPhoneType);
         }
     }
-
+    
     public string NewPhoneNumber
     {
         get => _newPhoneNumber;
@@ -1300,7 +1302,7 @@ And we will add the view-model codes to the
             IsAddPhoneButtonEnabled = !string.IsNullOrWhiteSpace(_newPhoneNumber);
         }
     }
-
+    
     private async Task AddPhoneNumberAsync(int personId)
     {
         var input = new AddPhoneInput
@@ -1309,12 +1311,12 @@ And we will add the view-model codes to the
             PersonId = personId,
             Type = (PhoneType)Enum.Parse(typeof(PhoneType), SelectedPhoneType)
         };
-
+    
         if (!Validate(input))
         {
             return;
         }
-
+    
         await SetBusyAsync(async () =>
         {
             var phone = await _personAppService.AddPhone(input);

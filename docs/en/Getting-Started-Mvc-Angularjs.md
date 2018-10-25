@@ -1,3 +1,5 @@
+# Getting Started
+
 This document is aimed to create and run an ASP.NET Zero based project
 in just 5 minutes. It's assumed that you already [purchased](/Prices)
 and created your ASP.NET Zero account.

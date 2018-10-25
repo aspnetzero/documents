@@ -1,4 +1,4 @@
-### ASP.NET Core MVC & JQuery
+# ASP.NET Core MVC & JQuery
 
 ASP.NET Zero uses the **latest ASP.NET Core MVC** to build an MVC web application using JQuery as the main client side library. Use it to jump start your business application.
 

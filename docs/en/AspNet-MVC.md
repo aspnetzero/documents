@@ -1,4 +1,4 @@
-### ASP.NET MVC 5.x & JQuery
+# ASP.NET MVC 5.x & JQuery
 
 If you want to use previous technologies, ASP.NET Zero can provide a base solution based on the ASP.NET MVC 5.x platform with JQuery as the main client side library. Use it to jump start your business application.
 

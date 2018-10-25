@@ -1,3 +1,5 @@
+# Step by Step Development
+
 ### Introduction
 
 In this document, we will create a sample **phonebook application**
@@ -126,11 +128,11 @@ Creating an empty view, **Index.cshtml** under
 **Areas/Mpa/Views/PhoneBook** folder:
 
     @using Acme.PhoneBook.Web.Navigation
-
+    
     @{
         ViewBag.CurrentPageName = PageNames.App.Tenant.PhoneBook;
     }
-
+    
     <div class="row margin-bottom-5">
         <div class="col-xs-12">
             <div class="page-head">
@@ -142,12 +144,12 @@ Creating an empty view, **Index.cshtml** under
             </div>
         </div>
     </div>
-
+    
     <div class="portlet light">
         <div class="portlet-body">
-
+    
             <p>PHONE BOOK CONTENT COMES HERE!</p>
-
+    
         </div>
     </div>
 
@@ -172,15 +174,15 @@ represent a person in phone book as shown below:
         public const int MaxNameLength = 32;
         public const int MaxSurnameLength = 32;
         public const int MaxEmailAddressLength = 255;
-
+    
         [Required]
         [MaxLength(MaxNameLength)]
         public virtual string Name { get; set; }
-
+    
         [Required]
         [MaxLength(MaxSurnameLength)]
         public virtual string Surname { get; set; }
-
+    
         [MaxLength(MaxEmailAddressLength)]
         public virtual string EmailAddress { get; set; }
     }
@@ -202,15 +204,15 @@ class defined in **.EntityFramework** project.
     public class PhoneBookDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         public virtual IDbSet<Person> Persons { get; set; }
-
+    
         //...other entities
-
+    
         public PhoneBookDbContext()
             : base("Default")
         {
-
+    
         }
-
+    
         //...other codes
     }
 
@@ -255,9 +257,9 @@ This command will add a **migration class** named
                     { "DynamicFilter_Person_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
                 })
                 .PrimaryKey(t => t.Id);
-
+    
         }
-
+    
         public override void Down()
         {
             DropTable("dbo.PbPersons",
@@ -288,12 +290,12 @@ shown below:
     public class InitialPeopleCreator
     {
         private readonly PhoneBookDbContext _context;
-
+    
         public InitialPeopleCreator(PhoneBookDbContext context)
         {
             _context = context;
         }
-
+    
         public void Create()
         {
             var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.com");
@@ -307,7 +309,7 @@ shown below:
                         EmailAddress = "douglas.adams@fortytwo.com"
                     });
             }
-
+    
             var asimov = _context.Persons.FirstOrDefault(p => p.EmailAddress == "isaac.asimov@foundation.org");
             if (asimov == null)
             {
@@ -359,14 +361,14 @@ below:
     {
         public string Filter { get; set; }
     }
-
+    
     [AutoMapFrom(typeof(Person))]
     public class PersonListDto : FullAuditedEntityDto
     {
         public string Name { get; set; }
-
+    
         public string Surname { get; set; }
-
+    
         public string EmailAddress { get; set; }
     }
 
@@ -383,12 +385,12 @@ After defining interface, we can implement it as shown below:
     public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
     {
         private readonly IRepository<Person> _personRepository;
-
+    
         public PersonAppService(IRepository<Person> personRepository)
         {
             _personRepository = personRepository;
         }
-
+    
         public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
         {
             var persons = _personRepository
@@ -402,7 +404,7 @@ After defining interface, we can implement it as shown below:
                 .OrderBy(p => p.Name)
                 .ThenBy(p => p.Surname)
                 .ToList();
-
+    
             return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
         }
     }
@@ -450,18 +452,18 @@ first test to verify getting people without any filter:
     public class PersonAppService_Tests : AppTestBase
     {
         private readonly IPersonAppService _personAppService;
-
+    
         public PersonAppService_Tests()
         {
             _personAppService = Resolve<IPersonAppService>();
         }
-
+    
         [Fact]
         public void Should_Get_All_People_Without_Any_Filter()
         {
             //Act
             var persons = _personAppService.GetPeople(new GetPeopleInput());
-
+    
             //Assert
             persons.Items.Count.ShouldBe(2);
         }
@@ -501,7 +503,7 @@ test to get filtered people:
             {
                 Filter = "adams"
             });
-
+    
         //Assert
         persons.Items.Count.ShouldBe(1);
         persons.Items[0].Name.ShouldBe("Douglas");
@@ -560,17 +562,17 @@ view:
     public class PhoneBookController : PhoneBookControllerBase
     {
         private readonly IPersonAppService _personAppService;
-
+    
         public PhoneBookController(IPersonAppService personAppService)
         {
             _personAppService = personAppService;
         }
-
+    
         public ActionResult Index(GetPeopleInput input)
         {
             var output = _personAppService.GetPeople(input);
             var model = new IndexViewModel(output);
-
+    
             return View(model);
         }
     }
@@ -623,7 +625,7 @@ below:
     @model Acme.PhoneBook.Web.Areas.Mpa.Models.PhoneBook.IndexViewModel
     ...
             <h3>@L("AllPeople")</h3>
-
+    
             <div class="list-group">
                 @foreach (var person in Model.Items)
                 {
@@ -677,11 +679,11 @@ method:
         [Required]
         [MaxLength(Person.MaxNameLength)]
         public string Name { get; set; }
-
+    
         [Required]
         [MaxLength(Person.MaxSurnameLength)]
         public string Surname { get; set; }
-
+    
         [EmailAddress]
         [MaxLength(Person.MaxEmailAddressLength)]
         public string EmailAddress { get; set; }
@@ -726,7 +728,7 @@ below:
                 Surname = "Nash",
                 EmailAddress = "john.nash@abeautifulmind.com"
             });
-
+    
         //Assert
         UsingDbContext(
             context =>
@@ -787,28 +789,28 @@ Copied and modified the view code as shown below
 
     @using Acme.PhoneBook.People
     @using Acme.PhoneBook.Web.Areas.Mpa.Models.Common.Modals
-
+    
     @Html.Partial("~/Areas/Mpa/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewPerson")))
-
+    
     <div class="modal-body">
     <form role="form" novalidate class="form-validation">
         <div class="form-group form-md-line-input form-md-floating-label no-hint">
             <input class="form-control" type="text" name="Name" required maxlength="@Person.MaxNameLength">
             <label>@L("Name")</label>
         </div>
-
+    
         <div class="form-group form-md-line-input form-md-floating-label no-hint">
             <input type="text" name="Surname" class="form-control" required maxlength="@Person.MaxSurnameLength">
             <label>@L("Surname")</label>
         </div>
-
+    
         <div class="form-group form-md-line-input form-md-floating-label no-hint">
             <input type="email" name="EmailAddress" class="form-control" maxlength="@Person.MaxEmailAddressLength">
             <label>@L("EmailAddress")</label>
         </div>
     </form>
     </div>
-
+    
     @Html.Partial("~/Areas/Mpa/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
 
 Modal header and footer code comes from the template. We just changed
@@ -823,15 +825,15 @@ Also, copied the modal js and modified as shown below
 
     (function($) {
         app.modals.CreatePersonModal = function () {
-
+    
             var _modalManager;
-
+    
             this.init = function(modalManager) {
                 _modalManager = modalManager;
-
+    
                 //Initialize your modal here...
             };
-
+    
             this.save = function () {
                 //Save your modal here...
             };
@@ -852,11 +854,11 @@ So, changing the **Index.cshtml** view header as shown below:
     @using Abp.Web.Mvc.Extensions
     @using Acme.PhoneBook.Web.Navigation
     @model Acme.PhoneBook.Web.Areas.Mpa.Models.PhoneBook.IndexViewModel
-
+    
     @{
         ViewBag.CurrentPageName = PageNames.App.Tenant.PhoneBook;
     }
-
+    
     @section Scripts
     {
         @Html.IncludeScript("~/Areas/Mpa/Views/PhoneBook/_CreatePersonModal.js")
@@ -872,7 +874,7 @@ So, changing the **Index.cshtml** view header as shown below:
                 </div>
             </div>
         </div>
-
+    
         <div class="col-xs-6 text-right">
             <button id="CreateNewPersonButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewPerson")</button>
         </div>
@@ -883,18 +885,18 @@ We included modal's javascript (\_CreatePersonModal.js) and a
 
     (function () {
         $(function () {
-
+    
             var _createPersonModal = new app.ModalManager({
                 viewUrl: abp.appPath + 'Mpa/PhoneBook/CreatePersonModal',
                 scriptUrl: abp.appPath + 'Areas/Mpa/Views/PhoneBook/_CreatePersonModal.js',
                 modalClass: 'CreatePersonModal'
             });
-
+    
             $('#CreateNewPersonButton').click(function(e) {
                 e.preventDefault();
                 _createPersonModal.open();
             });
-
+    
         });
     })();
 
@@ -927,25 +929,25 @@ implement it in the \_CreatePersonModal.js file:
 
     (function($) {
         app.modals.CreatePersonModal = function () {
-
+    
             var _modalManager;
             var _personService = abp.services.app.person;
             var _$form = null;
-
+    
             this.init = function(modalManager) {
                 _modalManager = modalManager;
-
+    
                 _$form = _modalManager.getModal().find('form');
                 _$form.validate();
             };
-
+    
             this.save = function () {
                 if (!_$form.valid()) {
                     return;
                 }
-
+    
                 var person = _$form.serializeFormToObject();
-
+    
                 _modalManager.setBusy(true);
                 _personService.createPerson(person).done(function () {
                     _modalManager.close();
@@ -1124,13 +1126,13 @@ We use **AbpMvcAuthorize** attribute for MVC Controllers as shown below:
     public class PhoneBookController : PhoneBookControllerBase
     {
         ...
-
+    
         [AbpMvcAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
         public PartialViewResult CreatePersonModal()
         {
             ...
         }
-
+    
         ...
     }
 
@@ -1199,13 +1201,13 @@ minified version to the page):
 Now, adding code to delete person (to Index.js):
 
     var _personService = abp.services.app.person;
-
+    
     $('#AllPeopleList button.delete-person').click(function (e) {
         e.preventDefault();
-
+    
         var $listItem = $(this).closest('.list-group-item');
         var personId = $listItem.attr('data-person-id');
-
+    
         abp.message.confirm(
             app.localize('AreYouSureToDeleteThePerson'),
             function(isConfirmed) {
@@ -1262,9 +1264,9 @@ the code):
 
     <div class="portlet light">
         <div class="portlet-title portlet-title-filter">
-
+    
             <h3>@L("AllPeople") (@Model.Items.Count)</h3>
-
+    
             <div class="inputs inputs-full-width">
                 <div class="portlet-input">
                     <form action="@Url.Action("Index")" method="GET">
@@ -1278,11 +1280,11 @@ the code):
                 </div>
             </div>
         </div>
-
+    
         <div class="portlet-body">
-
+    
             ...
-
+    
         </div>
     </div>
 
@@ -1292,7 +1294,7 @@ And added Filter property to the IndexViewModel:
     public class IndexViewModel : ListResultDto<PersonListDto>
     {
         public string Filter { get; set; }
-
+    
         public IndexViewModel(ListResultDto<PersonListDto> output, string filter = null)
         {
             output.MapTo(this);
@@ -1307,7 +1309,7 @@ Lastly, changed PhoneBookController's **Index** action to pass the
     {
         var output = _personAppService.GetPeople(input);
         var model = new IndexViewModel(output, input.Filter);
-
+    
         return View(model);
     }
 
@@ -1327,14 +1329,14 @@ Let's start by creating a new Entity, **Phone** in **.Core** project:
     public class Phone : CreationAuditedEntity<long>
     {
         public const int MaxNumberLength = 16;
-
+    
         [ForeignKey("PersonId")]
         public virtual Person Person { get; set; }
         public virtual int PersonId { get; set; }
-
+    
         [Required]
         public virtual PhoneType Type { get; set; }
-
+    
         [Required]
         [MaxLength(MaxNumberLength)]
         public virtual string Number { get; set; }
@@ -1350,7 +1352,7 @@ We added a **Phones** collection to the People:
     public class Person : FullAuditedEntity
     {
         //...other properties
-
+    
         public virtual ICollection<Phone> Phones { get; set; }
     }
 
@@ -1394,9 +1396,9 @@ table:
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PbPersons", t => t.PersonId, cascadeDelete: true)
                 .Index(t => t.PersonId);
-
+    
         }
-
+    
         public override void Down()
         {
             DropForeignKey("dbo.PbPhones", "PersonId", "dbo.PbPersons");
@@ -1411,7 +1413,7 @@ example **phone numbers** for example people:
     public class InitialPeopleAndPhoneCreator
     {
         //...
-
+    
         public void Create()
         {
             var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.net");
@@ -1430,7 +1432,7 @@ example **phone numbers** for example people:
                                     }
                     });
             }
-
+    
             var asimov = _context.Persons.FirstOrDefault(p => p.EmailAddress == "isaac.asimov@foundation.org");
             if (asimov == null)
             {
@@ -1470,19 +1472,19 @@ First, we're changing **PersonListDto** to contain a list of phones:
     public class PersonListDto : FullAuditedEntityDto
     {
         public string Name { get; set; }
-
+    
         public string Surname { get; set; }
-
+    
         public string EmailAddress { get; set; }
-
+    
         public Collection<PhoneInPersonListDto> Phones { get; set; }
     }
-
+    
     [AutoMapFrom(typeof(Phone))]
     public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
     {
         public PhoneType Type { get; set; }
-
+    
         public string Number { get; set; }
     }
 
@@ -1503,7 +1505,7 @@ entity. Now, we can change GetPeople method to get Phones from database:
             .OrderBy(p => p.Name)
             .ThenBy(p => p.Surname)
             .ToList();
-
+    
         return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
     }
 
@@ -1529,10 +1531,10 @@ methods here. AddPhoneInput DTO is shown below:
     {
         [Range(1, int.MaxValue)]
         public int PersonId { get; set; }
-
+    
         [Required]
         public PhoneType Type { get; set; }
-
+    
         [Required]
         [MaxLength(Phone.MaxNumberLength)]
         public string Number { get; set; }
@@ -1544,16 +1546,16 @@ Now, we can implement these methods:
     {
         await _phoneRepository.DeleteAsync(input.Id);
     }
-
+    
     public async Task<PhoneInPersonListDto> AddPhone([FromBody]AddPhoneInput input)
     {
         var person = _personRepository.Get(input.PersonId);
-
+    
         var phone = input.MapTo<Phone>();
         person.Phones.Add(phone);
-
+    
         await CurrentUnitOfWork.SaveChangesAsync();
-
+    
         return phone.MapTo<PhoneInPersonListDto>();
     }
 
@@ -1599,7 +1601,7 @@ Changes in view are shown below:
             <a href="javascript:;" class="list-group-item" data-person-id="@person.Id">
                 <h4 class="list-group-item-heading">
                     @person.Name @person.Surname
-
+    
                     <span class="person-buttons">
                         <button title="@L("Edit")" class="btn btn-circle btn-icon-only green edit-person">
                             <i class="icon-pencil"></i>
@@ -1678,12 +1680,12 @@ And the **PhoneRowInPersonListViewModel** is here:
     public class PhoneRowInPersonListViewModel
     {
         public PhoneInPersonListDto Phone { get; set; }
-
+    
         public PhoneRowInPersonListViewModel(PhoneInPersonListDto phone)
         {
             Phone = phone;
         }
-
+    
         public string GetPhoneTypeAsString()
         {
             return LocalizationHelper.GetString(PhoneBookConsts.LocalizationSourceName, "PhoneType_" + Phone.Type);
@@ -1700,18 +1702,18 @@ Changed **Index.less** a bit to adapt to the changed view:
                 float: right;
             }
         }
-
+    
         .table-phones {
             display: none;
         }
-
+    
         .person-editing {
             background-color: #ccffcc;
-
+    
             h4 {
                 font-weight: bold;
             }
-
+    
             .table-phones {
                 display: table;
             }
@@ -1725,20 +1727,20 @@ Added following codes into **Index.js**:
     //Edit person button
     $('#AllPeopleList button.edit-person').click(function (e) {
         e.preventDefault();
-
+    
         var $listItem = $(this).closest('.list-group-item');
-
+    
         $listItem
             .toggleClass('person-editing')
             .siblings().removeClass('person-editing');
     });
-
+    
     //Save phone button
     $('#AllPeopleList .button-save-phone').click(function (e) {
         e.preventDefault();
-
+    
         var $phoneEditorRow = $(this).closest('tr');
-
+    
         abp.ajax({
             url: abp.appPath + 'Mpa/PhoneBook/AddPhone',
             dataType: 'html',
@@ -1751,14 +1753,14 @@ Added following codes into **Index.js**:
             $(result).insertBefore($phoneEditorRow);
         });
     });
-
+    
     //Delete phone button
     $('#AllPeopleList').on('click', '.button-delete-phone', function (e) {
         e.preventDefault();
-
+    
         var $phoneRow = $(this).closest('tr');
         var phoneId = $phoneRow.attr('data-phone-id');
-
+    
         _personService.deletePhone({
             id: phoneId
         }).done(function () {
@@ -1792,7 +1794,7 @@ We added AddPhone action to the PhoneController as shown below:
     {
         PhoneInPersonListDto phoneInPersonList = await _personAppService.AddPhone(input);
         var model = new PhoneRowInPersonListViewModel(phoneInPersonList);
-
+    
         return PartialView("_PhoneRowInPersonList", model);
     }
 
@@ -1841,7 +1843,7 @@ should declare that Person entity must have a tenant using
     public class Person : FullAuditedEntity, IMustHaveTenant
     {
         public virtual int TenantId { get; set; }
-
+    
         //...other properties
     }
 

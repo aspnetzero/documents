@@ -1,4 +1,4 @@
-### ASP.NET MVC 5.x & AngularJS 1.x
+# ASP.NET MVC 5.x & AngularJS 1.x
 
 If you want to use previous technologies, ASP.NET Zero can provide a base solution based on the ASP.NET MVC 5.x & AngularJS 1.x frameworks. Use it to jump start your business application.
 

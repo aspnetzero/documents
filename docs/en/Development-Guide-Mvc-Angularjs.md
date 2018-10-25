@@ -1,3 +1,5 @@
+# Development Guide
+
 ### Introduction
 
 In the [Getting Started](Getting-Started.md) document, a new sample
@@ -217,7 +219,7 @@ change the following settings in the **web.config** file.
     <add key="ExternalAuth.Twitter.IsEnabled" value="false" />
     <add key="ExternalAuth.Twitter.ConsumerKey" value="" />
     <add key="ExternalAuth.Twitter.ConsumerSecret" value="" />
-
+    
     <add key="ExternalAuth.Google.IsEnabled" value="false" />
     <add key="ExternalAuth.Google.ClientId" value="" />
     <add key="ExternalAuth.Google.ClientSecret" value="" />
@@ -1250,11 +1252,11 @@ information:
         [Required]
         [StringLength(Tenant.MaxTenancyNameLength)]
         public string TenancyName { get; set; }
-
+    
         [Required]
         [StringLength(Tenant.MaxNameLength)]
         public string Name { get; set; }
-
+    
         public bool IsActive { get; set; }
     }
 
@@ -1483,13 +1485,13 @@ Here is a sample unit test from the application:
         {
             //Arrange
             CreateTestUsers();
-
+    
             var user = await GetUserByUserNameOrNullAsync("artdent");
             user.ShouldNotBe(null);
-
+    
             //Act
             await UserAppService.DeleteUser(new IdInput<long>(user.Id));
-
+    
             //Assert
             user = await GetUserByUserNameOrNullAsync("artdent");
             user.IsDeleted.ShouldBe(true);
