@@ -14,14 +14,11 @@ ASP.NET Zero has multiple architecture options. Select the one you want to prefe
 * [ASP.NET MVC 5.x & JQuery](AspNet-MVC.md)
 * [Xamarin (mobile)](Xamarin.md)
 
-## External Links
+## Miscellaneous
 
-ASP.NET Zero is developed based on the **ASP.NET Boilerplate** web application framework and the **Metronic** UI Theme. So, you can refer to their web sites to learn more about capabilities of ASP.NET Zero, other details and UI options.
+### Rapid Application Development
 
-* [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents)
-* [Metronic](http://www.keenthemes.com/preview/metronic/)
-
-## More Information
+ASP.NET Zero provides a [Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) to automatically create an entity and its corresponding layers from the database to the user interface. See [how to use it](Rapid-Application-Development.md).
 
 ### Change Logs
 
@@ -34,3 +31,10 @@ See the [road map](Road-Map.md) for some planned features for next releases.
 ### Old Documents
 
 [Click here](Old-Documents.md) for documents older than v6.2.
+
+## External Links
+
+ASP.NET Zero is developed based on the **ASP.NET Boilerplate** web application framework and the **Metronic** UI Theme. So, you can refer to their web sites to learn more about capabilities of ASP.NET Zero, other details and UI options.
+
+- [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents)
+- [Metronic](http://www.keenthemes.com/preview/metronic/)
