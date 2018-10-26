@@ -25,8 +25,10 @@ Build all.
 
 I used a SQL database on Azure, set up in Azure Portal, and there got connection string like this, into base_folder/appsettings.json:  
 
-	"ConnectionStrings": {
-	      "Default": "Server=tcp:research1server.database.windows.net,1433;Initial Catalog={my db name};Persist Security Info=False;User ID={my_id};Password={my password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"}, 
+```json
+"ConnectionStrings": {
+      "Default": "Server=tcp:research1server.database.windows.net,1433;Initial Catalog={my db name};Persist Security Info=False;User ID={my_id};Password={my password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"}, 
+```
 
 Note you have to get your IPv4 address (e.g. https://www.whatismyip.com/) and in Azure Portal  click on your database, then the "Set server firewall" button, then create a rule for your IP address (or range of addresses) and Save.  Otherwise when you start-up you will see a Connection Refused error in the browser console.
 
@@ -40,7 +42,9 @@ Go here: https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet and s
 
 Edit the Web.Host project file (right click project name and there is an Tools->Edit File option) and add following:
 
-	<ItemGroup> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" /> </ItemGroup>
+```xml
+<ItemGroup> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" /> </ItemGroup>
+```
 
 Then back in Terminal:
 

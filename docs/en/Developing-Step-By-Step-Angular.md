@@ -221,31 +221,33 @@ can define a **Person** entity (mapped to **PbPersons** table in
 database) to represent a person in phone book as shown below (I created
 in a new folder/namespace named PhoneBook):
 
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using Abp.Domain.Entities.Auditing;
-    
-    namespace Acme.PhoneBookDemo.PhoneBook
+```csharp
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities.Auditing;
+
+namespace Acme.PhoneBookDemo.PhoneBook
+{
+    [Table("PbPersons")]
+    public class Person : FullAuditedEntity
     {
-        [Table("PbPersons")]
-        public class Person : FullAuditedEntity
-        {
-            public const int MaxNameLength = 32;
-            public const int MaxSurnameLength = 32;
-            public const int MaxEmailAddressLength = 255;
-    
-            [Required]
-            [MaxLength(MaxNameLength)]
-            public virtual string Name { get; set; }
-    
-            [Required]
-            [MaxLength(MaxSurnameLength)]
-            public virtual string Surname { get; set; }
-    
-            [MaxLength(MaxEmailAddressLength)]
-            public virtual string EmailAddress { get; set; }
-        }
+        public const int MaxNameLength = 32;
+        public const int MaxSurnameLength = 32;
+        public const int MaxEmailAddressLength = 255;
+
+        [Required]
+        [MaxLength(MaxNameLength)]
+        public virtual string Name { get; set; }
+
+        [Required]
+        [MaxLength(MaxSurnameLength)]
+        public virtual string Surname { get; set; }
+
+        [MaxLength(MaxEmailAddressLength)]
+        public virtual string EmailAddress { get; set; }
     }
+}
+```
 
 Person's **primary key** type is **int** (as default). It inherits
 **FullAuditedEntity** that contains **creation**, **modification** and
@@ -261,12 +263,14 @@ values later.
 We add a DbSet property for Person entity to **PhoneBookDemoDbContext**
 class defined in **.EntityFrameworkCore** project.
 
-    public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User>
-    {
-        public virtual DbSet<Person> Persons { get; set; }
-    
-        //...other code
-    }
+```csharp
+public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User>
+{
+    public virtual DbSet<Person> Persons { get; set; }
+
+    //...other code
+}
+```
 
 ## Database Migrations
 
@@ -283,39 +287,41 @@ Open **Package Manager Console**, run the **Add-Migration
 This command will add a **migration class** named
 "**Added\_Persons\_Table**" as shown below:
 
-    public partial class Added_Persons_Table : Migration
+```csharp
+public partial class Added_Persons_Table : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "PbPersons",
-                columns: table => new
-                {
-                    Id = table.Column(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationTime = table.Column(nullable: false),
-                    CreatorUserId = table.Column(nullable: true),
-                    DeleterUserId = table.Column(nullable: true),
-                    DeletionTime = table.Column(nullable: true),
-                    EmailAddress = table.Column(maxLength: 255, nullable: true),
-                    IsDeleted = table.Column(nullable: false),
-                    LastModificationTime = table.Column(nullable: true),
-                    LastModifierUserId = table.Column(nullable: true),
-                    Name = table.Column(maxLength: 32, nullable: false),
-                    Surname = table.Column(maxLength: 32, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PbPersons", x => x.Id);
-                });
-        }
-    
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "PbPersons");
-        }
+        migrationBuilder.CreateTable(
+            name: "PbPersons",
+            columns: table => new
+            {
+                Id = table.Column(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                CreationTime = table.Column(nullable: false),
+                CreatorUserId = table.Column(nullable: true),
+                DeleterUserId = table.Column(nullable: true),
+                DeletionTime = table.Column(nullable: true),
+                EmailAddress = table.Column(maxLength: 255, nullable: true),
+                IsDeleted = table.Column(nullable: false),
+                LastModificationTime = table.Column(nullable: true),
+                LastModifierUserId = table.Column(nullable: true),
+                Name = table.Column(maxLength: 32, nullable: false),
+                Surname = table.Column(maxLength: 32, nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_PbPersons", x => x.Id);
+            });
     }
+
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable(
+            name: "PbPersons");
+    }
+}
+```
 
 We don't have to know so much about format and rules of this file. But,
 it's suggested to have a basic understanding of migrations. In the same
@@ -333,45 +339,47 @@ fill initial data for users and settings:
 So, we can add a separated class to fill some people to database as
 shown below:
 
-    namespace Acme.PhoneBookDemo.Migrations.Seed.Host
+```csharp
+namespace Acme.PhoneBookDemo.Migrations.Seed.Host
+{
+    public class InitialPeopleCreator
     {
-        public class InitialPeopleCreator
+        private readonly PhoneBookDemoDbContext _context;
+
+        public InitialPeopleCreator(PhoneBookDemoDbContext context)
         {
-            private readonly PhoneBookDemoDbContext _context;
-    
-            public InitialPeopleCreator(PhoneBookDemoDbContext context)
+            _context = context;
+        }
+
+        public void Create()
+        {
+            var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.com");
+            if (douglas == null)
             {
-                _context = context;
+                _context.Persons.Add(
+                    new Person
+                    {
+                        Name = "Douglas",
+                        Surname = "Adams",
+                        EmailAddress = "douglas.adams@fortytwo.com"
+                    });
             }
-    
-            public void Create()
+
+            var asimov = _context.Persons.FirstOrDefault(p => p.EmailAddress == "isaac.asimov@foundation.org");
+            if (asimov == null)
             {
-                var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.com");
-                if (douglas == null)
-                {
-                    _context.Persons.Add(
-                        new Person
-                        {
-                            Name = "Douglas",
-                            Surname = "Adams",
-                            EmailAddress = "douglas.adams@fortytwo.com"
-                        });
-                }
-    
-                var asimov = _context.Persons.FirstOrDefault(p => p.EmailAddress == "isaac.asimov@foundation.org");
-                if (asimov == null)
-                {
-                    _context.Persons.Add(
-                        new Person
-                        {
-                            Name = "Isaac",
-                            Surname = "Asimov",
-                            EmailAddress = "isaac.asimov@foundation.org"
-                        });
-                }
+                _context.Persons.Add(
+                    new Person
+                    {
+                        Name = "Isaac",
+                        Surname = "Asimov",
+                        EmailAddress = "isaac.asimov@foundation.org"
+                    });
             }
         }
     }
+}
+```
 
 These type of default data is good since we can also use these data in
 **unit tests**. Surely, we should be careful about seed data since this
@@ -380,18 +388,20 @@ PhoneBookEntityFrameworkCoreModule. This class (InitialPeopleCreator) is
 created and called in **InitialHostDbBuilder** class. This is not so
 important, just for a good code organization (see source codes).
 
-    public class InitialHostDbBuilder
+```csharp
+public class InitialHostDbBuilder
+{
+    //existing codes...
+
+    public void Create()
     {
-        //existing codes...
-    
-        public void Create()
-        {
-            //existing code...
-            new InitialPeopleCreator(_context).Create();
-    
-            _context.SaveChanges();
-        }
+        //existing code...
+        new InitialPeopleCreator(_context).Create();
+
+        _context.SaveChanges();
     }
+}
+```
 
 We run our project again, it runs seed and adds two people to PbPersons
 table:
@@ -409,16 +419,18 @@ get people from the server. So, we're first creating an **interface** to
 define the person application service (while this interface is optional,
 we suggest you to create it):
 
-    using Abp.Application.Services;
-    using Abp.Application.Services.Dto;
-    
-    namespace Acme.PhoneBookDemo.PhoneBook
+```csharp
+using Abp.Application.Services;
+using Abp.Application.Services.Dto;
+
+namespace Acme.PhoneBookDemo.PhoneBook
+{
+    public interface IPersonAppService : IApplicationService
     {
-        public interface IPersonAppService : IApplicationService
-        {
-            ListResultDto<PersonListDto> GetPeople(GetPeopleInput input);
-        }
+        ListResultDto<PersonListDto> GetPeople(GetPeopleInput input);
     }
+}
+```
 
 An application service method gets/returns **DTO**s. **ListResultDto**
 is a pre-build helper DTO to return a list of another DTO.
@@ -426,19 +438,21 @@ is a pre-build helper DTO to return a list of another DTO.
 method. So, GetPeopleIntput and PersonListDto are defined as shown
 below:
 
-    public class GetPeopleInput
-    {
-        public string Filter { get; set; }
-    }
-    
-    public class PersonListDto : FullAuditedEntityDto
-    {
-        public string Name { get; set; }
-    
-        public string Surname { get; set; }
-    
-        public string EmailAddress { get; set; }
-    }
+```csharp
+public class GetPeopleInput
+{
+    public string Filter { get; set; }
+}
+
+public class PersonListDto : FullAuditedEntityDto
+{
+    public string Name { get; set; }
+
+    public string Surname { get; set; }
+
+    public string EmailAddress { get; set; }
+}
+```
 
 **CustomDtoMapper.cs** is used to create mapping from **Person** to
 **PersonListDto**. **FullAuditedEntityDto** is inherited to
@@ -448,43 +462,47 @@ and
 [DTO](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
 documentations for more information. We are adding the following mappings.
 
-    ...
-    // PhoneBook (we will comment out other lines when the new DTOs are added)
-    configuration.CreateMap<Person, PersonListDto>();
-    //configuration.CreateMap<AddPhoneInput, Phone>();
-    //configuration.CreateMap<CreatePersonInput, Person>();
-    //configuration.CreateMap<Person, GetPersonForEditOutput>();
-    //configuration.CreateMap<Phone, PhoneInPersonListDto>();
+```csharp
+...
+// PhoneBook (we will comment out other lines when the new DTOs are added)
+configuration.CreateMap<Person, PersonListDto>();
+//configuration.CreateMap<AddPhoneInput, Phone>();
+//configuration.CreateMap<CreatePersonInput, Person>();
+//configuration.CreateMap<Person, GetPersonForEditOutput>();
+//configuration.CreateMap<Phone, PhoneInPersonListDto>();
+```
 
 After defining interface, we can implement it as shown below: (in
 **.Application** project)
 
-    public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
+```csharp
+public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
+{
+    private readonly IRepository<Person> _personRepository;
+
+    public PersonAppService(IRepository<Person> personRepository)
     {
-        private readonly IRepository<Person> _personRepository;
-    
-        public PersonAppService(IRepository<Person> personRepository)
-        {
-            _personRepository = personRepository;
-        }
-    
-        public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
-        {
-            var people = _personRepository
-                .GetAll()
-                .WhereIf(
-                    !input.Filter.IsNullOrEmpty(),
-                    p => p.Name.Contains(input.Filter) ||
-                         p.Surname.Contains(input.Filter) ||
-                         p.EmailAddress.Contains(input.Filter)
-                )
-                .OrderBy(p => p.Name)
-                .ThenBy(p => p.Surname)
-                .ToList();
-    
-            return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(people));
-        }
+        _personRepository = personRepository;
     }
+
+    public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
+    {
+        var people = _personRepository
+            .GetAll()
+            .WhereIf(
+                !input.Filter.IsNullOrEmpty(),
+                p => p.Name.Contains(input.Filter) ||
+                     p.Surname.Contains(input.Filter) ||
+                     p.EmailAddress.Contains(input.Filter)
+            )
+            .OrderBy(p => p.Name)
+            .ThenBy(p => p.Surname)
+            .ToList();
+
+        return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(people));
+    }
+}
+```
 
 We're injecting **person repository** (it's automatically created by
 ABP) and using it to filter and get people from database.
@@ -534,33 +552,35 @@ multitenancy).
 
 Let's create first test to verify getting people without any filter:
 
-    using Acme.PhoneBookDemo.People;
-    using Acme.PhoneBookDemo.People.Dtos;
-    using Shouldly;
-    using Xunit;
-    
-    namespace Acme.PhoneBookDemo.Tests.People
+```csharp
+using Acme.PhoneBookDemo.People;
+using Acme.PhoneBookDemo.People.Dtos;
+using Shouldly;
+using Xunit;
+
+namespace Acme.PhoneBookDemo.Tests.People
+{
+    public class PersonAppService_Tests : AppTestBase
     {
-        public class PersonAppService_Tests : AppTestBase
+        private readonly IPersonAppService _personAppService;
+
+        public PersonAppService_Tests()
         {
-            private readonly IPersonAppService _personAppService;
-    
-            public PersonAppService_Tests()
-            {
-                _personAppService = Resolve<IPersonAppService>();
-            }
-    
-            [Fact]
-            public void Should_Get_All_People_Without_Any_Filter()
-            {
-                //Act
-                var persons = _personAppService.GetPeople(new GetPeopleInput());
-    
-                //Assert
-                persons.Items.Count.ShouldBe(2);
-            }
+            _personAppService = Resolve<IPersonAppService>();
+        }
+
+        [Fact]
+        public void Should_Get_All_People_Without_Any_Filter()
+        {
+            //Act
+            var persons = _personAppService.GetPeople(new GetPeopleInput());
+
+            //Assert
+            persons.Items.Count.ShouldBe(2);
         }
     }
+}
+```
 
 We derived test class from **AppTestBase**. AppTestBase class
 initializes all system, creates an in-memory fake database, seeds
@@ -587,21 +607,23 @@ As you see, it worked **successfully**. Now, we know that
 PersonAppService works properly without any filter. Let's add a new unit
 test to get filtered people:
 
-    [Fact]
-    public void Should_Get_People_With_Filter()
-    {
-        //Act
-        var persons = _personAppService.GetPeople(
-            new GetPeopleInput
-            {
-                Filter = "adams"
-            });
-    
-        //Assert
-        persons.Items.Count.ShouldBe(1);
-        persons.Items[0].Name.ShouldBe("Douglas");
-        persons.Items[0].Surname.ShouldBe("Adams");
-    }
+```csharp
+[Fact]
+public void Should_Get_People_With_Filter()
+{
+    //Act
+    var persons = _personAppService.GetPeople(
+        new GetPeopleInput
+        {
+            Filter = "adams"
+        });
+
+    //Assert
+    persons.Items.Count.ShouldBe(1);
+    persons.Items[0].Name.ShouldBe("Douglas");
+    persons.Items[0].Surname.ShouldBe("Adams");
+}
+```
 
 Again, since we know initial database, we can check returned results
 easily. Here, initial test data is important. When we change initial
@@ -642,37 +664,39 @@ stop it and re-run **npm start** command.
 
 Change **phonebook.component.ts** as like below:
 
-    import { Component, Injector, OnInit } from '@angular/core';
-    import { AppComponentBase } from '@shared/common/app-component-base';
-    import { appModuleAnimation } from '@shared/animations/routerTransition';
-    import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto } from '@shared/service-proxies/service-proxies';
-    
-    @Component({
-        templateUrl: './phonebook.component.html',
-        animations: [appModuleAnimation()]
-    })
-    export class PhoneBookComponent extends AppComponentBase implements OnInit {
-    
-        people: PersonListDto[] = [];
-        filter: string = '';
-    
-        constructor(
-            injector: Injector,
-            private _personService: PersonServiceProxy
-        ) {
-            super(injector);
-        }
-    
-        ngOnInit(): void {
-            this.getPeople();
-        }
-    
-        getPeople(): void {
-            this._personService.getPeople(this.filter).subscribe((result) => {
-                this.people = result.items;
-            });
-        }
+```typescript
+import { Component, Injector, OnInit } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto } from '@shared/service-proxies/service-proxies';
+
+@Component({
+    templateUrl: './phonebook.component.html',
+    animations: [appModuleAnimation()]
+})
+export class PhoneBookComponent extends AppComponentBase implements OnInit {
+
+    people: PersonListDto[] = [];
+    filter: string = '';
+
+    constructor(
+        injector: Injector,
+        private _personService: PersonServiceProxy
+    ) {
+        super(injector);
     }
+
+    ngOnInit(): void {
+        this.getPeople();
+    }
+
+    getPeople(): void {
+        this._personService.getPeople(this.filter).subscribe((result) => {
+            this.people = result.items;
+        });
+    }
+}
+```
 
 We inject **PersonServiceProxy**, call its **getPeople** method and
 **subscribe** to get the result. We do this in **ngOnInit** function
@@ -684,36 +708,38 @@ the **people** class member.
 Now, we can use this people member from the view,
 **phonebook.component.html**:
 
-    <div [@routerTransition]>
-        <div class="m-subheader ">
-            <div class="d-flex align-items-center">
-                <div class="mr-auto col-sm-6">
-                    <h3 class="m-subheader__title m-subheader__title--separator">
-                        <span>{{l("PhoneBook")}}</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="m-content">
-            <div class="m-portlet m-portlet--mobile">
-                <div class="m-portlet__body">
-    
-                    <h3>{{l("AllPeople")}}</h3>
-                    <div class="m-widget1">
-                        <div class="m-widget1__item" *ngFor="let person of people">
-                            <div class="row m-row--no-padding align-items-center">
-                                <div class="col">
-                                    <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
-                                    <span class="m-widget1__desc">{{person.emailAddress}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                </div>
+```html
+<div [@routerTransition]>
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto col-sm-6">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    <span>{{l("PhoneBook")}}</span>
+                </h3>
             </div>
         </div>
     </div>
+    <div class="m-content">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__body">
+
+                <h3>{{l("AllPeople")}}</h3>
+                <div class="m-widget1">
+                    <div class="m-widget1__item" *ngFor="let person of people">
+                        <div class="row m-row--no-padding align-items-center">
+                            <div class="col">
+                                <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
+                                <span class="m-widget1__desc">{{person.emailAddress}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+```
 
 We simply used **ngFor** directive to loop and render people data. See
 the result:
@@ -742,25 +768,29 @@ Next step is to create a modal to add a new item to phone book.
 We first define **CreatePerson** method in **IPersonAppService**
 interface:
 
-    Task CreatePerson(CreatePersonInput input);
+```csharp
+Task CreatePerson(CreatePersonInput input);
+```
 
 Then we create **CreatePersonInput** DTO that defines parameters of the
 method:
 
-    public class CreatePersonInput
-    {
-        [Required]
-        [MaxLength(PersonConsts.MaxNameLength)]
-        public string Name { get; set; }
-    
-        [Required]
-        [MaxLength(PersonConsts.MaxSurnameLength)]
-        public string Surname { get; set; }
-    
-        [EmailAddress]
-        [MaxLength(PersonConsts.MaxEmailAddressLength)]
-        public string EmailAddress { get; set; }
-    }
+```csharp
+public class CreatePersonInput
+{
+    [Required]
+    [MaxLength(PersonConsts.MaxNameLength)]
+    public string Name { get; set; }
+
+    [Required]
+    [MaxLength(PersonConsts.MaxSurnameLength)]
+    public string Surname { get; set; }
+
+    [EmailAddress]
+    [MaxLength(PersonConsts.MaxEmailAddressLength)]
+    public string EmailAddress { get; set; }
+}
+```
 
 **CreatePersonInput** is mapped to **Person** entity (comment out
 related line in CustomDtoMapper.cs and we will use mapping below).
@@ -772,20 +802,24 @@ Notice that we use same consts defined in **PersonConsts.cs** in
 class, you can remove consts from **Person** entity and use this new
 consts class.
 
-    public class PersonConsts
-    {
-        public const int MaxNameLength = 32;
-        public const int MaxSurnameLength = 32;
-        public const int MaxEmailAddressLength = 255;
-    }
+```csharp
+public class PersonConsts
+{
+    public const int MaxNameLength = 32;
+    public const int MaxSurnameLength = 32;
+    public const int MaxEmailAddressLength = 255;
+}
+```
 
 Here, the implementation of CreatePerson method:
 
-    public async Task CreatePerson(CreatePersonInput input)
-    {
-        var person = ObjectMapper.Map<Person>(input);
-        await _personRepository.InsertAsync(person);
-    }
+```csharp
+public async Task CreatePerson(CreatePersonInput input)
+{
+    var person = ObjectMapper.Map<Person>(input);
+    await _personRepository.InsertAsync(person);
+}
+```
 
 A Person entity is created by mapping given input, then inserted to
 database. We used **async/await** pattern here. All methods in ASP.NET
@@ -800,27 +834,29 @@ testing**.
 We can create a unit test method to test CreatePerson method as shown
 below:
 
-    [Fact]
-    public async Task Should_Create_Person_With_Valid_Arguments()
-    {
-        //Act
-        await _personAppService.CreatePerson(
-            new CreatePersonInput
-            {
-                Name = "John",
-                Surname = "Nash",
-                EmailAddress = "john.nash@abeautifulmind.com"
-            });
-    
-        //Assert
-        UsingDbContext(
-            context =>
-            {
-                var john = context.Persons.FirstOrDefault(p => p.EmailAddress == "john.nash@abeautifulmind.com");
-                john.ShouldNotBe(null);
-                john.Name.ShouldBe("John");
-            });
-    }
+```csharp
+[Fact]
+public async Task Should_Create_Person_With_Valid_Arguments()
+{
+    //Act
+    await _personAppService.CreatePerson(
+        new CreatePersonInput
+        {
+            Name = "John",
+            Surname = "Nash",
+            EmailAddress = "john.nash@abeautifulmind.com"
+        });
+
+    //Assert
+    UsingDbContext(
+        context =>
+        {
+            var john = context.Persons.FirstOrDefault(p => p.EmailAddress == "john.nash@abeautifulmind.com");
+            john.ShouldNotBe(null);
+            john.Name.ShouldBe("John");
+        });
+}
+```
 
 Test method also written using **async/await** pattern since calling
 method is async. We called CreatePerson method, then checked if given
@@ -874,61 +910,63 @@ re-generating the proxy scripts.
 We are starting from creating a new component, named
 **create-person-modal.component.ts** into client side phonebook folder:
 
-    import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
-    import { ModalDirective } from 'ngx-bootstrap';
-    import { PersonServiceProxy, CreatePersonInput } from '@shared/service-proxies/service-proxies';
-    import { AppComponentBase } from '@shared/common/app-component-base';
-    import { finalize } from 'rxjs/operators';
-    
-    @Component({
-        selector: 'createPersonModal',
-        templateUrl: './create-person-modal.component.html'
-    })
-    export class CreatePersonModalComponent extends AppComponentBase {
-    
-        @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-    
-        @ViewChild('modal') modal: ModalDirective;
-        @ViewChild('nameInput') nameInput: ElementRef;
-    
-        person: CreatePersonInput = new CreatePersonInput();
-    
-        active: boolean = false;
-        saving: boolean = false;
-    
-        constructor(
-            injector: Injector,
-            private _personService: PersonServiceProxy
-        ) {
-            super(injector);
-        }
-    
-        show(): void {
-            this.active = true;
-            this.person = new CreatePersonInput();
-            this.modal.show();
-        }
-    
-        onShown(): void {
-            this.nameInput.nativeElement.focus();
-        }
-    
-        save(): void {
-            this.saving = true;
-            this._personService.createPerson(this.person)
-                .pipe(finalize(() => this.saving = false))
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(this.person);
-                });
-        }
-    
-        close(): void {
-            this.modal.hide();
-            this.active = false;
-        }
+```typescript
+import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap';
+import { PersonServiceProxy, CreatePersonInput } from '@shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { finalize } from 'rxjs/operators';
+
+@Component({
+    selector: 'createPersonModal',
+    templateUrl: './create-person-modal.component.html'
+})
+export class CreatePersonModalComponent extends AppComponentBase {
+
+    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+
+    @ViewChild('modal') modal: ModalDirective;
+    @ViewChild('nameInput') nameInput: ElementRef;
+
+    person: CreatePersonInput = new CreatePersonInput();
+
+    active: boolean = false;
+    saving: boolean = false;
+
+    constructor(
+        injector: Injector,
+        private _personService: PersonServiceProxy
+    ) {
+        super(injector);
     }
+
+    show(): void {
+        this.active = true;
+        this.person = new CreatePersonInput();
+        this.modal.show();
+    }
+
+    onShown(): void {
+        this.nameInput.nativeElement.focus();
+    }
+
+    save(): void {
+        this.saving = true;
+        this._personService.createPerson(this.person)
+            .pipe(finalize(() => this.saving = false))
+            .subscribe(() => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(this.person);
+            });
+    }
+
+    close(): void {
+        this.modal.hide();
+        this.active = false;
+    }
+}
+```
 
 Let me explain some parts of this class:
 
@@ -954,97 +992,103 @@ As declared in the component, we are creating the
 **create-person-modal.component.html** file in the same folder as shown
 below:
 
-    <div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
-                    <div class="modal-header">
-                        <h4 class="modal-title">
-                            <span>{{l("CreateNewPerson")}}</span>
-                        </h4>
-                        <button type="button" class="close" (click)="close()" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+```html
+<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>{{l("CreateNewPerson")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{l("Name")}}</label>
+                        <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>{{l("Name")}}</label>
-                            <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">
-                        </div>
-                        <div class="form-group">
-                            <label>{{l("Surname")}}</label>
-                            <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
-                        </div>
-                        <div class="form-group">
-                            <label>{{l("EmailAddress")}}</label>
-                            <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
-                        </div>
+                    <div class="form-group">
+                        <label>{{l("Surname")}}</label>
+                        <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
                     </div>
-                    <div class="modal-footer">
-                        <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel")}}</button>
-                        <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <div class="form-group">
+                        <label>{{l("EmailAddress")}}</label>
+                        <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+```
 
 Most of this code is similar for all modals. The important part is how
 we binded model to the view using the ngModel directive. As like all
 components, Angular requires to relate it to a module. We should add it to
 **declarations** array of **main.module.ts** as like shown below:
 
-    ...previous imports
-    import { CreatePersonModalComponent } from './phonebook/create-person-modal.component';
-    
-    @NgModule({
-        imports: [
-            ...existing module imports...
-        ],
-        declarations: [
-            DashboardComponent,
-            PhoneBookComponent,
-            CreatePersonModalComponent
-        ]
-    })
-    export class MainModule { }
+```typescript
+...previous imports
+import { CreatePersonModalComponent } from './phonebook/create-person-modal.component';
+
+@NgModule({
+    imports: [
+        ...existing module imports...
+    ],
+    declarations: [
+        DashboardComponent,
+        PhoneBookComponent,
+        CreatePersonModalComponent
+    ]
+})
+export class MainModule { }
+```
 
 We need to put a "Create new person" button to the 'people list page' to
 open the modal when clicked to the button. To do that, we made the
 following changes in **phonebook.component.html**:
 
-    <div [@routerTransition]>
-        <div class="m-subheader ">
-            <div class="d-flex align-items-center">
-                <div class="mr-auto col-sm-6">
-                    <h3 class="m-subheader__title m-subheader__title--separator">
-                        <span>{{l("PhoneBook")}}</span>
-                    </h3>
-                </div>
-                <div class="col-sm-6 text-right">
-                    <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson")}}</button>
-                </div>
+```html
+<div [@routerTransition]>
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto col-sm-6">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    <span>{{l("PhoneBook")}}</span>
+                </h3>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson")}}</button>
             </div>
         </div>
-        <div class="m-content">
-            <div class="m-portlet m-portlet--mobile">
-                <div class="m-portlet__body">
-                    <h3>{{l("AllPeople")}}</h3>
-                    <div class="m-widget1">
-                        <div class="m-widget1__item" *ngFor="let person of people">
-                            <div class="row m-row--no-padding align-items-center">
-                                <div class="col">
-                                    <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
-                                    <span class="m-widget1__desc">{{person.emailAddress}}</span>
-                                </div>
+    </div>
+    <div class="m-content">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__body">
+                <h3>{{l("AllPeople")}}</h3>
+                <div class="m-widget1">
+                    <div class="m-widget1__item" *ngFor="let person of people">
+                        <div class="row m-row--no-padding align-items-center">
+                            <div class="col">
+                                <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
+                                <span class="m-widget1__desc">{{person.emailAddress}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <createPersonModal #createPersonModal (modalSave)="getPeople()"></createPersonModal>
     </div>
+    <createPersonModal #createPersonModal (modalSave)="getPeople()"></createPersonModal>
+</div>
+```
 
 Made some minor changes in the view; Added a **button** to open the
 modal and the **createPersonModal** component as like another HTML tag
@@ -1068,13 +1112,17 @@ Go to **AppAuthorizationProvider** class in the server side and add a
 new permission as shown below (you can add just below the dashboard
 permission):
 
-    pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
+```csharp
+pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
+```
 
 A permission should have a unique name. We define permission names as
 constant strings in **AppPermissions** class. It's a simple constant
 string:
 
-    public const string Pages_Tenant_PhoneBook = "Pages.Tenant.PhoneBook";
+```csharp
+public const string Pages_Tenant_PhoneBook = "Pages.Tenant.PhoneBook";
+```
 
 Unique name of this permission is "**Pages.Tenant.PhoneBook**". While
 you can set any string (as long as it's unique), it's suggested to use
@@ -1091,11 +1139,13 @@ unauthorized users. Since all server side code is located in
 PersonAppService class, we can declare a class level attribute as shown
 below:
 
-    [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
-    public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
-    {
-        //...
-    }
+```csharp
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook)]
+public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
+{
+    //...
+}
+```
 
 Now, let's try to enter Phone Book page by clicking the menu item:
 
@@ -1110,7 +1160,9 @@ We got an exception about permission. Server did not send the data but
 we can still enter the page. To prevent it, open
 **main-routing.module.ts** and change the route definition like that:
 
-    { path: 'phonebook', component: PhoneBookComponent, data: { permission: 'Pages.Tenant.PhoneBook' } }
+```json
+{ path: 'phonebook', component: PhoneBookComponent, data: { permission: 'Pages.Tenant.PhoneBook' } }
+```
 
 **AuthRouteGuard** class automatically checks route permission data and
 prevents entering to the view if specified permission is not granted.
@@ -1123,7 +1175,9 @@ should also **hide** the Phone book **menu item**. It's easy, open
 **app-navigation-service.ts** and add change PhoneBook menu definition
 as shown below:
 
-    new AppMenuItem("PhoneBook", 'Pages.Tenant.PhoneBook', "flaticon-book", "/app/main/phonebook")
+```typescript
+new AppMenuItem("PhoneBook", 'Pages.Tenant.PhoneBook', "flaticon-book", "/app/main/phonebook")
+```
 
 #### Grant permission
 
@@ -1152,25 +1206,31 @@ actions** on a page, like creating a new person.
 Defining a permission is similar (in the AppAuthorizationProvider
 class):
 
-    var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
-    phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L("CreateNewPerson"), multiTenancySides: MultiTenancySides.Tenant);
+```csharp
+var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L("CreateNewPerson"), multiTenancySides: MultiTenancySides.Tenant);
+```
 
 First permission was defined before. In the second line, we are creating
 a child permission of first one. Remember to create a constant in
 AppPermissions class:
 
-    public const string Pages_Tenant_PhoneBook_CreatePerson = "Pages.Tenant.PhoneBook.CreatePerson";
+```csharp
+public const string Pages_Tenant_PhoneBook_CreatePerson = "Pages.Tenant.PhoneBook.CreatePerson";
+```
 
 #### Add AbpAuthorize Attribute
 
 This time, we're declaring **AbpAuthorize** attribute just for
 **CreatePerson** method:
 
-    [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
-    public async Task CreatePerson(CreatePersonInput input)
-    {
-        //...
-    }
+```csharp
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson)]
+public async Task CreatePerson(CreatePersonInput input)
+{
+    //...
+}
+```
 
 #### Hide Unauthorized Button
 
@@ -1182,7 +1242,9 @@ permission. It's very simple:
 Open the **phonebook.component.html** view and use **isGranted**
 condition as shown below:
 
-    <button *ngIf="isGranted('Pages.Tenant.PhoneBook.CreatePerson')" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson")}}</button>
+```html
+<button *ngIf="isGranted('Pages.Tenant.PhoneBook.CreatePerson')" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson")}}</button>
+```
 
 In this way, the "Create New Person" button does not rendered in server
 and user can not see this button.
@@ -1211,24 +1273,26 @@ We're starting from UI in this case.
 We're changing **phonebook.component.html** view to add a delete button
 (related part is shown here):
 
-    ...
-    <h3>{{l("AllPeople")}}</h3>
-    <div class="m-widget1">
-        <div class="m-widget1__item" *ngFor="let person of people">
-            <div class="row m-row--no-padding align-items-center">
-                <div class="col">
-                    <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
-                    <span class="m-widget1__desc">{{person.emailAddress}}</span>
-                </div>
-                <div class="col m--align-right">
-                    <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
+```html
+...
+<h3>{{l("AllPeople")}}</h3>
+<div class="m-widget1">
+    <div class="m-widget1__item" *ngFor="let person of people">
+        <div class="row m-row--no-padding align-items-center">
+            <div class="col">
+                <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
+                <span class="m-widget1__desc">{{person.emailAddress}}</span>
+            </div>
+            <div class="col m--align-right">
+                <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
         </div>
     </div>
-    ...
+</div>
+...
+```
 
 We simply added a button which calls **deletePerson** method (will be
 defined) when it's clicked. You can define a permission for 'deleting
@@ -1240,20 +1304,24 @@ We're using a **[LESS](http://lesscss.org/)** style here to take the
 button right. Created a file named **phonebook.component.less** (in
 phonebook folder) and added following lines:
 
-    .m-widget1__item{
-        button#deletePerson {
-            /* styles */
-        }
+```css
+.m-widget1__item{
+    button#deletePerson {
+        /* styles */
     }
+}
+```
 
 And adding the style to the **phonebook.component.ts** Component
 declaration:
 
-    @Component({
-        templateUrl: './phonebook.component.html',
-        styleUrls: ['./phonebook.component.less'],
-        animations: [appModuleAnimation()]
-    })
+```typescript
+@Component({
+    templateUrl: './phonebook.component.html',
+    styleUrls: ['./phonebook.component.less'],
+    animations: [appModuleAnimation()]
+})
+```
 
 Now, we can now see the buttons, but they don't work since we haven't
 defined the deletePerson method yet.
@@ -1263,16 +1331,20 @@ defined the deletePerson method yet.
 Let's leave the client side and add a DeletePerson method to the server
 side. We are adding it to the service interface,**IPersonAppService:**:
 
-    Task DeletePerson(EntityDto input);
+```csharp
+Task DeletePerson(EntityDto input);
+```
 
 **EntityDto** is a shortcut of ABP if we only get an id value.
 Implementation (in **PersonAppService**) is very simple:
 
-    [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson)]
-    public async Task DeletePerson(EntityDto input)
-    {
-        await _personRepository.DeleteAsync(input.Id);
-    }
+```csharp
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson)]
+public async Task DeletePerson(EntityDto input)
+{
+    await _personRepository.DeleteAsync(input.Id);
+}
+```
 
 ### Service Proxy Generation
 
@@ -1284,19 +1356,21 @@ refresh.bat as we did before.
 
 Now, we can add **deletePerson** method to **phonebook.component.ts**:
 
-    deletePerson(person: PersonListDto): void {
-        this.message.confirm(
-            this.l('AreYouSureToDeleteThePerson', person.name),
-            isConfirmed => {
-                if (isConfirmed) {
-                    this._personService.deletePerson(person.id).subscribe(() => {
-                        this.notify.info(this.l('SuccessfullyDeleted'));
-                        _.remove(this.people, person);
-                    });
-                }
+```typescript
+deletePerson(person: PersonListDto): void {
+    this.message.confirm(
+        this.l('AreYouSureToDeleteThePerson', person.name),
+        isConfirmed => {
+            if (isConfirmed) {
+                this._personService.deletePerson(person.id).subscribe(() => {
+                    this.notify.info(this.l('SuccessfullyDeleted'));
+                    _.remove(this.people, person);
+                });
             }
-        );
-    } 
+        }
+    );
+} 
+```
 
 It first shows a confirmation message when we click the delete button:
 
@@ -1309,7 +1383,9 @@ if operation succeed. Also, removes the person from the person array
 using [lodash](https://lodash.com/) library. We also added an import
 statement before the @Component declaration:
 
-    import * as _ from 'lodash';
+```typescript
+import * as _ from 'lodash';
+```
 
 ## Filtering people
 
@@ -1321,39 +1397,41 @@ UI is shown below:
 We added a search input to **phonebook.component.html** view (showing
 the related part of the code):
 
-    <h3>{{l("AllPeople")}} ({{people.length}})</h3>
-    <form autocomplete="off">
-        <div class="m-form m-form--label-align-right">
-            <div class="row align-items-center m--margin-bottom-10">
-                <div class="col-xl-12">
-                    <div class="form-group m-form__group align-items-center">
-                        <div class="input-group">
-                            <input [(ngModel)]="filter" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
-                            <span class="input-group-btn">
-                                <button (click)="getPeople()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
-                            </span>
-                        </div>
+```html
+<h3>{{l("AllPeople")}} ({{people.length}})</h3>
+<form autocomplete="off">
+    <div class="m-form m-form--label-align-right">
+        <div class="row align-items-center m--margin-bottom-10">
+            <div class="col-xl-12">
+                <div class="form-group m-form__group align-items-center">
+                    <div class="input-group">
+                        <input [(ngModel)]="filter" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                        <span class="input-group-btn">
+                            <button (click)="getPeople()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
-    
-    <div class="m-widget1">
-        <div class="m-widget1__item" *ngFor="let person of people">
-            <div class="row m-row--no-padding align-items-center">
-                <div class="col">
-                    <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
-                    <span class="m-widget1__desc">{{person.emailAddress}}</span>
-                </div>
-                <div class="col m--align-right">
-                    <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
+    </div>
+</form>
+
+<div class="m-widget1">
+    <div class="m-widget1__item" *ngFor="let person of people">
+        <div class="row m-row--no-padding align-items-center">
+            <div class="col">
+                <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
+                <span class="m-widget1__desc">{{person.emailAddress}}</span>
+            </div>
+            <div class="col m--align-right">
+                <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
         </div>
     </div>
+</div>
+```
 
 We also added currently filtered people count (people.length) in the
 header. Since we have already defined and used the filter property in
@@ -1369,22 +1447,24 @@ extend our domain to support **multiple phone numbers** for a person.
 
 Let's start by creating a new Entity, **Phone** in **.Core** project:
 
-    [Table("PbPhones")]
-    public class Phone : CreationAuditedEntity<long>
-    {
-        public const int MaxNumberLength = 16;
-    
-        [ForeignKey("PersonId")]
-        public virtual Person Person { get; set; }
-        public virtual int PersonId { get; set; }
-    
-        [Required]
-        public virtual PhoneType Type { get; set; }
-    
-        [Required]
-        [MaxLength(MaxNumberLength)]
-        public virtual string Number { get; set; }
-    }
+```csharp
+[Table("PbPhones")]
+public class Phone : CreationAuditedEntity<long>
+{
+    public const int MaxNumberLength = 16;
+
+    [ForeignKey("PersonId")]
+    public virtual Person Person { get; set; }
+    public virtual int PersonId { get; set; }
+
+    [Required]
+    public virtual PhoneType Type { get; set; }
+
+    [Required]
+    [MaxLength(MaxNumberLength)]
+    public virtual string Number { get; set; }
+}
+```
 
 Phone entities are stored in **PbPhones** table. Its primary key is
 **long** and it inherits creation auditing properties. It has a reference
@@ -1392,27 +1472,33 @@ to **Person** entity which owns the phone number.
 
 We added a **Phones** collection to the People:
 
-    [Table("PbPersons")]
-    public class Person : FullAuditedEntity
-    {
-        //...other properties
-    
-        public virtual ICollection<Phone> Phones { get; set; }
-    }
+```csharp
+[Table("PbPersons")]
+public class Person : FullAuditedEntity
+{
+    //...other properties
+
+    public virtual ICollection<Phone> Phones { get; set; }
+}
+```
 
 We have a **PhoneType** enum as shown below: (in **.Core**
 project)
 
-    public enum PhoneType : byte
-    {
-        Mobile,
-        Home,
-        Business
-    }
+```csharp
+public enum PhoneType : byte
+{
+    Mobile,
+    Home,
+    Business
+}
+```
 
 Lastly, we're also adding a DbSet property for Phone to our DbContext:
 
-    public virtual DbSet<Phone> Phones { get; set; }
+```csharp
+public virtual DbSet<Phone> Phones { get; set; }
+```
 
 ## Adding Database Migration
 
@@ -1424,91 +1510,95 @@ this command in the .EntityFramework project's directory:
 This will create a new code based migration file to create **PbPhones**
 table:
 
-    public partial class Added_Phone : Migration
+```csharp
+public partial class Added_Phone : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "PbPhones",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    CreatorUserId = table.Column<long>(nullable: true),
-                    Number = table.Column<string>(maxLength: 16, nullable: false),
-                    PersonId = table.Column<int>(nullable: false),
-                    Type = table.Column<byte>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PbPhones", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PbPhones_PbPersons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "PbPersons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-    
-            migrationBuilder.CreateIndex(
-                name: "IX_PbPhones_PersonId",
-                table: "PbPhones",
-                column: "PersonId");
-        }
-    
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "PbPhones");
-        }
+        migrationBuilder.CreateTable(
+            name: "PbPhones",
+            columns: table => new
+            {
+                Id = table.Column<long>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                CreationTime = table.Column<DateTime>(nullable: false),
+                CreatorUserId = table.Column<long>(nullable: true),
+                Number = table.Column<string>(maxLength: 16, nullable: false),
+                PersonId = table.Column<int>(nullable: false),
+                Type = table.Column<byte>(nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_PbPhones", x => x.Id);
+                table.ForeignKey(
+                    name: "FK_PbPhones_PbPersons_PersonId",
+                    column: x => x.PersonId,
+                    principalTable: "PbPersons",
+                    principalColumn: "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
+
+        migrationBuilder.CreateIndex(
+            name: "IX_PbPhones_PersonId",
+            table: "PbPhones",
+            column: "PersonId");
     }
+
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable(
+            name: "PbPhones");
+    }
+}
+```
 
 Before updating database, we can go to database
 **InitialPeopleCreator**, rename it to **InitialPeopleAndPhoneCreator**
 and add example **phone numbers** for example people (We renamed
 InitialPeopleCreator.cs to InitialPeopleAndPhoneCreator.cs):
 
-    public class InitialPeopleAndPhoneCreator
+```csharp
+public class InitialPeopleAndPhoneCreator
+{
+    //...
+
+    public void Create()
     {
-        //...
-    
-        public void Create()
+        var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.com");
+        if (douglas == null)
         {
-            var douglas = _context.Persons.FirstOrDefault(p => p.EmailAddress == "douglas.adams@fortytwo.com");
-            if (douglas == null)
-            {
-                _context.Persons.Add(
-                    new Person
-                    {
-                        Name = "Douglas",
-                        Surname = "Adams",
-                        EmailAddress = "douglas.adams@fortytwo.com",
-                        Phones = new List<Phone>
-                                    {
-                                        new Phone {Type = PhoneType.Home, Number = "1112242"},
-                                        new Phone {Type = PhoneType.Mobile, Number = "2223342"}
-                                    }
-                    });
-            }
-    
-            var asimov = _context.Persons.FirstOrDefault(p => p.EmailAddress == "isaac.asimov@foundation.org");
-            if (asimov == null)
-            {
-                _context.Persons.Add(
-                    new Person
-                    {
-                        Name = "Isaac",
-                        Surname = "Asimov",
-                        EmailAddress = "isaac.asimov@foundation.org",
-                        Phones = new List<Phone>
-                                    {
-                                        new Phone {Type = PhoneType.Home, Number = "8889977"}
-                                    }
-                    });
-            }
+            _context.Persons.Add(
+                new Person
+                {
+                    Name = "Douglas",
+                    Surname = "Adams",
+                    EmailAddress = "douglas.adams@fortytwo.com",
+                    Phones = new List<Phone>
+                                {
+                                    new Phone {Type = PhoneType.Home, Number = "1112242"},
+                                    new Phone {Type = PhoneType.Mobile, Number = "2223342"}
+                                }
+                });
+        }
+
+        var asimov = _context.Persons.FirstOrDefault(p => p.EmailAddress == "isaac.asimov@foundation.org");
+        if (asimov == null)
+        {
+            _context.Persons.Add(
+                new Person
+                {
+                    Name = "Isaac",
+                    Surname = "Asimov",
+                    EmailAddress = "isaac.asimov@foundation.org",
+                    Phones = new List<Phone>
+                                {
+                                    new Phone {Type = PhoneType.Home, Number = "8889977"}
+                                }
+                });
         }
     }
+}
+```
 
 We added two phone numbers to Douglas, one phone number to Isaac. But if
 we run our application now, phones are not inserted since this seed code
@@ -1526,44 +1616,48 @@ phone numbers of people into return value.
 
 First, we're changing **PersonListDto** to contain a list of phones:
 
-    public class PersonListDto : FullAuditedEntityDto
-    {
-        public string Name { get; set; }
-    
-        public string Surname { get; set; }
-    
-        public string EmailAddress { get; set; }
-    
-        public Collection<PhoneInPersonListDto> Phones { get; set; }
-    }
-    
-    public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
-    {
-        public PhoneType Type { get; set; }
-    
-        public string Number { get; set; }
-    }
+```csharp
+public class PersonListDto : FullAuditedEntityDto
+{
+    public string Name { get; set; }
+
+    public string Surname { get; set; }
+
+    public string EmailAddress { get; set; }
+
+    public Collection<PhoneInPersonListDto> Phones { get; set; }
+}
+
+public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
+{
+    public PhoneType Type { get; set; }
+
+    public string Number { get; set; }
+}
+```
 
 So, added also a DTO to transfer phone numbers and mapped from Phone
 entity. Now, we can change GetPeople method to get Phones from database:
 
-    public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
-    {
-        var persons = _personRepository
-            .GetAll()
-            .Include(p => p.Phones)
-            .WhereIf(
-                !input.Filter.IsNullOrEmpty(),
-                p => p.Name.Contains(input.Filter) ||
-                        p.Surname.Contains(input.Filter) ||
-                        p.EmailAddress.Contains(input.Filter)
-            )
-            .OrderBy(p => p.Name)
-            .ThenBy(p => p.Surname)
-            .ToList();
-    
-        return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(persons));
-    }
+```csharp
+public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
+{
+    var persons = _personRepository
+        .GetAll()
+        .Include(p => p.Phones)
+        .WhereIf(
+            !input.Filter.IsNullOrEmpty(),
+            p => p.Name.Contains(input.Filter) ||
+                    p.Surname.Contains(input.Filter) ||
+                    p.EmailAddress.Contains(input.Filter)
+        )
+        .OrderBy(p => p.Name)
+        .ThenBy(p => p.Surname)
+        .ToList();
+
+    return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(persons));
+}
+```
 
 We only added **Include** extension method to the query. Rest of the
 codes remains same. Furthermore, it would work without adding this, but
@@ -1575,54 +1669,62 @@ separately).
 We are adding two more methods to IPersonAppService interface as shown
 below:
 
-    Task DeletePhone(EntityDto<long> input);
-    Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
+```csharp
+Task DeletePhone(EntityDto<long> input);
+Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
+```
 
 We could create a new, separated IPhoneAppService. It's your choice.
 But, we can consider Person as an aggregate and add phone related
 methods here. AddPhoneInput DTO is shown below:
 
-    public class AddPhoneInput
-    {
-        [Range(1, int.MaxValue)]
-        public int PersonId { get; set; }
-    
-        [Required]
-        public PhoneType Type { get; set; }
-    
-        [Required]
-        [MaxLength(PhoneConsts.MaxNumberLength)]
-        public string Number { get; set; }
-    }
+```csharp
+public class AddPhoneInput
+{
+    [Range(1, int.MaxValue)]
+    public int PersonId { get; set; }
+
+    [Required]
+    public PhoneType Type { get; set; }
+
+    [Required]
+    [MaxLength(PhoneConsts.MaxNumberLength)]
+    public string Number { get; set; }
+}
+```
 
 We used PhoneConsts.MaxNumberLength for Number field. You should create
 this consts in **.Core.Shared**.
 
-    public class PhoneConsts
-    {
-        public const int MaxNumberLength = 16;
-    }
+```csharp
+public class PhoneConsts
+{
+    public const int MaxNumberLength = 16;
+}
+```
 
 Now, we can implement these methods:
 
-    public async Task DeletePhone(EntityDto<long> input)
-    {
-        await _phoneRepository.DeleteAsync(input.Id);
-    }
-    
-    public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
-    {
-        var person = _personRepository.Get(input.PersonId);
-        await _personRepository.EnsureCollectionLoadedAsync(person, p => p.Phones);
-    
-        var phone = ObjectMapper.Map<Phone>(input);
-        person.Phones.Add(phone);
-    
-        //Get auto increment Id of the new Phone by saving to database
-        await CurrentUnitOfWork.SaveChangesAsync();
-    
-        return ObjectMapper.Map<PhoneInPersonListDto>(phone);
-    }
+```csharp
+public async Task DeletePhone(EntityDto<long> input)
+{
+    await _phoneRepository.DeleteAsync(input.Id);
+}
+
+public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
+{
+    var person = _personRepository.Get(input.PersonId);
+    await _personRepository.EnsureCollectionLoadedAsync(person, p => p.Phones);
+
+    var phone = ObjectMapper.Map<Phone>(input);
+    person.Phones.Add(phone);
+
+    //Get auto increment Id of the new Phone by saving to database
+    await CurrentUnitOfWork.SaveChangesAsync();
+
+    return ObjectMapper.Map<PhoneInPersonListDto>(phone);
+}
+```
 
 (Note: We injected **IRepository&lt;Phone, long&gt;** in the constructor
 and set to \_phoneRepository field, as similar to \_personRepository)
@@ -1659,61 +1761,63 @@ the icon at left. We can add a new phone from the inputs at last line.
 
 Changes in view are shown below:
 
-    <div class="m-widget1__item" *ngFor="let person of people" [ngClass]="{'bg-secondary m--padding-10': person===editingPerson}">
-        <div class="row m-row--no-padding align-items-center">
-            <div class="col">
-                <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
-                <span class="m-widget1__desc">{{person.emailAddress}}</span>
-            </div>
-            <div class="col m--align-right">
-                <button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
-                    <i class="fa fa-pencil"></i>
-                </button>
-                <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
+```html
+<div class="m-widget1__item" *ngFor="let person of people" [ngClass]="{'bg-secondary m--padding-10': person===editingPerson}">
+    <div class="row m-row--no-padding align-items-center">
+        <div class="col">
+            <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
+            <span class="m-widget1__desc">{{person.emailAddress}}</span>
         </div>
-        <div class="row">
-            <div class="col-sm-12 m--margin-top-20" *ngIf="person===editingPerson">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:10%"></th>
-                            <th style="width:15%">{{l("Type")}}</th>
-                            <th style="width:75%">{{l("PhoneNumber")}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let phone of person.phones">
-                            <td>
-                                <button (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </td>
-                            <td>{{getPhoneTypeAsString(phone.type)}}</td>
-                            <td>{{phone.number}}</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button (click)="savePhone()" class="btn btn-sm btn-success">
-                                    <i class="fa fa-floppy-o"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <select name="Type" [(ngModel)]="newPhone.type"class="form-control">
-                                    <option value="0">{{l("PhoneType_Mobile")}}</option>
-                                    <option value="1">{{l("PhoneType_Home")}}</option>
-                                    <option value="2">{{l("PhoneType_Business")}}</option>
-                                </select>
-                            </td>
-                            <td><input type="text" name="number" [(ngModel)]="newPhone.number" class="form-control" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="col m--align-right">
+            <button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+                <i class="fa fa-pencil"></i>
+            </button>
+            <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+                <i class="fa fa-times"></i>
+            </button>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12 m--margin-top-20" *ngIf="person===editingPerson">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:10%"></th>
+                        <th style="width:15%">{{l("Type")}}</th>
+                        <th style="width:75%">{{l("PhoneNumber")}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let phone of person.phones">
+                        <td>
+                            <button (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </td>
+                        <td>{{getPhoneTypeAsString(phone.type)}}</td>
+                        <td>{{phone.number}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button (click)="savePhone()" class="btn btn-sm btn-success">
+                                <i class="fa fa-floppy-o"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <select name="Type" [(ngModel)]="newPhone.type"class="form-control">
+                                <option value="0">{{l("PhoneType_Mobile")}}</option>
+                                <option value="1">{{l("PhoneType_Home")}}</option>
+                                <option value="2">{{l("PhoneType_Business")}}</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="number" [(ngModel)]="newPhone.number" class="form-control" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+```
 
 We added an edit button for each person. Then added a table for each
 person that shows phones of the related person and allows adding a new
@@ -1725,103 +1829,105 @@ Before changing PhoneBookComponent, we should re-generate
 service-proxies using nswag as did above. And finally we can change
 PhoneBookComponent as shown below:
 
-    import { Component, Injector, OnInit } from '@angular/core';
-    import { AppComponentBase } from '@shared/common/app-component-base';
-    import { appModuleAnimation } from '@shared/animations/routerTransition';
-    import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto, PhoneInPersonListDto, AddPhoneInput, AddPhoneInputType, PhoneInPersonListDtoType } from '@shared/service-proxies/service-proxies';
-    
-    import * as _ from 'lodash';
-    
-    @Component({
-        templateUrl: './phonebook.component.html',
-        styleUrls: ['./phonebook.component.less'],
-        animations: [appModuleAnimation()]
-    })
-    export class PhoneBookComponent extends AppComponentBase implements OnInit {
-    
-        people: PersonListDto[] = [];
-        filter: string = '';
-    
-        editingPerson: PersonListDto = null;
-        newPhone: AddPhoneInput = null;
-    
-        constructor(
-            injector: Injector,
-            private _personService: PersonServiceProxy
-        ) {
-            super(injector);
-        }
-    
-        ngOnInit(): void {
-            this.getPeople();
-        }
-    
-        getPeople(): void {
-            this._personService.getPeople(this.filter).subscribe((result) => {
-                this.people = result.items;
-            });
-        }
-    
-        deletePerson(person: PersonListDto): void {
-            this.message.confirm(
-                this.l('AreYouSureToDeleteThePerson', person.name),
-                isConfirmed => {
-                    if (isConfirmed) {
-                        this._personService.deletePerson(person.id).subscribe(() => {
-                            this.notify.info(this.l('SuccessfullyDeleted'));
-                            _.remove(this.people, person);
-                        });
-                    }
-                }
-            );
-        }
-    
-        editPerson(person: PersonListDto): void {
-            if (person === this.editingPerson) {
-                this.editingPerson = null;
-            } else {
-                this.editingPerson = person;
-    
-                this.newPhone = new AddPhoneInput();
-                this.newPhone.type = AddPhoneInputType._0;
-                this.newPhone.personId = person.id;
-            }
-        };
-    
-        getPhoneTypeAsString(phoneType: PhoneInPersonListDtoType): string {
-            switch (phoneType) {
-                case PhoneInPersonListDtoType._0:
-                    return this.l('PhoneType_Mobile');
-                case PhoneInPersonListDtoType._1:
-                    return this.l('PhoneType_Home');
-                case PhoneInPersonListDtoType._2:
-                    return this.l('PhoneType_Business');
-                default:
-                    return '?';
-            }
-        };
-    
-        deletePhone(phone, person): void {
-            this._personService.deletePhone(phone.id).subscribe(() => {
-                this.notify.success(this.l('SuccessfullyDeleted'));
-                _.remove(person.phones, phone);
-            });
-        };
-    
-        savePhone(): void {
-            if (!this.newPhone.number) {
-                this.message.warn('Please enter a number!');
-                return;
-            }
-    
-            this._personService.addPhone(this.newPhone).subscribe(result => {
-                this.editingPerson.phones.push(result);
-                this.newPhone.number = '';
-    
-                this.notify.success(this.l('SavedSuccessfully'));
-            });
-        };
+```typescript
+import { Component, Injector, OnInit } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto, PhoneInPersonListDto, AddPhoneInput, AddPhoneInputType, PhoneInPersonListDtoType } from '@shared/service-proxies/service-proxies';
+
+import * as _ from 'lodash';
+
+@Component({
+    templateUrl: './phonebook.component.html',
+    styleUrls: ['./phonebook.component.less'],
+    animations: [appModuleAnimation()]
+})
+export class PhoneBookComponent extends AppComponentBase implements OnInit {
+
+    people: PersonListDto[] = [];
+    filter: string = '';
+
+    editingPerson: PersonListDto = null;
+    newPhone: AddPhoneInput = null;
+
+    constructor(
+        injector: Injector,
+        private _personService: PersonServiceProxy
+    ) {
+        super(injector);
     }
+
+    ngOnInit(): void {
+        this.getPeople();
+    }
+
+    getPeople(): void {
+        this._personService.getPeople(this.filter).subscribe((result) => {
+            this.people = result.items;
+        });
+    }
+
+    deletePerson(person: PersonListDto): void {
+        this.message.confirm(
+            this.l('AreYouSureToDeleteThePerson', person.name),
+            isConfirmed => {
+                if (isConfirmed) {
+                    this._personService.deletePerson(person.id).subscribe(() => {
+                        this.notify.info(this.l('SuccessfullyDeleted'));
+                        _.remove(this.people, person);
+                    });
+                }
+            }
+        );
+    }
+
+    editPerson(person: PersonListDto): void {
+        if (person === this.editingPerson) {
+            this.editingPerson = null;
+        } else {
+            this.editingPerson = person;
+
+            this.newPhone = new AddPhoneInput();
+            this.newPhone.type = AddPhoneInputType._0;
+            this.newPhone.personId = person.id;
+        }
+    };
+
+    getPhoneTypeAsString(phoneType: PhoneInPersonListDtoType): string {
+        switch (phoneType) {
+            case PhoneInPersonListDtoType._0:
+                return this.l('PhoneType_Mobile');
+            case PhoneInPersonListDtoType._1:
+                return this.l('PhoneType_Home');
+            case PhoneInPersonListDtoType._2:
+                return this.l('PhoneType_Business');
+            default:
+                return '?';
+        }
+    };
+
+    deletePhone(phone, person): void {
+        this._personService.deletePhone(phone.id).subscribe(() => {
+            this.notify.success(this.l('SuccessfullyDeleted'));
+            _.remove(person.phones, phone);
+        });
+    };
+
+    savePhone(): void {
+        if (!this.newPhone.number) {
+            this.message.warn('Please enter a number!');
+            return;
+        }
+
+        this._personService.addPhone(this.newPhone).subscribe(result => {
+            this.editingPerson.phones.push(result);
+            this.newPhone.number = '';
+
+            this.notify.success(this.l('SavedSuccessfully'));
+        });
+    };
+}
+```
 
 ## Edit Mode For People
 
@@ -1833,164 +1939,174 @@ First of all, we create the necessary DTOs to transfer people's id, name,
 surname and e-mail. Then create the functions in PersonAppService for
 editing people:  
 
-    [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
-    public async Task<GetPersonForEditOutput> GetPersonForEdit(GetPersonForEditInput input)
-    {
-        var person = await _personRepository.GetAsync(input.Id);
-        return ObjectMapper.Map<GetPersonForEditOutput>(person);
-    }
-    
-    [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
-    public async Task EditPerson(EditPersonInput input)
-    {
-        var person = await _personRepository.GetAsync(input.Id);
-        person.Name = input.Name;
-        person.Surname = input.Surname;
-        person.EmailAddress = input.EmailAddress;
-        await _personRepository.UpdateAsync(person);
-    }
+```csharp
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
+public async Task<GetPersonForEditOutput> GetPersonForEdit(GetPersonForEditInput input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    return ObjectMapper.Map<GetPersonForEditOutput>(person);
+}
+
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
+public async Task EditPerson(EditPersonInput input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    person.Name = input.Name;
+    person.Surname = input.Surname;
+    person.EmailAddress = input.EmailAddress;
+    await _personRepository.UpdateAsync(person);
+}
+```
 
 ### View
 
 Create edit-person-modal.component.html:
 
-    <div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
-            <div class="modal-header">
-                <h4 class="modal-title">
-                <span>{{l("EditPerson")}}</span>
-              </h4>
-              <button type="button" class="close" (click)="close()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>          
-            </div>
-            <div class="modal-body">
-    
-              <div class="form-group">
-                <label>{{l("Name")}}</label>
-                <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">            
-              </div>
-    
-              <div class="form-group">
-                <label>{{l("Surname")}}</label>
-                <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
-              </div>
-    
-              <div class="form-group">
-              <label>{{l("EmailAddress")}}</label>
-                <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">                        
-              </div>
-    
-            </div>
-            <div class="modal-footer">
-              <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel")}}</button>
-              <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
-            </div>
-          </form>
+```html
+<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
+        <div class="modal-header">
+            <h4 class="modal-title">
+            <span>{{l("EditPerson")}}</span>
+          </h4>
+          <button type="button" class="close" (click)="close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>          
         </div>
-      </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label>{{l("Name")}}</label>
+            <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">            
+          </div>
+
+          <div class="form-group">
+            <label>{{l("Surname")}}</label>
+            <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
+          </div>
+
+          <div class="form-group">
+          <label>{{l("EmailAddress")}}</label>
+            <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">                        
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel")}}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+        </div>
+      </form>
     </div>
+  </div>
+</div>
+```
 
 Add those lines to **phonebook.component.html:**:
 
-            <button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
-                <i class="fa fa-plus"></i>
-            </button>
-            <button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson')}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
-                <i class="fa fa-pencil"></i>
-            </button>
-           <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
-                <i class="fa fa-times"></i>
-            </button>
-                    .
-                    .
-                    .
-                    .
-                    .
-    <createPersonModal #createPersonModal(modalSave)="getPeople()"></createPersonModal>
-    <editPersonModal #editPersonModal (modalSave)="getPeople()"></editPersonModal>
+```html
+        <button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+            <i class="fa fa-plus"></i>
+        </button>
+        <button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson')}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+            <i class="fa fa-pencil"></i>
+        </button>
+       <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+            <i class="fa fa-times"></i>
+        </button>
+                .
+                .
+                .
+                .
+                .
+<createPersonModal #createPersonModal(modalSave)="getPeople()"></createPersonModal>
+<editPersonModal #editPersonModal (modalSave)="getPeople()"></editPersonModal>
+```
 
 ### Controller
 
 Create edit-person-modal.component.ts:
 
-    import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
-    import { ModalDirective } from 'ngx-bootstrap';
-    import { PersonServiceProxy, EditPersonInput } from '@shared/service-proxies/service-proxies';
-    import { AppComponentBase } from '@shared/common/app-component-base';
-    
-    @Component({
-      selector: 'editPersonModal',
-      templateUrl: './edit-person-modal.component.html'
-    })
-    export class EditPersonModalComponent extends AppComponentBase {
-    
-      @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-    
-      @ViewChild('modal') modal: ModalDirective;
-      @ViewChild('nameInput') nameInput: ElementRef;
-    
-      person: EditPersonInput = new EditPersonInput();
-    
-      active: boolean = false;
-      saving: boolean = false;
-    
-      constructor(
-        injector: Injector,
-        private _personService: PersonServiceProxy
-      ) {
-        super(injector);
-      }
-    
-      show(personId): void {
-        this.active = true;
-        this._personService.getPersonForEdit(personId).subscribe((result)=> {
-          this.person = result;
-          this.modal.show();
-        });
-    
-      }
-    
-      onShown(): void {
-       // this.nameInput.nativeElement.focus();
-      }
-    
-      save(): void {
-        this.saving = true;
-        this._personService.editPerson(this.person)
-          .subscribe(() => {
-            this.notify.info(this.l('SavedSuccessfully'));
-            this.close();
-            this.modalSave.emit(this.person);
-          });
-        this.saving = false;
-      }
-    
-      close(): void {
-        this.modal.hide();
-        this.active = false;
-      }
-    }
+```typescript
+import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap';
+import { PersonServiceProxy, EditPersonInput } from '@shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/common/app-component-base';
+
+@Component({
+  selector: 'editPersonModal',
+  templateUrl: './edit-person-modal.component.html'
+})
+export class EditPersonModalComponent extends AppComponentBase {
+
+  @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild('modal') modal: ModalDirective;
+  @ViewChild('nameInput') nameInput: ElementRef;
+
+  person: EditPersonInput = new EditPersonInput();
+
+  active: boolean = false;
+  saving: boolean = false;
+
+  constructor(
+    injector: Injector,
+    private _personService: PersonServiceProxy
+  ) {
+    super(injector);
+  }
+
+  show(personId): void {
+    this.active = true;
+    this._personService.getPersonForEdit(personId).subscribe((result)=> {
+      this.person = result;
+      this.modal.show();
+    });
+
+  }
+
+  onShown(): void {
+   // this.nameInput.nativeElement.focus();
+  }
+
+  save(): void {
+    this.saving = true;
+    this._personService.editPerson(this.person)
+      .subscribe(() => {
+        this.notify.info(this.l('SavedSuccessfully'));
+        this.close();
+        this.modalSave.emit(this.person);
+      });
+    this.saving = false;
+  }
+
+  close(): void {
+    this.modal.hide();
+    this.active = false;
+  }
+}
+```
 
 Add those lines to **main.module.ts:**:
 
-        import { EditPersonModalComponent } from './phonebook/edit-person-modal.component';
-    .
-    .
-    .
-    .
-    .
-    .
-        declarations: [
-          DashboardComponent,
-          PhoneBookComponent,
-          CreatePersonModalComponent,
-          EditPersonModalComponent
-        ]
-    .
-    .
+```typescript
+    import { EditPersonModalComponent } from './phonebook/edit-person-modal.component';
+.
+.
+.
+.
+.
+.
+    declarations: [
+      DashboardComponent,
+      PhoneBookComponent,
+      CreatePersonModalComponent,
+      EditPersonModalComponent
+    ]
+.
+.
+```
 
 
 ## Multi Tenancy
@@ -2004,7 +2120,9 @@ the application before any change.
 We disabled multi-tenancy at the beginning of this document. Now,
 re-enabling it in **PhoneBookDemoConsts** class:
 
-    public const bool MultiTenancyEnabled = true;
+```csharp
+public const bool MultiTenancyEnabled = true;
+```
 
 ### Make Entities Multi Tenant
 
@@ -2018,12 +2136,14 @@ on current Tenant, while retrieving entities from database. So, we
 should declare that Person entity must have a tenant using
 **IMustHaveTenant** interface:
 
-    public class Person : FullAuditedEntity, IMustHaveTenant
-    {
-        public virtual int TenantId { get; set; }
-    
-        //...other properties
-    }
+```csharp
+public class Person : FullAuditedEntity, IMustHaveTenant
+{
+    public virtual int TenantId { get; set; }
+
+    //...other properties
+}
+```
 
 We may want to add IMustHaveTenant interface to also Phone entity. This
 is needed if we directly use phone repository to get phones. In this
@@ -2038,7 +2158,9 @@ class adds an annotation this is needed for automatic filtering. We
 don't have to know what it is since it's done automatically. It also
 adds a **TenantId** column to PbPersons table as shown below:
 
-    migrationBuilder.AddColumn<int>(name: "TenantId",table: "PbPersons",nullable: false,defaultValue: 1);
+```csharp
+migrationBuilder.AddColumn<int>(name: "TenantId",table: "PbPersons",nullable: false,defaultValue: 1);
+```
 
 I added **defaultValue as 1** to AddColumn options. Thus, current people
 are automatically assigned to **default tenant** (default tenant's id is

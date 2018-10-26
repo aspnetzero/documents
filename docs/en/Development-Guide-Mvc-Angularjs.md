@@ -388,13 +388,15 @@ to get a deep understanding on creating menus.
 dynamically defined based on the current user's permissions (see
 authorization section). Example:
 
-    if (abp.auth.hasPermission('Pages.Administration.Tenant.Settings')) {
-        $stateProvider.state('tenant.settings', {
-            url: '/settings',
-            templateUrl: '~/App/tenant/views/settings/index.cshtml',
-            menu: 'Administration.Settings.Tenant'
-        });
-    }
+```javascript
+if (abp.auth.hasPermission('Pages.Administration.Tenant.Settings')) {
+    $stateProvider.state('tenant.settings', {
+        url: '/settings',
+        templateUrl: '~/App/tenant/views/settings/index.cshtml',
+        menu: 'Administration.Settings.Tenant'
+    });
+}
+```
 
 Conditional routing definition prevents users from accessing an
 unauthorized page by simply entering a URL into the browser's address
@@ -850,13 +852,15 @@ You can also define your custom notifications in the
 **AppNotificationProvider** class. For example, a new user registration
 notification is defined in the **AppNotificationProvider** as below.
 
-    context.Manager.Add(
-         new NotificationDefinition(
-            AppNotificationNames.NewUserRegistered,
-            displayName: L("NewUserRegisteredNotificationDefinition"),
-            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Users)
-        )
-    );
+```csharp
+context.Manager.Add(
+     new NotificationDefinition(
+        AppNotificationNames.NewUserRegistered,
+        displayName: L("NewUserRegisteredNotificationDefinition"),
+        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Users)
+    )
+);
+```
 
 See [notification
 definitions](https://aspnetboilerplate.com/Pages/Documents/Notification-System#notification-definitions)
@@ -1182,7 +1186,9 @@ as a cache server. If you want to enable it, just uncomment the
 following line in your **WebModule** (in App\_Start folder in your .Web
 project):
 
-    Configuration.Caching.UseRedis();
+```csharp
+Configuration.Caching.UseRedis();
+```
 
 Redis server should be running to be able to use it. See [caching
 documentation](https://aspnetboilerplate.com/Pages/Documents/Caching)
@@ -1198,16 +1204,20 @@ easily enable it.
 First, uncomment these lines in **WebModule** (in App\_Start folder in
 your .Web project):
 
-    Configuration.BackgroundJobs.UseHangfire(configuration =>
-    {
-        configuration.GlobalConfiguration.UseSqlServerStorage("Default");
-    });
+```csharp
+Configuration.BackgroundJobs.UseHangfire(configuration =>
+{
+    configuration.GlobalConfiguration.UseSqlServerStorage("Default");
+});
+```
 
 If you want to enable the Hangfire dashboard, you can uncomment the
 following line in **Startup.cs** (in App\_Start folder in your .Web
 project):
 
-    app.UseHangfireDashboard();
+```csharp
+app.UseHangfireDashboard();
+```
 
 **Note**: Hangfire creates its **own tables** in the database. See
 [background
@@ -1246,30 +1256,34 @@ that uses AutoMapper, which is simple and declarative.
 See the DTO class that is used to transfer a tenant's editing
 information:
 
-    [AutoMap(typeof (Tenant))]
-    public class TenantEditDto : EntityDto
-    {
-        [Required]
-        [StringLength(Tenant.MaxTenancyNameLength)]
-        public string TenancyName { get; set; }
-    
-        [Required]
-        [StringLength(Tenant.MaxNameLength)]
-        public string Name { get; set; }
-    
-        public bool IsActive { get; set; }
-    }
+```csharp
+[AutoMap(typeof (Tenant))]
+public class TenantEditDto : EntityDto
+{
+    [Required]
+    [StringLength(Tenant.MaxTenancyNameLength)]
+    public string TenancyName { get; set; }
+
+    [Required]
+    [StringLength(Tenant.MaxNameLength)]
+    public string Name { get; set; }
+
+    public bool IsActive { get; set; }
+}
+```
 
 Here, the **AutoMap** attribute automatically creates mapping between
 **TenantEditDto** and the **Tenant** classes. Then you can automatically
 convert a Tenant object to a TenantEditDto (and vice verse) object as
 shown below:
 
-    [AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
-    public async Task<TenantEditDto> GetTenantForEdit(EntityRequestInput input)
-    {
-        return (await TenantManager.GetByIdAsync(input.Id)).MapTo<TenantEditDto>();
-    }
+```csharp
+[AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
+public async Task<TenantEditDto> GetTenantForEdit(EntityRequestInput input)
+{
+    return (await TenantManager.GetByIdAsync(input.Id)).MapTo<TenantEditDto>();
+}
+```
 
 **MapTo** method does mapping.
 
@@ -1478,25 +1492,27 @@ It also provides some useful common methods for all tests.
 
 Here is a sample unit test from the application:
 
-    public class UserAppService_Delete_Tests : UserAppServiceTestBase
+```csharp
+public class UserAppService_Delete_Tests : UserAppServiceTestBase
+{
+    [Fact]
+    public async Task Should_Delete_User()
     {
-        [Fact]
-        public async Task Should_Delete_User()
-        {
-            //Arrange
-            CreateTestUsers();
-    
-            var user = await GetUserByUserNameOrNullAsync("artdent");
-            user.ShouldNotBe(null);
-    
-            //Act
-            await UserAppService.DeleteUser(new IdInput<long>(user.Id));
-    
-            //Assert
-            user = await GetUserByUserNameOrNullAsync("artdent");
-            user.IsDeleted.ShouldBe(true);
-        }
+        //Arrange
+        CreateTestUsers();
+
+        var user = await GetUserByUserNameOrNullAsync("artdent");
+        user.ShouldNotBe(null);
+
+        //Act
+        await UserAppService.DeleteUser(new IdInput<long>(user.Id));
+
+        //Assert
+        user = await GetUserByUserNameOrNullAsync("artdent");
+        user.IsDeleted.ShouldBe(true);
     }
+}
+```
 
 It creates some users to test and then verifies there is a user named
 "artdent". Then it calls the **DeleteUser** method of the **user

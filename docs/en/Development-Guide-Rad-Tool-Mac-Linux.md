@@ -10,91 +10,93 @@
 
  Input file includes a JSON string and it's name is the same as your entity's name. Here is a sample Product.json:
 
-    {
-      "MenuPosition": "main",
-      "RelativeNamespace": "Products",
-      "EntityName": "Product",
-      "EntityNamePlural": "Products",
-      "TableName": "Products",
-      "PrimaryKeyType": "int",
-      "BaseClass": "Entity",
-      "AutoMigration": true,
-      "UpdateDatabase": true,
-      "CreateUserInterface": true,
-      "CreateViewOnly": true,
-      "PagePermission": {
-           "Host": true,
-           "Tenant": true
-      },
-      "Properties": [
-                {
-                  "Name": "Name",
-                  "Type": "string",
-                  "MaxLength": 25,
-                  "MinLength": 2,
-                  "Range": {
-                    "IsRangeSet": false,
-                    "MinimumValue": 0,
-                    "MaximumValue": 0
-                  },
-                  "Required": true,
-                  "Nullable": false,
-                  "Regex": "",
-                  "UserInterface": {
-                    "List": true,
-                    "AdvancedFilter": true,
-                    "CreateOrUpdate": true
-                     }
-                },
-                {
-                  "Name": "Type",
-                  "Type": "ProductType",
-                  "MaxLength": 0,
-                  "MinLength": 0,
-                  "Range": {
-                    "IsRangeSet": false,
-                    "MinimumValue": 0,
-                    "MaximumValue": 0
-                  },
-                  "Required": false,
-                  "Nullable": false,
-                  "Regex": "",
-                  "UserInterface": {
-                    "List": true,
-                    "AdvancedFilter": true,
-                    "CreateOrUpdate": true
-                  }
-                }
-      ],
-      "NavigationProperties": [
-    			{
-                  "Namespace": "Volosoft.RadToolExplainer.Authorization.Users",
-                  "ForeignEntityName": "User",
-                  "IdType": "long",
-                  "IsNullable": true,
-                  "PropertyName": "UserId",
-                  "DisplayPropertyName": "Name",
-                  "DuplicationNumber": 0,
-                  "RelationType": "single"
-                }
-       ],
-      "EnumDefinitions": [
-                {
-                  "Name": "ProductType",
-                  "Namespace": "Volosoft.RadToolExplainer",
-                  "EnumProperties": [
-                            {
-                              "Name": "Liquid",
-                              "Value": 1
-                            },
-                            {
-                              "Name": "Solid",
-                              "Value": 2
-                            }
-                   ]
-                }
-       ]
-    }
+```json
+{
+  "MenuPosition": "main",
+  "RelativeNamespace": "Products",
+  "EntityName": "Product",
+  "EntityNamePlural": "Products",
+  "TableName": "Products",
+  "PrimaryKeyType": "int",
+  "BaseClass": "Entity",
+  "AutoMigration": true,
+  "UpdateDatabase": true,
+  "CreateUserInterface": true,
+  "CreateViewOnly": true,
+  "PagePermission": {
+       "Host": true,
+       "Tenant": true
+  },
+  "Properties": [
+            {
+              "Name": "Name",
+              "Type": "string",
+              "MaxLength": 25,
+              "MinLength": 2,
+              "Range": {
+                "IsRangeSet": false,
+                "MinimumValue": 0,
+                "MaximumValue": 0
+              },
+              "Required": true,
+              "Nullable": false,
+              "Regex": "",
+              "UserInterface": {
+                "List": true,
+                "AdvancedFilter": true,
+                "CreateOrUpdate": true
+                 }
+            },
+            {
+              "Name": "Type",
+              "Type": "ProductType",
+              "MaxLength": 0,
+              "MinLength": 0,
+              "Range": {
+                "IsRangeSet": false,
+                "MinimumValue": 0,
+                "MaximumValue": 0
+              },
+              "Required": false,
+              "Nullable": false,
+              "Regex": "",
+              "UserInterface": {
+                "List": true,
+                "AdvancedFilter": true,
+                "CreateOrUpdate": true
+              }
+            }
+  ],
+  "NavigationProperties": [
+			{
+              "Namespace": "Volosoft.RadToolExplainer.Authorization.Users",
+              "ForeignEntityName": "User",
+              "IdType": "long",
+              "IsNullable": true,
+              "PropertyName": "UserId",
+              "DisplayPropertyName": "Name",
+              "DuplicationNumber": 0,
+              "RelationType": "single"
+            }
+   ],
+  "EnumDefinitions": [
+            {
+              "Name": "ProductType",
+              "Namespace": "Volosoft.RadToolExplainer",
+              "EnumProperties": [
+                        {
+                          "Name": "Liquid",
+                          "Value": 1
+                        },
+                        {
+                          "Name": "Solid",
+                          "Value": 2
+                        }
+               ]
+            }
+   ]
+}
+```
 
 ## Guide To Create A New Input File
 
