@@ -2,7 +2,7 @@
 
 ## Introduction
 
-ASP.NET Zero is a starting point for new web applications with a **modern UI** and **SOLID architecture**. It implements basic/common requirements of a **line of business applications**. You get it's **source code** and develop your business application on top of and save your valuable time to **focus on your own business code**.
+ASP.NET Zero is a starting point for new web applications with a **modern UI** and **SOLID architecture**. It implements basic/common requirements of a **line of business applications**. You get it's **source code** and develop your business application on top of it for saving your valuable time to **focus on your own business code**.
 
 ## Project Types
 
@@ -23,10 +23,14 @@ ASP.NET Zero is developed based on the **ASP.NET Boilerplate** web application f
 
 ## More Information
 
-#### Change Logs
+### Change Logs
 
 See the [change logs](Change-Logs.md) to learn the features released with the previous versions.
 
-#### Road Map
+### Road Map
 
 See the [road map](Road-Map.md) for some planned features for next releases.
+
+### Old Documents
+
+[Click here](Old-Documents.md) for documents older than v6.2.
