@@ -8,7 +8,7 @@ Notice that the RAD tool is only available for **ASP.NET Core backend** (not ava
 
 See [this video](https://www.youtube.com/watch?v=lqu7AVBTepw) for a simple demonstration:
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/lqu7AVBTepw/0.jpg)](https://www.youtube.com/watch?v=lqu7AVBTepw)
+[![RAD tool demonstration](https://img.youtube.com/vi/lqu7AVBTepw/0.jpg)](https://www.youtube.com/watch?v=lqu7AVBTepw)
 
 ## Documentation
 
