@@ -97,13 +97,17 @@
       ]
     },
     {
-      "text": "Other Tutorials",
+      "text": "Tutorials",
       "items": [
         {
           "text": "Extending Existing Entities",
           "path": "Extending-Existing-Entities.md"
         }
       ]
+    },
+    {
+      "text": "Rapid Application Development",
+      "path": "Rapid-Application-Development.md"
     },
     {
       "text": "Change Logs",

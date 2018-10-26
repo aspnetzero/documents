@@ -9,7 +9,7 @@
 
 <body>
 
-<h1>ASP.NET Zero Differences Of Project Types</h1>
+<h1>Project Types Differences</h1>
 
 <h3 id="DocIntro">Overall</h3>
 <p>While base functionalities are identical for all versions of ASP.NET Zero, 
