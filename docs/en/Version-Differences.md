@@ -9,18 +9,20 @@
 
 <body>
 
+<h1>ASP.NET Zero Differences Of Project Types</h1>
+
 <h3 id="DocIntro">Overall</h3>
 <p>While base functionalities are identical for all versions of ASP.NET Zero, 
 there are still some differences between different versions. In this document, 
 we will highlight these differences.</p>
 <h4>ASP.NET Core v.s. ASP.NET MVC 5.x</h4>
-<p>Beginning from <a href="Change-Logs">v4.1</a>, we are more focused to
+<p>Beginning from <a href="http://docs.aspnetzero.com/documents/zero/latest/Change-Logs">v4.1</a>, we are more focused to
 <strong>ASP.NET Core</strong> based solutions (rather than ASP.NET MVC 5.x) 
 since ASP.NET Core is Microsoft&#39;s new ASP.NET version. That means our new major 
 features will be implemented for ASP.NET Core version (.net core &amp; full .net 
 framework).</p>
 <h4>Angular v.s. Angularjs 1.x</h4>
-<p>Beginning from <a href="Change-Logs">v4.1</a>, we are more focused to 
+<p>Beginning from <a href="http://docs.aspnetzero.com/documents/zero/latest/Change-Logs">v4.1</a>, we are more focused to 
 <strong>Angular</strong> based solutions (rather than Angularjs 1.x) since Angular is Google&#39;s 
 new SPA framework. That means our new major features will be implemented for 
 Angular framework. </p>
@@ -142,10 +144,10 @@ Angular framework. </p>
 <p>See <strong>development guide</strong> documents for details of all features 
 in different versions:</p>
 <ul>
-	<li><a href="Development-Guide-Core">ASP.NET Core &amp; jQuery</a></li>
-	<li><a href="Development-Guide-Angular">ASP.NET Core &amp; Angular</a></li>
-	<li><a href="Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; jQuery</a></li>
-	<li><a href="Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; Angularjs 1.x</a></li>
+	<li><a href="http://docs.aspnetzero.com/documents/zero/latest/Development-Guide-Core">ASP.NET Core &amp; jQuery</a></li>
+	<li><a href="http://docs.aspnetzero.com/documents/zero/latest/Development-Guide-Angular">ASP.NET Core &amp; Angular</a></li>
+	<li><a href="http://docs.aspnetzero.com/documents/zero/latest/Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; jQuery</a></li>
+	<li><a href="http://docs.aspnetzero.com/documents/zero/latest/Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; Angularjs 1.x</a></li>
 </ul>
 </body>
 

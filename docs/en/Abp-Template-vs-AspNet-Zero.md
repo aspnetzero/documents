@@ -9,6 +9,8 @@
 
 <body>
 
+<h1>ASP.NET Boilerplate Free Templates vs ASP.NET Zero</h1>
+
 <table class="table" id="TemplateComparisonTable">
 <thead>
 <tr>
@@ -239,7 +241,7 @@
 <tr>
 <td>&nbsp;</td>
 <td><a class="btn btn-default btn-sm" href="https://aspnetboilerplate.com/Templates" target="_blank">Download</a></td>
-<td><a class="btn btn-default btn-sm" href="/#pricing">Pricing</a></td>
+<td><a class="btn btn-default btn-sm" href="https://aspnetzero.com/Pricing">Pricing</a></td>
 </tr>
 </tbody>
 </table>
