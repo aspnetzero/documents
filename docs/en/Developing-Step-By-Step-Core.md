@@ -1,13 +1,13 @@
 # Step by Step Development
 
-### Introduction
+## Introduction
 
 In this document, we will create a sample **phonebook application**
 based on ASP.NET Zero (ASP.NET Core version) step by step. After all
 steps, we will have a multi-tenant, localized, authorized, configurable,
 testable... application.
 
-### Creating The Project
+## Creating The Project
 
 We're creating and downloading the solution named
 "**Acme.PhoneBookDemo**" as described in [Getting
@@ -40,11 +40,11 @@ and disable multi-tenancy as shown below:
         public const int PaymentCacheDurationInMinutes = 30;
     }
 
-### Adding a New Page
+## Adding a New Page
 
 Let's begin from UI and create a new page named "**Phone book**".
 
-#### Defining a menu item
+### Defining a menu item
 
 **AppNavigationProvider** class defines menus in the application. When
 we change this class, menus are automatically changed. Open this class
@@ -63,7 +63,7 @@ Every menu item must have a **unique name** to identify this menu item.
 Menu names are defined in AppPageNames class as constants. We add a new
 constant: "**PhoneBook**".
 
-#### Localizing Menu Item Display Name
+### Localizing Menu Item Display Name
 
 A menu item should also have a **localizable shown name**. It's used to
 display menu item on the page. **L("PhoneBook")** is the localized name of
@@ -87,7 +87,7 @@ also for Turkish in PhoneBook-tr.xml file:
 
     <text name="PhoneBook">Telefon Rehberi</text>
 
-#### Other menu item properties
+### Other menu item properties
 
 **url** can be a URL (it's URL of an **MVC Action** here) that will be
 redirected when we click the menu item.
@@ -100,11 +100,11 @@ See [navigation
 document](https://aspnetboilerplate.com/Pages/Documents/Navigation) for
 more information on menu definitions.
 
-### Creating the Page
+## Creating the Page
 
 After creating the menu item, we can create an empty page.
 
-#### Controller
+### Controller
 
 Creating the **PhoneBookController** under **Areas/App/Controllers**
 folder in the Web project:
@@ -125,7 +125,7 @@ standard Controller, PhoneBookDemoControllerBase provides very useful
 base properties and methods. So, always inherit from this class unless
 it has a disadvantage for your case.
 
-#### View
+### View
 
 Creating an empty view, **Index.cshtml** under
 **Areas/App/Views/PhoneBook** folder:
@@ -163,7 +163,7 @@ Now, it's time to run application and see the new phone book page:
 Menu item display name and page title are localized. Try to change UI
 language to see difference.
 
-### Creating Person Entity
+## Creating Person Entity
 
 We define entities in **.Core** (domain) project. We can define a
 **Person** entity (mapped to **PbPersons** table in database) to
@@ -220,7 +220,7 @@ class defined in **.EntityFrameworkCore** project.
         //...other codes
     }
 
-### Database Migrations
+## Database Migrations
 
 We use **EntityFramework Code-First migrations** to migrate database
 schema. Since we added **Person entity**, our DbContext model is
@@ -350,7 +350,7 @@ table:
 
 <img src="images/phonebook-persons-table-initial-data.png" alt="Persons initial data" class="img-thumbnail" width="720" height="50" />
 
-### Creating Person Application Service
+## Creating Person Application Service
 
 An Application Service is used from client (presentation layer) to
 perform operations (use cases) in the application.
@@ -442,7 +442,7 @@ methods. **ObjectMapper.Map** method automatically converts list of
 Person entities to list of PersonListDto objects with using
 configurations in **CustomDtoMapper.cs** in **.Application** project.
 
-#### Connection & Transaction Management
+### Connection & Transaction Management
 
 We don't manually open database connection or start/commit transactions
 manually. It's automatically done with ABP framework's Unit Of Work
@@ -450,7 +450,7 @@ system. See [UOW
 documentation](https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work)
 for more.
 
-#### Exception Handling
+### Exception Handling
 
 We don't handle exceptions manually (using a try-catch block). Because
 ABP framework automatically handles all exceptions on the web layer and
@@ -460,7 +460,7 @@ on the client and shows needed error information to the user. See
 document](https://aspnetboilerplate.com/Pages/Documents/Handling-Exceptions)
 for more.
 
-### Creating Unit Tests For PersonAppService
+## Creating Unit Tests For PersonAppService
 
 You can skip this section if you don't interest in **automated
 testing**.
@@ -545,7 +545,7 @@ There are many techniques on unit testing, I kept it simple here. But
 ASP.NET Zero template makes very easy to write unit and integration
 tests by base classes and pre-build test codes.
 
-### Testing PersonAppService From Browser Console
+## Testing PersonAppService From Browser Console
 
 Now, lets run and **login** to the application again, open Chrome
 Developer Console (or similar tools in other browsers) and write the
@@ -577,7 +577,7 @@ There are some other fields not shown here. So, we see that User with
 Id=2 called GetPeople method of the PersonAppService in recorded time
 with the shown parameters and it's executed in 134 ms.
 
-### Using GetPeople Method From MVC Controller
+## Using GetPeople Method From MVC Controller
 
 It's time to open **PhoneBookController** and get people to show on the
 view:
@@ -618,7 +618,7 @@ created a ViewModel object and passes to the view. Let's see the
 Here, we're extending the output of the PersonAppService.GetPeople method.
 We get the output from the constructor and map it to this object.
 
-#### Application Services and ViewModels
+### Application Services and ViewModels
 
 We created an **Application Service** (PersonAppService) and used it
 from the **Controller**. Instead, we could access **Repository**
@@ -638,7 +638,7 @@ view model. We did not prefer it and wrapped output by a dedicated
 **additional properties/methods** for our view model. Again, it's your
 choice of implementation.
 
-### Rendering People In MVC View
+## Rendering People In MVC View
 
 We show people on the page is most basic form. See the changed view
 below:
@@ -670,7 +670,7 @@ the result:
 
 We successfully retrieved list of people from database to the page.
 
-#### About Showing Tabular Data
+### About Showing Tabular Data
 
 We normally use a javascript based rich table/grid library to show
 tabular data, instead of manually rendering data like that. For example,
@@ -681,11 +681,11 @@ things much more easier and provides a much better user experience.
 We did not use a table component here, because we want to show basics of
 MVC instead of going details of a 3rd party library.
 
-### Creating a New Person
+## Creating a New Person
 
 Next step is to create a modal to add a new item to phone book.
 
-#### Add a CreatePerson Method to PersonAppService
+### Add a CreatePerson Method to PersonAppService
 
 We first define **CreatePerson** method in **IPersonAppService**
 interface:
@@ -731,7 +731,7 @@ database. We used **async/await** pattern here. All methods in ASP.NET
 Zero startup project is **async**. It's advised to use async/await
 wherever possible.
 
-#### Test CreatePerson Method
+### Test CreatePerson Method
 
 You can skip this section if you don't interest in **automated
 testing**.
@@ -795,7 +795,7 @@ arguments and asserts that it throws AbpValidationException. See
 document](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)
 for more information.
 
-#### Creating a Modal
+### Creating a Modal
 
 We will create a Bootstrap Modal to create a new person. First of all,
 you can create modal and save as you already know and like. But AspNet
@@ -867,7 +867,7 @@ Also, copied the \_**Empty.js** from
 Just named the modal as '**CreatePersonModal**'. We will fill the
 javascript code later.
 
-#### Opening the Modal
+### Opening the Modal
 
 We need to put a "Create new person" button to the 'people list page'
 and write some javascript code to open the modal when clicked to the
@@ -967,7 +967,7 @@ Now, we can run the application and open the modal by clicking the
 
 <img src="images/phonebook-create-person-dialog2.png" alt="Create Person Dialog" class="img-thumbnail" />
 
-#### Saving The Person
+### Saving The Person
 
 Finally, we can save the person when user clicks the the save button. We
 implement it in the \_CreatePersonModal.js file:
@@ -1019,7 +1019,7 @@ Notice that; We used PersonAppService's createPerson method directly
 from javascript. This is possible by ABP's [dynamic javascript proxy
 system](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#client-proxies).
 
-### Authorization For Phone Book
+## Authorization For Phone Book
 
 At this point, anyone can enter phone book page since no authorization
 defined. We will define two permission:
@@ -1028,9 +1028,9 @@ defined. We will define two permission:
 -   A permission to **create new person** (which is a child permission
     of first one, as naturally).
 
-#### Permission for Entering Phone Book Page
+### Permission for Entering Phone Book Page
 
-##### Define the permission
+#### Define the permission
 
 Go to **AppAuthorizationProvider** class and add a new permission as
 shown below:
@@ -1050,7 +1050,7 @@ this convention. A permission can have a localizable display name:
 localization, since it's very similar). Lastly, we set this as a
 **tenant** level permission.
 
-##### Add AbpAuthorize attribute
+#### Add AbpAuthorize attribute
 
 **AbpAuthorize** attribute can be used as **class level** or **method
 level** to protect an application service or service method from
@@ -1071,7 +1071,7 @@ Now, let's try to enter Phone Book page by clicking the menu item:
 We get an error message. This exception is thrown when any method of
 PersonAppService is called without required permission.
 
-##### Hide Unauthorized Menu Item
+#### Hide Unauthorized Menu Item
 
 This secures the service, but we should also **hide** the Phone book
 **menu item**. It's easy, open **AppNavigationProvider** and add
@@ -1085,7 +1085,7 @@ requiredPermissionName as shown below:
         requiredPermissionName: AppPermissions.Pages_Tenant_PhoneBook
     )
 
-##### Grant permission
+#### Grant permission
 
 So, how we can enter the page now? Simple, go to **Role Management**
 page and edit **admin** role:
@@ -1101,13 +1101,13 @@ details about roles and users).
 
 Now, we can enter the Phone book page again.
 
-#### Permission for Create New Person
+### Permission for Create New Person
 
 While a permission for a page is useful and probably needed always, we
 may need to define additional permissions to perform some **specific
 actions** on a page, like creating a new person.
 
-##### Define the Permission
+#### Define the Permission
 
 Defining a permission is similar:
 
@@ -1117,7 +1117,7 @@ Defining a permission is similar:
 First permission was defined before. In the second line, we are creating
 a child permission of first one.
 
-##### Add AbpAuthorize Attribute
+#### Add AbpAuthorize Attribute
 
 This time, we're declaring **AbpAuthorize** attribute just for
 **CreatePerson** method:
@@ -1128,7 +1128,7 @@ This time, we're declaring **AbpAuthorize** attribute just for
         //...
     }
 
-##### Hide Unauthorized Button
+#### Hide Unauthorized Button
 
 If we run the application and try to create a person, we get an
 authorization error after clicking the save button. But, it's good to
@@ -1145,7 +1145,7 @@ Open the **index.cshtml** razor view and use **IsGranted** method:
 In this way, the "Create New Person" button does not rendered in server
 and user can not see this button.
 
-##### Grant permission
+#### Grant permission
 
 To see the button again, we can go to role or user manager and grant
 related permission as shown below:
@@ -1155,7 +1155,7 @@ related permission as shown below:
 As shown above, **Create new person** permission is a child permission
 of the **Phone book**.
 
-#### Authorization for MVC Controllers
+### Authorization for MVC Controllers
 
 We added Authorize attributes to PersonAppService. This prevents
 unauthorized calls to this service. But unauthorized clients **still can
@@ -1185,7 +1185,7 @@ See [authorization
 documentation](https://aspnetboilerplate.com/Pages/Documents/Authorization)
 for more information on authorization.
 
-### Deleting a Person
+## Deleting a Person
 
 Let's add a delete button in people list as shown below:
 
@@ -1193,7 +1193,7 @@ Let's add a delete button in people list as shown below:
 
 We're starting from UI in this case.
 
-#### View
+### View
 
 We're changing **index.cshtml** view to add a button (related part is
 shown here):
@@ -1220,7 +1220,7 @@ shown here):
 
 Surely, we defined 'delete person' permission as like before.
 
-#### Style
+### Style
 
 We're using a **[LESS](http://lesscss.org/)** style here to take button
 right. Created a file named **index.less** and added following lines:
@@ -1243,7 +1243,7 @@ versions of styles for other environments like production and staging):
         </environment>
     }
 
-#### Javascript
+### Javascript
 
 Now, adding code to delete person (to Index.js):
 
@@ -1280,7 +1280,7 @@ If we click Yes, it simply calls **deletePerson** method of
 if operation succeed. Also, removes the person from the page using
 jQuery's **remove** function.
 
-#### Application Service
+### Application Service
 
 First, adding a new method definition to **IPersonAppService** interface
 as always:
@@ -1303,7 +1303,7 @@ We also need to define **Pages\_Tenant\_PhoneBook\_DeletePerson**
 constant in AppPermissions and define related permission in
 **AppAuthorizationProvider**.
 
-### Filtering people
+## Filtering people
 
 Now, we will implement **search** functionality of **GetPeople** method.
 UI is shown below:
@@ -1364,12 +1364,12 @@ Lastly, changed PhoneBookController's **Index** action to pass the
 That's all, It works! (Notice that; PersonAppService.GetPeople method
 was already using the input.Filter as we implemented it before).
 
-### Extending the Application: Adding Phone Numbers
+## Extending the Application: Adding Phone Numbers
 
 Until now, we did not even mention about phone numbers. It's time to
 extend our domain to support **multiple phone numbers** for a person.
 
-### Creating Phone Entity
+## Creating Phone Entity
 
 Let's start by creating a new Entity, **Phone** in **.Core** project:
 
@@ -1423,7 +1423,7 @@ Lastly, we're also adding a DbSet property for Phone to our DbContext:
 
     public virtual DbSet<Phone> Phones { get; set; }
 
-### Adding Database Migration
+## Adding Database Migration
 
 Our entity model has changed, so we need to add a new migration:
 
@@ -1526,7 +1526,7 @@ already exists. Since we haven't deployed yet, we can delete database
 Now, we are running our application to re-create database and seed it.
 You can check database to see **PbPhones** table and rows.
 
-### Changing GetPeople Method
+## Changing GetPeople Method
 
 We're changing **PersonAppService.GetPeople** method to **include**
 phone numbers of people into return value.
@@ -1577,7 +1577,7 @@ codes remains same. Furthermore, it would work without adding this, but
 much slower (since it will lazy load phone numbers for every person
 separately).
 
-### AddPhone and DeletePhone Methods
+## AddPhone and DeletePhone Methods
 
 We are adding two more methods to IPersonAppService interface as shown
 below:
@@ -1643,7 +1643,7 @@ There may be different approaches for AddPhone method. You can directly
 work with a **phone repository** to insert new phone. They all have
 different pros and cons. It's your choice.
 
-### Edit Mode For Phone Numbers
+## Edit Mode For Phone Numbers
 
 Final UI is shown below:
 
@@ -1654,7 +1654,7 @@ and all phone numbers are shown. Then we can delete any number by
 clicking the icon at left. We can add a new phone from the inputs at
 last line.
 
-#### View
+### View
 
 Changes in view are shown below:
 
@@ -1755,7 +1755,7 @@ And the **PhoneRowInPersonListViewModel** is here:
         }
     }
 
-#### Styles
+### Styles
 
 Changed **Index.less** a bit to adapt to the changed view:
 
@@ -1783,7 +1783,7 @@ Changed **Index.less** a bit to adapt to the changed view:
         }
     }
 
-#### Scripts
+### Scripts
 
 Added following codes into **Index.js**:
 
@@ -1848,7 +1848,7 @@ becomes **live**. That means, if we add new elements to the page and any
 element matches to the selector, its click event is automatically
 binded.
 
-#### AddPhone Action
+### AddPhone Action
 
 We added AddPhone action to the PhoneController as shown below:
 
@@ -1879,7 +1879,7 @@ below:
 As you see, this can be directly inserted to the table, as we already
 do.
 
-### Edit Mode For People
+## Edit Mode For People
 
 Now we want to edit name, surname and e-mail of people:
 
@@ -1904,7 +1904,7 @@ editing people:
                 await _personRepository.UpdateAsync(person);
             }
 
-#### View
+### View
 
     @using Acme.PhoneBook.People
     @using Acme.PhoneBook.Web.Areas.App.Models.Common.Modals
@@ -1935,7 +1935,7 @@ editing people:
     
     @Html.Partial("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
 
-#### View Model
+### View Model
 
     using Abp.AutoMapper;
     using Acme.PhoneBookDemo.PhoneBook;
@@ -1952,7 +1952,7 @@ editing people:
         }
     }
 
-#### Scripts
+### Scripts
 
 Create **\_editPersonModal.js**:
 
@@ -2017,19 +2017,19 @@ Add Those lines to **PhoneBookController.cs**:
                 return PartialView("_EditPersonModal", viewModel);
             }
 
-### Multi Tenancy
+## Multi Tenancy
 
 We have built a fully functional application until here. Now, we will
 see how to convert it to a multi-tenant application easily.
 
-#### Enable Multi Tenancy
+### Enable Multi Tenancy
 
 We disabled multi-tenancy at the beginning of this document. Now,
 re-enabling it in PhoneBookDemoConsts class:
 
     public const bool MultiTenancyEnabled = true;
 
-#### Make Entities Multi Tenant
+### Make Entities Multi Tenant
 
 In a multi-tenant application, a tenant's entities should be isolated by
 other tenants. For this example project, every tenant should have own
@@ -2071,7 +2071,7 @@ Now, we can update the database again:
 
     Update-Database
 
-#### Run The Multi Tenant Application
+### Run The Multi Tenant Application
 
 **It's finished**! We can test the application. Run the project,
 **login** as the **host admin** (click Change link and clear tenancy
@@ -2102,13 +2102,13 @@ You can add people here, logout and login as different tenants (you can
 login as default tenant for example). You will see that each tenant has
 an isolated phone book and can not see other's people.
 
-### Code Generation
+## Code Generation
 
 Using new **ASP.NET Zero Power Tools**, you can speed up your development.
 
 See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
 
-### Conclusion
+## Conclusion
 
 In this document, we built a complete example that covers most parts of
 the ASP.NET Zero system. We hope that it will help you to build your own
@@ -2118,7 +2118,7 @@ We intentionally used different approaches for similar tasks to show you
 different styles of development. ASP.NET Zero provides an architecture
 but does not restrict you. You can make your own style development.
 
-#### Source Code
+### Source Code
 
 You should [purchase](/Prices) ASP.NET Zero in order to get **source
 code**. After purchasing, you can get the sample project from private

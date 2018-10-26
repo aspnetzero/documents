@@ -1,13 +1,13 @@
 # Step by Step Development
 
-### Introduction
+## Introduction
 
 In this document, we will create a sample **phonebook application**
 based on ASP.NET Zero (ASP.NET Core & Angular version) step by step.
 After all steps, we will have a multi-tenant, localized, authorized,
 configurable, testable... application.
 
-### Creating And Running The Project
+## Creating And Running The Project
 
 We're creating and downloading the solution named
 "**Acme.PhoneBookDemo**" as described in [Getting
@@ -40,11 +40,11 @@ public class PhoneBookDemoConsts
 false, you might be get login error. To overcome this, you should remove
 cookies.
 
-### Adding a New Menu Item
+## Adding a New Menu Item
 
 Let's begin from UI and create a new page named "**Phone book**".
 
-#### Defining a Menu Item
+### Defining a Menu Item
 
 Open **src\\app\\shared\\layout\\nav\\app-navigation.service.ts** in the
 client side (**Acme.PhoneBookDemo.AngularUI**) which defines menu items
@@ -65,7 +65,7 @@ If you run the application, you can see a new menu item on the left
 menu, but it won't work (it redirect to default route) if you click to
 the menu item, since we haven't defined the Angular route yet.
 
-#### Localize Menu Item Display Name
+### Localize Menu Item Display Name
 
 Localization strings are defined in **XML** files in **.Core** project
 (in server side) as shown below:
@@ -92,7 +92,7 @@ requires recycle of the server application. We suggest to use Ctrl+F5 if
 you don't need to debugging for a faster startup. In that case, it's
 enough to make a re-build to recycle the application.
 
-#### Angular Route
+### Angular Route
 
 Angular has a powerful URL routing system. ASP.NET Zero has defined
 routes in a few places (for modularity, see [dev
@@ -107,7 +107,7 @@ to the main module. So, open **src\\app\\main\\main-routing.module.ts**
 We get an error since we haven't defined PhoneBookComponent yet. Also,
 we ignored permission for now (will implement later).
 
-### Creating the PhoneBookComponent
+## Creating the PhoneBookComponent
 
 Create a **phonebook** folder inside **src/app/main** folder and add a
 new typescript file (**phonebook.component.ts**) in the phonebook folder
@@ -214,7 +214,7 @@ added page:
 Note: Angular-cli automatically re-compiles and refreshes the page when
 any changes made to any file in the application.
 
-### Creating Person Entity
+## Creating Person Entity
 
 We define entities in **.Core** (domain) project (in server side). We
 can define a **Person** entity (mapped to **PbPersons** table in
@@ -268,7 +268,7 @@ class defined in **.EntityFrameworkCore** project.
         //...other code
     }
 
-### Database Migrations
+## Database Migrations
 
 We use **EntityFramework Code-First migrations** to migrate database
 schema. Since we added **Person entity**, our DbContext model is
@@ -398,7 +398,7 @@ table:
 
 <img src="images/phonebook-persons-table-initial-data.png" alt="Persons initial data" class="img-thumbnail" width="720" height="50" />
 
-### Creating Person Application Service
+## Creating Person Application Service
 
 An Application Service is used from client (presentation layer) to
 perform operations (use cases) of the application.
@@ -497,7 +497,7 @@ methods. **ObjectMapper.Map** method automatically converts list of
 Person entities to list of PersonListDto objects with using
 configurations in **CustomDtoMapper.cs** in **.Application** project.
 
-#### Connection & Transaction Management
+### Connection & Transaction Management
 
 We don't manually open database connection or start/commit transactions
 manually. It's automatically done with ABP framework's Unit Of Work
@@ -505,7 +505,7 @@ system. See [UOW
 documentation](https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work)
 for more.
 
-#### Exception Handling
+### Exception Handling
 
 We don't handle exceptions manually (using a try-catch block). Because
 ABP framework automatically handles all exceptions on the web layer and
@@ -515,7 +515,7 @@ on the client and shows needed error information to the user. See
 document](https://aspnetboilerplate.com/Pages/Documents/Handling-Exceptions)
 for more.
 
-### Creating Unit Tests For PersonAppService
+## Creating Unit Tests For PersonAppService
 
 You can skip this section if you are not interested in **automated
 testing**.
@@ -524,7 +524,7 @@ By writing unit test, we can test **PersonAppService.GetPeople** method
 without creating a user interface. We write unit test in .**Tests**
 project in the solution.
 
-#### MultiTenancy In Tests
+### MultiTenancy In Tests
 
 Since we disabled multitenancy, we should disable it for unit tests too.
 Open **PhoneBookDemoConsts** class in the Acme.PhoneBook.Core project
@@ -615,12 +615,12 @@ There are many techniques on unit testing, I kept it simple here. But
 ASP.NET Zero template makes very easy to write unit and integration
 tests by base classes and pre-build test codes. 
 
-### Using GetPeople Method From Angular Component
+## Using GetPeople Method From Angular Component
 
 Now, we can switch to the client side and use GetPeople method to show a
 list of people on the UI.
 
-#### Service Proxy Generation
+### Service Proxy Generation
 
 First, run (prefer Ctrl+F5 to be faster) the server side application
 (.Web.Host project). Then run **nswag/refresh.bat** file on the client
@@ -633,12 +633,12 @@ add **ApiServiceProxies.PersonServiceProxy** to the providers array.
 This step is only required when we add a new service. If we change an
 existing service, it's not needed.
 
-#### Angular-Cli Watcher
+### Angular-Cli Watcher
 
 Sometimes angular-cli can not understand the file changes. In that case,
 stop it and re-run **npm start** command.
 
-#### PhoneBookComponent Typescript Class
+### PhoneBookComponent Typescript Class
 
 Change **phonebook.component.ts** as like below:
 
@@ -679,7 +679,7 @@ We inject **PersonServiceProxy**, call its **getPeople** method and
 (defined in Angular's **OnInit** interface). Assigned returned items to
 the **people** class member.
 
-#### Rendering People In Angular View
+### Rendering People In Angular View
 
 Now, we can use this people member from the view,
 **phonebook.component.html**:
@@ -722,7 +722,7 @@ the result:
 
 We successfully retrieved list of people from database to the page.
 
-#### About Showing Tabular Data
+### About Showing Tabular Data
 
 We normally use a javascript based rich table/grid library to show
 tabular data, instead of manually rendering data like that. For example,
@@ -733,11 +733,11 @@ much more easier and provides a much better user experience.
 We did not use a table component here, because we want to show basics of
 Angular instead of going details of a 3rd party library.
 
-### Creating a New Person
+## Creating a New Person
 
 Next step is to create a modal to add a new item to phone book.
 
-#### Add a CreatePerson Method to PersonAppService
+### Add a CreatePerson Method to PersonAppService
 
 We first define **CreatePerson** method in **IPersonAppService**
 interface:
@@ -792,7 +792,7 @@ database. We used **async/await** pattern here. All methods in ASP.NET
 Zero startup project is **async**. It's advised to use async/await
 wherever possible.
 
-#### Test CreatePerson Method
+### Test CreatePerson Method
 
 You can skip this section if you don't interest in **automated
 testing**.
@@ -856,7 +856,7 @@ arguments and asserts that it throws AbpValidationException. See
 document](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)
 for more information.
 
-#### Creating a Modal
+### Creating a Modal
 
 We will create a Bootstrap Modal to create a new person. ASP.NET Zero
 uses [ngx-bootstrap](https://github.com/valor-software/ngx-bootstrap)
@@ -1051,7 +1051,7 @@ modal and the **createPersonModal** component as like another HTML tag
 (which matches to the selector in the
 **create-person-modal.component.ts**).
 
-### Authorization For Phone Book
+## Authorization For Phone Book
 
 At this point, anyone can enter phone book page since no authorization
 defined. We will define two permission:
@@ -1060,9 +1060,9 @@ defined. We will define two permission:
 -   A permission to **create new person** (which is a child permission
     of first one, as naturally).
 
-#### Permission for Entering Phone Book Page
+### Permission for Entering Phone Book Page
 
-##### Define the permission
+#### Define the permission
 
 Go to **AppAuthorizationProvider** class in the server side and add a
 new permission as shown below (you can add just below the dashboard
@@ -1083,7 +1083,7 @@ that convention. A permission can have a localizable display name:
 localization, since it's very similar). Lastly, we set this as a
 **tenant** level permission.
 
-##### Add AbpAuthorize attribute
+#### Add AbpAuthorize attribute
 
 **AbpAuthorize** attribute can be used as **class level** or **method
 level** to protect an application service or service method from
@@ -1104,7 +1104,7 @@ Now, let's try to enter Phone Book page by clicking the menu item:
 We get an error message. This exception is thrown when any method of
 PersonAppService is called without required permission.
 
-##### Guard Angular Route
+#### Guard Angular Route
 
 We got an exception about permission. Server did not send the data but
 we can still enter the page. To prevent it, open
@@ -1116,7 +1116,7 @@ we can still enter the page. To prevent it, open
 prevents entering to the view if specified permission is not granted.
 Try to click Phone Book menu!
 
-##### Hide Unauthorized Menu Item
+#### Hide Unauthorized Menu Item
 
 While user can not enter to the page, the menu item still there! We
 should also **hide** the Phone book **menu item**. It's easy, open
@@ -1125,7 +1125,7 @@ as shown below:
 
     new AppMenuItem("PhoneBook", 'Pages.Tenant.PhoneBook', "flaticon-book", "/app/main/phonebook")
 
-##### Grant permission
+#### Grant permission
 
 So, how we can enter the page now? Simple, go to **Role Management**
 page and edit **admin** role:
@@ -1141,13 +1141,13 @@ details about roles and users).
 
 Now, we can enter the Phone book page again.
 
-#### Permission for Create New Person
+### Permission for Create New Person
 
 While a permission for a page is useful and probably always needed, we
 may want to define additional permissions to perform some **specific
 actions** on a page, like creating a new person.
 
-##### Define the Permission
+#### Define the Permission
 
 Defining a permission is similar (in the AppAuthorizationProvider
 class):
@@ -1161,7 +1161,7 @@ AppPermissions class:
 
     public const string Pages_Tenant_PhoneBook_CreatePerson = "Pages.Tenant.PhoneBook.CreatePerson";
 
-##### Add AbpAuthorize Attribute
+#### Add AbpAuthorize Attribute
 
 This time, we're declaring **AbpAuthorize** attribute just for
 **CreatePerson** method:
@@ -1172,7 +1172,7 @@ This time, we're declaring **AbpAuthorize** attribute just for
         //...
     }
 
-##### Hide Unauthorized Button
+#### Hide Unauthorized Button
 
 If we run the application and try to create a person, we get an
 authorization error after clicking the save button. But, it's good to
@@ -1187,7 +1187,7 @@ condition as shown below:
 In this way, the "Create New Person" button does not rendered in server
 and user can not see this button.
 
-##### Grant permission
+#### Grant permission
 
 To see the button again, we can go to role or user manager and grant
 related permission as shown below:
@@ -1198,7 +1198,7 @@ As shown above, **Create new person** permission is a child permission
 of the **Phone book**. Remember to refresh page to get permissions
 updated.
 
-### Deleting a Person
+## Deleting a Person
 
 Let's add a delete button in people list as shown below:
 
@@ -1206,7 +1206,7 @@ Let's add a delete button in people list as shown below:
 
 We're starting from UI in this case.
 
-#### View
+### View
 
 We're changing **phonebook.component.html** view to add a delete button
 (related part is shown here):
@@ -1234,7 +1234,7 @@ We simply added a button which calls **deletePerson** method (will be
 defined) when it's clicked. You can define a permission for 'deleting
 person' as we did for 'creating person' above.
 
-#### Style
+### Style
 
 We're using a **[LESS](http://lesscss.org/)** style here to take the
 button right. Created a file named **phonebook.component.less** (in
@@ -1258,7 +1258,7 @@ declaration:
 Now, we can now see the buttons, but they don't work since we haven't
 defined the deletePerson method yet.
 
-#### Application Service
+### Application Service
 
 Let's leave the client side and add a DeletePerson method to the server
 side. We are adding it to the service interface,**IPersonAppService:**:
@@ -1274,13 +1274,13 @@ Implementation (in **PersonAppService**) is very simple:
         await _personRepository.DeleteAsync(input.Id);
     }
 
-#### Service Proxy Generation
+### Service Proxy Generation
 
 Since we changed server side services, we should re-generate the client
 side service proxies via NSwag. Make server side running and use
 refresh.bat as we did before.
 
-#### Component Script
+### Component Script
 
 Now, we can add **deletePerson** method to **phonebook.component.ts**:
 
@@ -1311,7 +1311,7 @@ statement before the @Component declaration:
 
     import * as _ from 'lodash';
 
-### Filtering people
+## Filtering people
 
 Now, we will implement **search** functionality of **GetPeople** method.
 UI is shown below:
@@ -1360,12 +1360,12 @@ header. Since we have already defined and used the filter property in
 **phonebook.component.ts** and implemented in the server side, this new
 code immediately works.
 
-### Extending the Application: Adding Phone Numbers
+## Extending the Application: Adding Phone Numbers
 
 Until now, we did not even mention about phone numbers. It's time to
 extend our domain to support **multiple phone numbers** for a person.
 
-### Creating Phone Entity
+## Creating Phone Entity
 
 Let's start by creating a new Entity, **Phone** in **.Core** project:
 
@@ -1414,7 +1414,7 @@ Lastly, we're also adding a DbSet property for Phone to our DbContext:
 
     public virtual DbSet<Phone> Phones { get; set; }
 
-### Adding Database Migration
+## Adding Database Migration
 
 Our entity model has changed, so we need to add a new migration. Run
 this command in the .EntityFramework project's directory:
@@ -1519,7 +1519,7 @@ Since we haven't deployed yet, we can delete database
 Now, we are running our application to re-create database and seed it.
 You can check database to see **PbPhones** table and rows.
 
-### Changing GetPeople Method
+## Changing GetPeople Method
 
 We're changing **PersonAppService.GetPeople** method to **include**
 phone numbers of people into return value.
@@ -1570,7 +1570,7 @@ codes remains same. Furthermore, it would work without adding this, but
 much slower (since it will lazy load phone numbers for every person
 separately).
 
-### AddPhone and DeletePhone Methods
+## AddPhone and DeletePhone Methods
 
 We are adding two more methods to IPersonAppService interface as shown
 below:
@@ -1645,7 +1645,7 @@ There may be different approaches for AddPhone method. You can directly
 work with a **phone repository** to insert new phone. They all have
 different pros and cons. It's your choice.
 
-### Edit Mode For Phone Numbers
+## Edit Mode For Phone Numbers
 
 Final UI is shown below:
 
@@ -1655,7 +1655,7 @@ When we click the **edit icon** for a person, its row is expanded and
 all phone numbers are shown. Then we can delete any phone by clicking
 the icon at left. We can add a new phone from the inputs at last line.
 
-#### View
+### View
 
 Changes in view are shown below:
 
@@ -1719,7 +1719,7 @@ We added an edit button for each person. Then added a table for each
 person that shows phones of the related person and allows adding a new
 phone. Phones table is only shown if we click the edit button.
 
-#### PhoneBook Component Class
+### PhoneBook Component Class
 
 Before changing PhoneBookComponent, we should re-generate
 service-proxies using nswag as did above. And finally we can change
@@ -1823,7 +1823,7 @@ PhoneBookComponent as shown below:
         };
     }
 
-### Edit Mode For People
+## Edit Mode For People
 
 Now we want to edit name, surname and e-mail of people:
 
@@ -1850,7 +1850,7 @@ editing people:
         await _personRepository.UpdateAsync(person);
     }
 
-#### View
+### View
 
 Create edit-person-modal.component.html:
 
@@ -1912,7 +1912,7 @@ Add those lines to **phonebook.component.html:**:
     <createPersonModal #createPersonModal(modalSave)="getPeople()"></createPersonModal>
     <editPersonModal #editPersonModal (modalSave)="getPeople()"></editPersonModal>
 
-#### Controller
+### Controller
 
 Create edit-person-modal.component.ts:
 
@@ -1993,20 +1993,20 @@ Add those lines to **main.module.ts:**:
     .
 
 
-### Multi Tenancy
+## Multi Tenancy
 
 We have built a fully functional application until here. Now, we will
 see how to convert it to a multi-tenant application easily. Logout from
 the application before any change.
 
-#### Enable Multi Tenancy
+### Enable Multi Tenancy
 
 We disabled multi-tenancy at the beginning of this document. Now,
 re-enabling it in **PhoneBookDemoConsts** class:
 
     public const bool MultiTenancyEnabled = true;
 
-#### Make Entities Multi Tenant
+### Make Entities Multi Tenant
 
 In a multi-tenant application, a tenant's entities should be isolated by
 other tenants. For this example project, every tenant should have own
@@ -2048,7 +2048,7 @@ Now, we can update the database again:
 
     Update-Database
 
-#### Run The Multi Tenant Application
+### Run The Multi Tenant Application
 
 **It's finished**! We can test the application. Run the project,
 **login** as the **host admin** (click Change link and clear tenancy
@@ -2079,13 +2079,13 @@ You can add people here, logout and login as different tenants (you can
 login as default tenant for example). You will see that each tenant has
 an isolated phone book and can not see other's people.
 
-### Code Generation
+## Code Generation
 
 Using new **ASP.NET Zero Power Tools**, you can speed up your development.
 
 See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
 
-### Conclusion
+## Conclusion
 
 In this document, we built a complete example that covers most parts of
 the ASP.NET Zero system. We hope that it will help you to build your own
@@ -2095,7 +2095,7 @@ We intentionally used different approaches for similar tasks to show you
 different styles of development. ASP.NET Zero provides an architecture
 but does not restrict you. You can make your own style development.
 
-#### Source Code
+### Source Code
 
 You should [purchase](/Prices) ASP.NET Zero in order to get **source
 code**. After purchasing, you can get the sample project from private

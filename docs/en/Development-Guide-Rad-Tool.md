@@ -2,11 +2,11 @@
 
 <img src="images/RadToolCarsTable2.jpg" alt="Generated User Interface" class="img-thumbnail" width="1369" height="612" />
 
-### Introduction
+## Introduction
 
  In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new entity. It creates all the related layers (including UI) by defining an entity.
 
-### Download And Install
+## Download And Install
 
  If your project version is 5.1.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools.
 
@@ -14,7 +14,7 @@
 
  This tool doesn't support versions before v5.0.0.
 
-### How To Use It?
+## How To Use It?
 
  The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
 
@@ -26,13 +26,13 @@ Warning: If you are working on ASP.NET Core & Angular template, after generating
 
  Warning: Be sure that you have saved your work before running this tool since it will add new files and modify some of the existing files. We strongly recommend using a source control system (like Git).  Otherwise, backup your project.
 
-### How It Works?
+## How It Works?
 
 DLLs (that are inside the folder mentioned above) do all the work. The extension is just a user interface. This design is required, otherwise it would only be available for Visual Studio Windows users. However, since the tool is built on .NET Core platform, **Mac** or **Linux** users can safely use the tool. 
 
 On Mac and Linux, you have to manually do some of the work that is done by the extension. This involves just creating a short and basic[ JSON file](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux) as input.
 
-### How To Edit Pre-defined Templates Or Create A New Template?
+## How To Edit Pre-defined Templates Or Create A New Template?
 
  The templates are inside "/AspNetZeroRadTool/FileTemplates" directory in your project's root directory. Every template is split into three files: "MainTemplate.txt", "PartialTemplates.txt" and "TemplateInfo.txt". If you want to edit any file, just copy it in same directory and change it's extension to ".custom.txt" from ".txt".  For example, you can create "MainTemplate.custom.txt" to override "MainTemplate.txt" in same directory. Please don't make any changes to the original templates.
 
@@ -41,11 +41,11 @@ On Mac and Linux, you have to manually do some of the work that is done by the e
  You can request help from our support team on [github](github.com/aspnetzero/aspnet-zero-core)  or  [forum](https://forum.aspnetboilerplate.com/viewforum.php?f=5)  if you are struggling.
 
 
-### Generated Files
+## Generated Files
 
  Here is the full list of the files that are created or modified by the tool, if you give a basic "Cars" entity as input.
 
-#### Server Side
+### Server Side
 
 **Created**
 
@@ -74,9 +74,9 @@ On Mac and Linux, you have to manually do some of the work that is done by the e
  (Optionally, adds a database migration and updates the database.)
 
 
-#### Client Side
+### Client Side
 
-##### Angular
+#### Angular
 
 **Created**
 
@@ -95,7 +95,7 @@ On Mac and Linux, you have to manually do some of the work that is done by the e
  -   (Main or Admin)-routing.module.ts
  -   (Main or Admin).module.ts
 
-##### Mvc
+#### Mvc
 
 **Created**
 

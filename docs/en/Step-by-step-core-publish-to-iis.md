@@ -1,6 +1,8 @@
+# Step By Step Publish To IIS
+
 Publishing ASP.NET Zero Core MVC project is no different to any other ASP.NET Core Applications.
 
-### Publishing Web Site
+## Publishing Web Site
 
 - Right click `\*.Web.Mvc` project and click **Publish**.
 - Click **Start** and select **Folder** tab and choose the URL that you want to publish.
@@ -11,7 +13,7 @@ Publishing ASP.NET Zero Core MVC project is no different to any other ASP.NET Co
 - Copy extracted files to server. (from `\*.Web.Mvc/bin/Release/netcoreapp2.1/publish/` to `C:\inetpub\wwwroot\mywebsite`).
 - Change `appsettings.production.json` configurations with your own settings.
 
-### Create IIS Web Site
+## Create IIS Web Site
 
 - Right click **Sites** and click **Add Website**.
 

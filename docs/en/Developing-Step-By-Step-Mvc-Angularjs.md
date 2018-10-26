@@ -1,13 +1,13 @@
 # Step by Step Development
 
-### Introduction
+## Introduction
 
 In this document, we will create a sample **phonebook application**
 based on ASP.NET Zero step by step. After all steps, we will have a
 multi-tenant, localized, authorized, configurable, testable...
 appliaction.
 
-### Creating The Project
+## Creating The Project
 
 We're creating and downloading the solution named "**Acme.PhoneBook**"
 as described in [Getting Started](Getting-Started.md) document. After
@@ -37,16 +37,16 @@ disable multi-tenancy as shown below:
         }
     }
 
-#### Switch to MPA
+### Switch to MPA
 
 Do not skip to switch default application to the MPA version (click "See
 Demo for Multi-Page Application version with ASP.NET MVC and jQuery").
 
-### Adding a New Page
+## Adding a New Page
 
 Let's begin from UI and create a new page named "**Phone book**".
 
-#### Defining a menu item
+### Defining a menu item
 
 **AppNavigationProvider** class defines menus in the application. When
 we change this class, menus are automatically changed. Open this class
@@ -64,7 +64,7 @@ Every menu item must have a **unique name** to identify this menu item.
 Menu names are defined in PageNames class as constants. We add a new
 constant: "**PhoneBook**".
 
-#### Localizing Menu Item Display Name
+### Localizing Menu Item Display Name
 
 A menu item should also have a **localizable shown name**. It's used to
 display menu item on the page. **L("PhoneBook")** is the localized name of
@@ -88,7 +88,7 @@ also for Turkish in PhoneBook-tr.xml file:
 
     <text name="PhoneBook" value="Telefon rehberi" />
 
-#### Other menu item properties
+### Other menu item properties
 
 **url** can be a URL or **AngularJS route** (state in Angular
 **ui-router** used in ASP.NET Zero) that will be activated when we click
@@ -102,7 +102,7 @@ See [navigation
 document](https://aspnetboilerplate.com/Pages/Documents/Navigation) for
 more information on menu definitions.
 
-### Creating AngularJS Route
+## Creating AngularJS Route
 
 AngularJS routes are defined in **app.js**. We're adding a new route
 definition as shown below:
@@ -121,7 +121,7 @@ Note that 'tenant.phonebook' is a **second level state** (child of
 information on defining states. But, in most cases, you can define it
 easily by taking existing routes as reference.
 
-### Creating AngularJS View and Controller
+## Creating AngularJS View and Controller
 
 The last step to see our new page is to create an AngularJS view and
 controller for it:
@@ -131,7 +131,7 @@ controller for it:
 We can use **empty** controller and view located under
 **common/views/\_empty** folder to simplify creating a new view.
 
-#### Controller
+### Controller
 
 Creating an empty Controller file, **index.js** under
 **App/tenant/views/phonebook** folder:
@@ -158,7 +158,7 @@ set any string. We use this naming **as convention** and it's advised to
 follow this convention when developing applications based on ASP.NET
 Zero.
 
-#### View
+### View
 
 Creating an empty view, **index.cshtml** under
 **App/tenant/views/phonebook** folder:
@@ -197,7 +197,7 @@ Now, it's time to run application and see the new phone book page:
 Menu item display name and page title are localized. Try to change UI
 language to see difference.
 
-### Creating Person Entity
+## Creating Person Entity
 
 We define entities in **.Core** (domain) project. We can define a
 **Person** entity (mapped to **PbPersons** table in database) to
@@ -251,7 +251,7 @@ class defined in **.EntityFramework** project.
         //...other codes
     }
 
-### Database Migrations
+## Database Migrations
 
 We use **EntityFramework Code-First migrations** to migrate database
 schema. Since we added **Person entity**, our DbContext model is
@@ -372,7 +372,7 @@ adds two people to PbPersons table:
 
 <img src="images/phonebook-persons-table-initial-data.png" alt="Persons initial data" class="img-thumbnail" width="720" height="50" />
 
-### Creating Person Application Service
+## Creating Person Application Service
 
 An Application Service is used from client (presentation layer) to
 perform operations (use cases) in the application.
@@ -454,7 +454,7 @@ Abp.Extensions namespace). ABP has many similar shortcut extension
 methods. **MapTo** method automatically converts list of Person entities
 to list of PersonListDto objects using **AutoMapper** library.
 
-#### Connection & Transaction Management
+### Connection & Transaction Management
 
 We don't manually open database connection or start/commit transactions
 manually. It's automatically done with ABP framework's Unit Of Work
@@ -462,7 +462,7 @@ system. See [UOW
 documentation](https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work)
 for more.
 
-#### Exception Handling
+### Exception Handling
 
 We don't handle exceptions manually (using a try-catch block). Because
 ABP framework automatically handles all exceptions on the web layer and
@@ -472,7 +472,7 @@ on the client and shows needed error information to the user. See
 document](https://aspnetboilerplate.com/Pages/Documents/Handling-Exceptions)
 for more.
 
-### Creating Unit Tests For PersonAppService
+## Creating Unit Tests For PersonAppService
 
 You can skip this section if you don't interest in **automated
 testing**.
@@ -557,7 +557,7 @@ There are many techniques on unit testing, I kept it simple here. But
 ASP.NET Zero template makes very easy to write unit and integration
 tests by base classes and pre-build test codes.
 
-### Testing PersonAppService From Browser Console
+## Testing PersonAppService From Browser Console
 
 Now, lets run and **login** to the application again, open Chrome
 Developer Console (or similar tools in other browsers) and write the
@@ -589,7 +589,7 @@ There are some other fields not shown here. So, we see that User with
 Id=2 called GetPeople method of the PersonAppService in recorded time
 with the shown parameters and it' executed in 134 ms.
 
-### Calling GetPeople Method From AngularJS Controller
+## Calling GetPeople Method From AngularJS Controller
 
 It's time to open phonebook AngularJS **controller** and get people to
 show on the view.
@@ -616,7 +616,7 @@ documentation to know how this service is automatically created). Then
 we call **getPeople** method and create a **success** handler to get
 **result** of the **AJAX** request. That's all!
 
-### Rendering People In AngularJS View
+## Rendering People In AngularJS View
 
 We show people on the page is most basic form. See the changed view
 below:
@@ -645,11 +645,11 @@ people (vm.persons). See the result:
 
 We successfully retrieved list of people from database to the page.
 
-### Creating a new people
+## Creating a new people
 
 Next step is to create a modal to add a new item to phone book.
 
-#### Add a CreatePerson Method to PersonAppService
+### Add a CreatePerson Method to PersonAppService
 
 We first define **CreatePerson** method in **IPersonAppService**
 interface:
@@ -695,7 +695,7 @@ database. We used **async/await** pattern here. All methods in ASP.NET
 Zero startup project is **async**. It's advised to use async/await
 wherever possible.
 
-#### Test CreatePerson Method
+### Test CreatePerson Method
 
 You can skip this section if you don't interest in **automated
 testing**.
@@ -759,7 +759,7 @@ arguments and asserts that it throws AbpValidationException. See
 document](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)
 for more information.
 
-#### Creating a Modal
+### Creating a Modal
 
 We will create a [Angular UI-Bootstrap
 modal](https://angular-ui.github.io/bootstrap/#/modal) to create a
@@ -846,7 +846,7 @@ flag is **true** during AJAX operation. This value is used on view to
 disable and make buttons animated. If createPerson success, modal is
 **closed**.
 
-#### Opening the Modal
+### Opening the Modal
 
 We return to phone book view and add a **button** to open this modal:
 
@@ -889,7 +889,7 @@ We open modal using $uibModal service by providing view and controller.
 We re-load person list (by calling getPeople function) after modal
 closed.
 
-### Authorization For Phone Book
+## Authorization For Phone Book
 
 At this point, anyone can enter phone book page since no authorization
 defined. We will define two permission:
@@ -898,9 +898,9 @@ defined. We will define two permission:
 -   A permission to **create new person** (which is a child permission
     of first one, as naturally).
 
-#### Permission for Entering Phone Book Page
+### Permission for Entering Phone Book Page
 
-##### Define the permission
+#### Define the permission
 
 Go to **AppAuthorizationProvider** class and add a new permission as
 shown below:
@@ -920,7 +920,7 @@ this convention. A permission can have a localizable display name:
 localization, since it's very similar). Lastly, we set this as a
 **tenant** level permission.
 
-##### Add AbpAuthorize attribute
+#### Add AbpAuthorize attribute
 
 **AbpAuthorize** attribute can be used as **class level** or **method
 level** to protect an application service or service method from
@@ -941,7 +941,7 @@ Now, let's try to enter Phone Book page by clicking the menu item:
 We get an error message. This exception is thrown when any method of
 PersonAppService is called without needed permission.
 
-##### Hide Unauthorized Menu Item
+#### Hide Unauthorized Menu Item
 
 This secures the service, but we should also **hide** the Phone book
 **menu item**. It's easy, open AppNavigationProvider and add
@@ -955,7 +955,7 @@ requiredPermissionName as shown below:
         requiredPermissionName: AppPermissions.Pages_Tenant_PhoneBook
     )
 
-##### Disable AngularJS route
+#### Disable AngularJS route
 
 While hiding menu item prevents user to enter the page by clicking it,
 he can still enter the page by entering the following URL directly to
@@ -978,7 +978,7 @@ We wrapper route definition by an if block that checks related
 permission. Now, user can not open the page without the permission. He
 is redirected to default route by AngularJS.
 
-##### Grant permission
+#### Grant permission
 
 So, how we can enter the page now? Simple, go to **Role Management**
 page and edit **admin** role:
@@ -994,13 +994,13 @@ details about roles and users).
 
 Now, we can enter the Phone book page again.
 
-#### Permission for Create New Person
+### Permission for Create New Person
 
 While a permission for a page is useful and probably needed always, we
 may need to define additional permissions to perform some **specific
 actions** on a page, like creating a new person.
 
-##### Define the permission
+#### Define the permission
 
 Defining a permission is similar:
 
@@ -1010,7 +1010,7 @@ Defining a permission is similar:
 First permission was defined before. In the second line, we are creating
 a child permission of first one.
 
-##### Add AbpAuthorize attribute
+#### Add AbpAuthorize attribute
 
 This time, we're declaring **AbpAuthorize** attribute just for
 **CreatePerson** method:
@@ -1021,7 +1021,7 @@ This time, we're declaring **AbpAuthorize** attribute just for
         //...
     }
 
-##### Hide Unauthorized Button
+#### Hide Unauthorized Button
 
 If we run the application and try to create a person, we get an
 authorization error after clicking the save button. But, it's good to
@@ -1051,7 +1051,7 @@ the button:
 
     <button ng-if="vm.permissions.createPerson" class="btn btn-primary blue" ng-click="vm.openCreatePersonModal()"><i class="fa fa-plus"></i> @L("CreateNewPerson")</button>
 
-##### Grant permission
+#### Grant permission
 
 To see the button again, we can go to role or user manager and grant
 related permission as shown below:
@@ -1065,7 +1065,7 @@ See [authorization
 documentation](https://aspnetboilerplate.com/Pages/Documents/Authorization)
 for more information on authorization.
 
-### Deleting a Person
+## Deleting a Person
 
 Let's add a delete button in people list as shown below:
 
@@ -1073,7 +1073,7 @@ Let's add a delete button in people list as shown below:
 
 We're starting from UI in this case.
 
-#### View
+### View
 
 We're changing index.cshtml view to add a button (related part is shown
 here):
@@ -1094,7 +1094,7 @@ here):
 
 Surely, we defined 'delete person' permission as like before.
 
-#### Style
+### Style
 
 We're using a **[LESS](http://lesscss.org/)** style here to take button
 right. Created a file named index.less and added following lines:
@@ -1110,7 +1110,7 @@ right. Created a file named index.less and added following lines:
 Pre-built bundling configuration automatically includes styles to
 layout.
 
-#### Controller
+### Controller
 
 Now, creating a **deletePerson** function in AngularJS controller (that
 was called from view above):
@@ -1146,7 +1146,7 @@ that:
 So, we can pass a name into localize method. This is similar to C\#'s
 string.Format method.
 
-#### Application Service
+### Application Service
 
 First, adding a new method definition to **IPersonAppService** interface
 as always:
@@ -1165,7 +1165,7 @@ Implementation (in **PersonAppService**) is very simple:
 We also **authorized** deleting a person as did before for creating a
 person.
 
-### Filtering people
+## Filtering people
 
 Now, we will implement **search** functionality of **GetPeople** method.
 UI is shown below:
@@ -1197,12 +1197,12 @@ Lastly, changed **getPeople** function in controller, to send
 That's all. It works since we already have implemented filtering on
 server.
 
-### Extending the Application: Adding Phone Numbers
+## Extending the Application: Adding Phone Numbers
 
 Until now, we did not even mention about phone numbers. It's time to
 extend our domain to support **multiple phone numbers** for a person.
 
-### Creating Phone Entity
+## Creating Phone Entity
 
 Let's start by creating a new Entity, **Phone** in **.Core** project:
 
@@ -1250,7 +1250,7 @@ Lastly, we're also adding a DbSet property for Phone to our DbContext:
 
     public virtual IDbSet<Phone> Phones { get; set; }
 
-### Adding Database Migration
+## Adding Database Migration
 
 Our entity model has changed, so we need to add a new migration:
 
@@ -1342,7 +1342,7 @@ Now, we are running **Update-Database** command in Package Manager
 Console to re-create database and seed it. You can check database to see
 **PbPhones** table and rows.
 
-### Changing GetPeople Method
+## Changing GetPeople Method
 
 We're changing **PersonAppService.GetPeople** method to **include**
 phone numbers of people into return value.
@@ -1395,7 +1395,7 @@ codes remains same. Furthermore, it would work without adding this, but
 much slower (since it will lazy load phone numbers for every person
 separately).
 
-### AddPhone and DeletePhone Methods
+## AddPhone and DeletePhone Methods
 
 We are adding two more methods to IPersonAppService interface as shown
 below:
@@ -1458,7 +1458,7 @@ There may be different approaches for AddPhone method. You can directly
 work with a **phone repository** to insert new phone. They all have
 different pros and cons. It's your choice.
 
-### Edit Mode For People List
+## Edit Mode For People List
 
 Final UI is shown below:
 
@@ -1469,7 +1469,7 @@ and all phone numbers are shown. Then we can delete any number by
 clicking the icon at left. We can add a new phone from the inputs at
 last line.
 
-#### View
+### View
 
 Changes in view are shown below:
 
@@ -1533,7 +1533,7 @@ We added an edit button for each person. Then added a table (shown if
 this person is being edited) for each person that shows phones of the
 related person and allows adding a new phone.
 
-#### Controller
+### Controller
 
 Added following codes into the AngularJS controller:
 
@@ -1585,19 +1585,19 @@ Added following codes into the AngularJS controller:
             });
     };
 
-### Multi Tenancy
+## Multi Tenancy
 
 We have built a fully functional application until here. Now, we will
 see how to convert it to a multi-tenant application easily.
 
-#### Enable Multi Tenancy
+### Enable Multi Tenancy
 
 We disabled multi-tenancy at the beginning of this document. Now,
 re-enabling it in **PhoneBookCoreModule** class:
 
     Configuration.MultiTenancy.IsEnabled = true;
 
-#### Make Entities Multi Tenant
+### Make Entities Multi Tenant
 
 In a multi-tenant application, a tenant's entities should be isolated by
 other tenants. For this example project, every tenant should have own
@@ -1639,7 +1639,7 @@ Now, we can update the database again:
 
     Update-Database
 
-#### Run The Multi Tenant Application
+### Run The Multi Tenant Application
 
 **It's finished**! We can test the application. Run the project,
 **login** as **host** as shown blow:
@@ -1672,13 +1672,13 @@ You can add people here, logout and login as different tenants (you can
 login as default tenant for example). You will see that each tenant has
 an isolated phone book and can not see other's people.
 
-### Conclusion
+## Conclusion
 
 In this document, we built a complete example that covers most parts of
 the ASP.NET Zero system. We hope that it will help you to build your own
 application.
 
-#### Source Code
+### Source Code
 
 You should [purchase](/Prices) ASP.NET Zero in order to get **source
 code**. After purchasing, you can get the sample project from private

@@ -1,12 +1,12 @@
 # Development Guide
 
-### Introduction
+## Introduction
 
  In this document, we will explain how to use **ASP.NET Zero Power Tools** without the Visual Studio extension.
 
  Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file for the rad tool. So, in order to use it without extension, input file should be created manually. 
 
-### Sample Input File
+## Sample Input File
 
  Input file includes a JSON string and it's name is the same as your entity's name. Here is a sample Product.json:
 
@@ -96,7 +96,7 @@
        ]
     }
 
-### Guide To Create A New Input File
+## Guide To Create A New Input File
 
 You have to fill the fields of json file according to your entity. However, some of the fields must match our constants. Here is the list of them:
 
@@ -113,7 +113,7 @@ You have to fill the fields of json file according to your entity. However, some
 - DuplicationNumber: A number post-fix that is added to end of variable names to prevent duplicate if there are more than one foreign key addressing to same entity. '0' means no post-fix.  
 
 
-#### Properties
+### Properties
 
  Properties are written as an array in JSON file. Add an object to that array for every property of your entity. There will be some unnecessary fields depending on property type. For example, you don't have to set regular expression for a numeric property or don't have to set range for a string. 
 
@@ -132,13 +132,13 @@ A property should be one of those types:
 
  or one of the enums you declared in "EnumDefinitions".
 
-### How To Run Rad Tool
+## How To Run Rad Tool
 
 You can use that command to run it on any device:
 
     dotnet AspNetZeroRadTool.dll YourEntity.Json
 
-### Notes
+## Notes
 
  - AspNetZeroRadTool folder is placed in your solution's directory. You have to place the json file and run the command in there.
  - Please Keep in mind that JSON file is completely case sensitive. 

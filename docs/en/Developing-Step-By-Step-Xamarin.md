@@ -1,14 +1,14 @@
 # Step by Step Development
 
-### Introduction
+## Introduction
 
 In this document, we will create a sample **Xamarin phonebook application** step by step integrated with ASP.NET Zero website. Be aware that only ASP.NET Core version is supported.
 
-### Downloading Phonebook-Core Sample
+## Downloading Phonebook-Core Sample
 
 In the [Developing Step By Step Phonebook](Developing-Step-By-Step-Core) documentation we've already completed how to create a phonebook on server side and web client. To resume this project, download the solution [Acme.PhoneBookDemo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/PhoneBook-Core) and open the **Acme.PhoneBookDemo.Mobile.sln** file.
 
-### Configuring Host Address
+## Configuring Host Address
 
 <img src="images/xamarin-phonebook-my-local-ip.png" alt="Configuring Host Address" class="img-thumbnail" />
 
@@ -16,7 +16,7 @@ If you are using an emulator, you can use the **emulator's loopback address** to
 
 <img src="images/xamarin-phonebook-android-emulator-ip.png" alt="Configuring Host Address for Android Emulator" class="img-thumbnail" />
 
-### Creating Phonebook Application Service Proxy
+## Creating Phonebook Application Service Proxy
 
 To consume server API methods, we need to implement the **IPersonAppService** application service over HTTP transmission. Create a new folder called **PhoneBook** in
 **Acme.PhoneBookDemo.Application.Client** project.
@@ -28,7 +28,7 @@ Add **async** keyword to all methods to be able to benefit from multi-tasking.
 
 <img src="images/xamarin-phonebook-person-app-service-client.png" alt="Creating Person App Service Client" class="img-thumbnail" />
 
-#### Implementing App Service Methods
+### Implementing App Service Methods
 
 In the ProxyAppServiceBase class you'll see *ApiClient*, which is being
 used to call host web API methods. We'll use *ApiClient* to transfer
@@ -111,9 +111,9 @@ purpose to refer to **XAML** files.
 Firstly we'll create view, then view-model. But it's up to you which
 side you start. Let's create **PeopleView.xaml**.
 
-### Creating People Page
+## Creating People Page
 
-#### Creating PeopleView
+### Creating PeopleView
 
 PeopleView is going to list all the persons. When we tap one of the
 person, we'll navigate to person details. The person details page will
@@ -138,7 +138,7 @@ We have created an empty view. To control this view, we have to create
 view-model for this view. Next step is creating view-model of
 PeopleView.xaml.
 
-#### Creating PeopleViewModel
+### Creating PeopleViewModel
 
 ASP.NET Zero Xamarin app uses
 [MVVM](https://developer.xamarin.com/guides/xamarin-forms/enterprise-application-patterns/mvvm/)
@@ -166,7 +166,7 @@ created *People* view and created view-model *PeopleViewModel*.
 To be able to see the new view in the app, there's one more thing to
 do: adding this page to the navigation menu.
 
-#### Adding People Page to Navigation Menu
+### Adding People Page to Navigation Menu
 
 To add a new menu item, open **MenuProvider** class in
 **Acme.PhoneBookDemo.Mobile.Shared** project. The navigation menu items
@@ -276,14 +276,14 @@ When you successfully login, you can see the below screen with new
 Up to here we successfully added an empty People page. Let's populate
 the view with data.
 
-#### Populating People View with Data
+### Populating People View with Data
 
 The first function is listing people in PeopleView. To list repeating
 items we use
 [ListView](https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/).
 Open **PeopleView.xaml** and set title of the view:
 
-##### Setting Page Title
+#### Setting Page Title
 
 Add title tag and namespace into **ContentPage** tag like below:  
 
@@ -293,7 +293,7 @@ Add title tag and namespace into **ContentPage** tag like below:
      Title="{extensions:Translate PhoneBook}"
      ...>
 
-##### Adding ListView Item
+#### Adding ListView Item
 
 There's a placeholder label in **&lt;ContentPage.Content&gt;** tag.
 Remove that Label and add the below ListView definition in
@@ -390,7 +390,7 @@ The final look of **PeopleView.xaml** is like below:
     
     </ContentPage>
 
-##### Creating People View-Model
+#### Creating People View-Model
 
 In the **PeopleView** we have used Persons as items source of ListView.
 So **PeopleViewModel** class needs to have a property called **Persons**
@@ -434,7 +434,7 @@ The complete definition of **PersonListModel** is like below:
         }
     }
 
-##### Listing People
+#### Listing People
 
 Open **PeopleViewModel** class. We'll retrieve data from
 **ProxyPersonAppService**. The interface of ProxyPersonAppService is
@@ -497,7 +497,7 @@ inserted to database.)
 
 <img src="images/xamarin-phonebook-people-view-populated-data.png" alt="People Page With Populated Data" class="img-thumbnail" />
 
-##### Searching People
+#### Searching People
 
 To search and filter people we'll use
 [SearchBar](https://developer.xamarin.com/api/type/Xamarin.Forms.SearchBar/),
@@ -563,7 +563,7 @@ Final look of the filtered list view is like below:
 
 <img src="images/xamarin-phonebook-search-people.png" alt="Search People" class="img-thumbnail" />
 
-### Creating Person Details Page
+## Creating Person Details Page
 
 Person details page will show personal information and phone numbers of
 selected person. We will be editing personal information, adding and
@@ -573,7 +573,7 @@ to this page, user will tap on a person in the PeopleView.
 We'll first create view, then view-model of the page. Let's start with
 creating the **PersonDetailsView.xaml**.
 
-#### Creating Person Details View
+### Creating Person Details View
 
 Basically, we'll do the same steps as we did for **PeopleView** page.
 
@@ -589,7 +589,7 @@ Basically, we'll do the same steps as we did for **PeopleView** page.
 Now we have an empty view. Let's put controls inside the
 **PersonDetailsView.xaml**.
 
-##### Creating Personal Information Section
+#### Creating Personal Information Section
 
 The view will have 2 main sections. Personal information on the top and phone numbers on the bottom. Let's create personal information section!
 
@@ -699,7 +699,7 @@ ListView control seems to be an easy but complicated control. We recommend to us
     wherever you can.
 -   Avoid placing a ListView inside a [ScrollView](https://developer.xamarin.com/guides/xamarin-forms/user-interface/layouts/scroll-view/).
 
-#### Creating PersonDetailsViewModel
+### Creating PersonDetailsViewModel
 
 The view-model name for PersonDetailsView must be
 **PersonDetailsViewModel**. Copy **\_SampleViewModel.cs** in
@@ -713,7 +713,7 @@ have an empty view-model. Do the following steps in
     transfer with server.
 
         private readonly IPersonAppService _personAppService;
-    
+        
         public PersonDetailsViewModel(IPersonAppService personAppService)
         {
             _personAppService = personAppService;
@@ -733,10 +733,10 @@ have an empty view-model. Do the following steps in
             {
                 await CreateNewPersonAsync();
             }
-    
+        
             await NavigationService.GoBackAsync();
         }
-    
+        
         private async Task UpdateExistingPersonAsync()
         {
             var editPersonInput = new EditPersonInput
@@ -746,10 +746,10 @@ have an empty view-model. Do the following steps in
                 Surname = Model.Surname,
                 Id = Model.Id
             };
-    
+        
             await _personAppService.EditPerson(editPersonInput);
         }
-    
+        
         private async Task CreateNewPersonAsync()
         {
             var createPersonInput = new CreatePersonInput
@@ -758,7 +758,7 @@ have an empty view-model. Do the following steps in
                 Name = Model.Name,
                 Surname = Model.Surname,
             };
-    
+        
             await _personAppService.CreatePerson(createPersonInput);
         }
 
@@ -802,7 +802,7 @@ have an empty view-model. Do the following steps in
                 RaisePropertyChanged(() => IsExistingPerson);
             }
         }
-    
+        
         private bool _isAddPhoneButtonEnabled;
         public bool IsAddPhoneButtonEnabled
         {
@@ -813,12 +813,12 @@ have an empty view-model. Do the following steps in
                 RaisePropertyChanged(() => IsAddPhoneButtonEnabled);
             }
         }
-    
+        
         public override async Task InitializeAsync(object navigationData)
         {
             IsExistingPerson = navigationData != null;
             IsAddPhoneButtonEnabled = false;
-    
+        
             if (IsExistingPerson)
             {
                 Model = (PersonListModel)navigationData;
@@ -835,7 +835,7 @@ already covered create person in PersonDetailsViewModel. We'll just need
 to navigate to PersonDetailsView with an empty navigationData. The rest
 will work fine.
 
-##### Add Person Creation Functionality
+#### Add Person Creation Functionality
 
 -   Creating new person needs permission. Open **PermissionKey** class
     and add the below line for shortcut. We'll use it to hide/show
@@ -884,7 +884,7 @@ will work fine.
         {
             await GotoPersonDetailsAsync(null);
         }
-    
+        
          public PersonListModel SelectedPerson
                 {
                     get => _selectedPerson;
@@ -895,13 +895,13 @@ will work fine.
                         AsyncRunner.Run(GotoPersonDetailsAsync(_selectedPerson));
                     }
                 }
-    
+        
         private async Task GotoPersonDetailsAsync(PersonListModel person)
         {
             await NavigationService.SetDetailPageAsync(typeof(PersonDetailsView), person, pushToStack: true);
         }
 
-##### Input Validation
+#### Input Validation
 
 We've implemented create and update person functions, but we didn't
 validate input. Validating an object before sending to server is very
@@ -960,7 +960,7 @@ Then use **Validate()** method in **UpdateExistingPersonAsync()** and in
 To test it, run the app and try to **create a person** with an **invalid
 email address**.
 
-##### Deleting Person
+#### Deleting Person
 
 -   Add the delete permission key in **PermissionKey.cs**.
 
@@ -979,30 +979,30 @@ email address**.
         <ContentPage.Content>
             <ListView HasUnevenRows="True"
                       ItemsSource="{Binding Model.Phones}" Margin="10">
-    
+        
                 <ListView.Header>
                     <StackLayout>
-    
+        
                         <controls:CardView Margin="0,10" >
                             <StackLayout Padding="10" Spacing="0" >
                                 <controls:LabelSection Text="{extensions:Translate PersonalInformations}"/>
                                 <controls:Divider Margin="0,0,0,5"/>
-    
+        
                                 <Label Text="{extensions:Translate Name}"></Label>
                                 <Entry Text="{Binding Model.Name, Mode=TwoWay}"/>
-    
+        
                                 <Label Text="{extensions:Translate Surname}"></Label>
                                 <Entry Text="{Binding Model.Surname, Mode=TwoWay}"/>
-    
+        
                                 <Label Text="{extensions:Translate EmailAddress}"></Label>
                                 <Entry Text="{Binding Model.EmailAddress, Mode=TwoWay}" Margin="0,0,0,10"/>
-    
+        
                                 <!-- SAVE BUTTON -->
                                 <Button Margin="{StaticResource ActionButtonMargin}"
                                             Style="{StaticResource ActionButton}"
                                             Text="{extensions:Translate Save}"
                                             Command="{Binding SavePersonCommand}"/>
-    
+        
                                 <!-- DELETE BUTTON -->
                                 <Button Margin="{StaticResource ActionButtonMargin}"
                                             IsVisible="{Binding IsDeleteButtonVisible}"
@@ -1034,7 +1034,7 @@ email address**.
         using Acme.PhoneBookDemo.UI;
         using Acme.PhoneBookDemo.Validations;
         using Acme.PhoneBookDemo.ViewModels.Base;
-    
+        
         namespace Acme.PhoneBookDemo.ViewModels
         {
             public class PersonDetailsViewModel : XamarinViewModel
@@ -1043,10 +1043,10 @@ email address**.
                 private readonly IPermissionService _permissionService;
                 private bool _isNewPerson;
                 private bool _isDeleteButtonVisible;
-    
+        
                 public ICommand SavePersonCommand => AsyncCommand.Create(SavePersonAsync);
                 public ICommand DeletePersonCommand => AsyncCommand.Create(DeletePersonAsync);
-    
+        
                 public bool IsDeleteButtonVisible
                 {
                     get => _isDeleteButtonVisible;
@@ -1056,36 +1056,36 @@ email address**.
                         RaisePropertyChanged(() => IsDeleteButtonVisible);
                     }
                 }
-    
+        
                 private async Task DeletePersonAsync()
                 {
                     var accepted = await UserDialogs.Instance.ConfirmAsync(L.Localize("UserDeleteWarningMessage", Model.FullName),
                         L.Localize("AreYouSure"), L.Localize("YesDelete"), L.Localize("Cancel"));
-    
+        
                     if (!accepted)
                     {
                         return;
                     }
-    
+        
                     await SetBusyAsync(async () =>
                     {
                         await _personAppService.DeletePerson(new EntityDto(Model.Id));
                         await NavigationService.GoBackAsync();
                     });
                 }
-    
+        
                 ...
                 public PersonDetailsViewModel(IPersonAppService personAppService, IPermissionService permissionService)
                 {
                     _personAppService = personAppService;
                     _permissionService = permissionService;
                 }
-    
+        
                 public override async Task InitializeAsync(object navigationData)
                 {
                     IsExistingPerson = navigationData != null;
                     IsAddPhoneButtonEnabled = false;
-    
+        
                     if (IsExistingPerson)
                     {
                         Model = (PersonListModel)navigationData;
@@ -1100,7 +1100,7 @@ email address**.
             }
         }
 
-###### Listing Phone Numbers
+#### Listing Phone Numbers
 
 To list phone numbers, we add following lines to
 **PersonDetailsView.xaml**:
@@ -1118,7 +1118,7 @@ To list phone numbers, we add following lines to
             </DataTemplate>
         </ListView.ItemTemplate>
 
-###### Deleting Phone Number
+#### Deleting Phone Number
 
 To delete a phone number, we put Iconize button. This control uses Font
 Awesome to create a button with icon. The only disadvantage of the
@@ -1187,7 +1187,7 @@ The delete button will look like below:
 
 <img src="images/xamarin-phonebook-phones-delete.png" alt="Delete Phone Numbers" class="img-thumbnail" />
 
-###### Adding Phone Numbers
+#### Adding Phone Numbers
 
 To add new phone numbers, add a new CardView to
 **PersonDetailsView.xaml**.
@@ -1330,11 +1330,11 @@ Final look on iOS platform:
 
 <img src="images/xamarin-phonebook-demo-ios-final-result.png" alt="Final Result On iOS Platform" class="img-thumbnail" />
 
-### Conclusion
+## Conclusion
 
 In this document, we built a complete example that covers most parts of the ASP.NET Zero Xamarin development. We intentionally used different approaches for similar tasks to show you different styles of development. ASP.NET Zero provides an architecture, but does not restrict you. You can decide on your own style of development.
 
-#### Source Code
+### Source Code
 
 You should [purchase](/Prices) ASP.NET Zero in order to get **source
 code**. After purchasing, you can get the sample project from private

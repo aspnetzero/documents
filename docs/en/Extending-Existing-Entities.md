@@ -1,6 +1,6 @@
 # Extending Existing Entities
 
-### Introduction
+## Introduction
 
 This tutorial is a step by step guide to learn **how to add new
 properties to existing entities**, from database layer to UI layer.
@@ -12,12 +12,12 @@ differences between them. So, we separated it into two sections.
 *Note: We assume that you created your project as described in the
 [Getting Started](Getting-Started.md) document.*
 
-### Extending Abstract Entities
+## Extending Abstract Entities
 
 As a sample, we will work on **User** entity. We want to add an
 **Address** property to the User.
 
-#### Add New Property To User
+### Add New Property To User
 
 Open Authorization\\Users\\**User.cs** (in .Core project) and add the
 new property:
@@ -32,7 +32,7 @@ new property:
 Here, we hided existing code in the User class to show it simpler. You
 can add Address property after existing properties.
 
-#### Add Migration
+### Add Migration
 
 Since we added new property, our database schema is changed. Whever we
 change our entities, we should add a new database migration. Open
@@ -67,7 +67,7 @@ When we check **AbpUsers** table in the database, we can see the new
 
 For test purposes, we entered some data for existing users by hand.
 
-#### Show Address On The UI
+### Show Address On The UI
 
 Authorization\\Users\\**UserAppService.cs** (in .Application project) is
 used to get list of users by clients. It returns a list of
@@ -116,7 +116,7 @@ This was for SPA (Single Page Application with AngularJS). It's similar
 for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Users\\index.js and add
 Address field to the table as like Surname.
 
-#### Add Address On User Create/Edit
+### Add Address On User Create/Edit
 
 We may want to set Address while **creating/editing** a User.
 
@@ -160,11 +160,11 @@ You can see this Github
 [commit](https://github.com/aspnetzero/aspnet-zero-samples/commit/b7fd57eb3e20cf3b96e9358bc3c4d92f81404f5a)
 for all changes applied.
 
-### Extending Non-Abstract Entities
+## Extending Non-Abstract Entities
 
 As a sample, we will work on **Edition** entity.
 
-#### Derive From Edition Entity
+### Derive From Edition Entity
 
 Since Edition is **not abstract** in the framework, we can not direcly
 add new properties to the Edition class. Instead, we should use OOP
@@ -196,7 +196,7 @@ Then we add a DbSet property for Edition entity to DbContext class defined in .E
         //...other codes
     }
 
-#### Add Migration
+### Add Migration
 
 Since we added a new entity class, our database schema is changed.
 Whever we change our entities, we should add a new database migration.
@@ -289,7 +289,7 @@ to:
 
 Thus, it creates MyEdition entity when we create database from scratch.
 
-#### Show Price On The UI
+### Show Price On The UI
 
 Editions\\**EditionAppService.cs** (in .Application project) is used to
 get list of editions by clients. It returns a list of **EditionListDto**
@@ -336,7 +336,7 @@ This was for SPA (Single Page Application with AngularJS). It's similar
 for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Editions\\**index.js**
 and add Price field to the table.
 
-#### Add Price On Edition Create/Update
+### Add Price On Edition Create/Update
 
 We may want to add Price field to edition create/update form.
 Create/Update logic is implemented in **EditionAppService** class.
@@ -415,7 +415,7 @@ You can see this Github
 [commit](https://github.com/aspnetzero/aspnet-zero-samples/commit/ecf25b60bda72166d41ad7605000d7dc7556e8bf)
 for all changes applied.
 
-### Source Code
+## Source Code
 
 You can get the full source code of this sample from the Github
 repository:
