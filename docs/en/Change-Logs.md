@@ -6,6 +6,14 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+### v6.2 (2018-10-26)
+
+* Added different Metronic layout support ([default](https://keenthemes.com/metronic/preview/?demo=default) and [demo8](https://keenthemes.com/metronic/preview/?demo=demo8))
+* Upgraded to Angular v7.0.
+* Display cookie consent to users.
+* Upgraded to FontAwesome v5.
+* Allow searching on permission tree.
+
 ## v6.1 (2018-10-13)
 
 * Added ability to download users collected data (GDPR).
