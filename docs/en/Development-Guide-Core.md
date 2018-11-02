@@ -20,9 +20,7 @@ Following tools are needed in order to use ASP.NET Zero Core solution:
 
 - [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
 
-- [gulp (must be installed
-
-  globally)](https://www.npmjs.com/package/gulp)
+- [gulp](https://www.npmjs.com/package/gulp) (must be installed globally)
 
 - [yarn](https://yarnpkg.com/)
 
