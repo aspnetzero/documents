@@ -572,7 +572,7 @@ documents for more information.
 In audit logs page, we can see all user interactions with the
 application:
 
-<img src="images/audit-logs-core-3.png" alt="Audit logs" class="img-thumbnail" />
+<img src="images/audit-logs-core-4.png" alt="Audit logs" class="img-thumbnail" />
 
 All application service methods and MVC controller actions are
 automatically logged and can be viewed here. See [audit logs
@@ -583,6 +583,27 @@ see all details an audit log:
 <img src="images/audit-logs-detail-1.png" alt="Audit Log" class="img-thumbnail" />
 
 Audit log report is provided by **AuditLogAppService** class.
+
+#### Change Logs
+
+In audit logs page, we can also see entity change logs. Entity change logs are disabled by default. You can go to *YourProjectName*EntityFrameworkCoreModule and comment out the related lines for enabling entity history. For more information please see [https://aspnetboilerplate.com/Pages/Documents/Entity-History](https://aspnetboilerplate.com/Pages/Documents/Entity-History).
+
+<img src="images/change-logs-core.png" alt="Change logs" class="img-thumbnail" />
+
+By clicking the magnifier icon on the change log list, you can see the details of a change log.
+
+<img src="images/change-log-details-core.png" alt="Change logs" class="img-thumbnail" />
+
+Change logs for an entity can be used on a entity list page as well. **EntityTypeHistoryModalComponent** is used for that purpose. You just need to open this modal with the required paremters **entityTypeFullName**, **entityId** and **entityTypeDescription**.
+
+You can see an example usage in Role page.
+
+<img src="images/entity_hist_act_button.png" alt="aaa logs" class="img-thumbnail" />
+
+And it opens the dialog below:
+
+<img src="images/entity_type_change_logs.png" alt="Change logs" class="img-thumbnail" />
+
 
 ### Subscription
 

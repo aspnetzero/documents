@@ -676,6 +676,26 @@ see all details an audit log:
 
 Audit log report is provided by **AuditLogAppService** class.
 
+#### Change Logs
+
+In audit logs page, we can also see entity change logs. Entity change logs are disabled by default. You can go to *YourProjectName*EntityFrameworkCoreModule and comment out the related lines for enabling entity history. For more information please see [https://aspnetboilerplate.com/Pages/Documents/Entity-History](https://aspnetboilerplate.com/Pages/Documents/Entity-History).
+
+<img src="images/change-logs-core.png" alt="Change logs" class="img-thumbnail" />
+
+By clicking the magnifier icon on the change log list, you can see the details of a change log.
+
+<img src="images/change-log-details-core.png" alt="Change logs" class="img-thumbnail" />
+
+Change logs for an entity can be used on a entity list page as well. **EntityTypeHistoryModal** is used for that purpose. You just need to open this modal with the required paremters **entityTypeFullName**, **entityId** and **entityTypeDescription**.
+
+You can see an example usage in Role page.
+
+<img src="images/entity_hist_act_button.png" alt="aaa logs" class="img-thumbnail" />
+
+And it opens the dialog below:
+
+<img src="images/entity_type_change_logs.png" alt="Change logs" class="img-thumbnail" />
+
 #### Subscription
 
 Tenants can manage (show, extend or upgrade) their edition/plan
@@ -1123,9 +1143,11 @@ To make this working, public web site and main application must know
 their URLs. There are two configuration for that:
 
 1.   In the **appsettings.json** of the **Web.**<span
+
     class="auto-style3">Public</span> project, set
     "**AdminWebSiteRootAddress**" to root URL of the main application.
 2.   In the **appsettings.json** of the **Web.**<span
+
     class="auto-style3">Mvc</span> project, set
     "**RedirectAllowedExternalWebSites**" to root URL of the public web
     site.
