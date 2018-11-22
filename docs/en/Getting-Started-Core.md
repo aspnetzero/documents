@@ -6,37 +6,37 @@ This document is aimed to create and run an ASP.NET Zero based project in just 5
 
 [Login](/Account/Login) to this web site with your user name and password. Then you will see [Download](/Download) link on the main menu.
 
+## Prerequirements
+
+MVC application needs the following tools to be installed:
+
+- [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
+- [gulp (must be installed globally)](https://www.npmjs.com/package/gulp)
+- [yarn](https://yarnpkg.com/)
+- [Bundler & Minifier Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40)
+- [Web Compiler Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/3b329021-cd7a-4a01-86fc-714c2d05bb6c)
+
 ## Create a Project
 
 Go to the [download](/Download) page. You will see a form as shown below:
 
 <img src="images/download-core-jquery-2.png" alt="Create project" class="img-thumbnail" />
 
-Select **ASP.NET Core & jQuery** as Project Type and fill other required fields. Click to the Download button, your project will be ready in one minute. Open the **\*.Web.sln** solution in **Visual Studio 2017+**:
+Select **ASP.NET Core & jQuery** as Project Type and fill other required fields. Click to the Download button, your project will be ready in one minute.
+
+## Configure The Project
+
+Before opening the solution open a command prompt, navigate to root directory of **\*.Web.Mvc** project and run "**yarn**" command to install client side dependencies.
+
+**Important Notice:** Installing client side npm dependencies using **yarn** before opening the solution will decrease project opening & building time dramatically.
+
+Open the **\*.Web.sln** solution in **Visual Studio 2017+**:
 
 If you want to work on only Xamarin project, open **\*.Mobile.sln** solution. If you want to work on both Xamarin and Web projects, open **\*.All.sln** solution.
 
 <img src="images/solution-overall-core-5.png" alt="ASP.NET Core solution" class="img-thumbnail" />
 
 Right click the **.Web.Mvc** project and select "**Set as StartUp project**": Then **build** the solution. It make take longer time in first build since all **nuget** packages will be restored.
-
-## Configure The Project
-
-**Important Notice:**  
-
-Installing client side npm dependencies using **yarn** before opening the solution will decrease project opening & building time dramatically.
-
-Before opening the solution open a command prompt, navigate to root directory of **\*.Web.Mvc** project and run "**yarn**" command to install client side dependencies.
-
-## Prerequirements
-
-MVC application needs the following tools to be installed:
-
--   [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
--   [gulp (must be installed globally)](https://www.npmjs.com/package/gulp)
--   [yarn](https://yarnpkg.com/)
--   [Bundler & Minifier Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40)
--   [Web Compiler Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/3b329021-cd7a-4a01-86fc-714c2d05bb6c)
 
 ### Database Connection
 
