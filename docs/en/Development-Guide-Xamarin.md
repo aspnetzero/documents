@@ -588,4 +588,3 @@ List of libraries are used to build ASP.NET Zero Xamarin project;
 -   [Xam.Plugin.Media](https://github.com/jamesmontemagno/MediaPlugin)
 -   [Xam.Plugins.Forms.ImageCircle](https://github.com/jamesmontemagno/ImageCirclePlugin)
 -   [Xamarin.FFImageLoading.Forms](https://github.com/luberda-molinet/FFImageLoading)
--   [LiveXAML](https://github.com/OYIon/LiveXAML)
