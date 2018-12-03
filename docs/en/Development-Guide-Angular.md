@@ -656,6 +656,8 @@ this tab. Each tenant can override this setting in tenant settings page.
 
 <img src="images/host-settings-security-3.png" alt="Tenant settings" class="img-thumbnail" />
 
+**Email(SMTP)** tab allows you to configure smtp settings for your app. AspNet Zero uses MailKit to send emails. By default, smtp certificate validation is disabled in **YourProjectNameMailKitSmtpBuilder.cs** class. If you are able to validate mail server's certificate, you need to modify **ServerCertificateValidationCallback** in **YourProjectNameMailKitSmtpBuilder.cs**.
+
 ### Tenant Settings
 
 In a multi-tenant application, tenant settings are shown as below:
