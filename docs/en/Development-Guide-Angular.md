@@ -225,6 +225,12 @@ should complete **SmsSender** class in the [server
 side](Development-Guide-Core.md) to make it usable. Otherwise, disable
 SMS verification in the settings.
 
+##### Twilio Integration
+
+In order to enable Twilio integration, just uncomment the following line in your **CoreModule** (in your .Core project):
+
+    Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
+
 ### User Lockout
 
 As seen in the previous section, you can configure user lockout
