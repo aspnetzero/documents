@@ -231,6 +231,8 @@ In order to enable Twilio integration, just uncomment the following line in your
 
     Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
 
+You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in appsetting.json file.
+
 ### User Lockout
 
 As seen in the previous section, you can configure user lockout
