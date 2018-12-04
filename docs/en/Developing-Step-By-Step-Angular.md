@@ -2006,7 +2006,10 @@ Create edit-person-modal.component.html:
 Add those lines to **phonebook.component.html:**:
 
 ```html
-        <button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+        
+	// Other Code lines...	
+
+		<button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
             <i class="fa fa-plus"></i>
         </button>
         <button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson')}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
@@ -2015,11 +2018,9 @@ Add those lines to **phonebook.component.html:**:
        <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
             <i class="fa fa-times"></i>
         </button>
-                .
-                .
-                .
-                .
-                .
+                
+	// Other Code lines...
+				
 <createPersonModal #createPersonModal(modalSave)="getPeople()"></createPersonModal>
 <editPersonModal #editPersonModal (modalSave)="getPeople()"></editPersonModal>
 ```
@@ -2092,20 +2093,17 @@ Add those lines to **main.module.ts:**:
 
 ```typescript
     import { EditPersonModalComponent } from './phonebook/edit-person-modal.component';
-.
-.
-.
-.
-.
-.
+
+	// Other Code lines...
+	
     declarations: [
       DashboardComponent,
       PhoneBookComponent,
       CreatePersonModalComponent,
       EditPersonModalComponent
     ]
-.
-.
+
+	// Other Code lines...
 ```
 
 
