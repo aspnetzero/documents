@@ -4,21 +4,19 @@
 
 ## Introduction
 
- In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new entity. It creates all the related layers (including UI) by defining an entity.
+ In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new entity. It creates all the related layers (including UI) by defining an entity. This tool supports v5.0.0 and later versions.
 
 ## Download And Install
 
- If your project version is 5.1.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools.
+ If your project version is 5.1.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from [marketplace](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) or Extension and Updates.
 
- If your project version is below 5.1.0, you also have to copy the AspNetZeroRadTool folder to your own project from a newly downloaded 5.1.0+ project.
-
- This tool doesn't support versions before v5.0.0.
+<img src="images/rad-extension-install.png" alt="Extension installation" class="img-thumbnail" width="508" height="441" />
 
 ## How To Use It?
 
  The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
 
- <img src="images/RadToolUI2.jpg" alt="Extension UI" class="img-thumbnail" width="508" height="441" />
+ <img src="images/RadToolUI3.png" alt="Extension UI" class="img-thumbnail" width="508" height="441" />
 
  A simple console will appear and give you information about the process. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
 
