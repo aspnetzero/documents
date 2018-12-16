@@ -68,7 +68,7 @@ The diagram below shows the overall architecture:
 
 ### Angular Solution
 
-Entrance point of the Angular solution is src/**main.ts**. It simply
+Entry point of the Angular solution is src/**main.ts**. It simply
 bootstraps the root [Angular
 module](https://angular.io/docs/ts/latest/guide/ngmodule.html):
 **RootModule**. Fundamental modules of the solution are shown below:
