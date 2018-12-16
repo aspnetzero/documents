@@ -94,7 +94,7 @@ Multi-tenancy is **enabled by default**. If you don't have an idea about
 Multi-Tenancy, you can read [wikipedia.org/wiki/Multitenancy](https://en.wikipedia.org/wiki/Multitenancy). If
 you don't want to create a multi-tenant application, you can **disable** it by
 setting **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the
-.Core.Shared project.
+***.Core.Shared** project.
 
 ### Run API Host
 
