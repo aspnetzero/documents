@@ -72,8 +72,7 @@ information).
 #### Entity Framework Migration Command
 
 You can also use Entity Framework's built-in tools for migrations. Open
-**Package Manager Console** in Visual Studio, set
-**.**EntityFrameworkCore as the **Default Project** and run the
+**Package Manager Console** in Visual Studio, set .**EntityFrameworkCore** as the **Default Project** and run the
 **Update-Database** command as shown below: 
 
 <img src="images/update-database-ef-core.png" alt="dotnet ef database update" class="img-thumbnail" />
