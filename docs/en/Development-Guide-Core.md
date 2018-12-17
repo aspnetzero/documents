@@ -271,6 +271,16 @@ vendor). Current implementation just writes security code to logs. You
 should complete **SmsSender** class in the solution to make it usable.
 Otherwise, disable SMS verification in the settings.
 
+##### Twilio Integration
+
+In order to enable Twilio integration, just uncomment the following line in your **CoreModule** (in your .Core project):
+
+```
+Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
+```
+
+You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in appsetting.json file.
+
 #### User Lockout
 
 As seen in the previous section, you can configure user lockout
@@ -744,6 +754,8 @@ a password satisfies the password complexity settings.
 
 <img src="images/host-settings-security-3.png" alt="Tenant settings" class="img-thumbnail" />
 
+**Email(SMTP)** tab allows you to configure smtp settings for your app. AspNet Zero uses MailKit to send emails. By default, smtp certificate validation is disabled in **YourProjectNameMailKitSmtpBuilder.cs** class. If you are able to validate mail server's certificate, you need to modify **ServerCertificateValidationCallback** in **YourProjectNameMailKitSmtpBuilder.cs**.
+
 #### Tenant Settings
 
 In a multi-tenant application, tenant settings are shown as below:
@@ -1121,9 +1133,11 @@ To make this working, public web site and main application must know
 their URLs. There are two configuration for that:
 
 1.   In the **appsettings.json** of the **Web.**<span
+
     class="auto-style3">Public</span> project, set
     "**AdminWebSiteRootAddress**" to root URL of the main application.
 2.   In the **appsettings.json** of the **Web.**<span
+
     class="auto-style3">Mvc</span> project, set
     "**RedirectAllowedExternalWebSites**" to root URL of the public web
     site.

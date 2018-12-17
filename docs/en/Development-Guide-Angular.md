@@ -225,6 +225,14 @@ should complete **SmsSender** class in the [server
 side](Development-Guide-Core.md) to make it usable. Otherwise, disable
 SMS verification in the settings.
 
+##### Twilio Integration
+
+In order to enable Twilio integration, just uncomment the following line in your **CoreModule** (in your .Core project):
+
+    Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
+
+You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in appsetting.json file.
+
 ### User Lockout
 
 As seen in the previous section, you can configure user lockout
@@ -647,6 +655,8 @@ settings. Host can define system wide password complexity settings in
 this tab. Each tenant can override this setting in tenant settings page.
 
 <img src="images/host-settings-security-3.png" alt="Tenant settings" class="img-thumbnail" />
+
+**Email(SMTP)** tab allows you to configure smtp settings for your app. AspNet Zero uses MailKit to send emails. By default, smtp certificate validation is disabled in **YourProjectNameMailKitSmtpBuilder.cs** class. If you are able to validate mail server's certificate, you need to modify **ServerCertificateValidationCallback** in **YourProjectNameMailKitSmtpBuilder.cs**.
 
 ### Tenant Settings
 
