@@ -2,7 +2,7 @@ This document is aimed to create and run an ASP.NET Zero based project in just 5
 
 ### Login
 
-[Login](/Account/Login) to this web site with your user name and password. Then you will see [Download](/Download) link on the main menu.
+[Login](https://aspnetzero.com/Account/Login) to this web site with your user name and password. Then you will see [Download](https://aspnetzero.com/Download) link on the main menu.
 
 ### Prerequirements
 
@@ -16,7 +16,7 @@ MVC application needs the following tools to be installed:
 
 ### Create a Project
 
-Go to the [download](/Download) page. You will see a form as shown below:
+Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
 
 <img src="images/download-core-jquery-2.png" alt="Create project" class="img-thumbnail" />
 

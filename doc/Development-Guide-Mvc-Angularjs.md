@@ -25,7 +25,7 @@ solution:
 
 #### Solution Structure (Layers)
 
-When you create and [download](/Download) your project, there will be a
+When you create and [download](https://aspnetzero.com/Download) your project, there will be a
 solution structure as shown below:
 
 <img src="images/solution-overall-2.png" alt="ASP.NET Zero solution structure" class="img-thumbnail" width="242" height="219" />

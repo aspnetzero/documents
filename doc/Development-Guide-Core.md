@@ -28,7 +28,7 @@ Following tools are needed in order to use ASP.NET Zero Core solution:
 
 #### Solution Structure (Layers)
 
-After you create and [download](/Download) your project, you have a solution structure as shown below for **\*.Web.sln**:
+After you create and [download](https://aspnetzero.com/Download) your project, you have a solution structure as shown below for **\*.Web.sln**:
 
 There are two more solutions, **\*.Mobile.sln** contains only Xamarin application development projects and **\*.All.sln** contains both mobile and web development projects.
 

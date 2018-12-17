@@ -4,12 +4,12 @@ and created your ASP.NET Zero account.
 
 ### Login
 
-[Login](/Account/Login) to this web site with your user name and
-password. Then you will see [Download](/Download) link on the main menu.
+[Login](https://aspnetzero.com/Account/Login) to this web site with your user name and
+password. Then you will see [Download](https://aspnetzero.com/Download) link on the main menu.
 
 ### Create a Project
 
-Go to the [download](/Download) page. You will see a form as shown
+Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown
 below:
 
 <img src="images/download-mvc5-jquery.png" alt="Create project" class="img-thumbnail" width="572" height="534" />
