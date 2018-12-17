@@ -6,6 +6,12 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+## v6.4 (2018-12-14)
+
+- Added different Metronic layout support ([demo7](https://keenthemes.com/metronic/preview/?demo=demo7) and [demo3](https://keenthemes.com/metronic/preview/?demo=demo3)).
+- Added Twilio sms integration.
+- Bug fixes and enhancements.
+
 ## v6.3 (2018-11-20)
 
 - Added different Metronic layout support ([demo2](https://keenthemes.com/metronic/preview/?demo=demo2) and [demo11](https://keenthemes.com/metronic/preview/?demo=demo11))
