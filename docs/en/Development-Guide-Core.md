@@ -788,12 +788,6 @@ system, then generally even **no need** to set Domain name, user and
 password. You can logout and then login with your **domain user name and
 password**. If not, you should set these credentials.
 
-**.NET Core Compatibility**
-
-LDAP Authentication is not supportted by .NET Core yet. Thus, it's
-designed to be conditional. If you are using .Net Framework (4.6+) then
-it will be available, otherwise it will be disabled.
-
 #### Maintenance
 
 Maintenance page is available to **host side** for multi tenant
