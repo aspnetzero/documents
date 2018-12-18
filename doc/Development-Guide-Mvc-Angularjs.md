@@ -1,4 +1,6 @@
-### Introduction
+# Development Guide
+
+## Introduction
 
 In the [Getting Started](Getting-Started.md) document, a new sample
 project is created named "**Acme.PhoneBook**". This document is a guide
@@ -12,7 +14,7 @@ Before reading this document, you should run the application and explore
 the user interface. This will help you to have a better understanding of
 concepts defined here.
 
-#### Pre Requirements
+### Pre Requirements
 
 The following tools are needed in order to use the ASP.NET Zero
 solution:
@@ -23,7 +25,7 @@ solution:
         2+
 -   SQL Server
 
-#### Solution Structure (Layers)
+### Solution Structure (Layers)
 
 When you create and [download](https://aspnetzero.com/Download) your project, there will be a
 solution structure as shown below:
@@ -52,7 +54,7 @@ There are seven projects in the solution:
     migrations.
 -   **Tests** project contains unit and integration tests.
 
-#### Applications
+### Applications
 
 ASP.NET Zero solution contains **four** applications:
 
@@ -71,7 +73,7 @@ Thus, the back-end application is built in two different architectures
 you just want to build a SPA, you can safely remove MPA files from your
 project, or vice versa.
 
-#### Multi tenancy
+### Multi tenancy
 
 Multi-tenancy is used to build **SaaS** (Software as a Service)
 applications easily. With this technique, we can deploy **single
@@ -98,7 +100,7 @@ filter interfaces. Read [multi-tenant
 documentation](https://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy)
 if you are building multi-tenant applications.
 
-#### Web Site Root URL
+### Web Site Root URL
 
 **web.config** file contains a setting, named "**WebSiteRootAddress**",
 which stores root URL of the web application:
@@ -123,7 +125,7 @@ your application. To do that;
 
 There may be other ways of doing it but this is the simplest.
 
-### Front End MVC Application
+## Front End MVC Application
 
 ASP.NET Zero contains front-end pages that can be a starting point for
 your public web site or a landing page for the application. When you
@@ -148,7 +150,7 @@ a new menu item here, it will be automatically shown in the menu. There
 is a **Login** link at the top right corner. This link takes us to the
 **Login page** for the **backend** application.
 
-#### Layout
+### Layout
 
 Layout of front-end pages is located in the **Views/Layout** folder of
 the **.Web** project:
@@ -159,7 +161,7 @@ the **.Web** project:
 Language flags and the menu is rendered in **\_Header** file.
 \_PreFooter is not used but you can add it to the \_Layout if you want.
 
-#### Tenant Sign Up
+### Tenant Sign Up
 
 When you click the "New tenant" link in the front end application, you
 can sign up to become a new tenant:
@@ -171,19 +173,19 @@ used to register a new tenant. Tenant registration can be
 enabled/disabled and settings can be changed in the settings page of the
 backend application.
 
-### Account Controller
+## Account Controller
 
 **AccountController** provides **login**, **register**, **forgot
 password** and **email activation** pages.
 
-#### Layout
+### Layout
 
 Account management pages have a separate **\_Layout** view under
 **Views/Account** folder:
 
 <img src="images/account-views.png" alt="Account Controller Views" class="img-thumbnail" width="214" height="324" />
 
-#### Login
+### Login
 
 Main view for the AccountController is the Login page:
 
@@ -205,7 +207,7 @@ since **123qwe** is not very secure:
 After changing password you will be redirected to the Angular
 application.
 
-#### Social Logins
+### Social Logins
 
 ASP.NET Zero supports social media logins. To enable it, you should
 change the following settings in the **web.config** file.
@@ -217,7 +219,7 @@ change the following settings in the **web.config** file.
     <add key="ExternalAuth.Twitter.IsEnabled" value="false" />
     <add key="ExternalAuth.Twitter.ConsumerKey" value="" />
     <add key="ExternalAuth.Twitter.ConsumerSecret" value="" />
-
+    
     <add key="ExternalAuth.Google.IsEnabled" value="false" />
     <add key="ExternalAuth.Google.ClientId" value="" />
     <add key="ExternalAuth.Google.ClientSecret" value="" />
@@ -237,7 +239,7 @@ Then you can click a social media icon to login with your existing
 account. Check **Startup** class to see where this configuration is
 used. You can add more social media options yourself.
 
-#### OpenId Connect Login
+### OpenId Connect Login
 
 In addition to social logins, ASP.NET Zero integrates with OpenId
 Connect login. It's configuration can be changed in **web.config**:
@@ -250,7 +252,7 @@ Connect login. It's configuration can be changed in **web.config**:
 A logo (similar to social logos above) is shown in Login page when its
 enabled.
 
-#### Active Directory Federation Service (ADFS) Login
+### Active Directory Federation Service (ADFS) Login
 
 ADFS is just another external login like the social logins. In order to
 configure ADFS login, you just need to configure the following settings
@@ -260,7 +262,7 @@ in the **web.config** file.
     <add key="ExternalAuth.WsFederation.MetaDataAddress" value="" />
     <add key="ExternalAuth.WsFederation.Wtrealm" value="" />
 
-#### Two Factor Login
+### Two Factor Login
 
 ASP.NET Zero is ready to provide two factor login, but its disabled by
 default. You can easily enable it in the host settings page (on the
@@ -283,14 +285,14 @@ the user enters the code in the next page:
 
 <img src="images/verify-security-code.png" alt="Verify security code" class="img-thumbnail" width="419" height="292" />
 
-##### Email Verification
+#### Email Verification
 
 This is available if the user has a confirmed email address. Since email
 sending is disabled in debug mode, you can see the code in logs. In
 release mode, email will be sent (you can change this and make emailing
 available in debug as well -- see the sending emails section).
 
-##### SMS Verification
+#### SMS Verification
 
 This is available if the user has a confirmed phone number. Note that
 SMS sending is not fully implemented because it requires an integration
@@ -299,13 +301,13 @@ to logs. You should complete the **IdentitySmsMessageService** class in
 the solution to make it usable. Otherwise, disable SMS verification in
 the settings.
 
-#### User Lockout
+### User Lockout
 
 As seen in the previous section, you can configure user lockout
 settings. Users are locked out when they enter wrong password for a
 specified count and duration.
 
-#### Register
+### Register
 
 When you click the "**Create Account**" link in the login page, a
 registration form is shown:
@@ -322,7 +324,7 @@ properly work, you should create your own private and public keys for
 your domain on <https://www.google.com/recaptcha> and replace the keys
 in the **web.config** file.
 
-#### Email Activation
+### Email Activation
 
 When a user registers as shown above, an email confirmation code is sent
 to their email address. If user did not receive this email for some
@@ -334,14 +336,14 @@ Again, Tenancy name input is not shown for a single-tenant application
 or when tenant name is known via subdomain (like
 tenancyname.mydomain.com).
 
-#### Forgot Password
+### Forgot Password
 
 If a user forgots their password, they can click the "Forgot Password"
 link and will then be sent an email to reset their password.
 
 <img src="images/forgot-password.png" alt="Forgot password" class="img-thumbnail" width="421" height="359" />
 
-### AngularJS Back End Single-Page Application
+## AngularJS Back End Single-Page Application
 
 The backend in ASP.NET Zero is a **single page AngularJS application**.
 When you login, you are redirected to the **ApplicationController**. It
@@ -351,7 +353,7 @@ returns the layout view of the application.
 built with ASP.NET MVC and jQuery (see the related section in this
 document).
 
-#### Application Folders
+### Application Folders
 
 All view, script and styles files are located in **App** folder (not all
 folders/files are not shown here):
@@ -371,14 +373,14 @@ under their own folder, not in the common folder. If you are developing
 a single-tenant application, you can place your files under the tenant
 section.
 
-#### Main Menu
+### Main Menu
 
 Application's main menu is defined in the **AppNavigationProvider**
 class. See ABP's [navigation
 documentation](https://aspnetboilerplate.com/Pages/Documents/Navigation)
 to get a deep understanding on creating menus.
 
-#### Routes
+### Routes
 
 **app.js** is the entrance point of the application. You define the
 **app** AngularJS module and AngularJS **routes** in this file. Angular
@@ -386,13 +388,15 @@ to get a deep understanding on creating menus.
 dynamically defined based on the current user's permissions (see
 authorization section). Example:
 
-    if (abp.auth.hasPermission('Pages.Administration.Tenant.Settings')) {
-        $stateProvider.state('tenant.settings', {
-            url: '/settings',
-            templateUrl: '~/App/tenant/views/settings/index.cshtml',
-            menu: 'Administration.Settings.Tenant'
-        });
-    }
+```javascript
+if (abp.auth.hasPermission('Pages.Administration.Tenant.Settings')) {
+    $stateProvider.state('tenant.settings', {
+        url: '/settings',
+        templateUrl: '~/App/tenant/views/settings/index.cshtml',
+        menu: 'Administration.Settings.Tenant'
+    });
+}
+```
 
 Conditional routing definition prevents users from accessing an
 unauthorized page by simply entering a URL into the browser's address
@@ -403,7 +407,7 @@ As you see, **.cshtml** files are used for views. While **.html** files
 can be used, using .cshtml files allows us to take advantage of Razor's
 power when creating views.
 
-#### Layout
+### Layout
 
 Layout of the application is located under common/views/**layout**
 folder. All scripts and styles in the App folder (and subfolders) are
@@ -415,7 +419,7 @@ place there will be automatically added to the layout.
 Layout consists of different parts as shown above. The main menu is
 rendered in **sidebar**.
 
-#### Edition Management
+### Edition Management
 
 *If you're not developing a multi-tenant application, you can skip this
 section.*
@@ -449,7 +453,7 @@ and [edition
 management](https://aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management)
 documents for more information.
 
-#### Tenant Management
+### Tenant Management
 
 *If you're not developing a multi-tenant application, you can skip this
 section.*
@@ -501,7 +505,7 @@ Example (deleting a tenant):
 TenantAppService mostly uses **TenantManager** domain service for tenant
 operations.
 
-##### Tenant Edition and Features
+#### Tenant Edition and Features
 
 An **edition** can be **assigned** to a tenant during tenant creation or
 by editing the tenant. The tenant will inherit all features of the
@@ -511,7 +515,7 @@ its features:
 
 <img src="images/tenant-features.png" alt="Tenant features" class="img-thumbnail" width="613" height="245" />
 
-##### Tenant User Impersonation
+#### Tenant User Impersonation
 
 As a host user, you may want to perform operations on behalf of a
 tenant. In that case, you can click the Actions button of a tenant and
@@ -524,14 +528,14 @@ You can select any user and perform such operations as that user is
 allowed. See **User Impersonation** section in this document for more
 information.
 
-##### Using Tenancy Name As Subdomain
+#### Using Tenancy Name As Subdomain
 
 A multi-tenant application generally uses subdomains to identify current
 tenant. **tenant1**.mydomain.com, **tenant2**.mydomain.com and so on.
 ASP.NET Zero automatically identifies and gets the tenant name from the
 subdomain (see host settings section).
 
-#### Organization Units
+### Organization Units
 
 Organization units (OU) are used to hierarchically group users and
 entities. Then you can get user or entities based on their OUs. When you
@@ -563,7 +567,7 @@ See [organization unit management
 document](https://aspnetboilerplate.com/Pages/Documents/Zero/Organization-Units)
 for more information.
 
-#### Role Management
+### Role Management
 
 When you click Administration/Roles menu, you go to the role management
 page:
@@ -603,7 +607,7 @@ permissions by default. These can be changed easily. See
 **StaticRoleNames** class for all static roles and **AppRoleConfig** for
 changing static roles.
 
-##### Role Permissions
+#### Role Permissions
 
 Since roles are used to group permissions, you can set permissions of a
 role while creating or editing as shown below:
@@ -615,7 +619,7 @@ role while creating or editing as shown below:
 Every tenant has its own roles and any change in roles for a tenant does
 not affect other tenants. Also, host has its own isolated roles.
 
-#### User Management
+### User Management
 
 When you click on the Administration/Users menu item, you go to the user
 management page:
@@ -648,7 +652,7 @@ on. A user can have a **profile picture**. It can be changed by the user
 (see User Menu section). **Admin** user cannot be deleted as a business
 rule. If you don't want to use admin, you can make it passive.
 
-##### User Impersonation
+#### User Impersonation
 
 As admin (or any allowed user), you may want to login as a user and
 perform operations on behalf of that user, without knowing their
@@ -673,7 +677,7 @@ indicate that you are currently impersonating another user.
 
 Impersonation is done in **AccountController** of the Web project.
 
-#### Language Management
+### Language Management
 
 The language management page is used to manage (add/edit/delete)
 **application languages** and change **localized texts**:
@@ -709,7 +713,7 @@ See [language management
 documentation](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Management)
 for more information.
 
-#### Audit Logs
+### Audit Logs
 
 The audit logs page displays all user interactions with the application:
 
@@ -725,7 +729,7 @@ see all details for an audit log entry:
 
 The audit log report is provided by the **AuditLogAppService** class.
 
-#### Host Settings
+### Host Settings
 
 The host settings page is used to configure some system settings:
 
@@ -756,7 +760,7 @@ for checking if a password satisfies the password complexity settings.
 
 <img src="images/security-settings.png" alt="Security settings" class="img-thumbnail" width="736" height="895" />
 
-#### Tenant Settings
+### Tenant Settings
 
 In a multi-tenant application, tenant settings are shown as below:
 
@@ -769,7 +773,7 @@ complexity settings defined by the host user.
 
 The **TenantSettingAppService** is used to get/set tenant settings.
 
-##### Enabling LDAP (Active Directory) Authentication
+#### Enabling LDAP (Active Directory) Authentication
 
 LDAP (Active Directory) Authentication is disabled by default. To make
 it work, you should disable multi-tenancy since LDAP auth is not used in
@@ -789,7 +793,7 @@ name, user, and password. You can logout and then login with your
 **domain user name and password**. If not, you should set this
 information.
 
-#### Maintenance
+### Maintenance
 
 The maintenance page is only available to the **host** and is shown
 below:
@@ -807,7 +811,7 @@ the server side.
 
 **WebLogAppService** is used to get logs from server.
 
-#### Tenant Dashboard
+### Tenant Dashboard
 
 ASP.NET Zero startup project also includes a **sample** dashboard. It is
 just for demo purposes, you can use it as a starting point for your
@@ -819,7 +823,7 @@ Here, only **Member Activity** graph data is retrieved from server (from
 **TenantDashboardAppService**). You can click the refresh button to
 generate random graphs.
 
-#### Notifications
+### Notifications
 
 Notification icon is located next to the language selection button. The
 number in the red circle shows the unread notification count.
@@ -834,7 +838,7 @@ A user can mark all notifications as read by clicking the "Set all as
 read" link or can mark a single notification by clicking the "set as
 read" link next to each notification.
 
-##### Notification Settings
+#### Notification Settings
 
 "Settings" link opens notification settings dialog.
 
@@ -848,13 +852,15 @@ You can also define your custom notifications in the
 **AppNotificationProvider** class. For example, a new user registration
 notification is defined in the **AppNotificationProvider** as below.
 
-    context.Manager.Add(
-         new NotificationDefinition(
-            AppNotificationNames.NewUserRegistered,
-            displayName: L("NewUserRegisteredNotificationDefinition"),
-            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Users)
-        )
-    );
+```csharp
+context.Manager.Add(
+     new NotificationDefinition(
+        AppNotificationNames.NewUserRegistered,
+        displayName: L("NewUserRegisteredNotificationDefinition"),
+        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Users)
+    )
+);
+```
 
 See [notification
 definitions](https://aspnetboilerplate.com/Pages/Documents/Notification-System#notification-definitions)
@@ -866,13 +872,13 @@ notifications. See [notifications
 documentation](https://aspnetboilerplate.com/Pages/Documents/Notification-System)
 for detailed information.
 
-##### Notification List
+#### Notification List
 
 All notifications connected to the user are listed on this page.
 
 <img src="images/notifications-list.png" alt="notification list" class="img-thumbnail" width="1075" height="600" />
 
-#### Chat
+### Chat
 
 The chat icon is located next to the user's profile image on the top
 right corner of the page. The number in the red circle shows the total
@@ -931,7 +937,7 @@ The **UserFriendCacheSyncronizer** class is responsible for keeping the
 user friends cache up to date. In order to do that, it watches some
 events of the Friendship and ChatMessage entities.
 
-##### Chat Features
+#### Chat Features
 
 <img src="images/chat-features.png" alt="User menu" class="img-thumbnail" />
 
@@ -940,13 +946,13 @@ with host", "Chat with other tenants". These features can be
 enabled/disabled per edition/tenant. By using these features the host
 can enable/disable chat with other tenant's users or host users.
 
-#### User Menu
+### User Menu
 
 A user can click his name at the top right corner to open the user menu:
 
 <img src="images/user-menu-3.png" alt="User menu" class="img-thumbnail" width="382" height="307" />
 
-##### Linked Accounts
+#### Linked Accounts
 
 Linked accounts are used to link multiple accounts to each other. A user
 can easily navigate through his/her accounts using this feature.
@@ -965,7 +971,7 @@ The **UserLinkAppService** class is used to manage application logic for
 account linking; the **UserLinkManager** class is used to manage domain
 logic for account linking.
 
-##### Profile Settings
+#### Profile Settings
 
 My settings is used to change user profile settings:
 
@@ -976,7 +982,7 @@ considered a special user name since it's used in the database migration
 seed. Other users can change their usernames. **ProfileAppService** is
 used to get/change settings.
 
-##### Login Attempts
+#### Login Attempts
 
 All login attempts (success or failed) are logged in the application. A
 user can see the last login attempts for his/her account. The
@@ -984,7 +990,7 @@ user can see the last login attempts for his/her account. The
 
 <img src="images/login-attempts.png" alt="Login attempts" class="img-thumbnail" width="611" height="538" />
 
-##### Change Picture
+#### Change Picture
 
 A user can change their own profile picture. **ProfileController** is
 used to upload and get user profile pictures. The [AngularJS file
@@ -993,16 +999,16 @@ select and upload a profile picture to the server. Currently, jpg/jpeg,
 gif and png files are supported, you can extend this to allow additional
 file extensions.
 
-##### Change Password
+#### Change Password
 
 **ProfileAppService** is used to change password.
 
-##### Logout
+#### Logout
 
 **AccountController** is used to logout the user and redirect to the
 Login page.
 
-### MVC Back End Multi Page Application
+## MVC Back End Multi Page Application
 
 The same backend application is also available as a **MPA** using
 ASP.NET **MVC**, **Web API** and **jQuery**. All functionality is
@@ -1015,7 +1021,7 @@ Since all functionality is identical, you can read the SPA section
 above to understand the application. A few differences in setup are
 explained below.
 
-#### Application Folders
+### Application Folders
 
 This application is included in the .**Web** project as a separated
 **Area** as shown below:
@@ -1025,14 +1031,14 @@ This application is included in the .**Web** project as a separated
 This is a classic MVC folder structure with Controllers, Models and
 Views.
 
-#### Main Menu
+### Main Menu
 
 Application's main menu is defined in the **MpaNavigationProvider**
 class. See ABP's [navigation
 documentation](https://aspnetboilerplate.com/Pages/Documents/Navigation)
 to get a deep understanding on creating menus.
 
-#### Layout
+### Layout
 
 Layout of the application is located under Views/**Layout** folder.
 
@@ -1040,7 +1046,7 @@ Layout of the application is located under Views/**Layout** folder.
 
 The header, footer and siderbar are developed as partial views.
 
-### Migrator Console Application
+## Migrator Console Application
 
 ASP.NET Zero includes a tool, Migrator.exe, to easily migrate your
 databases. You can run this application to create/migrate host and
@@ -1063,9 +1069,9 @@ on deployment, instead of EntityFramework's own Migrate.exe (which
 requires some configuration and can work for single database in one
 run).
 
-### Infrastructure
+## Infrastructure
 
-#### Dynamic Web API Layer
+### Dynamic Web API Layer
 
 Both SPA and MPA application use AJAX extensively to provide a better
 user experience. They call application service methods via AJAX. Thus it
@@ -1085,7 +1091,7 @@ for more information.
 While ABP dynamically create Web API Controllers, you can also create
 regular Web API Controllers as you might normally do. 
 
-#### Localization
+### Localization
 
 The ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero
 uses **dynamic, database based, per-tenant** localization (see the
@@ -1118,7 +1124,7 @@ and [language
 management](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Management)
 documentations for more information.
 
-#### EntityFramework Integration
+### EntityFramework Integration
 
 The ASP.NET Zero template uses EntityFramework **code-first** and
 **migrations**. PhoneBook**DbContext** (YourProjectDbContext for your
@@ -1130,7 +1136,7 @@ repositories. See entity [framework
 integration](https://aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration)
 documentation for more information.
 
-#### Authorization Provider
+### Authorization Provider
 
 The authorization system is based on permissions. **AppPermissions**
 contains constants for permission names and the
@@ -1142,7 +1148,7 @@ See [authorization
 documentation](https://aspnetboilerplate.com/Pages/Documents/Authorization)
 to learn how to configure permissions.
 
-#### Feature Provider
+### Feature Provider
 
 **AppFeatureProvider** class defines features of the application for
 multi-tenant applications. Feature names are defined in the
@@ -1152,7 +1158,7 @@ See [feature management
 documentation](https://aspnetboilerplate.com/Pages/Documents/Feature-Management)
 to learn how to define and use features.
 
-#### Setting Provider
+### Setting Provider
 
 Every setting has a unique name. Setting names are defined in the
 **AppSettings** class as constants. All settings and their default
@@ -1162,7 +1168,7 @@ See [setting
 documentation](https://aspnetboilerplate.com/Pages/Documents/Setting-Management)
 to learn how to create and use settings.
 
-#### Navigation Provider
+### Navigation Provider
 
 Menus are automatically generated using definitions in the
 **AppNavigationProvider** class. You have two menus: **Main** (the main
@@ -1173,20 +1179,22 @@ See [navigation
 documentation](https://aspnetboilerplate.com/Pages/Documents/Navigation)
 for more information.
 
-#### Caching And Redis Cache
+### Caching And Redis Cache
 
 ASP.NET Zero uses **in-memory** caching but it's ready to use **Redis**
 as a cache server. If you want to enable it, just uncomment the
 following line in your **WebModule** (in App\_Start folder in your .Web
 project):
 
-    Configuration.Caching.UseRedis();
+```csharp
+Configuration.Caching.UseRedis();
+```
 
 Redis server should be running to be able to use it. See [caching
 documentation](https://aspnetboilerplate.com/Pages/Documents/Caching)
 for more information.
 
-#### Background Jobs And HangFire
+### Background Jobs And HangFire
 
 ABP framework contains a **background job system** with a **default**
 background job manager. If you want to use
@@ -1196,16 +1204,20 @@ easily enable it.
 First, uncomment these lines in **WebModule** (in App\_Start folder in
 your .Web project):
 
-    Configuration.BackgroundJobs.UseHangfire(configuration =>
-    {
-        configuration.GlobalConfiguration.UseSqlServerStorage("Default");
-    });
+```csharp
+Configuration.BackgroundJobs.UseHangfire(configuration =>
+{
+    configuration.GlobalConfiguration.UseSqlServerStorage("Default");
+});
+```
 
 If you want to enable the Hangfire dashboard, you can uncomment the
 following line in **Startup.cs** (in App\_Start folder in your .Web
 project):
 
-    app.UseHangfireDashboard();
+```csharp
+app.UseHangfireDashboard();
+```
 
 **Note**: Hangfire creates its **own tables** in the database. See
 [background
@@ -1214,7 +1226,7 @@ and [hangfire
 integration](https://aspnetboilerplate.com/Pages/Documents/Hangfire-Integration)
 documents for more information.
 
-#### SignalR Integration
+### SignalR Integration
 
 SignalR is properly configured and integrated in the startup template.
 The real time notification system uses it. You can direcly use SignalR
@@ -1222,7 +1234,7 @@ in your applications. See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information.
 
-#### Logging
+### Logging
 
 ASP.NET Zero uses **Log4Net** for logging as default. Configuration is
 defined in **log4net.config** file in the .Web project. It writes all
@@ -1234,7 +1246,7 @@ Check [logging
 documentation](https://aspnetboilerplate.com/Pages/Documents/Logging) to
 see how to inject ILogger and write logs.
 
-#### DTO Mappings
+### DTO Mappings
 
 ASP.NET Zero uses [AutoMapper](http://automapper.org/) for DTO to Entity
 mappings (and other types of object-to-object mappings). You use the
@@ -1244,34 +1256,38 @@ that uses AutoMapper, which is simple and declarative.
 See the DTO class that is used to transfer a tenant's editing
 information:
 
-    [AutoMap(typeof (Tenant))]
-    public class TenantEditDto : EntityDto
-    {
-        [Required]
-        [StringLength(Tenant.MaxTenancyNameLength)]
-        public string TenancyName { get; set; }
+```csharp
+[AutoMap(typeof (Tenant))]
+public class TenantEditDto : EntityDto
+{
+    [Required]
+    [StringLength(Tenant.MaxTenancyNameLength)]
+    public string TenancyName { get; set; }
 
-        [Required]
-        [StringLength(Tenant.MaxNameLength)]
-        public string Name { get; set; }
+    [Required]
+    [StringLength(Tenant.MaxNameLength)]
+    public string Name { get; set; }
 
-        public bool IsActive { get; set; }
-    }
+    public bool IsActive { get; set; }
+}
+```
 
 Here, the **AutoMap** attribute automatically creates mapping between
 **TenantEditDto** and the **Tenant** classes. Then you can automatically
 convert a Tenant object to a TenantEditDto (and vice verse) object as
 shown below:
 
-    [AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
-    public async Task<TenantEditDto> GetTenantForEdit(EntityRequestInput input)
-    {
-        return (await TenantManager.GetByIdAsync(input.Id)).MapTo<TenantEditDto>();
-    }
+```csharp
+[AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
+public async Task<TenantEditDto> GetTenantForEdit(EntityRequestInput input)
+{
+    return (await TenantManager.GetByIdAsync(input.Id)).MapTo<TenantEditDto>();
+}
+```
 
 **MapTo** method does mapping.
 
-##### Custom Object Mappings
+#### Custom Object Mappings
 
 Attribute based mapping may not be sufficient in some cases. If you need
 to directly use Automapper API to configure your mappings, you should do
@@ -1281,7 +1297,7 @@ See [Data Transfer Objects
 documentation](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
 for more information on DTOs.
 
-#### Sending Emails
+### Sending Emails
 
 ASP.NET Zero sends emails to users in some cases (e.g. forgot password
 and email confirmation). The email template is defined in the
@@ -1294,7 +1310,7 @@ You can enable it if you want. It is enabled in RELEASE mode. Check the
 *YourProjectName*CoreModule class's PreInitialize method to change it if
 you like.
 
-#### BinaryObjectManager
+### BinaryObjectManager
 
 User **profile pictures** are stored in the database, instead of in the
 file system. But it's not stored in Users table for performance reasons
@@ -1316,7 +1332,7 @@ You can create a different implementation of the
 **IBinaryObjectManager** interface to store files in another
 destination.
 
-#### Soft Deletes
+### Soft Deletes
 
 It's common to use the **soft-delete** pattern which is used to not
 delete an entity from the database but only mark it as 'deleted.' Thus,
@@ -1327,7 +1343,7 @@ In ASP.NET Zero, most entities are soft-deleted. See ABP's [data filter
 documentation](https://aspnetboilerplate.com/Pages/Documents/Data-Filters)
 for more information about.
 
-#### Bundling & Minifying
+### Bundling & Minifying
 
 ASP.NET Zero uses [ASP.NET
 Optimization](https://www.nuget.org/packages/Microsoft.AspNet.Web.Optimization)
@@ -1342,7 +1358,7 @@ different files:
 Also, see the **ScriptPaths** and **StylePaths** classes. They contain
 constants for locations of JS and CSS files.
 
-#### Base Classes
+### Base Classes
 
 There are some useful base classes used in the application:
 
@@ -1367,7 +1383,7 @@ There are some useful base classes used in the application:
 It's strongly recommended to inherit one of these classes since they
 really make Logging, Localization, Authorization, etc. easier.
 
-#### CSRF/XSRF Protection
+### CSRF/XSRF Protection
 
 ABP framework simplifies and automates CSRF protection as much as
 possible. ASP.NET Zero template comes with CSRF protection pre-configured
@@ -1375,7 +1391,7 @@ and working out of the box. For more information please see ABP's
 [XSRF-CSRF-Protection
 documentation](https://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection)
 
-#### Versioning
+### Versioning
 
 The **AppVersionHelper** class is used to define the **current version**
 of the application in a single place. When you change the **Version**
@@ -1384,7 +1400,7 @@ version and release date are automatically shown in the bottom left
 corner on the application pages. That way you can always see the running
 application version.
 
-### Token Based Authentication
+## Token Based Authentication
 
 ASP.NET Zero uses cookie based authentication for browsers. However, if
 you want to consume Web APIs or application services (those are exposed
@@ -1397,7 +1413,7 @@ can use the token for subsequent requests.
 Here, **Postman** (chrome extension) will be used to demonstrate
 requests and responses.
 
-#### Authentication
+### Authentication
 
 Just send a **POST** request to
 **http://localhost:6234/api/Account/Authenticate** with
@@ -1411,7 +1427,7 @@ authenticate as a **host** user. As seen above, **result** property of
 returning JSON contains the token. You can save it and use for
 subsequent requests.
 
-#### Use API
+### Use API
 
 After authenticating and getting the token, you can use it to call any
 **authorized** actions. All **application services** are available to be
@@ -1429,7 +1445,7 @@ course, request and response body will be different for different APIs.
 Almost all operations available in the UI are also available via the Web
 API (since the UI uses the same Web API) and can be easily consumed.
 
-### Swagger UI
+## Swagger UI
 
 Swagger UI is integrated into ASP.NET Zero. The Swagger UI configuration
 is located in the **WebApiModule** class in the WebApi project. You can
@@ -1437,7 +1453,7 @@ browse the Swagger UI under "/**swagger/ui/index**".
 
 <img src="images/swagger-ui.png" alt="Swagger UI" class="img-thumbnail" width="1000" height="689" />
 
-### Unit Testing
+## Unit Testing
 
 The ASP.NET Zero startup project contains **unit** and **integration**
 tests. Tests are developed using the following tools:
@@ -1476,25 +1492,31 @@ It also provides some useful common methods for all tests.
 
 Here is a sample unit test from the application:
 
-    public class UserAppService_Delete_Tests : UserAppServiceTestBase
+```csharp
+public class UserAppService_Delete_Tests : UserAppServiceTestBase
+{
+    [Fact]
+    public async Task Should_Delete_User()
     {
-        [Fact]
-        public async Task Should_Delete_User()
-        {
-            //Arrange
-            CreateTestUsers();
+			  
+											  
+		 
+        //Arrange
+        CreateTestUsers();
 
-            var user = await GetUserByUserNameOrNullAsync("artdent");
-            user.ShouldNotBe(null);
+        var user = await GetUserByUserNameOrNullAsync("artdent");
+        user.ShouldNotBe(null);
 
-            //Act
-            await UserAppService.DeleteUser(new IdInput<long>(user.Id));
+        //Act
+        await UserAppService.DeleteUser(new IdInput<long>(user.Id));
 
-            //Assert
-            user = await GetUserByUserNameOrNullAsync("artdent");
-            user.IsDeleted.ShouldBe(true);
-        }
+        //Assert
+        user = await GetUserByUserNameOrNullAsync("artdent");
+        user.IsDeleted.ShouldBe(true);
+		 
     }
+}
+```
 
 It creates some users to test and then verifies there is a user named
 "artdent". Then it calls the **DeleteUser** method of the **user
@@ -1506,7 +1528,7 @@ You can read [this
 article](http://www.codeproject.com/Articles/871786/Unit-testing-in-Csharp-using-xUnit-Entity-Framewor)
 to understand unit testing better.
 
-### Publishing
+## Publishing
 
 **Email Settings**
 
@@ -1516,11 +1538,11 @@ new tenant registration).
 Publishing ASP.NET Zero is not different than any other solution. You
 can use Visual Studio as normally you do.
 
-#### Publish to The Azure
+### Publish to The Azure
 
 Read [this document](Step-by-step-publish-to-azure-mvc5.md) to publish to the Azure.
 
-### Library & Frameworks Used
+## Library & Frameworks Used
 
 Many open source frameworks and libraries are used to build ASP.NET Zero
 project. Here is a list of all libraries:

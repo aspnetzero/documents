@@ -1,4 +1,6 @@
-### Introduction
+# Development Guide
+
+## Introduction
 
 Xamarin is a cross-platform UI toolkit that allows developers to
 efficiently create native cross platform user interface layouts.  
@@ -13,7 +15,7 @@ For an overview of the ASP.NET Zero getting started see [ASP.NET Zero
 Getting Started.](Getting-Started-Core) The ASP.NET Zero Xamarin is only
 available for ASP.NET Core included Angular UI and Mvc UI.
 
-#### Prerequisites
+### Prerequisites
 
 Following tools are needed in order to develop ASP.NET Zero Xamarin:
 
@@ -27,7 +29,7 @@ operating systems:
 -   Android 4.0.3 (API 15) or higher ([more
     details](https://developer.xamarin.com/guides/xamarin-forms/getting-started/installation/#android))
 
-#### Android
+### Android
 
 You should have the latest Android SDK Tools and Android API platform
 installed. You can update to the latest versions using the [Android SDK
@@ -44,21 +46,21 @@ These values are set in the **Project Options**:
 
 <img src="images/options-android-vs-sml.png" alt="Xamarin Android Options" class="img-thumbnail" />
 
-#### Mac System Requirements
+### Mac System Requirements
 
 You can use Visual Studio for Mac to develop Xamarin.Forms apps on OS X
 El Capitan (10.11) or newer. To develop iOS apps, it is recommended
 having at least the iOS 10 SDK and Xcode latest installed.
 
-#### Windows System Requirements
+### Windows System Requirements
 
 Xamarin.Forms apps for iOS and Android can be built on any Windows
 installation that supports Xamarin development. A networked Mac is
 required for iOS development.
 
-#### Solution Structure (Layers)
+### Solution Structure (Layers)
 
-After you [download](https://aspnetzero.com/Download) your project, you will see 3 types of
+After you [download](/Download) your project, you will see 3 types of
 solutions;
 
 -   **.Mobile** Xamarin and related projects included.
@@ -91,9 +93,9 @@ There are 6 projects in the mobile solution:
 -   **Mobile.iOS** project contains iOS specific classes.
 -   **Mobile.Droid** project contains Android specific classes.
 
-### Debugging
+## Debugging
 
-#### Host
+### Host
 
 To start debugging Xamarin app you need to configure host settings. You
 can use **Web.Host** to feed the Xamarin app.  
@@ -136,7 +138,7 @@ Core](https://weblog.west-wind.com/posts/2016/Sep/28/External-Network-Access-to-
 We have successfully started host. Now we can configure Xamarin app to
 connect this host.
 
-#### Debugging Xamarin App
+### Debugging Xamarin App
 
 To start debugging you need to change the IP address in
 **DebugServerIpAddresses** class. In the below screen you see the IP
@@ -164,7 +166,7 @@ For further information read Xamarin official document about [how to set up devi
 
 <img src="images/xamarin-api-url-config.png" alt="Debug IP Address" class="img-thumbnail" />
 
-#### Debugging Android
+### Debugging Android
 
 There are a few installation steps and configuration details required to
 install Xamarin.Android. It's highly recommended you to read the
@@ -178,7 +180,7 @@ Choose an Android emulator from list and press start button.
 <img src="images/xamarin-emulator-selection.png" alt="Android Emulator Selection" class="img-thumbnail" />  
 
 
-#### Debugging iOS
+### Debugging iOS
 
 There are a few requirements that must be adhered to when developing for
 iOS in Visual Studio. A Mac is required to compile IPA files.
@@ -212,7 +214,7 @@ automatically updates the running application. LiveXAML is a paid
 product. If you want to purchase LiveXAML, ASP.NET Zero customers get
 30% discount.
 
-### Xamarin.Forms
+## Xamarin.Forms
 
 A key component of building cross-platform applications is being able to
 share code across various platform-specific projects. ASP.NET Zero
@@ -222,7 +224,7 @@ Mobile.Shared project so that it will be used in both iOS and Android.
 If you need platform specific development then try to use class
 abstractions in shared project and implement/extend in end platforms.
 
-#### Mobile.Droid
+### Mobile.Droid
 
 Xamarin Android project has a very basic structure. ASP.NET Zero adds or
 modifies these files in the default project;
@@ -275,7 +277,7 @@ Mobile.iOS.csproj in notepad and find replace all occurrences of
 
 <img src="images/xamarin-android-output-path-csproj.png" alt="Android Output Path" class="img-thumbnail" />
 
-#### Mobile.iOS
+### Mobile.iOS
 
 <img src="images/xamarin-ios-project-structure.png" alt="iOS Structure" class="img-thumbnail" />
 
@@ -300,7 +302,7 @@ modifies these files in the default project;
     Icon\*.png and Default\*.png files files with yours based on the
     same sizes.
 
-#### Mobile.Shared
+### Mobile.Shared
 
 Shared project is a special type of project that can be used across
 disparate CLI platforms including Mobile.iOS and Mobile.Android. That's
@@ -314,7 +316,7 @@ as much non-UI functionality as is possible.
 [Setting Up A Xamarin Cross Platform
 Solution](https://developer.xamarin.com/guides/cross-platform/application_fundamentals/building_cross_platform_applications/part_3_-_setting_up_a_xamarin_cross_platform_solution/)
 
-##### Project structure
+#### Project structure
 
 <img src="images/xamarin-shared-project-structure.png" alt="Shared Project Structure" class="img-thumbnail" />
 
@@ -324,7 +326,7 @@ Mobile.Shared project consists of fundamentals of a Xamarin application
 like Behaviors, Commands, Controls, Converters, Extensions, Views and
 ViewModels.
 
-###### MVVM
+#### MVVM
 
 The Model-View-ViewModel (MVVM) architectural pattern is used in the
 shared project. The pattern enforces a separation between three software
@@ -353,7 +355,7 @@ There's an empty sample view called *\_SampleView.xaml* and binding
 context *\_SampleViewModel.cs*. You can copy paste and rename these
 empty templates to add a new blank page.
 
-###### Dependency Injection
+#### Dependency Injection
 
 ASP.NET Zero Xamarin uses ASP.NET Boilerplate Framework's dependency
 injection system. Therefore it uses [Castle
@@ -366,7 +368,7 @@ ASP.NET Boilerplate provides *ITransientDependency* and
 [ASP.NET Boilerplate Dependency
 Injection](https://aspnetboilerplate.com/Pages/Documents/Dependency-Injection/)
 
-###### Communicating with Host Api
+#### Communicating with Host Api
 
 ***AbpApiClient*** class is used to communicate with host. In this
 class, *[FlurlClient](https://github.com/tmenier/Flurl)*  is used as
@@ -390,7 +392,7 @@ retrieved.
 it should be wrapped with SetBusyAsync method in view model so that user
 can see a busy indicator.
 
-###### Navigation Service
+#### Navigation Service
 
 Navigation service implementation is done in *NavigationService* class.
 It's initialized in *App.xaml.cs* OnStart() method. If user is not
@@ -417,7 +419,7 @@ use these methods;
 -   **CloseModalAsync** dismisses the most recent modally presented
     Page.
 
-###### Exception Handling
+#### Exception Handling
 
 All exceptions are globally handled in *ExceptionHandler* class,
 LogException() method. Subscription to app wide unhandled exceptions is
@@ -430,9 +432,9 @@ Crash Reporting](https://hockeyapp.net/). Beside it's advised to keep a
 breakpoint in *LogException()* method. This is useful to see the
 exception before app crashes.
 
-##### Pages
+#### Pages
 
-###### InitialView
+#### InitialView
 
 InitialView is a transition page that checks whether user has any
 granted menu permission or not. If user has no permissions then an info
@@ -441,7 +443,7 @@ granted menu permission, it is automatically being navigated to the
 first authorized menu item. InitialView is being created in
 MainView.xaml.
 
-###### Login
+#### Login
 
 <img src="images/xamarin-login.png" alt="Shared Project Structure" class="img-thumbnail" />
 
@@ -456,7 +458,7 @@ stored as encrypted). User information is being set in
 *ApplicationContext* so if current logon account information is needed
 it can be retrieved with injecting *IApplicationContext*.
 
-###### MainView
+#### MainView
 
 <img src="images/xamarin-menu.png" alt="Shared Project Structure" class="img-thumbnail" />
 
@@ -485,7 +487,7 @@ only user has granted required permission. The menu items are being
 created in *MainViewModel* class with *BuildMenuItems()* method. A new
 menu item can be added directly to *MenuProvider* class.
 
-###### TenantsView
+#### TenantsView
 
 <img src="images/xamarin-tenants.png" alt="Shared Project Structure" class="img-thumbnail" />
 
@@ -498,7 +500,7 @@ that filters tenants on keypress. A limited information is shown in the
 list view item template. When user taps any item it navigates to the
 TenantDetailsView with the selected tenant object.
 
-###### TenantDetailsView
+#### TenantDetailsView
 
 <img src="images/xamarin-tenant-details.png" alt="Shared Project Structure" class="img-thumbnail" />
 
@@ -523,7 +525,7 @@ MessasingCenter.](https://developer.xamarin.com/guides/xamarin-forms/application
 Lastly *TenantDetailsView* is being popped with *GoBackAsync()* method
 of *NavigationService*.
 
-###### UsersView
+#### UsersView
 
 <img src="images/xamarin-users.png" alt="Shared Project Structure" class="img-thumbnail" />
 
@@ -535,7 +537,7 @@ users are shown in circle image view using
 library. When a user is being tapped, it's navigated to
 *UserDetailsView* with the selected user.
 
-###### UserDetailsView
+#### UserDetailsView
 
 <img src="images/xamarin-user-details.png" alt="Shared Project Structure" class="img-thumbnail" />
 
@@ -545,16 +547,16 @@ inputs will be readonly. This is done in xaml with the following code;
 
 `IsEnabled="{extensions:HasPermission Text={x:Static permission:PermissionKey.UserEdit}}"`
 
-###### ProfilePictureView
+#### ProfilePictureView
 
 <img src="images/xamarin-profile-picture.png" alt="Shared Project Structure" class="img-thumbnail" />
 
 This is for viewing user profile picture in full screen mode. When user
 taps the profile picture thumbnail, this view is being shown.
 
-### Distribution
+## Distribution
 
-#### Configuration
+### Configuration
 
 -   Before publishing the application change the **DefaultHostUrl** in
     **ApiUrlConfig** class. how to distribute Xamarin application.
@@ -562,7 +564,7 @@ taps the profile picture thumbnail, this view is being shown.
 -   Change all AppLogo.png files with your own app logo.
 -   Version your application for future updates.
 
-#### Publishing
+### Publishing
 
 If you want to publish your application to the related application store
 you can read the Xamarin official guides;
@@ -572,7 +574,7 @@ you can read the Xamarin official guides;
 -   [Publishing to the Google
     Play](https://developer.xamarin.com/guides/android/deployment,_testing,_and_metrics/publishing_an_application/part_3_-_publishing_an_application_on_google_play/)
 
-### Used Libraries & Frameworks
+## Used Libraries & Frameworks
 
 List of libraries are used to build ASP.NET Zero Xamarin project;
 
@@ -586,4 +588,4 @@ List of libraries are used to build ASP.NET Zero Xamarin project;
 -   [Xam.Plugin.Media](https://github.com/jamesmontemagno/MediaPlugin)
 -   [Xam.Plugins.Forms.ImageCircle](https://github.com/jamesmontemagno/ImageCirclePlugin)
 -   [Xamarin.FFImageLoading.Forms](https://github.com/luberda-molinet/FFImageLoading)
--   [LiveXAML](https://github.com/OYIon/LiveXAML)
+												 

@@ -1,13 +1,15 @@
+# Getting Started
+
 This document is aimed to create and run an ASP.NET Zero based project
 in just 5 minutes. It's assumed that you already [purchased](/Prices)
 and created your ASP.NET Zero account.
 
-### Login
+## Login
 
 [Login](https://aspnetzero.com/Account/Login) to this web site with your user name and
 password. Then you will see [Download](https://aspnetzero.com/Download) link on the main menu.
 
-### Create a Project
+## Create a Project
 
 Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown
 below:
@@ -20,32 +22,32 @@ minute. After extacting the downloaded zip file and opening solution in
 
 <img src="images/solution-overall-2.png" alt="ASP.NET Zero solution structure" class="img-thumbnail" width="242" height="219" />
 
-### Configure The Project
+## Configure The Project
 
 Right click the **.Web** project and select "**Set as StartUp
 project**": Then **build** the solution. It make take longer time in
 first build since all **nuget** packages will be restored.
 
-#### Database Connection
+### Database Connection
 
 Open web.config file in the .Web project and change the **Default**
 connection string if you want:
 
     <add name="Default" connectionString="Server=localhost; Database=PhoneBook; Trusted_Connection=True;" providerName="System.Data.SqlClient" />
 
-#### Database Migrations
+### Database Migrations
 
 You have two options to create and migrate database to the latest
 version.
 
-##### ASP.NET Zero Migrator Application
+#### ASP.NET Zero Migrator Application
 
 ASP.NET Zero solution includes a **.Migrator** (like
 Acme.PhoneBook.Migrator) project in the solution. You can run this tool
 for database migrations on development and production (see [development
 guide](Development-Guide-Mvc-Angularjs.md) for more information).
 
-##### Entity Framework Migration Command
+#### Entity Framework Migration Command
 
 You can also use Entity Framework's built-in command line tools for
 migrations.
@@ -66,7 +68,7 @@ production. But notice that; Migrator.exe supports running migrations in
 multiple databases at once, which can be useful in
 development/production for multi tenant applications.
 
-#### Multi-Tenancy
+### Multi-Tenancy
 
 ASP.NET Zero supports multi-tenant and single-tenant applications.
 Multi-tenancy is **enabled by default**. If you don't have idea about
@@ -75,7 +77,7 @@ can **disable** it by setting
 **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the .Core
 project.
 
-### Run The Project
+## Run The Project
 
 All ready.. just run your solution. It will open home page of your web
 site. You can click login link at top right corner to **login** to the
@@ -94,7 +96,7 @@ If your application is multi-tenant, then you can leave tenancy name as
 **empty** in login screen and use **admin** as user name and **123qwe**
 as password to login as **host admin**.
 
-### More
+## More
 
 Your solution is up and working. See [<span
 class="text-primary">development

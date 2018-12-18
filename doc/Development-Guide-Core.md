@@ -1,4 +1,6 @@
-### Introduction
+# Development Guide
+
+## Introduction
 
 In [Getting Started](Getting-Started-Core.md) document, a new sample project is created named "**Acme.PhoneBookDemo**". This document is a complete guide while developing your project. We definitely suggest to read this document before starting to the development. Since ASP.NET Zero is built on [ASP.NET Boilerplate](https://aspnetboilerplate.com/) application framework, this document highly refers it's [documentation](https://aspnetboilerplate.com/Pages/Documents).
 
@@ -18,9 +20,9 @@ Following tools are needed in order to use ASP.NET Zero Core solution:
 
 - [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
 
-- [gulp (must be installed
+						  
 
-  globally)](https://www.npmjs.com/package/gulp)
+- [gulp](https://www.npmjs.com/package/gulp) (must be installed globally)
 
 - [yarn](https://yarnpkg.com/)
 
@@ -270,6 +272,16 @@ not implemented actually (because it requires an integration to an SMS
 vendor). Current implementation just writes security code to logs. You
 should complete **SmsSender** class in the solution to make it usable.
 Otherwise, disable SMS verification in the settings.
+
+##### Twilio Integration
+
+In order to enable Twilio integration, just uncomment the following line in your **CoreModule** (in your .Core project):
+
+```
+Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
+```
+
+You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in appsetting.json file.
 
 #### User Lockout
 
@@ -744,6 +756,8 @@ a password satisfies the password complexity settings.
 
 <img src="images/host-settings-security-3.png" alt="Tenant settings" class="img-thumbnail" />
 
+**Email(SMTP)** tab allows you to configure smtp settings for your app. AspNet Zero uses MailKit to send emails. By default, smtp certificate validation is disabled in **YourProjectNameMailKitSmtpBuilder.cs** class. If you are able to validate mail server's certificate, you need to modify **ServerCertificateValidationCallback** in **YourProjectNameMailKitSmtpBuilder.cs**.
+
 #### Tenant Settings
 
 In a multi-tenant application, tenant settings are shown as below:
@@ -776,11 +790,11 @@ system, then generally even **no need** to set Domain name, user and
 password. You can logout and then login with your **domain user name and
 password**. If not, you should set these credentials.
 
-**.NET Core Compatibility**
+						   
 
-LDAP Authentication is not supportted by .NET Core yet. Thus, it's
-designed to be conditional. If you are using .Net Framework (4.6+) then
-it will be available, otherwise it will be disabled.
+																  
+																	   
+													
 
 #### Maintenance
 
@@ -1121,9 +1135,11 @@ To make this working, public web site and main application must know
 their URLs. There are two configuration for that:
 
 1.   In the **appsettings.json** of the **Web.**<span
+
     class="auto-style3">Public</span> project, set
     "**AdminWebSiteRootAddress**" to root URL of the main application.
 2.   In the **appsettings.json** of the **Web.**<span
+
     class="auto-style3">Mvc</span> project, set
     "**RedirectAllowedExternalWebSites**" to root URL of the public web
     site.

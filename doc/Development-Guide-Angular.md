@@ -1,6 +1,8 @@
-### Introduction
+# Development Guide
 
-#### About This Document
+## Introduction
+
+### About This Document
 
 In [Getting Started](Getting-Started.md) document, a new sample
 project is created named "**Acme.PhoneBook**". This document is a guide
@@ -20,7 +22,7 @@ This document is only for the **Angular** application. For **server
 side**, see [ASP.NET Core documentation](Development-Guide-Core.md)
 too.
 
-#### Pre Requirements
+### Pre Requirements
 
 Following tools are needed in order to use the solution:
 
@@ -32,16 +34,16 @@ In addition, see [ASP.NET Core](Development-Guide-Core.md)
 documentation for server side requirements and other server side
 features.
 
-##### IDE
+#### IDE
 
 It's suggested to use an IDE to develop your project. We used [Visual
 Studio 2017](https://www.visualstudio.com), but you can use VS Code or
 any other IDE/Editor you like (VS Code, for instance). You can also use
 any OS you like (MacOS/Linux/Windows).
 
-### Overall
+## Overall
 
-#### Architecture
+### Architecture
 
 The diagram below shows the overall architecture:
 
@@ -64,9 +66,9 @@ The diagram below shows the overall architecture:
     simply provides end points for token based authentication and to use
     the application services.
 
-#### Angular Solution
+### Angular Solution
 
-Entrance point of the Angular solution is src/**main.ts**. It simply
+Entry point of the Angular solution is src/**main.ts**. It simply
 bootstraps the root [Angular
 module](https://angular.io/docs/ts/latest/guide/ngmodule.html):
 **RootModule**. Fundamental modules of the solution are shown below:
@@ -113,7 +115,7 @@ In addition to those fundamental modules, there are some share modules:
     nswag code. It's used to communicate to backend ASP.NET Core API. We
     will see "how to generate automatic proxies" later.
 
-#### Configuration
+### Configuration
 
 Angular solution contains src/assets/**appconfig.json** file which
 contains some configuration for the client side:
@@ -141,7 +143,7 @@ configurations beside the application:
 
 There may be other ways of doing it but this is the most simple way.
 
-### AccountModule
+## AccountModule
 
 **AccountModule** provides **login**, **register**, **forgot password**
 and **email activation** pages and located under src/account folder:
@@ -151,7 +153,7 @@ and **email activation** pages and located under src/account folder:
 **account.component** is the root component of account.module.
 **account-routing.module** defines routes for the account application.
 
-#### Login
+### Login
 
 Default route for AccountModule is the login/**login.component**:
 
@@ -174,7 +176,7 @@ application. At first login, we should change admin password since
 After changing password we are redirected to the **application**
 (app.module).
 
-#### Social Logins
+### Social Logins
 
 Social logins can be enabled and configured from
 [backend](Development-Guide-Core.md). Once they are properly
@@ -184,7 +186,7 @@ Note that currently only **Facebook** and **Google** authentication is
 implemented for Angular2 application. Microsoft and Twitter logins are
 on the road map.
 
-#### Two Factor Login
+### Two Factor Login
 
 ASP.NET Zero is ready to provide two factor login, but it's disabled as
 default. You can easily enable it in host settings page (in Security
@@ -207,14 +209,14 @@ enters the code in the next page:
 
 <img src="images/verify-security-code-1.png" alt="Verify security code" class="thumbnail" />
 
-##### Email Verification
+#### Email Verification
 
 This is available if user has a confirmed email address. Since email
 sending is disabled in debug mode, you can see the code in logs. In
 release mode, email will be sent (You can change this from [server
 side](Development-Guide-Core.md)).
 
-##### SMS Verification
+#### SMS Verification
 
 This is available if user has a confirmed phone number. SMS sending is
 not implemented actually (because it requires an integration to an SMS
@@ -223,13 +225,21 @@ should complete **SmsSender** class in the [server
 side](Development-Guide-Core.md) to make it usable. Otherwise, disable
 SMS verification in the settings.
 
-#### User Lockout
+##### Twilio Integration
+
+In order to enable Twilio integration, just uncomment the following line in your **CoreModule** (in your .Core project):
+
+    Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
+
+You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in appsetting.json file.
+
+### User Lockout
 
 As seen in the previous section, you can configure user lockout
 settings. Users are lockout when they enter wrong password for a
 specified count and duration.
 
-#### Register
+### Register
 
 When we click the "**Create Account**" link (which is only available for
 tenants for multitenant applications) in the login page, a registration
@@ -244,7 +254,7 @@ your domain on <https://www.google.com/recaptcha> and replace keys in
 **appsettings.json** file in the [server side](Development-Guide-Core.md) and in the **appconfig.json** in the
 client side.
 
-#### Email Activation
+### Email Activation
 
 When a user registers as shown above, an email confirmation code is sent
 to his email address. If user did not receive this email for some
@@ -253,14 +263,14 @@ code.
 
 <img src="images/email-activation-1.png" alt="Email activation" class="img-thumbnail" />
 
-#### Forgot Password
+### Forgot Password
 
 If a user forgots his password, he can click the "Forgot Password" link
 to get an email to reset the password.
 
 <img src="images/forgot-password-1.png" alt="Forgot password" class="img-thumbnail" />
 
-#### Tenant Registration
+### Tenant Registration
 
 Tenant registration link is shown on the login form only if you are in
 the host context. When you click to the link, a registration form is
@@ -268,7 +278,7 @@ shown:
 
 <img src="images/tenant-signup-v3.png" alt="Tenant registration form" class="img-thumbnail" />
 
-### AppModule
+## AppModule
 
 This is the actual application module which is entered by username and
 password. You will mostly work on this application to add your business
@@ -283,7 +293,7 @@ Folder structure of the source code is like that:
 It consists of 3 sub modules as described before. **app.component** is
 the root component for all views.
 
-#### Main Menu and Layout
+### Main Menu and Layout
 
 Menu and Layout files located under shared folder:
 
@@ -298,7 +308,7 @@ route. Angular routes are defined in several modules:
 -   app/**app-routing.module** defines general routes and the default
     route.
 
-#### Edition Management
+### Edition Management
 
 *If you're not developing a multi-tenant application, you can skip this
 section.*
@@ -332,7 +342,7 @@ and [edition
 management](https://aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management)
 documents for more information.
 
-#### Tenant Management
+### Tenant Management
 
 *If you're not developing a multi-tenant application, you can skip this
 section.*
@@ -374,7 +384,7 @@ Once you assign an edition to the tenant, you can select an expiration
 date (see edition management section to know what happens after
 subscription expiration).
 
-##### Tenant Edition and Features
+#### Tenant Edition and Features
 
 An **edition** can be **assigned** to a tenant (while creating or
 editing). Tenant will inherit all features of the assigned edition, but
@@ -383,7 +393,7 @@ we can also override features and values for a tenant. Click
 
 <img src="images/tenant-features-core-1.png" alt="Tenant features" class="img-thumbnail" />
 
-##### Tenant User Impersonation
+#### Tenant User Impersonation
 
 As a host user, we may want to perform operations in behalf of a tenant.
 In this case, we can click the "**Login as this tenant**" button in the
@@ -392,14 +402,14 @@ tenant. We can select any user and perform operations allowed that user.
 See **User Impersonation** section in this document for more
 information.
 
-##### Using Tenancy Name As Subdomain
+#### Using Tenancy Name As Subdomain
 
 A multi-tenant application generally uses subdomain to identify current
 tenant. **tenant1**.mydomain.com, **tenant2**.mydomain.com and so on.
 ASP.NET Zero automatically identify and get tenant name from subdomain.
 See application configuration section.
 
-#### Host Dashboard
+### Host Dashboard
 
 Host dashboard is used to show some statistics about tenants, editions
 and income:
@@ -410,7 +420,7 @@ This is a fully implemented dashboard except two sample statistics
 (sample statistics 1 & 2) those are placeholders for your own
 statistics.
 
-#### Organization Units
+### Organization Units
 
 Organization units (OU) are used to hierarchically group user and
 entities. Then you can get user or entities based on their OUs. When we
@@ -434,7 +444,7 @@ See [organization unit management
 document](https://aspnetboilerplate.com/Pages/Documents/Zero/Organization-Units)
 for more information.
 
-#### Role Management
+### Role Management
 
 When we click Administration/Roles menu, we enter to the role management
 page:
@@ -469,7 +479,7 @@ for tenants. **Admin** roles have all permissions granted by default.
 permission by default. These can be changed easily in the [server
 side](Development-Guide-Core.md).
 
-##### Role Permissions
+#### Role Permissions
 
 Since roles are used to group permissions, we can set permissions of a
 role while creating or editing as shown below:
@@ -482,7 +492,7 @@ Every tenant has it's **own roles** and any change in roles for a tenant
 does not effect other tenants. Also, host has also it's own isolated
 roles.
 
-#### User Management
+### User Management
 
 When we click Administration/Users menu, we enter to the user management
 page:
@@ -511,7 +521,7 @@ on... A user can have a **profile picture**. It can be changed by the
 user (See User Menu section). **Admin** user can not be deleted as a
 business rule. If you don't want to use admin, just make it inactive.
 
-##### User Impersonation
+#### User Impersonation
 
 As admin (or any allowed user), we may want to login as a user and
 perform operations in behalf of that user, without knowing his password.
@@ -529,7 +539,7 @@ indicates that operations are performed by somebody else. Notice that;
 Also a **red 'back' icon** shown near to the user name to indicate that
 you are in an impersonated account.
 
-#### Language Management
+### Language Management
 
 Language management page is used to manage (add/edit/delete)
 **application languages** and change **localized texts**:
@@ -565,7 +575,7 @@ and
 [localization](https://aspnetboilerplate.com/Pages/Documents/Localization)
 documents for more information.
 
-#### Audit Logs
+### Audit Logs
 
 In audit logs page, we can see all user interactions with the
 application:
@@ -582,7 +592,7 @@ see all details an audit log:
 
 Audit log report is provided by **AuditLogAppService** class.
 
-#### Subscription
+### Subscription
 
 Tenants can manage (show, extend or upgrade) their edition/plan
 subscriptions using this page:
@@ -608,7 +618,7 @@ generated. You can see a sample invoice below:
 
 <img src="images/sample-invoice-core.png" alt="Sample Invoice" class="img-thumbnail" />
 
-#### Visual Settings
+### Visual Settings
 
 ASP.NET Zero's look of UI can be modified in visual settings page. This
 page is used to modify look of UI both for system and personal user
@@ -625,7 +635,7 @@ and Footer of the application.
 
 <img src="images/visual-settings-core.png" alt="Visual settings" class="img-thumbnail" />
 
-#### Host Settings
+### Host Settings
 
 Host settings page is used to configure some system settings:
 
@@ -646,7 +656,9 @@ this tab. Each tenant can override this setting in tenant settings page.
 
 <img src="images/host-settings-security-3.png" alt="Tenant settings" class="img-thumbnail" />
 
-#### Tenant Settings
+**Email(SMTP)** tab allows you to configure smtp settings for your app. AspNet Zero uses MailKit to send emails. By default, smtp certificate validation is disabled in **YourProjectNameMailKitSmtpBuilder.cs** class. If you are able to validate mail server's certificate, you need to modify **ServerCertificateValidationCallback** in **YourProjectNameMailKitSmtpBuilder.cs**.
+
+### Tenant Settings
 
 In a multi-tenant application, tenant settings are shown as below:
 
@@ -657,7 +669,7 @@ page (since there is no host setting page). Tenants can also define
 password complexity settings for their users or they can use password
 complexity settings defined by host user.
 
-##### Enabling LDAP (Active Directory) Authentication
+#### Enabling LDAP (Active Directory) Authentication
 
 LDAP (Active Directory) Authentication is disabled by default. To make
 it work, we should **disable multi-tenancy** since LDAP auth is not used
@@ -673,13 +685,13 @@ system, then generally even **no need** to set Domain name, user and
 password. You can logout and then login with your **domain user name and
 password**. If not, you should set these credentials.
 
-**.NET Core Compatibility**
+						   
 
-LDAP Authentication is not supportted by .NET Core yet. Thus, it's
-designed to be conditional. If you are using .Net Framework (4.6+) then
-it will be available, otherwise it will be disabled.
+																  
+																	   
+													
 
-#### Maintenance
+### Maintenance
 
 Maintenance page is available to **host side** for multi tenant
 applications (for single tenant applications it's shown in tenant side)
@@ -694,7 +706,7 @@ logs:
 
 <img src="images/maintenance-logs-1.png" alt="Maintenance logs" class="img-thumbnail" />
 
-#### Tenant Dashboard
+### Tenant Dashboard
 
 ASP.NET Zero startup project also includes a **sample** dashboard. It's
 just for demo purposes, you can make it as a start point for your actual
@@ -705,7 +717,7 @@ dashboard. It's implemented with app/main/**dashboard.component** in
 
 Client gets all data from server, server generates random data.
 
-#### Notifications
+### Notifications
 
 Notification icon is located next to the language selection button. The
 number in the red circle shows unread notification count.
@@ -723,7 +735,7 @@ read" link next to each notification.
 Notifications are sent real-time using SignalR. In addition, a **desktop
 push notification** is shown when a notification is received.
 
-##### Notification Settings
+#### Notification Settings
 
 "Settings" link opens notification settings dialog.
 
@@ -738,13 +750,13 @@ side](Development-Guide-Core.md). See [notifications
 documentation](https://aspnetboilerplate.com/Pages/Documents/Notification-System)
 for detailed information.
 
-##### Notification List
+#### Notification List
 
 All notifications of the user are listed in this page.
 
 <img src="images/notifications-list-core-4.png" alt="Notification list" class="img-thumbnail" />
 
-#### Chat
+### Chat
 
 Chat icon is located next to user's profile image on top right corner of
 the page. The number in the red circle shows total unread chat message
@@ -785,7 +797,7 @@ icon right of the selected user's username. This icon opens an action
 menu and this menu contains block user or unblock user actions according
 to user's block status.
 
-##### Chat Features
+#### Chat Features
 
 <img src="images/chat-features-1.png" alt="User menu" class="img-thumbnail" />
 
@@ -794,13 +806,13 @@ with host", "Chat with other tenants". These features can be
 enabled/disabled per edition/tenant. By using these features host can
 enable/disable chat with other tenant's users or host users.
 
-#### User Menu
+### User Menu
 
 A user can click his name at top right corner to open user menu:
 
 <img src="images/user-menu-4.png" alt="User menu" class="img-thumbnail" />
 
-##### Linked Accounts
+#### Linked Accounts
 
 Linked accounts are used to link multiple accounts to each other. In
 this way, a user can easily navigate through his accounts using this
@@ -816,7 +828,7 @@ related account.
 
 <img src="images/link-new-account-1.png" alt="link new account" class="img-thumbnail" />
 
-##### Profile Settings
+#### Profile Settings
 
 My settings is used to change user profile settings:
 
@@ -826,34 +838,34 @@ As shown here, **admin** user name can not be changed. It's considered a
 special user name since it's used in database migration seed. Other
 users can change their usernames.
 
-##### Login Attempts
+#### Login Attempts
 
 All login attempts (success of failed) are logged in the application. A
 user can see last login attempts for his/her account.
 
 <img src="images/login-attempts-1.png" alt="Login attempts" class="img-thumbnail" />
 
-##### Change Picture
+#### Change Picture
 
 A user can change own profile picture. Currently, jpg/jpeg, gif and png
 files are supported, you can extend it.
 
-##### Change Password
+#### Change Password
 
 **ProfileAppService** is used to change password.
 
-##### Download Collected Data
+#### Download Collected Data
 
 A user can download his/her collected data using this menu item.
 
 <img src="images/gdpr_download_item.png" alt="Login attempts" class="img-thumbnail" />
 
-##### Logout
+#### Logout
 
 **AccountController** is used to logout the user and redirect to Login
 page.
 
-#### Setup Page
+### Setup Page
 
 ASP.NET Zero application can be set-up using install page. This page is
 developed to create initial database, apply migrations and configure the
@@ -862,9 +874,9 @@ accessed via **http://yourwebsite.com/app/admin/install**.
 
 <img src="images/install-page-core.png" alt="install page" class="img-thumbnail" width="1200" />
 
-### Infrastructure
+## Infrastructure
 
-#### NPM Packages
+### NPM Packages
 
 ASP.NET Zero solution supports both [yarn](https://yarnpkg.com/) and
 [npm](https://www.npmjs.com/) to obtain front end library dependencies
@@ -873,7 +885,7 @@ some problems, yarn solves those problems and it is compatible with npm
 as well. You can easily add, update or remove packages on yarn's command
 line interface.
 
-#### Angular CLI & WebPack
+### Angular CLI & WebPack
 
 ASP.NET Zero uses [angular-cli](https://cli.angular.io/) for the
 development and deployment. It's properly configured for angular-cli and
@@ -883,7 +895,7 @@ replacement feature). Once it's compiled and ready, you can go to
 <http://localhost:4200> to open the application in your browser. See
 [angular-cli](https://cli.angular.io/) official web site for more.
 
-#### NSwag
+### NSwag
 
 Since all communication to server made via AJAX requests, we are using a
 client side javascript layer to call server API. It's automatically
@@ -905,7 +917,7 @@ While Nswag automatically generate proxy files, it does not refresh
 **service-proxies.module**.ts. If you add a new service, you should
 **manually** add it to this file as like others.
 
-#### AppComponentBase
+### AppComponentBase
 
 If you inherit your components from **AppComponentBase** class, you can
 get many commonly used services as pre-injected (like localization,
@@ -914,7 +926,7 @@ on...). For example; you can just use **l(...)** function In views and
 **this.l(...)** function in component classes for localization. See
 pre-built components for example usages.
 
-#### Localization
+### Localization
 
 ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero
 uses **dynamic, database based, per-tenant** localization.
@@ -940,7 +952,7 @@ and [language
 management](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Management)
 documentations for more information on localization.
 
-#### Exception Handling
+### Exception Handling
 
 ASP.NET Zero uses ABP's [exception
 handling](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#exception-filter)
@@ -948,7 +960,7 @@ system. Thus, you don't need to handle & care about exceptions in most
 time. All server side exceptions are gracefully handled and an
 appropriate message is shown to the user.
 
-#### Authorization
+### Authorization
 
 You can inject and use PermissionCheckerService to check user
 permissions. It's pre injected for AppComponentBase (permission field)
@@ -957,7 +969,7 @@ defined in [server side](Development-Guide-Core.md). See authorization
 [documentation](https://aspnetboilerplate.com/Pages/Documents/Authorization)
 for more.
 
-#### Features
+### Features
 
 You can inject and use FeatureCheckerService to check tenant features.
 It's pre injected for AppComponentBase (feature field). Features are
@@ -966,7 +978,7 @@ management
 [documentation](https://aspnetboilerplate.com/Pages/Documents/Feature-Management)
 for more.
 
-#### Setting
+### Setting
 
 You can inject and use SettingService to check settings. It's pre
 injected for AppComponentBase (setting field). Settings are defined in
@@ -974,7 +986,7 @@ injected for AppComponentBase (setting field). Settings are defined in
 [documentation](https://aspnetboilerplate.com/Pages/Documents/Setting-Management)
 for more.
 
-#### SignalR Integration
+### SignalR Integration
 
 SignalR is properly configured and integrated to the startup project.
 Real time notification and chat systems use it. You can also direcly use
@@ -989,7 +1001,7 @@ See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information.
 
-### Token Based Authentication
+## Token Based Authentication
 
 ASP.NET Zero Angular UI uses the [server
 side](Development-Guide-Core.md) via token based authentication. Any
@@ -999,7 +1011,7 @@ consumes the same API. In this section, we'll demonstrate usage of the
 API from [Postman](https://www.getpostman.com/docs/introduction) (a
 Google Chrome extension).
 
-#### Authentication
+### Authentication
 
 We suggest you to disable two factor authentication for the user which
 will be used for remote authentication. Otherwise, two factor
@@ -1020,7 +1032,7 @@ Then we can send username and password as a **POST** request to http://localhost
 
 In the returning response, **accessToken** will be used to authorize for the API.
 
-#### Using API
+### Using API
 
 After authenticate and get the access token, we can use it to call any
 **authorized** actions. All **services** are available to be used
@@ -1034,7 +1046,7 @@ http://localhost:22742**/api/services/app/User/GetUsers** and added
 Authorization to the header as "**Bearer &lt;accessToken&gt;**".
 Returning JSON contains the list of users.
 
-### Swagger UI
+## Swagger UI
 
 [Swagger UI](http://swagger.io/swagger-ui/) is **integrated** to ASP.NET
 Zero **by default**. You can browse **swagger ui** from
@@ -1045,7 +1057,7 @@ all available API:
 
 <img src="images/swagger-ui-ng2-1.png" alt="Swagger UI" class="img-thumbnail" />
 
-### Deployment
+## Deployment
 
 **About Deployment**
 
@@ -1067,11 +1079,11 @@ build your application:
 This command uses **dist** folder as output. Just remember to change
 **assets/appconfig.json** file with your own configuration.
 
-#### Publish to The Azure
+### Publish to The Azure
 
 Read [this document](Step-by-step-publish-to-azure-angular.md) to publish to the Azure.
 
-#### AOT
+### AOT
 
 Angular CLI uses
 **[AOT](https://angular.io/docs/ts/latest/cookbook/aot-compiler.html)
@@ -1079,21 +1091,21 @@ Angular CLI uses
 to ng build command to disable it. But we recommend AOT since it has
 significiant performance gain.
 
-#### IIS Deploy
+### IIS Deploy
 
 Read [this document](Step-by-step-angular-publish-to-iis.md) to publish to the IIS.
 
-### ASP.NET Zero Power Tools
+## ASP.NET Zero Power Tools
 
 **ASP.NET Zero Power Tools** creates all related layers (including UI) by defining an entity.
 
 See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
 
-### Penetration Test
+## Penetration Test
 
 Asp.Net Zero (v5) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.7.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world's most popular security tools and is actively maintained by hundreds of international volunteers, see [Security-Report](Security-Report-Angular.md) for details.
 
-### Used Library & Frameworks
+## Used Library & Frameworks
 
 Many open source frameworks and libraries are used to build ASP.NET Zero
 project. Here, a list of all libraries:

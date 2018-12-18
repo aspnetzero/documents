@@ -6,12 +6,12 @@ and created your ASP.NET Zero account.
 
 ## Login
 
-[Login](/Account/Login) to this web site with your user name and
-password. Then you will see [Download](/Download) link on the main menu.
+[Login](https://aspnetzero.com/Account/Login) to this web site with your user name and
+password. Then you will see [Download](https://aspnetzero.com/Download) link on the main menu.
 
 ## Create a Project
 
-Go to the [download](/Download) page. You will see a form as shown
+Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown
 below:
 
 <img src="images/download-angular-3.png" alt="Download angular" class="img-thumbnail" />
@@ -91,8 +91,7 @@ development/production for multi tenant applications.
 
 ASP.NET Zero supports multi-tenant and single-tenant applications.
 Multi-tenancy is **enabled by default**. If you don't have an idea about 
-Multi-Tenancy, you can read [wikipedia.org/wiki/Multitenancy](https://en.wikipedia.org/wiki/Multitenancy). If
-you don't want to create a multi-tenant application, you can **disable** it by
+Multi-Tenancy, you can read [wikipedia.org/wiki/Multitenancy](https://en.wikipedia.org/wiki/Multitenancy). If you don't want to create a multi-tenant application, you can **disable** it by
 setting **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the
 ***.Core.Shared** project.
 
