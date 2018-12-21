@@ -873,11 +873,6 @@ All notifications of user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, real time notifications
-will not work if you select .NET Core as your base framework.
-
 #### Chat
 
 Chat icon is located next to user's profile image on top right corner of
@@ -938,11 +933,6 @@ online users and unread message count from each friend.
 **UserFriendCacheSyncronizer** class is responsible for keeping user
 friends cache up to date. In order to do that, it watches some events of
 Friendship and ChatMessage entities.
-
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, chat feature will not work
-if you select .NET Core as your base framework.
 
 ##### Chat Features
 
@@ -1380,11 +1370,6 @@ Core yet. We integrated **OWIN** to ASP.NET Core pipeline in order to
 use SignalR in the application. See [SignalR
 integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
 document for more information on SignalR.
-
-**.NET Core Compatibility**
-
-Since SignalR is not ready yet for .NET Core, SignalR integration is
-disabled if you select .NET Core as your base framework.
 
 #### Logging
 
