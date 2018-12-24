@@ -3,8 +3,6 @@
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
 -   Tenant **subscription enhancements** (like recurring payments).
--   **Entity History** UI (showing property based entity changes).
--   Integration to a popular provider for **sending SMS**.
 -   Customizable **dashboard/widget** system.
 -   Improvements on the **Rapid Application Development** tooling.
 -   **GraphQL** endpoint.
