@@ -710,6 +710,51 @@ generated. You can see a sample invoice below:
 
 <img src="images/sample-invoice-core.png" alt="Sample Invoice" class="img-thumbnail" />
 
+AspNet Zeros subscription system allows using two payment gateways, one is [PayPal](https://www.paypal.com) and the other one is [Stripe](https://stripe.com/). You can configure both payment gateways in the appsettings.json file in *.Web.Mvc project.
+
+##### PayPal
+
+In order to configure PayPal settings, open appsettings.json file in *.Web.Mvc project and fill the values;
+
+* **IsActive:** This setting can be used to enable/disable PayPal. If set to false, end users will not see PayPal option during the payment process.
+* **Environment:** Determines PayPal environment. "sandbox" is used for testing environment and "live" is used for production environment.
+* **BaseUrl:** Url for making API calls to PayPal. You can find correct urls in your PayPal developer dashboard. 
+*  **ClientId**: ClientId for the PayPal app.
+* **ClientSecret:** ClientSecret for the PayPal app.
+* **DemoUsername:** Username for a demo account to show users in Demo mode for testing purposes.
+* **DemoPassword:** Password for a demo account to show users in Demo mode for testing purposes.
+
+Note: Current implementation of PayPal doesn't support recurring payments. So, If a tenant wants to pay via PayPal, AspNet Zero will not charge Tenant's account automatically. In that case, Tenant needs to pay the subscription price on every subscription cycle.
+
+##### Stripe
+
+In order to configure Stripe, open appsettings.json file in *.Web.Mvc project and fill the values;
+
+* **IsActive:** This setting can be used to enable/disable Stripe. If set to false, end users will not see Stripe option during the payment process.
+* **BaseUrl:** Url for making API calls to Stripe. You can find correct urls in your Stripe dashboard. 
+* **SecretKey:** Your Stripe SecretKey.
+* **PublishableKey:** Your Stripe PublishableKey.
+* **WebhookSecret:** Your Stripe WebhookSecret which is used to validate WebHook requests.
+
+Stripe supports recurring payments. If a tenant wants to pay via Stripe and accepts automatically billing the  account used for the initial payment, then Stripe charges the amount from Tenants account on each subscription cycle and notifies AspNet Zero. Then, AspNet Zero extends the subscription for the paid period (either monthly or annual).
+
+###### Testing Stripe WebHooks on localhost
+
+In order to get Stripe's WebHook request on your local environment, you need to use an external tool. [https://webhookrelay.com](https://webhookrelay.com) is one of the best tools on the web at the moment. [How to receive Stripe webhooks on localhost](https://webhookrelay.com/blog/2017/12/26/receiving-stripe-webhooks-localhost/) can be used to test Stripe's WebHooks on the localhost. Basically, you need to create an account on [https://webhookrelay.com](https://webhookrelay.com), then need to download relay.exe to your development machine. 
+
+Then, you need to run relay.exe like this;
+
+```./relay.exe forward --bucket stripe http://localhost:62114/Stripe/WebHooks```
+
+This will give you an url something like "https://my.webhookrelay.com/v1/webhooks/aa180d45-87d5-4e9c-8bfa-e535a91df3fc". You need to enter this url as an WebHook endpoint on Stripe's WebHook dashboard ([https://dashboard.stripe.com/account/webhooks](https://dashboard.stripe.com/account/webhooks)).
+
+Don't forget to enter your production app's url as a WebHook endpoint when you publish your app to production.
+
+* Notes
+  * Tenants can disable or enable Stripe to charge their accounts automatically on the Subscription page. 
+  * When upgrading to an higher edition, stripe calculates the cost for upgrade and charges it from Tenants account. However, AspNet Zero can't show this amount during the edition upgrade process. But, this amount can be seen at the Payment History tab on Subscription page after a successful payment process.
+  * When a tenant subscribes to an edition using Stripe and if admin user changes the edition of the Tenant on Tenant page to a higher edition, Tenant's account will be charged on stripe automatically.
+
 #### Visual Settings
 
 ASP.NET Zero's look of UI can be modified in visual settings page. This
