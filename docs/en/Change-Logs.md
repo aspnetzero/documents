@@ -6,6 +6,12 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+### v6.5 (2019-01-11)
+
+- Implemented recurring payments for subscriptions (using [Stripe](https://stripe.com/))
+- Upgraded to PrimeNG v7.0.
+- Enhancements and bug fixes.
+
 ## v6.4 (2018-12-14)
 
 - Added different Metronic layout support ([demo7](https://keenthemes.com/metronic/preview/?demo=demo7) and [demo3](https://keenthemes.com/metronic/preview/?demo=demo3)).
