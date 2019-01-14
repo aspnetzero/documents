@@ -2,20 +2,19 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   Tenant **subscription enhancements** (like recurring payments).
--   Customizable **dashboard/widget** system.
--   Improvements on the **Rapid Application Development** tooling.
 -   **GraphQL** endpoint.
+-   Customizable **dashboard/widget** system.
 -   **Webhook** system.
+-   Improvements on the **Rapid Application Development** tooling.
 -   Improvements on the **Xamarin** mobile application.
--   **Importing** users.
 -   Sending **mass notifications/emails** to users.
+-   Option to allow only one **concurrent login** per user.
+-   **Importing** users.
 -   **Calendar** module.
 -   Session timeout & **lock screen**.
--   Option to allow only one **concurrent login** per user.
 -   User based **menu customization**.
 -   **Improvements** on current features.
--   More **tutorials** and **examples**.
+-   More **tutorials**, **examples** & **video courses**.
 
 We are adding new items here as we clarify them. All these features and
 **much more** will be available also for current customers in their
