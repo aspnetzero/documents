@@ -2,6 +2,7 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
+-   Apply more Metronic **layouts** (6 done, see [all](https://keenthemes.com/metronic/)).
 -   **GraphQL** endpoint.
 -   Customizable **dashboard/widget** system.
 -   **Webhook** system.
