@@ -792,6 +792,12 @@ public class CreatePersonInput
 }
 ```
 
+And configure auto-mapper:
+
+```csharp
+configuration.CreateMap<CreatePersonInput, Person>();
+```
+
 **CreatePersonInput** is mapped to **Person** entity (comment out
 related line in CustomDtoMapper.cs and we will use mapping below).
 All properties are decorated with **data annotation attributes**
@@ -1147,7 +1153,7 @@ public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
 }
 ```
 
-Now, let's try to enter Phone Book page by clicking the menu item:
+Admin role has every static permission by default but those permissions can be reversible on user interface for this role. Now, let's try to enter Phone Book page by clicking the menu item without required permission:
 
 <img src="images/phonebook-permission-error.png" alt="Permission error" class="img-thumbnail" width="505" height="412" />
 
@@ -1300,8 +1306,7 @@ person' as we did for 'creating person' above.
 
 ### Style
 
-We're using a **[LESS](http://lesscss.org/)** style here to take the
-button right. Created a file named **phonebook.component.less** (in
+We're using a **[LESS](http://lesscss.org/)** style. Created a file named **phonebook.component.less** (in
 phonebook folder) and added following lines:
 
 ```css
@@ -1636,6 +1641,12 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
 }
 ```
 
+Then we configure auto-mapper:
+
+```csharp
+configuration.CreateMap<Phone, PhoneInPersonListDto>();
+```
+
 So, added also a DTO to transfer phone numbers and mapped from Phone
 entity. Now, we can change GetPeople method to get Phones from database:
 
@@ -1674,6 +1685,20 @@ Task DeletePhone(EntityDto<long> input);
 Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
 ```
 
+**AppPermissions** class:
+
+```csharp
+public const string Pages_Tenant_PhoneBook_AddPhone = "Pages.Tenant.PhoneBook.AddPhone";
+public const string Pages_Tenant_PhoneBook_DeletePhone = "Pages.Tenant.PhoneBook.DeletePhone";
+```
+
+**AppAuthorizationProvider** class:
+
+```csharp
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_AddPhone, L("AddPhone"), multiTenancySides: MultiTenancySides.Tenant);
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_DeletePhone, L("DeletePhone"), multiTenancySides: MultiTenancySides.Tenant);
+```
+
 We could create a new, separated IPhoneAppService. It's your choice.
 But, we can consider Person as an aggregate and add phone related
 methods here. AddPhoneInput DTO is shown below:
@@ -1706,11 +1731,13 @@ public class PhoneConsts
 Now, we can implement these methods:
 
 ```csharp
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePhone)]
 public async Task DeletePhone(EntityDto<long> input)
 {
     await _phoneRepository.DeleteAsync(input.Id);
 }
 
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_AddPhone)]
 public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 {
     var person = _personRepository.Get(input.PersonId);
@@ -1724,6 +1751,12 @@ public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 
     return ObjectMapper.Map<PhoneInPersonListDto>(phone);
 }
+```
+
+Then configure auto-mapper:
+
+```csharp
+configuration.CreateMap<AddPhoneInput, Phone>();
 ```
 
 (Note: We injected **IRepository&lt;Phone, long&gt;** in the constructor
@@ -1936,7 +1969,7 @@ Now we want to edit name, surname and e-mail of people:
 <img src="images/edit-person-core1.png" alt="Edit Person" class="img-thumbnail" />  
 
 First of all, we create the necessary DTOs to transfer people's id, name,
-surname and e-mail. Then create the functions in PersonAppService for
+surname and e-mail. We can optionally configure auto-mapper, but this is not necessary because all properties match automatically. Then we create the functions in PersonAppService for
 editing people:  
 
 ```csharp
@@ -1956,6 +1989,12 @@ public async Task EditPerson(EditPersonInput input)
     person.EmailAddress = input.EmailAddress;
     await _personRepository.UpdateAsync(person);
 }
+```
+
+Then configure auto-mapper:
+
+```csharp
+configuration.CreateMap<Person, GetPersonForEditOutput>();
 ```
 
 ### View
