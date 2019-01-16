@@ -1153,7 +1153,9 @@ public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
 }
 ```
 
-Admin role has every static permission by default but those permissions can be reversible on user interface for this role. Now, let's try to enter Phone Book page by clicking the menu item without required permission:
+Admin role has every static permission by default but those permissions can be reversible on user interface for this role. Go to Roles page, edit role named "admin", go to Permissions tab and revoke "Phone Book" permission and save.
+
+Now, let's try to enter Phone Book page by clicking the menu item without required permission:
 
 <img src="images/phonebook-permission-error.png" alt="Permission error" class="img-thumbnail" width="505" height="412" />
 
@@ -1306,15 +1308,11 @@ person' as we did for 'creating person' above.
 
 ### Style
 
-We're using a **[LESS](http://lesscss.org/)** style. Created a file named **phonebook.component.less** (in
-phonebook folder) and added following lines:
+We're using **[LESS](http://lesscss.org/)** files for styling the components. We created a file named **phonebook.component.less** (in
+phonebook folder) with an empty content.
 
 ```css
-.m-widget1__item{
-    button#deletePerson {
-        /* styles */
-    }
-}
+/* styles */
 ```
 
 And adding the style to the **phonebook.component.ts** Component
@@ -1685,14 +1683,14 @@ Task DeletePhone(EntityDto<long> input);
 Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
 ```
 
-**AppPermissions** class:
+We are also defining permission names for creating a new phone and deleting a phone in **AppPermissions** class:
 
 ```csharp
 public const string Pages_Tenant_PhoneBook_AddPhone = "Pages.Tenant.PhoneBook.AddPhone";
 public const string Pages_Tenant_PhoneBook_DeletePhone = "Pages.Tenant.PhoneBook.DeletePhone";
 ```
 
-**AppAuthorizationProvider** class:
+And use those permission names to define actual permissions in **AppAuthorizationProvider** class:
 
 ```csharp
 phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_AddPhone, L("AddPhone"), multiTenancySides: MultiTenancySides.Tenant);
