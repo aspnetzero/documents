@@ -1821,14 +1821,14 @@ Changes in view are shown below:
                 <tbody>
                     <tr *ngFor="let phone of person.phones">
                         <td>
-                            <button (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+                            <button *ngIf="isGranted('Pages.Tenant.PhoneBook.DeletePhone')" (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
                                 <i class="fa fa-times"></i>
                             </button>
                         </td>
                         <td>{{getPhoneTypeAsString(phone.type)}}</td>
                         <td>{{phone.number}}</td>
                     </tr>
-                    <tr>
+                    <tr *ngIf="isGranted('Pages.Tenant.PhoneBook.AddPhone')">
                         <td>
                             <button (click)="savePhone()" class="btn btn-sm btn-success">
                                 <i class="fa fa-floppy-o"></i>
