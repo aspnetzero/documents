@@ -792,7 +792,7 @@ public class CreatePersonInput
 }
 ```
 
-And configure auto-mapper:
+Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
 
 ```csharp
 configuration.CreateMap<CreatePersonInput, Person>();
@@ -1639,7 +1639,7 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
 }
 ```
 
-Then we configure auto-mapper:
+Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
 
 ```csharp
 configuration.CreateMap<Phone, PhoneInPersonListDto>();
@@ -1751,7 +1751,7 @@ public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 }
 ```
 
-Then configure auto-mapper:
+Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
 
 ```csharp
 configuration.CreateMap<AddPhoneInput, Phone>();
@@ -1989,7 +1989,7 @@ public async Task EditPerson(EditPersonInput input)
 }
 ```
 
-Then configure auto-mapper:
+Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
 
 ```csharp
 configuration.CreateMap<Person, GetPersonForEditOutput>();
