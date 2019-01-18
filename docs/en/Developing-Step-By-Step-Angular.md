@@ -1683,20 +1683,6 @@ Task DeletePhone(EntityDto<long> input);
 Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
 ```
 
-We are also defining permission names for creating a new phone and deleting a phone in **AppPermissions** class:
-
-```csharp
-public const string Pages_Tenant_PhoneBook_AddPhone = "Pages.Tenant.PhoneBook.AddPhone";
-public const string Pages_Tenant_PhoneBook_DeletePhone = "Pages.Tenant.PhoneBook.DeletePhone";
-```
-
-And use those permission names to define actual permissions in **AppAuthorizationProvider** class:
-
-```csharp
-phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_AddPhone, L("AddPhone"), multiTenancySides: MultiTenancySides.Tenant);
-phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_DeletePhone, L("DeletePhone"), multiTenancySides: MultiTenancySides.Tenant);
-```
-
 We could create a new, separated IPhoneAppService. It's your choice.
 But, we can consider Person as an aggregate and add phone related
 methods here. AddPhoneInput DTO is shown below:
@@ -1729,13 +1715,13 @@ public class PhoneConsts
 Now, we can implement these methods:
 
 ```csharp
-[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePhone)]
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
 public async Task DeletePhone(EntityDto<long> input)
 {
     await _phoneRepository.DeleteAsync(input.Id);
 }
 
-[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_AddPhone)]
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
 public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 {
     var person = _personRepository.Get(input.PersonId);
@@ -1821,14 +1807,14 @@ Changes in view are shown below:
                 <tbody>
                     <tr *ngFor="let phone of person.phones">
                         <td>
-                            <button *ngIf="isGranted('Pages.Tenant.PhoneBook.DeletePhone')" (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+                            <button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
                                 <i class="fa fa-times"></i>
                             </button>
                         </td>
                         <td>{{getPhoneTypeAsString(phone.type)}}</td>
                         <td>{{phone.number}}</td>
                     </tr>
-                    <tr *ngIf="isGranted('Pages.Tenant.PhoneBook.AddPhone')">
+                    <tr *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')">
                         <td>
                             <button (click)="savePhone()" class="btn btn-sm btn-success">
                                 <i class="fa fa-floppy-o"></i>
