@@ -1185,3 +1185,729 @@ Here is a sample **package-mapping-config.js** file;
 
 <img src="images/gulp-bundle-config-mappings.png-2.png" alt="Gulp mappings" class="img-thumbnail" />
 
+In order to create css and javascript bundles https://www.nuget.org/packages/BundlerMinifier.Core/ package is used. Bundling definitions are stored in **bundleconfig.json** file. If you don't want to modify this file manually, you can use https://marketplace.visualstudio.com/items?itemName=MadsKristensen.BundlerMinifier Visual Studio extension to create bundling definitions for you.
+
+#### Application Services as MVC API Controllers
+
+ASP.NET Zero project highly use AJAX to provide a better user
+experience. UI calls **application service methods** via AJAX. So, it's
+needed to create MVC API controllers as adapters (A Client calls MVC API
+Controller action via AJAX, then it calls application service method).
+ABP framework automatically creates MVC API Controllers for all
+application services. So, no need to manually create MVC API Controllers
+for application services.See related
+[documentation](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#application-services-as-controllers)
+for more. While ABP dynamically create Web API Controllers, we can also
+create regular MVC API Controllers as we always do.
+
+#### Localization
+
+ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero
+uses **dynamic, database based, per-tenant** localization (See the
+related section above).
+
+XML files are used as base translation for desired languages:
+
+<img src="images/localization-files-core-1.png" alt="Localization XML files" class="img-thumbnail" />
+
+PhoneBook will be your ProjectName. You can add more XML files by
+copying one XML file and translate to desired language. See [valid
+culture codes](http://www.csharp-examples.net/culture-names/).
+
+When you are adding a new localizable text, add it to the XML file of
+the default language then use in your application (Also, add translated
+values to corresponding XML files). No need to add it to database
+migration code since value in the XML file will be used as default.
+
+**Application languages** are defined in **DefaultLanguagesCreator**
+class. This is used as a **seed data** in Entity Framework Migration.
+So, if you want to **add a new default language**, just add it into
+DefaultLanguagesCreator class. Also, you should add a corresponding XML
+file as described above as default translation.
+
+See
+[localization](https://aspnetboilerplate.com/Pages/Documents/Localization)
+and [language
+management](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Management)
+documentations for more information.
+
+#### EntityFrameworkCore Integration
+
+ASP.NET Zero template uses EntityFramework Core **code-first** and
+**migrations**. PhoneBook**DbContext** (YourProjectDbContext for your
+project) defines the DbContext class. **Migrations** folder contains EF
+migrations.
+
+PhoneBook**RepositoryBase** class is the base class for your custom
+repositories. See entity [framework
+integration](https://aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration)
+documentation for more.
+
+##### Database Migrations
+
+You can use Package Manager Console to add new migrations and update
+your database as you normally do. See EF Core's
+[documentation](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell)
+for details.
+
+#### Exception Handling
+
+ASP.NET Zero uses ABP's [exception
+handling](https://aspnetboilerplate.com/Pages/Documents/AspNet-Core#exception-filter)
+system. Thus, you don't need to handle & care about exceptions in most
+time.
+
+ASP.NET Zero solution adds **exception handling middlewares** in the
+**Startup** class like that:
+
+    if (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+    else
+    {
+        app.UseStatusCodePagesWithRedirects("~/Error?statusCode={0}");
+        app.UseExceptionHandler("/Error");
+    }
+
+So, you get a nicely formatted exception page in development and a more
+user friendly error page in production. See **ErrorController** and it's
+related views (**Views\\Error**) for details.
+
+#### User Secrets
+
+ASP.NET Core introduced [user
+secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets)
+system to store **sensitive data** in development. ASP.NET Zero uses
+this system (it's configured properly for your solution). You may want
+to use a different connection string (or social media API keys) in
+development and do not want to add these secret data in your
+appsettings.json in the project (and do not want to commit these
+sensitive information to your source control system). Then use secret
+manager tool to store this sensitive information in your local computer
+and allow your application to read them from your local computer if
+available.
+
+For example, you can use the following command, in Windows **command
+prompt** in the location of **Core** project, to change connection
+string for your local development environment:
+
+    dotnet user-secrets set ConnectionStrings:Default "Server=1.2.3.4;Database=MyProjectDevDb;User=sa;Password=12345678"
+
+This user secret value overrides the value in the appsettings.json. See
+ASP.NET's [own
+documentation](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets)
+for details about user secrets.
+
+#### Authorization Provider
+
+Authorization system is based on permissions. **AppPermissions**
+contains constants for permission names and **AppAuthorizationProvider**
+class defines all permissions in the system. We should define a
+permission here before using it in application layer.
+
+See [authorization
+documentation](https://aspnetboilerplate.com/Pages/Documents/Authorization)
+to learn how to configure permissions.
+
+#### Feature Provider
+
+**AppFeatureProvider** class defines features of the application for
+multi-tenant applications. Feature names are defined in **AppFeatures**
+class as contants.
+
+See [feature management
+documentation](https://aspnetboilerplate.com/Pages/Documents/Feature-Management)
+to learn how to define and use features.
+
+#### Setting Provider
+
+Every setting has a unique name. Setting names are defined in
+**AppSettings** class as constants. All settings and their default
+values are defined in **AppSettingProvider** class.
+
+See [setting
+documentation](https://aspnetboilerplate.com/Pages/Documents/Setting-Management)
+to learn how to create and use settings.
+
+#### Navigation Provider
+
+Menus are automatically generated using definitions in
+**AppNavigationProvider** class. We have two menus: **Main** (the main
+menu in the backend application) and **FrontEnd** (Main menu in
+front-end web site).
+
+See [navigation
+documentation](https://aspnetboilerplate.com/Pages/Documents/Navigation)
+for more information.
+
+#### Caching And Redis Cache
+
+ASP.NET Zero uses **in-memory** caching but it's ready to use **Redis**
+as cache server. If you want to enable it, just uncomment the following
+line in your **WebCoreModule** (in your .Web.Core project):
+
+    Configuration.Caching.UseRedis(...);
+
+Redis server should be up & running to be able to use it. See [caching
+documentation](https://aspnetboilerplate.com/Pages/Documents/Caching)
+for more information.
+
+#### Background Jobs And HangFire
+
+ABP framework contains a **background job system** with a **default**
+background job manager. If you want to use
+[Hangfire](http://hangfire.io/) as your background job manager, you can
+easily enable it;
+
+1.  Uncomment **AddHangfire** and **UseHangfireDashboard** and
+    **UseHangfireServer** lines in Startup.cs (of Web.Mvc or Web.Host
+    depending on your case).
+2.  Uncomment Configuration.BackgroundJobs.UseHangfire in
+    ...WebCoreModule.cs class in your .Web.Core project.
+
+**Note**: Hangfire creates it's **own tables** in the database on first
+run. See [background
+job](https://aspnetboilerplate.com/Pages/Documents/Background-Jobs-And-Workers)
+and [hangfire
+integration](https://aspnetboilerplate.com/Pages/Documents/Hangfire-Integration)
+documents for more information.
+
+#### SignalR Integration
+
+SignalR is properly configured and integrated to the startup template.
+Real time notification and chat systems use it. You can direcly use
+SignalR in your applications.
+
+Notice that; As the time being, SignalR [has not been
+released](https://github.com/aspnet/Home/wiki/Roadmap#12) for ASP.NET
+Core yet. We integrated **OWIN** to ASP.NET Core pipeline in order to
+use SignalR in the application. See [SignalR
+integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
+document for more information on SignalR.
+
+#### Logging
+
+ASP.NET Zero uses **Log4Net** for logging as default. Configuration is
+defined in **log4net.config** file in the .Web project. It writes all
+logs to **App\_Data/Logs/Logs.txt** folder of web site as default. When
+you publish your project, remember to configure **write permission** to
+Logs folder.
+
+Check [logging
+documentation](https://aspnetboilerplate.com/Pages/Documents/Logging) to
+see how to inject ILogger and write logs.
+
+#### DTO Mappings
+
+ASP.NET Zero uses [AutoMapper](http://automapper.org/) for DTO to Entity
+mappings (and other types of object-to-object mappings). We use
+[Abp.AutoMapper](https://www.nuget.org/packages/Abp.AutoMapper) library
+that makes usage of AutoMapper simpler and declarative.
+
+For instance, see the DTO class that is used to transfer a tenant
+editing information:
+
+    [AutoMap(typeof (Tenant))]
+    public class TenantEditDto : EntityDto
+    {
+        [Required]
+        [StringLength(Tenant.MaxTenancyNameLength)]
+        public string TenancyName { get; set; }
+    
+        [Required]
+        [StringLength(Tenant.MaxNameLength)]
+        public string Name { get; set; }
+    
+        public bool IsActive { get; set; }
+    }
+
+Here, **AutoMap** attribute automatically creates mapping between
+**TenantEditDto** and **Tenant** classes. Then we can automatically
+convert a Tenant object to TenantEditDto (and vice verse) object as
+shown below:
+
+    [AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
+    public async Task<TenantEditDto> GetTenantForEdit(EntityRequestInput input)
+    {
+        return ObjectMapper.Map<TenantEditDto>(await TenantManager.GetByIdAsync(input.Id));
+    }
+
+<span class="auto-style3">ObjectMapper</span> (this property comes from
+base class, but can be injected as IObjectMapper when you need somewhere
+else) is used to perform mappings.
+
+##### Custom Object Mappings
+
+Attribute based mapping may not be sufficient in some cases. If you need
+to directly use Automapper API to configure your mappings, you should do
+it in **CustomDtoMapper** class.
+
+See [Data Transfer Objects
+documentation](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
+for more information on DTOs.
+
+#### Sending Emails
+
+ASP.NET Zero sends emails to users in some cases (like forgot password
+and email confirmation). Email template is defined in
+**Emailing/EmailTemplates** folder of .Core project (**default.html**).
+You can change default email template by editing this file.
+
+**Email sending** is disabled in DEBUG mode. Because, development
+environment may not be configured properly to send emails. You can
+enable it if you want. It's enabled in RELEASE mode. Check
+*YourProjectName*CoreModule class's PreInitialize method to change it if
+you like.
+
+**.NET Core Compatibility**
+
+Since .NET Core does not support smpt client, ASP.NET Zero uses
+[MailKit](https://github.com/jstedfast/MailKit) to send emails.
+
+#### BinaryObjectManager
+
+User **profile pictures** are stored in database, instead of file
+system. But it's not stored in Users table for performance reasons
+(Users are frequently retrieved from database, but profile pictures are
+rarely needed).
+
+A general-purpose binary saving mechanism built in ASP.NET Zero.
+**BinaryObject** entity can be used to save any type of binary objects
+(byte arrays). Since a profile picture can be converted to a byte array,
+user profile pictures are saved here.
+
+**IBinaryObjectManager** interface defines methods to save, get and
+delete binary objects. **DbBinaryObjectManager** implements it to save
+binary object in database. For example, **ProfileController** uses
+IBinaryObjectManager to get current user's profile picture from
+database.
+
+You can create a different implementation of **IBinaryObjectManager**
+interface to store files in another destination.
+
+#### Soft Deletes
+
+It's common to use the **soft-delete** pattern which is used to not
+delete an entity from database but only mark it as 'deleted'. So, if an
+entity is soft-deleted, it should not be accidentally retrieved into the
+application. ABP's **data filters** make this automatically.
+
+In ASP.NET Zero, most entities are soft-deleted. See ABP's [data filter
+documentation](https://aspnetboilerplate.com/Pages/Documents/Data-Filters)
+for more information about this topic.
+
+#### Bundling, Minifying and Compiling
+
+ASP.NET Zero uses [Bundler & Minifier Visual Studio
+extension](https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40)
+for bundling & minifying script and style files. It should be installed
+in your Visual Studio. **bundleconfig.json** file defines all bundling
+configuration.
+
+ASP.NET Zero also uses [Web Compiler Visual Studio
+extension](https://visualstudiogallery.msdn.microsoft.com/3b329021-cd7a-4a01-86fc-714c2d05bb6c)
+for compiling [LESS](http://lesscss.org/) files to CSS files. This
+extension also should be installed in your Visual Studio.
+**compilerconfig.json** defines all compiling configuration.
+
+See documentation of these extensions to learn to use them.
+
+#### Base Classes
+
+There are some useful base classes used in the application:
+
+-   PhoneBook**AppServiceBase** can be used as a base class for all
+    **application services**.
+-   PhoneBook**DomainServiceBase** can be used as a base class for
+    **domain services**.
+-   PhoneBook**ControllerBase** can be used as a base class for ASP.NET
+    Core **MVC Controllers**.
+-   PhoneBook**RazorPage** can be used as a base class for ASP.NET **MVC
+    Views**. Actually, all views are automatically inherit this since
+    it's defined in **\_ViewImports.cshtml** files. You can add some
+    common properties/methods here to use in all views.
+-   PhoneBook**ServiceBase** can be used as a base class for other
+    service-like classes. UserEmailer class inherits it, for instance.
+-   PhoneBook**RepositoryBase** can be used as a base class for [custom
+    repository](https://aspnetboilerplate.com/Pages/Documents/EntityFramework-Integration#DocCustomRepositoryMethods)
+    implementations.
+
+It's strongly recommended to inherit one of these classes upon your
+needs since they really make Logging, Localization, Authorization...
+easier.
+
+#### CSRF/XSRF Protection
+
+ABP framework simplifies and automates CSRF protection as much as
+possible. ASP.NET Zero template comes with pre-configured and working out
+of the box. For more information please see ABP's [XSRF-CSRF-Protection
+documentation](https://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection#aspnet-core)
+
+#### Versioning
+
+**AppVersionHelper** class is used to define **current version** of the
+application in single place. Version and release date automatically
+shown bottom left corner in the backend application pages. This helps us
+to see running application version always.
+
+### Token Based Authentication
+
+ Any application can authenticate and use any functionality in the
+application as API. For instance, you can create a mobile application
+consumes the same API. In this section, we'll demonstrate usage of the
+API from [Postman](https://www.getpostman.com/docs/introduction) (a
+Google Chrome extension).
+
+#### Authentication
+
+We suggest you to disable two factor authentication for the user which
+will be used for remote authentication. Otherwise, two factor
+authentication flow should be implemented by the client. We assume that
+you have disabled two factor authentication for the **admin** user of
+**default** tenant since we will use it in this sample.
+
+Following headers should be configured for all requests (Abp.TenantId is
+Id of the default tenant. This is not required for single tenant
+applications or if you want to work with host users):
+
+<img src="images/postman-ng2-auth-headers.png" alt="Postman auth headers" class="img-thumbnail" width="523" height="112" />
+
+Then we can send username and password as a **POST** request to
+http://localhost:62114**/api/TokenAuth/Authenticate**
+
+<img src="images/postman-authenticate-core-2.png" alt="Postman get user list" class="img-thumbnail" width="919" height="1023" />
+
+In the returning response, **accessToken** will be used to authorize for
+the API.
+
+#### Using API
+
+After authenticate and get the access token, we can use it to call any
+**authorized** actions. All **services** are available to be used
+remotely. For example, we can use the **User service** to get a **list
+of users**:
+
+<img src="images/postman-getusers-core-2.png" alt="Postman authentication" class="img-thumbnail" width="919" height="1023" />
+
+We sent a GET request to
+http://localhost:62114**/api/services/app/User/GetUsers** and added
+Authorization to the header as "**Bearer &lt;accessToken&gt;**".
+Returning JSON contains the list of users.
+
+### Swagger UI
+
+[Swagger UI](http://swagger.io/swagger-ui/) is **integrated** to ASP.NET
+Zero but **disabled by default**. Swagger UI configuration is located in
+**S**<span class="auto-style3">tartup</span> class in the **.Web**
+project. You can enable it by just uncommenting the related lines:
+
+In Startup.**ConfigureServices** method, enable the following line:
+
+    services.AddSwaggerGen();
+
+And in Startup.Configure method, enable the following lines:
+
+    app.UseSwagger();
+    app.UseSwaggerUi();
+
+You can browse **swagger ui** with this URL: "/**swagger/ui**".
+
+<img src="images/swagger-ui-core.png" alt="Swagger UI" width="974" height="753" />
+
+Thus, anyone (or any application) can explore, test and use the API
+easily.
+
+### Identity Server 4 Integration
+
+[IdentityServer4](http://identityserver.io/) is an OpenID Connect and
+OAuth 2.0 framework for ASP.NET Core. ASP.NET Zero is integrated to
+IdentityServer4. It's **enabled by default**.
+
+#### Configuration
+
+You can enable/disable or configure it from **appsettings.json** file
+
+    "IdentityServer": {
+      "IsEnabled": "true",
+      "Clients": [
+        {
+          "ClientId": "client",
+          "AllowedGrantTypes": [ "password" ],
+          "ClientSecrets": [
+            {
+              "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
+            }
+          ],
+          "AllowedScopes": [ "default-api" ]
+        },
+        {
+          "ClientId": "demo",
+          "ClientName": "MVC Client Demo",
+          "AllowedGrantTypes": [ "hybrid", "client_credentials" ],
+          "RequireConsent": "true",
+          "ClientSecrets": [
+            {
+              "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
+            }
+          ],
+          "RedirectUris": [ "http://openidclientdemo.com:8001/signin-oidc" ],
+          "PostLogoutRedirectUris": [ "http://openidclientdemo.com:8001/signout-callback-oidc" ],
+          "AllowedScopes": [ "openid", "profile", "email", "phone", "default-api" ],
+          "AllowOfflineAccess": "true"
+        }
+      ]
+    }
+
+#### Testing with Client
+
+ASP.NET Zero solution has a sample console application
+(ConsoleApiClient) that can connects to the application, authenticates
+through IdentityServer4 and calls an API.
+
+#### OpenId Connect Integration
+
+Once IdentityServer4 integration is enabled Web.Mvc application becomes
+an OpenId Connect server. That means another web application can use
+standard OpenId Connect protocol to authenticate users with your
+application and get permission to share their information (a.k.a.
+consent screen).
+
+#### More
+
+See [IdentityServer4's own
+documentation](https://identityserver4.readthedocs.io/en/release/) to
+understand and configure IdentityServer4.
+
+### Unit Testing
+
+ASP.NET Zero startup project contains **unit** and **integration**
+tests. Tests are developed using following tools:
+
+-   [xUnit](http://xunit.github.io/) as as testing framework.
+-   [SQLite
+    In-Memory](https://docs.microsoft.com/en-us/ef/core/miscellaneous/testing/sqlite)
+    database for mocking entity framework and database.
+-   [Abp.TestBase](http://www.nuget.org/packages/Abp.TestBase) to
+    simplify integration testing for ABP based applications.
+-   [Shouldly](https://github.com/shouldly/shouldly) as assertion
+    library.
+
+Tests cover **Domain** (core) and **Application** layers of the project.
+Open Test Explorer (Test\\Windows\\Test Explorer in VS main menu) to run
+unit tests:
+
+Some unit tests (tenant creation, edition creation etc.) are only valid
+in multi tenancy concept. You can change
+AbpZeroTemplateConsts.MultiTenancyEnabled to false in order to make your
+application single tenant. Thus, multitenancy related tests will be
+skipped.
+
+<img src="images/unit-tests.png" alt="Some unit tests" class="img-thumbnail" width="555" height="244" />
+
+These unit tests will be a guide to understand the code. Also, they can
+be a model while writing your own unit tests for your application's
+functionalities.
+
+All unit test classes (actually they are integration tests since they
+work integrated to ABP, EntityFramework, AutoMapper and other libraries
+used up to application layer) are derived from **AppTestBase**. It
+initializes ABP system, mocks database using Effort, creates initial
+test data and logins to the application for each tests. It also provides
+some useful common methods for all tests.
+
+Here, a sample unit test in the application:
+
+    public class UserAppService_Delete_Tests : UserAppServiceTestBase
+    {
+        [Fact]
+        public async Task Should_Delete_User()
+        {
+            //Arrange
+            CreateTestUsers();
+    
+            var user = await GetUserByUserNameOrNullAsync("artdent");
+            user.ShouldNotBe(null);
+    
+            //Act
+            await UserAppService.DeleteUser(new IdInput<long>(user.Id));
+    
+            //Assert
+            user = await GetUserByUserNameOrNullAsync("artdent");
+            user.IsDeleted.ShouldBe(true);
+        }
+    }
+
+It creates some users to test and then verifies there is a user named
+"artdent". Then it calls **DeleteUser** method of the **user application
+service** (which is being tested). Finally, checks if user is deleted.
+Here, User is a Soft Delete entity, so it's **IsDeleted** property must
+be true if it's deleted.
+
+You can read [this
+article](http://www.codeproject.com/Articles/871786/Unit-testing-in-Csharp-using-xUnit-Entity-Framewor)
+to understand unit testing better.
+
+### Publishing
+
+**Email Settings**
+
+If you don't configure email settings, some functions may not work (Like
+new tenant registration).
+
+Publishing ASP.NET Zero is not different than any other solution. You
+can use Visual Studio as normally you do.
+
+#### Publish to The Azure
+
+Read [this document](Step-by-step-publish-to-azure-core-mvc.md) to publish to the Azure.
+
+### ASP.NET Zero Power Tools
+
+**ASP.NET Zero Power Tools** creates all related layers (including UI) by defining an entity.
+
+See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
+
+#### Configuration
+
+ASP.NET Zero is properly configured for development. But when you want
+to publish your application to your **test/production environment**, you
+may need to change some configuration in order to make it properly work.
+Each section in this document describes it's own configuration, but we
+will provide a summary here.
+
+Every application in the solution has it's own **appsettings.json** that
+should be independently configured.
+
+##### Web.Mvc Application
+
+-   "**ConnectionStrings:Default**": Database connection string.
+-   "**Abp.RedisCache**": Redis cache settings if you are enabled [Redis
+    cache
+    provider](https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration).
+-   "**App:WebSiteRootAddress**": Root URL of this application.
+-   "**App:RedirectAllowedExternalWebSites**": A comma separated list of
+    root URLs those are allowed to be redirected once user logins. For
+    security reasons, ASP.NET Zero only redirects to local URLs except
+    this list. If you will use the public web site, you should add it's
+    root URL to this list.
+-   "**Authentication**": Authentication settings especially for
+    external login providers.
+-   "**Recaptcha**": Recaptcha settings if you enabled it.
+-   "**IdentityServer**": IdentityServer settings. It's important to
+    disable it if you are not using IdentityServer. If you are using,
+    ensure that you configured proper settings.
+-   "**Payment**": Payment provider settings if you are developing a
+    paid SaaS product.
+
+Web.Public Application
+
+-   "**ConnectionStrings:Default**": Database connection string.
+-   "**App:WebSiteRootAddress**": Root URL of this application (the
+    public web site).
+-   "**App:AdminWebSiteRootAddress**": Root URL of the main (Web.Mvc)
+    application.
+
+Migrator Application
+
+-   "**ConnectionStrings:Default**": Database connection string.
+
+Web.Host Application
+
+-   "**ConnectionStrings:Default**": Database connection string.
+-   "**Abp.RedisCache**": Redis cache settings if you are enabled [Redis
+    cache
+    provider](https://aspnetboilerplate.com/Pages/Documents/Caching#redis-cache-integration).
+-   "**App:**<span class="auto-style3">ServerRootAddress</span>": Root
+    URL of this application.
+-   "**App:ClientRootAddress**": Root URL of the Angular application (if
+    you are using Angular as UI).
+-   "**App:CorsOrigins**": Allowed origins for cross origin requests
+    (splitted by comma).
+-   "**Authentication**": Authentication settings especially for
+    external login providers.
+-   "**IdentityServer**": IdentityServer settings. It's important to
+    disable it if you are not using IdentityServer. If you are using,
+    ensure that you configured proper settings.
+-   "**Payment**": Payment provider settings if you are developing a
+    paid SaaS product.
+
+#### Publishing to IIS
+
+Read [this document](Step-by-step-core-publish-to-iis.md) to publish to the IIS.
+
+#### Publishing to Docker Containers
+
+ASP.NET Zero solution has a **build folder** which contains a Powershell
+script to **build & publish** your solution to the **output** folder. It
+also contains **Docker** files to run your application inside Docker
+containers. These files are very simple, you can improve them based on
+your needs.
+
+#### Penetration Test
+
+Asp.Net Zero (v5) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.7.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world's most popular security tools and is actively maintained by hundreds of international volunteers, see [Security-Report](Security-Report-Core.md) for details.
+
+### Used Library & Frameworks
+
+Many open source frameworks and libraries are used to build ASP.NET Zero
+project. Here, a list of all libraries.
+
+-   Server side
+    -   [ASP.NET Boilerplate Framework &
+        Module-Zero](https://aspnetboilerplate.com)
+    -   [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/)
+    -   [ASP.NET Identity Core (and social login
+        extensions)](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity)
+    -   [SignalR](http://www.asp.net/signalr)
+    -   [EntityFramework
+        Core](https://docs.microsoft.com/en-us/ef/core/index)
+    -   [Castle Windsor](http://www.castleproject.org/projects/windsor/)
+    -   [AutoMapper](http://automapper.org/)
+    -   [IdentityServer4](http://identityserver.io/)
+    -   [HangFire](http://hangfire.io/)
+    -   [Log4Net](https://logging.apache.org/log4net/)
+    -   [PaulMiami reCAPTCHA](https://github.com/PaulMiami/reCAPTCHA)
+    -   [xUnit](https://xunit.github.io/)
+    -   [Swashbuckle](https://github.com/domaindrivendev/Ahoy)
+    -   [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
+    -   [System.Linq.Dynamic.Core](https://github.com/StefH/System.Linq.Dynamic.Core)
+    -   [EPPlus](http://epplus.codeplex.com/)
+-   Client side
+    -   [Metronic Theme](http://keenthemes.com/metronic-theme/)
+    -   [Twitter Bootstrap](http://getbootstrap.com/)
+    -   [Bootstrap Hover
+        Dropdown](https://github.com/CWSpear/bootstrap-hover-dropdown)
+    -   [Bootstrap Date Range
+        Picker](https://github.com/dangrossman/bootstrap-daterangepicker)
+    -   [Bootstrap Switch](http://www.bootstrap-switch.org/)
+    -   [Bootstrap
+        Select](http://silviomoreto.github.io/bootstrap-select)
+    -   [jQuery](http://jquery.com/)
+    -   [jQuery UI](http://jqueryui.com/)
+    -   [jQuery BlockUI](http://malsup.com/jquery/block/)
+    -   [jQuery Slimscroll](http://rocha.la/jQuery-slimScroll)
+    -   [jQuery Sparkline](http://omnipotent.net/jquery.sparkline/)
+    -   [jQuery Uniform](https://github.com/pixelmatrix/uniform)
+    -   [jQuery Validation](http://jqueryvalidation.org/)
+    -   [Datatables](https://datatables.net/)
+    -   [jQuery Ajax Forms](http://malsup.com/jquery/form/)
+    -   [jQuery Timeago](https://github.com/rmm5t/jquery-timeago)
+    -   [Json2](https://github.com/douglascrockford/JSON-js)
+    -   [Jcrop](https://github.com/tapmodo/Jcrop)
+    -   [LocalForage](https://github.com/localForage/localForage)
+    -   [Js Cookie](https://github.com/js-cookie/js-cookie)
+    -   [Moment.js](http://momentjs.com/)
+    -   [Moment.js Timezone](http://momentjs.com/timezone/)
+    -   [Mustache.js](https://github.com/janl/mustache.js)
+    -   [Underscore.js](http://underscorejs.org/)
+    -   [JsTree](https://www.jstree.com/)
+    -   [Morris](http://morrisjs.github.io/morris.js/)
+    -   [Respondjs](https://github.com/scottjehl/Respond)
+    -   [Font-Awesome](http://fontawesome.io/)
+    -   [Famfamfam flags](http://www.famfamfam.com/lab/icons/flags/)
+    -   [Simple Line
+        Icons](http://thesabbir.github.io/simple-line-icons/)
+    -   [SpinJs](http://fgnass.github.io/spin.js/)
+    -   [SweetAlert](http://t4t5.github.io/sweetalert/)
+    -   [Toastr](http://codeseven.github.io/toastr/)
