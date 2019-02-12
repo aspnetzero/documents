@@ -127,8 +127,8 @@ API:
 -   **appBaseUrl**: Used to configure the base address of the client
     application. Default value: http://localhost:4200
 
-**appBaseUrl** is configured since we use it to define format of our
-URL. 
+The purpose of **appBaseUrl** is to enable the Angular client to decompose
+the browser address into tenant-name + base-url. 
 
 #### Subdomain Multi-Tenancy:
 If we want to use the tenancy name as a subdomain for a multi-tenant
