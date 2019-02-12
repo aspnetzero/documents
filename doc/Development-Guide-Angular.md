@@ -117,28 +117,45 @@ In addition to those fundamental modules, there are some share modules:
 
 ### Configuration
 
-Angular solution contains src/assets/**appconfig.json** file which
-contains some configuration for the client side:
+The Angular solution file src/assets/**appconfig.json** contains some 
+configuration for the client side. At runtime, the client scripts will 
+download this file, and use it to calculate the address of the server-side
+API:
 
--   **remoteServiceBaseUrl**: Used to configure base address of the
+-   **remoteServiceBaseUrl**: Used to configure the base address of the
     server side APIs. Default value: http://localhost:22742
--   **appBaseUrl**: Used to configure base address of the client
+-   **appBaseUrl**: Used to configure the base address of the client
     application. Default value: http://localhost:4200
 
 **appBaseUrl** is configured since we use it to define format of our
-URL. If we want to use tenancy name as subdomain for a multi-tenant
+URL. 
+
+#### Subdomain Multi-Tenancy:
+If we want to use the tenancy name as a subdomain for a multi-tenant
 application then we can define **appBaseUrl** as
 
 http://**{TENANCY\_NAME}**.mydomain.com
 
 {TENANCY\_NAME} is the place holder here for tenant names. Tenancy name
-can also be configured for **remoteServiceBaseUrl** as similar. To make
-tenancy name subdomains properly work, we should also make two
-configurations beside the application:
+must be similarly configured for **remoteServiceBaseUrl**. 
+
+It's important to understand that subdomain multi-tenancy is a function
+of the `DomainTenantResolveContributor` ***server-side*** module.
+This means that the server API **must** be accessed via a sub-domain that
+conforms to the format you have defined during your configuration of 
+AspNetBoilerplate (see 
+[these notes](https://github.com/aspnetboilerplate/aspnetboilerplate/blob/dev/doc/WebSite/Multi-Tenancy.md#determining-current-tenant) regarding preinitialization).
+
+<img src="images/angular2-core-subdomain-tenant-resolution-sequence.png" alt="Angular ASP.NET Core Sub-Domain Tenancy Overview" class="img-thumbnail" width="540" height="379" />
+
+To complete the setup of subdomain tenancy, we should also make two
+infrastructural configurations:
 
 1.  We should configure DNS to redirect all subdomains to a static IP
     address. To declare 'all subdomains', we can use wildcard like
-    **\*.mydomain.com**.
+    **\*.mydomain.com**. Note that if you have a split Angular/API
+    setup, then you will need 2 subdomain formats, such as:
+    **\*.app.mydomain.com** and **\*.api.mydomain.com**
 2.  We should configure IIS to bind this static IP to our application.
 
 There may be other ways of doing it but this is the most simple way.
