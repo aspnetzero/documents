@@ -130,7 +130,8 @@ API:
 The purpose of **appBaseUrl** is to enable the Angular client to decompose
 the browser address into tenant-name + base-url. 
 
-#### Subdomain Multi-Tenancy:
+#### Subdomain Multi-Tenancy
+
 If we want to use the tenancy name as a subdomain for a multi-tenant
 application then we can define **appBaseUrl** as
 
@@ -140,11 +141,11 @@ http://**{TENANCY\_NAME}**.mydomain.com
 must be similarly configured for **remoteServiceBaseUrl**. 
 
 It's important to understand that subdomain multi-tenancy is a function
-of the `DomainTenantResolveContributor` ***server-side*** module.
+of the `DomainTenantResolveContributor` server-side class.
 This means that the server API **must** be accessed via a sub-domain that
 conforms to the format you have defined during your configuration of 
 AspNetBoilerplate (see 
-[these notes](https://github.com/aspnetboilerplate/aspnetboilerplate/blob/dev/doc/WebSite/Multi-Tenancy.md#determining-current-tenant) regarding preinitialization).
+[Multi-Tenancy](https://github.com/aspnetboilerplate/aspnetboilerplate/blob/dev/doc/WebSite/Multi-Tenancy.md#determining-current-tenant) regarding preinitialization).
 
 <img src="images/angular2-core-subdomain-tenant-resolution-sequence.png" alt="Angular ASP.NET Core Sub-Domain Tenancy Overview" class="img-thumbnail" width="540" height="379" />
 
@@ -154,8 +155,8 @@ infrastructural configurations:
 1.  We should configure DNS to redirect all subdomains to a static IP
     address. To declare 'all subdomains', we can use wildcard like
     **\*.mydomain.com**. Note that if you have a split Angular/API
-    setup, then you will need 2 subdomain formats, such as:
-    **\*.app.mydomain.com** and **\*.api.mydomain.com**
+    setup, then you will need 2 subdomain formats, such as
+    **\*.app.mydomain.com** and **\*.api.mydomain.com**.
 2.  We should configure IIS to bind this static IP to our application.
 
 There may be other ways of doing it but this is the most simple way.
