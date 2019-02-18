@@ -1,86 +1,12 @@
-# Create And Edit In The Page Without Popup Modal
+# Converting Create/Edit Modal to Page
 
-You can change "create and edit" modals to full pages. In this article, we will explain how to do this for "create/edit" tenant modals.
+In this document we will explain how to convert AspNet Zero's tenant create & edit modals to regular Angular pages.
 
 ## Create Tenant
 
-### Add route for tenant creation page
-
-Add following path to `admin-routing.module.ts` for create tenant page.
-
-````ts
-
-...
-
-import { CreateTenantModalComponent } from './tenants/create-tenant-modal.component';
-
-...
-
-@NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: '',
-                children: [
-
-                    ...
-
-                    { path: 'tenants/create-tenant', component: CreateTenantModalComponent, data: { permission: 'Pages.Tenants.Create' } },
-
-                    ...
-
-                ]
-            }
-        ])
-    ],
-    exports: [
-        RouterModule
-    ]
-})
-...
-````
-
-### Remove createTenantModal component
-
-Remove following line `tenants.component.html`.
-
-````html
-<createTenantModal #createTenantModal (modalSave)="getTenants()"></createTenantModal>
-````
-
-And following line from `tenants.component.ts`
-
-````ts
-@ViewChild('createTenantModal') createTenantModal: CreateTenantModalComponent;
-````
-
-### Navigate to the tenant creation page
-
-Import router.
-
-````ts
-import { ActivatedRoute, Router } from '@angular/router';
-
-constructor(
-        ...
-        private _router: Router,
-        ...
-    ) {
-        ...
-    }
-````
-
-And navigate to tenant creation page.
-
-````ts
-createTenant(): void {
-        this._router.navigate(['app/admin/tenants/create-tenant']);
-}
-````
-
 ### Create tenant page html
 
-Remove all modal related html elements and use html elements like other pages. There is no need to change any form and form elements. Latest tenant creation page look like following:
+First, create a new html page named **create-tenant.component.html **with the content below. This is an empty page template for AspNet Zero's Angular pages.
 
 ````html
 <div [@routerTransition]>
@@ -99,7 +25,42 @@ Remove all modal related html elements and use html elements like other pages. T
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
-                <form #tenantCreateForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+````
+
+After doing that, copy the form element from **create-tenant-modal.component.html** into div with "**m-portlet__body**" class. Now, there are still modal related html code in our file, so we need to remove them.
+
+First, remove the html item with **modal-header** class since we don't need it anymore.
+
+Now, move all content of the div with class **modal-body** into the **form** tag. After that, we can remove the div with class **modal-body**. 
+
+Finally, change the class of the div which contains Save and Cancel buttons from **modal-footer** to **m--margin-top-40**.
+
+Here is final version of **create-tenant.component.html**:
+
+````html
+<div [@routerTransition]>
+    <div class="m-subheader">
+        <div class="row align-items-center">
+            <div class="mr-auto col-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    <span>{{"CreateNewTenant" | localize}}</span>
+                </h3>
+                <span class="m-section__sub">
+                    {{"CreateTenantHeaderInfo" | localize}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="m-content">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__body">
+                <form #tenantCreateForm="ngForm" role="form" novalidate class="form-validation" *ngIf="active" (submit)="save()">
                     <div class="form-group">
                         <label for="TenancyName">{{"TenancyName" | localize}} *</label>
                         <input id="TenancyName" #tenancyNameInput="ngModel" class="form-control" type="text" [ngClass]="{'edited':tenant.tenancyName}" name="tenancyName" [(ngModel)]="tenant.tenancyName" #tenancyName="ngModel" required maxlength="64" pattern="^[a-zA-Z][a-zA-Z0-9_-]{1,}$">
@@ -108,11 +69,13 @@ Remove all modal related html elements and use html elements like other pages. T
                     <div>
                         <span class="help-block text-danger" *ngIf="!tenancyName.valid && !tenancyName.pristine">{{"TenantName_Regex_Description" | localize}}</span>
                     </div>
+
                     <div class="form-group">
                         <label for="Name">{{"TenantName" | localize}} *</label>
                         <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control" [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
                         <validation-messages [formCtrl]="nameInput"></validation-messages>
                     </div>
+
                     <div class="m-checkbox-list">
                         <label class="m-checkbox">
                             <input id="CreateTenant_UseHostDb" type="checkbox" name="UseHostDb" [(ngModel)]="useHostDb">
@@ -120,16 +83,19 @@ Remove all modal related html elements and use html elements like other pages. T
                             <span></span>
                         </label>
                     </div>
+
                     <div class="form-group" *ngIf="!useHostDb">
                         <label for="DatabaseConnectionString">{{"DatabaseConnectionString" | localize}} *</label>
                         <input id="DatabaseConnectionString" #connectionStringInput="ngModel" type="text" name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString" [ngClass]="{'edited':tenant.connectionString}" required maxlength="1024">
                         <validation-messages [formCtrl]="connectionStringInput"></validation-messages>
                     </div>
+
                     <div class="form-group">
                         <label for="AdminEmailAddress">{{"AdminEmailAddress" | localize}} *</label>
                         <input id="AdminEmailAddress" #adminEmailAddressInput="ngModel" type="email" name="AdminEmailAddress" class="form-control" [(ngModel)]="tenant.adminEmailAddress" [ngClass]="{'edited':tenant.adminEmailAddress}" required pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" maxlength="256">
                         <validation-messages [formCtrl]="adminEmailAddressInput"></validation-messages>
                     </div>
+
                     <div class="m-checkbox-list">
                         <label class="m-checkbox">
                             <input id="CreateTenant_SetRandomPassword" type="checkbox" name="SetRandomPassword" [(ngModel)]="setRandomPassword">
@@ -137,6 +103,7 @@ Remove all modal related html elements and use html elements like other pages. T
                             <span></span>
                         </label>
                     </div>
+
                     <div class="form-group" *ngIf="!setRandomPassword">
                         <label for="AdminPassword">{{"AdminPassword" | localize}}</label>
                         <input id="AdminPassword" type="password" name="adminPassword" class="form-control" id="adminPassword"
@@ -144,6 +111,7 @@ Remove all modal related html elements and use html elements like other pages. T
                                #adminPassword="ngModel" validateEqual="adminPasswordRepeat" reverse="true" maxlength="32" [requireDigit]="passwordComplexitySetting.requireDigit" [requireLowercase]="passwordComplexitySetting.requireLowercase"
                                [requireUppercase]="passwordComplexitySetting.requireUppercase" [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric" [requiredLength]="passwordComplexitySetting.requiredLength">
                     </div>
+
                     <div [hidden]="tenantCreateForm.form.valid || tenantCreateForm.form.pristine">
                         <ul class="help-block text-danger" *ngIf="tenantCreateForm.controls['adminPassword'] && tenantCreateForm.controls['adminPassword'].errors">
                             <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireDigit">{{"PasswordComplexity_RequireDigit_Hint" | localize}}</li>
@@ -153,6 +121,7 @@ Remove all modal related html elements and use html elements like other pages. T
                             <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requiredLength">{{"PasswordComplexity_RequiredLength_Hint" | localize:passwordComplexitySetting.requiredLength}}</li>
                         </ul>
                     </div>
+
                     <div class="form-group" *ngIf="!setRandomPassword">
                         <label for="AdminPasswordRepeat">{{"AdminPasswordRepeat" | localize}}</label>
                         <input id="AdminPasswordRepeat" type="password" name="adminPasswordRepeat" class="form-control"
@@ -162,6 +131,7 @@ Remove all modal related html elements and use html elements like other pages. T
                                validateEqual="adminPassword"
                                maxlength="32">
                     </div>
+
                     <div [hidden]="tenantCreateForm.form.valid || tenantCreateForm.form.pristine">
                         <ul class="help-block text-danger" *ngIf="tenantCreateForm.controls['adminPasswordRepeat'] && tenantCreateForm.controls['adminPasswordRepeat'].errors">
                             <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireDigit">{{"PasswordComplexity_RequireDigit_Hint" | localize}}</li>
@@ -172,12 +142,14 @@ Remove all modal related html elements and use html elements like other pages. T
                             <li [hidden]="tenantCreateForm.controls['adminPasswordRepeat'].valid">{{"PasswordsDontMatch" | localize}}</li>
                         </ul>
                     </div>
+
                     <div class="form-group">
                         <label for="edition">{{"Edition" | localize}}</label>
                         <select id="edition" name="edition" class="form-control" [(ngModel)]="tenant.editionId" (change)="onEditionChange($event)">
                             <option *ngFor="let edition of editions" [value]="edition.value">{{edition.displayText}}</option>
                         </select>
                     </div>
+
                     <div [hidden]="!isSubscriptionFieldsVisible" class="m-checkbox-list">
                         <label for="CreateTenant_IsUnlimited" class="m-checkbox">
                             <input id="CreateTenant_IsUnlimited" type="checkbox" name="IsUnlimited" [(ngModel)]="isUnlimited" />
@@ -185,10 +157,12 @@ Remove all modal related html elements and use html elements like other pages. T
                             <span></span>
                         </label>
                     </div>
+
                     <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group" [ngClass]="{'has-error': !subscriptionEndDateIsValid()}">
                         <label for="SubscriptionEndDate">{{"SubscriptionEndDate" | localize}}</label>
                         <input id="SubscriptionEndDate" type="text" #SubscriptionEndDateUtc name="SubscriptionEndDateUtc" class="form-control" bsDatepicker [(ngModel)]="tenant.subscriptionEndDateUtc" autocomplete="off">
                     </div>
+
                     <div [hidden]="!isSubscriptionFieldsVisible" class="m-checkbox-list">
                         <label for="CreateTenant_IsInTrialPeriod" class="m-checkbox">
                             <input id="CreateTenant_IsInTrialPeriod" type="checkbox" name="IsInTrialPeriod" [disabled]="isSelectedEditionFree" [(ngModel)]="tenant.isInTrialPeriod">
@@ -196,6 +170,7 @@ Remove all modal related html elements and use html elements like other pages. T
                             <span></span>
                         </label>
                     </div>
+
                     <div class="m-checkbox-list">
                         <label for="CreateTenant_ShouldChangePasswordOnNextLogin" class="m-checkbox">
                             <input id="CreateTenant_ShouldChangePasswordOnNextLogin" type="checkbox" name="ShouldChangePasswordOnNextLogin" [(ngModel)]="tenant.shouldChangePasswordOnNextLogin">
@@ -214,7 +189,7 @@ Remove all modal related html elements and use html elements like other pages. T
                         </label>
                     </div>
                     <div class="m--margin-top-40">
-                        <button type="button" [disabled]="saving" class="btn btn-secondary" (click)="cancel()">{{"Cancel" | localize}}</button>
+                        <button type="button" [disabled]="saving" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
                         <button type="submit" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')" class="btn btn-primary" [disabled]="!tenantCreateForm.form.valid || saving || !subscriptionEndDateIsValid()"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
                     </div>
                 </form>
@@ -226,12 +201,38 @@ Remove all modal related html elements and use html elements like other pages. T
 
 ### Create tenant page ts
 
+Create a new file next to html file we have just created using the name **create-tenant.component.ts**. Copy the content of **create-tenant-modal.component.ts** to newly created file. Modal page uses two methods named `show` and `onShown` which are not available in regular pages. So, we will implement `OnInit` and `AfterViewInit` in our Angular component and move the code of show method into `ngOnInit` and move the code of `onShown` into `ngAfterViewInit`. After doing that, we can delete empty `show` and `onShown` methods.
+
 Import `OnInit` and `AfterViewInit` and move lines from `show` to `ngOnInit` and move lines from `onShown` to `ngAfterViewInit`.
 
-Remove all modal related code. Latest tenant creation page ts looks:
+Then, change the value of `templateUrl` from **./create-tenant-modal.component.html** to **./create-tenant.component.html**. You can also delete selector property of component definition since it is not mandatory. 
+
+Since we are using animation when routing to create tenant page, import `appModuleAnimation` into the component and use it as the value for `animations` of the component definition.
 
 ````ts
-import { Component, Injector, OnInit, AfterViewInit } from '@angular/core';
+// other imports.
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+
+@Component({
+    templateUrl: './create-tenant.component.html',
+    animations: [appModuleAnimation()]
+})
+// component definition.
+````
+
+
+Also delete modal and modalSave properties since we don't need them anymore. Also, delete their usages in the component.
+
+When the tenant is created, instead of closing the modal, we need to redirect user to tenant list. In order to do that, inject `Router` into our component and add below line into the close method of the component.
+
+`this._router.navigate(['app/admin/tenants']);`
+
+After all, you can delete **create-tenant-modal.component.ts** from your project.
+
+Here is final version of **create-tenant.component.ts**:
+
+````ts
+import { Component, EventEmitter, Injector, Output, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     CommonLookupServiceProxy, CreateTenantInput,
@@ -239,16 +240,18 @@ import {
     TenantServiceProxy, SubscribableEditionComboboxItemDto
 } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
+import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
-import {  Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { Router } from '@angular/router';
 
 @Component({
-    templateUrl: './create-tenant-modal.component.html',
+    templateUrl: './create-tenant.component.html',
     animations: [appModuleAnimation()]
 })
-export class CreateTenantModalComponent extends AppComponentBase implements OnInit, AfterViewInit {
+export class CreateTenantComponent extends AppComponentBase implements OnInit, AfterViewInit {
 
+    active = false;
     saving = false;
     setRandomPassword = true;
     useHostDb = true;
@@ -269,16 +272,17 @@ export class CreateTenantModalComponent extends AppComponentBase implements OnIn
         super(injector);
     }
 
+    ngAfterViewInit(): void {
+        document.getElementById('TenancyName').focus();
+    }
+
     ngOnInit(): void {
+        this.active = true;
+        this.init();
+
         this._profileService.getPasswordComplexitySetting().subscribe(result => {
             this.passwordComplexitySetting = result.setting;
         });
-
-        this.init();
-    }
-
-    ngAfterViewInit(): void {
-        document.getElementById('TenancyName').focus();
     }
 
     init(): void {
@@ -361,8 +365,13 @@ export class CreateTenantModalComponent extends AppComponentBase implements OnIn
             .pipe(finalize(() => this.saving = false))
             .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
-                this._router.navigate(['app/admin/tenants']);
+                this.close();
             });
+    }
+
+    close(): void {
+        this.active = false;
+        this._router.navigate(['app/admin/tenants']);
     }
 
     onEditionChange(): void {
@@ -384,10 +393,94 @@ export class CreateTenantModalComponent extends AppComponentBase implements OnIn
             this.isSubscriptionFieldsVisible = true;
         }
     }
+}
+````
 
-    cancel(): void {
-        this._router.navigate(['app/admin/tenants']);
+### Add route for tenant creation page
+
+In order to navigate to create page, we need to add route to our route config. Add following path to `admin-routing.module.ts` for create tenant page.
+
+````ts
+
+...
+
+import { CreateTenantComponent } from './tenants/create-tenant.component';
+
+...
+
+@NgModule({
+    imports: [
+        RouterModule.forChild([
+            {
+                path: '',
+                children: [
+
+                    ...
+
+                    { path: 'tenants/create-tenant', component: CreateTenantComponent, data: { permission: 'Pages.Tenants.Create' } },
+
+                    ...
+
+                ]
+            }
+        ])
+    ],
+    exports: [
+        RouterModule
+    ]
+})
+...
+````
+
+### Remove createTenantModal component
+
+Remove following line from `tenants.component.html`.
+
+````html
+<createTenantModal #createTenantModal (modalSave)="getTenants()"></createTenantModal>
+````
+
+And following lines from `tenants.component.ts`
+
+````ts
+@ViewChild('createTenantModal') createTenantModal: CreateTenantModalComponent;
+````
+
+### Add CreateTenantComponent to AdminModule
+
+In order to uses newly created CreateTenantComponent, we need to add it to our AdminModule.
+
+Replace
+
+`import { CreateTenantModalComponent } from './create-tenant-modal.component';`
+
+with
+
+`import { CreateTenantComponent } from './create-tenant.component';`
+
+and use `CreateTenantComponent` instead of `CreateTenantModalComponent` in the imports list of AdminModule.
+
+### Navigate to the tenant creation page
+
+Import router into `tenants.component.ts`;
+
+````ts
+import { ActivatedRoute, Router } from '@angular/router';
+
+constructor(
+        ...
+        private _router: Router,
+        ...
+    ) {
+        ...
     }
+````
+
+And navigate to tenant creation page.
+
+````ts
+createTenant(): void {
+        this._router.navigate(['app/admin/tenants/create-tenant']);
 }
 ````
 
