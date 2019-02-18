@@ -102,6 +102,10 @@
         {
           "text": "Extending Existing Entities",
           "path": "Extending-Existing-Entities.md"
+        },
+		{
+          "text": "Converting Create & Edit Modals to Angular Pages",
+          "path": "Create-Edit-In-The-Page.md"
         }
       ]
     },
