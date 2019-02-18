@@ -201,7 +201,9 @@ Here is final version of **create-tenant.component.html**:
 
 ### Create tenant page ts
 
-Create a new file next to html file we have just created using the name **create-tenant.component.ts**. Copy the content of **create-tenant-modal.component.ts** to newly created file. Modal page uses two methods named `show` and `onShown` which are not available in regular pages. So, we will implement `OnInit` and `AfterViewInit` in our Angular component and move the code of show method into `ngOnInit` and move the code of `onShown` into `ngAfterViewInit`. After doing that, we can delete empty `show` and `onShown` methods.
+Create a new file next to html file we have just created using the name **create-tenant.component.ts**. Copy the content of **create-tenant-modal.component.ts** to newly created file. Change the component name from `CreateTenantModalComponent` to `CreateTenantComponent`.
+
+Modal page uses two methods named `show` and `onShown` which are not available in regular pages. So, we will implement `OnInit` and `AfterViewInit` in our Angular component and move the code of show method into `ngOnInit` and move the code of `onShown` into `ngAfterViewInit`. After doing that, we can delete empty `show` and `onShown` methods.
 
 Import `OnInit` and `AfterViewInit` and move lines from `show` to `ngOnInit` and move lines from `onShown` to `ngAfterViewInit`.
 
@@ -221,7 +223,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 ````
 
 
-Also delete modal and modalSave properties since we don't need them anymore. Also, delete their usages in the component.
+Also delete **modal** and **modalSave** properties since we don't need them anymore. Also, delete their usages in the component.
 
 When the tenant is created, instead of closing the modal, we need to redirect user to tenant list. In order to do that, inject `Router` into our component and add below line into the close method of the component.
 
@@ -452,11 +454,11 @@ In order to uses newly created CreateTenantComponent, we need to add it to our A
 
 Replace
 
-`import { CreateTenantModalComponent } from './create-tenant-modal.component';`
+`import { CreateTenantModalComponent } from './tenants/create-tenant-modal.component';`
 
 with
 
-`import { CreateTenantComponent } from './create-tenant.component';`
+`import { CreateTenantComponent } from './tenants/create-tenant.component';`
 
 and use `CreateTenantComponent` instead of `CreateTenantModalComponent` in the imports list of AdminModule.
 
@@ -486,87 +488,11 @@ createTenant(): void {
 
 ## Edit Tenant
 
-Tenant edit is the almost same like tenant creation. There is one different thing that you should pass tenant id to router.
-
-### Add route for tenant edit page
-
-Add following path to `admin-routing.module.ts` for edit tenant page.
-
-````ts
-
-...
-
-import { EditTenantModalComponent } from './tenants/edit-tenant-modal.component';
-
-...
-
-@NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: '',
-                children: [
-
-                    ...
-
-                    { path: 'tenants/edit-tenant', component: EditTenantModalComponent, data: { permission: 'Pages.Tenants.Edit' } },
-
-                    ...
-
-                ]
-            }
-        ])
-    ],
-    exports: [
-        RouterModule
-    ]
-})
-...
-````
-
-### Remove editTenantModal component
-
-Remove following line `tenants.component.html`.
-
-````html
-<editTenantModal #editTenantModal (modalSave)="getTenants()"></editTenantModal>
-````
-
-And following line from `tenants.component.ts`
-
-````ts
-@ViewChild('editTenantModal') editTenantModal: EditTenantModalComponent;
-````
-
-### Navigate to the tenant edit page
-
-Import router.
-
-````ts
-import { ActivatedRoute, Router } from '@angular/router';
-
-constructor(
-        ...
-        private _router: Router,
-        ...
-    ) {
-        ...
-    }
-````
-
-And navigate to tenant edit page.
-
-````ts
-editTenant(tenantId): void {
-        this._router.navigate(['app/admin/tenants/edit-tenant'], { queryParams: { tenantId: tenantId } });
-    }
-````
-
 ### Edit tenant page html
 
-Remove all modal related html elements and use html elements like other pages. There is no need to change any form and form elements. Latest tenant edit page look like following:
+First, create a new html page named **edit-tenant.component.html **with the content below. 
 
-````html
+````ts
 <div [@routerTransition]>
     <div class="m-subheader">
         <div class="row align-items-center">
@@ -583,7 +509,42 @@ Remove all modal related html elements and use html elements like other pages. T
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
-                <form #tenantEditForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()" *ngIf="tenant">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+````
+
+After doing that, copy the form element from **edit-tenant-modal.component.html** into div with "**m-portlet__body**" class. Now, there are still modal related html code in our file, so we need to remove them.
+
+First, remove the html item with **modal-header** class since we don't need it anymore.
+
+Now, move all content of the div with class **modal-body** into the **form** tag. After that, we can remove the div with class **modal-body**. 
+
+Finally, change the class of the div which contains Save and Cancel buttons from **modal-footer** to **m--margin-top-40**.
+
+Here is final version of **edit-tenant.component.html**:
+
+`````html
+<div [@routerTransition]>
+    <div class="m-subheader">
+        <div class="row align-items-center">
+            <div class="mr-auto col-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    <span>{{"EditTenant" | localize}}: {{tenant.tenancyName}}</span>
+                </h3>
+                <span class="m-section__sub">
+                    {{"EditTenantHeaderInfo" | localize}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="m-content">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__body">
+                <form #tenantEditForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()" *ngIf="tenant && active">
                     <div class="form-group">
                         <label for="Name">{{"TenantName" | localize}} *</label>
                         <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control" [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
@@ -634,7 +595,7 @@ Remove all modal related html elements and use html elements like other pages. T
                         </label>
                     </div>
                     <div class="m--margin-top-40">
-                        <button type="button" [disabled]="saving" class="btn btn-secondary" (click)="cancel()">{{"Cancel" | localize}}</button>
+                        <button type="button" [disabled]="saving" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
                         <button type="submit" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')" class="btn btn-primary" [disabled]="!tenantEditForm.form.valid || saving || !subscriptionEndDateUtcIsValid"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
                     </div>
                 </form>
@@ -642,19 +603,75 @@ Remove all modal related html elements and use html elements like other pages. T
         </div>
     </div>
 </div>
-````
+`````
 
 ### Edit tenant page ts
 
+Create a new file next to html file we have just created using the name **edit-tenant.component.ts**. Copy the content of **edit-tenant-modal.component.ts** to newly created file. Change the component name from `EditTenantModalComponent` to `EditTenantComponent`.
+
+Modal page uses two methods named `show` and `onShown` which are not available in regular pages. So, we will implement `OnInit` and `AfterViewInit` in our Angular component and move the code of show method into `ngOnInit` and move the code of `onShown` into `ngAfterViewInit`. After doing that, we can delete empty `show` and `onShown` methods.
+
 Import `OnInit` and `AfterViewInit` and move lines from `show` to `ngOnInit` and move lines from `onShown` to `ngAfterViewInit`.
 
-Additionaly, you should get tenant id parameter in `ngOnInit` that is different than tenant creation page.
+Then, change the value of `templateUrl` from **./edit-tenant-modal.component.html** to **./edit-tenant.component.html**. You can also delete selector property of component definition since it is not mandatory. 
+
+Since we are using animation when routing to create tenant page, import `appModuleAnimation` into the component and use it as the value for `animations` of the component definition.
+
+````ts
+// other imports.
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+
+@Component({
+    templateUrl: './create-tenant.component.html',
+    animations: [appModuleAnimation()]
+})
+// component definition.
+````
+
+`EditTenantModalComponent` was getting tenantId as a parameter of it's show method. We will be getting tenantId parameter from query string. In order to do this, first inject `ActivatedRoute` into `EditTenantComponent` like below;
+
+````typescript
+// other imports
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+    templateUrl: './edit-tenant-modal.component.html',
+    animations: [appModuleAnimation()]
+})
+export class EditTenantComponent extends AppComponentBase implements OnInit, AfterViewInit {
+
+	// other code blocks...
+    
+    constructor(
+        injector: Injector,
+        private _tenantService: TenantServiceProxy,
+        private _commonLookupService: CommonLookupServiceProxy,
+        private _activatedRoute: ActivatedRoute
+    ) {
+        super(injector);
+    }
+	
+	// other code blocks...
+}	
+````
+
+and get it's value from query string in the ngOnInit like below;
 
 ````ts
 var tenantId = this._activatedRoute.snapshot.queryParams['tenantId'];
 ````
 
-Remove all modal related code. And the latest tenant edit page ts looks:
+Also delete tenantId parameter from ngOnInit method since we are now getting it from query parameters.
+
+Also delete **modal** and **modalSave** properties since we don't need them anymore. Also, delete their usages in the component.
+
+When the tenant is edited, instead of closing the modal, we need to redirect user to tenant list. In order to do that, inject `Router` into our component and add below line into the close method of the component.
+
+`this._router.navigate(['app/admin/tenants']);`
+
+After all, you can delete **edit-tenant-modal.component.ts** from your project.
+
+Here is final version of **edit-tenant.component.ts**:
 
 ````ts
 import { Component, ElementRef, EventEmitter, Injector, Output, ViewChild, OnInit, AfterViewInit } from '@angular/core';
@@ -664,20 +681,19 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'editTenantModal',
-    templateUrl: './edit-tenant-modal.component.html'
+    templateUrl: './edit-tenant.component.html',
+    animations: [appModuleAnimation()]
 })
-export class EditTenantModalComponent extends AppComponentBase implements OnInit, AfterViewInit {
+export class EditTenantComponent extends AppComponentBase implements OnInit, AfterViewInit {
 
     @ViewChild('nameInput') nameInput: ElementRef;
-    @ViewChild('editModal') modal: ModalDirective;
     @ViewChild('SubscriptionEndDateUtc') subscriptionEndDateUtc: ElementRef;
 
-    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
+    active = false;
     saving = false;
     isUnlimited = false;
     subscriptionEndDateUtcIsValid = false;
@@ -690,17 +706,18 @@ export class EditTenantModalComponent extends AppComponentBase implements OnInit
 
     constructor(
         injector: Injector,
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
         private _tenantService: TenantServiceProxy,
-        private _commonLookupService: CommonLookupServiceProxy
+        private _commonLookupService: CommonLookupServiceProxy,
+        private _activatedRoute: ActivatedRoute,
+        private _router: Router
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
-        var tenantId = this._activatedRoute.snapshot.queryParams['tenantId'];
+        this.active = true;
 
+        var tenantId = this._activatedRoute.snapshot.queryParams['tenantId'];
         this._commonLookupService.getEditionsForCombobox(false).subscribe(editionsResult => {
             this.editions = editionsResult.items;
             let notSelectedEdition = new SubscribableEditionComboboxItemDto();
@@ -714,7 +731,6 @@ export class EditTenantModalComponent extends AppComponentBase implements OnInit
                 this.tenant.editionId = this.tenant.editionId || 0;
                 this.isUnlimited = !this.tenant.subscriptionEndDateUtc;
                 this.subscriptionEndDateUtcIsValid = this.isUnlimited || this.tenant.subscriptionEndDateUtc !== undefined;
-                this.modal.show();
                 this.toggleSubscriptionFields();
             });
         });
@@ -761,11 +777,12 @@ export class EditTenantModalComponent extends AppComponentBase implements OnInit
             .pipe(finalize(() => this.saving = false))
             .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
-                this._router.navigate(['app/admin/tenants']);
+                this.close();
             });
     }
 
-    cancel(): void {
+    close(): void {
+        this.active = false;
         this._router.navigate(['app/admin/tenants']);
     }
 
@@ -797,3 +814,91 @@ export class EditTenantModalComponent extends AppComponentBase implements OnInit
     }
 }
 ````
+
+
+### Add route for tenant edit page
+
+Add following path to `admin-routing.module.ts` for edit tenant page.
+
+````ts
+
+...
+
+import { EditTenantComponent } from './tenants/edit-tenant.component';
+
+...
+
+@NgModule({
+    imports: [
+        RouterModule.forChild([
+            {
+                path: '',
+                children: [
+
+                    ...
+
+                    { path: 'tenants/edit-tenant', component: EditTenantComponent, data: { permission: 'Pages.Tenants.Edit' } },
+
+                    ...
+
+                ]
+            }
+        ])
+    ],
+    exports: [
+        RouterModule
+    ]
+})
+...
+````
+
+### Remove editTenantModal component
+
+Remove following line `tenants.component.html`.
+
+````html
+<editTenantModal #editTenantModal (modalSave)="getTenants()"></editTenantModal>
+````
+
+Remove following lines from `tenants.component.ts`;
+
+````typescript
+import { EditTenantModalComponent } from './edit-tenant-modal.component';
+````
+
+````typescript
+@ViewChild('editTenantModal') editTenantModal: EditTenantModalComponent;
+````
+
+### Add CreateTenantComponent to AdminModule
+
+In order to uses newly created EditTenantComponent, we need to add it to our AdminModule.
+
+Replace
+
+`import { EditTenantModalComponent } from './tenants/edit-tenant-modal.component';`
+
+with
+
+`import { EditTenantComponent } from './tenants/edit-tenant.component';`
+
+and use `EditTenantComponent` instead of `EditTenantModalComponent` in the imports list of AdminModule.
+
+### Navigate to the tenant edit page
+
+Router was already injected into TenantsComponent when converting create modal to a page. We can use it to navigate to tenant edit page. In order to do that, create a new method named `editTenant` in tenants.component.ts like below;
+
+````ts
+editTenant(tenantId): void {
+        this._router.navigate(['app/admin/tenants/edit-tenant'], { queryParams: { tenantId: tenantId } });
+    }
+````
+
+And use it in tenants.component.html like below instead of `editTenantModal.show(record.id)`;
+
+````typescript
+ <a href="javascript:;" *ngIf="permission.isGranted('Pages.Tenants.Edit')"
+                                                       (click)="editTenant(record.id)">{{'Edit' | localize}}</a>
+````
+
+That's all. Now we can run the project, open tenant list and create a new tenant or edit an existing tenant in a new page instead of modal window.
