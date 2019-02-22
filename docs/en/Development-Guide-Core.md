@@ -13,9 +13,8 @@ Following tools are needed in order to use ASP.NET Zero Core solution:
 - [Visual Studio 2017 v15.3.5](https://www.visualstudio.com)+
 
 - Visual Studio Extensions:
-  -   [Web
-      Compiler](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebCompiler)
-  -   [Typescript](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
+
+  - [Typescript](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
       2.0+
 
 - [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
@@ -1075,7 +1074,7 @@ single database in one run).
 
 ASP.NET Zero contains a separated application that can be a starting
 point for your public web site or a landing page for your application.
-Set **Web.Public** as **Startup Project** and run the application:
+Before running the project, we need to run a npm task to bundle and minify the CSS and JavaScript files. In order to do that, we can open a command prompt, navigate to root directory of ***.Web.Public** project and run **npm run create-bundles** command. This command should be run when a new npm package is being added to the solution. Or you can just build your solution and all bundles will be updated automatically.
 
 <img src="images/frontend-homepage.jpg" alt="Frontend home page" class="img-thumbnail" width="500" height="496" />
 
