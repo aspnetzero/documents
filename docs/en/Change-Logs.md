@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+## v6.7.0 (2019-02-25)
+
+* Implemented ADFS login for Angular.
+* Added quick theme selection icon to layout.
+* Replaced Web Compiler extension with gulp task.
+* Enhancements and bug fixes.
+
 ## v6.6.1 (2019-02-11)
 
 * Upgraded Xamarin package dependencies.
