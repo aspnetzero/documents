@@ -423,13 +423,7 @@ and
 documentations for more information. We are adding the following mappings.
 
 ```csharp
-...
-// PhoneBook (we will comment out other lines when the new DTOs are added)
 configuration.CreateMap<Person, PersonListDto>();
-//configuration.CreateMap<AddPhoneInput, Phone>();
-//configuration.CreateMap<CreatePersonInput, Person>();
-//configuration.CreateMap<Person, GetPersonForEditOutput>();
-//configuration.CreateMap<Phone, PhoneInPersonListDto>();
 ```
 
 After defining interface, we can implement it as shown below:
@@ -756,8 +750,12 @@ public class CreatePersonInput
 }
 ```
 
-**CreatePersonInput** is mapped to **Person** entity (comment out
-related line in CustomDtoMapper.cs and we will use mapping below).
+And create mapping in CustomDtoMapper.cs:
+
+```csharp
+configuration.CreateMap<CreatePersonInput, Person>();
+```
+
 All properties are decorated with **data annotation attributes**
 to provide automatic
 **[validation](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)**.
@@ -1688,6 +1686,12 @@ public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
 }
 ```
 
+And create mapping in CustomDtoMapper.cs:
+
+```csharp
+configuration.CreateMap<Phone, PhoneInPersonListDto>();
+```
+
 We only added **Include** extension method to the query. Rest of the
 codes remains same. Furthermore, it would work without adding this, but
 much slower (since it will lazy load phone numbers for every person
@@ -1742,6 +1746,12 @@ public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 
     return ObjectMapper.Map<PhoneInPersonListDto>(phone);
 }
+```
+
+And create mapping in CustomDtoMapper.cs:
+
+```csharp
+configuration.CreateMap<AddPhoneInput, Phone>();
 ```
 
 (Note: We injected **IRepository&lt;Phone, long&gt;** in the constructor
@@ -2040,6 +2050,12 @@ editing people:
             person.EmailAddress = input.EmailAddress;
             await _personRepository.UpdateAsync(person);
         }
+```
+
+And create mapping in CustomDtoMapper.cs:
+
+```csharp
+configuration.CreateMap<Person, GetPersonForEditOutput>();
 ```
 
 ### View

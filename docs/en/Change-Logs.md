@@ -6,7 +6,20 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
-### v6.5 (2019-01-11)
+## v6.6.1 (2019-02-11)
+
+* Upgraded Xamarin package dependencies.
+* Bug fixes.
+
+## v6.6 (2019-02-08)
+
+* Implemented Metronic [demo6](https://keenthemes.com/metronic/preview/?demo=demo6) and [demo10](https://keenthemes.com/metronic/preview/?demo=demo10) layouts.
+* Implemented refresh token for the Xamarin app.
+* Switched to Google OAuth2 from Google+ API.
+* Upgraded to ABP v4.2.
+* Minor features, enhancements and bug fixes.
+
+## v6.5 (2019-01-11)
 
 - Implemented recurring payments for subscriptions (using [Stripe](https://stripe.com/))
 - Upgraded to PrimeNG v7.0.
