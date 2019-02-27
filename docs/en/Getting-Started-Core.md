@@ -73,7 +73,7 @@ ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy
 
 Before running the project, we need to run a npm task to bundle and minify the CSS and JavaScript files. In order to do that, we can open a command prompt, navigate to root directory of ***.Web.Mvc** project and run **npm run create-bundles** command. This command should be run when a new npm package is being added to the solution. Or you can just build your solution and all bundles will be updated automatically.
 
-**Note:** Run **npm run watch-less** command to see changes in runtime. This command wathing the **.less** files and compiling them.
+Less files are converted to css and min.css files using Gulp. If you run **npm run watch-less** command using command prompt, you can immediately see the changes in runtime. This command is watching all **.less** files under **wwwroot** folder and compile them when any change happens.
 
 Now we are ready.. just run your solution. It will open login page of your web site.
 
