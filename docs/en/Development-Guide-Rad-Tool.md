@@ -16,7 +16,7 @@
 
  The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
 
- <img src="images/RadToolUI3.png" alt="Extension UI" class="img-thumbnail" width="508" height="441" />
+ <img src="images/RadToolUI3New.jpg" alt="Extension UI" class="img-thumbnail" width="508" height="441" />
 
  A simple console will appear and give you information about the process. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
 
