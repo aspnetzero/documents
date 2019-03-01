@@ -229,8 +229,27 @@ class="auto-style3"> appsettings.json</span>:
       "IsEnabled": "false",
       "Authority": "",
       "ClientId": "",
-      "ClientSecret": ""
+      "ClientSecret": "",
+      "ValidateIssuer": "true",
+      "ClaimsMapping: []
     }
+
+In some cases, OpenId Connect provider doesn't return claims we want to use. For example, Azure AD doesn't return "nameidentifier" claim but ASP.NET Core Identity uses it to find id of the user. So, in such cases, we can use **ClaimsMapping** to map claims of provider to custom claims.
+
+````json
+"ClaimsMapping": [
+	{
+	  "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+	  "key": "http://schemas.microsoft.com/identity/claims/objectidentifier"
+	}
+]
+````
+
+If you are using Azure AD for OpenID Connect and your app is multi-tenant on Azure side, then you need to disable issuer validation, so all Azure AD users can use your app. Note that, multi-tenant app here is the one you have created on your Azure portal, it is not related to AspNet Zero's multi-tenant feature.
+
+````json
+"ValidateIssuer": "false"
+````
 
 #### Two Factor Login
 
