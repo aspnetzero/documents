@@ -598,6 +598,8 @@ page:
 **Users** are people who can **login** to the application and perform
 some operations based on their **permissions**.
 
+Current **user list** can be downloaded as an Excel file. new users can be imported from an excel file. Also, invalid user information is sent back with the reason for invalidity via notification system after import process ends.
+
 **User** class represents a user. User class [can be
 extended](Extending-Existing-Entities.md) by adding new properties.
 

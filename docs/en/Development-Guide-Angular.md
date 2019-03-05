@@ -502,6 +502,14 @@ page:
 **Users** are people who can **login** to the application and perform
 some operations based on their **permissions**.
 
+Current **user list** can be downloaded as an Excel file. new users can be imported from an excel file. Also, invalid user information is sent back with the reason for invalidity via notification system after import process ends.
+
+**User** class represents a user. User class [can be
+extended](Extending-Existing-Entities.md) by adding new properties.
+
+**UserManager** is used to perform domain logic, **UserAppService** is
+used to perform application logic for users.
+
 A user can have zero or more **roles**. If a user has more than one
 role, he inherits union of permissions of all these roles. Also, we can
 set **user-specific permission**. A user specific permission setting
