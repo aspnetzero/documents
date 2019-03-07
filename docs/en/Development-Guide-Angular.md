@@ -320,8 +320,8 @@ editions:
 
 <img src="images/editions-page-core-4.png" alt="Editions Page" class="img-thumbnail" />
 
-Editions are used to group feature values and assign to tenants. When we
-click Actions/Edit for an edition, we can see it's poperties:
+Editions are used to group feature values and assign to tenants. We can
+create a new edition by clicking "**Create new edition**" button:
 
 <img src="images/edition-edit-1.png" alt="Edit Edition" class="img-thumbnail" />
 
