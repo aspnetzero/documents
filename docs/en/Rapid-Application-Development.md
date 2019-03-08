@@ -6,7 +6,7 @@ Notice that the RAD tool is only available for **ASP.NET Core backend** (not ava
 
 ## Demonstration
 
-See [this video](https://youtu.be/OsSdNkwmC7I?t=1001) for a simple demonstration:
+[Watch a demonstration of the Power Tools](https://youtu.be/OsSdNkwmC7I?t=1001)
 
 [![RAD tool demonstration](images/RadToolVideo.jpg)](https://youtu.be/OsSdNkwmC7I?t=1001)
 
