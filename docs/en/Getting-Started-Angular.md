@@ -98,8 +98,11 @@ setting **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the
 ### Run API Host
 
 Once you've done the configuration, you can run the application. Server
-side application only contains APIs. So, default page is a swagger UI
-which can be used to investigate the API:
+side application only contains APIs. So, default page is a Swagger UI
+which can be used to investigate the API.
+
+**NOTE:** When you start host project, you won't see the Swagger UI, since there is no home controller. 
+So you should add the url `/swagger` to see Swagger UI. 
 
 <img src="images/swagger-ui-ng2-1.png" alt="Swagger UI" class="img-thumbnail" />
 
@@ -119,6 +122,8 @@ Navigate to the Angular folder, open a command line and run the following
 command to restore packages:
 
     yarn
+
+**Note:** If you downloaded merged project then you should run commands on Host folder not Angular.
 
 We suggest to use [yarn](https://yarnpkg.com/) because npm has some
 problems. It is slow and can not consistently resolve dependencies, yarn
