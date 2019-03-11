@@ -151,7 +151,7 @@ As we declared in **phonebook.component.ts** we should create a
         <div class="d-flex align-items-center">
             <div class="mr-auto col-sm-6">
                 <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{l("PhoneBook")}}</span>
+                    <span>{{l("PhoneBook" | localize)}}</span>
                 </h3>
             </div>
         </div>
@@ -714,7 +714,7 @@ Now, we can use this people member from the view,
         <div class="d-flex align-items-center">
             <div class="mr-auto col-sm-6">
                 <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{l("PhoneBook")}}</span>
+                    <span>{{l("PhoneBook" | localize)}}</span>
                 </h3>
             </div>
         </div>
@@ -723,7 +723,7 @@ Now, we can use this people member from the view,
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
 
-                <h3>{{l("AllPeople")}}</h3>
+                <h3>{{l("AllPeople" | localize)}}</h3>
                 <div class="m-widget1">
                     <div class="m-widget1__item" *ngFor="let person of people">
                         <div class="row m-row--no-padding align-items-center">
@@ -961,7 +961,7 @@ export class CreatePersonModalComponent extends AppComponentBase {
         this._personService.createPerson(this.person)
             .pipe(finalize(() => this.saving = false))
             .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
+                this.notify.info(this.l('SavedSuccessfully' | localize));
                 this.close();
                 this.modalSave.emit(this.person);
             });
@@ -1005,7 +1005,7 @@ below:
             <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span>{{l("CreateNewPerson")}}</span>
+                        <span>{{l("CreateNewPerson" | localize)}}</span>
                     </h4>
                     <button type="button" class="close" (click)="close()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -1013,21 +1013,21 @@ below:
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>{{l("Name")}}</label>
+                        <label>{{l("Name" | localize)}}</label>
                         <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">
                     </div>
                     <div class="form-group">
-                        <label>{{l("Surname")}}</label>
+                        <label>{{l("Surname" | localize)}}</label>
                         <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
                     </div>
                     <div class="form-group">
-                        <label>{{l("EmailAddress")}}</label>
+                        <label>{{l("EmailAddress" | localize)}}</label>
                         <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel" | localize)}}</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{l("Save" | localize)}}</span></button>
                 </div>
             </form>
         </div>
@@ -1067,18 +1067,18 @@ following changes in **phonebook.component.html**:
         <div class="d-flex align-items-center">
             <div class="mr-auto col-sm-6">
                 <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{l("PhoneBook")}}</span>
+                    <span>{{l("PhoneBook" | localize)}}</span>
                 </h3>
             </div>
             <div class="col-sm-6 text-right">
-                <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson")}}</button>
+                <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson" | localize)}}</button>
             </div>
         </div>
     </div>
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
-                <h3>{{l("AllPeople")}}</h3>
+                <h3>{{l("AllPeople" | localize)}}</h3>
                 <div class="m-widget1">
                     <div class="m-widget1__item" *ngFor="let person of people">
                         <div class="row m-row--no-padding align-items-center">
@@ -1119,7 +1119,7 @@ new permission as shown below (you can add just below the dashboard
 permission):
 
 ```csharp
-pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
+pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook" | localize), multiTenancySides: MultiTenancySides.Tenant);
 ```
 
 A permission should have a unique name. We define permission names as
@@ -1215,8 +1215,8 @@ Defining a permission is similar (in the AppAuthorizationProvider
 class):
 
 ```csharp
-var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
-phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L("CreateNewPerson"), multiTenancySides: MultiTenancySides.Tenant);
+var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook" | localize), multiTenancySides: MultiTenancySides.Tenant);
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L("CreateNewPerson" | localize), multiTenancySides: MultiTenancySides.Tenant);
 ```
 
 First permission was defined before. In the second line, we are creating
@@ -1251,7 +1251,7 @@ Open the **phonebook.component.html** view and use **isGranted**
 condition as shown below:
 
 ```html
-<button *ngIf="isGranted('Pages.Tenant.PhoneBook.CreatePerson')" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson")}}</button>
+<button *ngIf="isGranted('Pages.Tenant.PhoneBook.CreatePerson')" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson" | localize)}}</button>
 ```
 
 In this way, the "Create New Person" button does not rendered in server
@@ -1283,7 +1283,7 @@ We're changing **phonebook.component.html** view to add a delete button
 
 ```html
 ...
-<h3>{{l("AllPeople")}}</h3>
+<h3>{{l("AllPeople" | localize)}}</h3>
 <div class="m-widget1">
     <div class="m-widget1__item" *ngFor="let person of people">
         <div class="row m-row--no-padding align-items-center">
@@ -1292,7 +1292,7 @@ We're changing **phonebook.component.html** view to add a delete button
                 <span class="m-widget1__desc">{{person.emailAddress}}</span>
             </div>
             <div class="col m--align-right">
-                <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+                <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete' | localize)}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
@@ -1362,11 +1362,11 @@ Now, we can add **deletePerson** method to **phonebook.component.ts**:
 ```typescript
 deletePerson(person: PersonListDto): void {
     this.message.confirm(
-        this.l('AreYouSureToDeleteThePerson', person.name),
+        this.l('AreYouSureToDeleteThePerson' | localize: person.name),
         isConfirmed => {
             if (isConfirmed) {
                 this._personService.deletePerson(person.id).subscribe(() => {
-                    this.notify.info(this.l('SuccessfullyDeleted'));
+                    this.notify.info(this.l('SuccessfullyDeleted' | localize));
                     _.remove(this.people, person);
                 });
             }
@@ -1401,14 +1401,14 @@ We added a search input to **phonebook.component.html** view (showing
 the related part of the code):
 
 ```html
-<h3>{{l("AllPeople")}} ({{people.length}})</h3>
+<h3>{{l("AllPeople" | localize)}} ({{people.length}})</h3>
 <form autocomplete="off">
     <div class="m-form m-form--label-align-right">
         <div class="row align-items-center m--margin-bottom-10">
             <div class="col-xl-12">
                 <div class="form-group m-form__group align-items-center">
                     <div class="input-group">
-                        <input [(ngModel)]="filter" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                        <input [(ngModel)]="filter" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot' | localize)" type="text">
                         <span class="input-group-btn">
                             <button (click)="getPeople()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
                         </span>
@@ -1427,7 +1427,7 @@ the related part of the code):
                 <span class="m-widget1__desc">{{person.emailAddress}}</span>
             </div>
             <div class="col m--align-right">
-                <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+                <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete' | localize)}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
@@ -1786,10 +1786,10 @@ Changes in view are shown below:
             <span class="m-widget1__desc">{{person.emailAddress}}</span>
         </div>
         <div class="col m--align-right">
-            <button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+            <button (click)="editPerson(person)" title="{{l('Edit' | localize)}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
                 <i class="fa fa-pencil"></i>
             </button>
-            <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+            <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete' | localize)}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
                 <i class="fa fa-times"></i>
             </button>
         </div>
@@ -1800,8 +1800,8 @@ Changes in view are shown below:
                 <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:15%">{{l("Type")}}</th>
-                        <th style="width:75%">{{l("PhoneNumber")}}</th>
+                        <th style="width:15%">{{l("Type" | localize)}}</th>
+                        <th style="width:75%">{{l("PhoneNumber" | localize)}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1822,9 +1822,9 @@ Changes in view are shown below:
                         </td>
                         <td>
                             <select name="Type" [(ngModel)]="newPhone.type"class="form-control">
-                                <option value="0">{{l("PhoneType_Mobile")}}</option>
-                                <option value="1">{{l("PhoneType_Home")}}</option>
-                                <option value="2">{{l("PhoneType_Business")}}</option>
+                                <option value="0">{{l("PhoneType_Mobile" | localize)}}</option>
+                                <option value="1">{{l("PhoneType_Home" | localize)}}</option>
+                                <option value="2">{{l("PhoneType_Business" | localize)}}</option>
                             </select>
                         </td>
                         <td><input type="text" name="number" [(ngModel)]="newPhone.number" class="form-control" /></td>
@@ -1886,11 +1886,11 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
 
     deletePerson(person: PersonListDto): void {
         this.message.confirm(
-            this.l('AreYouSureToDeleteThePerson', person.name),
+            this.l('AreYouSureToDeleteThePerson' | localize: person.name),
             isConfirmed => {
                 if (isConfirmed) {
                     this._personService.deletePerson(person.id).subscribe(() => {
-                        this.notify.info(this.l('SuccessfullyDeleted'));
+                        this.notify.info(this.l('SuccessfullyDeleted' | localize));
                         _.remove(this.people, person);
                     });
                 }
@@ -1913,11 +1913,11 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
     getPhoneTypeAsString(phoneType: PhoneInPersonListDtoType): string {
         switch (phoneType) {
             case PhoneInPersonListDtoType._0:
-                return this.l('PhoneType_Mobile');
+                return this.l('PhoneType_Mobile' | localize);
             case PhoneInPersonListDtoType._1:
-                return this.l('PhoneType_Home');
+                return this.l('PhoneType_Home' | localize);
             case PhoneInPersonListDtoType._2:
-                return this.l('PhoneType_Business');
+                return this.l('PhoneType_Business' | localize);
             default:
                 return '?';
         }
@@ -1925,7 +1925,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
 
     deletePhone(phone, person): void {
         this._personService.deletePhone(phone.id).subscribe(() => {
-            this.notify.success(this.l('SuccessfullyDeleted'));
+            this.notify.success(this.l('SuccessfullyDeleted' | localize));
             _.remove(person.phones, phone);
         });
     };
@@ -1940,7 +1940,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
             this.editingPerson.phones.push(result);
             this.newPhone.number = '';
 
-            this.notify.success(this.l('SavedSuccessfully'));
+            this.notify.success(this.l('SavedSuccessfully' | localize));
         });
     };
 }
@@ -1992,7 +1992,7 @@ Create edit-person-modal.component.html:
       <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
         <div class="modal-header">
             <h4 class="modal-title">
-            <span>{{l("EditPerson")}}</span>
+            <span>{{l("EditPerson" | localize)}}</span>
           </h4>
           <button type="button" class="close" (click)="close()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -2001,24 +2001,24 @@ Create edit-person-modal.component.html:
         <div class="modal-body">
 
           <div class="form-group">
-            <label>{{l("Name")}}</label>
+            <label>{{l("Name" | localize)}}</label>
             <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">            
           </div>
 
           <div class="form-group">
-            <label>{{l("Surname")}}</label>
+            <label>{{l("Surname" | localize)}}</label>
             <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
           </div>
 
           <div class="form-group">
-          <label>{{l("EmailAddress")}}</label>
+          <label>{{l("EmailAddress" | localize)}}</label>
             <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">                        
           </div>
 
         </div>
         <div class="modal-footer">
-          <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel")}}</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+          <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel" | localize)}}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{l("Save" | localize)}}</span></button>
         </div>
       </form>
     </div>
@@ -2032,13 +2032,13 @@ Add those lines to **phonebook.component.html:**:
         
 	// Other Code lines...	
 
-		<button (click)="editPerson(person)" title="{{l('Edit')}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+		<button (click)="editPerson(person)" title="{{l('Edit' | localize)}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
             <i class="fa fa-plus"></i>
         </button>
-        <button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson')}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+        <button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson' | localize)}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
             <i class="fa fa-pencil"></i>
         </button>
-       <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete')}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+       <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete' | localize)}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
             <i class="fa fa-times"></i>
         </button>
                 
@@ -2098,7 +2098,7 @@ export class EditPersonModalComponent extends AppComponentBase {
     this.saving = true;
     this._personService.editPerson(this.person)
       .subscribe(() => {
-        this.notify.info(this.l('SavedSuccessfully'));
+        this.notify.info(this.l('SavedSuccessfully' | localize));
         this.close();
         this.modalSave.emit(this.person);
       });
