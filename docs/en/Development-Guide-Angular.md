@@ -120,10 +120,9 @@ In addition to those fundamental modules, there are some share modules:
 Angular solution contains src/assets/**appconfig.json** file which
 contains some configuration for the client side:
 
--   **remoteServiceBaseUrl**: Used to configure base address of the
-    server side APIs. Default value: http://localhost:22742
--   **appBaseUrl**: Used to configure base address of the client
-    application. Default value: http://localhost:4200
+- **remoteServiceBaseUrl**: Used to configure base address of the server side APIs. Default value: http://localhost:22742
+- **appBaseUrl**: Used to configure base address of the client application. Default value: http://localhost:4200
+- **localeMappings**: Used to configure localizations of third-party libraries that are incompatible with existing localizations.
 
 **appBaseUrl** is configured since we use it to define format of our
 URL. If we want to use tenancy name as subdomain for a multi-tenant
