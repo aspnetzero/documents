@@ -1251,7 +1251,7 @@ Open the **phonebook.component.html** view and use **isGranted**
 condition as shown below:
 
 ```html
-<button *ngIf="isGranted('Pages.Tenant.PhoneBook.CreatePerson')" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson" | localize)}}</button>
+<button *ngIf="'Pages.Tenant.PhoneBook.CreatePerson' | permission" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson" | localize)}}</button>
 ```
 
 In this way, the "Create New Person" button does not rendered in server
@@ -1807,14 +1807,14 @@ Changes in view are shown below:
                 <tbody>
                     <tr *ngFor="let phone of person.phones">
                         <td>
-                            <button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+                            <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
                                 <i class="fa fa-times"></i>
                             </button>
                         </td>
                         <td>{{getPhoneTypeAsString(phone.type)}}</td>
                         <td>{{phone.number}}</td>
                     </tr>
-                    <tr *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')">
+                    <tr *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission">
                         <td>
                             <button (click)="savePhone()" class="btn btn-sm btn-success">
                                 <i class="fa fa-floppy-o"></i>
@@ -2035,7 +2035,7 @@ Add those lines to **phonebook.component.html:**:
 		<button (click)="editPerson(person)" title="{{l('Edit' | localize)}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
             <i class="fa fa-plus"></i>
         </button>
-        <button *ngIf="isGranted('Pages.Tenant.PhoneBook.EditPerson')" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson' | localize)}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+        <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson' | localize)}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
             <i class="fa fa-pencil"></i>
         </button>
        <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete' | localize)}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
