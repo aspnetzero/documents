@@ -101,7 +101,7 @@ Once you've done the configuration, you can run the application. Server
 side application only contains APIs. So, default page is a Swagger UI
 which can be used to investigate the API.
 
-**NOTE:** When you start host project, you won't see the Swagger UI, since there is no home controller. 
+**NOTE:** If you download merged project and when you start host project, you won't see the Swagger UI, since there is no home controller. 
 So you should add the url `/swagger` to see Swagger UI. 
 
 <img src="images/swagger-ui-ng2-1.png" alt="Swagger UI" class="img-thumbnail" />
