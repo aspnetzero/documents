@@ -13,6 +13,7 @@ ASP.NET Zero has multiple architecture options. Select the one you want to prefe
 * [ASP.NET MVC 5.x & AngularJS 1.x](AspNet-MVC-AngularJS.md)
 * [ASP.NET MVC 5.x & JQuery](AspNet-MVC.md)
 * [Xamarin / Mobile](Xamarin.md)
+* [GraphQL](GraphQL.md)
 
 ## Miscellaneous
 
