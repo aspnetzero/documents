@@ -98,11 +98,17 @@ setting **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the
 ### Run API Host
 
 Once you've done the configuration, you can run the application. Server
-side application only contains APIs. So, default page is a Swagger UI
-which can be used to investigate the API.
+side application only contains APIs. When you start the application you will see a login page:
 
-**NOTE:** If you download merged project and when you start host project, you won't see the Swagger UI, since there is no home controller. 
-So you should add the url `/swagger` to see Swagger UI. 
+**NOTE:** If you download merged project and when you start host project, you won't see the login page. So you should add the url `/ui/login` to see login page.
+
+<img src="images/host-login-page.png" alt="Swagger UI" class="img-thumbnail" />
+
+If you log in to host application, then you will see host main page:
+
+<img src="images/host-home-page.png" alt="Swagger UI" class="img-thumbnail" />
+
+You can navigate **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground** from this page. For example when you navigate **Swagger UI**, you will see following page:
 
 <img src="images/swagger-ui-ng2-1.png" alt="Swagger UI" class="img-thumbnail" />
 
