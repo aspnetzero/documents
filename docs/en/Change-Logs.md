@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+## v6.8.0 (2019-03-14)
+
+* Added GraphQL integration.
+* Added Metronic [demo4](https://keenthemes.com/metronic/preview/?demo=demo4), [demo5](https://keenthemes.com/metronic/preview/?demo=demo5), [demo9](https://keenthemes.com/metronic/preview/?demo=demo9), [demo12](https://keenthemes.com/metronic/preview/?demo=demo12) themes.
+* Implemented Organization Unit Roles
+* Implemented importing users from excel/csv.
+* Added SMTP email support per tenant.
+* Enhancements and bug fixes.
+
 ## v6.7.0 (2019-02-25)
 
 * Implemented ADFS login for Angular.
