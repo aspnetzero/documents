@@ -94,6 +94,11 @@
             }
           ]
         }
+		,
+        {
+          "text": "GraphQL",
+          "path": "GraphQL.md"
+        }
       ]
     },
     {

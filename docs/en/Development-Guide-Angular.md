@@ -501,6 +501,14 @@ page:
 **Users** are people who can **login** to the application and perform
 some operations based on their **permissions**.
 
+Current **user list** can be downloaded as an Excel file. new users can be imported from an excel file. Also, invalid user information is sent back with the reason for invalidity via notification system after import process ends.
+
+**User** class represents a user. User class [can be
+extended](Extending-Existing-Entities.md) by adding new properties.
+
+**UserManager** is used to perform domain logic, **UserAppService** is
+used to perform application logic for users.
+
 A user can have zero or more **roles**. If a user has more than one
 role, he inherits union of permissions of all these roles. Also, we can
 set **user-specific permission**. A user specific permission setting
@@ -716,6 +724,8 @@ this tab. Each tenant can override this setting in tenant settings page.
 <img src="images/host-settings-security-3.png" alt="Tenant settings" class="img-thumbnail" />
 
 **Email(SMTP)** tab allows you to configure smtp settings for your app. AspNet Zero uses MailKit to send emails. By default, smtp certificate validation is disabled in **YourProjectNameMailKitSmtpBuilder.cs** class. If you are able to validate mail server's certificate, you need to modify **ServerCertificateValidationCallback** in **YourProjectNameMailKitSmtpBuilder.cs**.
+
+If you want each Tenant to configure their own SMTP settings, you can go to **YourProjectNameConsts.cs** which is in ***.Core.Shared** project and set **AllowTenantsToChangeEmailSettings** to true. In that way, each tenant can configure and use their own SMTP settings.
 
 ### Tenant Settings
 
