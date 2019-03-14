@@ -1247,7 +1247,7 @@ authorization error after clicking the save button. But, it's good to
 **completely hide Create New Person button** if we don't have the
 permission. It's very simple:
 
-Open the **phonebook.component.html** view and use **isGranted**
+Open the **phonebook.component.html** view and add the permission **Pages.Tenant.PhoneBook.CreatePerson**
 condition as shown below:
 
 ```html
