@@ -6,13 +6,11 @@ and created your ASP.NET Zero account.
 
 ## Login
 
-[Login](https://aspnetzero.com/Account/Login) to this web site with your user name and
-password. Then you will see [Download](https://aspnetzero.com/Download) link on the main menu.
+[Login](https://aspnetzero.com/Account/Login) to this web site with your user name and password. Then you will see [Download](https://aspnetzero.com/Download) link on the main menu.
 
 ## Create a Project
 
-Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown
-below:
+Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
 
 <img src="images/download-angular-3.png" alt="Download angular" class="img-thumbnail" />
 
@@ -34,8 +32,7 @@ select "One Solution" checkbox while downloading your project.
 
 ## ASP.NET Core Application
 
-When you open Server side solution **\*.Web.sln** in **Visual Studio
-2017+**, you will see the solution structure as like below:
+When you open the server side solution **\*.Web.sln** in **Visual Studio 2017+**, you will see the solution structure as below:
 
 If you want to work on only Xamarin project, open **\*.Mobile.sln**
 solution. If you want to work on both Xamarin and Web projects, open
@@ -100,7 +97,7 @@ setting **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the
 Once you've done the configuration, you can run the application. Server
 side application only contains APIs. When you start the application you will see a login page:
 
-**NOTE:** If you download merged project and when you start host project, you won't see the login page. So you should add the url `/ui/login` to see login page.
+**NOTE:** If your project is a merged project, you will not see the login page when you start the host project. Basically you need to manually navigate to http://localhost:22742/ui/login.
 
 <img src="images/host-login-page.png" alt="Swagger UI" class="img-thumbnail" />
 
