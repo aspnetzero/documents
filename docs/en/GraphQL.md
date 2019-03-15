@@ -252,7 +252,7 @@ query MyQuery {
 }
 ```
 
-**Be aware** that if your authentication is not valid, or if you didn't set  `"request.credentials": "include"` in your Playground settings, you will see the below error response for the authentication required queries.
+**Be aware** that if your authentication is not valid or if you didn't set  `"request.credentials": "include"` in your Playground settings, you will see the below error response for the authentication required queries.
 
 ```json
 errors": [
@@ -278,7 +278,7 @@ errors": [
 
 ## GraphQL Query Execution Flow
 
-When a new query is initiated, the GraphQL middleware parses the query, then routes it to the corresponding query handler which is registered in `QueryContainer` class of the ***.GraphQL** project. Out of the box there are 3 query handlers registered in `QueryContainer`: `RoleQuery, ` `UserQuery` and  `OrganizationUnitQuery`. The next step is the `Resolve` method of the query with the query context. The query context has all the information about a query like  `UserContext`, `Arguments`, `Selections` and `Variables`. If there is an `[AbpAuthorize]`  attribute on the `Resolve` method, AspNet Boilerplate framework checks the related permission of the logged on user and throws `ABP_AUTHORIZATION` exception when the related permission is not granted. If there is no `[AbpAuthorize]` attribute, then it can be run by anonymous users. In the `Resolve` method, the necessary query runs and returns a `DTO` object. Then the `DTO` object is being converted to the relevant `IGraphType`. This conversation is made in the GraphQL middleware and the middleware knows which `IGraphType` to be converted, as it is registered it in the `QueryContainer`.
+When a new query is initiated, the GraphQL middleware parses the query then routes it to the corresponding query handler which is registered in `QueryContainer` class of the ***.GraphQL** project. Out of the box there are 3 query handlers registered in `QueryContainer`: `RoleQuery, ` `UserQuery` and  `OrganizationUnitQuery`. The next step is the `Resolve` method of the query with the query context. The query context has all the information about a query like  `UserContext`, `Arguments`, `Selections` and `Variables`. If there is an `[AbpAuthorize]`  attribute on the `Resolve` method, AspNet Boilerplate framework checks the related permission of the logged on user and throws `ABP_AUTHORIZATION` exception when the related permission is not granted. If there is no `[AbpAuthorize]` attribute, then it can be run by anonymous users. In the `Resolve` method, the necessary query runs and returns a `DTO` object. Then the `DTO` object is being converted to the relevant `IGraphType`. This conversation is made by the GraphQL middleware and the middleware knows which `IGraphType` to be converted, as it is registered it in the `QueryContainer`.
 
 
 
@@ -299,7 +299,7 @@ public class AuditLog : Entity<long>, IMayHaveTenant
 }
 ```
 
-1. Create a new `DTO ` class. Name it `AuditLogDto.cs`locate it in the `DTO` folder of the ***.GraphQL** project.   Add the `[AutoMapFrom(typeof(AuditLog))]` attribute to register the `AuditLogDto` for mapping. This will be used to map from the `AuditLog` entity to `AuditLogDto`.
+1. Create a new `DTO ` class. Name it `AuditLogDto.cs`, locate it in the `DTO` folder of the ***.GraphQL** project.   Add the `[AutoMapFrom(typeof(AuditLog))]` attribute to register the `AuditLogDto` for mapping. This will be used to map from the `AuditLog` entity to `AuditLogDto`.
 
    **AuditLogDto.cs**
 
@@ -314,9 +314,9 @@ public class AuditLog : Entity<long>, IMayHaveTenant
    }
    ```
 
-2. Create a new class in the `Types` folder of the ***.GraphQL** project and name it `AuditLogType.cs` . Derive this class from `ObjectGraphType<AuditLogDto>`. `AuditLogType` will be used to map from the `AuditLogDto` class.
+2. Create a new class in the `Types` folder of the ***.GraphQL** project and name it `AuditLogType.cs`. Derive this class from `ObjectGraphType<AuditLogDto>`. `AuditLogType` will be used to map from the `AuditLogDto` class.
 
-   Be careful with the `nullable` types. You must explicitly specify if the field is `nullable`.
+   Be careful with the `nullable` types. You must explicitly define the `nullable` field.
 
    **AuditLogType.cs**
 
@@ -334,9 +334,7 @@ public class AuditLog : Entity<long>, IMayHaveTenant
    }
    ```
 
-3. Create a new class and name it`AuditLogQuery.cs` in the `Queries` folder of the  ***.GraphQL** project. This is the query resolver for `AuditLogs`. It should be derived from the base  
-
-   `AbpZeroTemplateQueryBase<TField,TResult> `. This abstract base class has two generic types. `TField`  which is the type to return to the client. (In this example, it is a list of `AuditLogType`). And `TResult`, this is the return type of the `Resolve()` method. Basically `TResult` will be mapped to `TField` in the GraphQL middleware. 
+3. Create a new class and name it `AuditLogQuery.cs` in the `Queries` folder of the  ***.GraphQL** project. This is the query resolver for `AuditLogs`. It should be derived from the base `AbpZeroTemplateQueryBase<TField,TResult>`. This abstract base class has two generic types. `TField`  which is the type to return to the client. In this example, it is a list of `AuditLogType`. Other field is `TResult`, this is the return type of the `Resolve()` method. Basically `TResult` will be mapped to `TField` by the GraphQL middleware. 
 
    To get the list of audit logs, `IRepository<AuditLog, long>` is injected into the query. Note that the base class `AbpZeroTemplateQueryBase` is registered to the dependency injection container with `ITransient` lifecycle. So all the GraphQL queries derived from `AbpZeroTemplateQueryBase` are meant to be `ITransientDependency`.
 
@@ -404,7 +402,7 @@ public class AuditLog : Entity<long>, IMayHaveTenant
    }
    ```
 
-5. It is completed. We have added a new query to get audit logs. You can now run the query on GraphQL Playground and see the results. Below is the sample query to get the audit logs from GraphQL API.
+5. It is completed. We have added a new query to get audit logs. You can now run the query on the  GraphQL Playground and see the results. Below is the sample query to get the audit logs from GraphQL API.
 
    ```json
    query MyAuditLogQuery {
@@ -465,19 +463,18 @@ public class AuditLog : Entity<long>, IMayHaveTenant
    }
    ```
 
-   To run the final query with `[AbpAuthorize]` attribute, you need to get an authentication cookie. 
+   To run the final query with `[AbpAuthorize]` attribute, you need to get an authentication cookie. Go to your login page:
 
-   * Login to http://localhost:62114/Account/Login  for `MVC `.
-   * Login to  http://localhost:22742/ui/login for `Angular`
+   * http://localhost:62114/Account/Login  `MVC `.
+   * http://localhost:22742/ui/login `Angular`
 
-   After successful login, you will have your authentication cookie and run the query successfully.
+   After successful login, you will have your authentication cookie and you can run the query.
 
 ## Writing a New Unit Test For Your Query
 
-When you write a new GraphQL query, it is suggested to write a new unit test for the query. ASP.NET Zero provides a unit test project for your GraphQL queries. There is a `test` folder in your ASP.NET Zero solution. In the `test` folder, open the ***.GraphQL.Tests **project.  Create a new folder for your new entity query. 
+When you write a new GraphQL query, it is suggested to write a new unit test for the query. ASP.NET Zero provides a unit test project for your GraphQL queries. There is a `test` folder in your ASP.NET Zero solution. In the `test` folder, open the ***.GraphQL.Tests** project.  Create a new folder for your new query. 
 
-In our previous sample, we have written a query for `AuditLog` entity. 
-Let's write a unit test for the `AuditLogQuery`.
+In our previous sample, we have written a query for `AuditLog` entity. Let's write a unit test for the `AuditLogQuery`.
 
 Before writing a new unit test for a new entity. You need to add sample data to the in-memory test database. For the `AuditLog ` tests, let's add some test data;
 
@@ -509,8 +506,6 @@ Before writing a new unit test for a new entity. You need to add sample data to 
    			ExecutionTime = DateTime.Parse("2019-12-28"),
    			UserId = 2
    		});
-   
-   		_context.SaveChanges();
    	}
    }
    ```
@@ -539,9 +534,9 @@ Before writing a new unit test for a new entity. You need to add sample data to 
 
 4. Derive the `AuditLogQuery_Tests` class from `GraphQLTestBase<MainSchema>`. This will help us to use some handy base functionality.
 
-   Note that `MainSchema` is the schema for all our queries and it was registered in the `Startup` of the ***.Web.Mvc** or ***.Web.Host** project*.
+   Note that `MainSchema` is the schema for all our queries and it was registered in the `Startup` of the ***.Web.Mvc** or  ***.Web.Host** project.
 
-5. Below is the full content of the `AuditLogQuery_Tests` class. `AssertQuerySuccessAsync()` method comes from the base class. It gets a GraphQL query and expected value. Then performs a string comparison with the actual value and the expected value and fails the test if it's not equal.
+5. Below is the full content of the `AuditLogQuery_Tests` class. `AssertQuerySuccessAsync()` method comes from the base class. It gets a GraphQL query and an expected value. It performs a string comparison with the actual value and the expected value when it's not equal, it fails the test.
 
    ```csharp
    public class AuditLogQuery_Tests : GraphQLTestBase<MainSchema>
@@ -590,4 +585,4 @@ Before writing a new unit test for a new entity. You need to add sample data to 
 
    ## Conclusion
 
-   GraphQL is not a magical library that sorts out all the Web API issues but it helps us to provide our clients a very flexible Web API. In this document, we have seen the structure of the ASP.NET Zero GraphQL implementation. We have understood how we enable GraphQL and GraphQL Playground. We also added a new sample GraphQL query to understand it better. We added a new unit test for the related query as well. 
+   GraphQL helps us providing our clients a very flexible Web API. In this document, we have seen the structure of the ASP.NET Zero GraphQL implementation. We understood how we can enable GraphQL and GraphQL Playground. We added a new sample GraphQL query to understand it better. We also added a new unit test for the query. 
