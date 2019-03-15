@@ -2,7 +2,7 @@
 
 > GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. GraphQL provides a complete and understandable description of the data in your API, gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools. It is a single API face for different clients like mobile, desktop apps, tablets. ASP.NET Zero includes an implementation of GraphQL API. In the solution the ***.GraphQL** project exposes some built-in queries like Organization Units, Roles and Users . There is also a unit test project ***.GraphQL.Tests** in the `test` folder. You can add your own GraphQL unit tests to this project.
 >
-> [https://graphql.org/](https://graphql.org/)
+> For more information about GraphQL visit [https://graphql.org/](https://graphql.org/)
 
 
 
@@ -56,8 +56,8 @@ public static class WebConsts
 
 The default GraphQL endpoints are;
 
-* http://localhost:62114/graphql for `MVC`
-* http://localhost:22742/graphql for `Angular`
+* [http://localhost:62114/graphql](http://localhost:62114/graphql) `MVC`
+* [http://localhost:22742/graphql](http://localhost:22742/graphql) `Angular`
 
 ### Changing The Default GraphQL Endpoint
 
@@ -74,17 +74,17 @@ This will change your endpoint to ` yourdomain.com/mygraphql`.
 GraphQL Playground is an extension tool that helps you write your GraphQL queries easily. It supports  autocompletion & error highlighting. It is included AspNet Zero but disabled by default.
 The default GraphQL Playground endpoints are;
 
-- http://localhost:62114/ui/playground  for `MVC`
-- http://localhost:22742/ui/playground  for `Angular`
+- [http://localhost:62114/ui/playground](http://localhost:62114/ui/playground)  `MVC`
+- [http://localhost:22742/ui/playground](http://localhost:22742/ui/playground)  `Angular`
 
 There is also a desktop version of the GraphQL Playground. The desktop app is the same as the web version but includes these additional features:
 
 - Partial support for [graphql-config](https://github.com/prismagraphql/graphql-config) enabling features like multi-environment setups (no support for sending HTTP headers).
-- Double click on `*.graphql` files.
+- Double click `*.graphql` files to open.
 
 To download GraphQL Desktop version click on the following link;
 
-https://github.com/prisma/graphql-playground/releases
+[https://github.com/prisma/graphql-playground/releases](https://github.com/prisma/graphql-playground/releases)
 
 ## Enabling GraphQL Playground
 
@@ -122,7 +122,7 @@ This will change your playground endpoint to ` yourdomain.com/myplayground`.
 
 ### GraphQL Playground Settings
 
-To be able to run the queries that requires authentication, you need to go to settings tab and change the `request.credentials` from `omit` to `include` . This is needed for cookie authentication.
+To be able to run the queries that requires authentication, you need to open Playground on your browser, open settings tab and change the `request.credentials` from `omit` to `include` . This is needed for cookie authentication.
 
 On the other hand, Playground uses polling to update the schema and refreshes the schema every 2 seconds. You can also safely disable this option to not see flooding XHR requests on your browser's network tab. 
 
@@ -143,15 +143,72 @@ After these settings, you need to save it by pressing `SAVE SETTINGS` button.
 
 ## Running Queries on GraphQL Playground
 
-Playground gives you the advantage of writing the queries with intellisense and see the results on your browser. There are two types of queries **queries require authentication** and **queries doesn't require authentication**. For the queries that doesn't require authentication, you can directly write the query on the playground and see the results. But for the authentication required queries you have to authenticate first. To authenticate, read the next section which is relevant to you.
+Playground gives you the advantage of writing the queries with intellisense and see the results on your browser. There are two types of queries; **Queries require authentication** and **Queries doesn't require authentication**. For the queries that doesn't require authentication, you can directly write the query on the Playground and see the results. But for the authentication required queries you have to authenticate first. To authenticate, read the next section of the project that is relevant to you..
 
-### - MVC Project Authentication
+### Authenticating Playground Requests in MVC Project
 
-MVC project uses cookie authentication. Before running any queries that need authentication you need to login to your website to retrieve the authentication cookie. Start your ***.Web.Mvc** project, open your browser and navigate to http://localhost:62114/Account/Login. After successful login, you will have a valid authentication cookie in your browser's storage. Now you can go to http://localhost:62114/ui/playground and start testing your query.
+#### Authenticating With Cookie
 
-### - Angular Project Authentication
+MVC project uses cookie authentication. Before running any queries that need authentication, you need to login to your website to retrieve the authentication cookie. 
+Start your ***.Web.Mvc** project, open your browser and navigate to [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login).
+After successful login, you will have a valid authentication cookie in your browser's storage.
+Now you can go to [http://localhost:62114/ui/playground](http://localhost:62114/ui/playground) and run your query as authenticated.
 
-Angular project uses both token (Bearer) authentication and cookie authentication. The simplest way is authenticating with cookie. Start your ***.Web.Host** project and go to http://localhost:22742/ui/login. After the successful login, you will see GraphQL Playground box in the redirected page. Click the link that goes to http://localhost:22742/ui/playground and start testing your query.
+### Authenticating Playground Requests in Angular Project
+
+Angular project uses both token (Bearer) authentication and cookie authentication. The simplest way is authenticating with cookie.
+
+#### Authenticating With Cookie
+
+Start your ***.Web.Host** project and go to [http://localhost:22742/ui/login](http://localhost:22742/ui/login).
+After the successful login, you will see the GraphQL Playground box in the redirected page.
+Click the link that goes to [http://localhost:22742/ui/playground](http://localhost:22742/ui/playground) and run your query as authenticated.
+
+#### Authenticating With Token
+
+Alternatively you can use token authentication in `Angular ` project.
+Make a post request to [http://localhost:22742/api/TokenAuth/Authenticate](http://localhost:22742/api/TokenAuth/Authenticate) to get the token.
+See the below request to get the token:
+
+```json
+POST /api/TokenAuth/Authenticate HTTP/1.1
+Host: localhost:22742
+Content-Type: application/json
+cache-control: no-cache
+
+{
+	TenancyName: "",
+	UserNameOrEmailAddress: "admin",
+	Password: "123qwe"
+}
+```
+
+You will get a similar response like below. You will use `accessToken` value.
+
+```json
+{
+    "result": {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJBc3BOZXQuSWRlbnRpdHkuU2VjdXJpdHlTdGFtcCI6IktGWDUzQldLWlNZNUE1TjNQM0xYRFM2S1NUNUIyRDdPIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFkbWluIiwiMjU2ZTc4NmVmZmFmNDJmZDk5N2MyNTk5MTNjNjEyNDciXSwic3ViIjoiMSIsImp0aSI6ImZkMmY3NWFhLWNiMWItNDlmMi1iYjg2LWZjNTNiMmZhYTI3NyIsImlhdCI6MTU1MjYzOTM5NiwidG9rZW5fdmFsaWRpdHlfa2V5IjoiNjFhOGVkNjYtMTMwYS00ODhhLWEwMTAtYThkMDI2M2RiNTUxIiwidXNlcl9pZGVudGlmaWVyIjoiMSIsIm5iZiI6MTU1MjYzOTM5NiwiZXhwIjoxNTUyNzI1Nzk2LCJpc3MiOiJBYnBaZXJvVGVtcGxhdGUiLCJhdWQiOiJBYnBaZXJvVGVtcGxhdGUifQ.nGcwto1Ih8z15FIZ_4lAXc_Q7Lf1ccJwKDAnGh8AzY8",
+        "encryptedAccessToken": "wNYmO41/48SHNstaLVXxHCCre29BZQl1NhC6NM3R3rzpXtPQxVzH6jEzA/QhXFN5tu6Fk7pO53uppm1mVXMZgxbyRVz26dnepi/FyB6axBY+6gq1GL+uRQgoiFUCjRN2p8w6LevViwKlHyWZZJZO1DGVSjAi1m2U+og9pkHw9/QR4Nl/DPnoP9JYDMpZ1zxx09u6s0GZ9/Q5Sjk+L0UfcSCbl38X8he5w9UIn/Hvxh7ysM1CiPLsoOwtbiieSRVmrmt0JjnipAn4/K283F8GrGwzwgehWsqefmUnM0ckMwP9ZAdwQxWDhxv0IqNw4tDhwUYs/1SYdYozdNzgByhgNOBPzQDObNLlWc4vV5VMOiajyrvabgoLnMvpYCP0YrrR2Trkgw9U1crOz6qWkGpdxJs8t6le2nIPkkMDOuzJL+9gOpxxPd6pOXWTmPN73/ioJF5xcwxX3KnKQX7IbIlv7MRIHQf0EjGdpCk+TMkVcAAYSOGMv/0AMZSS0LZQYDrDCEy1wQMDhH8FT4VaJDnugINdL8TWD7ZX3lYu3HLvTpyDX59wqSqUuT/M0XaTW+J/7lGWOyz8zzPUXPsID4wDAXGe6vfLrzn0Tz9zyeRbXApmmP0aFJN7xfh96O3H4H7L9QWNefIZjq0UMPGmDkCW7FubMRuLNdJNLs6ItfUDCJcDVppn0hNRJB7mpocPeII4fd06Q7YGdbB3sruMYXx/CQxvZCiohK4q0hQxFXqG7Xb2Ig1xYJOA5qT9JikvS2vVcvDGh/+Shn6FQISBwDGwOBjlJ4EupqQ1XalfAqa4IPUjskHsN1spypNb4WMZvu5gooxES4mFdTiJoPPR7WgpauAdu2CHKr7CLla6fBeHfVbNXgVYPEM/mJFnd++RZj5SYul+6FhwZwNfTixawjknoGX9+vJfeYID5V1F4mjN86FAP4caVp5nAOuycdYjgnc6vdvEXjuZ+KU5nVFFO8U5i+Xd9Hc0qMNllF6aM3TilIHVWQKdESuHdBLfCT7MYyeWu1YNh7LsXuadb7eTctUUzxJ3roUh6tg/hyRh9TE7hGvmvucz+2ZJwfnYfLNeXXnTJjsDKIWwHC9v999e5B2LeA==",
+        "expireInSeconds": 86400,
+        "shouldResetPassword": false,
+        "passwordResetCode": null,
+        "userId": 1,
+        "requiresTwoFactorVerification": false,
+        "twoFactorAuthProviders": null,
+        "twoFactorRememberClientToken": null,
+        "returnUrl": null,
+        "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJBc3BOZXQuSWRlbnRpdHkuU2VjdXJpdHlTdGFtcCI6IktGWDUzQldLWlNZNUE1TjNQM0xYRFM2S1NUNUIyRDdPIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFkbWluIiwiMjU2ZTc4NmVmZmFmNDJmZDk5N2MyNTk5MTNjNjEyNDciXSwic3ViIjoiMSIsImp0aSI6ImU1NTY3MTkxLWY0YTktNDZjOC04Mjc3LTgyMjdlYjRiZjNmMCIsImlhdCI6MTU1MjYzOTM5NiwidG9rZW5fdmFsaWRpdHlfa2V5IjoiNjJmYWMzNDMtNDhiOS00MTgzLTkyMWItNGM4Njk5YWQ1YzdhIiwidXNlcl9pZGVudGlmaWVyIjoiMSIsIm5iZiI6MTU1MjYzOTM5NiwiZXhwIjoxNTg0MTc1Mzk2LCJpc3MiOiJBYnBaZXJvVGVtcGxhdGUiLCJhdWQiOiJBYnBaZXJvVGVtcGxhdGUifQ.u6cnxzB6Hnd4VpPYt-hOi23f6YlEkNZdw3cnyzi-0go"
+    },
+    "targetUrl": null,
+    "success": true,
+    "error": null,
+    "unAuthorizedRequest": false,
+    "__abp": true
+}
+```
+
+Write the `accessToken` value to the HTTP headers as seen below. ![graphql_structure](images/graphql_playground_token_authentication.jpg)
 
 ### Sample GraphQL Query
 
@@ -241,8 +298,6 @@ public class AuditLog : Entity<long>, IMayHaveTenant
 	public virtual DateTime ExecutionTime { get; set; }
 }
 ```
-
-
 
 1. Create a new `DTO ` class. Name it `AuditLogDto.cs`locate it in the `DTO` folder of the ***.GraphQL** project.   Add the `[AutoMapFrom(typeof(AuditLog))]` attribute to register the `AuditLogDto` for mapping. This will be used to map from the `AuditLog` entity to `AuditLogDto`.
 
