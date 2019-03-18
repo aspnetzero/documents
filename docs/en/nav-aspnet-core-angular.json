@@ -1,0 +1,117 @@
+{
+	"items" : [
+		{
+			"text" : "Getting Started",
+			"path" : "Getting-Started-Angular.md",
+			"items" : [
+				{
+					"text" : "For MacOS",
+					"path" : "Getting-Started-MacOSX.md"
+				}
+			]
+		},
+		{
+			"text" : "Introduction",
+			"path" : "Introduction-Angular.md"
+		},
+		{
+			"text" : "Overview",
+			"path" : "Overview-Angular.md"
+		},
+		{
+			"text" : "Fundemantals",
+			"items" : [
+				{
+					"text" : "Account Module",
+					"path" : "Getting-Started-Angular-Account-Module.md",
+					"items" : [
+						{
+							"text" : "Login",
+							"path" : "Getting-Started-Angular-Login.md",
+							"items" : [
+								{
+									"text" : "Social Logins",
+									"path" : "Getting-Started-Angular-Social-Logins.md"
+								},
+								{
+									"text" : "Two Factor Authentication",
+									"path" : "Getting-Started-Angular-Two-Factor-Authentication.md"
+								},
+								{
+									"text" : "Forgot Password",
+									"path" : "Getting-Started-Angular-Forgot-Password.md"
+								}
+							]
+						},
+						{
+							"text" : "Sign Up",
+							"path" : "Getting-Started-Angular-Sign-Up.md",
+							"items" : [
+								{
+									"text" : "Email Activation",
+									"path" : "Getting-Started-Angular-Email-Activation.md"
+								}
+							]
+						},
+						{
+							"text" : "Tenant Sign Up",
+							"path" : "Getting-Started-Angular-Tenant-Sign-Up.md"
+						}
+					]
+				},
+				{
+					"text" : "App Module",
+					"path" : "Getting-Started-Angular-App-Module.md",
+					"items" : [
+						{
+							"text" : "Main Menu and Layout",
+							"path" : "Getting-Started-Angular-Main-Menu-Layout"
+						}
+					]
+				}
+			]
+		},
+		{
+			"text" : "Tutorial",
+			"path" : "Developing-Step-By-Step-Angular.md"
+		},
+		{
+			"text" : "Tutorials",
+			"items" : [
+				{
+					"text" : "Extending Existing Entities",
+					"path" : "Extending-Existing-Entities.md"
+				},
+				{
+					"text" : "Converting Create & Edit Modals to Angular Pages",
+					"path" : "Create-Edit-In-The-Page.md"
+				}
+			]
+		},
+		{
+			"text" : "Rapid Application Development",
+			"path" : "Rapid-Application-Development.md"
+		},
+		{
+			"text" : "Change Logs",
+			"path" : "Change-Logs.md"
+		},
+		{
+			"text" : "Road Map",
+			"path" : "Road-Map.md"
+		},
+		{
+			"text" : "External Links",
+			"items" : [
+				{
+					"text" : "ASP.NET Boilerplate",
+					"path" : "https://aspnetboilerplate.com/Pages/Documents"
+				},
+				{
+					"text" : "Metronic Theme",
+					"path" : "http://www.keenthemes.com/preview/metronic/"
+				}
+			]
+		}
+	]
+}
