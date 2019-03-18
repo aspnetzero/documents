@@ -593,10 +593,12 @@ does not effect other tenants. Also, host has also own isolated roles.
 When we click Administration/Users menu, we enter to the user management
 page:
 
-<img src="images/user-management-core-3.png" alt="User management" class="img-thumbnail" />
+<img src="images/user-management-core-4.png" alt="User management" class="img-thumbnail" />
 
 **Users** are people who can **login** to the application and perform
 some operations based on their **permissions**.
+
+<img src="images/users-excel-operations.png" alt="excel operations" class="img-thumbnail" />
 
 Current **user list** can be downloaded as an Excel file. new users can be imported from an excel file. Also, invalid user information is sent back with the reason for invalidity via notification system after import process ends.
 
