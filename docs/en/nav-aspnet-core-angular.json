@@ -69,6 +69,10 @@
 						},
 						{
 							"text" : "Edition Management",
+							"path" : "Getting-Started-Angular-Edition-Management.md"
+						},
+						{
+							"text" : "Tenant Management",
 							"path" : "Getting-Started-Angular-Tenant-Management.md"
 						}
 					]
