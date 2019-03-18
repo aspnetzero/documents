@@ -74,6 +74,10 @@
 						{
 							"text" : "Tenant Management",
 							"path" : "Getting-Started-Angular-Tenant-Management.md"
+						},
+						{
+							"text" : "Host Dashboard",
+							"path" : "Getting-Started-Angular-Host-Dashboard.md"
 						}
 					]
 				}
