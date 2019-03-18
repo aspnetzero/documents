@@ -82,6 +82,10 @@
 						{
 							"text" : "Organization Units",
 							"path" : "Getting-Started-Angular-Organization-Units.md"
+						},
+						{
+							"text" : "Role Management",
+							"path" : "Getting-Started-Angular-Role-Management.md"
 						}
 					]
 				}
