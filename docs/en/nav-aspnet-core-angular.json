@@ -65,7 +65,11 @@
 					"items" : [
 						{
 							"text" : "Main Menu and Layout",
-							"path" : "Getting-Started-Angular-Main-Menu-Layout"
+							"path" : "Getting-Started-Angular-Main-Menu-Layout.md"
+						},
+						{
+							"text" : "Edition Management",
+							"path" : "Getting-Started-Angular-Tenant-Management.md"
 						}
 					]
 				}
