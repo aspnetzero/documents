@@ -33,22 +33,36 @@ The diagram below shows the overall architecture:
 
 <img src="images/angular2-core-overall-architecture.png" alt="Angular ASP.NET Core Architecture Overall" class="thumbnail" width="683" height="163" />
 
--   **Angular** project is designed so it can be **deployed separately**
-    from the backend ASP.NET Core solution, to a different port in same
-    server or to a different server. When it's deployed, it's actually a
-    plain HTML+JS+CSS web application that can be served on any operating
-    system and any web server.
--   **Angular** solution consists of 2 fundamental modules:
-    -   **AccountModule** is for login, register, remember password and
-        so on. It's mainly used to authenticate a user using
-        TokenAuthController in the server side.
-    -   **AppModule** is for authenticated users. Once a user logged in
-        successfully, they are redirected to the main application.
-        Communication performed via AJAX requests using header based
-        token authentication.
--   **ASP.NET Core** solution does not have any HTML, JS or CSS code. It
-    simply provides end points for token based authentication and to use
-    the application services.
+- Angular project is designed so that it can be **deployed separately** from the backend ASP.NET Core solution, to a different port in same server or to a different server. When it's deployed, it's actually a
+  plain HTML+JS+CSS web application that can be served on any operating system and any web server.
+
+- Angular solution consists of 2 fundamental modules:
+
+  ### Account Module
+
+  AccountModule provides **login**, **register**, **forgot password** and **email activation** pages and located under src/account folder:
+
+  <img src="D:/Github/documents/docs/en/images/ng2-account-module-files.png" alt="Account Module Angular 2" class="thumbnail" width="252" height="217" />
+
+  **account.component** is the root component of account.module. **account-routing.module** defines routes for the account application.
+
+  ### App Module
+
+  This is the actual application module which is entered by username and
+  password. You will mostly work on this application to add your business
+  requirements. A screenshot from the application:
+
+  <img src="D:/Github/documents/docs/en/images/dashboardV4.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
+
+  Folder structure of the source code is like that:
+
+  <img src="D:/Github/documents/docs/en/images/ng2-app-module.png" alt="Angular app module files" class="img-thumbnail" width="223" height="450" />
+
+  It consists of 3 sub modules as described before. **app.component** is the root component for all views.
+
+  
+
+Note that ASP.NET Core solution does not have any HTML, JS or CSS code. It simply provides end points for token based authentication and to use the application services.
 
 ## Angular Solution
 

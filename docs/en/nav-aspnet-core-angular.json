@@ -1,399 +1,387 @@
 {
-	"items" : [
-		{
-			"text" : "Getting Started",
-			"path" : "Getting-Started-Angular.md",
-			"items" : [
-				{
-					"text" : "For MacOS",
-					"path" : "Getting-Started-MacOSX.md"
-				}
-			]
-		},
-		{
-			"text" : "Overview",
-			"path" : "Overview-Angular.md"
-		},
-		{
-			"text" : "Features",
-			"items" : [
-				{
-					"text" : "Account Module",
-					"path" : "Getting-Started-Angular-Account-Module.md",
-					"items" : [
-						{
-							"text" : "Login",
-							"path" : "Getting-Started-Angular-Login.md",
-							"items" : [
-								{
-									"text" : "Social Logins",
-									"path" : "Getting-Started-Angular-Social-Logins.md"
-								},
-								{
-									"text" : "Two Factor Authentication",
-									"path" : "Getting-Started-Angular-Two-Factor-Authentication.md"
-								},
-								{
-									"text" : "Forgot Password",
-									"path" : "Getting-Started-Angular-Forgot-Password.md"
-								},
-								{
-									"text" : "Token Based Authentication",
-									"path" : "Getting-Started-Angular-Token-Based-Authentication.md"
-								}
-							]
-						},
-						{
-							"text" : "Sign Up",
-							"path" : "Getting-Started-Angular-Sign-Up.md",
-							"items" : [
-								{
-									"text" : "Email Activation",
-									"path" : "Getting-Started-Angular-Email-Activation.md"
-								}
-							]
-						},
-						{
-							"text" : "Tenant Sign Up",
-							"path" : "Getting-Started-Angular-Tenant-Sign-Up.md"
-						}
-					]
-				},
-				{
-					"text" : "App Module",
-					"path" : "Getting-Started-Angular-App-Module.md",
-					"items" : [
-						{
-							"text" : "Main Menu and Layout",
-							"path" : "Getting-Started-Angular-Main-Menu-Layout.md"
-						},
-						{
-							"text" : "Edition Management",
-							"path" : "Getting-Started-Angular-Edition-Management.md"
-						},
-						{
-							"text" : "Tenant Management",
-							"path" : "Getting-Started-Angular-Tenant-Management.md"
-						},
-						{
-							"text" : "Host Dashboard",
-							"path" : "Getting-Started-Angular-Host-Dashboard.md"
-						},
-						{
-							"text" : "Organization Units",
-							"path" : "Getting-Started-Angular-Organization-Units.md"
-						},
-						{
-							"text" : "Role Management",
-							"path" : "Getting-Started-Angular-Role-Management.md"
-						},
-						{
-							"text" : "User Management",
-							"path" : "Getting-Started-Angular-User-Management.md"
-						},
-						{
-							"text" : "Language Management",
-							"path" : "Getting-Started-Angular-Language-Management.md"
-						},
-						{
-							"text" : "Audit Logs",
-							"path" : "Getting-Started-Angular-Audit-Logs.md"
-						},
-						{
-							"text" : "Entity History",
-							"path" : "Getting-Started-Angular-Entity-History.md"
-						},
-						{
-							"text" : "Subscription",
-							"path" : "Getting-Started-Angular-Subscription.md",
-							"items" : [
-								{
-									"text" : "PayPal Integration",
-									"path" : "Getting-Started-Angular-PayPal-Integration.md"
-								},
-								{
-									"text" : "Stripe Integration",
-									"path" : "Getting-Started-Angular-Subscription-Stripe-Integration.md"
-								}
-							]
-						},
-						{
-							"text" : "Visual Settings",
-							"path" : "Getting-Started-Angular-Visual-Settings.md"
-						},
-						{
-							"text" : "Host Settings",
-							"path" : "Getting-Started-Angular-Host-Settings.md"
-						},
-						{
-							"text" : "Tenant Settings",
-							"path" : "Getting-Started-Angular-Tenant-Settings.md",
-							"items" : [
-								{
-									"text" : "Active Directory",
-									"path" : "Getting-Started-Angular-Active-Directory.md"
-								}
-							]
-						},
-						{
-							"text" : "Maintenance",
-							"path" : "Getting-Started-Angular-Maintenance.md"
-						},
-						{
-							"text" : "Tenant Dashboard",
-							"path" : "Getting-Started-Angular-Tenant-Dashboard.md"
-						},
-						{
-							"text" : "Notifications",
-							"path" : "Getting-Started-Angular-Notifications.md"
-						},
-						{
-							"text" : "Chat",
-							"path" : "Getting-Started-Angular-Chat.md"
-						},
-						{
-							"text" : "User Menu",
-							"path" : "Getting-Started-Angular-User-Menu.md"
-						},
-						{
-							"text" : "Setup Page",
-							"path" : "Getting-Started-Angular-Setup-Page.md"
-						}
-					]
-				}
-			]
-		},
-		{
-			"text" : "Xamarin Application",
-			"path" : "Xamarin.md",
-			"items" : [
-				{
-					"text" : "Development Guide",
-					"path" : "Development-Guide-Xamarin.md"
-				},
-				{
-					"text" : "Step by Step Development",
-					"path" : "Developing-Step-By-Step-Xamarin.md"
-				}
-			]
-		},
-		{
-			"text" : "Infrastructure",
-			"path" : "Getting-Started-Angular-Infrastructure.md",
-			"items" : [
-				{
-					"text" : "NPM Packages",
-					"path" : "Getting-Started-Angular-Infrastructure-Npm-Packages.md"
-				},
-				{
-					"text" : "Angular CLI & WebPack",
-					"path" : "Getting-Started-Angular-Infrastructure-Angular-CLI-WebPack.md"
-				},
-				{
-					"text" : "NSwag",
-					"path" : "Getting-Started-Angular-Infrastructure-NSwag.md"
-				},
-				{
-					"text" : "AppComponentBase",
-					"path" : "Getting-Started-Angular-Infrastructure-AppComponentBase.md"
-				},
-				{
-					"text" : "Localization",
-					"path" : "Getting-Started-Angular-Infrastructure-Localization.md"
-				},
-				{
-					"text" : "Exception Handling",
-					"path" : "Getting-Started-Angular-Infrastructure-Exception-Handling.md"
-				},
-				{
-					"text" : "Authorization",
-					"path" : "Getting-Started-Angular-Infrastructure-Authorization.md"
-				},
-				{
-					"text" : "Features",
-					"path" : "Getting-Started-Angular-Infrastructure-Features.md"
-				},
-				{
-					"text" : "Setting",
-					"path" : "Getting-Started-Angular-Infrastructure-Setting.md"
-				},
-				{
-					"text" : "SignalR Integration",
-					"path" : "Getting-Started-Angular-Infrastructure-SignalR-Integration.md"
-				},
-				{
-					"text" : "Used Libraries & Frameworks",
-					"path" : "Getting-Started-Angular-Infrastructure-Used-Libraries-Frameworks.md"
-				}
-			]
-		},
-		{
-			"text" : "Tools and Libraries",
-			"items" : [
-				{
-					"text" : "GrapQL API",
-					"path" : "GraphQL.md"
-				},
-				{
-					"text" : "Swagger UI",
-					"path" : "Getting-Started-Angular-Swagger-UI.md"
-				},
-				{
-					"text" : "Power Tools",
-					"path" : "Rapid-Application-Development.md"
-				}
-			]
-		},
-		{
-			"text" : "Deployment",
-			"path" : "Getting-Started-Angular-Deployment.md"
-		},
-		{
-			"text" : "Tutorials",
-			"items" : [
-				{
-					"text" : "Developing Step By Step",
-					"items" : [
-						{
-							"text" : "Introduction",
-							"path" : "Developing-Step-By-Step-Angular-Introduction.md"
-						},
-						{
-							"text" : "Creating & Running The Project",
-							"path" : "Developing-Step-By-Step-Angular-Creating-Running-Project.md"
-						},
-						{
-							"text" : "Adding a New Menu Item",
-							"path" : "Developing-Step-By-Step-Angular-Adding-New-Menu-Item.md"
-						},
-						{
-							"text" : "Creating PhoneBook Component",
-							"path" : "Developing-Step-By-Step-Angular-Creating-PhoneBook-Component.md"
-						},
-						{
-							"text" : "Creating Person Entity",
-							"path" : "Developing-Step-By-Step-Angular-Creating-Person-Entity.md"
-						},
-						{
-							"text" : "Database Migrations for Person",
-							"path" : "Developing-Step-By-Step-Angular-Database-Migrations-Person-Entity.md"
-						},
-						{
-							"text" : "Creating Unit Tests for Person Application Service",
-							"path" : "Developing-Step-By-Step-Angular-Creating-Unit-Tests-for-Person-Application-Service.md"
-						},
-						{
-							"text" : "Creating Person Application Service",
-							"path" : "Developing-Step-By-Step-Angular-Creating-Person-Application-Service.md"
-						},
-						{
-							"text" : "Using GetPeople Method From Angular Component",
-							"path" : "Developing-Step-By-Step-Angular-Using-GetPeople-Method-from-Angular.md"
-						},
-						{
-							"text" : "Creating a New Person",
-							"path" : "Developing-Step-By-Step-Angular-Creating-New-Person.md",
-							"items" : [
-								{
-									"text" : "Testing CreatePerson Method",
-									"path" : "Developing-Step-By-Step-Angular-Creating-Testing-Create-Person-Method.md"
-								},
-								{
-									"text" : "Creating Modal for New Person",
-									"path" : "Developing-Step-By-Step-Angular-Creating-Testing-Creating-Modal-New-Person.md"
-								}
-							]
-						},
-						{
-							"text" : "Authorization For Phone Book",
-							"path" : "Developing-Step-By-Step-Angular-Authorization-PhoneBook.md"
-						}
-					]
-				},
-				{
-					"text" : "Extending Existing Entities",
-					"path" : "Extending-Existing-Entities.md"
-				},
-				{
-					"text" : "Converting Create & Edit Modals to Angular Pages",
-					"path" : "Create-Edit-In-The-Page.md"
-				},
-				{
-					"text" : "Deleting a Person",
-					"path" : "Developing-Step-By-Step-Angular-Deleting-Person.md"
-				},
-				{
-					"text" : "Filtering People",
-					"path" : "Developing-Step-By-Step-Angular-Deleting-Filtering-People.md"
-				},
-				{
-					"text" : "Adding Phone Numbers",
-					"path" : "Developing-Step-By-Step-Angular-Deleting-Adding-Phone-Numbers.md",
-					"items" : [
-						{
-							"text" : "Creating Phone Entity",
-							"path" : "Developing-Step-By-Step-Angular-Deleting-Creating-Phone-Entity.md"
-						},
-						{
-							"text" : "Database Migration of Phone Entity",
-							"path" : "Developing-Step-By-Step-Angular-Deleting-Migrations-Phone-Entity.md"
-						},
-						{
-							"text" : "Changing GetPeople Method",
-							"path" : "Developing-Step-By-Step-Angular-Deleting-Changing-GetPeople-Method.md"
-						},
-						{
-							"text" : "Adding AddPhone and DeletePhone Methods",
-							"path" : "Developing-Step-By-Step-Angular-Deleting-Adding-AddPhone-DeletePhone-Methods.md"
-						},
-						{
-							"text" : "Edit Mode For Phone Numbers",
-							"path" : "Developing-Step-By-Step-Angular-Deleting-Edit-Mode-Phone-Numbers.md"
-						},
-						{
-							"text" : "Edit Mode For People",
-							"path" : "Developing-Step-By-Step-Angular-Deleting-Edit-Mode-People.md"
-						}
-					]
-				},
-				{
-					"text" : "Multi Tenancy",
-					"path" : "Developing-Step-By-Step-Angular-Deleting-Multi-Tenancy.md"
-				},
-				{
-					"text" : "Running the Application",
-					"path" : "Developing-Step-By-Step-Angular-Deleting-Running-Application.md"
-				},
-				{
-					"text" : "Conclusion",
-					"path" : "Developing-Step-By-Step-Angular-Deleting-Conclusion.md"
-				}
-			]
-		},
-		{
-			"text" : "Change Logs",
-			"path" : "Change-Logs.md"
-		},
-		{
-			"text" : "Road Map",
-			"path" : "Road-Map.md"
-		},
-		{
-			"text" : "Penetration Test",
-			"path" : "Penetration-Test.md"
-		},
-		{
-			"text" : "External Links",
-			"items" : [
-				{
-					"text" : "ASP.NET Boilerplate",
-					"path" : "https://aspnetboilerplate.com/Pages/Documents"
-				},
-				{
-					"text" : "Metronic Theme",
-					"path" : "http://www.keenthemes.com/preview/metronic/"
-				}
-			]
-		}
-	]
+  "items": [
+    {
+      "text": "Getting Started",
+      "path": "Getting-Started-Angular.md",
+      "items": [
+        {
+          "text": "For MacOS",
+          "path": "Getting-Started-MacOSX.md"
+        }
+      ]
+    },
+    {
+      "text": "Overview",
+      "path": "Overview-Angular.md"
+    },
+    {
+      "text": "Features",
+      "items": [
+        {
+          "text": "Login",
+          "path": "Getting-Started-Angular-Login.md",
+          "items": [
+            {
+              "text": "Social Logins",
+              "path": "Getting-Started-Angular-Social-Logins.md"
+            },
+            {
+              "text": "Two Factor Authentication",
+              "path": "Getting-Started-Angular-Two-Factor-Authentication.md"
+            },
+            {
+              "text": "Forgot Password",
+              "path": "Getting-Started-Angular-Forgot-Password.md"
+            },
+            {
+              "text": "Token Based Authentication",
+              "path": "Getting-Started-Angular-Token-Based-Authentication.md"
+            }
+          ]
+        },
+        {
+          "text": "Sign Up",
+          "path": "Getting-Started-Angular-Sign-Up.md",
+          "items": [
+            {
+              "text": "Email Activation",
+              "path": "Getting-Started-Angular-Email-Activation.md"
+            }
+          ]
+        },
+        {
+          "text": "Tenant Sign Up",
+          "path": "Getting-Started-Angular-Tenant-Sign-Up.md"
+        },
+        {
+          "text": "Main Menu and Layout",
+          "path": "Getting-Started-Angular-Main-Menu-Layout.md"
+        },
+        {
+          "text": "Edition Management",
+          "path": "Getting-Started-Angular-Edition-Management.md"
+        },
+        {
+          "text": "Tenant Management",
+          "path": "Getting-Started-Angular-Tenant-Management.md"
+        },
+        {
+          "text": "Host Dashboard",
+          "path": "Getting-Started-Angular-Host-Dashboard.md"
+        },
+        {
+          "text": "Organization Units",
+          "path": "Getting-Started-Angular-Organization-Units.md"
+        },
+        {
+          "text": "Role Management",
+          "path": "Getting-Started-Angular-Role-Management.md"
+        },
+        {
+          "text": "User Management",
+          "path": "Getting-Started-Angular-User-Management.md"
+        },
+        {
+          "text": "Language Management",
+          "path": "Getting-Started-Angular-Language-Management.md"
+        },
+        {
+          "text": "Audit Logs",
+          "path": "Getting-Started-Angular-Audit-Logs.md"
+        },
+        {
+          "text": "Entity History",
+          "path": "Getting-Started-Angular-Entity-History.md"
+        },
+        {
+          "text": "Subscription",
+          "path": "Getting-Started-Angular-Subscription.md",
+          "items": [
+            {
+              "text": "PayPal Integration",
+              "path": "Getting-Started-Angular-PayPal-Integration.md"
+            },
+            {
+              "text": "Stripe Integration",
+              "path": "Getting-Started-Angular-Subscription-Stripe-Integration.md"
+            }
+          ]
+        },
+        {
+          "text": "Visual Settings",
+          "path": "Getting-Started-Angular-Visual-Settings.md"
+        },
+        {
+          "text": "Host Settings",
+          "path": "Getting-Started-Angular-Host-Settings.md"
+        },
+        {
+          "text": "Tenant Settings",
+          "path": "Getting-Started-Angular-Tenant-Settings.md",
+          "items": [
+            {
+              "text": "Active Directory",
+              "path": "Getting-Started-Angular-Active-Directory.md"
+            }
+          ]
+        },
+        {
+          "text": "Maintenance",
+          "path": "Getting-Started-Angular-Maintenance.md"
+        },
+        {
+          "text": "Tenant Dashboard",
+          "path": "Getting-Started-Angular-Tenant-Dashboard.md"
+        },
+        {
+          "text": "Notifications",
+          "path": "Getting-Started-Angular-Notifications.md"
+        },
+        {
+          "text": "Chat",
+          "path": "Getting-Started-Angular-Chat.md"
+        },
+        {
+          "text": "User Menu",
+          "path": "Getting-Started-Angular-User-Menu.md"
+        },
+        {
+          "text": "Setup Page",
+          "path": "Getting-Started-Angular-Setup-Page.md"
+        }
+      ]
+    },
+    {
+      "text": "Xamarin Application",
+      "path": "Xamarin.md",
+      "items": [
+        {
+          "text": "Development Guide",
+          "path": "Development-Guide-Xamarin.md"
+        },
+        {
+          "text": "Step by Step Development",
+          "path": "Developing-Step-By-Step-Xamarin.md"
+        }
+      ]
+    },
+    {
+      "text": "Infrastructure",
+      "path": "Getting-Started-Angular-Infrastructure.md",
+      "items": [
+        {
+          "text": "NPM Packages",
+          "path": "Getting-Started-Angular-Infrastructure-Npm-Packages.md"
+        },
+        {
+          "text": "Angular CLI & WebPack",
+          "path": "Getting-Started-Angular-Infrastructure-Angular-CLI-WebPack.md"
+        },
+        {
+          "text": "NSwag",
+          "path": "Getting-Started-Angular-Infrastructure-NSwag.md"
+        },
+        {
+          "text": "AppComponentBase",
+          "path": "Getting-Started-Angular-Infrastructure-AppComponentBase.md"
+        },
+        {
+          "text": "Localization",
+          "path": "Getting-Started-Angular-Infrastructure-Localization.md"
+        },
+        {
+          "text": "Exception Handling",
+          "path": "Getting-Started-Angular-Infrastructure-Exception-Handling.md"
+        },
+        {
+          "text": "Authorization",
+          "path": "Getting-Started-Angular-Infrastructure-Authorization.md"
+        },
+        {
+          "text": "Features",
+          "path": "Getting-Started-Angular-Infrastructure-Features.md"
+        },
+        {
+          "text": "Setting",
+          "path": "Getting-Started-Angular-Infrastructure-Setting.md"
+        },
+        {
+          "text": "SignalR Integration",
+          "path": "Getting-Started-Angular-Infrastructure-SignalR-Integration.md"
+        },
+        {
+          "text": "Used Libraries & Frameworks",
+          "path": "Getting-Started-Angular-Infrastructure-Used-Libraries-Frameworks.md"
+        }
+      ]
+    },
+    {
+      "text": "Tools and Libraries",
+      "items": [
+        {
+          "text": "GrapQL API",
+          "path": "GraphQL.md"
+        },
+        {
+          "text": "Swagger UI",
+          "path": "Getting-Started-Angular-Swagger-UI.md"
+        },
+        {
+          "text": "Power Tools",
+          "path": "Rapid-Application-Development.md"
+        }
+      ]
+    },
+    {
+      "text": "Deployment",
+      "path": "Getting-Started-Angular-Deployment.md"
+    },
+    {
+      "text": "Tutorials",
+      "items": [
+        {
+          "text": "Developing Step By Step",
+          "items": [
+            {
+              "text": "Introduction",
+              "path": "Developing-Step-By-Step-Angular-Introduction.md"
+            },
+            {
+              "text": "Creating & Running The Project",
+              "path": "Developing-Step-By-Step-Angular-Creating-Running-Project.md"
+            },
+            {
+              "text": "Adding a New Menu Item",
+              "path": "Developing-Step-By-Step-Angular-Adding-New-Menu-Item.md"
+            },
+            {
+              "text": "Creating PhoneBook Component",
+              "path": "Developing-Step-By-Step-Angular-Creating-PhoneBook-Component.md"
+            },
+            {
+              "text": "Creating Person Entity",
+              "path": "Developing-Step-By-Step-Angular-Creating-Person-Entity.md"
+            },
+            {
+              "text": "Database Migrations for Person",
+              "path": "Developing-Step-By-Step-Angular-Database-Migrations-Person-Entity.md"
+            },
+            {
+              "text": "Creating Unit Tests for Person Application Service",
+              "path": "Developing-Step-By-Step-Angular-Creating-Unit-Tests-for-Person-Application-Service.md"
+            },
+            {
+              "text": "Creating Person Application Service",
+              "path": "Developing-Step-By-Step-Angular-Creating-Person-Application-Service.md"
+            },
+            {
+              "text": "Using GetPeople Method From Angular Component",
+              "path": "Developing-Step-By-Step-Angular-Using-GetPeople-Method-from-Angular.md"
+            },
+            {
+              "text": "Creating a New Person",
+              "path": "Developing-Step-By-Step-Angular-Creating-New-Person.md",
+              "items": [
+                {
+                  "text": "Testing CreatePerson Method",
+                  "path": "Developing-Step-By-Step-Angular-Creating-Testing-Create-Person-Method.md"
+                },
+                {
+                  "text": "Creating Modal for New Person",
+                  "path": "Developing-Step-By-Step-Angular-Creating-Testing-Creating-Modal-New-Person.md"
+                }
+              ]
+            },
+            {
+              "text": "Authorization For Phone Book",
+              "path": "Developing-Step-By-Step-Angular-Authorization-PhoneBook.md"
+            }
+          ]
+        },
+        {
+          "text": "Extending Existing Entities",
+          "path": "Extending-Existing-Entities.md"
+        },
+        {
+          "text": "Converting Create & Edit Modals to Angular Pages",
+          "path": "Create-Edit-In-The-Page.md"
+        },
+        {
+          "text": "Deleting a Person",
+          "path": "Developing-Step-By-Step-Angular-Deleting-Person.md"
+        },
+        {
+          "text": "Filtering People",
+          "path": "Developing-Step-By-Step-Angular-Deleting-Filtering-People.md"
+        },
+        {
+          "text": "Adding Phone Numbers",
+          "path": "Developing-Step-By-Step-Angular-Deleting-Adding-Phone-Numbers.md",
+          "items": [
+            {
+              "text": "Creating Phone Entity",
+              "path": "Developing-Step-By-Step-Angular-Deleting-Creating-Phone-Entity.md"
+            },
+            {
+              "text": "Database Migration of Phone Entity",
+              "path": "Developing-Step-By-Step-Angular-Deleting-Migrations-Phone-Entity.md"
+            },
+            {
+              "text": "Changing GetPeople Method",
+              "path": "Developing-Step-By-Step-Angular-Deleting-Changing-GetPeople-Method.md"
+            },
+            {
+              "text": "Adding AddPhone and DeletePhone Methods",
+              "path": "Developing-Step-By-Step-Angular-Deleting-Adding-AddPhone-DeletePhone-Methods.md"
+            },
+            {
+              "text": "Edit Mode For Phone Numbers",
+              "path": "Developing-Step-By-Step-Angular-Deleting-Edit-Mode-Phone-Numbers.md"
+            },
+            {
+              "text": "Edit Mode For People",
+              "path": "Developing-Step-By-Step-Angular-Deleting-Edit-Mode-People.md"
+            }
+          ]
+        },
+        {
+          "text": "Multi Tenancy",
+          "path": "Developing-Step-By-Step-Angular-Deleting-Multi-Tenancy.md"
+        },
+        {
+          "text": "Running the Application",
+          "path": "Developing-Step-By-Step-Angular-Deleting-Running-Application.md"
+        },
+        {
+          "text": "Conclusion",
+          "path": "Developing-Step-By-Step-Angular-Deleting-Conclusion.md"
+        }
+      ]
+    },
+    {
+      "text": "Change Logs",
+      "path": "Change-Logs.md"
+    },
+    {
+      "text": "Road Map",
+      "path": "Road-Map.md"
+    },
+    {
+      "text": "Penetration Test",
+      "path": "Penetration-Test.md"
+    },
+    {
+      "text": "External Links",
+      "items": [
+        {
+          "text": "ASP.NET Boilerplate",
+          "path": "https://aspnetboilerplate.com/Pages/Documents"
+        },
+        {
+          "text": "Metronic Theme",
+          "path": "http://www.keenthemes.com/preview/metronic/"
+        }
+      ]
+    }
+  ]
 }

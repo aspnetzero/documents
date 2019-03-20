@@ -170,6 +170,6 @@ You can download our rapid application development tool from the following link:
 
 [https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
 
-## More
+## Next
 
-Your solution is up and working. See [<span class="text-primary">development guide</span>](Development-Guide-Xamarin.md) for Xamarin application, [<span class="text-primary">development guide</span>](Development-Guide-Angular.md) document for more information.
+Your solution is up and working. See the [Xamarin Development Guide](Development-Guide-Xamarin) or [Angular Overview](Overview-Angular) document for more information.
