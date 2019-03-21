@@ -5,7 +5,6 @@ The following topics will be described in this section
 - [NPM Packages](Getting-Started-Angular-Infrastructure-Npm-Packages)
 - [Angular CLI & WebPack](Getting-Started-Angular-Infrastructure-Angular-CLI-WebPack)
 - [NSwag](Getting-Started-Angular-Infrastructure-NSwag)
-- [AppComponentBase](Getting-Started-Angular-Infrastructure-AppComponentBase)
 - [Localization](Getting-Started-Angular-Infrastructure-Localization)
 - [Exception Handling](Getting-Started-Angular-Infrastructure-Exception-Handling)
 - [Authorization](Getting-Started-Angular-Infrastructure-Authorization)
