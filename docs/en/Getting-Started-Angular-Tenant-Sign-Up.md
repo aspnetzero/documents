@@ -4,4 +4,7 @@ Tenant sign up link is shown on the login form only if you are in the host conte
 
 <img src="D:/Github/documents/docs/en/images/tenant-signup-v3.png" alt="Tenant registration form" class="img-thumbnail" />
 
-## 
+## Next
+
+- [Main Menu and Layout](Getting-Started-Angular-Main-Menu-Layout)
+

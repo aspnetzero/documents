@@ -102,7 +102,7 @@
               "items": [
                 {
                   "text": "PayPal Integration",
-                  "path": "Getting-Started-Angular-PayPal-Integration.md"
+                  "path": "Getting-Started-Angular-Subscription-PayPal-Integration.md"
                 },
                 {
                   "text": "Stripe Integration",

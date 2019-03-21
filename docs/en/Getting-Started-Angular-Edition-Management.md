@@ -2,15 +2,11 @@
 
 *If you're not developing a multi-tenant application, you can skip this section.*
 
-Most **SaaS** (multi-tenant) applications have **editions** (packages)
-those have different **features**. Thus, they can provide different
-**price and feature options** to their tenants (customers). **Editions page** (available in host login) is used to manage application's
-editions:
+Most **SaaS** (multi-tenant) applications have **editions** (packages) those have different **features**. Thus, they can provide different **price and feature options** to their tenants (customers). **Editions page** (available in host login) is used to manage application's editions:
 
 <img src="D:/Github/documents/docs/en/images/editions-page-core-4.png" alt="Editions Page" class="img-thumbnail" />
 
-Editions are used to group feature values and assign to tenants. We can
-create a new edition by clicking "**Create new edition**" button:
+Editions are used to group feature values and assign to tenants. We can create a new edition by clicking "**Create new edition**" button:
 
 <img src="D:/Github/documents/docs/en/images/edition-edit-1.png" alt="Edit Edition" class="img-thumbnail" />
 
@@ -21,3 +17,9 @@ Features tab is used to determining features available for the edition:
 <img src="D:/Github/documents/docs/en/images/edition-feature-editing-core-1.png" alt="Edit edition features" class="img-thumbnail" />
 
 See [feature management](https://aspnetboilerplate.com/Pages/Documents/Feature-Management) and [edition management](https://aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management) documents for more information.
+
+
+
+## Next
+
+- [Tenant Management](Getting-Started-Angular-Tenant-Management)

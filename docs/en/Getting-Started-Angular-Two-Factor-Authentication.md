@@ -39,3 +39,7 @@ Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
 ```
 
 You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in `appsetting.json` file.
+
+## Next
+
+* [Forgot Password](Getting-Started-Angular-Forgot-Password)

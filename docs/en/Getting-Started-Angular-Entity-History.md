@@ -8,9 +8,12 @@ When we click the magnifier icon, we can see all details a change log. We can se
 
 <img src="D:/Github/documents/docs/en/images/entity-history-log-detail.png" alt="Change Log Detail" class="img-thumbnail" />
 
-You should add entity type that you want to track to `*.Core\EntityHistory\EntityHistoryHelper.TrackedTypes`. And make sure you uncomment following line in `*.EntityFrameworkCore\EntityFrameworkCore\YourProjectNameEntityFrameworkCoreModule.cs`
+You should add entity type that you want to track to ***.Core\EntityHistory\EntityHistoryHelper.TrackedTypes**.  And make sure you uncomment following line in ***.EntityFrameworkCore\EntityFrameworkCore\YourProjectNameEntityFrameworkCoreModule.cs**
 
-```
+```csharp
 //Configuration.EntityHistory.Selectors.Add("AbpZeroTemplateEntities", EntityHistoryHelper.TrackedTypes);
 ```
 
+## Next
+
+- [Subscription](Getting-Started-Angular-Subscription)
