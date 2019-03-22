@@ -308,11 +308,8 @@
           "items": [
             {
               "text": "Developing Step By Step",
+              "path": "Developing-Step-By-Step-Core-Introduction.md",
               "items": [
-                {
-                  "text": "Introduction",
-                  "path": "Developing-Step-By-Step-Core-Introduction.md"
-                },
                 {
                   "text": "Creating & Running The Project",
                   "path": "Developing-Step-By-Step-Core-Creating-Running-Project.md"
@@ -339,7 +336,7 @@
                     },
                     {
                       "text": "Creating Unit Tests For PersonAppService",
-                      "path": "Developing-Step-By-Step-Core-Creating-Unit-Tests-PersonAppService"
+                      "path": "Developing-Step-By-Step-Core-Creating-Unit-Tests-PersonAppService.md"
                     },
                     {
                       "text": "Testing PersonAppService from Browser Console",
@@ -432,10 +429,6 @@
             {
               "text": "Extending Existing Entities",
               "path": "Extending-Existing-Entities.md"
-            },
-            {
-              "text": "Converting Create & Edit Modals to Angular Pages",
-              "path": "Create-Edit-In-The-Page.md"
             }
           ]
         },
