@@ -306,53 +306,53 @@
                 },
                 {
                   "text": "Deleting a Person",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Person.md"
+                  "path": "Developing-Step-By-Step-Angular-Person.md"
                 },
                 {
                   "text": "Filtering People",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Filtering-People.md"
+                  "path": "Developing-Step-By-Step-Angular-Filtering-People.md"
                 },
                 {
                   "text": "Adding Phone Numbers",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Adding-Phone-Numbers.md",
+                  "path": "Developing-Step-By-Step-Angular-Adding-Phone-Numbers.md",
                   "items": [
                     {
                       "text": "Creating Phone Entity",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Creating-Phone-Entity.md"
+                      "path": "Developing-Step-By-Step-Angular-Creating-Phone-Entity.md"
                     },
                     {
                       "text": "Database Migration of Phone Entity",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Migrations-Phone-Entity.md"
+                      "path": "Developing-Step-By-Step-Angular-Migrations-Phone-Entity.md"
                     },
                     {
                       "text": "Changing GetPeople Method",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Changing-GetPeople-Method.md"
+                      "path": "Developing-Step-By-Step-Angular-Changing-GetPeople-Method.md"
                     },
                     {
                       "text": "Adding AddPhone and DeletePhone Methods",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Adding-AddPhone-DeletePhone-Methods.md"
+                      "path": "Developing-Step-By-Step-Angular-Adding-AddPhone-DeletePhone-Methods.md"
                     },
                     {
                       "text": "Edit Mode For Phone Numbers",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Edit-Mode-Phone-Numbers.md"
+                      "path": "Developing-Step-By-Step-Angular-Edit-Mode-Phone-Numbers.md"
                     },
                     {
                       "text": "Edit Mode For People",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Edit-Mode-People.md"
+                      "path": "Developing-Step-By-Step-Angular-Edit-Mode-People.md"
                     }
                   ]
                 },
                 {
                   "text": "Multi Tenancy",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Multi-Tenancy.md"
+                  "path": "Developing-Step-By-Step-Angular-Multi-Tenancy.md"
                 },
                 {
                   "text": "Running the Application",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Running-Application.md"
+                  "path": "Developing-Step-By-Step-Angular-Running-Application.md"
                 },
                 {
                   "text": "Conclusion",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Conclusion.md"
+                  "path": "Developing-Step-By-Step-Angular-Conclusion.md"
                 }
               ]
             },
