@@ -1,4 +1,4 @@
-# SignalR Integration
+# SignalR
 
 SignalR is properly configured and integrated to the startup template. Real time notification and chat systems use it. You can direcly use SignalR in your applications.
 
