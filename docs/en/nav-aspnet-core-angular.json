@@ -22,135 +22,135 @@
           "items": [
             {
               "text": "Login",
-              "path": "Getting-Started-Angular-Login.md",
+              "path": "Features-Angular-Login.md",
               "items": [
                 {
                   "text": "Social Logins",
-                  "path": "Getting-Started-Angular-Social-Logins.md"
+                  "path": "Features-Angular-Social-Logins.md"
                 },
                 {
                   "text": "Two Factor Authentication",
-                  "path": "Getting-Started-Angular-Two-Factor-Authentication.md"
+                  "path": "Features-Angular-Two-Factor-Authentication.md"
                 },
                 {
                   "text": "Forgot Password",
-                  "path": "Getting-Started-Angular-Forgot-Password.md"
+                  "path": "Features-Angular-Forgot-Password.md"
                 },
                 {
                   "text": "Token Based Authentication",
-                  "path": "Getting-Started-Angular-Token-Based-Authentication.md"
+                  "path": "Features-Angular-Token-Based-Authentication.md"
                 }
               ]
             },
             {
               "text": "Sign Up",
-              "path": "Getting-Started-Angular-Sign-Up.md",
+              "path": "Features-Angular-Sign-Up.md",
               "items": [
                 {
                   "text": "Email Activation",
-                  "path": "Getting-Started-Angular-Email-Activation.md"
+                  "path": "Features-Angular-Email-Activation.md"
                 }
               ]
             },
             {
               "text": "Tenant Sign Up",
-              "path": "Getting-Started-Angular-Tenant-Sign-Up.md"
+              "path": "Features-Angular-Tenant-Sign-Up.md"
             },
             {
               "text": "Main Menu and Layout",
-              "path": "Getting-Started-Angular-Main-Menu-Layout.md"
+              "path": "Features-Angular-Main-Menu-Layout.md"
             },
             {
               "text": "Edition Management",
-              "path": "Getting-Started-Angular-Edition-Management.md"
+              "path": "Features-Angular-Edition-Management.md"
             },
             {
               "text": "Tenant Management",
-              "path": "Getting-Started-Angular-Tenant-Management.md"
+              "path": "Features-Angular-Tenant-Management.md"
             },
             {
               "text": "Host Dashboard",
-              "path": "Getting-Started-Angular-Host-Dashboard.md"
+              "path": "Features-Angular-Host-Dashboard.md"
             },
             {
               "text": "Organization Units",
-              "path": "Getting-Started-Angular-Organization-Units.md"
+              "path": "Features-Angular-Organization-Units.md"
             },
             {
               "text": "Role Management",
-              "path": "Getting-Started-Angular-Role-Management.md"
+              "path": "Features-Angular-Role-Management.md"
             },
             {
               "text": "User Management",
-              "path": "Getting-Started-Angular-User-Management.md"
+              "path": "Features-Angular-User-Management.md"
             },
             {
               "text": "Language Management",
-              "path": "Getting-Started-Angular-Language-Management.md"
+              "path": "Features-Angular-Language-Management.md"
             },
             {
               "text": "Audit Logs",
-              "path": "Getting-Started-Angular-Audit-Logs.md"
+              "path": "Features-Angular-Audit-Logs.md"
             },
             {
               "text": "Entity History",
-              "path": "Getting-Started-Angular-Entity-History.md"
+              "path": "Features-Angular-Entity-History.md"
             },
             {
               "text": "Subscription",
-              "path": "Getting-Started-Angular-Subscription.md",
+              "path": "Features-Angular-Subscription.md",
               "items": [
                 {
                   "text": "PayPal Integration",
-                  "path": "Getting-Started-Angular-Subscription-PayPal-Integration.md"
+                  "path": "Features-Angular-Subscription-PayPal-Integration.md"
                 },
                 {
                   "text": "Stripe Integration",
-                  "path": "Getting-Started-Angular-Subscription-Stripe-Integration.md"
+                  "path": "Features-Angular-Subscription-Stripe-Integration.md"
                 }
               ]
             },
             {
               "text": "Visual Settings",
-              "path": "Getting-Started-Angular-Visual-Settings.md"
+              "path": "Features-Angular-Visual-Settings.md"
             },
             {
               "text": "Host Settings",
-              "path": "Getting-Started-Angular-Host-Settings.md"
+              "path": "Features-Angular-Host-Settings.md"
             },
             {
               "text": "Tenant Settings",
-              "path": "Getting-Started-Angular-Tenant-Settings.md",
+              "path": "Features-Angular-Tenant-Settings.md",
               "items": [
                 {
                   "text": "Active Directory",
-                  "path": "Getting-Started-Angular-Active-Directory.md"
+                  "path": "Features-Angular-Active-Directory.md"
                 }
               ]
             },
             {
               "text": "Maintenance",
-              "path": "Getting-Started-Angular-Maintenance.md"
+              "path": "Features-Angular-Maintenance.md"
             },
             {
               "text": "Tenant Dashboard",
-              "path": "Getting-Started-Angular-Tenant-Dashboard.md"
+              "path": "Features-Angular-Tenant-Dashboard.md"
             },
             {
               "text": "Notifications",
-              "path": "Getting-Started-Angular-Notifications.md"
+              "path": "Features-Angular-Notifications.md"
             },
             {
               "text": "Chat",
-              "path": "Getting-Started-Angular-Chat.md"
+              "path": "Features-Angular-Chat.md"
             },
             {
               "text": "User Menu",
-              "path": "Getting-Started-Angular-User-Menu.md"
+              "path": "Features-Angular-User-Menu.md"
             },
             {
               "text": "Setup Page",
-              "path": "Getting-Started-Angular-Setup-Page.md"
+              "path": "Features-Angular-Setup-Page.md"
             },
 			{
               "text": "Public Website",
@@ -162,7 +162,7 @@
             },
             {
               "text": "Swagger UI",
-              "path": "Getting-Started-Angular-Swagger-UI.md"
+              "path": "Features-Angular-Swagger-UI.md"
             }
           ]
         },
@@ -198,47 +198,47 @@
     },
     {
       "text": "Infrastructure & Concepts",
-      "path": "Getting-Started-Angular-Infrastructure.md",
+      "path": "Features-Angular-Infrastructure.md",
       "items": [
         {
           "text": "NPM Packages",
-          "path": "Getting-Started-Angular-Infrastructure-Npm-Packages.md"
+          "path": "Features-Angular-Infrastructure-Npm-Packages.md"
         },
         {
           "text": "Angular CLI & WebPack",
-          "path": "Getting-Started-Angular-Infrastructure-Angular-CLI-WebPack.md"
+          "path": "Features-Angular-Infrastructure-Angular-CLI-WebPack.md"
         },
         {
           "text": "NSwag",
-          "path": "Getting-Started-Angular-Infrastructure-NSwag.md"
+          "path": "Features-Angular-Infrastructure-NSwag.md"
         },
         {
           "text": "Localization",
-          "path": "Getting-Started-Angular-Infrastructure-Localization.md"
+          "path": "Features-Angular-Infrastructure-Localization.md"
         },
         {
           "text": "Exception Handling",
-          "path": "Getting-Started-Angular-Infrastructure-Exception-Handling.md"
+          "path": "Features-Angular-Infrastructure-Exception-Handling.md"
         },
         {
           "text": "Authorization",
-          "path": "Getting-Started-Angular-Infrastructure-Authorization.md"
+          "path": "Features-Angular-Infrastructure-Authorization.md"
         },
         {
           "text": "Features",
-          "path": "Getting-Started-Angular-Infrastructure-Features.md"
+          "path": "Features-Angular-Infrastructure-Features.md"
         },
         {
           "text": "Setting",
-          "path": "Getting-Started-Angular-Infrastructure-Setting.md"
+          "path": "Features-Angular-Infrastructure-Setting.md"
         },
         {
           "text": "SignalR Integration",
-          "path": "Getting-Started-Angular-Infrastructure-SignalR-Integration.md"
+          "path": "Features-Angular-Infrastructure-SignalR-Integration.md"
         },
         {
           "text": "Used Libraries & Frameworks",
-          "path": "Getting-Started-Angular-Infrastructure-Used-Libraries-Frameworks.md"
+          "path": "Features-Angular-Infrastructure-Used-Libraries-Frameworks.md"
         }
       ]
     },
