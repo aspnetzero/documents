@@ -179,3 +179,7 @@ public class PhoneBookController : PhoneBookControllerBase
 See [authorization
 documentation](https://aspnetboilerplate.com/Pages/Documents/Authorization)
 for more information on authorization.
+
+## Next
+
+- [Deleting a Person](Developing-Step-By-Step-Core-Deleting-Person.md)

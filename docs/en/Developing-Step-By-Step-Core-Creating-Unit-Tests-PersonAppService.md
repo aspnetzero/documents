@@ -86,3 +86,8 @@ initial data, our tests remain working.
 There are many techniques on unit testing, I kept it simple here. But
 ASP.NET Zero template makes very easy to write unit and integration
 tests by base classes and pre-build test codes.
+
+
+## Next
+
+- [Testing PersonAppService from Browser Console](Developing-Step-By-Step-Core-Testing-PersonAppService-From-Browser-Console.md)				 

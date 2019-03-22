@@ -64,3 +64,7 @@ Now, it's time to run application and see the new phone book page:
 
 Menu item display name and page title are localized. Try to change UI
 language to see difference.
+
+## Next
+
+- [Creating Person Entity](Developing-Step-By-Step-Core-Creating-Person-Entity.md)

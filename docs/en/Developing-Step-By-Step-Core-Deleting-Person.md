@@ -127,3 +127,9 @@ person.
 We also need to define **Pages\_Tenant\_PhoneBook\_DeletePerson**
 constant in AppPermissions and define related permission in
 **AppAuthorizationProvider**.
+
+## Next
+
+- [Filtering People](Developing-Step-By-Step-Core-Filtering-People.md)
+
+  

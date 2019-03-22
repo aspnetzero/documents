@@ -24,3 +24,7 @@ It's empty because trio tenant has a completely isolated people list.
 You can add people here, logout and login as different tenants (you can
 login as default tenant for example). You will see that each tenant has
 an isolated phone book and can not see other's people.
+
+## Next
+
+- [Conclusion](Developing-Step-By-Step-Core-Conclusion.md)

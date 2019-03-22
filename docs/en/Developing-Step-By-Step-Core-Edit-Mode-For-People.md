@@ -149,3 +149,7 @@ Add Those lines to **PhoneBookController.cs**:
             return PartialView("_EditPersonModal", viewModel);
         }
 ```
+
+## Next
+
+- [Multi Tenancy](Developing-Step-By-Step-Core-Multi-Tenancy.md)

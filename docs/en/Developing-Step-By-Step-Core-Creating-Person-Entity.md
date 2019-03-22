@@ -61,4 +61,6 @@ public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User>
 }
 ```
 
-## 
+## Next
+
+- [Database Migrations for Person](Developing-Step-By-Step-Core-Database-Migrations-Person.md)

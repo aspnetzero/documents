@@ -29,3 +29,7 @@ table in PhoneBook database to see the call information:
 There are some other fields not shown here. So, we see that User with
 Id=2 called GetPeople method of the PersonAppService in recorded time
 with the shown parameters and it's executed in 134 ms.
+
+## Next
+
+- [Using GetPeople Method From MVC Controller](Developing-Step-By-Step-Core-Using-GetPeople-Method-From-MVC-Controller.md)

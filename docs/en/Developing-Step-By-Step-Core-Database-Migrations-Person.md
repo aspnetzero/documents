@@ -133,3 +133,7 @@ We run our project again, it runs seed and adds two people to PbPersons
 table:
 
 <img src="D:/Github/documents/docs/en/images/phonebook-persons-table-initial-data.png" alt="Persons initial data" class="img-thumbnail" width="720" height="50" />
+
+## Next
+
+- [Creating Person Application Service](Developing-Step-By-Step-Core-Creating-Person-Application-Service.md)				

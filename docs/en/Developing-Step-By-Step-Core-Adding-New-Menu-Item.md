@@ -65,3 +65,7 @@ library here.
 See [navigation
 document](https://aspnetboilerplate.com/Pages/Documents/Navigation) for
 more information on menu definitions.
+
+## Next
+
+- [Creating the Page](Developing-Step-By-Step-Core-Creating-Page.md)

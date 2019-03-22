@@ -246,3 +246,7 @@ below:
 ```
 
 As you see, this can be directly inserted to the table, as we already do.
+
+## Next
+
+- [Edit Mode For People](Developing-Step-By-Step-Core-Edit-Mode-For-People.md)

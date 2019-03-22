@@ -104,3 +104,6 @@ Now, we can run the application and open the modal by clicking the
 
 <img src="D:/Github/documents/docs/en/images/phonebook-create-person-dialog2.png" alt="Create Person Dialog" class="img-thumbnail" />
 
+## Next
+
+- [Saving the Person](Developing-Step-By-Step-Core-Saving-Person.md)

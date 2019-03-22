@@ -75,3 +75,7 @@ for more.)
 There may be different approaches for AddPhone method. You can directly
 work with a **phone repository** to insert new phone. They all have
 different pros and cons. It's your choice.
+
+## Next
+
+* [Edit Mode For Phone Numbers](Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers)

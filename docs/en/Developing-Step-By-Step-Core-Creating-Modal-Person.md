@@ -71,5 +71,8 @@ Also, copied the \_**Empty.js** from
 })(jQuery);
 ```
 
-Just named the modal as '**CreatePersonModal**'. We will fill the
-javascript code later.
+Just named the modal as '**CreatePersonModal**'. We will fill the JavaScript code later.
+
+## Next
+
+- [Opening the Person Modal](Developing-Step-By-Step-Core-Creating-Opening-Person-Modal.md)

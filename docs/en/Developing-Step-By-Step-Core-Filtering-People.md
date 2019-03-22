@@ -63,3 +63,7 @@ public ActionResult Index(GetPeopleInput input)
 
 That's all, It works! (Notice that; PersonAppService.GetPeople method
 was already using the input.Filter as we implemented it before).
+
+## Next
+
+- [Adding Phone Numbers](Developing-Step-By-Step-Core-Adding-Phone-Numbers.md)

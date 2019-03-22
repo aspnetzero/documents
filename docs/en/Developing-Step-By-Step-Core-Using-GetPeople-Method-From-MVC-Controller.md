@@ -107,3 +107,7 @@ things much more easier and provides a much better user experience.
 
 We did not use a table component here, because we want to show basics of
 MVC instead of going details of a 3rd party library.
+
+## Next
+
+- [Creating a New Person](Developing-Step-By-Step-Core-Creating-New-Person.md)

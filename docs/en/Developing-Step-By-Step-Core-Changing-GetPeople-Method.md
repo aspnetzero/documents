@@ -58,3 +58,7 @@ We only added **Include** extension method to the query. Rest of the
 codes remains same. Furthermore, it would work without adding this, but
 much slower (since it will lazy load phone numbers for every person
 separately).
+
+## Next
+
+- [Adding AddPhone and DeletePhone Methods](Developing-Step-By-Step-Core-Adding-AddPhone-DeletePhone-Methods.md)

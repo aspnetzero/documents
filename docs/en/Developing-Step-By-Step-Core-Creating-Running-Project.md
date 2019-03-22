@@ -32,3 +32,7 @@ public class PhoneBookDemoConsts
     public const int PaymentCacheDurationInMinutes = 30;
 }
 ```
+
+## Next
+
+- [Adding a New Menu Item](Developing-Step-By-Step-Core-Adding-New-Menu-Item.md)
