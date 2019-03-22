@@ -311,109 +311,121 @@
               "items": [
                 {
                   "text": "Introduction",
-                  "path": "Developing-Step-By-Step-Angular-Introduction.md"
+                  "path": "Developing-Step-By-Step-Core-Introduction.md"
                 },
                 {
                   "text": "Creating & Running The Project",
-                  "path": "Developing-Step-By-Step-Angular-Creating-Running-Project.md"
+                  "path": "Developing-Step-By-Step-Core-Creating-Running-Project.md"
                 },
                 {
                   "text": "Adding a New Menu Item",
-                  "path": "Developing-Step-By-Step-Angular-Adding-New-Menu-Item.md"
+                  "path": "Developing-Step-By-Step-Core-Adding-New-Menu-Item.md"
                 },
                 {
-                  "text": "Creating PhoneBook Component",
-                  "path": "Developing-Step-By-Step-Angular-Creating-PhoneBook-Component.md",
+                  "text": "Creating the Page",
+                  "path": "Developing-Step-By-Step-Core-Creating-Page.md",
                   "items": [
                     {
                       "text": "Creating Person Entity",
-                      "path": "Developing-Step-By-Step-Angular-Creating-Person-Entity.md"
+                      "path": "Developing-Step-By-Step-Core-Creating-Person-Entity.md"
                     },
                     {
                       "text": "Database Migrations for Person",
-                      "path": "Developing-Step-By-Step-Angular-Database-Migrations-Person-Entity.md"
-                    },
-                    {
-                      "text": "Creating Unit Tests for Person Application Service",
-                      "path": "Developing-Step-By-Step-Angular-Creating-Unit-Tests-for-Person-Application-Service.md"
+                      "path": "Developing-Step-By-Step-Core-Database-Migrations-Person.md"
                     },
                     {
                       "text": "Creating Person Application Service",
-                      "path": "Developing-Step-By-Step-Angular-Creating-Person-Application-Service.md"
+                      "path": "Developing-Step-By-Step-Core-Creating-Person-Application-Service.md"
                     },
                     {
-                      "text": "Using GetPeople Method From Angular Component",
-                      "path": "Developing-Step-By-Step-Angular-Using-GetPeople-Method-from-Angular.md"
+                      "text": "Creating Unit Tests For PersonAppService",
+                      "path": "Developing-Step-By-Step-Core-Creating-Unit-Tests-PersonAppService"
+                    },
+                    {
+                      "text": "Testing PersonAppService from Browser Console",
+                      "path": "Developing-Step-By-Step-Core-Testing-PersonAppService-From-Browser-Console.md"
+                    },
+                    {
+                      "text": "Using GetPeople Method From MVC Controller" ,
+                      "path": "Developing-Step-By-Step-Core-Using-GetPeople-Method-From-MVC-Controller.md"
                     }
                   ]
                 },
                 {
                   "text": "Creating a New Person",
-                  "path": "Developing-Step-By-Step-Angular-Creating-New-Person.md",
+                  "path": "Developing-Step-By-Step-Core-Creating-New-Person.md",
                   "items": [
                     {
                       "text": "Testing CreatePerson Method",
-                      "path": "Developing-Step-By-Step-Angular-Creating-Testing-Create-Person-Method.md"
+                      "path": "Developing-Step-By-Step-Core-Testing-CreatePerson-Method.md"
                     },
                     {
                       "text": "Creating Modal for New Person",
-                      "path": "Developing-Step-By-Step-Angular-Creating-Testing-Creating-Modal-New-Person.md"
+                      "path": "Developing-Step-By-Step-Core-Creating-Modal-Person.md"
+                    },
+                    {
+                      "text": "Opening the Person Modal",
+                      "path": "Developing-Step-By-Step-Core-Creating-Opening-Person-Modal.md"
+                    },
+                    {
+                      "text": "Saving The Person",
+                      "path": "Developing-Step-By-Step-Core-Saving-Person.md"
                     }
                   ]
                 },
                 {
                   "text": "Authorization For Phone Book",
-                  "path": "Developing-Step-By-Step-Angular-Authorization-PhoneBook.md"
+                  "path": "Developing-Step-By-Step-Core-Authorization-For-Phone-Book.md"
                 },
                 {
                   "text": "Deleting a Person",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Person.md"
+                  "path": "Developing-Step-By-Step-Core-Deleting-Person.md"
                 },
                 {
                   "text": "Filtering People",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Filtering-People.md"
+                  "path": "Developing-Step-By-Step-Core-Filtering-People.md"
                 },
                 {
                   "text": "Adding Phone Numbers",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Adding-Phone-Numbers.md",
+                  "path": "Developing-Step-By-Step-Core-Adding-Phone-Numbers.md",
                   "items": [
                     {
                       "text": "Creating Phone Entity",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Creating-Phone-Entity.md"
+                      "path": "Developing-Step-By-Step-Core-Creating-Phone-Entity.md"
                     },
                     {
                       "text": "Database Migration of Phone Entity",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Migrations-Phone-Entity.md"
+                      "path": "Developing-Step-By-Step-Core-Database-Migration-Phone-Entity.md"
                     },
                     {
                       "text": "Changing GetPeople Method",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Changing-GetPeople-Method.md"
+                      "path": "Developing-Step-By-Step-Core-Changing-GetPeople-Method.md"
                     },
                     {
                       "text": "Adding AddPhone and DeletePhone Methods",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Adding-AddPhone-DeletePhone-Methods.md"
+                      "path": "Developing-Step-By-Step-Core-Adding-AddPhone-DeletePhone-Methods.md"
                     },
                     {
                       "text": "Edit Mode For Phone Numbers",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Edit-Mode-Phone-Numbers.md"
+                      "path": "Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers.md"
                     },
                     {
                       "text": "Edit Mode For People",
-                      "path": "Developing-Step-By-Step-Angular-Deleting-Edit-Mode-People.md"
+                      "path": "Developing-Step-By-Step-Core-Edit-Mode-For-People.md"
                     }
                   ]
                 },
                 {
                   "text": "Multi Tenancy",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Multi-Tenancy.md"
+                  "path": "Developing-Step-By-Step-Core-Multi-Tenancy.md"
                 },
                 {
                   "text": "Running the Application",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Running-Application.md"
+                  "path": "Developing-Step-By-Step-Core-Running-Application.md"
                 },
                 {
                   "text": "Conclusion",
-                  "path": "Developing-Step-By-Step-Angular-Deleting-Conclusion.md"
+                  "path": "Developing-Step-By-Step-Core-Conclusion.md"
                 }
               ]
             },
