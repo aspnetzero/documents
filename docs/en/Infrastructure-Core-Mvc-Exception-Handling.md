@@ -2,11 +2,11 @@
 
 The following topics will be covered in this section:
 
-- [NPM Packages](Getting-Started-Angular-Infrastructure-Npm-Packages)
-- [Angular CLI & WebPack](Getting-Started-Angular-Infrastructure-Angular-CLI-WebPack)
+- [Startup Class](Infrastructure-Core-Mvc-Startup)
+- [NPM & Frontend Dependencies](Infrastructure-Core-Mvc-NPM-Frontend-Dependencies)
 - [NSwag](Getting-Started-Angular-Infrastructure-NSwag)
-- [Localization](Getting-Started-Angular-Infrastructure-Localization)
-- [Exception Handling](Getting-Started-Angular-Infrastructure-Exception-Handling)
+- [Application Services as MVC API Controllers](Infrastructure-Core-Mvc-Application-Service-API)
+- [Localization](Infrastructure-Core-Mvc-Localization)
 - [Authorization](Getting-Started-Angular-Infrastructure-Authorization)
 - [Features](Getting-Started-Angular-Infrastructure-Features)
 - [Setting](Getting-Started-Angular-Infrastructure-Setting)

@@ -2,17 +2,11 @@
   "items": [
     {
       "text": "Getting Started",
-      "path": "Getting-Started-Angular.md",
-      "items": [
-        {
-          "text": "For MacOS",
-          "path": "Getting-Started-MacOSX.md"
-        }
-      ]
+      "path": "Getting-Started-Core.md"
     },
     {
       "text": "Overview",
-      "path": "Overview-Angular.md"
+      "path": "Overview-Core.md"
     },
     {
       "text": "Web",
@@ -22,139 +16,139 @@
           "items": [
             {
               "text": "Login",
-              "path": "Getting-Started-Angular-Login.md",
+              "path": "Features-Mvc-Core-Login.md",
               "items": [
                 {
                   "text": "Social Logins",
-                  "path": "Getting-Started-Angular-Social-Logins.md"
+                  "path": "Features-Mvc-Core-Social-Logins.md"
                 },
                 {
                   "text": "Two Factor Authentication",
-                  "path": "Getting-Started-Angular-Two-Factor-Authentication.md"
+                  "path": "Features-Mvc-Core-Two-Factor-Authentication.md"
                 },
                 {
                   "text": "Forgot Password",
-                  "path": "Getting-Started-Angular-Forgot-Password.md"
-                },
-                {
-                  "text": "Token Based Authentication",
-                  "path": "Getting-Started-Angular-Token-Based-Authentication.md"
+                  "path": "Features-Mvc-Core-Forgot-Password.md"
                 }
               ]
             },
             {
               "text": "Sign Up",
-              "path": "Getting-Started-Angular-Sign-Up.md",
+              "path": "Features-Mvc-Core-Sign-Up.md",
               "items": [
                 {
                   "text": "Email Activation",
-                  "path": "Getting-Started-Angular-Email-Activation.md"
+                  "path": "Features-Mvc-Core-Email-Activation.md"
                 }
               ]
             },
             {
-              "text": "Tenant Sign Up",
-              "path": "Getting-Started-Angular-Tenant-Sign-Up.md"
-            },
-            {
               "text": "Main Menu and Layout",
-              "path": "Getting-Started-Angular-Main-Menu-Layout.md"
+              "path": "Features-Mvc-Core-Main-Menu-Layout.md"
             },
             {
               "text": "Edition Management",
-              "path": "Getting-Started-Angular-Edition-Management.md"
+              "path": "Features-Mvc-Core-Edition-Management.md"
             },
             {
               "text": "Tenant Management",
-              "path": "Getting-Started-Angular-Tenant-Management.md"
+              "path": "Features-Mvc-Core-Tenant-Management.md"
             },
             {
               "text": "Host Dashboard",
-              "path": "Getting-Started-Angular-Host-Dashboard.md"
+              "path": "Features-Mvc-Core-Host-Dashboard.md"
             },
             {
               "text": "Organization Units",
-              "path": "Getting-Started-Angular-Organization-Units.md"
+              "path": "Features-Mvc-Core-Organization-Units.md"
             },
             {
               "text": "Role Management",
-              "path": "Getting-Started-Angular-Role-Management.md"
+              "path": "Features-Mvc-Core-Role-Management.md"
             },
             {
               "text": "User Management",
-              "path": "Getting-Started-Angular-User-Management.md"
+              "path": "Features-Mvc-Core-User-Management.md"
             },
             {
               "text": "Language Management",
-              "path": "Getting-Started-Angular-Language-Management.md"
+              "path": "Features-Mvc-Core-Language-Management.md"
             },
             {
               "text": "Audit Logs",
-              "path": "Getting-Started-Angular-Audit-Logs.md"
+              "path": "Features-Mvc-Core-Audit-Logs.md"
             },
             {
               "text": "Entity History",
-              "path": "Getting-Started-Angular-Entity-History.md"
+              "path": "Features-Mvc-Core-Entity History.md"
             },
             {
               "text": "Subscription",
-              "path": "Getting-Started-Angular-Subscription.md",
+              "path": "Features-Mvc-Core-Subscription.md",
               "items": [
                 {
                   "text": "PayPal Integration",
-                  "path": "Getting-Started-Angular-Subscription-PayPal-Integration.md"
+                  "path": "Features-Mvc-Core-Subscription-PayPal.md"
                 },
                 {
                   "text": "Stripe Integration",
-                  "path": "Getting-Started-Angular-Subscription-Stripe-Integration.md"
+                  "path": "Features-Mvc-Core-Subscription-Stripe.md"
                 }
               ]
             },
             {
               "text": "Visual Settings",
-              "path": "Getting-Started-Angular-Visual-Settings.md"
+              "path": "Features-Mvc-Core-Visual-Settings.md"
             },
             {
               "text": "Host Settings",
-              "path": "Getting-Started-Angular-Host-Settings.md"
+              "path": "Features-Mvc-Core-Host-Settings.md"
             },
             {
               "text": "Tenant Settings",
-              "path": "Getting-Started-Angular-Tenant-Settings.md",
+              "path": "Features-Mvc-Core-Tenant-Settings.md",
               "items": [
                 {
                   "text": "Active Directory",
-                  "path": "Getting-Started-Angular-Active-Directory.md"
+                  "path": "Features-Mvc-Core-Tenant-Active-Directory.md"
                 }
               ]
             },
             {
               "text": "Maintenance",
-              "path": "Getting-Started-Angular-Maintenance.md"
+              "path": "Features-Mvc-Core-Maintenance.md"
             },
             {
               "text": "Tenant Dashboard",
-              "path": "Getting-Started-Angular-Tenant-Dashboard.md"
+              "path": "Features-Mvc-Core-Tenant-Dashboard.md"
             },
             {
               "text": "Notifications",
-              "path": "Getting-Started-Angular-Notifications.md"
+              "path": "Features-Mvc-Core-Notifications.md"
             },
             {
               "text": "Chat",
-              "path": "Getting-Started-Angular-Chat.md"
+              "path": "Features-Mvc-Core-Chat.md"
             },
             {
               "text": "User Menu",
-              "path": "Getting-Started-Angular-User-Menu.md"
+              "path": "Features-Mvc-Core-User-Menu.md"
             },
             {
               "text": "Setup Page",
-              "path": "Getting-Started-Angular-Setup-Page.md"
+              "path": "Features-Mvc-Core-Setup-Page.md"
             },
-			{
+            {
               "text": "Public Website",
               "path": "Public-Website.md"
+            },
+            {
+              "text": "Web.Host Project",
+              "path": "Features-Mvc-Core-Web-Host-Project.md"
+            },
+            {
+              "text": "Migrator Console Application",
+              "path": "Migrator-Console-Application.md"
             },
             {
               "text": "GrapQL API",
@@ -162,23 +156,27 @@
             },
             {
               "text": "Swagger UI",
-              "path": "Getting-Started-Angular-Swagger-UI.md"
+              "path": "Features-Mvc-Core-Swagger-UI.md"
             }
           ]
         },
         {
           "text": "Deployment",
-          "path": "Deployment-Angular.md",
-		  "items": [
-                {
-                  "text": "Publishing to Azure",
-                  "path": "Step-by-step-publish-to-azure-angular.md"
-                },
-				 {
-                  "text": "Publishing to Azure",
-                  "path": "Step-by-step-angular-publish-to-iis.md"
-                }
-		  ]
+          "path": "Deployment-Mvc-Core.md",
+          "items": [
+            {
+              "text": "Publishing to Azure",
+              "path": "Deployment-Mvc-Core-Azure.md"
+            },
+            {
+              "text": "Publishing to IIS",
+              "path": "Deployment-Mvc-Core-IIS.md"
+            },
+            {
+              "text": "Publishing to Docker",
+              "path": "Deployment-Mvc-Core-Docker.md"
+            }
+          ]
         }
       ]
     },
@@ -201,44 +199,104 @@
       "path": "Getting-Started-Angular-Infrastructure.md",
       "items": [
         {
-          "text": "NPM Packages",
-          "path": "Getting-Started-Angular-Infrastructure-Npm-Packages.md"
+          "text": "Startup Class",
+          "path": "Infrastructure-Core-Mvc-Startup.md"
         },
         {
-          "text": "Angular CLI & WebPack",
-          "path": "Getting-Started-Angular-Infrastructure-Angular-CLI-WebPack.md"
+          "text": "NPM & Frontend Dependencies",
+          "path": "Infrastructure-Core-Mvc-NPM-Frontend-Dependencies.md"
         },
         {
-          "text": "NSwag",
-          "path": "Getting-Started-Angular-Infrastructure-NSwag.md"
+          "text": "Application Services as MVC API Controllers",
+          "path": "Infrastructure-Core-Mvc-Application-Service-API.md"
         },
         {
           "text": "Localization",
-          "path": "Getting-Started-Angular-Infrastructure-Localization.md"
+          "path": "Infrastructure-Core-Mvc-Localization.md"
+        },
+        {
+          "text": "Entity Framework Core",
+          "path": "Infrastructure-Core-Mvc-Entity-Framework-Core.md"
         },
         {
           "text": "Exception Handling",
           "path": "Getting-Started-Angular-Infrastructure-Exception-Handling.md"
         },
         {
-          "text": "Authorization",
-          "path": "Getting-Started-Angular-Infrastructure-Authorization.md"
+          "text": "User Secrets",
+          "path": "Infrastructure-Core-Mvc-User-Secrets.md"
         },
         {
-          "text": "Features",
-          "path": "Getting-Started-Angular-Infrastructure-Features.md"
+          "text": "Providers",
+          "path": "Infrastructure-Core-Mvc-Providers.md"
         },
         {
-          "text": "Setting",
-          "path": "Getting-Started-Angular-Infrastructure-Setting.md"
+          "text": "Caching",
+          "path": "Infrastructure-Core-Mvc-Caching.md"
+        },
+        {
+          "text": "Background Jobs & HangFire",
+          "path": "Infrastructure-Core-Mvc-Background-Jobs.md"
         },
         {
           "text": "SignalR Integration",
-          "path": "Getting-Started-Angular-Infrastructure-SignalR-Integration.md"
+          "path": "Infrastructure-Core-Mvc-SignalR.md"
+        },
+        {
+          "text": "Logging",
+          "path": "Infrastructure-Core-Mvc-Logging.md"
+        },
+        {
+          "text": "Dto Mappings",
+          "path": "Infrastructure-Core-Mvc-Dto-Mappings.md"
+        },
+        {
+          "text": "Sending Emails",
+          "path": "Infrastructure-Core-Mvc-Sending-Emails.md"
+        },
+        {
+          "text": "Binary Object Manager",
+          "path": "Infrastructure-Core-Mvc-Binary-Object-Manager.md"
+        },
+        {
+          "text": "Soft Delete",
+          "path": "Infrastructure-Core-Mvc-Soft-Delete.md"
+        },
+        {
+          "text": "Bundling, Minifying and Compiling",
+          "path": "Infrastructure-Core-Mvc-Bundling-Minifying-Compiling.md"
+        },
+        {
+          "text": "Base Classes",
+          "path": "Infrastructure-Core-Mvc-Base-Classes.md"
+        },
+        {
+          "text": "CSRF / XSRF Protection",
+          "path": "Infrastructure-Core-Mvc-CSRF.md"
+        },
+        {
+          "text": "Versioning",
+          "path": "Infrastructure-Core-Mvc-Versioning.md"
+        },
+        {
+          "text": "Token Based Authentication",
+          "path": "Infrastructure-Core-Mvc-Token-Based-Authentication.md"
+        },
+        {
+          "text": "Identity Server 4 Integration",
+          "path": "Infrastructure-Core-Mvc-Identity-Server4-Integration.md"
+        },
+        {
+          "text": "Unit Testing",
+          "path": "Infrastructure-Core-Mvc-Unit-Testing.md"
+        },
+        {
+          "text": "Configuration",
+          "path": "Infrastructure-Core-Mvc-Configuration.md"
         },
         {
           "text": "Used Libraries & Frameworks",
-          "path": "Getting-Started-Angular-Infrastructure-Used-Libraries-Frameworks.md"
+          "path": "Infrastructure-Core-Mvc-Used-Libraries-Frameworks.md"
         }
       ]
     },
@@ -250,8 +308,11 @@
           "items": [
             {
               "text": "Developing Step By Step",
-              "path": "Developing-Step-By-Step-Angular-Introduction.md",
               "items": [
+                {
+                  "text": "Introduction",
+                  "path": "Developing-Step-By-Step-Angular-Introduction.md"
+                },
                 {
                   "text": "Creating & Running The Project",
                   "path": "Developing-Step-By-Step-Angular-Creating-Running-Project.md"
@@ -373,7 +434,7 @@
               "text": "Developing Step By Step",
               "path": "Developing-Step-By-Step-Xamarin.md"
             }
-          ] 
+          ]
         }
       ]
     },

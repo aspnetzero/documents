@@ -6,7 +6,7 @@ In this document, a new sample project is being created with the name "**Acme.Ph
 
 Before reading this document, it's suggested to run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
 
-About Server Side
+### About Server Side
 
 This document is only for the **Angular** application. For **server side**, see [ASP.NET Core documentation](Development-Guide-Core.md)
 too.
@@ -19,9 +19,7 @@ Following tools are needed in order to use the solution:
 - [Typescript 2.0+](https://www.typescriptlang.org/)
 - [yarn](https://yarnpkg.com/)
 
-In addition, see [ASP.NET Core](Development-Guide-Core.md)
-documentation for server side requirements and other server side
-features.
+In addition, see [ASP.NET Core](Development-Guide-Core.md) documentation for server side requirements and other server side features.
 
 ### IDE
 
@@ -48,9 +46,7 @@ The diagram below shows the overall architecture:
 
   ### App Module
 
-  This is the actual application module which is entered by username and
-  password. You will mostly work on this application to add your business
-  requirements. A screenshot from the application:
+  This is the actual application module which is entered by username and password. You will mostly work on this application to add your business requirements. A screenshot from the application:
 
   <img src="D:/Github/documents/docs/en/images/dashboardV4.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
 
@@ -72,9 +68,7 @@ Entry point of the Angular solution is src/**main.ts**. It simply bootstraps the
 <img src="images/ng2-modules.png" alt="Angular 2 modules" class="img-thumbnail" width="501" height="221" />
 
 -   **RootModule** is responsible to bootstrap the application.
--   **AccountModule** provides login, two factor authentication,
-    register, password forget/reset, email activation...
-    functionalities. It's [lazy loaded](https://angular.io/docs/ts/latest/guide/router.html).
+-   **AccountModule** provides login, two factor authentication, register, password forget/reset, email activation, etc... It's [lazy loaded](https://angular.io/docs/ts/latest/guide/router.html).
 -   **AppModule** is just to group application modules and provide a
     base layout. It contains 2 sub modules:
     -   **AdminModule** contains pages like user management, role
@@ -88,52 +82,40 @@ Entry point of the Angular solution is src/**main.ts**. It simply bootstraps the
         loaded.
 
 Fundamental modules have their own **routes**. For example;
-AccountModule views start with "**/account**" (like "/account/login"), AdminModule views starts with "**/app/admin**" (like "/app/admin/users"). Angular's router lazy loads modules based on their
-url. For instance, when you request a url starts with "app/admin", the AdminModule and all it's components are loaded. They are not loaded if you don't request those pages. That brings better startup time (and also
+AccountModule views start with "**/account**" (like "/account/login"), AdminModule views starts with  **/app/admin**" (like "/app/admin/users"). Angular's router lazy loads modules based on their url. For instance, when you request a url starts with "app/admin", the AdminModule and all it's components are loaded. They are not loaded if you don't request those pages. That brings better startup time (and also
 better development time since they are independently splitted to chunks).
 
 In addition to those fundamental modules, there are some share modules:
 
--   app/shared/common/**app-common.module**: a common module used by
-    main and admin modules as shared functionality.
--   shared/common/**common.module**: A common module used by account and
-    app modules (and their sub modules).
--   shared/utils/**utils.module**: Another common module used by all
-    modules (and their sub modules). We tried to collect general purpose
-    code here those can be used even in different applications.
--   shared/service-proxies/**service-proxy.module**: Auto generated
-    nswag code. It's used to communicate to backend ASP.NET Core API. We
-    will see "how to generate automatic proxies" later.
+-   app/shared/common/**app-common.module**: a common module used by main and admin modules as shared functionality.
+-   shared/common/**common.module**: A common module used by account and app modules (and their sub modules).
+-   shared/utils/**utils.module**: Another common module used by all modules (and their sub modules). We tried to collect general purpose code here those can be used even in different applications.
+-   shared/service-proxies/**service-proxy.module**: Auto generated `nswag` code. It's used to communicate to backend ASP.NET Core API. We will see "how to generate automatic proxies" later.
 
 ### Configuration
 
-Angular solution contains src/assets/**appconfig.json** file which
-contains some configuration for the client side:
+Angular solution contains src/assets/**appconfig.json** file which contains some configuration for the client side:
 
 - **remoteServiceBaseUrl**: Used to configure base address of the server side APIs. Default value: http://localhost:22742
 - **appBaseUrl**: Used to configure base address of the client application. Default value: http://localhost:4200
 - **localeMappings**: Used to configure localizations of third-party libraries that are incompatible with existing localizations.
 
-**appBaseUrl** is configured since we use it to define format of our
-URL. If we want to use tenancy name as subdomain for a multi-tenant
-application then we can define **appBaseUrl** as
+**appBaseUrl** is configured since we use it to define format of our URL. If we want to use tenancy name as subdomain for a multi-tenant application then we can define **appBaseUrl** as
 
 http://**{TENANCY\_NAME}**.mydomain.com
 
-{TENANCY\_NAME} is the place holder here for tenant names. Tenancy name
-can also be configured for **remoteServiceBaseUrl** as similar. To make
-tenancy name subdomains properly work, we should also make two
-configurations beside the application:
+{TENANCY\_NAME} is the place holder here for tenant names. Tenancy name can also be configured for **remoteServiceBaseUrl** as similar. To make tenancy name subdomains properly work, we should also make two configurations beside the application:
 
-1.  We should configure DNS to redirect all subdomains to a static IP
-    address. To declare 'all subdomains', we can use wildcard like
-    **\*.mydomain.com**.
+1.  We should configure DNS to redirect all subdomains to a static IP address. To declare 'all subdomains', we can use wildcard like **\*.mydomain.com**.
 2.  We should configure IIS to bind this static IP to our application.
 
 There may be other ways of doing it but this is the simplest way.
 
-
-
 #### AppComponentBase
 
-If you inherit your components from **AppComponentBase** class, you can get many commonly used services as pre-injected (like localization, permission checker, feature checker, ui notify/message, settings and so on...). For example; you can just use **l(...)** function In views and **this.l(...)** function in component classes for localization. See pre-built components for example usages.
+If you inherit your components from **AppComponentBase** class, you can get many commonly used services as pre-injected (like localization, permission checker, feature checker, UI notify/message, settings and so on...). For example; you can just use **l(...)** function In views and **this.l(...)** function in component classes for localization. See pre-built components for example usages.
+
+## Next
+
+- [Features](Getting-Started-Angular-Login) to understand the solution structure and start your development.
+- [Step by Step Development](Developing-Step-By-Step-Angular-Introduction) tutorial leads you to develop a multi-tenant, localized, authorized, configurable and testable application step by step.

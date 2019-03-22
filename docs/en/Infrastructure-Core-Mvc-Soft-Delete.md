@@ -1,0 +1,3 @@
+# Soft Delete
+
+It's common to use the **soft-delete** pattern which is used to not delete an entity from database but only mark it as 'deleted'. So, if an entity is soft-deleted, it should not be accidentally retrieved into the application. ABP's **data filters** make this automatically. In ASP.NET Zero, most entities are soft-deleted. See ABP's [data filter documentation](https://aspnetboilerplate.com/Pages/Documents/Data-Filters) for more information about this topic.

@@ -1,4 +1,4 @@
-# Step By Step Publish To IIS
+# Publishing to IIS
 
 Publishing ASP.NET Zero Core MVC project is no different to any other ASP.NET Core Applications.
 
@@ -23,4 +23,5 @@ Publishing ASP.NET Zero Core MVC project is no different to any other ASP.NET Co
 
 <img src="images/iis-core-publish-configure-app-pool.png">
 
-Check [Host ASP.NET Core on Windows with IIS](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/index?view=aspnetcore-2.1) document for more detail.
+For more information see [Host ASP.NET Core on Windows with IIS](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/index?view=aspnetcore-2.1) document
+
