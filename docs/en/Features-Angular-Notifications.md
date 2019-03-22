@@ -28,4 +28,4 @@ All notifications of the user are listed in this page.
 
 ## Next
 
-- [Chat](Getting-Started-Angular-Chat)
+- [Chat](Features-Angular-Chat)

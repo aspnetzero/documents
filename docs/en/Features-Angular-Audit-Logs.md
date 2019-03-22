@@ -12,4 +12,4 @@ Audit log report is provided by **AuditLogAppService** class.
 
 ## Next
 
-- [Entity History](Getting-Started-Angular-Entity-History)
+- [Entity History](Features-Angular-Entity-History)

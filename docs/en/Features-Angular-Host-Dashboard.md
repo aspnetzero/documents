@@ -9,6 +9,6 @@ This is a fully implemented dashboard except two sample statistics (sample stati
 
 ## Next
 
-- [Organization Units](Getting-Started-Angular-Organization-Units)
+- [Organization Units](Features-Angular-Organization-Units)
 
   

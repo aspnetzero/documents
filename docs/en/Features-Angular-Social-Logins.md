@@ -6,5 +6,5 @@ login/**login.service** implements client side logic for social logins. Note tha
 
 ## Next
 
-- [Two Factor Authentication](Getting-Started-Angular-Two-Factor-Authentication)
+- [Two Factor Authentication](Features-Angular-Two-Factor-Authentication)
 

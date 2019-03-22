@@ -6,5 +6,5 @@ Tenant sign up link is shown on the login form only if you are in the host conte
 
 ## Next
 
-- [Main Menu and Layout](Getting-Started-Angular-Main-Menu-Layout)
+- [Main Menu and Layout](Features-Angular-Main-Menu-Layout)
 

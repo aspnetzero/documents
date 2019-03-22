@@ -22,4 +22,4 @@ See [feature management](https://aspnetboilerplate.com/Pages/Documents/Feature-M
 
 ## Next
 
-- [Tenant Management](Getting-Started-Angular-Tenant-Management)
+- [Tenant Management](Features-Angular-Tenant-Management)

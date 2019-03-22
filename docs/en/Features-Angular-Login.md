@@ -19,5 +19,5 @@ As seen in the previous section, you can configure user lockout settings. Users 
 
 ## Next
 
-* [Social Logins](Getting-Started-Angular-Social-Logins)
+* [Social Logins](Features-Angular-Social-Logins)
 

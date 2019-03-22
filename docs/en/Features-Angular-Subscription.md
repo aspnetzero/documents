@@ -20,5 +20,5 @@ AspNet Zeros subscription system allows using two payment gateways, one is [PayP
 
 ## Next
 
-* [PayPal Integration](Getting-Started-Angular-Subscription-PayPal-Integration)
-* [Stripe Integration](Getting-Started-Angular-Subscription-Stripe-Integration)
+* [PayPal Integration](Features-Angular-Subscription-PayPal-Integration)
+* [Stripe Integration](Features-Angular-Subscription-Stripe-Integration)

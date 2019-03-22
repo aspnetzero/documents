@@ -42,4 +42,4 @@ You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in
 
 ## Next
 
-* [Forgot Password](Getting-Started-Angular-Forgot-Password)
+* [Forgot Password](Features-Angular-Forgot-Password)

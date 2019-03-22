@@ -10,4 +10,4 @@ In the **Caches** tab, we can clear some or all caches. Clearing caches may be n
 
 ## Next
 
-- [Tenant Dashboard](Getting-Started-Angular-Tenant-Dashboard)
+- [Tenant Dashboard](Features-Angular-Tenant-Dashboard)

@@ -33,5 +33,5 @@ There are three chat features in the system. These are "Chat", "Chat with host",
 
 ## Next
 
-- [User Menu](Getting-Started-Angular-User-Menu)
+- [User Menu](Features-Angular-User-Menu)
 

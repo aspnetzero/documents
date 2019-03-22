@@ -8,4 +8,4 @@ If we disable multi-tenancy, some host settings are also shown in this page (sin
 
 ## Next
 
-* [Active Directory](Getting-Started-Angular-Active-Directory)
+* [Active Directory](Features-Angular-Active-Directory)

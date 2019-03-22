@@ -35,4 +35,4 @@ A multi-tenant application generally uses subdomain to identify current tenant. 
 
 ## Next
 
-- [Host Dashboard](Getting-Started-Angular-Host-Dashboard)
+- [Host Dashboard](Features-Angular-Host-Dashboard)

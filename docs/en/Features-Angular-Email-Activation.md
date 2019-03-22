@@ -7,5 +7,5 @@ code again by clicking email activation link.
 
 ## Next
 
-- [Tenant Sign Up](Getting-Started-Angular-Tenant-Sign-Up)
+- [Tenant Sign Up](Features-Angular-Tenant-Sign-Up)
 

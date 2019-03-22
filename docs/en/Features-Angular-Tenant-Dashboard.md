@@ -8,4 +8,4 @@ Client gets all data from server, server generates random data.
 
 ## Next
 
-- [Notifications](Getting-Started-Angular-Notifications)
+- [Notifications](Features-Angular-Notifications)

@@ -12,4 +12,4 @@ In this page, users can change visual settings for Layout, Header, Menu and Foot
 
 ## Next
 
-- [Host Settings](Getting-Started-Angular-Host-Settings)
+- [Host Settings](Features-Angular-Host-Settings)

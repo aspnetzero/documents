@@ -16,4 +16,4 @@ You should add entity type that you want to track to ***.Core\EntityHistory\Enti
 
 ## Next
 
-- [Subscription](Getting-Started-Angular-Subscription)
+- [Subscription](Features-Angular-Subscription)

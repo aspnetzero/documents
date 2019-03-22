@@ -14,4 +14,4 @@ Note that current implementation of PayPal doesn't support recurring payments. S
 
 ## Next
 
-- [Visual Settings](Getting-Started-Angular-Visual-Settings)
+- [Visual Settings](Features-Angular-Visual-Settings)

@@ -30,4 +30,4 @@ Every tenant has it's **own roles** and any change in roles for a tenant does no
 
 ## Next
 
-- [User Management](Getting-Started-Angular-User-Management)
+- [User Management](Features-Angular-User-Management)

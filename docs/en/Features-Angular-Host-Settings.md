@@ -17,4 +17,4 @@ If you want each Tenant to configure their own SMTP settings, you can go to **Yo
 
 ## Next
 
-- [Tenant Settings](Getting-Started-Angular-Tenant-Settings)
+- [Tenant Settings](Features-Angular-Tenant-Settings)

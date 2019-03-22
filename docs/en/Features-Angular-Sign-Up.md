@@ -8,4 +8,4 @@ When we click the "**Create Account**" link (which is only available for tenants
 
 ## Next
 
-- [Email Activation](Getting-Started-Angular-Email-Activation)
+- [Email Activation](Features-Angular-Email-Activation)

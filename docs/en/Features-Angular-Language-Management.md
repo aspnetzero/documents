@@ -20,4 +20,4 @@ See [language management](https://aspnetboilerplate.com/Pages/Documents/Zero/Lan
 
 ## Next
 
-- [Audit Logs](Getting-Started-Angular-Audit-Logs)
+- [Audit Logs](Features-Angular-Audit-Logs)

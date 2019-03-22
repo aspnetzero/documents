@@ -6,4 +6,4 @@ If a user forgets the password, it can be retrieved by clicking the **Forgot Pas
 
 ## Next
 
-* [Token Based Authentication](Getting-Started-Angular-Token-Based-Authentication)
+* [Token Based Authentication](Features-Angular-Token-Based-Authentication)

@@ -12,4 +12,4 @@ Main menu is defined and rendered in the **side-bar.component**. You can add you
 
 ## Next
 
-- [Edition Management](Getting-Started-Angular-Edition-Management)
+- [Edition Management](Features-Angular-Edition-Management)

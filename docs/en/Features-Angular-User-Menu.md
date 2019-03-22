@@ -50,4 +50,4 @@ A user can download his/her collected data using this menu item.
 
 ## Next
 
-- [Setup Page](Getting-Started-Angular-Setup-Page)
+- [Setup Page](Features-Angular-Setup-Page)

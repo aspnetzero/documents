@@ -2,14 +2,14 @@
 
 The following topics will be covered in this section:
 
-- [NPM Packages](Getting-Started-Angular-Infrastructure-Npm-Packages)
-- [Angular CLI & WebPack](Getting-Started-Angular-Infrastructure-Angular-CLI-WebPack)
-- [NSwag](Getting-Started-Angular-Infrastructure-NSwag)
-- [Localization](Getting-Started-Angular-Infrastructure-Localization)
-- [Exception Handling](Getting-Started-Angular-Infrastructure-Exception-Handling)
-- [Authorization](Getting-Started-Angular-Infrastructure-Authorization)
-- [Features](Getting-Started-Angular-Infrastructure-Features)
-- [Setting](Getting-Started-Angular-Infrastructure-Setting)
-- [SignalR Integration](Getting-Started-Angular-Infrastructure-SignalR-Integration)
-- [Used Libraries & Frameworks](Getting-Started-Angular-Infrastructure-Used-Libraries-Frameworks)
+- [NPM Packages](Features-Angular-Infrastructure-Npm-Packages)
+- [Angular CLI & WebPack](Features-Angular-Infrastructure-Angular-CLI-WebPack)
+- [NSwag](Features-Angular-Infrastructure-NSwag)
+- [Localization](Features-Angular-Infrastructure-Localization)
+- [Exception Handling](Features-Angular-Infrastructure-Exception-Handling)
+- [Authorization](Features-Angular-Infrastructure-Authorization)
+- [Features](Features-Angular-Infrastructure-Features)
+- [Setting](Features-Angular-Infrastructure-Setting)
+- [SignalR Integration](Features-Angular-Infrastructure-SignalR-Integration)
+- [Used Libraries & Frameworks](Features-Angular-Infrastructure-Used-Libraries-Frameworks)
 

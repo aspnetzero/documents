@@ -36,4 +36,4 @@ indicates that operations are performed by somebody else. Notice that also a **r
 
 ## Next
 
-- [Language Management](Getting-Started-Angular-Language-Management)
+- [Language Management](Features-Angular-Language-Management)

@@ -29,4 +29,4 @@ Note that;
 
 ## Next
 
-- [Visual Settings](Getting-Started-Angular-Visual-Settings)
+- [Visual Settings](Features-Angular-Visual-Settings)
