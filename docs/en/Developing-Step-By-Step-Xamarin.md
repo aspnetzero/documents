@@ -372,7 +372,7 @@ The final look of **PeopleView.xaml** is like below:
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Name="PeoplePage"
              xmlns:base="clr-namespace:Acme.PhoneBookDemo.ViewModels.Base;assembly=Acme.PhoneBookDemo.Mobile.Shared"
-             xmlns:behaviors="clr-namespace:Acme.PhoneBookDeehaviors;assembly=Acme.PhoneBookDemo.Mobile.Shared"
+             xmlns:behaviors="clr-namespace:Acme.PhoneBook.Behaviors;assembly=Acme.PhoneBookDemo.Mobile.Shared"
              xmlns:extensions="clr-namespace:Acme.PhoneBookDemo.Extensions.MarkupExtensions;assembly=Acme.PhoneBookDemo.Mobile.Shared"
              x:Class="Acme.PhoneBookDemo.Views.PeopleView"
              Title="{extensions:Translate PhoneBook}"
