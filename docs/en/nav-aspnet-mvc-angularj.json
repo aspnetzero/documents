@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "text": "Getting Started",
+      "path": "Getting-Started-Mvc-Angularjs.md"
+    },
+    {
+      "text": "Development Guide",
+      "path": "Development-Guide-Mvc-Angularjs.md"
+    },
+    {
+      "text": "Step by Step Development",
+      "path": "Developing-Step-By-Step-Mvc-Angularjs.md"
+    },
+    {
+      "text": "Change Logs",
+      "path": "Change-Logs.md"
+    },
+    {
+      "text": "Road Map",
+      "path": "Road-Map.md"
+    },
+    {
+      "text": "External Links",
+      "items": [
+        {
+          "text": "ASP.NET Boilerplate",
+          "path": "https://aspnetboilerplate.com/Pages/Documents"
+        },
+        {
+          "text": "Metronic Theme",
+          "path": "http://www.keenthemes.com/preview/metronic/"
+        }
+      ]
+    }
+  ]
+}
