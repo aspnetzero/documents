@@ -6,4 +6,4 @@ ASP.NET Zero application can be set-up using install page. This page is develope
 
 ## Next
 
-- [GrapQL API](GraphQL)
+- [Public Website](Public-Website)
