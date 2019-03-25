@@ -207,43 +207,43 @@
       "items": [
         {
           "text": "NPM Packages",
-          "path": "Features-Angular-Infrastructure-Npm-Packages.md"
+          "path": "Infrastructure-Angular-Npm-Packages.md"
         },
         {
           "text": "Angular CLI & WebPack",
-          "path": "Features-Angular-Infrastructure-Angular-CLI-WebPack.md"
+          "path": "Infrastructure-Angular-Angular-CLI-WebPack.md"
         },
         {
           "text": "NSwag",
-          "path": "Features-Angular-Infrastructure-NSwag.md"
+          "path": "Infrastructure-Angular-NSwag.md"
         },
         {
           "text": "Localization",
-          "path": "Features-Angular-Infrastructure-Localization.md"
+          "path": "Infrastructure-Angular-Localization.md"
         },
         {
           "text": "Exception Handling",
-          "path": "Features-Angular-Infrastructure-Exception-Handling.md"
+          "path": "Infrastructure-Angular-Exception-Handling.md"
         },
         {
           "text": "Authorization",
-          "path": "Features-Angular-Infrastructure-Authorization.md"
+          "path": "Infrastructure-Angular-Authorization.md"
         },
         {
           "text": "Features",
-          "path": "Features-Angular-Infrastructure-Features.md"
+          "path": "Infrastructure-Angular-Features.md"
         },
         {
           "text": "Setting",
-          "path": "Features-Angular-Infrastructure-Setting.md"
+          "path": "Infrastructure-Angular-Setting.md"
         },
         {
           "text": "SignalR Integration",
-          "path": "Features-Angular-Infrastructure-SignalR-Integration.md"
+          "path": "Infrastructure-Angular-SignalR-Integration.md"
         },
         {
           "text": "Used Libraries & Frameworks",
-          "path": "Features-Angular-Infrastructure-Used-Libraries-Frameworks.md"
+          "path": "Infrastructure-Angular-Used-Libraries-Frameworks.md"
         },
         {
           "text": "Penetration Test",
