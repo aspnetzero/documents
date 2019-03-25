@@ -44,8 +44,12 @@ A user can change own profile picture. **ProfileController** is used to upload a
 
 A user can download his/her collected data using this menu item.
 
-<img src="D:/Github/documents/doc/images/gdpr_download_item.png" alt="Login attempts" class="img-thumbnail" />
+<img src="images/gdpr_download_item.png" alt="Login attempts" class="img-thumbnail" />
 
 ## Logout
 
 **AccountController** is used to logout the user and redirect to Login page.
+
+## Next
+
+- [Setup Page](Features-Mvc-Core-Setup-Page)

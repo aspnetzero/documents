@@ -12,3 +12,7 @@ server side.
 <img src="D:/Github/documents/docs/en/images/maintenance-logs-1.png" alt="Maintenance logs" class="img-thumbnail" />
 
 **WebLogAppService** is used to get logs from server.
+
+## Next
+
+- [Tenant Dashboard](Features-Mvc-Core-Tenant-Dashboard)

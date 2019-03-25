@@ -15,3 +15,7 @@ After changing password we are redirected to the **backend application**.
 ## User Lockout
 
 As seen in the previous section, you can configure user lockout settings. Users are lockout when they enter wrong password for a specified count and duration.
+
+## Next
+
+* [Social Logins](Features-Mvc-Core-Social-Logins)

@@ -1,6 +1,6 @@
 # Two Factor Login
 
-ASP.NET Zero is ready to provide two factor login, but it's disabled as default. You can easily enable it in host settings page (in Security tab):
+ASP.NET Zero is ready to provide two factor login, but it's disabled as default. You can easily enable it in host settings page in security tab:
 
 <img src="D:/Github/documents/docs/en/images/lockout-two-factor-settings-1.png" class="img-thumbnail" />
 
@@ -30,4 +30,8 @@ In order to enable Twilio integration, just uncomment the following line in your
 Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
 ```
 
-You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in appsetting.json file.
+You also need to configure **AccountSid**, **AuthToken** and **SenderNumber** in `appsetting.json` file.
+
+## Next
+
+* [Forgot Password](Features-Mvc-Core-Forgot-Password)

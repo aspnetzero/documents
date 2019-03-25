@@ -17,4 +17,6 @@ Features tab is used to determining features available for the edition:
 
 <img src="D:/Github/documents/docs/en/images/edition-feature-editing-core-1.png" alt="Edit edition features" class="img-thumbnail" />
 
-See [feature management](https://aspnetboilerplate.com/Pages/Documents/Feature-Management) and [edition management](https://aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management) documents for more information.
+## Next
+
+- [Tenant Management](Features-Mvc-Core-Tenant-Management)

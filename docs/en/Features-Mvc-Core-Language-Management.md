@@ -20,3 +20,7 @@ Both pages use **LanguageAppService** class as application service. It has metho
 interfaces are used to perform domain logic (as used by LanguageAppService).
 
 See [language management](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Management) and [localization](https://aspnetboilerplate.com/Pages/Documents/Localization) documents for more information.
+
+## Next
+
+- [Audit Logs](Features-Mvc-Core-Audit-Logs)

@@ -11,3 +11,6 @@ In this page, users can change visual settings for Layout, Header, Menu and Foot
 
 <img src="D:/Github/documents/docs/en/images/visual-settings-core.png" alt="Visual settings" class="img-thumbnail" />
 
+## Next
+
+- [Host Settings](Features-Mvc-Core-Host-Settings)

@@ -586,7 +586,3 @@ Before writing a new unit test for a new entity. You need to add sample data to 
    ## Conclusion
 
    GraphQL helps us providing our clients a very flexible Web API. In this document, we have seen the structure of the ASP.NET Zero GraphQL implementation. We understood how we can enable GraphQL and GraphQL Playground. We added a new sample GraphQL query to understand it better. We also added a new unit test for the query. 
-
-## Next
-
-- [Swagger UI](Getting-Started-Angular-Swagger-UI)

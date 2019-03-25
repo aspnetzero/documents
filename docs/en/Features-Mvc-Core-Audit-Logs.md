@@ -10,3 +10,7 @@ see all details an audit log:
 <img src="D:/Github/documents/docs/en/images/audit-logs-detail-1.png" alt="Audit Log" class="img-thumbnail" />
 
 Audit log report is provided by **AuditLogAppService** class.
+
+## Next
+
+- [Entity History](Features-Mvc-Core-Entity-History)

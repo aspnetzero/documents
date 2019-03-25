@@ -11,3 +11,6 @@ migrated for another tenant (for shared databases between multiple tenants).
 You can use this tool on development or on product environment to migrate databases on deployment, instead of EntityFramework's own Migrate.exe (which requires some configuration and can only work for
 single database in one run).
 
+## Next
+
+- [Public Project](Public-Website)

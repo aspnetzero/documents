@@ -35,3 +35,7 @@ In an impersonated account, we can only perform operations allowed to that user.
 indicates that operations are performed by somebody else. Notice that; Also a **red 'back' icon** shown near to the user name to indicate that you are in an impersonated account.
 
 Impersonation is done in **AccountController** of the Web project.
+
+## Next
+
+- [Language Management](Features-Mvc-Core-Language-Management)

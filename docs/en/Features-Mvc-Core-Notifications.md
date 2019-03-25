@@ -42,4 +42,6 @@ All notifications of user are listed in this page.
 
 <img src="D:/Github/documents/docs/en/images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
-#### 
+## Next
+
+- [Chat](Features-Mvc-Core-Chat)

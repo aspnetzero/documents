@@ -25,5 +25,11 @@ Don't forget to enter your production app's url as a WebHook endpoint when you p
 Note that;
 
 - Tenants can disable or enable Stripe to charge their accounts automatically on the Subscription page. 
+
 - When upgrading to an higher edition, stripe calculates the cost for upgrade and charges it from Tenants account. However, AspNet Zero can't show this amount during the edition upgrade process. But, this amount can be seen at the Payment History tab on Subscription page after a successful payment process.
+
 - When a tenant subscribes to an edition using Stripe and if admin user changes the edition of the Tenant on Tenant page to a higher edition, Tenant's account will be charged on stripe automatically.
+
+  ## Next
+
+  - [Visual Settings](Features-Mvc-Core-Visual-Settings)

@@ -45,3 +45,7 @@ As a host user, we may want to perform operations in behalf of a tenant. In this
 ## Using Tenancy Name As Subdomain
 
 A multi-tenant application generally uses subdomain to identify current tenant. **tenant1**.mydomain.com, **tenant2**.mydomain.com and so on. ASP.NET Zero automatically identify and get tenant name from subdomain (See host settings section).
+
+## Next
+
+- [Host Dashboard](Features-Mvc-Core-Host-Dashboard)

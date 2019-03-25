@@ -4,3 +4,6 @@ ASP.NET Zero application can be set-up using install page. This page is develope
 
 <img src="D:/Github/documents/docs/en/images/install-page-core.png" alt="install page" class="img-thumbnail" width="1200" />
 
+## Next
+
+- [Web Host Project](Features-Mvc-Core-Web-Host-Project)

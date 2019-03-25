@@ -11,3 +11,7 @@ In order to configure PayPal settings, open `appsettings.json` file in ***.Web.M
 - **DemoPassword:** Password for a demo account to show users in Demo mode for testing purposes.
 
 Note: Current implementation of PayPal doesn't support recurring payments. So, If a tenant wants to pay via PayPal, AspNet Zero will not charge Tenant's account automatically. In that case, Tenant needs to pay the subscription price on every subscription cycle.
+
+## Next
+
+- [Visual Settings](Features-Mvc-Core-Visual-Settings)

@@ -80,7 +80,7 @@
             },
             {
               "text": "Entity History",
-              "path": "Features-Mvc-Core-Entity History.md"
+              "path": "Features-Mvc-Core-Entity-History.md"
             },
             {
               "text": "Subscription",
@@ -139,16 +139,16 @@
               "path": "Features-Mvc-Core-Setup-Page.md"
             },
             {
-              "text": "Public Website",
-              "path": "Public-Website.md"
-            },
-            {
               "text": "Web.Host Project",
               "path": "Features-Mvc-Core-Web-Host-Project.md"
             },
             {
               "text": "Migrator Console Application",
               "path": "Migrator-Console-Application.md"
+            },
+            {
+              "text": "Public Website",
+              "path": "Public-Website.md"
             },
             {
               "text": "GrapQL API",

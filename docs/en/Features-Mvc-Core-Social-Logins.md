@@ -2,7 +2,7 @@
 
 ASP.NET Zero supports social media logins. To enable it, we should change the following settings in **appsettings.json** file.
 
-```
+```json
   "Authentication": {
     "Facebook": {
       "IsEnabled": "false",
@@ -36,7 +36,7 @@ them into `appsettings.json`. When you enable it, social media logos are automat
 
 In addition to social logins, ASP.NET Zero includes OpenId Connect Login integrated. It's configuration can be changed in `appsettings.json`
 
-```
+```json
 "OpenId": {
   "IsEnabled": "false",
   "Authority": "",
@@ -64,3 +64,6 @@ If you are using Azure AD for OpenID Connect and your app is multi-tenant on Azu
 "ValidateIssuer": "false"
 ```
 
+## Next
+
+* [Two Factor Authentication](Features-Mvc-Core-Two-Factor-Authentication)

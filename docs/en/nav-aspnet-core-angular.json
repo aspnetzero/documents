@@ -172,11 +172,16 @@
 		  "items": [
                 {
                   "text": "Publishing to Azure",
-                  "path": "Step-by-step-publish-to-azure-angular.md"
+                  "path": "Deployment-Angular-Publish-Azure.md"
                 },
 				 {
-                  "text": "Publishing to Azure",
-                  "path": "Step-by-step-angular-publish-to-iis.md"
+                  "text": "Publishing to IIS",
+                  "path": "Deployment-Angular-Publish-IIS.md"
+                }
+				,
+				 {
+                  "text": "Publishing to Docker",
+                  "path": "Deployment-Angular-Docker.md"
                 }
 		  ]
         }

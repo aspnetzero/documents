@@ -40,3 +40,7 @@ Since chat is a real time operation, application caches friends of online users 
 <img src="D:/Github/documents/docs/en/images/chat-features-1.png" alt="User menu" class="img-thumbnail" />
 
 There are three chat features in the system. These are "Chat", "Chat with host", "Chat with other tenants". These features can be enabled/disabled per edition/tenant. By using these features host can enable/disable chat with other tenant's users or host users.
+
+## Next
+
+- [User Menu](Features-Mvc-Core-User-Menu)

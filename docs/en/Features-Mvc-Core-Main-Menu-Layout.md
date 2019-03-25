@@ -10,3 +10,7 @@ Layout of the application is located under **Areas/App/Views/Layout** folder. It
 <img src="D:/Github/documents/docs/en/images/app-layout-core-1.png" alt="Application layout" class="img-thumbnail" />
 
 Main menu is rendered in **menu** component. Layout also highly uses bundling & minification (see the section below) system for script and style includes.
+
+## Next
+
+- [Edition Management](Features-Mvc-Core-Edition-Management)

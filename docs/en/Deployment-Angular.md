@@ -23,8 +23,9 @@ to the `ng build` command to disable it. But we recommend AOT feature since it h
 
 # Next
 
-* [Publishing to Azure](Step-by-step-publish-to-azure-angular)
-* [Publishing to IIS](Step-by-step-angular-publish-to-iis)
+* [Publishing to Azure](Deployment-Angular-Publish-Azure)
+* [Publishing to IIS](Deployment-Angular-Publish-IIS)
+* [Publishing to Docker](Deployment-Angular-Docker)
 
 
 

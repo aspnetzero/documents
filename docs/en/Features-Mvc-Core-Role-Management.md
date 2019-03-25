@@ -12,8 +12,7 @@ A role is represented by the **Role** class. Role class can be extended by addin
 
 Roles can be dynamic or static:
 
-- **Static role**: A static role has a known **name** (like 'admin') and can not change this name (we can change **display name**). It's exists on the system startup and can not be deleted. Thus, we can
-  write our code based on a static role name.
+- **Static role**: A static role has a known **name** (like 'admin') and can not change this name (we can change **display name**). It's exists on the system startup and can not be deleted. Thus, we can write our code based on a static role name.
 - **Dynamic role**: We can create a dynamic role after deployment. Then we can grant permissions for that role, we can assign the role to some users and we can delete it. We can not know names of dynamic roles in development time.
 
 One or more roles can be set as **default**. Default roles are assigned to new added/registered users as default. This is not a development time property and can be set or changed after deployment.
@@ -29,3 +28,7 @@ Since roles are used to group permissions, we can set permissions of a role whil
 *Note that not all permissions shown in the figure above*
 
 Every tenant has it's own roles and any change in roles for a tenant does not effect other tenants. Also, host has also own isolated roles.
+
+## Next
+
+- [User Management](Features-Mvc-Core-User-Management)

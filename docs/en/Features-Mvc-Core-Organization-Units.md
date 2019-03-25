@@ -16,3 +16,7 @@ This is actually a **generic lookup modal** and can be used to select any type o
 `Areas\App\Views\Common\Modals\_LookupModal.cshtml` and it's related script file). To select the users, we created **FindUsers** method in **CommonLookupAppService** then configured the modal to work with this method (see `view-resources/Areas/App/Views/OrganizationUnits/index.js` file for usage of lookupModal.open).
 
 See [organization unit management document](https://aspnetboilerplate.com/Pages/Documents/Zero/Organization-Units) for more information.
+
+## Next
+
+- [Role Management](Features-Mvc-Core-Role-Management)

@@ -9,3 +9,7 @@ A few notes on **Web.Host** project:
 - It enables **CORS**. So, cross origin requests are allowed. It only allows to **http://localhost:4200** by default (see Startup class for the configuration).
 - Configured and enabled **Swagger UI** by default.
 
+## Next
+
+- [Migrator Console Application](Migrator-Console-Application)
+
