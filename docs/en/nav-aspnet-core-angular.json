@@ -19,6 +19,7 @@
       "items": [
         {
           "text": "Features",
+          "path": "Features-Angular.md",
           "items": [
             {
               "text": "Login",
@@ -152,7 +153,7 @@
               "text": "Setup Page",
               "path": "Features-Angular-Setup-Page.md"
             },
-			{
+            {
               "text": "Public Website",
               "path": "Public-Website.md"
             },
@@ -169,21 +170,20 @@
         {
           "text": "Deployment",
           "path": "Deployment-Angular.md",
-		  "items": [
-                {
-                  "text": "Publishing to Azure",
-                  "path": "Deployment-Angular-Publish-Azure.md"
-                },
-				 {
-                  "text": "Publishing to IIS",
-                  "path": "Deployment-Angular-Publish-IIS.md"
-                }
-				,
-				 {
-                  "text": "Publishing to Docker",
-                  "path": "Deployment-Angular-Docker.md"
-                }
-		  ]
+          "items": [
+            {
+              "text": "Publishing to Azure",
+              "path": "Deployment-Angular-Publish-Azure.md"
+            },
+            {
+              "text": "Publishing to IIS",
+              "path": "Deployment-Angular-Publish-IIS.md"
+            },
+            {
+              "text": "Publishing to Docker",
+              "path": "Deployment-Angular-Docker.md"
+            }
+          ]
         }
       ]
     },
@@ -203,7 +203,7 @@
     },
     {
       "text": "Infrastructure & Concepts",
-      "path": "Features-Angular-Infrastructure.md",
+      "path": "Infrastructure-Angular.md",
       "items": [
         {
           "text": "NPM Packages",
@@ -244,6 +244,10 @@
         {
           "text": "Used Libraries & Frameworks",
           "path": "Features-Angular-Infrastructure-Used-Libraries-Frameworks.md"
+        },
+        {
+          "text": "Penetration Test",
+          "path": "Security-Report-Angular.md"
         }
       ]
     },
@@ -378,7 +382,7 @@
               "text": "Developing Step By Step",
               "path": "Developing-Step-By-Step-Xamarin.md"
             }
-          ] 
+          ]
         }
       ]
     },
@@ -389,10 +393,6 @@
     {
       "text": "Road Map",
       "path": "Road-Map.md"
-    },
-    {
-      "text": "Penetration Test",
-      "path": "Security-Report-Angular.md"
     },
     {
       "text": "External Links",

@@ -13,6 +13,7 @@
       "items": [
         {
           "text": "Features",
+          "path": "Features-Mvc-Core.md",
           "items": [
             {
               "text": "Login",
@@ -196,7 +197,7 @@
     },
     {
       "text": "Infrastructure & Concepts",
-      "path": "Getting-Started-Angular-Infrastructure.md",
+      "path": "Infrastructure-Core-Mvc.md",
       "items": [
         {
           "text": "Startup Class",
@@ -220,7 +221,7 @@
         },
         {
           "text": "Exception Handling",
-          "path": "Getting-Started-Angular-Infrastructure-Exception-Handling.md"
+          "path": "Infrastructure-Core-Mvc-Exception-Handling.md"
         },
         {
           "text": "User Secrets",
@@ -297,6 +298,10 @@
         {
           "text": "Used Libraries & Frameworks",
           "path": "Infrastructure-Core-Mvc-Used-Libraries-Frameworks.md"
+        },
+        {
+          "text": "Penetration Test",
+          "path": "Security-Report-Core.md"
         }
       ]
     },
@@ -343,7 +348,7 @@
                       "path": "Developing-Step-By-Step-Core-Testing-PersonAppService-From-Browser-Console.md"
                     },
                     {
-                      "text": "Using GetPeople Method From MVC Controller" ,
+                      "text": "Using GetPeople Method From MVC Controller",
                       "path": "Developing-Step-By-Step-Core-Using-GetPeople-Method-From-MVC-Controller.md"
                     }
                   ]
@@ -450,10 +455,6 @@
     {
       "text": "Road Map",
       "path": "Road-Map.md"
-    },
-    {
-      "text": "Penetration Test",
-      "path": "Security-Report-Angular.md"
     },
     {
       "text": "External Links",

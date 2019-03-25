@@ -12,4 +12,4 @@ The following topics will be covered in this section:
 - [Setting](Features-Angular-Infrastructure-Setting)
 - [SignalR Integration](Features-Angular-Infrastructure-SignalR-Integration)
 - [Used Libraries & Frameworks](Features-Angular-Infrastructure-Used-Libraries-Frameworks)
-
+- [Penetration Test](Security-Report-Angular)

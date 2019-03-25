@@ -27,4 +27,4 @@ The following topics will be covered in this section:
 - [Unit Testing](Infrastructure-Core-Mvc-Unit-Testing)
 - [Configuration](Infrastructure-Core-Mvc-Configuration)
 - [Used Libraries & Frameworks](Infrastructure-Core-Mvc-Used-Libraries-Frameworks)
-
+- [Penetration Test](Security-Report-Core)
