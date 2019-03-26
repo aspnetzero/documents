@@ -43,7 +43,7 @@ There are 12 projects in the solution:
 
 ASP.NET Zero solution contains 4 applications:
 
-- **Back End Application** `Web.Mvc`: This is the main application which is entered by username and password. You will mostly work on this application to add your business requirements. Backend application is built in a dedicated area, named "**App**" by default, but can be determined while you are [creating the solution](Getting-Started.md). So, all controllers, views and models are located under **Areas/App** folder. Also, related script and style files are located under **wwwroot/view-resources/Areas/App** folder, as shown below:
+- **Back End Application** `Web.Mvc`: This is the main application which needs authentication to access. You will mostly work on this application to add your business logic. Backend application is built in a dedicated area, named "**App**" by default, but can be determined while you are [creating the solution](Getting-Started-Core). So, all controllers, views and models are located under **Areas/App** folder. Also, related script and style files are located under **wwwroot/view-resources/Areas/App** folder, as shown below:
 
   <img src="D:/Github/documents/docs/en/images/app-folders-core.png" alt="Application folders" class="img-thumbnail" width="161" height="381" />
 
@@ -57,7 +57,7 @@ ASP.NET Zero solution contains 4 applications:
 
 Multi-tenancy is used to build **SaaS** (Software as a Service) applications easily. With this technique, we can deploy **single application** to serve to **multiple customers**. Each Tenant will have it's own **roles**, **users** and **settings**. 
 
-ASP.NET Zero's all code-base is developed to be **multi-tenant**. But, it [**can be disabled**](Getting-Started#DocConfigureMultiTenancy) with a single line of configuration if you are developing a **single-tenant** application. When you disable it, all multi-tenancy stuff will be hidden and not available. If multi-tenancy is disabled, there will be a single tenant named **Default**.
+ASP.NET Zero's all code-base is developed to be **multi-tenant**. But, it [**can be disabled**](Getting-Started-Core#multi-tenancy) with a single line of configuration if you are developing a **single-tenant** application. When you disable it, all multi-tenancy stuff will be hidden and not available. If multi-tenancy is disabled, there will be a single tenant named **Default**.
 
 There are two types of perspective in multi-tenant applications:
 
@@ -109,5 +109,5 @@ As similar, all views of the application have corresponding style and script fil
 
 ##  Next
 
-- [Development Guide](Development-Guide-Core) to understand the solution structure and start your development.
-- [Step by Step Development](Developing-Step-By-Step-Core) tutorial leads you to develop a multi-tenant, localized, authorized, configurable and testable application step by step.
+- [Features](Features-Mvc-Core) to understand the features.
+- [Step by Step Development](Developing-Step-By-Step-Core-Introduction) tutorial leads you to develop a multi-tenant, localized, authorized, configurable and testable application step by step.

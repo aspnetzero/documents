@@ -117,5 +117,5 @@ If you inherit your components from **AppComponentBase** class, you can get many
 
 ## Next
 
-- [Features](Getting-Started-Angular-Login) to understand the solution structure and start your development.
+- [Features](Features-Angular) to understand the solution structure and start your development.
 - [Step by Step Development](Developing-Step-By-Step-Angular-Introduction) tutorial leads you to develop a multi-tenant, localized, authorized, configurable and testable application step by step.
