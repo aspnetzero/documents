@@ -8,7 +8,7 @@ Before reading this document, it's suggested to run the application and explore 
 
 ### About Server Side
 
-This document is only for the **Angular** application. For **server side**, see [ASP.NET Core documentation](Development-Guide-Core.md)
+This document is only for the **Angular** application. For **server side**, see [ASP.NET Core documentation](Index-Core-Mvc)
 too.
 
 ## Pre Requirements
@@ -19,7 +19,7 @@ Following tools are needed in order to use the solution:
 - [Typescript 2.0+](https://www.typescriptlang.org/)
 - [yarn](https://yarnpkg.com/)
 
-In addition, see [ASP.NET Core](Development-Guide-Core.md) documentation for server side requirements and other server side features.
+In addition, see [ASP.NET Core](Index-Core-Mvc) documentation for server side requirements and other server side features.
 
 ### IDE
 
