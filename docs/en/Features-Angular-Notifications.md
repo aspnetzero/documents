@@ -18,7 +18,7 @@ User can marks all notifications as read by clicking the **Set all as read** lin
 
 In this dialog there is a global setting for user to enable/disable receiving notifications. If this setting is enabled, then user can enable/disable each notification individually.
 
-You can also define your custom notifications in the [server side](Development-Guide-Core.md). See [notifications documentation](https://aspnetboilerplate.com/Pages/Documents/Notification-System) for detailed information.
+You can also define your custom notifications in the [server side](Features-Mvc-Core-Notifications). See [notifications documentation](https://aspnetboilerplate.com/Pages/Documents/Notification-System) for detailed information.
 
 ## Notification List
 

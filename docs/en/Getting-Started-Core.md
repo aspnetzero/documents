@@ -43,9 +43,11 @@ Right click the **.Web.Mvc** project and select "**Set as StartUp project**": Th
 
 Open **appsettings.json** in **.Web.Mvc** project and change the **Default** connection string if you want:
 
-    "ConnectionStrings": {
-        "Default": "Server=localhost; Database=PhoneBookDemoDb; Trusted_Connection=True;"
-    }
+```json
+"ConnectionStrings": {
+    "Default": "Server=localhost; Database=PhoneBookDemoDb; Trusted_Connection=True;"
+}
+```
 
 #### Migrations
 
@@ -53,7 +55,7 @@ We have two options to create and migrate database to the latest version.
 
 ##### ASP.NET Zero Migrator Application
 
-ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production (see [development guide](Development-Guide-Core.md) for more information).
+ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production platforms (see [migrator docs](Migrator-Console-Application) for more information).
 
 ##### Entity Framework Migration Command
 
@@ -93,4 +95,4 @@ ASP.NET Zero Power Tools lets you to create a new page from the backend to the U
 
 ## Next
 
-Your solution is up and working. Check out the [<span class="text-primary">Xamarin Development Guide</span>](Development-Guide-Xamarin.md) or continue with [<span class="text-primary">Development Guide</span>](Development-Guide-Core.md).
+Your solution is up and working. Check out the [Xamarin Development Guide](Development-Guide-Xamarin) or continue with [Features](Features-Mvc-Core).

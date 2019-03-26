@@ -1,6 +1,14 @@
 # Active Directory (LDAP)
 
-LDAP (Active Directory) Authentication is disabled by default. To make it work, we should **disable multi-tenancy** since LDAP auth is not used in a multi-tenant system normally. See [server side](Development-Guide-Core.md) to enable LDAP. Once we enable, we can see **LDAP settings** section in the settings page:
+LDAP (Active Directory) Authentication is disabled by default. To make it work, we should **disable multi-tenancy** since LDAP authentication is not used in a multi-tenant system normally. 
+
+To enable LDAP on server-side open `*CoreModule.cs` in ***.Core** project, uncomment the following line
+
+```csharp
+Configuration.Modules.ZeroLdap().Enable(typeof(AppLdapAuthenticationSource));
+```
+
+See [server side](Features-Mvc-Core-Tenant-Active-Directory) to enable LDAP. Once we enable, we can see **LDAP settings** section in the settings page:
 
 <img src="D:/Github/documents/docs/en/images/tenant-settings-ldap-1.png" alt="LDAP Settings" class="img-thumbnail" />
 

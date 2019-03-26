@@ -1,6 +1,6 @@
 # Token Based Authentication
 
-ASP.NET Zero Angular UI uses the [server side](Development-Guide-Core.md) via token based authentication. Any application can authenticate and use any functionality in the application as API. For instance, you can create a mobile application consumes the same API. In this section, we'll demonstrate usage of the API from [Postman](https://www.getpostman.com/docs/introduction) (a Google Chrome extension).
+ASP.NET Zero Angular UI consumes the [host](Infrastructure-Core-Mvc-Token-Based-Authentication) via token based authentication. Any application can authenticate and use any functionality in the application as API. For instance, you can create a mobile application consumes the same API. In this section, we'll demonstrate usage of the API from [Postman](https://www.getpostman.com/docs/introduction) (a Google Chrome extension).
 
 ## Authentication
 

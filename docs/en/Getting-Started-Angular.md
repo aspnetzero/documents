@@ -16,9 +16,8 @@ Select **ASP.NET Core & Angular** as Project Type and fill other required fields
 
 <img src="images/angular-solution-folders.png" alt="Client Server folders" class="img-thumbnail" />
 
--   **angular** folder contains the [Angular
-    application](Development-Guide-Angular.md) which is configured to work with [angular-cli](https://cli.angular.io/).
--   **aspnet-core** folder contains the [server side](Development-Guide-Core.md) ASP.NET Core solution and configured to work with [Visual Studio](https://www.visualstudio.com/vs/community/).
+-   **angular** folder contains the [Angular application](Features-Angular) which is configured to work with [angular-cli](https://cli.angular.io/).
+-   **aspnet-core** folder contains the [server side](Features-Mvc-Core) ASP.NET Core solution and configured to work with [Visual Studio](https://www.visualstudio.com/vs/community/).
 
 ### Merging Client and Server Solutions
 
@@ -50,7 +49,7 @@ We have two options to create and migrate database to the latest version.
 
 ##### ASP.NET Zero Migrator Application
 
-ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production (see [development guide](Development-Guide-Angular.md) for more information).
+ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production (see [development guide](Features-Angular) for more information).
 
 ##### Entity Framework Migration Command
 

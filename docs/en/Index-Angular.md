@@ -10,7 +10,7 @@ In this document, you will find the below topics:
 * [Overview](Overview-Angular.md) shows the prerequirements, solution structure, multi-tenancy.
 * [Features](Features-Angular.md) explains the feature set of ASP.NET Zero project.
 * [Deployment](Deployment-Angular.md) guides you how to publish your ASP.NET Zero project to IIS, Azure and Docker.
-* [Infrastructure & Concepts](Features-Angular-Infrastructure.md) docs explains the basic concepts and infrastructure of ASP.NET Zero project. 
+* [Infrastructure & Concepts](Infrastructure-Angular.md) docs explains the basic concepts and infrastructure of ASP.NET Zero project. 
 * [Mobile (Xamarin)](Xamarin.md) doc contains a development guide and tutorial that helps you to develop a Xamarin app step by step.
 * [GraphQL](GraphQL.md) doc shows you how to enable the built-in GraphQL API and start writing your queries.
 

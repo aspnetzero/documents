@@ -16,7 +16,7 @@ Roles can be dynamic or static:
 One or more roles can be set as **default**. Default roles are assigned to new added/registered users as default. This is not a development time property and can be set or changed after deployment.
 
 In startup project, we have static **admin** role for host (for multi-tenant apps). Also, we have static **admin** and **user** roles for tenants. **Admin** roles have all permissions granted by default.
-**User** role is the **default** role for new users and has no permission by default. These can be changed easily  on the [server side](Development-Guide-Core.md).
+**User** role is the **default** role for new users and has no permission by default. These can be changed easily  on the [server side](Features-Mvc-Core-Role-Management).
 
 #### Role Permissions
 

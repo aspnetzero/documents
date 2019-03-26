@@ -1,8 +1,4 @@
 # Authorization
 
-You can inject and use PermissionCheckerService to check user
-permissions. It's pre injected for AppComponentBase (permission field)
-and also you can use shortcut isGranted function. Permissions are
-defined in [server side](Development-Guide-Core.md). See authorization
-[documentation](https://aspnetboilerplate.com/Pages/Documents/Authorization)
-for more.
+You can inject and use `PermissionCheckerService` to check user permissions. It's pre injected for `AppComponentBase` (permission field) and also you can use shortcut `isGranted` function. Permissions are defined on the backend. See [Role Management](Features-Mvc-Core-Role-Management), [User Management](Features-Mvc-Core-User-Management) or [ASP.NET Boilerplate authorization](https://aspnetboilerplate.com/Pages/Documents/Authorization) document.
+

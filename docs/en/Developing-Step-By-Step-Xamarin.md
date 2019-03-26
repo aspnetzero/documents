@@ -6,7 +6,7 @@ In this document, we will create a sample **Xamarin phonebook application** step
 
 ## Downloading Phonebook-Core Sample
 
-In the [Developing Step By Step Phonebook](Developing-Step-By-Step-Core) documentation we've already completed how to create a phonebook on server side and web client. To resume this project, download the solution [Acme.PhoneBookDemo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/PhoneBook-Core) and open the **Acme.PhoneBookDemo.Mobile.sln** file.
+In the **Developing Step By Step**  document we have already seen how to create a phonebook on server side and web client. In this document we will resume this project. We will build a phonebook application on ASP.NET Zero Xamarin project. Download the solution [Acme.PhoneBookDemo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/PhoneBook-Core) and open the **Acme.PhoneBookDemo.Mobile.sln** file.
 
 ## Configuring Host Address
 
@@ -213,9 +213,8 @@ public class MenuProvider : ISingletonDependency, IMenuProvider
 
 Let's set the properties of the new *NavigationMenuItem*:
 
-1.  **Title:** It's already localized in the [Developing Step By Step
-    Phonebook](Developing-Step-By-Step-Core.html). We just
-    set localization key with this shortcut: **L.Localize("PhoneBook")**. And it localizes the menu text.
+1. **Title:** It's already localized in the **Developing Step By Step** document. We just
+   set localization key with this shortcut: **L.Localize("PhoneBook")**. And it localizes the menu text.
 2.  **Icon:** Download a related png icon file. For this example, go to
     <https://material.io/icons/#ic_contact_phone> and download PNGS.
     Then extract the downloaded zip file. In the zip file, you can use *ic\_contact\_phone\_black\_24dp\\android\\drawable-xxhdpi\\ic\_contact\_phone\_black\_24dp.png*
