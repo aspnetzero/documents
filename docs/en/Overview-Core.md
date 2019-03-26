@@ -89,7 +89,7 @@ Thus, ASP.NET Zero can automatically detect current tenant from URLs. If you con
 2. You should configure IIS to bind this static IP to your application.
 
 Similar to **WebSiteRootAddress**, **ServerRootAddress** setting is also exists in `appsettings.json` in .Web.Host project. In addition, .Web.Host application contains **ClientRootAddress** which is used if this API
-is used by the [Angular](Developing-Step-By-Step-Angular.md) UI. If you are not using Angular UI, you can ignore it. Finally, **CorsOrigins** setting is used to allow some domains for cross origin requests. This is also useful when you are hosting your Angular UI in a separated server/domain.
+is used by the [Angular UI](Developing-Step-By-Step-Angular-Introduction). If you are not using Angular UI, you can ignore it. Finally, **CorsOrigins** setting is used to allow some domains for cross origin requests. This is also useful when you are hosting your Angular UI in a separated server/domain.
 
 ## Account Controller
 
