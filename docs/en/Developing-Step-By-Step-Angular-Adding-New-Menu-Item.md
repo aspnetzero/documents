@@ -26,7 +26,7 @@ Open PhoneBookDemo.xml (the **default**, **English** localization dictionary) an
 <text name="PhoneBook">Phone Book</text>
 ```
 
-If we don't define "PhoneBook"s value for other localization dictionaries, default value is shown in all languages. For example, we can define it also for Turkish in PhoneBookDmo-tr.xml file:
+If we don't define "PhoneBook"s value for other localization dictionaries, default value is shown in all languages. For example, we can define it also for Turkish in `PhoneBookDmo-tr.xml` file:
 
 ```xml
 <text name="PhoneBook">Telefon Rehberi</text>
@@ -44,3 +44,7 @@ Angular has a powerful URL routing system. ASP.NET Zero has defined routes in a 
 ```
 
 We get an error since we haven't defined PhoneBookComponent yet. Also, we ignored permission for now (will implement later).
+
+## Next
+
+- [Creating the PhoneBook Component](Developing-Step-By-Step-Angular-Creating-PhoneBook-Component)

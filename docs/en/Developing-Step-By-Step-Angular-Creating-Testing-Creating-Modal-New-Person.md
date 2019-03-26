@@ -200,3 +200,7 @@ Made some minor changes in the view; Added a **button** to open the
 modal and the **createPersonModal** component as like another HTML tag
 (which matches to the selector in the
 **create-person-modal.component.ts**).
+
+## Next
+
+- [Authorization For Phone Book](Developing-Step-By-Step-Angular-Authorization-PhoneBook)

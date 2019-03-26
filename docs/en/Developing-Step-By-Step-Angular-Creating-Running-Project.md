@@ -21,3 +21,7 @@ public class PhoneBookDemoConsts
 ```
 
 **Note:** If you log in before changing **MultiTenancyEnabled** to false, you might be get login error. To overcome this, you should remove cookies.
+
+## Next
+
+- [Adding a New Menu Item](Developing-Step-By-Step-Angular-Adding-New-Menu-Item)

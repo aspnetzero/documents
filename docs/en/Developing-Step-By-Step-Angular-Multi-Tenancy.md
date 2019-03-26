@@ -62,3 +62,7 @@ Now, we can update the database again:
 ```
 Update-Database
 ```
+
+## Next
+
+- [Running the Application](Developing-Step-By-Step-Angular-Running-Application)

@@ -104,3 +104,7 @@ added page:
 
 Note: Angular-cli automatically re-compiles and refreshes the page when
 any changes made to any file in the application.
+
+## Next
+
+- [Creating Person Entity](Developing-Step-By-Step-Angular-Creating-Person-Entity)

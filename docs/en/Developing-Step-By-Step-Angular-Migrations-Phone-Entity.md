@@ -106,3 +106,7 @@ Since we haven't deployed yet, we can delete database
 
 Now, we are running our application to re-create database and seed it.
 You can check database to see **PbPhones** table and rows.
+
+## Next
+
+- [Changing GetPeople Method](Developing-Step-By-Step-Angular-Changing-GetPeople-Method)

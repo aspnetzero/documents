@@ -54,3 +54,7 @@ Lastly, we're also adding a DbSet property for Phone to our DbContext:
 ```csharp
 public virtual DbSet<Phone> Phones { get; set; }
 ```
+
+## Next
+
+- [Database Migration of Phone Entity](Developing-Step-By-Step-Angular-Migrations-Phone-Entity)

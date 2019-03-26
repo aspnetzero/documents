@@ -180,3 +180,7 @@ Add those lines to **main.module.ts:**:
 
 	// Other Code lines...
 ```
+
+## Next
+
+- [Multi Tenancy](Developing-Step-By-Step-Angular-Multi-Tenancy)

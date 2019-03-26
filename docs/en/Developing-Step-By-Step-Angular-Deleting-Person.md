@@ -120,3 +120,6 @@ statement before the @Component declaration:
 import * as _ from 'lodash';
 ```
 
+## Next
+
+* [Filtering People](Developing-Step-By-Step-Angular-Filtering-People)

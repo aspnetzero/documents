@@ -48,3 +48,7 @@ We also added currently filtered people count (people.length) in the
 header. Since we have already defined and used the filter property in
 **phonebook.component.ts** and implemented in the server side, this new
 code immediately works.
+
+## Next
+
+- [Adding Phone Numbers](Developing-Step-By-Step-Angular-Adding-Phone-Numbers)

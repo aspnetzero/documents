@@ -121,3 +121,7 @@ To see the button again, we can go to role or user manager and grant related per
 <img src="D:/Github/documents/docs/en/images/user-permissions-phonebook1.png" alt="User specific permissions" class="img-thumbnail" />
 
 As shown above, **Create new person** permission is a child permission of the **Phone book**. Remember to refresh page to get permissions updated.
+
+## Next
+
+- [Deleting a Person](Developing-Step-By-Step-Angular-Deleting-Person)

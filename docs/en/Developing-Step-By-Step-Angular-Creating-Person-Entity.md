@@ -55,3 +55,7 @@ public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User>
     //...other code
 }
 ```
+
+## Next
+
+- [Database Migrations for Person](Developing-Step-By-Step-Angular-Database-Migrations-Person-Entity)

@@ -65,3 +65,7 @@ arguments and asserts that it throws AbpValidationException. See
 [validation
 document](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)
 for more information.
+
+## Next
+
+- [Creating Modal for New Person](Developing-Step-By-Step-Angular-Creating-Testing-Creating-Modal-New-Person)

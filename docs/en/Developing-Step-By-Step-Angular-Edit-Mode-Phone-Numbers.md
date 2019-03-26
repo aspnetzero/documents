@@ -362,3 +362,7 @@ Add those lines to **main.module.ts:**:
 
 	// Other Code lines...
 ```
+
+## Next
+
+- [Edit Mode For People](Developing-Step-By-Step-Angular-Edit-Mode-People)
