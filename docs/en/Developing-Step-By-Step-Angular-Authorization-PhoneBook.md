@@ -41,7 +41,7 @@ Admin role has every static permission by default but those permissions can be r
 
 Now, let's try to enter Phone Book page by clicking the menu item without required permission:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-permission-error.png" alt="Permission error" class="img-thumbnail" width="505" height="412" />
+<img src="images/phonebook-permission-error.png" alt="Permission error" class="img-thumbnail" width="505" height="412" />
 
 We get an error message. This exception is thrown when any method of `PersonAppService` is called without required permission.
 
@@ -67,7 +67,7 @@ new AppMenuItem("PhoneBook", 'Pages.Tenant.PhoneBook', "flaticon-book", "/app/ma
 
 So, how we can enter the page now? Simple, go to **Role Management** page and edit **admin** role:
 
-<img src="D:/Github/documents/docs/en/images/role-permissions-with-phonebook1.png" alt="Role permissions" class="img-thumbnail" />
+<img src="images/role-permissions-with-phonebook1.png" alt="Role permissions" class="img-thumbnail" />
 
 We see that a **new permission** named "**Phone book**" added to **permissions** tab. So, we can check it and save the role. After saving, we need to **refresh** the whole page to refresh permissions for the current user. We could also grant this permission to a specific user. Now, we can enter the Phone book page again.
 
@@ -118,7 +118,7 @@ In this way, the "Create New Person" button does not rendered in server and user
 
 To see the button again, we can go to role or user manager and grant related permission as shown below:
 
-<img src="D:/Github/documents/docs/en/images/user-permissions-phonebook1.png" alt="User specific permissions" class="img-thumbnail" />
+<img src="images/user-permissions-phonebook1.png" alt="User specific permissions" class="img-thumbnail" />
 
 As shown above, **Create new person** permission is a child permission of the **Phone book**. Remember to refresh page to get permissions updated.
 

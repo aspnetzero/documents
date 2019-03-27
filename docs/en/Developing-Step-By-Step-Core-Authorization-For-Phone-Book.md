@@ -39,7 +39,7 @@ public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
 
 Now, let's try to enter Phone Book page by clicking the menu item:
 
-<img src="D:/Github/documents/docs/en/images/error-500.png" alt="500 Error" class="img-thumbnail" width="614" height="243" />
+<img src="images/error-500.png" alt="500 Error" class="img-thumbnail" width="614" height="243" />
 
 We get an error message. This exception is thrown when any method of PersonAppService is called without required permission.
 
@@ -61,7 +61,7 @@ new MenuItemDefinition(
 
 So, how we can enter the page now? Simple, go to **Role Management** page and edit **admin** role:
 
-<img src="D:/Github/documents/docs/en/images/role-permissions-with-phonebook2.png" alt="Role permissions" class="img-thumbnail" width="839" height="898" />
+<img src="images/role-permissions-with-phonebook2.png" alt="Role permissions" class="img-thumbnail" width="839" height="898" />
 
 We see that a **new permission** named "**Phone book**" added to **permissions** tab. So, we can check it and save the role. After saving, we need to **refresh** the whole page to refresh permissions for the current user. We could also grant this permission for a specific user. Now, we can enter the Phone book page again.
 
@@ -113,7 +113,7 @@ In this way, the "Create New Person" button does not rendered in server and user
 
 To see the button again, we can go to role or user manager and grant related permission as shown below:
 
-<img src="D:/Github/documents/docs/en/images/user-permissions-phonebook2.png" alt="User specific permissions" class="img-thumbnail" />
+<img src="images/user-permissions-phonebook2.png" alt="User specific permissions" class="img-thumbnail" />
 
 As shown above, **Create new person** permission is a child permission of the **Phone book**.
 

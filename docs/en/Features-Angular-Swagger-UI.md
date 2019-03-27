@@ -6,5 +6,5 @@ Notice that this is the [server side](Features-Mvc-Core-Swagger-UI) URL of the a
 
 The below page is the default page of server side API application where you can see all available API endpoints:
 
-<img src="D:/Github/documents/docs/en/images/swagger-ui-ng2-1.png" alt="Swagger UI" class="img-thumbnail" />
+<img src="images/swagger-ui-ng2-1.png" alt="Swagger UI" class="img-thumbnail" />
 

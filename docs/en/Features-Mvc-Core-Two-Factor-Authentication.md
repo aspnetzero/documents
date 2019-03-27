@@ -2,17 +2,17 @@
 
 ASP.NET Zero is ready to provide two factor login, but it's disabled as default. You can easily enable it in host settings page in security tab:
 
-<img src="D:/Github/documents/docs/en/images/lockout-two-factor-settings-1.png" class="img-thumbnail" />
+<img src="images/lockout-two-factor-settings-1.png" class="img-thumbnail" />
 
 Note: In a multi-tenant application, two factor authentication is available to tenants only if it's enabled in the host settings. Also, email verification and SMS verification settings are only available in the host side. This is by design.
 
 When it's enabled, user is asked to select a verification provider after entering user name and password:
 
-<img src="D:/Github/documents/docs/en/images/send-security-code-1.png" alt="Send security code" class="img-thumbnail" />
+<img src="images/send-security-code-1.png" alt="Send security code" class="img-thumbnail" />
 
 Then a **confirmation code** is sent to the selected provider and user enters the code in the next page:
 
-<img src="D:/Github/documents/docs/en/images/verify-security-code-1.png" alt="Verify security code" class="img-thumbnail" />
+<img src="images/verify-security-code-1.png" alt="Verify security code" class="img-thumbnail" />
 
 ## Email Verification
 

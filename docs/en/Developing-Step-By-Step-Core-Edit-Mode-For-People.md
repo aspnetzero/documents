@@ -2,7 +2,7 @@
 
 Now we want to edit name, surname and e-mail of people:
 
-<img src="D:/Github/documents/docs/en/images/edit-person-core.png" alt="Edit Person" class="img-thumbnail" width="548" height="333" />  
+<img src="images/edit-person-core.png" alt="Edit Person" class="img-thumbnail" width="548" height="333" />  
 
 First of all, we create the necessary DTOs to transfer people's id, name,
 surname and e-mail. Then create the functions in PersonAppService for

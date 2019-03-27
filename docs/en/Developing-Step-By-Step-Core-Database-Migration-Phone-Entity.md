@@ -2,7 +2,7 @@
 
 Our entity model has changed, so we need to add a new migration:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-migrations-core-4.png" alt="Entity Framework Migration" class="img-thumbnail" />
+<img src="images/phonebook-migrations-core-4.png" alt="Entity Framework Migration" class="img-thumbnail" />
 
 This will create a new code based migration file to create **PbPhones**
 table:

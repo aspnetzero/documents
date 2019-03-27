@@ -2,7 +2,7 @@
 
 Now we want to edit name, surname and e-mail of people:
 
-<img src="D:/Github/documents/docs/en/images/edit-person-core1.png" alt="Edit Person" class="img-thumbnail" />  
+<img src="images/edit-person-core1.png" alt="Edit Person" class="img-thumbnail" />  
 
 First of all, we create the necessary DTOs to transfer people's id, name,
 surname and e-mail. We can optionally configure auto-mapper, but this is not necessary because all properties match automatically. Then we create the functions in PersonAppService for

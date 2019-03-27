@@ -102,7 +102,7 @@ public PartialViewResult CreatePersonModal()
 Now, we can run the application and open the modal by clicking the
 'Create New Person' button:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-create-person-dialog2.png" alt="Create Person Dialog" class="img-thumbnail" />
+<img src="images/phonebook-create-person-dialog2.png" alt="Create Person Dialog" class="img-thumbnail" />
 
 ## Next
 

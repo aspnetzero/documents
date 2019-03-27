@@ -11,7 +11,7 @@ Tests cover **Domain** (core) and **Application** layers of the project. Open Te
 
 Some unit tests (tenant creation, edition creation etc.) are only valid in multi tenancy concept. You can change AbpZeroTemplateConsts.MultiTenancyEnabled to false in order to make your application single tenant. Thus, multitenancy related tests will be skipped.
 
-<img src="D:/Github/documents/docs/en/images/unit-tests.png" alt="Some unit tests" class="img-thumbnail" width="555" height="244" />
+<img src="images/unit-tests.png" alt="Some unit tests" class="img-thumbnail" width="555" height="244" />
 
 These unit tests will be a guide to understand the code. Also, they can be a model while writing your own unit tests for your application's functionalities.
 

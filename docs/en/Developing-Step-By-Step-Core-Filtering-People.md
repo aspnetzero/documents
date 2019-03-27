@@ -2,7 +2,7 @@
 
 Now, we will implement **search** functionality of **GetPeople** method. UI is shown below:
 
-<img src="D:/Github/documents/docs/en/images/search-people2.png" alt="Searching people" class="img-thumbnail" width="770" height="328" />
+<img src="images/search-people2.png" alt="Searching people" class="img-thumbnail" width="770" height="328" />
 
 We added a search input to filter people (showing the related part of
 the code):

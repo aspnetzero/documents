@@ -105,7 +105,7 @@ Now, we can use this people member from the view,
 We simply used **ngFor** directive to loop and render people data. See
 the result:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-people-view-2.png" alt="Phonebook peoples" class="img-thumbnail" />
+<img src="images/phonebook-people-view-2.png" alt="Phonebook peoples" class="img-thumbnail" />
 
 We successfully retrieved list of people from database to the page.
 

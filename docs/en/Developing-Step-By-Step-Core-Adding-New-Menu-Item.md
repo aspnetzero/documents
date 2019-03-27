@@ -36,7 +36,7 @@ AppNavigationProvider class).
 Localization strings are defined in **XML** files in **.Core** project
 as shown below:
 
-<img src="D:/Github/documents/docs/en/images/localization-files-5.png" alt="Localization files" class="img-thumbnail" />
+<img src="images/localization-files-5.png" alt="Localization files" class="img-thumbnail" />
 
 Open PhoneBook.xml (the **default**, **English** localization
 dictionary) and add the following line:

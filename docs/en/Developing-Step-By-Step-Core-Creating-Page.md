@@ -60,7 +60,7 @@ We set ViewBag.CurrentPageName to the current page's name to
 automatically highlight the related menu item when this page is active.
 Now, it's time to run application and see the new phone book page:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-empty-mpa2.png" alt="Phone book empty screen" class="img-thumbnail" />
+<img src="images/phonebook-empty-mpa2.png" alt="Phone book empty screen" class="img-thumbnail" />
 
 Menu item display name and page title are localized. Try to change UI
 language to see difference.

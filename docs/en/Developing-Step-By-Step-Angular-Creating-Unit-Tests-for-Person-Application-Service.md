@@ -66,7 +66,7 @@ database.
 
 Let's run the **all unit tests** in Test Explorer and see if it works:
 
-<img src="D:/Github/documents/docs/en/images/phone-book-unit-test-success-2.png" alt="xUnit unit test success" class="img-thumbnail" />
+<img src="images/phone-book-unit-test-success-2.png" alt="xUnit unit test success" class="img-thumbnail" />
 
 As you see, it worked **successfully**. Now, we know that
 PersonAppService works properly without any filter. Let's add a new unit

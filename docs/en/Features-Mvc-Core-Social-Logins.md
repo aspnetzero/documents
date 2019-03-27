@@ -30,7 +30,7 @@ ASP.NET Zero supports social media logins. To enable it, we should change the fo
 You can find many documents on the web to learn how to obtain authentication keys for social platforms. So, we will not go to details of creating apps on social medias. Once you get your keys, you can write
 them into `appsettings.json`. When you enable it, social media logos are automatically shown on the login page as shown below:
 
-<img src="D:/Github/documents/docs/en/images/social-login-logos-3.png" alt="Social Login Icons" class="img-thumbnail" />
+<img src="images/social-login-logos-3.png" alt="Social Login Icons" class="img-thumbnail" />
 
 ## OpenId Connect Login
 

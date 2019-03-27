@@ -22,7 +22,7 @@ After you create and [download](https://aspnetzero.com/Download) your project, y
 
 There are two more solutions, **\*.Mobile.sln** contains only Xamarin application development projects and **\*.All.sln** contains both mobile and web development projects.
 
-<img src="D:/Github/documents/docs/en/images/solution-overall-core-5.png" alt="ASP.NET Core solution" class="img-thumbnail" />
+<img src="images/solution-overall-core-5.png" alt="ASP.NET Core solution" class="img-thumbnail" />
 
 There are 12 projects in the solution:
 
@@ -45,7 +45,7 @@ ASP.NET Zero solution contains 4 applications:
 
 - **Back End Application** `Web.Mvc`: This is the main application which needs authentication to access. You will mostly work on this application to add your business logic. Backend application is built in a dedicated area, named "**App**" by default, but can be determined while you are [creating the solution](Getting-Started-Core). So, all controllers, views and models are located under **Areas/App** folder. Also, related script and style files are located under **wwwroot/view-resources/Areas/App** folder, as shown below:
 
-  <img src="D:/Github/documents/docs/en/images/app-folders-core.png" alt="Application folders" class="img-thumbnail" width="161" height="381" />
+  <img src="images/app-folders-core.png" alt="Application folders" class="img-thumbnail" width="161" height="381" />
 
 - **Back End API** `Web.Host`: An application to only serve the main application as API and does not provide UI.
 
@@ -99,11 +99,11 @@ is used by the [Angular UI](Developing-Step-By-Step-Angular-Introduction). If yo
 
 Account management pages have a separated **\_Layout** view under **Views/Account** folder:
 
-<img src="D:/Github/documents/docs/en/images/account-views-core-v2.png" alt="Account Views" class="img-thumbnail" width="216" height="214" />
+<img src="images/account-views-core-v2.png" alt="Account Views" class="img-thumbnail" width="216" height="214" />
 
 Related **Script** and **Style** resources located under **view-resources/Views/Account** folder:
 
-<img src="D:/Github/documents/docs/en/images/account-views-core-resources.png" alt="Account view resources" class="img-thumbnail" width="205" height="347" />
+<img src="images/account-views-core-resources.png" alt="Account view resources" class="img-thumbnail" width="205" height="347" />
 
 As similar, all views of the application have corresponding style and script files under **wwwroot/view-resources** folder.
 

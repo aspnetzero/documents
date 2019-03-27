@@ -4,7 +4,7 @@ ASP.NET Zero **User Interface** is completely localized. ASP.NET Zero uses **dyn
 
 XML files are used as base translation for desired languages (defined in the [server side](Infrastructure-Core-Mvc-Localization)):
 
-<img src="D:/Github/documents/docs/en/images/localization-files-core-1.png" alt="Localization XML files" class="img-thumbnail" />
+<img src="images/localization-files-core-1.png" alt="Localization XML files" class="img-thumbnail" />
 
 PhoneBook will be your ProjectName. You can add more XML files by copying one XML file and translate to desired language. See [valid culture codes](http://www.csharp-examples.net/culture-names/).
 

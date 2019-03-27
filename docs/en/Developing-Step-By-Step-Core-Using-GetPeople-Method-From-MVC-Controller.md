@@ -93,7 +93,7 @@ below:
 We declared the **@model** and used a foreach loop to render people. See
 the result:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-people-view-3.png" alt="Phonebook peoples" class="img-thumbnail" width="954" height="354" />
+<img src="images/phonebook-people-view-3.png" alt="Phonebook peoples" class="img-thumbnail" width="954" height="354" />
 
 We successfully retrieved list of people from database to the page.
 

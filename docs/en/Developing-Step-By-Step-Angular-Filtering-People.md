@@ -3,7 +3,7 @@
 Now, we will implement **search** functionality of **GetPeople** method.
 UI is shown below:
 
-<img src="D:/Github/documents/docs/en/images/search-people1.png" alt="Searching people" class="img-thumbnail" />
+<img src="images/search-people1.png" alt="Searching people" class="img-thumbnail" />
 
 We added a search input to **phonebook.component.html** view (showing
 the related part of the code):

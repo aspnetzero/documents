@@ -2,7 +2,7 @@
 
 A user can click his name at top right corner to open user menu:
 
-<img src="D:/Github/documents/docs/en/images/user-menu-4.png" alt="User menu" class="img-thumbnail" />
+<img src="images/user-menu-4.png" alt="User menu" class="img-thumbnail" />
 
 ## Linked Accounts
 
@@ -10,11 +10,11 @@ Linked accounts are used to link multiple accounts to each other. In this way, a
 
 User can link new accounts or delete already linked accounts by clicking the "Manage accounts" link.
 
-<img src="D:/Github/documents/docs/en/images/linked-accounts-3.png" alt="User menu" class="img-thumbnail" />
+<img src="images/linked-accounts-3.png" alt="User menu" class="img-thumbnail" />
 
 In order to link a new account, user must enter login credentials of related account.
 
-<img src="D:/Github/documents/docs/en/images/link-new-account-1.png" alt="link new account" class="img-thumbnail" />
+<img src="images/link-new-account-1.png" alt="link new account" class="img-thumbnail" />
 
 **UserLinkAppService** class is used to manage application logic for account linking, **UserLinkManager** class is used to manage domain logic for account linking.
 
@@ -22,7 +22,7 @@ In order to link a new account, user must enter login credentials of related acc
 
 My settings is used to change user profile settings:
 
-<img src="D:/Github/documents/docs/en/images/user-settings-3.png" alt="User settings" class="img-thumbnail" />
+<img src="images/user-settings-3.png" alt="User settings" class="img-thumbnail" />
 
 As shown here, **admin** user name can not be changed. It's considered a special user name since it's used in database migration seed. Other users can change their usernames. **ProfileAppService** is used to get/change settings.
 
@@ -30,7 +30,7 @@ As shown here, **admin** user name can not be changed. It's considered a special
 
 All login attempts (success of failed) are logged in the application. A user can see last login attempts for his/her account. **UserLoginAppService** is used to get login attempts from server.
 
-<img src="D:/Github/documents/docs/en/images/login-attempts-1.png" alt="Login attempts" class="img-thumbnail" />
+<img src="images/login-attempts-1.png" alt="Login attempts" class="img-thumbnail" />
 
 ## Change Picture
 

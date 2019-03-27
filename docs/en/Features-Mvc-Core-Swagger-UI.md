@@ -18,6 +18,6 @@ app.UseSwaggerUi();
 
 You can browse **swagger ui** with this URL: "/**swagger/ui**".
 
-<img src="D:/Github/documents/docs/en/images/swagger-ui-core.png" alt="Swagger UI" width="974" height="753" />
+<img src="images/swagger-ui-core.png" alt="Swagger UI" width="974" height="753" />
 
 Thus, anyone (or any application) can explore, test and use the API easily.

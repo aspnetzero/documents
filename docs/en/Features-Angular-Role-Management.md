@@ -2,7 +2,7 @@
 
 When we click Administration / Roles menu, we enter to the role management page:
 
-<img src="D:/Github/documents/docs/en/images/role-management-core-3.png" alt="Role management page" class="img-thumbnail" />
+<img src="images/role-management-core-3.png" alt="Role management page" class="img-thumbnail" />
 
 Roles are used to **group permissions**. When a user has a role, then they will have all permissions of that role.
 
@@ -22,7 +22,7 @@ In startup project, we have static **admin** role for host (for multi-tenant app
 
 Since roles are used to group permissions, we can set permissions of a role while creating or editing as shown below:
 
-<img src="D:/Github/documents/docs/en/images/role-permissions-core-1.png" alt="Role Permissions" class="img-thumbnail" />
+<img src="images/role-permissions-core-1.png" alt="Role Permissions" class="img-thumbnail" />
 
 *Note that not all permissions shown in the figure above.*
 

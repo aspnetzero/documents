@@ -8,7 +8,7 @@ table in the database.
 Open **Package Manager Console**, run the **Add-Migration
 "Added\_Persons\_Table"** command as shown below:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-migrations-core-3.png" alt="Entity Framework Code First Migration" class="img-thumbnail" />
+<img src="images/phonebook-migrations-core-3.png" alt="Entity Framework Code First Migration" class="img-thumbnail" />
 
 This command will add a **migration class** named
 "**Added\_Persons\_Table**" as shown below:
@@ -55,12 +55,12 @@ Package Manager Console, we write **Update-Database** command in order
 to apply the new migration to database. After updating, we can see that
 **PbPersons table** is added to database.
 
-<img src="D:/Github/documents/docs/en/images/phonebook-tables-spa.png" alt="Phonebook tables" class="img-thumbnail" />
+<img src="images/phonebook-tables-spa.png" alt="Phonebook tables" class="img-thumbnail" />
 
 But this new table is empty. In ASP.NET Zero, there are some classes to
 fill initial data for users and settings:
 
-<img src="D:/Github/documents/docs/en/images/aspnet-core-ef-seed-1.png" alt="Seed folders" class="img-thumbnail" />
+<img src="images/aspnet-core-ef-seed-1.png" alt="Seed folders" class="img-thumbnail" />
 
 So, we can add a separated class to fill some people to database as
 shown below:
@@ -132,7 +132,7 @@ public class InitialHostDbBuilder
 We run our project again, it runs seed and adds two people to PbPersons
 table:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-persons-table-initial-data.png" alt="Persons initial data" class="img-thumbnail" width="720" height="50" />
+<img src="images/phonebook-persons-table-initial-data.png" alt="Persons initial data" class="img-thumbnail" width="720" height="50" />
 
 ## Next
 

@@ -100,7 +100,7 @@ Added an **import** statement and added PhoneBookComponent to
 **declarations** array. Now, we can refresh the page to see the new
 added page:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-empty-ng2.png" alt="Phonebook empty" class="img-thumbnail" style="width:100.0%" />
+<img src="images/phonebook-empty-ng2.png" alt="Phonebook empty" class="img-thumbnail" style="width:100.0%" />
 
 Note: Angular-cli automatically re-compiles and refreshes the page when
 any changes made to any file in the application.

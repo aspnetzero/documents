@@ -2,7 +2,7 @@
 
 When we click the "**Create Account**" link in the login page, a registration form is shown:
 
-<img src="D:/Github/documents/docs/en/images/registration-form-small-1.png" alt="Registration form" class="img-thumbnail" />
+<img src="images/registration-form-small-1.png" alt="Registration form" class="img-thumbnail" />
 
 A user can be register for a tenant, not for host if this is a multi-tenant application. If it's single-teant, there will be no tenancy name input here.
 

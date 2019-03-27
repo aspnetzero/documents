@@ -5,7 +5,7 @@ uses [ngx-bootstrap](https://github.com/valor-software/ngx-bootstrap)
 library to create modals (you can use another library, but we will use
 it in this sample too). Final modal will be like below:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-create-person-dialog1.png" alt="Create Person Dialog" class="img-thumbnail" />
+<img src="images/phonebook-create-person-dialog1.png" alt="Create Person Dialog" class="img-thumbnail" />
 
 First of all, we should use **nswag/refresh.bat** to re-generate
 service-proxies. This will generate the code that is needed to call

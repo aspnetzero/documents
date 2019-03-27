@@ -18,7 +18,7 @@ If you run the application, you can see a new menu item on the left menu, but it
 
 Localization strings are defined in **XML** files in **.Core** project in server side as shown below:
 
-<img src="D:/Github/documents/docs/en/images/localization-files-4.png" alt="Localization files" class="img-thumbnail" />
+<img src="images/localization-files-4.png" alt="Localization files" class="img-thumbnail" />
 
 Open PhoneBookDemo.xml (the **default**, **English** localization dictionary) and add the following line:
 

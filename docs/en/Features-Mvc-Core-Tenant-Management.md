@@ -4,13 +4,13 @@
 
 If this is a multi-tenant application and you logged in as a host user, then tenants page is shown:
 
-<img src="D:/Github/documents/docs/en/images/tenant-management-core-3.png" alt="Tenant management page" class="img-thumbnail" />
+<img src="images/tenant-management-core-3.png" alt="Tenant management page" class="img-thumbnail" />
 
 A tenant is represented by **Tenant** class. Tenant class [can be extended](Extending-Existing-Entities.md) by adding new properties. There is an only one tenant, named **Default** as initial. **Tenancy Name** (code name) is the **unique** name of a tenant. A tenant can be **active** or **passive**. If it's passive, no user of this tenant can login to the application.
 
 When we click the "**Create New Tenant**" button, a dialog is shown:
 
-<img src="D:/Github/documents/docs/en/images/tenant-create-modal-1.png" alt="Tenant Creation Modal" class="img-thumbnail" />
+<img src="images/tenant-create-modal-1.png" alt="Tenant Creation Modal" class="img-thumbnail" />
 
 **Tenancy name** should be unique and not contain spaces or other special chars since it may be used as subdomain name (like tenancyname.mydomain.com. See the section below). **Name** can be anything. **Admin email** is used as email address of the admin user of new tenant. Admin user is automatically created with the tenant. We can set a random password for admin and send activation email. When user
 first logins, he/she should change the password. We can uncheck this to enter a known password.
@@ -36,7 +36,7 @@ TenantAppService mostly uses **TenantManager** domain service for tenant operati
 
 An **edition** can be **assigned** to a tenant (while creating or editing). Tenant will inherit all features of the assigned edition. But we can also override features and values for a tenant. Click **actions/change features** for a tenant to **customize** it's features:
 
-<img src="D:/Github/documents/docs/en/images/tenant-features-core-1.png" alt="Tenant features" class="img-thumbnail" />
+<img src="images/tenant-features-core-1.png" alt="Tenant features" class="img-thumbnail" />
 
 ## Tenant User Impersonation
 

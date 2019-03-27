@@ -2,7 +2,7 @@
 
 Let's add a delete button in people list as shown below:
 
-<img src="D:/Github/documents/docs/en/images/phonebook-people-delete-button1.png" alt="Delete person" class="img-thumbnail" />
+<img src="images/phonebook-people-delete-button1.png" alt="Delete person" class="img-thumbnail" />
 
 We're starting from UI in this case.
 
@@ -107,7 +107,7 @@ deletePerson(person: PersonListDto): void {
 
 It first shows a confirmation message when we click the delete button:
 
-<img src="D:/Github/documents/docs/en/images/confirmation-delete-person1.png" alt="Confirmation message" class="img-thumbnail" />
+<img src="images/confirmation-delete-person1.png" alt="Confirmation message" class="img-thumbnail" />
 
 If we click Yes, it simply calls **deletePerson** method of
 **PersonAppService** and shows a

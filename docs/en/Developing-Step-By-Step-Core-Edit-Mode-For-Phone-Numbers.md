@@ -2,7 +2,7 @@
 
 Up to here , final UI is shown below:
 
-<img src="D:/Github/documents/docs/en/images/phone-book-edit-mode2.png" alt="Phone book edit mode" class="img-thumbnail" width="762" height="642" />
+<img src="images/phone-book-edit-mode2.png" alt="Phone book edit mode" class="img-thumbnail" width="762" height="642" />
 
 When we click the **green edit icon** for a person, its row is expanded
 and all phone numbers are shown. Then we can delete any number by
