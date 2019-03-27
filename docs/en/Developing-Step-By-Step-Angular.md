@@ -427,7 +427,7 @@ namespace Acme.PhoneBookDemo.PhoneBook
 {
     public interface IPersonAppService : IApplicationService
     {
-        ListResultDto<PersonListDto> GetPeople(GetPeopleInput input);
+        Task<ListResultDto<PersonListDto>> GetPeople(GetPeopleInput input);
     }
 }
 ```
@@ -485,9 +485,9 @@ public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
         _personRepository = personRepository;
     }
 
-    public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
+    public async Task<ListResultDto<PersonListDto>> GetPeople(GetPeopleInput input)
     {
-        var people = _personRepository
+        var people = await _personRepository
             .GetAll()
             .WhereIf(
                 !input.Filter.IsNullOrEmpty(),
@@ -497,7 +497,7 @@ public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
             )
             .OrderBy(p => p.Name)
             .ThenBy(p => p.Surname)
-            .ToList();
+            .ToListAsync();
 
         return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(people));
     }
@@ -570,10 +570,10 @@ namespace Acme.PhoneBookDemo.Tests.People
         }
 
         [Fact]
-        public void Should_Get_All_People_Without_Any_Filter()
+        public async Task Should_Get_All_People_Without_Any_Filter()
         {
             //Act
-            var persons = _personAppService.GetPeople(new GetPeopleInput());
+            var persons = await _personAppService.GetPeople(new GetPeopleInput());
 
             //Assert
             persons.Items.Count.ShouldBe(2);
@@ -609,10 +609,10 @@ test to get filtered people:
 
 ```csharp
 [Fact]
-public void Should_Get_People_With_Filter()
+public async Task Should_Get_People_With_Filter()
 {
     //Act
-    var persons = _personAppService.GetPeople(
+    var persons = await _personAppService.GetPeople(
         new GetPeopleInput
         {
             Filter = "adams"
@@ -1649,9 +1649,9 @@ So, added also a DTO to transfer phone numbers and mapped from Phone
 entity. Now, we can change GetPeople method to get Phones from database:
 
 ```csharp
-public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
+public async Task<ListResultDto<PersonListDto>> GetPeople(GetPeopleInput input)
 {
-    var persons = _personRepository
+    var persons = await _personRepository
         .GetAll()
         .Include(p => p.Phones)
         .WhereIf(
@@ -1662,7 +1662,7 @@ public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
         )
         .OrderBy(p => p.Name)
         .ThenBy(p => p.Surname)
-        .ToList();
+        .ToListAsync();
 
     return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(persons));
 }
