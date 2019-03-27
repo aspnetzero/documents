@@ -1,16 +1,23 @@
-# ASP.NET MVC 5X & jQuery Documentation
+# ASP.NET Zero Documentation
 
 ## Introduction
 
 ASP.NET Zero is a starting point for new web applications with a **modern UI** and **SOLID architecture**. It implements basic/common requirements of a **line of business applications**. You get it's **source code** and develop your business application on top of it for saving your valuable time to **focus on your own business code**.
 
-In this document, you will find the below topics:
+## Project Types
 
-* [Getting Started](Getting-Started-Mvc-Angularjs.md) to download and run the source code.
-* [Development Guide](Development-Guide-Mvc-Angularjs.md) to understand the solution structure and start your development.
-* [Step by Step Development](Developing-Step-By-Step-MPA.md) tutorial leads you to develop a multi-tenant, localized, authorized, configurable and testable application step by step.
+ASP.NET Zero has multiple architecture options. Select the one you want to prefer:
+
+-   [ASP.NET Core & jQuery](../aspnet-core-mvc/latest/Getting-Started-Core)
+-   [ASP.NET Core & Angular](../aspnet-core-angular/latest/Getting-Started-Angular)
+-   [ASP.NET MVC 5x & jQuery](../aspnet-mvc-jquery/latest/Getting-Started-Mvc-Angularjs)
+-   [ASP.NET MVC 5x & AngularJS 1x](../aspnet-mvc-angularjs/latest/Getting-Started-Mvc-Angularjs)
 
 ## Miscellaneous
+
+### Power Tools
+
+ASP.NET Zero Power Tools, helps you to create an entity and its corresponding layers from database to the user interface. It is a Visual Studio Extension hosted on Visual Studio Marketplace. [Go to Power Tools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)  or [see how to use it](Rapid-Application-Development.md).
 
 ### Change Logs
 

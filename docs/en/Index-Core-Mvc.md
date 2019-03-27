@@ -1,4 +1,4 @@
-# ASP.NET Zero Documentation
+# ASP.NET Core MVC & jQuery Project Documentation
 
 ## Introduction
 

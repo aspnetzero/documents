@@ -1,8 +1,13 @@
-# Rapid Application Development
+# Power Tools
 
-ASP.NET Zero provides a Visual Studio Extension, named [ASP.NET Zero Power Tools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools), to automatically create an entity and its corresponding layers from the database to the user interface. So, you can create a fully working, production ready CRUD page in seconds.
+[ASP.NET Zero Power Tools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) is a Visual Studio Extension that can automatically create an entity and its layers from the database to the user interface. So, you can create a fully working, production ready CRUD page in seconds.
+
+[![Power Tools Marketplace](images/power-tools-marketplace.png)](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
+
 
 Notice that the RAD tool is only available for **ASP.NET Core backend** (not available for ASP.NET MVC 5.x).
+
+
 
 ## Demonstration
 

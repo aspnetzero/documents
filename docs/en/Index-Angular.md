@@ -1,4 +1,4 @@
-# ASP.NET Zero Documentation
+# ASP.NET CORE & Angular Project Documentation
 
 ## Introduction
 
