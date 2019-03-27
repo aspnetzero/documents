@@ -10,12 +10,12 @@ This document is aimed to create and run an ASP.NET Zero based project in just 5
 
 MVC application needs the following tools to be installed:
 
-- [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
-- [gulp (must be installed globally)](https://www.npmjs.com/package/gulp)
-- [yarn](https://yarnpkg.com/)
+- [Node.js](https://nodejs.org/en/download/) 6.9+ with NPM 3.10+
+- [Gulp](https://www.npmjs.com/package/gulp) (*must be installed globally*)
+- [Yarn](https://yarnpkg.com/)
 - [Bundler & Minifier Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40)
 
-## Create a Project
+## Create Your Project
 
 Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
 
@@ -37,23 +37,27 @@ If you want to work on only Xamarin project, open **\*.Mobile.sln** solution. If
 
 Right click the **.Web.Mvc** project and select "**Set as StartUp project**": Then **build** the solution. It make take longer time in first build since all **nuget** packages will be restored.
 
-### Database Connection
+### Database
+
+#### Connection String
 
 Open **appsettings.json** in **.Web.Mvc** project and change the **Default** connection string if you want:
 
-    "ConnectionStrings": {
-        "Default": "Server=localhost; Database=PhoneBookDemoDb; Trusted_Connection=True;"
-    }
+```json
+"ConnectionStrings": {
+    "Default": "Server=localhost; Database=PhoneBookDemoDb; Trusted_Connection=True;"
+}
+```
 
-### Database Migrations
+#### Migrations
 
 We have two options to create and migrate database to the latest version.
 
-#### ASP.NET Zero Migrator Application
+##### ASP.NET Zero Migrator Application
 
-ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production (see [development guide](Development-Guide-Core.md) for more information).
+ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production platforms (see [migrator docs](Migrator-Console-Application) for more information).
 
-#### Entity Framework Migration Command
+##### Entity Framework Migration Command
 
 You can also use Entity Framework's built-in tools for migrations. Open **Package Manager Console** in Visual Studio, set **EntityFrameworkCore** as the **Default Project** and run the **Update-Database** command as shown below: 
 
@@ -69,7 +73,7 @@ You can use EF console commands for development and Migrator.exe for production.
 
 ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy is **enabled by default**. If you don't have idea about multi-tenancy or don't want to create a multi-tenant application, you can **disable** it by setting **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the *.Core.Shared project.
 
-## Run The Project
+## Running The Application
 
 Before running the project, we need to run a npm task to bundle and minify the CSS and JavaScript files. In order to do that, we can open a command prompt, navigate to root directory of ***.Web.Mvc** project and run **npm run create-bundles** command. This command should be run when a new npm package is being added to the solution. Or you can just build your solution and all bundles will be updated automatically.
 
@@ -85,10 +89,10 @@ If multi-tenancy is enabled, you will see the current tenant and a change link. 
 
 ## ASP.NET Zero Power Tools
 
-To minimize the effort of creating a new entity, you can install the Rapid Application Development Tool from the following link:
+ASP.NET Zero Power Tools lets you to create a new page from the backend to the UI layer by just typing your entity properties. It creates the entity, related permissions, application services, client-side code, applies DB migrations and adds to the main menu. Finally you will have a CRUD page that is capable of insert, update, delete, list, excel export functions. To minimize the effort of creating a new page, install the Power Tools from the following link:
 
 [https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
 
-## More
+## Next
 
-Your solution is up and working. Check out the [<span class="text-primary">Xamarin Development Guide</span>](Development-Guide-Xamarin.md) or continue with [<span class="text-primary">Development Guide</span>](Development-Guide-Core.md).
+Your solution is up and working. Check out the [Xamarin Development Guide](Development-Guide-Xamarin) or continue with [Features](Features-Mvc-Core).

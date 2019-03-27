@@ -2,30 +2,19 @@
 
 ## Introduction
 
-In this document, we will create a sample **phonebook application**
-based on ASP.NET Zero step by step. After all steps, we will have a
-multi-tenant, localized, authorized, configurable, testable...
-appliaction.
+In this document, we will create a sample **phonebook application** based on ASP.NET Zero step by step. After all steps, we will have a multi-tenant, localized, authorized, configurable, testable application.
 
 ## Creating The Project
 
-We're creating and downloading the solution named "**Acme.PhoneBook**"
-as described in [Getting Started](Getting-Started.md) document. After
-opening solution in Visual Studio, we see an NLayered solution that
-consists of six projects:
+We're creating and downloading the solution named "**Acme.PhoneBook**" as described in [Getting Started](Getting-Started-Mvc-Angularjs) document. After opening solution in Visual Studio, we see an NLayered solution that consists of six projects:
 
 <img src="images/solution-overall.png" alt="Solution Overall" class="img-thumbnail" width="249" height="166" />
 
-Also, run database migrations, create the database and login to the
-application as described in [getting started](Getting-Started.md)
-document. After all completed and logged in to the application, we see a
-dashboard as shown below:
+Also, run database migrations, create the database and login to the application as described in [getting started](Getting-Started-Mvc-Angularjs) document. After all completed and logged in to the application, we see a dashboard as shown below:
 
 <img src="images/default-dashboard2.png" alt="Dashboard" class="img-thumbnail" width="800" height="484" />
 
-We will make our application **single-tenant** (we will convert it to
-multi-tenant later). So, we open **PhoneBookCoreModule** class and
-disable multi-tenancy as shown below:
+We will make our application **single-tenant** (we will convert it to multi-tenant later). So, we open **PhoneBookCoreModule** class and disable multi-tenancy as shown below:
 
 ```csharp
 [DependsOn(typeof(AbpZeroCoreModule))]
@@ -41,8 +30,7 @@ public class PhoneBookCoreModule : AbpModule
 
 ### Switch to MPA
 
-Do not skip to switch default application to the MPA version (click "See
-Demo for Multi-Page Application version with ASP.NET MVC and jQuery").
+Do not skip to switch default application to the MPA version (click "See Demo for Multi-Page Application version with ASP.NET MVC and jQuery").
 
 ## Adding a New Page
 
@@ -50,9 +38,7 @@ Let's begin from UI and create a new page named "**Phone book**".
 
 ### Defining a menu item
 
-**AppNavigationProvider** class defines menus in the application. When
-we change this class, menus are automatically changed. Open this class
-and create new menu item as shown below.
+**AppNavigationProvider** class defines menus in the application. When we change this class, menus are automatically changed. Open this class and create new menu item as shown below.
 
 ```csharp
 .AddItem(new MenuItemDefinition(
@@ -64,33 +50,24 @@ and create new menu item as shown below.
 )
 ```
 
-Every menu item must have a **unique name** to identify this menu item.
-Menu names are defined in PageNames class as constants. We add a new
-constant: "**PhoneBook**".
+Every menu item must have a **unique name** to identify this menu item. Menu names are defined in PageNames class as constants. We add a new constant: "**PhoneBook**".
 
 ### Localizing Menu Item Display Name
 
-A menu item should also have a **localizable shown name**. It's used to
-display menu item on the page. **L("PhoneBook")** is the localized name of
-our new menu. **L** method is a helper method gets a localization key
-and simply returns a **LocalizableString** object (see
-AppNavigationProvider class).
+A menu item should also have a **localizable shown name**. It's used to display menu item on the page. `L("PhoneBook")` is the localized name of our new menu. **L** method is a helper method gets a localization key
+and simply returns a **LocalizableString** object (see `AppNavigationProvider` class).
 
-Localization strings are defined in **XML** files in **.Core** project
-as shown below:
+Localization strings are defined in **XML** files in **.Core** project as shown below:
 
 <img src="images/localization-files-2.png" alt="Localization files" class="img-thumbnail" width="202" height="151" />
 
-Open PhoneBook.xml (the **default**, **English** localization
-dictionary) and add the following line:
+Open PhoneBook.xml (the **default**, **English** localization dictionary) and add the following line:
 
 ```xaml
 <text name="PhoneBook" value="Phone book" />
 ```
 
-If we don't define "PhoneBook"s value for other localization
-dictionaries, default value is shown in all languages. We can define it
-also for Turkish in PhoneBook-tr.xml file:
+If we don't define "PhoneBook"s value for other localization dictionaries, default value is shown in all languages. We can define it also for Turkish in `PhoneBook-tr.xml` file:
 
 ```xml
 <text name="PhoneBook" value="Telefon rehberi" />
@@ -98,22 +75,15 @@ also for Turkish in PhoneBook-tr.xml file:
 
 ### Other menu item properties
 
-**url** can be a URL or **AngularJS route** (state in Angular
-**ui-router** used in ASP.NET Zero) that will be activated when we click
-the menu item. We will define this route below.
+**url** can be a URL or **AngularJS route** (state in Angular **ui-router** used in ASP.NET Zero) that will be activated when we click the menu item. We will define this route below.
 
-Lastly, **icon** is the shown menu icon for new menu item. It can be a
-**css** class. We can use Glyphicon, Font-Awesome or another css font
-library here.
+Lastly, **icon** is the shown menu icon for new menu item. It can be a **css** class. We can use Glyphicon, Font-Awesome or another css font library here.
 
-See [navigation
-document](https://aspnetboilerplate.com/Pages/Documents/Navigation) for
-more information on menu definitions.
+See [navigation document](https://aspnetboilerplate.com/Pages/Documents/Navigation) for more information on menu definitions.
 
 ## Creating AngularJS Route
 
-AngularJS routes are defined in **app.js**. We're adding a new route
-definition as shown below:
+AngularJS routes are defined in **app.js**. We're adding a new route definition as shown below:
 
 ```javascript
 $stateProvider.state('tenant.phonebook', {
@@ -122,29 +92,21 @@ $stateProvider.state('tenant.phonebook', {
 });
 ```
 
-'**tenant.phonebook**' is the **unique** name of this state (route).
-**url** is the mapped URL to this route and **templateUrl** is the view
-path for this route.
+'**tenant.phonebook**' is the **unique** name of this state (route). **url** is the mapped URL to this route and **templateUrl** is the view path for this route.
 
-Note that 'tenant.phonebook' is a **second level state** (child of
-'tenant' abstract state). See Angular UI's route document for more
-information on defining states. But, in most cases, you can define it
-easily by taking existing routes as reference.
+Note that 'tenant.phonebook' is a **second level state** (child of 'tenant' abstract state). See Angular UI's route document for more information on defining states. But, in most cases, you can define it easily by taking existing routes as reference.
 
 ## Creating AngularJS View and Controller
 
-The last step to see our new page is to create an AngularJS view and
-controller for it:
+The last step to see our new page is to create an AngularJS view and controller for it:
 
 <img src="images/phonebook-controller-views-files.png" alt="Phonebook AngularJS controller and view" class="img-thumbnail" width="171" height="198" />
 
-We can use **empty** controller and view located under
-**common/views/\_empty** folder to simplify creating a new view.
+We can use **empty** controller and view located under **common/views/\_empty** folder to simplify creating a new view.
 
 ### Controller
 
-Creating an empty Controller file, **index.js** under
-**App/tenant/views/phonebook** folder:
+Creating an empty Controller file, **index.js** under **App/tenant/views/phonebook** folder:
 
 ```javascript
 (function() {
@@ -163,17 +125,11 @@ Creating an empty Controller file, **index.js** under
 })();
 ```
 
-This is the minimum controller definition that creates a controller
-named '**tenant.views.phonebook.index**' and triggers Metronic's init
-method for this page. Controller name is completely arbitrary. You can
-set any string. We use this naming **as convention** and it's advised to
-follow this convention when developing applications based on ASP.NET
-Zero.
+This is the minimum controller definition that creates a controller named '**tenant.views.phonebook.index**' and triggers Metronic's init method for this page. Controller name is completely arbitrary. You can set any string. We use this naming **as convention** and it's advised to follow this convention when developing applications based on ASP.NET Zero.
 
 ### View
 
-Creating an empty view, **index.cshtml** under
-**App/tenant/views/phonebook** folder:
+Creating an empty view, **index.cshtml** under **App/tenant/views/phonebook** folder:
 
 ```html
 <div ng-controller="tenant.views.phonebook.index as vm">
@@ -198,24 +154,17 @@ Creating an empty view, **index.cshtml** under
 </div>
 ```
 
-We can use **.cshtml (razor)** files as views (thanks to ABP framework).
-That makes easy localization**,** conditionally creating some part of
-the view (based on some user permissions for example) and so on. Don't
-confuse about all these html structure. You can simple copy empty view
-from **common/views/\_empty** folder .
+We can use **.cshtml (razor)** files as views (thanks to ABP framework). That makes easy localization**,** conditionally creating some part of the view (based on some user permissions for example) and so on. Don't confuse about all these html structure. You can simple copy empty view from **common/views/\_empty** folder.  
 
 Now, it's time to run application and see the new phone book page:
 
 <img src="images/phonebook-page-empty.png" alt="Empty page" class="img-thumbnail" width="720" height="195" />
 
-Menu item display name and page title are localized. Try to change UI
-language to see difference.
+Menu item display name and page title are localized. Try to change UI language to see difference.
 
 ## Creating Person Entity
 
-We define entities in **.Core** (domain) project. We can define a
-**Person** entity (mapped to **PbPersons** table in database) to
-represent a person in phone book as shown below:
+We define entities in **.Core** (domain) project. We can define a **Person** entity (mapped to **PbPersons** table in database) to represent a person in phone book as shown below:
 
 ```csharp
 [Table("PbPersons")]
@@ -238,19 +187,9 @@ public class Person : FullAuditedEntity
 }
 ```
 
-Person's **primary key** type is **int** (as default). It inherits
-**FullAuditedEntity** that contains **creation**, **modification** and
-**deletion** audit properties. It's also **soft-delete**. When we delete
-a person, it's not deleted by database but marked as deleted (see
-[entity](https://aspnetboilerplate.com/Pages/Documents/Entities) and
-[data
-filters](https://aspnetboilerplate.com/Pages/Documents/Data-Filters)
-documentations for more information). We created consts for
-**MaxLength** properties. This is a good practice since we will use same
-values later.
+Person's **primary key** type is **int** (as default). It inherits **FullAuditedEntity** that contains **creation**, **modification** and **deletion** audit properties. It's also **soft-delete**. When we delete a person, it's not deleted by database but marked as deleted (see [entity](https://aspnetboilerplate.com/Pages/Documents/Entities) and [data filters](https://aspnetboilerplate.com/Pages/Documents/Data-Filters) documentations for more information). We created `consts` for **MaxLength** properties. This is a good practice since we will use same values later.
 
-We add a DbSet property for Person entity to **PhoneBookDbContext**
-class defined in **.EntityFramework** project.
+We add a DbSet property for Person entity to **PhoneBookDbContext** class defined in **.EntityFramework** project.
 
 ```csharp
 public class PhoneBookDbContext : AbpZeroDbContext<Tenant, Role, User>
@@ -271,19 +210,13 @@ public class PhoneBookDbContext : AbpZeroDbContext<Tenant, Role, User>
 
 ## Database Migrations
 
-We use **EntityFramework Code-First migrations** to migrate database
-schema. Since we added **Person entity**, our DbContext model is
-changed. So, we should create a **new migration** to create the new
-table in the database.
+We use **EntityFramework Code-First migrations** to migrate database schema. Since we added **Person entity**, our DbContext model is changed. So, we should create a **new migration** to create the new table in the database.
 
-After opening **Package Manager Console** and selecting
-**.EntityFramework** as **default project**, we write the following
-command:
+After opening **Package Manager Console** and selecting **.EntityFramework** as **default project**, we write the following command:
 
 <img src="images/phonebook-migrations-1.png" alt="Entity Framework Code First Migration" class="img-thumbnail" width="609" height="68" />
 
-This command will add a **migration class** named
-"**Added\_Persons\_Table**" as shown below:
+This command will add a **migration class** named "**Added\_Persons\_Table**" as shown below:
 
 ```csharp
 public partial class Added_Persons_Table : DbMigration
@@ -325,22 +258,15 @@ public partial class Added_Persons_Table : DbMigration
 }
 ```
 
-We don't have to know so much about format and rules of this file. But,
-it's suggested to have a basic understanding of migrations. In the same
-Package Manager Console, we write "**Update-Database**" command in order
-to apply the new migration to database. After updating, we can see that
-**PbPersons table** is added to database.
+We don't have to know so much about format and rules of this file. But, it's suggested to have a basic understanding of migrations. In the same Package Manager Console, we write "**Update-Database**" command in order to apply the new migration to database. After updating, we can see that **PbPersons table** is added to database.
 
 <img src="images/phonebook-tables.png" alt="PhoneBook tables" class="img-thumbnail" width="190" height="302" />
 
-But this new table is empty. We can use EntityFramework's **Seed**
-method to add some initial data to database. In ASP.NET Zero, there are
-some classes to fill initial data for users and settings:
+But this new table is empty. We can use EntityFramework's **Seed** method to add some initial data to database. In ASP.NET Zero, there are some classes to fill initial data for users and settings:
 
 <img src="images/phonebook-seed-files-1.png" alt="Entity Framework seed data" class="img-thumbnail" />
 
-So, we can add a separated class to fill some people to database as
-shown below:
+So, we can add a separated class to fill some people to database as shown below:
 
 ```csharp
 public class InitialPeopleCreator
@@ -381,27 +307,18 @@ public class InitialPeopleCreator
 }
 ```
 
-These type of default data is good since we can also use these data in
-**unit tests**. Surely, we should be careful about seed data since this
-code will always be executed after each **Update-Database** command (See
-EntityFramework documentations to know more about seed data). This class
-is created and called in **DefaultTenantBuilder** class, and it's called
-from EntityFramework's **Configuration** class. This is not so
+These type of default data is good since we can also use these data in **unit tests**. Surely, we should be careful about seed data since this code will always be executed after each **Update-Database** command  See EntityFramework documentations to know more about seed data). This class is created and called in **DefaultTenantBuilder** class, and it's called from EntityFramework's **Configuration** class. This is not so
 important, just for a good code organization (see source codes).
 
-We execute **Update-Database** command again. This command runs seed and
-adds two people to PbPersons table:
+We execute **Update-Database** command again. This command runs seed and adds two people to PbPersons table:
 
 <img src="images/phonebook-persons-table-initial-data.png" alt="Persons initial data" class="img-thumbnail" width="720" height="50" />
 
 ## Creating Person Application Service
 
-An Application Service is used from client (presentation layer) to
-perform operations (use cases) in the application.
+An Application Service is used from client (presentation layer) to perform operations (use cases) in the application.
 
-Application services are located in **.Application** project. We create
-first application service to get people from server. We're creating an
-**interface** to define the person application service:
+Application services are located in **.Application** project. We create first application service to get people from server. We're creating an **interface** to define the person application service:
 
 ```csharp
 public interface IPersonAppService : IApplicationService
@@ -410,11 +327,7 @@ public interface IPersonAppService : IApplicationService
 }
 ```
 
-An application service method gets/returns **DTO**s. **ListResultDto**
-is a pre-build helper DTO to return a list of another DTO.
-**GetPeopleInput** is a DTO to pass request parameters to **GetPeople**
-method. So, GetPeopleIntput and PersonListDto are defined as shown
-below:
+An application service method gets/returns **DTO**s. **ListResultDto** is a pre-build helper DTO to return a list of another DTO. **GetPeopleInput** is a DTO to pass request parameters to **GetPeople** method. So, GetPeopleIntput and PersonListDto are defined as shown below:
 
 ```csharp
 public class GetPeopleInput
@@ -433,13 +346,7 @@ public class PersonListDto : FullAuditedEntityDto
 }
 ```
 
-**AutoMapFrom** attribute is used to configure **AutoMapper** to create
-mapping from **Person** to **PersonListDto**. **FullAuditedEntityDto**
-is inherited to implement audit properties automatically. See [application
-service](https://aspnetboilerplate.com/Pages/Documents/Application-Services)
-and
-[DTO](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
-documentations for more information.
+**AutoMapFrom** attribute is used to configure **AutoMapper** to create mapping from **Person** to **PersonListDto**. **FullAuditedEntityDto** is inherited to implement audit properties automatically. See [application service](https://aspnetboilerplate.com/Pages/Documents/Application-Services) and [DTO](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects) documentations for more information.
 
 After defining interface, we can implement it as shown below:
 
@@ -472,38 +379,22 @@ public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
 }
 ```
 
-We're injecting **person repository** (it's automatically created by
-ABP) and using it to filter and get people from database.
+We're injecting **person repository** (it's automatically created by ABP) and using it to filter and get people from database.
 
-**WhereIf** is an extension method here (defined in Abp.Linq.Extensions
-namespace). It performs Where condition, only if filter is not null or
-empty. **IsNullOrEmpty** is also an extension method (defined in
-Abp.Extensions namespace). ABP has many similar shortcut extension
-methods. **MapTo** method automatically converts list of Person entities
-to list of PersonListDto objects using **AutoMapper** library.
+**WhereIf** is an extension method here (defined in Abp.Linq.Extensions namespace). It performs Where condition, only if filter is not null or empty. **IsNullOrEmpty** is also an extension method (defined in Abp.Extensions namespace). ABP has many similar shortcut extension methods. **MapTo** method automatically converts list of Person entities to list of PersonListDto objects using **AutoMapper** library.
 
 ### Connection & Transaction Management
 
-We don't manually open database connection or start/commit transactions
-manually. It's automatically done with ABP framework's Unit Of Work
-system. See [UOW
-documentation](https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work)
-for more.
+We don't manually open database connection or start/commit transactions manually. It's automatically done with ABP framework's Unit Of Work system. See [UOW documentation](https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work) for more.
 
 ### Exception Handling
 
-We don't handle exceptions manually (using a try-catch block). Because
-ABP framework automatically handles all exceptions on the web layer and
-returns appropriate error messages to the client. It then handles errors
-on the client and shows needed error information to the user. See
-[exception handling
-document](https://aspnetboilerplate.com/Pages/Documents/Handling-Exceptions)
-for more.
+We don't handle exceptions manually (using a try-catch block). Because ABP framework automatically handles all exceptions on the web layer and returns appropriate error messages to the client. It then handles errors on the client and shows needed error information to the user. See [exception handling
+document](https://aspnetboilerplate.com/Pages/Documents/Handling-Exceptions) for more.
 
 ## Creating Unit Tests For PersonAppService
 
-You can skip this section if you don't interest in **automated
-testing**.
+You can skip this section if you don't interest in **automated testing**.
 
 By writing unit test, we can test **PersonAppService.GetPeople** method
 without creating a user interface that calls it and shows people on the
@@ -1053,7 +944,7 @@ We see that a **new permission** named "**Phone book**" added to
 **permissions** tab. So, we can check it and save the role. After
 saving, we need to **refresh** the whole page to refresh permissions for
 the current user. We could also grant this permission for a specific
-user (see [development guide document](Development-Guide.md) for
+user (see [development guide document](Development-Guide-Mvc-Angularjs) for
 details about roles and users).
 
 Now, we can enter the Phone book page again.

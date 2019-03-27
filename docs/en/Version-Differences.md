@@ -3,7 +3,7 @@
 
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<link type="text/css" rel="stylesheet" href="bootstrap.min.css" />
+
 <title>Version Differences</title>
 </head>
 

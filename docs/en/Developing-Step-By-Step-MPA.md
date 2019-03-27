@@ -2,31 +2,19 @@
 
 ## Introduction
 
-In this document, we will create a sample **phonebook application**
-based on ASP.NET Zero step by step. After all steps, we will have a
-multi-tenant, localized, authorized, configurable, testable...
-appliaction.
+In this document, we will create a sample **phonebook application** based on ASP.NET Zero step by step. After all steps, we will have a multi-tenant, localized, authorized, configurable, testable application.
 
 ## Creating The Project
 
-We're creating and downloading the solution named "**Acme.PhoneBook**"
-as described in [Getting Started](Getting-Started.md) document. After
-opening solution in Visual Studio, we see an NLayered solution that
-consists of six projects:
+We're creating and downloading the solution named "**Acme.PhoneBook**". After opening solution in Visual Studio, we see an NLayered solution that consists of six projects:
 
 <img src="images/solution-overall.png" alt="Solution Overall" class="img-thumbnail" width="249" height="166" />
 
-Also, run database migrations, create the database and login to the
-application as described in [Getting Started](Getting-Started.md)
-document. After all completed and logged in to the application, we see a
-dashboard as shown below:
+Also, run database migrations, create the database and login to the application. After all completed and logged in to the application, we see a dashboard as shown below:
 
 <img src="images/default-dashboard.png" alt="Dashboard" class="img-thumbnail" width="800" height="594" />
 
-Logout from the application for now. We will make our application
-**single-tenant** (we will convert it to multi-tenant later). So, we
-open **PhoneBookCoreModule** class and disable multi-tenancy as shown
-below:
+Logout from the application for now. We will make our application **single-tenant** (we will convert it to multi-tenant later). So, we open **PhoneBookCoreModule** class and disable multi-tenancy as shown below:
 
 ```csharp
 [DependsOn(typeof(AbpZeroCoreModule))]
@@ -46,10 +34,7 @@ Let's begin from UI and create a new page named "**Phone book**".
 
 ### Defining a menu item
 
-**MpaNavigationProvider** class defines menus in the application. When
-we change this class, menus are automatically changed. Open this class
-and create new menu item as shown below (You can add it right after the
-dashboard menu item).
+**MpaNavigationProvider** class defines menus in the application. When we change this class, menus are automatically changed. Open this class and create new menu item as shown below (You can add it right after the dashboard menu item).
 
 ```csharp
 .AddItem(new MenuItemDefinition(
@@ -61,33 +46,23 @@ dashboard menu item).
 )
 ```
 
-Every menu item must have a **unique name** to identify this menu item.
-Menu names are defined in PageNames class as constants. We add a new
-constant: "**PhoneBook**".
+Every menu item must have a **unique name** to identify this menu item. Menu names are defined in PageNames class as constants. We add a new constant: "**PhoneBook**".
 
 ### Localizing Menu Item Display Name
 
-A menu item should also have a **localizable shown name**. It's used to
-display menu item on the page. **L("PhoneBook")** is the localized name of
-our new menu. **L** method is a helper method gets a localization key
-and simply returns a **LocalizableString** object (see
-MpaNavigationProvider class).
+A menu item should also have a **localizable shown name**. It's used to display menu item on the page. **L("PhoneBook")** is the localized name of our new menu. **L** method is a helper method gets a localization key and simply returns a **LocalizableString** object (see MpaNavigationProvider class).
 
-Localization strings are defined in **XML** files in **.Core** project
-as shown below:
+Localization strings are defined in **XML** files in **.Core** project as shown below:
 
 <img src="images/localization-files-2.png" alt="Localization files" class="img-thumbnail" width="202" height="151" />
 
-Open PhoneBook.xml (the **default**, **English** localization
-dictionary) and add the following line:
+Open PhoneBook.xml (the **default**, **English** localization dictionary) and add the following line:
 
 ```xml
 <text name="PhoneBook" value="Phone book" />
 ```
 
-If we don't define "PhoneBook"s value for other localization
-dictionaries, default value is shown in all languages. We can define it
-also for Turkish in PhoneBook-tr.xml file:
+If we don't define "PhoneBook"s value for other localization dictionaries, default value is shown in all languages. We can define it also for Turkish in `PhoneBook-tr.xml` file:
 
 ```xml
 <text name="PhoneBook" value="Telefon rehberi" />
@@ -95,16 +70,11 @@ also for Turkish in PhoneBook-tr.xml file:
 
 ### Other menu item properties
 
-**url** can be a URL (it's URL of an **MVC Action** here) that will be
-redirected when we click the menu item.
+**url** can be a URL (it's URL of an **MVC Action** here) that will be redirected when we click the menu item.
 
-Lastly, **icon** is the shown menu icon for new menu item. It can be a
-**css** class. We can use Glyphicon, Font-Awesome or another css font
-library here.
+Lastly, **icon** is the shown menu icon for new menu item. It can be a **CSS** class. We can use Glyphicon, Font-Awesome or another CSS font library here.
 
-See [navigation
-document](https://aspnetboilerplate.com/Pages/Documents/Navigation) for
-more information on menu definitions.
+See [navigation document](https://aspnetboilerplate.com/Pages/Documents/Navigation) for more information on menu definitions.
 
 ## Creating the Page
 
@@ -1113,12 +1083,7 @@ page and edit **admin** role:
 
 <img src="images/role-permissions-with-phonebook.png" alt="Role permissions" class="img-thumbnail" width="617" height="574" />
 
-We see that a **new permission** named "**Phone book**" added to
-**permissions** tab. So, we can check it and save the role. After
-saving, we need to **refresh** the whole page to refresh permissions for
-the current user. We could also grant this permission for a specific
-user (see [development guide document](Development-Guide.md) for
-details about roles and users).
+We see that a **new permission** named "**Phone book**" added to **permissions** tab. So, we can check it and save the role. After saving, we need to **refresh** the whole page to refresh permissions for the current user. We could also grant this permission for a specific user.
 
 Now, we can enter the Phone book page again.
 

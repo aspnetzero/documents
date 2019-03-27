@@ -1,0 +1,473 @@
+{
+  "items": [
+    {
+      "text": "Getting Started",
+      "path": "Getting-Started-Core.md"
+    },
+    {
+      "text": "Overview",
+      "path": "Overview-Core.md"
+    },
+    {
+      "text": "Web",
+      "items": [
+        {
+          "text": "Features",
+          "path": "Features-Mvc-Core.md",
+          "items": [
+            {
+              "text": "Login",
+              "path": "Features-Mvc-Core-Login.md",
+              "items": [
+                {
+                  "text": "Social Logins",
+                  "path": "Features-Mvc-Core-Social-Logins.md"
+                },
+                {
+                  "text": "Two Factor Authentication",
+                  "path": "Features-Mvc-Core-Two-Factor-Authentication.md"
+                },
+                {
+                  "text": "Forgot Password",
+                  "path": "Features-Mvc-Core-Forgot-Password.md"
+                }
+              ]
+            },
+            {
+              "text": "Sign Up",
+              "path": "Features-Mvc-Core-Sign-Up.md",
+              "items": [
+                {
+                  "text": "Email Activation",
+                  "path": "Features-Mvc-Core-Email-Activation.md"
+                }
+              ]
+            },
+            {
+              "text": "Main Menu and Layout",
+              "path": "Features-Mvc-Core-Main-Menu-Layout.md"
+            },
+            {
+              "text": "Edition Management",
+              "path": "Features-Mvc-Core-Edition-Management.md"
+            },
+            {
+              "text": "Tenant Management",
+              "path": "Features-Mvc-Core-Tenant-Management.md"
+            },
+            {
+              "text": "Host Dashboard",
+              "path": "Features-Mvc-Core-Host-Dashboard.md"
+            },
+            {
+              "text": "Organization Units",
+              "path": "Features-Mvc-Core-Organization-Units.md"
+            },
+            {
+              "text": "Role Management",
+              "path": "Features-Mvc-Core-Role-Management.md"
+            },
+            {
+              "text": "User Management",
+              "path": "Features-Mvc-Core-User-Management.md"
+            },
+            {
+              "text": "Language Management",
+              "path": "Features-Mvc-Core-Language-Management.md"
+            },
+            {
+              "text": "Audit Logs",
+              "path": "Features-Mvc-Core-Audit-Logs.md"
+            },
+            {
+              "text": "Entity History",
+              "path": "Features-Mvc-Core-Entity-History.md"
+            },
+            {
+              "text": "Subscription",
+              "path": "Features-Mvc-Core-Subscription.md",
+              "items": [
+                {
+                  "text": "PayPal Integration",
+                  "path": "Features-Mvc-Core-Subscription-PayPal.md"
+                },
+                {
+                  "text": "Stripe Integration",
+                  "path": "Features-Mvc-Core-Subscription-Stripe.md"
+                }
+              ]
+            },
+            {
+              "text": "Visual Settings",
+              "path": "Features-Mvc-Core-Visual-Settings.md"
+            },
+            {
+              "text": "Host Settings",
+              "path": "Features-Mvc-Core-Host-Settings.md"
+            },
+            {
+              "text": "Tenant Settings",
+              "path": "Features-Mvc-Core-Tenant-Settings.md",
+              "items": [
+                {
+                  "text": "Active Directory",
+                  "path": "Features-Mvc-Core-Tenant-Active-Directory.md"
+                }
+              ]
+            },
+            {
+              "text": "Maintenance",
+              "path": "Features-Mvc-Core-Maintenance.md"
+            },
+            {
+              "text": "Tenant Dashboard",
+              "path": "Features-Mvc-Core-Tenant-Dashboard.md"
+            },
+            {
+              "text": "Notifications",
+              "path": "Features-Mvc-Core-Notifications.md"
+            },
+            {
+              "text": "Chat",
+              "path": "Features-Mvc-Core-Chat.md"
+            },
+            {
+              "text": "User Menu",
+              "path": "Features-Mvc-Core-User-Menu.md"
+            },
+            {
+              "text": "Setup Page",
+              "path": "Features-Mvc-Core-Setup-Page.md"
+            },
+            {
+              "text": "Web.Host Project",
+              "path": "Features-Mvc-Core-Web-Host-Project.md"
+            },
+            {
+              "text": "Migrator Console Application",
+              "path": "Migrator-Console-Application.md"
+            },
+            {
+              "text": "Public Website",
+              "path": "Public-Website.md"
+            },
+            {
+              "text": "GrapQL API",
+              "path": "GraphQL.md"
+            },
+            {
+              "text": "Swagger UI",
+              "path": "Features-Mvc-Core-Swagger-UI.md"
+            }
+          ]
+        },
+        {
+          "text": "Deployment",
+          "path": "Deployment-Mvc-Core.md",
+          "items": [
+            {
+              "text": "Publishing to Azure",
+              "path": "Deployment-Mvc-Core-Azure.md"
+            },
+            {
+              "text": "Publishing to IIS",
+              "path": "Deployment-Mvc-Core-IIS.md"
+            },
+            {
+              "text": "Publishing to Docker",
+              "path": "Deployment-Mvc-Core-Docker.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Mobile (Xamarin)",
+      "path": "Xamarin.md",
+      "items": [
+        {
+          "text": "Development Guide",
+          "path": "Development-Guide-Xamarin.md"
+        }
+      ]
+    },
+    {
+      "text": "Power Tools",
+      "path": "Rapid-Application-Development.md"
+    },
+    {
+      "text": "Infrastructure & Concepts",
+      "path": "Infrastructure-Core-Mvc.md",
+      "items": [
+        {
+          "text": "Startup Class",
+          "path": "Infrastructure-Core-Mvc-Startup.md"
+        },
+        {
+          "text": "NPM & Frontend Dependencies",
+          "path": "Infrastructure-Core-Mvc-NPM-Frontend-Dependencies.md"
+        },
+        {
+          "text": "Application Services as MVC API Controllers",
+          "path": "Infrastructure-Core-Mvc-Application-Service-API.md"
+        },
+        {
+          "text": "Localization",
+          "path": "Infrastructure-Core-Mvc-Localization.md"
+        },
+        {
+          "text": "Entity Framework Core",
+          "path": "Infrastructure-Core-Mvc-Entity-Framework-Core.md"
+        },
+        {
+          "text": "Exception Handling",
+          "path": "Infrastructure-Core-Mvc-Exception-Handling.md"
+        },
+        {
+          "text": "User Secrets",
+          "path": "Infrastructure-Core-Mvc-User-Secrets.md"
+        },
+        {
+          "text": "Providers",
+          "path": "Infrastructure-Core-Mvc-Providers.md"
+        },
+        {
+          "text": "Caching",
+          "path": "Infrastructure-Core-Mvc-Caching.md"
+        },
+        {
+          "text": "Background Jobs & HangFire",
+          "path": "Infrastructure-Core-Mvc-Background-Jobs.md"
+        },
+        {
+          "text": "SignalR",
+          "path": "Infrastructure-Core-Mvc-SignalR.md"
+        },
+        {
+          "text": "Logging",
+          "path": "Infrastructure-Core-Mvc-Logging.md"
+        },
+        {
+          "text": "Dto Mappings",
+          "path": "Infrastructure-Core-Mvc-Dto-Mappings.md"
+        },
+        {
+          "text": "Sending Emails",
+          "path": "Infrastructure-Core-Mvc-Sending-Emails.md"
+        },
+        {
+          "text": "Binary Object Manager",
+          "path": "Infrastructure-Core-Mvc-Binary-Object-Manager.md"
+        },
+        {
+          "text": "Soft Delete",
+          "path": "Infrastructure-Core-Mvc-Soft-Delete.md"
+        },
+        {
+          "text": "Bundling, Minifying and Compiling",
+          "path": "Infrastructure-Core-Mvc-Bundling-Minifying-Compiling.md"
+        },
+        {
+          "text": "Base Classes",
+          "path": "Infrastructure-Core-Mvc-Base-Classes.md"
+        },
+        {
+          "text": "CSRF / XSRF Protection",
+          "path": "Infrastructure-Core-Mvc-CSRF.md"
+        },
+        {
+          "text": "Versioning",
+          "path": "Infrastructure-Core-Mvc-Versioning.md"
+        },
+        {
+          "text": "Token Based Authentication",
+          "path": "Infrastructure-Core-Mvc-Token-Based-Authentication.md"
+        },
+        {
+          "text": "Identity Server 4 Integration",
+          "path": "Infrastructure-Core-Mvc-Identity-Server4-Integration.md"
+        },
+        {
+          "text": "Unit Testing",
+          "path": "Infrastructure-Core-Mvc-Unit-Testing.md"
+        },
+        {
+          "text": "Configuration",
+          "path": "Infrastructure-Core-Mvc-Configuration.md"
+        },
+        {
+          "text": "Used Libraries & Frameworks",
+          "path": "Infrastructure-Core-Mvc-Used-Libraries-Frameworks.md"
+        },
+        {
+          "text": "Penetration Test",
+          "path": "Security-Report-Core.md"
+        }
+      ]
+    },
+    {
+      "text": "Tutorials",
+      "items": [
+        {
+          "text": "Web",
+          "items": [
+            {
+              "text": "Developing Step By Step",
+              "path": "Developing-Step-By-Step-Core-Introduction.md",
+              "items": [
+                {
+                  "text": "Creating & Running The Project",
+                  "path": "Developing-Step-By-Step-Core-Creating-Running-Project.md"
+                },
+                {
+                  "text": "Adding a New Menu Item",
+                  "path": "Developing-Step-By-Step-Core-Adding-New-Menu-Item.md"
+                },
+                {
+                  "text": "Creating the Page",
+                  "path": "Developing-Step-By-Step-Core-Creating-Page.md",
+                  "items": [
+                    {
+                      "text": "Creating Person Entity",
+                      "path": "Developing-Step-By-Step-Core-Creating-Person-Entity.md"
+                    },
+                    {
+                      "text": "Database Migrations for Person",
+                      "path": "Developing-Step-By-Step-Core-Database-Migrations-Person.md"
+                    },
+                    {
+                      "text": "Creating Person Application Service",
+                      "path": "Developing-Step-By-Step-Core-Creating-Person-Application-Service.md"
+                    },
+                    {
+                      "text": "Creating Unit Tests For PersonAppService",
+                      "path": "Developing-Step-By-Step-Core-Creating-Unit-Tests-PersonAppService.md"
+                    },
+                    {
+                      "text": "Testing PersonAppService from Browser Console",
+                      "path": "Developing-Step-By-Step-Core-Testing-PersonAppService-From-Browser-Console.md"
+                    },
+                    {
+                      "text": "Using GetPeople Method From MVC Controller",
+                      "path": "Developing-Step-By-Step-Core-Using-GetPeople-Method-From-MVC-Controller.md"
+                    }
+                  ]
+                },
+                {
+                  "text": "Creating a New Person",
+                  "path": "Developing-Step-By-Step-Core-Creating-New-Person.md",
+                  "items": [
+                    {
+                      "text": "Testing CreatePerson Method",
+                      "path": "Developing-Step-By-Step-Core-Testing-CreatePerson-Method.md"
+                    },
+                    {
+                      "text": "Creating Modal for New Person",
+                      "path": "Developing-Step-By-Step-Core-Creating-Modal-Person.md"
+                    },
+                    {
+                      "text": "Opening the Person Modal",
+                      "path": "Developing-Step-By-Step-Core-Creating-Opening-Person-Modal.md"
+                    },
+                    {
+                      "text": "Saving Person",
+                      "path": "Developing-Step-By-Step-Core-Saving-Person.md"
+                    }
+                  ]
+                },
+                {
+                  "text": "Authorization For Phone Book",
+                  "path": "Developing-Step-By-Step-Core-Authorization-For-Phone-Book.md"
+                },
+                {
+                  "text": "Deleting a Person",
+                  "path": "Developing-Step-By-Step-Core-Deleting-Person.md"
+                },
+                {
+                  "text": "Filtering People",
+                  "path": "Developing-Step-By-Step-Core-Filtering-People.md"
+                },
+                {
+                  "text": "Adding Phone Numbers",
+                  "path": "Developing-Step-By-Step-Core-Adding-Phone-Numbers.md",
+                  "items": [
+                    {
+                      "text": "Creating Phone Entity",
+                      "path": "Developing-Step-By-Step-Core-Creating-Phone-Entity.md"
+                    },
+                    {
+                      "text": "Database Migration of Phone Entity",
+                      "path": "Developing-Step-By-Step-Core-Database-Migration-Phone-Entity.md"
+                    },
+                    {
+                      "text": "Changing GetPeople Method",
+                      "path": "Developing-Step-By-Step-Core-Changing-GetPeople-Method.md"
+                    },
+                    {
+                      "text": "Adding AddPhone and DeletePhone Methods",
+                      "path": "Developing-Step-By-Step-Core-Adding-AddPhone-DeletePhone-Methods.md"
+                    },
+                    {
+                      "text": "Edit Mode For Phone Numbers",
+                      "path": "Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers.md"
+                    },
+                    {
+                      "text": "Edit Mode For People",
+                      "path": "Developing-Step-By-Step-Core-Edit-Mode-For-People.md"
+                    }
+                  ]
+                },
+                {
+                  "text": "Multi Tenancy",
+                  "path": "Developing-Step-By-Step-Core-Multi-Tenancy.md"
+                },
+                {
+                  "text": "Running the Application",
+                  "path": "Developing-Step-By-Step-Core-Running-Application.md"
+                },
+                {
+                  "text": "Conclusion",
+                  "path": "Developing-Step-By-Step-Core-Conclusion.md"
+                }
+              ]
+            },
+            {
+              "text": "Extending Existing Entities",
+              "path": "Extending-Existing-Entities.md"
+            }
+          ]
+        },
+        {
+          "text": "Mobile (Xamarin)",
+          "items": [
+            {
+              "text": "Developing Step By Step",
+              "path": "Developing-Step-By-Step-Xamarin.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Change Logs",
+      "path": "Change-Logs.md"
+    },
+    {
+      "text": "Road Map",
+      "path": "Road-Map.md"
+    },
+    {
+      "text": "External Links",
+      "items": [
+        {
+          "text": "ASP.NET Boilerplate",
+          "path": "https://aspnetboilerplate.com/Pages/Documents"
+        },
+        {
+          "text": "Metronic Theme",
+          "path": "http://www.keenthemes.com/preview/metronic/"
+        }
+      ]
+    }
+  ]
+}

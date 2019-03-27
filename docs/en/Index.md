@@ -17,9 +17,9 @@ ASP.NET Zero has multiple architecture options. Select the one you want to prefe
 
 ## Miscellaneous
 
-### Rapid Application Development
+### Power Tools
 
-ASP.NET Zero provides a [Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) to automatically create an entity and its corresponding layers from the database to the user interface. See [how to use it](Rapid-Application-Development.md).
+ASP.NET Zero Power Tools, helps you to create an entity and its corresponding layers from database to the user interface. It is a Visual Studio Extension hosted on Visual Studio Marketplace. [Go to Power Tools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)  or [see how to use it](Rapid-Application-Development.md).
 
 ### Change Logs
 

@@ -2,25 +2,23 @@
 
 ## Introduction
 
-This tutorial is a step by step guide to learn **how to add new
-properties to existing entities**, from database layer to UI layer.
+This tutorial is a step by step guide to learn **how to add new properties to existing entities**, from database layer to UI layer.
 
-In ASP.NET Zero, **Tenant**, **User** and **Role** entities are
-**abstract** in the framework, others are not. There are some
-differences between them. So, we separated it into two sections.
+In ASP.NET Zero, **Tenant**, **User** and **Role** entities are **abstract** in the framework, others are not. There are some differences between them. So, we separated it into two sections.
 
-*Note: We assume that you created your project as described in the
-[Getting Started](Getting-Started.md) document.*
+*Note: We assume that you have created your project as described in the Getting Started document*
+
+* [Getting Started Angular](Getting-Started-Angular)
+
+* [Getting Started MVC](Getting-Started-Core) 
 
 ## Extending Abstract Entities
 
-As a sample, we will work on **User** entity. We want to add an
-**Address** property to the User.
+As a sample, we will work on **User** entity. We want to add an **Address** property to the User.
 
 ### Add New Property To User
 
-Open Authorization\\Users\\**User.cs** (in .Core project) and add the
-new property:
+Open Authorization\\Users\\**User.cs** (in .Core project) and add the new property:
 
 ```csharp
 public class User : AbpUser<User>
@@ -31,14 +29,11 @@ public class User : AbpUser<User>
 }
 ```
 
-Here, we hided existing code in the User class to show it simpler. You
-can add Address property after existing properties.
+Here, we hided existing code in the User class to show it simpler. You can add Address property after existing properties.
 
 ### Add Migration
 
-Since we added new property, our database schema is changed. Whever we
-change our entities, we should add a new database migration. Open
-Console Package Manager and write new migration code:
+Since we added new property, our database schema is changed. Whever we change our entities, we should add a new database migration. Open Console Package Manager and write new migration code:
 
     Add-Migration "Added_Address_To_User"
 
@@ -59,13 +54,11 @@ public partial class Added_Address_To_User : DbMigration
 }
 ```
 
-Since it's automatically created, we don't have to know what it does for
-most cases. Now, we can update our database with this command:
+Since it's automatically created, we don't have to know what it does for most cases. Now, we can update our database with this command:
 
     Update-Database
 
-When we check **AbpUsers** table in the database, we can see the new
-**Address** field:
+When we check **AbpUsers** table in the database, we can see the new **Address** field:
 
 <img src="images/extend-entities-user-address.png" alt="Address for Users" class="img-thumbnail" width="505" height="102" />
 
@@ -73,12 +66,7 @@ For test purposes, we entered some data for existing users by hand.
 
 ### Show Address On The UI
 
-Authorization\\Users\\**UserAppService.cs** (in .Application project) is
-used to get list of users by clients. It returns a list of
-**UserListDto** (we always use
-[DTOs](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
-for client communication). So, we should add the Address property to
-UserListDto too:
+Authorization\\Users\\**UserAppService.cs** (in .Application project) is used to get list of users by clients. It returns a list of **UserListDto** (we always use [DTOs](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects) for client communication). So, we should add the Address property to UserListDto too:
 
 ```csharp
 [AutoMapFrom(typeof(User))]
@@ -90,11 +78,8 @@ public class UserListDto : EntityDto<long>, IPassivable, IHasCreationTime
 }
 ```
 
-Since UserListDto **auto maps** from User entity, no need to change
-**UserAppService.GetUsers** method. Now, we can go to UI side to add
-Address property to the **users table**. Open
-.Web\\App\\common\\views\\users\\**index.js** and add Address column
-right after Surname column:
+Since UserListDto **auto maps** from User entity, no need to change **UserAppService.GetUsers** method. Now, we can go to UI side to add Address property to the **users table**. Open 
+.Web\\App\\common\\views\\users\\**index.js** and add Address column right after Surname column:
 
 ```javascript
 {
@@ -115,24 +100,18 @@ right after Surname column:
 },
 ```
 
-New added code is highlighted. That's all. Let's run the application and
-open the **users page**:
+New added code is highlighted. That's all. Let's run the application and open the **users page**:
 
 <img src="images/extend-entities-user-address-in-table.png" alt="Address in table" class="img-thumbnail" width="802" height="527" />
 
-This was for SPA (Single Page Application with AngularJS). It's similar
-for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Users\\index.js and add
-Address field to the table as like Surname.
+This was for SPA (Single Page Application with AngularJS). It's similar for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Users\\index.js and add Address field to the table as like Surname.
 
 ### Add Address On User Create/Edit
 
 We may want to set Address while **creating/editing** a User.
 
-Clients use UserAppService.**GetUserForEdit** method to show user
-information on edit form. It returns **GetUserForEditOutput** object
-which contains a **UserEditDto** object that includes user properties.
-So, we should add Address to UserEditDto to allow clients to change
-Address property on create/update:
+Clients use UserAppService.**GetUserForEdit** method to show user information on edit form. It returns **GetUserForEditOutput** object which contains a **UserEditDto** object that includes user properties.
+So, we should add Address to UserEditDto to allow clients to change Address property on create/update:
 
 ```csharp
 public class UserEditDto : IPassivable
@@ -143,9 +122,7 @@ public class UserEditDto : IPassivable
 }
 ```
 
-Since **UserAppService** use **auto mapping**, no need to manually map
-Address to the User entity. So, server side code is just that. We can go
-to UI side to add an Address field to the form:
+Since **UserAppService** use **auto mapping**, no need to manually map Address to the User entity. So, server side code is just that. We can go to UI side to add an Address field to the form:
 
 ```html
 <div class="form-group form-md-line-input form-md-floating-label no-hint">
@@ -154,23 +131,15 @@ to UI side to add an Address field to the form:
 </div>
 ```
 
-This code is written to
-.Web\\App\\common\\views\\users\\**createOrEditModal.cshtml** for SPA.
-For MPA, it will be similar in
-.Web\\Areas\\Mpa\\Views\\Users\\**createOrEditModal.cshtml** file. You
-can take existing Surname property as example. After adding, new Address
-field is shown on the create/edit form as shown below:
+This code is written to .Web\\App\\common\\views\\users\\**createOrEditModal.cshtml** for SPA.
+For MPA, it will be similar in .Web\\Areas\\Mpa\\Views\\Users\\**createOrEditModal.cshtml** file. You
+can take existing Surname property as example. After adding, new Address field is shown on the create/edit form as shown below:
 
 <img src="images/extend-entities-user-address-in-edit-form.png" alt="Address on user edit form" class="img-thumbnail" width="614" height="906" />
 
-Note: Since we haven't localized "Address" text, it's shown like
-\[Address\]. To fix it, you can open localization file under
-.Core\\Localization\\ExtendEntitiesDemo and add Address text as like
-others.
+Note: Since we haven't localized "Address" text, it's shown like \[Address\]. To fix it, you can open localization file under .Core\\Localization\\ExtendEntitiesDemo and add Address text as like others.
 
-You can see this Github
-[commit](https://github.com/aspnetzero/aspnet-zero-samples/commit/b7fd57eb3e20cf3b96e9358bc3c4d92f81404f5a)
-for all changes applied.
+You can see this Github [commit](https://github.com/aspnetzero/aspnet-zero-samples/commit/b7fd57eb3e20cf3b96e9358bc3c4d92f81404f5a) for all changes applied.
 
 ## Extending Non-Abstract Entities
 
@@ -178,12 +147,7 @@ As a sample, we will work on **Edition** entity.
 
 ### Derive From Edition Entity
 
-Since Edition is **not abstract** in the framework, we can not direcly
-add new properties to the Edition class. Instead, we should use OOP
-patterns like **inheritance** or **composition**. Since inheritance will
-be simpler, we can create a new class deriving from Edition entity, say
-**MyEdition** (We add this class into Editions folder under the .Core
-project):
+Since Edition is **not abstract** in the framework, we can not direcly add new properties to the Edition class. Instead, we should use OOP patterns like **inheritance** or **composition**. Since inheritance will be simpler, we can create a new class deriving from Edition entity, say **MyEdition** (We add this class into Editions folder under the .Core project):
 
 ```csharp
 public class MyEdition : Edition
@@ -214,9 +178,7 @@ public class ProjectNameDbContext : AbpZeroDbContext<Tenant, Role, User>
 
 ### Add Migration
 
-Since we added a new entity class, our database schema is changed.
-Whever we change our entities, we should add a new database migration.
-Open Console Package Manager and write new migration code:
+Since we added a new entity class, our database schema is changed. Whever we change our entities, we should add a new database migration. Open Console Package Manager and write new migration code:
 
     Add-Migration "Added_MyEdition_Entity"
 
@@ -270,8 +232,7 @@ Basically, this migration adds two new columns to **AbpEditions** table:
     Edition and MyEdition entities (automatically created for
     inheritance).
 
-Before applying changes to the database, we **changed** default
-migration code from:
+Before applying changes to the database, we **changed** default migration code from:
 
 ```csharp
 AddColumn("dbo.AbpEditions", "Price", c => c.Int());
@@ -285,22 +246,18 @@ AddColumn("dbo.AbpEditions", "Price", c => c.Int(nullable: false, defaultValue: 
 AddColumn("dbo.AbpEditions", "Discriminator", c => c.String(nullable: false, maxLength: 128, defaultValue: "MyEdition"));
 ```
 
-We did it since we want to replace existing **Edition** entities by
-**MyEdition**. Now, we can update our database with this command:
+We did it since we want to replace existing **Edition** entities by **MyEdition**. Now, we can update our database with this command:
 
     Update-Database
 
-When we check **AbpEditions** table in the database, we can see the new
-fields:
+When we check **AbpEditions** table in the database, we can see the new fields:
 
 <img src="images/extend-entities-editions-db-table.png" alt="Editions table" class="img-thumbnail" width="578" height="98" />
 
 As you see, existing 'Standard Edition' entry changed to MyEdition with
 Price = 0.
 
-One last thing about migration is the database **Seed code**. Seed code
-currently creates the 'Standard edition'. We should go to
-.EntityFramework\\Migrations\\Seed\\**DefaultEditionCreator.cs** class
+One last thing about migration is the database **Seed code**. Seed code currently creates the 'Standard edition'. We should go to .EntityFramework\\Migrations\\Seed\\**DefaultEditionCreator.cs** class
 and change Edition creation code from:
 
 ```csharp
@@ -317,12 +274,7 @@ Thus, it creates MyEdition entity when we create database from scratch.
 
 ### Show Price On The UI
 
-Editions\\**EditionAppService.cs** (in .Application project) is used to
-get list of editions by clients. It returns a list of **EditionListDto**
-(we always use
-[DTOs](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
-for client communication). So, we should add the Price property to
-EditionListDto too:
+Editions\\**EditionAppService.cs** (in .Application project) is used to get list of editions by clients. It returns a list of **EditionListDto** (we always use [DTOs](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects) for client communication). So, we should add the Price property to EditionListDto too:
 
 ```csharp
 [AutoMapFrom(typeof(MyEdition))]
@@ -334,11 +286,8 @@ public class EditionListDto : EntityDto, IHasCreationTime
 }
 ```
 
-We added **auto mapping from MyEdition**. No need to change
-**EditionAppService.GetEditions** method by the help of auto mapping.
-Now, we can go to UI side to add Price property to the **editions
-table**. Open .Web\\App\\host\\views\\editions\\**index.js** and add
-Price column right after EditionName column:
+We added **auto mapping from MyEdition**. No need to change **EditionAppService.GetEditions** method by the help of auto mapping. Now, we can go to UI side to add Price property to the **editions
+table**. Open .Web\\App\\host\\views\\editions\\**index.js** and add Price column right after EditionName column:
 
 ```javascript
 {
@@ -356,24 +305,15 @@ Price column right after EditionName column:
 }
 ```
 
-New added code is highlighted. That's all. Let's run the application and
-open the **editions page** (editions page is only available for host
-users, not tenant users):
+New added code is highlighted. That's all. Let's run the application and open the **editions page** (editions page is only available for host users, not tenant users):
 
 <img src="images/extend-entities-editions-ui-table.png" alt="UI table for editions" class="img-thumbnail" width="810" height="174" />
 
-This was for SPA (Single Page Application with AngularJS). It's similar
-for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Editions\\**index.js**
-and add Price field to the table.
+This was for SPA (Single Page Application with AngularJS). It's similar for MPA side. Just open .Web\\Areas\\Mpa\\Views\\Editions\\**index.js** and add Price field to the table.
 
 ### Add Price On Edition Create/Update
 
-We may want to add Price field to edition create/update form.
-Create/Update logic is implemented in **EditionAppService** class.
-**GetEditionForEdit** method is called by clients to fill the
-create/edit form. This method returns a GetEditionForEditOutput which
-contains **EditionEditDto** to transfer edition properties. So, we
-should add Price property to EditionEditDto class:
+We may want to add Price field to edition create/update form. Create/Update logic is implemented in **EditionAppService** class. **GetEditionForEdit** method is called by clients to fill the create/edit form. This method returns a GetEditionForEditOutput which contains **EditionEditDto** to transfer edition properties. So, we should add Price property to EditionEditDto class:
 
 ```csharp
 [AutoMap(typeof(Edition), typeof(MyEdition))]
@@ -385,13 +325,9 @@ public class EditionEditDto
 }
 ```
 
-We also added **auto mapping** for **MyEdition** entity. We could
-directly replace Edition by MyEdition if we will never use the Edition
-class. We left it like that to show different usages.
+We also added **auto mapping** for **MyEdition** entity. We could directly replace Edition by MyEdition if we will never use the Edition class. We left it like that to show different usages.
 
-Since ASP.NET Zero **does not** use auto mapping for creating (in
-CreateEditionAsync method) and updating (in UpdateEditionAsync method)
-editions, we should change these code too:
+Since ASP.NET Zero **does not** use auto mapping for creating (in CreateEditionAsync method) and updating (in UpdateEditionAsync method) editions, we should change these code too:
 
 ```csharp
 ///...
@@ -422,16 +358,9 @@ protected virtual async Task UpdateEditionAsync(CreateOrUpdateEditionDto input)
 //...
 ```
 
-Notice the highlighted areas. First, we should create **MyEdition**,
-instead of **Edition** and set also **Price** property. In the update
-part, we used [edition
-manager](https://aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management)
-to get the edition. Edition manager normally works for the **Edition**
-entity. So, we should **cast** it to **MyEdition** in order to reach to
-the **Price** property.
+Notice the highlighted areas. First, we should create **MyEdition**, instead of **Edition** and set also **Price** property. In the update part, we used [edition manager](https://aspnetboilerplate.com/Pages/Documents/Zero/Edition-Management) to get the edition. Edition manager normally works for the **Edition** entity. So, we should **cast** it to **MyEdition** in order to reach to the **Price** property.
 
-Now, we can go the the UI part. Open
-.Web\\App\\host\\views\\editions\\**createOrEditModal.cshtml** and add
+Now, we can go the the UI part. Open .Web\\App\\host\\views\\editions\\**createOrEditModal.cshtml** and add
 the following form field after the EditionName field:
 
 ```html
@@ -441,23 +370,16 @@ the following form field after the EditionName field:
 </div>
 ```
 
-It's similar for MVC side. In this case, you need to edit
-.Web\\Areas\\Mpa\\Views\\Editions\\**\_CreateOrEditModal.cshtml**. Now,
-we can edit an edition with entering the price:
+It's similar for MVC side. In this case, you need to edit .Web\\Areas\\Mpa\\Views\\Editions\\**\_CreateOrEditModal.cshtml**. Now, we can edit an edition with entering the price:
 
 <img src="images/extend-entities-editions-ui-edit.png" alt="Edit edition with price" width="392" height="411" />
 
-You can see this Github
-[commit](https://github.com/aspnetzero/aspnet-zero-samples/commit/ecf25b60bda72166d41ad7605000d7dc7556e8bf)
-for all changes applied.
+You can see this GitHub [commit](https://github.com/aspnetzero/aspnet-zero-samples/commit/ecf25b60bda72166d41ad7605000d7dc7556e8bf) for all changes applied.
 
 ## Source Code
 
-You can get the full source code of this sample from the Github
-repository:
+You can get the full source code of this sample from the GitHub repository:
 
-[Extend Entities SPA
-Demo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ExtendEntitiesDemo)
+* [Extend Entities SPA Demo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ExtendEntitiesDemo)
 
-[Extend Entities MPA
-Demo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ExtendEntitiesDemo-MPA)
+* [Extend Entities MPA Demo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ExtendEntitiesDemo-MPA)
