@@ -32,14 +32,14 @@ And configure it according to your needs. A sample setting is shown below:
 
 The details will be explained in the next lines. Here are the quick steps to publish the **Web.Mvc Application** to the Azure.
 
-- Run the `npm run create-bundles` to bundle and minify the js/css files
+- Run the `npm run build` to bundle and minify the js/css files
 - Run the migrations on the Azure
 - Configure the **.Web.Mvc/appsettings.production.json**
 - Publish the application to Azure
 
-### Run the `npm run create-bundles`
+### Run the `npm run build`
 
-Run the `npm run create-bundles` to bundle and minify the js/css files.
+Run the `npm run build` to bundle and minify the js/css files.
 
 ### Run Migrations on The Azure
 
@@ -95,7 +95,7 @@ The details will be explained in the next lines. Here are the quick steps to pub
 
 ### Update Bundles
 
-Right click **Web.Public** project and select **Bundler & Minifier/Update Bundles**
+Run the **npm run build** command to create js and css bundles.
 
 <img src="images/azure-publish-core-mvc-bundle-public.png">
 

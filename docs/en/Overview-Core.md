@@ -13,7 +13,6 @@ Following tools are needed in order to use ASP.NET Zero Core solution:
 - [Visual Studio 2017 v15.3.5+](https://www.visualstudio.com)
 - [Typescript 2.0+](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
 - [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
-- [Gulp](https://www.npmjs.com/package/gulp) (*must be installed globally*)
 - [Yarn](https://yarnpkg.com/)
 
 ## Solution Structure (Layers)

@@ -1,6 +1,6 @@
 # Public Web Site
 
-ASP.NET Zero contains a separated application that can be a starting point for your public web site or a landing page for your application. Before running the project, we need to run a NPM task to bundle and minify the CSS and JavaScript files. In order to do that, we can open a command prompt, navigate to root directory of ***.Web.Public** project and run **npm run create-bundles** command. This command should be run when a new NPM package is being added to the solution. Or you can just build your solution and all bundles will be updated automatically.
+ASP.NET Zero contains a separated application that can be a starting point for your public web site or a landing page for your application. Before running the project, we need to run a NPM task to bundle and minify the CSS and JavaScript files. In order to do that, we can open a command prompt, navigate to root directory of ***.Web.Public** project and run **npm run create-bundles** command. This command should be run when a new NPM package is being added to the solution.
 
 <img src="images/frontend-homepage.jpg" alt="Frontend home page" class="img-thumbnail" width="500" height="496" />
 
