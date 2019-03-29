@@ -79,7 +79,7 @@ If you inherit your components from **AppComponentBase** class, you can get many
 
 - Web Application
   - [Features](Features-Angular.md)
-  - [Development Tutorial](Developing-Step-By-Step-Angular-Introduction)
+  - [Development Tutorial](Developing-Step-By-Step-Angular-Introduction.md)
   - [Deployment](Deployment-Angular.md)
 - Mobile (Xamarin) Application
   - [Development Guide](Development-Guide-Xamarin.md)
