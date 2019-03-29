@@ -1,51 +1,50 @@
-# Getting Started
+# Running ASP.NET Zero on Mac
 
-## Running ASP.NET Zero on Mac
+Download an ASP.NET CORE & Angular project with .NET Core framework as described in the [getting started document](Getting-Started-Angular.md). Do not check the "One solution" option.
 
- -  Install Visual Studio for Mac: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
- -  Install Visual Studio Code: [https://code.visualstudio.com/](https://code.visualstudio.com/)
- -  Install .net core SDK: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
+## Pre-Requirements
 
-Download the ASP.NET CORE & Angular latest project version with .NET Core 2.0 as chosen framework and do not check one solution.
+ -  Visual Studio for Mac: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
+ -  Visual Studio Code: [https://code.visualstudio.com/](https://code.visualstudio.com/)
+ -  .Net core SDK: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
 
-Install latest:
- -  yarn [https://yarnpkg.com/en/docs/install#mac-stable](https://yarnpkg.com/en/docs/install#mac-stable)
- -  Nvm with node version 8.11.1 ([https://github.com/creationix/nvm](https://github.com/creationix/nvm))
- -  angular-cli ([https://cli.angular.io/](https://cli.angular.io/))
+ -  Yarn [https://yarnpkg.com/en/docs/install#mac-stable](https://yarnpkg.com/en/docs/install#mac-stable)
+ -  NVM with node version 8.11.1+: [https://github.com/creationix/nvm](https://github.com/creationix/nvm)
+ -  Angular-cli ([https://cli.angular.io/](https://cli.angular.io/))
 
-Then, In the terminal, go to base_folder/angular and
+## Restoring Packages
+
+In the terminal, go to base_folder/angular and run the `yarn` command:
 
 	> yarn
 
-Next open app in Visual Studio for Mac.  If you are not going to work on Xamarin app, open the Web solution only, under base_folder/aspnet-core.
+## Configuration & Build
 
-Set **Web.Host** project as Startup Project (right click on Web.Host project in Solution Explorer and you will see the option)
+The application is configured to work with SQL Server by default. If you want to use a different database provider, please check [https://aspnetboilerplate.com/Pages/Documents/Entity-Framework-Core#other-database-integrations](https://aspnetboilerplate.com/Pages/Documents/Entity-Framework-Core#other-database-integrations).
 
-Build all.
-
-The app is configured to work with SQL Server by default. If you want to use a different database provider, please check [https://aspnetboilerplate.com/Pages/Documents/Entity-Framework-Core#other-database-integrations](https://aspnetboilerplate.com/Pages/Documents/Entity-Framework-Core#other-database-integrations).
-
-SQL Server database on Azure is used in this example. You can set your SQL Server database up in Azure Portal, and there got connection string like this, into base_folder/appsettings.json:  
+SQL Server database on Azure is used in this example. You can set your SQL Server database up in Azure Portal, and there got connection string like this, into **appsettings.json**: 
 
 ```json
 "ConnectionStrings": {
       "Default": "Server=tcp:research1server.database.windows.net,1433;Initial Catalog={my db name};Persist Security Info=False;User ID={my_id};Password={my password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"}, 
 ```
 
-Note you have to get your IPv4 address (e.g. [https://www.whatismyip.com/](https://www.whatismyip.com/)) and in Azure Portal  click on your database, then the "**Set server firewall**" button, then create a rule for your IP address (or range of addresses) and Save.  Otherwise when you start-up you will see a Connection Refused error in the browser console.
+> Note: You have to get your IPv4 address (e.g. [https://www.whatismyip.com/](https://www.whatismyip.com/)) and in Azure Portal  click on your database, then the "**Set server firewall**" button, then create a rule for your IP address (or range of addresses) and Save.  Otherwise when you start-up you will see a Connection Refused error in the browser console.
 
-Next, open app in Visual Studio for Mac.  Again, if you are not going to work on Xamarin app, open the Web solution only, under base_folder/aspnet-core.
+Open the application in Visual Studio for Mac.  If you are not going to work on Xamarin app, open the Web solution only, under base_folder/aspnet-core.
 
 Set Web.Host project as Startup Project (right click on Web.Host project in Solution Explorer and you will see the option)
 
-Now we want to get EF for dotnet. 
+You need to get EF Core for dotnet. 
 
 Go here: [https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet) and see Installing the Tools section. 
 
 Edit the **Web.Host** project file (right click project name and there is an Tools->Edit File option) and add following:
 
 ```xml
-<ItemGroup> <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" /> </ItemGroup>
+<ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+</ItemGroup>
 ```
 
 Then back in Terminal:
