@@ -77,5 +77,10 @@ If you inherit your components from **AppComponentBase** class, you can get many
 
 ## Next
 
-- [Features](Features-Angular)
-- [Step by Step Development](Developing-Step-By-Step-Angular-Introduction)
+- Web Application
+  - [Features](Features-Angular.md)
+  - [Development Tutorial](Developing-Step-By-Step-Angular-Introduction)
+  - [Deployment](Deployment-Angular.md)
+- Mobile (Xamarin) Application
+  - [Development Guide](Development-Guide-Xamarin.md)
+  - [Development Tutorial](Developing-Step-By-Step-Xamarin)
