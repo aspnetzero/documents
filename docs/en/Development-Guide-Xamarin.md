@@ -60,7 +60,7 @@ required for iOS development.
 
 ### Solution Structure (Layers)
 
-After you [download](/Download) your project, you will see 3 types of
+After you [download](https://aspnetzero.com/Download) your project, you will see 3 types of
 solutions;
 
 -   **.Mobile** Xamarin and related projects included.
