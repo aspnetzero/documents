@@ -1,5 +1,23 @@
 # Login
 
+## Account Controller
+
+**AccountController** provides **login**, **register**, **forgot password** and **email activation** pages.
+
+## Layout
+
+Account management pages have a separated **\_Layout** view under **Views/Account** folder:
+
+<img src="images/account-views-core-v2.png" alt="Account Views" class="img-thumbnail" width="216" height="214" />
+
+Related **Script** and **Style** resources located under **view-resources/Views/Account** folder:
+
+<img src="images/account-views-core-resources.png" alt="Account view resources" class="img-thumbnail" width="205" height="347" />
+
+As similar, all views of the application have corresponding style and script files under **wwwroot/view-resources** folder.
+
+## Login Page
+
 Main view for `AccountController` is the Login page:
 
 <img src="images/login-screen-3.png" alt="Login page" class="img-thumbnail" />
@@ -12,9 +30,9 @@ We can use **admin** user name and **123qwe** password in first run the applicat
 
 After changing password we are redirected to the **backend application**.
 
-## User Lockout
+### User Lockout
 
-As seen in the previous section, you can configure user lockout settings. Users are lockout when they enter wrong password for a specified count and duration.
+Users are lockout when they enter wrong password for a specified count and duration. You can configure lockout settings in the settings page of the application.
 
 ## Next
 

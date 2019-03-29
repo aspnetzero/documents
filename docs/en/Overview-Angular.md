@@ -71,7 +71,7 @@ There may be other ways of doing it but this is the simplest way.
 
 > In the development time, you don't need to use subdomains for tenants for a simpler development experience. When you do like that, a 'tenant switch' dialog is used to manually switch between tenants.
 
-#### AppComponentBase
+### AppComponentBase
 
 If you inherit your components from **AppComponentBase** class, you can get many commonly used services as pre-injected (like localization, permission checker, feature checker, UI notify/message, settings and so on...). For example; you can just use **l(...)** function (lowercase of 'L') In views and **this.l(...)** function in component classes for localization. See pre-built components for example usages.
 
