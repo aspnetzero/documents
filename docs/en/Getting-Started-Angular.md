@@ -1,14 +1,10 @@
 # Getting Started
 
-This document is aimed to create and run an ASP.NET Zero based project in just 10 minutes. It's assumed that you already [purchased](https://aspnetzero.com/Prices) and created your ASP.NET Zero account.
-
-## Login
-
-[Login](https://aspnetzero.com/Account/Login) to this web site with your user name and password. Then you will see [Download](https://aspnetzero.com/Download) link on the main menu.
+This document is aimed to create and run an ASP.NET Zero based project in just 5 minutes. It's assumed that you already [purchased](https://aspnetzero.com/Prices) and created your ASP.NET Zero account.
 
 ## Create Your Project
 
-Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
+[Login to aspnetzero.com](https://aspnetzero.com/Account/Login) with your user name and password. Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
 
 <img src="images/download-angular-3.png" alt="Download angular" class="img-thumbnail" />
 
@@ -16,22 +12,30 @@ Select **ASP.NET Core & Angular** as Project Type and fill other required fields
 
 <img src="images/angular-solution-folders.png" alt="Client Server folders" class="img-thumbnail" />
 
--   **angular** folder contains the [Angular application](Features-Angular) which is configured to work with [angular-cli](https://cli.angular.io/).
--   **aspnet-core** folder contains the [server side](Features-Mvc-Core) ASP.NET Core solution and configured to work with [Visual Studio](https://www.visualstudio.com/vs/community/).
+-   **angular** folder contains the Angular UI application which is configured to work with the [angular-cli](https://cli.angular.io/).
+-   **aspnet-core** folder contains the server side ASP.NET Core solution and configured to work with [Visual Studio](https://www.visualstudio.com/vs/community/).
 
 ### Merging Client and Server Solutions
 
-Client and Server solutions are designed to work separately by default but if you want to work on a single Visual Studio solution, you can select "One Solution" checkbox while downloading your project.
+Client and Server solutions are designed to work separately by default. If you want to work on a single Visual Studio solution, you can select "Single Solution" checkbox while downloading your project.
+
+## Pre Requirements
+
+- [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
+- [Typescript 2.0+](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
+- [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
+- [Gulp](https://www.npmjs.com/package/gulp) (*must be installed globally*)
+- [Yarn](https://yarnpkg.com/)
 
 ## ASP.NET Core Application
 
-When you open the server side solution **\*.Web.sln** in **Visual Studio 2017+**, you will see the solution structure as below:
-
-If you want to work on only Xamarin project, open **\*.Mobile.sln** solution. If you want to work on both Xamarin and Web projects, open **\*.All.sln** solution.
+When you open the server side solution (**\*.Web.sln**) in **Visual Studio 2017+**, you will see the solution structure as below:
 
 <img src="images/aspnet-core-host-solution-4.png" alt="ASP.NET Core solution structure" class="img-thumbnail" />
 
-Right click the **.Web.Host** project and select "**Set as StartUp project**": Then **build** the solution. It may take a longer time during the first build since all **nuget** packages will be restored.
+> If you want to work on only Xamarin project, open **\*.Mobile.sln** solution. If you want to work on both of Xamarin and Web projects, open **\*.All.sln** solution.
+
+Right click the **.Web.Host** project and select "**Set as StartUp project**". Then **build** the solution. It may take a longer time during the first build since all **nuget** packages will be restored.
 
 ### Database
 
@@ -51,11 +55,11 @@ We have two options to create and migrate database to the latest version.
 
 ##### ASP.NET Zero Migrator Application
 
-ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production (see [development guide](Features-Angular) for more information).
+ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production.
 
 ##### Entity Framework Migration Command
 
-You can also use Entity Framework's built-in tools for migrations. Open **Package Manager Console** in Visual Studio, set *.**EntityFrameworkCore** as the **Default Project** and run the **Update-Database** command as shown below: 
+You can also use Entity Framework Core's built-in tools for migrations. Open **Package Manager Console** in Visual Studio, set *.**EntityFrameworkCore** as the **Default Project** and run the **Update-Database** command as shown below: 
 
 <img src="images/update-database-ef-core.png" alt="dotnet ef database update" class="img-thumbnail" />
 
@@ -65,20 +69,19 @@ This command will create your database and fill initial data. You can open SQL S
 
 You can use EF console commands for development and Migrator.exe for production. But notice that; Migrator.exe supports running migrations in multiple databases at once, which can be useful in development/production for multi tenant applications.
 
-### Multi-Tenancy
+### Configure Multi-Tenancy
 
-ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy is **enabled by default**. If you don't have an idea about multi-tenancy, you can read it on [wikipedia.org/wiki/Multitenancy](https://en.wikipedia.org/wiki/Multitenancy). If you don't want to create a multi-tenant application, you can **disable** it by setting **PhoneBookDemoConsts.MultiTenancyEnabled** to false in the ***.Core.Shared** project.
+ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy is **enabled by default**. If you don't have an idea about multi-tenancy, you can read it on [wikipedia.org/wiki/Multitenancy](https://en.wikipedia.org/wiki/Multitenancy). If you don't want to create a multi-tenant application, you can **disable** it by setting **PhoneBookDemoConsts.MultiTenancyEnabled** to false in the ***.Core.Shared** project (name of the PhoneBookDemoConsts will be like *YourProjectName*Consts for your project).
 
 ### Run API Host
 
-Once you've done the configuration, you can run the application. Server
-side application only contains APIs. When you start the application you will see a login page:
-
-**NOTE:** If your project is a merged project, you will not see the login page when you start the host project. Basically you need to manually navigate to http://localhost:22742/ui/login.
+Once you've done the configuration, you can run the application. Server side application only contains APIs. When you start the application you will see a login page:
 
 <img src="images/host-login-page.png" alt="Swagger UI" class="img-thumbnail" />
 
-If you log in to host application, then you will see host main page:
+**NOTE:** If your project is a merged project, you will not see the login page when you start the host project. Basically you need to manually navigate to http://localhost:22742/ui/login.
+
+If you log in to host application, then you will see a page like that:
 
 <img src="images/host-home-page.png" alt="Swagger UI" class="img-thumbnail" />
 
@@ -88,23 +91,15 @@ You can navigate **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground*
 
 ## Angular Application
 
-### Prerequirements
-
-Angular application needs the following tools to be installed:
-
--   [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
--   [Typescript 2.0+](https://www.typescriptlang.org/)
--   [yarn](https://yarnpkg.com/)
-
 ### Restore Packages
 
-Navigate to the Angular folder, open a command line and run the following command to restore packages:
+Navigate to the **angular folder**, open a command line and run the following command to restore the packages:
 
     yarn
 
-**Note:** If you downloaded merged project then you should run commands on `Host` folder not `Angular` folder.
+**Note:** If you've downloaded a merged project then you should run commands on `Host` folder (the folder contaning the *.Web.Host project).
 
-We suggest to use [yarn](https://yarnpkg.com/) because NPM has some problems. It is slow and can not consistently resolve  dependencies, yarn solves those problems and it is compatible to NPM as well.
+We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
 
 ### Running The Application
 
@@ -118,24 +113,27 @@ Once the application compiled, you can browse <http://localhost:4200> in your br
 
 ### Login
 
-All ready.. just run your solution to enter to the login page:
+All ready! Just run your solution to enter to the login page:
 
 <img src="images/login-screen-3.png" alt="Login page" class="img-thumbnail" />
 
-If multi-tenancy is enabled, you will see the current tenant and a change link. If so, click to **Change** like and enter **default** as tenant name. If you leave it empty, you login as the host admin user. Then enter **admin** as user name and **123qwe** as password. You should change your password at first login.
+If multi-tenancy is enabled, you will see the current tenant and a change link. If so, click to **Change** and enter **default** as tenant name. If you leave it empty, you login as the host admin user. Then enter **admin** as user name and **123qwe** as password (remember to change it to a more secure password on production!).
 
 ### Application UI
 
-After you login to the application, you will see the sample dashboard screen:
+After login to the application, you will see the sample dashboard screen:
 
 <img src="images/dashboardV3.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
 
 ## ASP.NET Zero Power Tools
 
-ASP.NET Zero Power Tools lets you to create a new page from the backend to the UI layer by just typing your entity properties. It creates the entity, related permissions, application services, client-side code, applies DB migrations and adds to the main menu. Finally you will have a CRUD page that is capable of insert, update, delete, list, excel export functions. To minimize the effort of creating a new page, install the Power Tools from the following link:
+ASP.NET Zero Power Tools lets you to create a new page from the database to the UI layer by just typing your entity properties. It creates the entity, related permissions, application services, DTOs, client-side code, a menu element and so on... It also creates & applies database migrations.
+
+Finally you will have a CRUD page with insert, update, delete, list and excel export functions. To minimize the effort of creating a new page, install the Power Tools from the following link:
 
 [https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
 
 ## Next
 
-Your solution is up and working. See the [Xamarin Development Guide](Development-Guide-Xamarin) or [Angular Overview](Overview-Angular) document for more information.
+* [Solution Overview](Overview-Angular)
+* [Xamarin Development Guide](Development-Guide-Xamarin)
