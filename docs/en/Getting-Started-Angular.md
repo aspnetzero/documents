@@ -39,9 +39,11 @@ Right click the **.Web.Host** project and select "**Set as StartUp project**": T
 
 Open **appsettings.json** in **.Web.Host** project and change the **Default** connection string if you want:
 
-    "ConnectionStrings": {
-        "Default": "Server=localhost; Database=PhoneBookDemoDb; Trusted_Connection=True;"
-    }
+```json
+"ConnectionStrings": {
+    "Default": "Server=localhost; Database=PhoneBookDemoDb; Trusted_Connection=True;"
+}
+```
 
 #### Migrations
 
@@ -65,7 +67,7 @@ You can use EF console commands for development and Migrator.exe for production.
 
 ### Multi-Tenancy
 
-ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy is **enabled by default**. If you don't have an idea about multi-tenancy, you can read it on [wikipedia.org/wiki/Multitenancy](https://en.wikipedia.org/wiki/Multitenancy). If you don't want to create a multi-tenant application, you can **disable** it by setting **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the ***.Core.Shared** project.
+ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy is **enabled by default**. If you don't have an idea about multi-tenancy, you can read it on [wikipedia.org/wiki/Multitenancy](https://en.wikipedia.org/wiki/Multitenancy). If you don't want to create a multi-tenant application, you can **disable** it by setting **PhoneBookDemoConsts.MultiTenancyEnabled** to false in the ***.Core.Shared** project.
 
 ### Run API Host
 
@@ -100,11 +102,9 @@ Navigate to the Angular folder, open a command line and run the following comman
 
     yarn
 
-**Note:** If you downloaded merged project then you should run commands on Host folder not Angular.
+**Note:** If you downloaded merged project then you should run commands on `Host` folder not `Angular` folder.
 
-We suggest to use [yarn](https://yarnpkg.com/) because npm has some
-problems. It is slow and can not consistently resolve dependencies, yarn
-solves those problems and it is compatible to npm as well.
+We suggest to use [yarn](https://yarnpkg.com/) because NPM has some problems. It is slow and can not consistently resolve  dependencies, yarn solves those problems and it is compatible to NPM as well.
 
 ### Running The Application
 
@@ -112,10 +112,7 @@ Open the command line and run the following command:
 
     npm start
 
-Once the application compiled, you can browse <http://localhost:4200> in
-your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)
-enabled. You can use the following command (instead of npm start) to
-enable HMR on development time:
+Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
 
     npm run hmr
 
