@@ -2,40 +2,39 @@
 
 This document is aimed to create and run an ASP.NET Zero based project in just 5 minutes. It's assumed that you already [purchased](/Prices) and created your ASP.NET Zero account.
 
-## Login
-
-[Login](https://aspnetzero.com/Account/Login) to this web site with your user name and password. Then you will see [Download](https://aspnetzero.com/Download) link on the main menu.
-
-## Prerequirements
-
-MVC application needs the following tools to be installed:
-
-- [Node.js](https://nodejs.org/en/download/) 6.9+ with NPM 3.10+
-- [Gulp](https://www.npmjs.com/package/gulp) (*must be installed globally*)
-- [Yarn](https://yarnpkg.com/)
-- [Bundler & Minifier Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40)
-
 ## Create Your Project
 
-Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
+[Login to aspnetzero.com](https://aspnetzero.com/Account/Login) with your user name and password. Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
 
 <img src="images/download-core-jquery-2.png" alt="Create project" class="img-thumbnail" />
 
 Select **ASP.NET Core & jQuery** as Project Type and fill other required fields. Click to the Download button, your project will be ready in one minute.
 
+## Pre Requirements
+
+- [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com)
+- [Node.js](https://nodejs.org/en/download/) 6.9+ with NPM 3.10+
+- [Gulp](https://www.npmjs.com/package/gulp) (*must be installed globally*)
+- [Yarn](https://yarnpkg.com/)
+- [Bundler & Minifier Visual Studio extension](https://visualstudiogallery.msdn.microsoft.com/9ec27da7-e24b-4d56-8064-fd7e88ac1c40)
+
 ## Configure The Project
 
-Before opening the solution open a command prompt, navigate to root directory of **\*.Web.Mvc** project and run "**yarn**" command to install client side dependencies.
+Before opening the solution, open a command prompt, navigate to root directory of **\*.Web.Mvc** project and run "**yarn**" command to install client side dependencies.
+
+````
+yarn
+````
 
 **Important Notice:** Installing client side npm dependencies using **yarn** before opening the solution will decrease project opening & building time dramatically.
 
-Open the **\*.Web.sln** solution in **Visual Studio 2017+**:
+Open the **\*.Web.sln** solution in **Visual Studio**. If you want to work on only Xamarin project, open **\*.Mobile.sln** solution. If you want to work on both Xamarin and Web projects, open **\*.All.sln** solution.
 
-If you want to work on only Xamarin project, open **\*.Mobile.sln** solution. If you want to work on both Xamarin and Web projects, open **\*.All.sln** solution.
+*.Web solution structure is shown below:
 
 <img src="images/solution-overall-core-5.png" alt="ASP.NET Core solution" class="img-thumbnail" />
 
-Right click the **.Web.Mvc** project and select "**Set as StartUp project**": Then **build** the solution. It make take longer time in first build since all **nuget** packages will be restored.
+Right click the **.Web.Mvc** project, select "**Set as StartUp project**" and **build** the solution. It may take longer time in first build since all **nuget** packages will be restored.
 
 ### Database
 
@@ -69,9 +68,9 @@ This command will create your database and fill initial data. You can open SQL S
 
 You can use EF console commands for development and Migrator.exe for production. But notice that; Migrator.exe supports running migrations in multiple databases at once, which is very useful in development/production for multi tenant applications.
 
-### Multi-Tenancy
+### Configure Multi-Tenancy
 
-ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy is **enabled by default**. If you don't have idea about multi-tenancy or don't want to create a multi-tenant application, you can **disable** it by setting **AbpZeroTemplateConsts.MultiTenancyEnabled** to false in the *.Core.Shared project.
+ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy is **enabled by default**. If you don't have idea about multi-tenancy or don't want to create a multi-tenant application, you can **disable** it by setting **PhoneBookDemoConsts.MultiTenancyEnabled** to false in the *.Core.Shared project (name of the PhoneBookDemoConsts will be like *YourProjectName*Consts for your project).
 
 ## Running The Application
 
@@ -79,7 +78,7 @@ Before running the project, we need to run a npm task to bundle and minify the C
 
 Less files are converted to css and min.css files using Gulp. If you run **npm run watch-less** command using command prompt, you can immediately see the changes in runtime. This command is watching all **.less** files under **wwwroot** folder and compile them when any change happens.
 
-Now we are ready.. just run your solution. It will open login page of your web site.
+Now we are ready.. just run your solution. It will open the login page of the web application:
 
 <img src="images/login-screen-3.png" alt="Login page" class="img-thumbnail" />
 
@@ -89,10 +88,12 @@ If multi-tenancy is enabled, you will see the current tenant and a change link. 
 
 ## ASP.NET Zero Power Tools
 
-ASP.NET Zero Power Tools lets you to create a new page from the backend to the UI layer by just typing your entity properties. It creates the entity, related permissions, application services, client-side code, applies DB migrations and adds to the main menu. Finally you will have a CRUD page that is capable of insert, update, delete, list, excel export functions. To minimize the effort of creating a new page, install the Power Tools from the following link:
+ASP.NET Zero Power Tools lets you to create a new page from the database to the UI layer by just typing your entity properties. It creates the entity, related permissions, application services, DTOs, client-side code, a menu element and so on... It also creates & applies database migrations.
+
+Finally you will have a CRUD page with insert, update, delete, list and excel export functions. To minimize the effort of creating a new page, install the Power Tools from the following link:
 
 [https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
 
 ## Next
 
-Your solution is up and working. Check out the [Xamarin Development Guide](Development-Guide-Xamarin) or continue with [Features](Features-Mvc-Core).
+* [Solution Overview](Overview-Core.md)

@@ -55,7 +55,7 @@ We have two options to create and migrate database to the latest version.
 
 ##### ASP.NET Zero Migrator Application
 
-ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the solution. You can run this tool for database migrations on development and production.
+ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator) project in the server side solution. You can run this tool for database migrations on development and production  (see [migrator docs](Migrator-Console-Application) for more information).
 
 ##### Entity Framework Migration Command
 
@@ -136,4 +136,3 @@ Finally you will have a CRUD page with insert, update, delete, list and excel ex
 ## Next
 
 * [Solution Overview](Overview-Angular)
-* [Xamarin Development Guide](Development-Guide-Xamarin)
