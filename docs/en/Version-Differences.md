@@ -98,7 +98,7 @@ Angular framework. </p>
 </tr>
 <tr>
 	<td>ADFS login</td>
-	<td>-</td>
+	<td>OK</td>
 	<td>OK</td>
 	<td>OK</td>
 	<td>OK</td>
