@@ -307,4 +307,4 @@ A private IP (such as 10.x.x.x, 172.x.x.x, 192.168.x.x) or an Amazon EC2 private
 
 For all the other OWASP standardizations, download the OWASP sheet.
 
-[Open Web Application Security Project (OWASP) - Application Security Verification Standard 3.0 PDF sheet ](https://www.owasp.orgimages/6/67/OWASPApplicationSecurityVerificationStandard3.0.pdf) 
+[Open Web Application Security Project (OWASP) - Application Security Verification Standard 3.0 PDF sheet ](https://www.owasp.org/images/6/67/OWASPApplicationSecurityVerificationStandard3.0.pdf) 

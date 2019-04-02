@@ -2014,6 +2014,6 @@ but does not restrict you. You can make your own style development.
 
 ### Source Code
 
-You should [purchase](/Prices) ASP.NET Zero in order to get **source
+You should [purchase](https://aspnetzero.com/Pricing) ASP.NET Zero in order to get **source
 code**. After purchasing, you can get the sample project from private
 Github repository: <https://github.com/aspnetzero/aspnet-zero-samples>

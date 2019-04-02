@@ -2,26 +2,20 @@
 
 ## Introduction
 
-In this document, a new sample project is created named **Acme.PhoneBookDemo**. This document is a complete guide while developing your project. We definitely suggest to read this document before starting to the development. Since ASP.NET Zero is built on [ASP.NET Boilerplate](https://aspnetboilerplate.com/) application framework, this document highly refers it's [documentation](https://aspnetboilerplate.com/Pages/Documents).
 
-Before reading this document, it's suggested to run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
+Before reading this document, it's suggested to run the application and explore the user interface as described in the [Getting Started document](Getting-Started-Core.md). This will help you to have a better understanding of the concepts defined here.
 
-### Prerequirements
-
-Following tools are needed in order to use ASP.NET Zero Core solution:
-
-- [Visual Studio 2017 v15.3.5+](https://www.visualstudio.com)
-- [Typescript 2.0+](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
-- [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
-- [Yarn](https://yarnpkg.com/)
 
 ## Solution Structure (Layers)
 
 After you create and [download](https://aspnetzero.com/Download) your project, you have a solution structure as shown below for **\*.Web.sln**:
 
-There are two more solutions, **\*.Mobile.sln** contains only Xamarin application development projects and **\*.All.sln** contains both mobile and web development projects.
-
 <img src="images/solution-overall-core-5.png" alt="ASP.NET Core solution" class="img-thumbnail" />
+
+There are two more solutions:
+
+* **\*.Mobile.sln** contains the Xamarin projects
+* **\*.All.sln** contains both mobile and web development projects.
 
 There are 12 projects in the solution:
 
@@ -40,32 +34,19 @@ There are 12 projects in the solution:
 
 ### Applications
 
-ASP.NET Zero solution contains 4 applications:
+ASP.NET Zero solution contains four applications:
 
-- **Back End Application** `Web.Mvc`: This is the main application which needs authentication to access. You will mostly work on this application to add your business logic. Backend application is built in a dedicated area, named "**App**" by default, but can be determined while you are [creating the solution](Getting-Started-Core). So, all controllers, views and models are located under **Areas/App** folder. Also, related script and style files are located under **wwwroot/view-resources/Areas/App** folder, as shown below:
+- **Back End Application** (`Web.Mvc`): This is the main application which needs authentication to access. You will mostly work on this application to add your business logic. Backend application is built in a dedicated area, named "**App**" by default, but can be configured while you are [creating the solution](Getting-Started-Core). So, all controllers, views and models are located under the **Areas/App** folder. Related script and style files are located under **wwwroot/view-resources/Areas/App** folder, as shown below:
 
   <img src="images/app-folders-core.png" alt="Application folders" class="img-thumbnail" width="161" height="381" />
 
-- **Back End API** `Web.Host`: An application to only serve the main application as API and does not provide UI.
+- **Back End API** (`Web.Host`): An application to only serve the main application as REST API and does not provide any UI.
 
-- **Public Web Site** `Web.Public`: This can be used to create a public web site or a landing page for your application.
+- **Public Web Site** (`Web.Public`): This can be used to create a public web site or a landing page for your application.
 
-- **Migration Applier** `Migrator`: Console application that runs database migrations.
+- **Migration Executer** (`Migrator`): Console application that runs database migrations.
 
-## Multi-Tenancy
-
-Multi-tenancy is used to build **SaaS** (Software as a Service) applications easily. With this technique, we can deploy **single application** to serve to **multiple customers**. Each Tenant will have it's own **roles**, **users** and **settings**. 
-
-ASP.NET Zero's all code-base is developed to be **multi-tenant**. But, it [**can be disabled**](Getting-Started-Core#multi-tenancy) with a single line of configuration if you are developing a **single-tenant** application. When you disable it, all multi-tenancy stuff will be hidden and not available. If multi-tenancy is disabled, there will be a single tenant named **Default**.
-
-There are two types of perspective in multi-tenant applications:
-
-- **Host**: Manages tenants and system.
-- **Tenant**: Uses the application features.
-
-Read [multi tenant documentation](https://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy) if you are building multi-tenant applications.
-
-## Website Root URL
+## Basic Configuration
 
 `appsettings.json` in Web.Mvc project contains a setting **WebSiteRootAddress**, which stores the root URL of the web application:
 
@@ -73,9 +54,20 @@ Read [multi tenant documentation](https://aspnetboilerplate.com/Pages/Documents/
 "WebSiteRootAddress": "http://localhost:62114/"
 ```
 
+It's used to calculate some URLs in the application. So, you need to change this on production.
 
+### Multi-Tenancy
 
-It's used to calculate some URLs in the application. So, you need to change this on deployment. For multi-tenant applications, this URL can contain dynamic tenancy name. In that case, put {TENANCY\_NAME} instead of tenancy name like:
+Multi-tenancy is used to build **SaaS** (Software as a Service) applications easily. With this technique, we can deploy **single application** to serve to **multiple customers**. Each Tenant will have it's own roles, users, settings and other data. 
+
+ASP.NET Zero's code-base is developed to be **multi-tenant**. But, it [**can be disabled**](Getting-Started-Core#multi-tenancy) with a single line of configuration if you are developing a **single-tenant** application. When you disable it, all multi-tenancy stuff will be hidden. If multi-tenancy is disabled, there will be a single tenant named **Default**.
+
+There are two types of perspective in multi-tenant applications:
+
+- **Host**: Manages tenants and the system.
+- **Tenant**: Uses the actual application features and pays for it.
+
+For multi-tenant applications, Web Site Root URL can contain dynamic tenancy name. In that case, put {TENANCY\_NAME} as a placeholder for tenancy name like:
 
 ```csharp
 "WebSiteRootAddress": "http://{TENANCY_NAME}.mydomain.com/"
@@ -87,26 +79,27 @@ Thus, ASP.NET Zero can automatically detect current tenant from URLs. If you con
    **\*.mydomain.com**.
 2. You should configure IIS to bind this static IP to your application.
 
-Similar to **WebSiteRootAddress**, **ServerRootAddress** setting is also exists in `appsettings.json` in .Web.Host project. In addition, .Web.Host application contains **ClientRootAddress** which is used if this API
-is used by the [Angular UI](Developing-Step-By-Step-Angular-Introduction). If you are not using Angular UI, you can ignore it. Finally, **CorsOrigins** setting is used to allow some domains for cross origin requests. This is also useful when you are hosting your Angular UI in a separated server/domain.
+There may be other ways of doing it but this is the simplest way.
 
-## Account Controller
+> In the development time, you don't need to use subdomains for tenants for a simpler development experience. When you do like that, a 'tenant switch' dialog is used to manually switch between tenants.
 
-**AccountController** provides **login**, **register**, **forgot password** and **email activation** pages.
+Check out the [multi tenant documentation](https://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy) if you are building multi-tenant applications.
 
-## Layout
+Similar to **WebSiteRootAddress**, **ServerRootAddress** setting is also exists in `appsettings.json` in .Web.Host project.
 
-Account management pages have a separated **\_Layout** view under **Views/Account** folder:
+### Angular UI
 
-<img src="images/account-views-core-v2.png" alt="Account Views" class="img-thumbnail" width="216" height="214" />
+In addition, .Web.Host application contains **ClientRootAddress** which is used if this API
+is used by the Angular UI. If you are not using Angular UI, you can ignore it. 
 
-Related **Script** and **Style** resources located under **view-resources/Views/Account** folder:
-
-<img src="images/account-views-core-resources.png" alt="Account view resources" class="img-thumbnail" width="205" height="347" />
-
-As similar, all views of the application have corresponding style and script files under **wwwroot/view-resources** folder.
+**CorsOrigins** setting is used to allow some domains for cross origin requests. This is also useful when you are hosting your Angular UI in a separated server/domain.
 
 ##  Next
 
-- [Features](Features-Mvc-Core) to understand the features.
-- [Step by Step Development](Developing-Step-By-Step-Core-Introduction) tutorial leads you to develop a multi-tenant, localized, authorized, configurable and testable application step by step.
+- Web Application
+  - [Features](Features-Mvc-Core.md)
+  - [Development Tutorial](Developing-Step-By-Step-Core-Introduction.md)
+  - [Deployment](Deployment-Mvc-Core.md)
+- Mobile (Xamarin) Application
+  - [Development Guide](Development-Guide-Xamarin.md)
+  - [Development Tutorial](Developing-Step-By-Step-Xamarin)
