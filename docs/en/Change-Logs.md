@@ -6,6 +6,11 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+## v6.9.0 (2019-04-02)
+
+* Use WebPack instead of gulp to bundle assets for MVC app
+* Enhancements and bug fixes.
+
 ## v6.8.0 (2019-03-14)
 
 * Added GraphQL integration.
