@@ -1684,7 +1684,7 @@ consent screen).
 #### More
 
 See [IdentityServer4's own
-documentation](https://identityserver4.readthedocs.io/en/release/) to
+documentation](http://docs.identityserver.io/en/latest/) to
 understand and configure IdentityServer4.
 
 ### Unit Testing

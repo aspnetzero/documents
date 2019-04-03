@@ -707,7 +707,7 @@ as a title.
 In **CardView,** add a **&lt;StackLayout&gt;** to show elements
 vertically. Put labels, entries for **Name**, **Surname** and
 **EmailAddress** fields. All the entries are
-[TwoWay](https://developer.xamarin.com/api/field/Xamarin.Forms.BindingMode.TwoWay/) binding, because we propagate value in both directions.  
+[TwoWay](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/data-binding/binding-mode#two-way-bindings) binding, because we propagate value in both directions.  
 
 ListView control seems to be an easy but complicated control. We recommend to use ListView in these circumstances:
 

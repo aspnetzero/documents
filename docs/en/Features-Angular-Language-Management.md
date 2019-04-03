@@ -16,7 +16,7 @@ We can select any language as a **base** (reference) and change **target** langu
 
 **Host** users (if allowed) can edit languages and localized texts. These languages will be default for all tenants for a multi-tenant application. **Tenants** inherit languages and localized texts and can**override** localized texts or can add new languages.
 
-See [language management](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Managemen) and [localization](https://aspnetboilerplate.com/Pages/Documents/Localization) documents for more information.
+See [language management](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Management) and [localization](https://aspnetboilerplate.com/Pages/Documents/Localization) documents for more information.
 
 ## Next
 
