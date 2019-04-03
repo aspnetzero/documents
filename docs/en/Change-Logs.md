@@ -2,7 +2,7 @@
 
 **Note:** Major features are only being developed for ASP.NET Core +
 jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
-[version comparison table](Version-Differences.md) for more.
+[version comparison table](Version-Differences.md) for more details.
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
