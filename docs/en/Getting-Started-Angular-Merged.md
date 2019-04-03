@@ -19,8 +19,6 @@ Select **ASP.NET Core & Angular** as Project Type and fill other required fields
 
 Client and Server solutions are designed to work separately by default. If you want to work on a single Visual Studio solution, you can select "Single Solution" checkbox while downloading your project.
 
-If you have selected this option, please follow [Getting Started](Getting-Started-Angular-Merged) document for ASP.NET Core & Angular merged solution.
-
 ## Pre Requirements
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
@@ -64,7 +62,7 @@ You can also use Entity Framework Core's built-in tools for migrations. Open **P
 
 <img src="images/update-database-ef-core.png" alt="dotnet ef database update" class="img-thumbnail" />
 
-This command will create your database. Initial data will be inserted when you run the ***.Web.Host** project. You can open SQL Server Management Studio to check if database is created:
+This command will create your database. Initial data will be inserted when you run the *.Web.Host project. You can open SQL Server Management Studio to check if database is created:
 
 <img src="images/created-database-tables-4.png" alt="ASP.NET Zero Database Tables" class="img-thumbnail" />
 
@@ -94,15 +92,17 @@ For example when you navigate **Swagger UI**, you will see following page:
 
 ### Restore Packages
 
-Navigate to the **angular** folder, open a command line and run the following command to restore the packages:
+Navigate to the **angular folder**, open a command line and run the following command to restore the packages:
 
     yarn
+
+**Note:** If you've downloaded a merged project then you should run commands on `Host` folder (the folder contaning the *.Web.Host project).
 
 We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
 
 ### Running The Application
 
-Run the following command in the command line:
+Open the command line and run the following command:
 
     npm start
 
@@ -112,15 +112,15 @@ Once the application compiled, you can browse <http://localhost:4200> in your br
 
 ### Login
 
-All ready! Now, you can login to the application:
+All ready! Just run your solution to enter to the login page:
 
 <img src="images/login-screen-3.png" alt="Login page" class="img-thumbnail" />
 
-If multi-tenancy is enabled, you will see the current tenant and a change link. If so, click to **Change** and enter **default** as tenant name. If you leave it empty, you login as the host admin user. Then enter **admin** as username and **123qwe** as password (remember to change it to a more secure password on production!).
+If multi-tenancy is enabled, you will see the current tenant and a change link. If so, click to **Change** and enter **default** as tenant name. If you leave it empty, you login as the host admin user. Then enter **admin** as user name and **123qwe** as password (remember to change it to a more secure password on production!).
 
 ### Application UI
 
-When you login to the application as a Tenant admin, you will see the sample dashboard screen:
+After login to the application, you will see the sample dashboard screen:
 
 <img src="images/dashboardV3.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
 
