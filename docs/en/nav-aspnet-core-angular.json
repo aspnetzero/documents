@@ -153,6 +153,10 @@
               "text": "Setup Page",
               "path": "Features-Angular-Setup-Page.md"
             },
+			{
+              "text": "Migrator Console Application",
+              "path": "Migrator-Console-Application.md"
+            },
             {
               "text": "Public Website",
               "path": "Public-Website.md"
