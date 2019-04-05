@@ -84,6 +84,10 @@ ASP.NET Zero also includes ADFS login integrated. t's configuration can be chang
 }
 ```
 
+## JwtBearer
+
+ASP.NET Zero uses JwtBearer authentication by defult. It is recommended to change SecurityKey configured in appsettings.json for your production environment
+
 ## IExternalLoginInfoManager interface
 
 ASP.NET Zero allows to customize getting user's username, name and surname from claims when logging in via external login. By default there are two implementations of IExternalLoginInfoManager which are **DefaultExternalLoginInfoManager** and **WsFederationExternalLoginInfoManager**.
