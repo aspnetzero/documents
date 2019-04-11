@@ -42,7 +42,7 @@ As we declared in **phonebook.component.ts** we should create a
         <div class="d-flex align-items-center">
             <div class="mr-auto col-sm-6">
                 <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{l("PhoneBook" | localize)}}</span>
+                    <span>{{"PhoneBook" | localize}}</span>
                 </h3>
             </div>
         </div>

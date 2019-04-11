@@ -20,10 +20,10 @@ Changes in view are shown below:
             <span class="m-widget1__desc">{{person.emailAddress}}</span>
         </div>
         <div class="col m--align-right">
-            <button (click)="editPerson(person)" title="{{l('Edit' | localize)}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+            <button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
                 <i class="fa fa-pencil"></i>
             </button>
-            <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete' | localize)}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+            <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
                 <i class="fa fa-times"></i>
             </button>
         </div>
@@ -34,8 +34,8 @@ Changes in view are shown below:
                 <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:15%">{{l("Type" | localize)}}</th>
-                        <th style="width:75%">{{l("PhoneNumber" | localize)}}</th>
+                        <th style="width:15%">{{"Type" | localize}}</th>
+                        <th style="width:75%">{{"PhoneNumber" | localize}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,9 +56,9 @@ Changes in view are shown below:
                         </td>
                         <td>
                             <select name="Type" [(ngModel)]="newPhone.type"class="form-control">
-                                <option value="0">{{l("PhoneType_Mobile" | localize)}}</option>
-                                <option value="1">{{l("PhoneType_Home" | localize)}}</option>
-                                <option value="2">{{l("PhoneType_Business" | localize)}}</option>
+                                <option value="0">{{"PhoneType_Mobile" | localize}}</option>
+                                <option value="1">{{"PhoneType_Home" | localize}}</option>
+                                <option value="2">{{"PhoneType_Business" | localize}}</option>
                             </select>
                         </td>
                         <td><input type="text" name="number" [(ngModel)]="newPhone.number" class="form-control" /></td>

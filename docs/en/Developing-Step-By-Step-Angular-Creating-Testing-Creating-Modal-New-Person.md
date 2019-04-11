@@ -105,7 +105,7 @@ below:
             <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span>{{l("CreateNewPerson" | localize)}}</span>
+                        <span>{{"CreateNewPerson" | localize}}</span>
                     </h4>
                     <button type="button" class="close" (click)="close()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -113,21 +113,21 @@ below:
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>{{l("Name" | localize)}}</label>
+                        <label>{{"Name" | localize}}</label>
                         <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">
                     </div>
                     <div class="form-group">
-                        <label>{{l("Surname" | localize)}}</label>
+                        <label>{{"Surname" | localize}}</label>
                         <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
                     </div>
                     <div class="form-group">
-                        <label>{{l("EmailAddress" | localize)}}</label>
+                        <label>{{"EmailAddress" | localize}}</label>
                         <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel" | localize)}}</button>
-                    <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{l("Save" | localize)}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
                 </div>
             </form>
         </div>
@@ -167,18 +167,18 @@ following changes in **phonebook.component.html**:
         <div class="d-flex align-items-center">
             <div class="mr-auto col-sm-6">
                 <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{l("PhoneBook" | localize)}}</span>
+                    <span>{{"PhoneBook" | localize}}</span>
                 </h3>
             </div>
             <div class="col-sm-6 text-right">
-                <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson" | localize)}}</button>
+                <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{"CreateNewPerson" | localize}}</button>
             </div>
         </div>
     </div>
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
-                <h3>{{l("AllPeople" | localize)}}</h3>
+                <h3>{{"AllPeople" | localize}}</h3>
                 <div class="m-widget1">
                     <div class="m-widget1__item" *ngFor="let person of people">
                         <div class="row m-row--no-padding align-items-center">

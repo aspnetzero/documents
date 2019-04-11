@@ -9,7 +9,7 @@ We added a search input to **phonebook.component.html** view (showing
 the related part of the code):
 
 ```html
-<h3>{{l("AllPeople" | localize)}} ({{people.length}})</h3>
+<h3>{{"AllPeople" | localize}} ({{people.length}})</h3>
 <form autocomplete="off">
     <div class="m-form m-form--label-align-right">
         <div class="row align-items-center m--margin-bottom-10">
@@ -35,7 +35,7 @@ the related part of the code):
                 <span class="m-widget1__desc">{{person.emailAddress}}</span>
             </div>
             <div class="col m--align-right">
-                <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete' | localize)}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+                <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
