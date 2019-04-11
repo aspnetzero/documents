@@ -109,7 +109,7 @@ If we run the application and try to create a person, we get an authorization er
 Open the **phonebook.component.html** view and add the permission **Pages.Tenant.PhoneBook.CreatePerson** condition as shown below:
 
 ```html
-<button *ngIf="'Pages.Tenant.PhoneBook.CreatePerson' | permission" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{l("CreateNewPerson" | localize)}}</button>
+<button *ngIf="'Pages.Tenant.PhoneBook.CreatePerson' | permission" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{"CreateNewPerson" | localize}}</button>
 ```
 
 In this way, the "Create New Person" button does not rendered in server and user can not see this button.

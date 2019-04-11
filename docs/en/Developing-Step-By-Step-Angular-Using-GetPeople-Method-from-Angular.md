@@ -75,7 +75,7 @@ Now, we can use this people member from the view,
         <div class="d-flex align-items-center">
             <div class="mr-auto col-sm-6">
                 <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{l("PhoneBook" | localize)}}</span>
+                    <span>{{"PhoneBook" | localize}}</span>
                 </h3>
             </div>
         </div>
@@ -84,7 +84,7 @@ Now, we can use this people member from the view,
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
 
-                <h3>{{l("AllPeople" | localize)}}</h3>
+                <h3>{{"AllPeople" | localize}}</h3>
                 <div class="m-widget1">
                     <div class="m-widget1__item" *ngFor="let person of people">
                         <div class="row m-row--no-padding align-items-center">
