@@ -44,7 +44,7 @@ Create edit-person-modal.component.html:
       <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
         <div class="modal-header">
             <h4 class="modal-title">
-            <span>{{l("EditPerson" | localize)}}</span>
+            <span>{{"EditPerson" | localize}}</span>
           </h4>
           <button type="button" class="close" (click)="close()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -53,24 +53,24 @@ Create edit-person-modal.component.html:
         <div class="modal-body">
 
           <div class="form-group">
-            <label>{{l("Name" | localize)}}</label>
+            <label>{{"Name" | localize}}</label>
             <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">            
           </div>
 
           <div class="form-group">
-            <label>{{l("Surname" | localize)}}</label>
+            <label>{{"Surname" | localize}}</label>
             <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
           </div>
 
           <div class="form-group">
-          <label>{{l("EmailAddress" | localize)}}</label>
+          <label>{{"EmailAddress" | localize}}</label>
             <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">                        
           </div>
 
         </div>
         <div class="modal-footer">
-          <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{l("Cancel" | localize)}}</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{l("Save" | localize)}}</span></button>
+          <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
         </div>
       </form>
     </div>
@@ -84,13 +84,13 @@ Add those lines to **phonebook.component.html:**:
         
 	// Other Code lines...	
 
-		<button (click)="editPerson(person)" title="{{l('Edit' | localize)}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+		<button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
             <i class="fa fa-plus"></i>
         </button>
-        <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="editPersonModal.show(person.id)" title="{{l('EditPerson' | localize)}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+        <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="editPersonModal.show(person.id)" title="{{'EditPerson' | localize}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
             <i class="fa fa-pencil"></i>
         </button>
-       <button id="deletePerson" (click)="deletePerson(person)" title="{{l('Delete' | localize)}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+       <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
             <i class="fa fa-times"></i>
         </button>
                 
