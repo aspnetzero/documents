@@ -6,11 +6,15 @@ Before reading this document, it's suggested to read [Getting Started](https://a
 
 ## Create The Azure Website
 
-Create two websites in Azure.  One for **Web.Host** and other for **AngularUI**
+It is possible to publish ASP.NET Zero's Angular client app and server side Web.Host API app together or separately. In this document, we will publish both apps separately.
+
+So, go to your Azure Portal and create two websites, one for **Web.Host** project and other one for **Angular** application.
 
 ### Creating an Azure Website for Host
 
-Select the "**Web App + SQL**" for **Host**. 
+We will be using "**Web App + SQL**" for **Web.Host** project but if you already have an SQL Database, you can just create Web App and use the connection string of your Azure SQL Database.
+
+So, select "**Web App + SQL**" and click create: 
 
 <img src="images/azure-publish-angular-create-azure-host-website.png">
 
@@ -18,9 +22,9 @@ And configure it according to your needs. A sample setting is shown below:
 
 <img src="images/azure-publish-angular-create-azure-host-website-configuration.png">
 
-### Creating an Azure Website for AngularUI
+### Creating an Azure Website for Angular
 
-Select the "**Web App**" for **AngularUI**.
+Select "**Web App**" and click create. Since we already created the database for **Web.Host** application, we don't need it here.
 
 <img src="images/azure-publish-angular-create-azure-angular-website.png">
 
@@ -39,7 +43,7 @@ The details will be explained in the next lines. Here are the quick steps to pub
 ### Run Migrations on The Azure
 
 One of the best ways to run migrations on the Azure is running `update-database` command in the Visual Studio. 
-But this command won't run. Your client IP address should have access to the Azure. 
+In order to do that, your public IP address should have access to the Azure. 
 
 #### Configuring the Firewall for Client Access 
 
@@ -48,7 +52,7 @@ If you are already logged in to the Azure, following info screen will be shown (
 
 <img src="images/azure-publish-angular-allow-ip-to-azure.png">
 
-Now our client IP address have access to the Azure. Of cource, this operation can also be done via the [Azure Portal](https://portal.azure.com). Check [here](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure) to learn how to configure the firewall for client access via Azure Portal.
+Now your client IP address have access to the Azure. Of course, this operation can also be done via the [Azure Portal](https://portal.azure.com). Check [here](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure) to learn how to configure the firewall for client access via Azure Portal.
 
 #### Apply Migrations
 
@@ -80,19 +84,19 @@ Select "**azure-publish-demo-server**" and click "**OK**", then click "**Publish
 
 <img src="images/azure-publish-angular-swagger-ui.png">
 
-## Publish AngularUI to The Azure
+## Publish Angular to The Azure
 
 The details will be explained in the next lines. Here are the quick steps to publish the **AngularUI** to the Azure
 
 - Run the `yarn` command to restore packages
 - Run the `ng build -prod`
-- Copy the web.config file that is placed in **angular** folder root to dist folder
+- Copy the web.config file that is placed in **angular** folder to **dist** folder
 - Configure the **angular/dist/assets/appconfig.json**
-- Send the required files to the Azure
+- Upload required files to the Azure
 
 ### Prepare The Publish Folder
 
-Run the `yarn` command to restore packages and run the `ng build -prod` to create publish folder that named **dist**.
+Run the `yarn` command to restore packages and run the `ng build --prod` to create publish folder that named **dist**.
 
 <img src="images/azure-publish-angular-publish-angular.png">
 
@@ -102,13 +106,13 @@ Copy the web.config file that is placed in **angular** folder to **angular/dist*
 
 ### Copy the appconfig.json
 
-Configure the **angular/dist/assets/appconfig.json** like following:
+Configure the **angular/dist/assets/appconfig.production.json** like following:
 
 <img src="images/azure-publish-angular-appconfig.png">
 
-### Send The Publish Files to The Azure
+### Upload Files to Azure
 
-Files should be sent to the Azure via FTP. Transfer files from the **dist** to the **www** folder in the Azure. The folder structure should look like:
+Files must be uploaded to the Azure via FTP. Transfer files from the **dist** to the **www** folder in the Azure. The folder structure should look like:
 
 <img src="images/azure-publish-angular-filezilla.png">
 
