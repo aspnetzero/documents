@@ -26,7 +26,7 @@
               "path": "Features-Angular-Login.md",
               "items": [
                 {
-                  "text": "Social Logins",
+                  "text": "Social & External Logins",
                   "path": "Features-Angular-Social-Logins.md"
                 },
                 {
@@ -152,6 +152,10 @@
             {
               "text": "Setup Page",
               "path": "Features-Angular-Setup-Page.md"
+            },
+			{
+              "text": "Migrator Console Application",
+              "path": "Migrator-Console-Application.md"
             },
             {
               "text": "Public Website",

@@ -16,18 +16,37 @@ Then a **confirmation code** is sent to the selected provider and user enters th
 
 ## Email Verification
 
-This is available if user has a confirmed email address. Since email sending is disabled in debug mode, you can see the code in logs. In release mode, email will be sent (You can change this from [server side](Features-Mvc-Core-Two-Factor-Authentication)).
+This is available if user has a confirmed email address. Since email sending is disabled in debug mode, you can see the code in logs. In release mode, email will be sent. You can change this behaviour in the PreInitialize method of **{YourProjectName}CoreModule.cs**.
+
+Here is the code block which configures ASP.NET Zero to use NullEmailSender in debug mode:
+
+```csharp
+if (DebugHelper.IsDebug)
+{
+	//Disabling email sending in debug mode
+	Configuration.ReplaceService<IEmailSender, NullEmailSender>(DependencyLifeStyle.Transient);
+}
+```
 
 ## SMS Verification
 
-This is available if user has a confirmed phone number. SMS sending is not implemented actually (because it requires an integration to an SMS vendor). Current implementation just writes security code to logs. You
-should complete **SmsSender** class in the [server side](Features-Mvc-Core-Two-Factor-Authentication) to make it usable. Otherwise, disable SMS verification in the settings.
+This is available if user has a confirmed phone number. In order to validate a phone number, a user should open my settings modal as explained in [here](Features-Angular-User-Menu#profile-settings). 
+When the user enters the phone number, a button will appear to validate to phone number. 
+When the validate button is clicked, an SMS message is sent to entered phone number including a validation code and another modal window is opened for entering the validation code. 
+When user enters this validation code, the phone number for the user will be set as validated. SMS sending is implemented in ASP.NET Zero using Twilio but an empty SmsSender class is used by default which writes SMS messages to log file.
+
+If you want to use Twilio for sending SMS on your app, please refer to next section. You can also implement `ISmsSender` interface and use your custom implementation for sending SMS.
+In that case, you need to configure ASP.NET Zero to use your custom implementation like below in the PreInitialize method of **{YourProjectName}CoreModule.cs**:
+
+```csharp
+Configuration.ReplaceService<ISmsSender,CustomSmsSender>();
+```
 
 ### Twilio Integration
 
-In order to enable Twilio integration, just uncomment the following line in your **CoreModule** (in your Core project):
+In order to enable Twilio integration, just uncomment the following line in your **{YourProjectName}CoreModule** (in your Core project):
 
-```
+```csharp
 Configuration.ReplaceService<ISmsSender,TwilioSmsSender>();
 ```
 

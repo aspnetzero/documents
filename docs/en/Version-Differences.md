@@ -4,7 +4,6 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 </head>
-
 <body>
 
 <h1>Project Types Differences</h1>
@@ -14,14 +13,14 @@
 there are still some differences between different versions. In this document, 
 we will highlight these differences.</p>
 <h4>ASP.NET Core v.s. ASP.NET MVC 5.x</h4>
-<p>Beginning from <a href="/documents/common/latest/Change-Logs">v4.1</a>, we are more focused to
+<p>Beginning from <a href="https://docs.aspnetzero.com/documents/common/latest/Change-Logs">v4.1</a>, we are more focused to
 <strong>ASP.NET Core</strong> based solutions (rather than ASP.NET MVC 5.x) 
 since ASP.NET Core is Microsoft&#39;s new ASP.NET version. That means our new major 
-features will be implemented for ASP.NET Core version (.net core &amp; full .net 
-framework).</p>
+features will be implemented for ASP.NET Core version (.NET Core &amp; Full .Net 
+Framework).</p>
 <h4>Angular v.s. Angularjs 1.x</h4>
-<p>Beginning from <a href="/documents/common/latest/Change-Logs">v4.1</a>, we are more focused to 
-<strong>Angular</strong> based solutions (rather than Angularjs 1.x) since Angular is Google&#39;s 
+<p>Beginning from <a href="https://docs.aspnetzero.com/documents/common/latest/Change-Logs">v4.1</a>, we are more focused to 
+<strong>Angular</strong> based solution (rather than Angularjs 1.x) since Angular is Google&#39;s 
 new SPA framework. That means our new major features will be implemented for 
 Angular framework. </p>
 <h3>Version Differences Table</h3>
@@ -88,32 +87,11 @@ Angular framework. </p>
 	<td>-</td>
 </tr>
 <tr>
-	<td>Chat &amp; Real Time Notifications (SignalR integration)</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>OK</td>
-</tr>
-<tr>
-	<td>ADFS login</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>OK</td>
-</tr>
-<tr>
 	<td>Social Logins (Facebook, Twitter, Microsoft, Google+)</td>
 	<td>OK (Facebook, Google)</td>
 	<td>OK (all)</td>
 	<td>OK (all)</td>
 	<td>OK (all)</td>
-</tr>
-<tr>
-	<td>LDAP login</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>OK</td>
 </tr>
 <tr>
 	<td>Two Factor Auth</td>

@@ -12,6 +12,15 @@
       "text": "Step by Step Development",
       "path": "Developing-Step-By-Step-Mvc-Angularjs.md"
     },
+	{
+      "text": "Tutorials",
+      "items": [
+        {
+          "text": "Extending Existing Entities",
+          "path": "Extending-Existing-Entities.md"
+        }
+      ]
+    },
     {
       "text": "Change Logs",
       "path": "Change-Logs.md"

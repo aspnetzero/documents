@@ -1,12 +1,11 @@
 # Running ASP.NET Zero on Mac
 
-Download an ASP.NET CORE & Angular project with .NET Core framework as described in the [getting started document](Getting-Started-Angular.md). Do not check the "One solution" option.
+Download an ASP.NET CORE & Angular project with .NET Core framework as described in the [getting started document](Getting-Started-Angular.md). Do not check the "One solution" option when creating your project.
 
 ## Pre-Requirements
 
- -  Visual Studio for Mac: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
- -  Visual Studio Code: [https://code.visualstudio.com/](https://code.visualstudio.com/)
- -  .Net core SDK: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
+ -  Visual Studio for Mac: [<https://visualstudio.microsoft.com/vs/mac/>](<https://visualstudio.microsoft.com/vs/mac/>)
+-  .Net core SDK: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
 
  -  Yarn [https://yarnpkg.com/en/docs/install#mac-stable](https://yarnpkg.com/en/docs/install#mac-stable)
  -  NVM with node version 8.11.1+: [https://github.com/creationix/nvm](https://github.com/creationix/nvm)
@@ -58,10 +57,14 @@ Check your dotnet ef install:
 
 And you should see a nice ASCII unicorn.
 
+After that, run the command below to create your database:
+
+	> dotnet ef database update
+
 
 Run the project in Visual Studio for Mac, it should take you to [http://localhost:5000/swagger/](http://localhost:5000/swagger/).
 
-Go to "**base_folder/angular/src/assets/**" and change port "**22742**" to "**5000**" in **appconfig.json** file before running the angular application.
+Go to "**base_folder/angular/src/assets/**" and change port in remoteServiceBaseUrl from "**22742**" to "**5000**" in **appconfig.json** file before running the angular application.
 
 Then go to base_folder/angular and:
 
@@ -77,17 +80,11 @@ Or Update-Database:
 
 	> dotnet ef database update
 
-When you need to update service-proxies.ts then from angular directory after/while Web.Host project is up and running:
+### ASP.NET Zero Power Tools
 
-	/node_modules/.bin/nswag run
-
-
-For RAD tool on Mac, there is no Visual Studio extension to create the JSON input file, you create it manually. Which can be faster actually than field by field in GUI. Then run:
+For ASP.NET Zero Power Tools on Mac, there is no Visual Studio extension, so you need to create the JSON input file it manually, then run:
 
 	> dotnet AspNetZeroRadTool.dll YourEntity.Json
 
-(from [https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux))
-
-
-If you want to use VS Code on Mac without Visual Studio for Mac, this might be useful to set Startup Project, although it already seems out of date...
-[https://stackoverflow.com/questions/46705521/how-do-i-designate-a-startup-project-in-vs-code](https://stackoverflow.com/questions/46705521/how-do-i-designate-a-startup-project-in-vs-code)
+For more information please check 
+(from [Development-Guide-Rad-Tool-Mac-Linux](Development-Guide-Rad-Tool-Mac-Linux))

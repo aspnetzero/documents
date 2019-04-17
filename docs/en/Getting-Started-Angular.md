@@ -4,7 +4,7 @@ This document is aimed to create and run an ASP.NET Zero based project in just 5
 
 ## Create Your Project
 
-[Login to aspnetzero.com](https://aspnetzero.com/Account/Login) with your user name and password. Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
+[Login to aspnetzero.com](https://aspnetzero.com/Account/Login) with your username and password. Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
 
 <img src="images/download-angular-3.png" alt="Download angular" class="img-thumbnail" />
 
@@ -19,17 +19,18 @@ Select **ASP.NET Core & Angular** as Project Type and fill other required fields
 
 Client and Server solutions are designed to work separately by default. If you want to work on a single Visual Studio solution, you can select "Single Solution" checkbox while downloading your project.
 
+If you have selected this option, please follow [Getting Started](Getting-Started-Angular-Merged) document for ASP.NET Core & Angular merged solution.
+
 ## Pre Requirements
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
 - [Typescript 2.0+](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
 - [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
-- [Gulp](https://www.npmjs.com/package/gulp) (*must be installed globally*)
 - [Yarn](https://yarnpkg.com/)
 
 ## ASP.NET Core Application
 
-When you open the server side solution (**\*.Web.sln**) in **Visual Studio 2017+**, you will see the solution structure as below:
+When you open the server side solution (**\*.Web.sln**) using **Visual Studio 2017+**, you will see the solution structure as below:
 
 <img src="images/aspnet-core-host-solution-4.png" alt="ASP.NET Core solution structure" class="img-thumbnail" />
 
@@ -63,7 +64,7 @@ You can also use Entity Framework Core's built-in tools for migrations. Open **P
 
 <img src="images/update-database-ef-core.png" alt="dotnet ef database update" class="img-thumbnail" />
 
-This command will create your database and fill initial data. You can open SQL Server Management Studio to check if database is created:
+This command will create your database. Initial data will be inserted when you run the ***.Web.Host** project. You can open SQL Server Management Studio to check if database is created:
 
 <img src="images/created-database-tables-4.png" alt="ASP.NET Zero Database Tables" class="img-thumbnail" />
 
@@ -75,17 +76,17 @@ ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy
 
 ### Run API Host
 
-Once you've done the configuration, you can run the application. Server side application only contains APIs. When you start the application you will see a login page:
+Once you've done the configuration, you can run the application. Server side application only contains APIs. When you start the application you will see a login page like below:
 
 <img src="images/host-login-page.png" alt="Swagger UI" class="img-thumbnail" />
 
-**NOTE:** If your project is a merged project, you will not see the login page when you start the host project. Basically you need to manually navigate to http://localhost:22742/ui/login.
-
-If you log in to host application, then you will see a page like that:
+If you log in to host application, then you will see a page like below:
 
 <img src="images/host-home-page.png" alt="Swagger UI" class="img-thumbnail" />
 
-You can navigate **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground** from this page. For example when you navigate **Swagger UI**, you will see following page:
+You can navigate to **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground** from this page. Note that, by default only Swagger UI is enabled, you can enable Hangfire by following [Hangfire documentation](Hangfire) and GraphQL by following [GraphQL documentation](GraphQL).
+
+For example when you navigate **Swagger UI**, you will see following page:
 
 <img src="images/swagger-ui-ng2-1.png" alt="Swagger UI" class="img-thumbnail" />
 
@@ -93,17 +94,15 @@ You can navigate **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground*
 
 ### Restore Packages
 
-Navigate to the **angular folder**, open a command line and run the following command to restore the packages:
+Navigate to the **angular** folder, open a command line and run the following command to restore the packages:
 
     yarn
-
-**Note:** If you've downloaded a merged project then you should run commands on `Host` folder (the folder contaning the *.Web.Host project).
 
 We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
 
 ### Running The Application
 
-Open the command line and run the following command:
+Run the following command in the command line:
 
     npm start
 
@@ -113,15 +112,15 @@ Once the application compiled, you can browse <http://localhost:4200> in your br
 
 ### Login
 
-All ready! Just run your solution to enter to the login page:
+All ready! Now, you can login to the application:
 
 <img src="images/login-screen-3.png" alt="Login page" class="img-thumbnail" />
 
-If multi-tenancy is enabled, you will see the current tenant and a change link. If so, click to **Change** and enter **default** as tenant name. If you leave it empty, you login as the host admin user. Then enter **admin** as user name and **123qwe** as password (remember to change it to a more secure password on production!).
+If multi-tenancy is enabled, you will see the current tenant and a change link. If so, click to **Change** and enter **default** as tenant name. If you leave it empty, you login as the host admin user. Then enter **admin** as username and **123qwe** as password (remember to change it to a more secure password on production!).
 
 ### Application UI
 
-After login to the application, you will see the sample dashboard screen:
+When you login to the application as a Tenant admin, you will see the sample dashboard screen:
 
 <img src="images/dashboardV3.png" alt="Dashboard" class="img-thumbnail" width="1235" height="965" />
 

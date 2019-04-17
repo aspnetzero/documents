@@ -33,7 +33,7 @@ Here, we hided existing code in the User class to show it simpler. You can add A
 
 ### Add Migration
 
-Since we added new property, our database schema is changed. Whever we change our entities, we should add a new database migration. Open Console Package Manager and write new migration code:
+Since we added new property, our database schema is changed. Whenever we change our entities, we should add a new database migration. Open Package Manager Console and write new migration code:
 
     Add-Migration "Added_Address_To_User"
 
@@ -62,9 +62,11 @@ When we check **AbpUsers** table in the database, we can see the new **Address**
 
 <img src="images/extend-entities-user-address.png" alt="Address for Users" class="img-thumbnail" width="505" height="102" />
 
-For test purposes, we entered some data for existing users by hand.
+For testing purposes, we can enter some data for existing users by hand.
 
 ### Show Address On The UI
+
+Note: The UI part of this document is written for ASP.NET MVC 5.x version of ASP.NET Zero. Document will be updated for ASP.NET Core soon.
 
 Authorization\\Users\\**UserAppService.cs** (in .Application project) is used to get list of users by clients. It returns a list of **UserListDto** (we always use [DTOs](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects) for client communication). So, we should add the Address property to UserListDto too:
 

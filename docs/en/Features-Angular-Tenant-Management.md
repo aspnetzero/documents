@@ -16,7 +16,7 @@ When we click the "**Create New Tenant**" button, a dialog is shown:
 
 When we create a new tenant, we should select/create a database to store new tenant's data. We can select '**Use host database**' to store tenant data in host database (can be used for single database approach) or we can specify a connection string to create/use a **dedicated database** for new tenant. ASP.NET Zero supports **hybrid** approach. That means you can use host database for some tenants and create dedicated databases for some other tenants. Even you can **group** some tenants in a separated database.
 
-Once you assign an edition to the tenant, you can select an expiration date (see edition management section to know what happens after subscription expiration).
+Once you assign an edition to the tenant, you can select an expiration date (see [edition management](Features-Angular-Edition-Management) section to know what happens after subscription expiration).
 
 #### Tenant Edition and Features
 
@@ -26,12 +26,12 @@ An **edition** can be **assigned** to a tenant (while creating or editing). Tena
 
 #### Tenant User Impersonation
 
-As a host user, we may want to perform operations in behalf of a tenant. In this case, we can click the "**Login as this tenant**" button in the actions. When we click it, we see **a modal to select a user** of the
-tenant. We can select any user and perform operations allowed that user. See **User Impersonation** section in this document for more information.
+As a host user, we may want to perform operations on behalf of a tenant. In this case, we can click the "**Login as this tenant**" button in the actions. When we click it, we see **a modal to select a user** of the
+tenant. We can select any user and perform operations allowed that user. See [User Impersonation](Features-Angular-User-Management#user-impersonation) section of user management document for more information.
 
 #### Using Tenancy Name As Subdomain
 
-A multi-tenant application generally uses subdomain to identify current tenant. **tenant1**.mydomain.com, **tenant2**.mydomain.com and so on. ASP.NET Zero automatically identify and get tenant name from subdomain. See application configuration section.
+A multi-tenant application generally uses subdomain to identify current tenant. **tenant1**.mydomain.com, **tenant2**.mydomain.com and so on. ASP.NET Zero automatically identify and get tenant name from subdomain. See [Multi Tenancy](Overview-Angular#multi-tenancy) and [Configuration](Overview-Angular#configuration) sections of overview document.
 
 ## Next
 
