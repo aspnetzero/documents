@@ -10,14 +10,9 @@ This document is aimed to create and run an ASP.NET Zero based project in just 5
 
 Select **ASP.NET Core & Angular** as Project Type and fill other required fields. Your project will be ready in one minute. When you open the downloaded zip file, you will see two folders:
 
-<img src="images/angular-solution-folders.png" alt="Client Server folders" class="img-thumbnail" />
+<img src="images/angular-solution-folders-merged.png" alt="Client Server folders" class="img-thumbnail" />
 
--   **angular** folder contains the Angular UI application which is configured to work with the [angular-cli](https://cli.angular.io/).
--   **aspnet-core** folder contains the server side ASP.NET Core solution and configured to work with [Visual Studio](https://www.visualstudio.com/vs/community/).
-
-### Merging Client and Server Solutions
-
-Client and Server solutions are designed to work separately by default. If you want to work on a single Visual Studio solution, you can select "Single Solution" checkbox while downloading your project.
+-   **aspnet-core** folder contains the entire app. Angular UI application is placed under **aspnet-core/src/*.Web.Host** folder which is configured to work with the [angular-cli](https://cli.angular.io/). Server side API app (*.Web.Host) is an ASP.NET Core solution and configured to work with [Visual Studio](https://www.visualstudio.com/vs/community/).
 
 ## Pre Requirements
 
@@ -92,11 +87,9 @@ For example when you navigate **Swagger UI**, you will see following page:
 
 ### Restore Packages
 
-Navigate to the **angular folder**, open a command line and run the following command to restore the packages:
+Navigate to the root folder of ***.Web.Host** project, open a command line and run the following command to restore the packages:
 
     yarn
-
-**Note:** If you've downloaded a merged project then you should run commands on `Host` folder (the folder contaning the *.Web.Host project).
 
 We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
 
@@ -109,6 +102,8 @@ Open the command line and run the following command:
 Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
 
     npm run hmr
+
+In development time, since we use **angular-cli** and it is a separate process, we need to run *.Web.Host project and Angular UI separately. However, merged Angular solution can be published to a single website or two separate websites.
 
 ### Login
 
