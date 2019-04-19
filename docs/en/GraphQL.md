@@ -143,7 +143,7 @@ After these settings, you need to save it by pressing `SAVE SETTINGS` button.
 
 ## Running Queries on GraphQL Playground
 
-Playground gives you the advantage of writing the queries with intellisense and see the results on your browser. There are two types of queries; **Queries require authentication** and **Queries don't require authentication**. For the queries that doesn't require authentication, you can directly write the query on the Playground and see the results. But for the authentication required queries you have to authenticate first. To authenticate, read the next section of the project that is relevant to you..
+Playground gives you the advantage of writing the queries with intellisense and see the results on your browser. There are two types of queries; **Queries require authentication** and **Queries don't require authentication**. For the queries that don't require authentication, you can directly write the query on the Playground and see the results. But for the authentication required queries you have to authenticate first. To authenticate, read the next section of the project that is relevant to you..
 
 ### Authenticating Playground Requests in MVC Project
 
