@@ -102,9 +102,11 @@ can use **Web.Host** to feed the Xamarin app.
 Open Windows Command Prompt. Go to the folder where your **Web.Host csproj** file is located.  
 Then run the commands below to start hosting your Web API.
 
-    SET ASPNETCORE_ENVIRONMENT=Development
-    SET ASPNETCORE_URLS=http://*:22742
-    dotnet run
+```
+SET ASPNETCORE_ENVIRONMENT=Development
+SET ASPNETCORE_URLS=http://*:22742
+dotnet run
+```
 
 In order to every time write these lines, you can download the batch
 file below and run it to host your web api.
