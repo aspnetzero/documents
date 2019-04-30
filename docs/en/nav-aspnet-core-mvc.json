@@ -176,6 +176,10 @@
             {
               "text": "Publishing to Docker",
               "path": "Deployment-Mvc-Core-Docker.md"
+            },
+            {
+              "text": "Setting Up an Azure Pipeline",
+              "path": "Setting-Up-an-Azure-Pipeline-Mvc-Core.md"
             }
           ]
         }
