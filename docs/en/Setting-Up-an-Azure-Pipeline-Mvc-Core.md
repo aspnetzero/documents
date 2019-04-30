@@ -46,13 +46,13 @@ Then you will be able to see the list of your repositories on GitHub.
 
 
 
-The next step is choosing a template... We will choose the template **ASP.NET Core**. To find it type `ASP.NET Core` in the search box and then choose click the **Apply** button.
+The next step is choosing a template... We will choose the template **ASP.NET Core**. To find it type `ASP.NET Core` to the search box and then click the **Apply** button.
 
 ![Choose template](/images/azure-pipelines-choose-template.png)
 
 
 
-After the template is being created, you will see the below pipeline steps that auto-generated.
+After the template is being created, you will see the below auto-generated pipeline steps.
 
 ![Pipeline steps](/images/azure-pipelines-pipeline-steps.png)
 
@@ -64,7 +64,7 @@ As you see from the above image, **Some settings need attention**. Click that li
 
 
 
-Other important setting is the **Project(s)  to build and restore**. The default setting is `**/*.csproj` but this will break build process because Xamarin projects don't build with `dotnet build` command but need to be built with `msbuild`. So we need to build only the `*.Web.Mvc` project. So change it to `**/MyPortalDemo.Web.Mvc.csproj` in the textbox as seen below.
+Other important setting is the **Project(s)  to build and restore**. The default setting is `**/*.csproj` but this will break build process because Xamarin projects don't build with `dotnet build` command but need to be built with `msbuild`. So we need to build only the `*.Web.Mvc` project. For that, change it to `**/MyPortalDemo.Web.Mvc.csproj` as seen below.
 
 ![Set Web.MVC project to build](/images/azure-pipelines-set-mvc-project.png)
 
@@ -121,7 +121,7 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
    Now save the changes by click **Save** button on the toolbar.
 
-   ![Save pipeline](D:/Github/documents/docs/en/images/azure-pipelines-save.png)
+   ![Save pipeline](images/azure-pipelines-save.png)
 
    
 
@@ -129,11 +129,11 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
 3. **Generate Migration Scripts Task**
 
-   This is the last task. This task will generate SQL scripts and we will run it on our database. For this task, we need to install a third party extension. Write `Entity Framework Core Migrations Script Generator` to the search textbox and click the **Get it free** button as seen on the below screenshot.
+   This is the last task. This task will generate SQL scripts and we will run it against our database. For this task, we need to install a third party extension. Write `Entity Framework Core Migrations Script Generator` to the search textbox and click the **Get it free** button as seen on the below screenshot.
 
    ![Generate Migration Scripts 1](/images/azure-pipelines-add-ef-core-generate-migration-script.png)
 
-   After you install it, go back to your original portal and refresh the page. Now click the `+` again. Write `yarn` to the search textbox again. Now, you will see **Add** button. Click add button to continue.
+   After you install it, go back to your original portal and refresh the page. Now click the `+` again. Write `Entity Framework Core Migrations Script` to the search textbox again. Now, you will see **Add** button. Click add button to continue.
 
    ![Generate Migration Scripts 2](/images/azure-pipelines-add-ef-core-generate-migration-script2.png)
 
@@ -150,7 +150,7 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
    
 
    Now save the changes by click **Save** button on the toolbar.
-   ![Add yarn](D:/Github/documents/docs/en/images/azure-pipelines-save.png)
+   ![Save changes](/images/azure-pipelines-save.png)
 
 
 
@@ -162,15 +162,13 @@ Alternatively you can  run your job by pressing **Queue** button on the toolbar.
 
 ![Queue](/images/azure-pipelines-queue2.png)
 
-Or  to run the whole process, go to **Builds** menu and on the top-right  there is **Queue** button. Click to start your job. ![Queue](/images/azure-pipelines-queue.png)
-
 ![Job result](/images/azure-pipelines-job-result.png)
 
 
 
 Until now, we have created a pipeline to get our project from GitHub, build, yarn, NPM run build, test and publish.  The next step is copying the publish output to Azure App Service. 
 
-**Before starting this step, we assume that you have already created a web app on Azure App Services**.
+**Before starting this step, we assume that you have already created a web app on Azure App Services and set up your database**.
 
 ![Job result](/images/azure-pipelines-new-pipeline.png)
 
@@ -233,3 +231,8 @@ When you see the green tick for your release, it means it's successfully complet
 ![Configure stage](images/azure-pipelines-release-success.png)
 
 We have successfully set up an Azure Pipeline for an ASP.NET Zero MVC Core project. You can start this pipeline by clicking **Queue** button on the **Builds** menu. But you can also, enable continuous integration by clicking the relevant checkbox in the **Triggers** tab. We will not cover this feature. 
+
+
+
+To run the whole process, go to **Builds** menu and on the top-right, there is **Queue** button. Click to start your job. ![Queue](D:/Github/documents/docs/en/images/azure-pipelines-queue.png)
+
