@@ -12,6 +12,7 @@
 
 ```json
 {
+  "IsRegenerate": false,
   "MenuPosition": "main",
   "RelativeNamespace": "Products",
   "EntityName": "Product",
@@ -19,10 +20,12 @@
   "TableName": "Products",
   "PrimaryKeyType": "int",
   "BaseClass": "Entity",
+  "EntityHistory": false,
   "AutoMigration": true,
   "UpdateDatabase": true,
   "CreateUserInterface": true,
   "CreateViewOnly": true,
+  "CreateExcelExport": true,
   "PagePermission": {
        "Host": true,
        "Tenant": true
