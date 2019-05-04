@@ -273,5 +273,5 @@ When you see the green tick for your release, it means it's successfully complet
 
 We have successfully set up an Azure Pipeline for an ASP.NET Zero MVC Core project. You can start this pipeline by clicking **Queue** button on the **Builds** menu. But you can also, enable continuous integration by clicking the relevant checkbox in the **Triggers** tab. We will not cover this feature. 
 
-To run the whole process, go to **Builds** menu and on the top-right, there is **Queue** button. Click to start your job. ![Queue](D:/Github/documents/docs/en/images/azure-pipelines-queue.png)
+To run the whole process, go to **Builds** menu and on the top-right, there is **Queue** button. Click to start your job. ![Queue](/images/azure-pipelines-queue.png)
 
