@@ -1,0 +1,109 @@
+# Introduction
+
+In this article we will use [Azure Storage Static site](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website) feature to deploy the **AngularUI** site.
+
+## Why use Azure Storage
+
+**AngularUI** is a static website, therefore it can be deployed in Azure storage which provides features specifically designed for static websites.
+such as Custom Domains, and SSL.
+Also; using Azure Storage is much [cheaper](https://azure.microsoft.com/en-us/pricing/details/storage/) than deploying an app Service on Azure.
+
+## Steps
+
+- Create Storage Account
+- Enable Static Website feature
+- Publish files to Azure Storage
+
+### Create Storage Account
+
+follow this article: [Create a storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account)
+and make sure that you are using at least **StorageV2 (general purpose v2)** account kind.
+
+### Enable Static Site feature
+
+go to the newly created storage account and navigate to **Static website** from the side menu.
+
+*if you do not see this option: make sure that you are using at least **StorageV2 (general purpose v2)** account kind.*
+
+- Set **Static website** : Enabled
+- Set **Index document name** : index.html
+- Set **Error document path** : index.html
+
+### Publish files to Azure Storage
+
+once you enable the static website feature on Azure storage, it will automatically create a special container with the name **$web**.
+
+*note: you can not change this name.*
+
+I assume that you already have a *dist* folder built, you can use [this method](/docs/en/Deployment-Angular-Publish-Azure#prepare-the-publish-folder)
+
+#### Update appsettings.json
+
+update the **HOST** appsettings.json with the following:
+
+- ClientRootAddress: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
+- CorsOrigins: add the static website primary end point
+
+update the **AngulrUI** appsettings.json with the following:
+
+- appBaseUrl: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
+
+#### Manual Publishing
+
+you can manually upload your *dist* files using [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) to the *$web* container.
+
+#### Automated publishing using Azure Pipelines
+
+I assume that you already have a **BUILD** pipeline created.
+we will create a **RELEASE** pipeline here to do the following:
+
+- Pick up the *drop* folder from the **BUILD** pipeline
+- Delete everything that exists in **$web** *(always clean the storage container before we upload a new version)*
+- Publish the files to the **$web** container
+
+#### Steps to create a Release Pipeline
+
+- Go to (Azure DevOps)[https://dev.azure.com]
+- Click Pipelines from the side menu
+- Click Releass
+- Click *New* > *New release pipeline*
+- Click *Empty job*
+- Click *Add an artifcat* and select the source of the **AngularUI** dist folder
+- Click on *Stage 1* jobs link
+- Click + to add a new Task to the Agent job
+- Add the following tasks *(in this order)*
+  - Azure CLI
+  - Azure File Copy
+- configure the tasks settings as below
+
+##### Azure CLI : Settings
+
+- Azure Subscription: (select your subscription)
+- Script Location: Inline Script
+- Inline Script
+  - ````az storage blob delete-batch --account-name [STORAGE-ACCOUNT-NAME] --source $web ````
+
+##### Azure File Copy : Settings
+
+*note: (switch to Task Version 3 if it is not the default).*
+
+- Source: (select the source of the drop folder)
+- Azure Subscription: (select your subscription)
+- Destination Type: Azure Blob
+- RM Storage Account: (storage account name)
+- Container Name: $web
+
+That is it, now you can queue a release once a build has completed and droped an artifcat to be picked up from your release pipeline.
+
+<!-- ## BONUS: Custom Domain
+
+you can use Azure Storage Static website feature to have your Custom domain redirected to it with SSL enabled.
+
+for that to work, you have to serve the contents of the static website from Azure CDN.
+
+### Steps to has a Custom Domain for your static website
+
+- Create Azure CDN End point
+- 
+
+Azure Documentation: [Custom Domains](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website#custom-domain-names) -->
