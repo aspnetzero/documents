@@ -63,9 +63,9 @@ we will create a **RELEASE** pipeline here to do the following:
 
 #### Steps to create a Release Pipeline
 
-- Go to (Azure DevOps)[https://dev.azure.com]
+- Go to [Azure DevOps](https://dev.azure.com){target=_blank}
 - Click Pipelines from the side menu
-- Click Releass
+- Click Releases
 - Click *New* > *New release pipeline*
 - Click *Empty job*
 - Click *Add an artifcat* and select the source of the **AngularUI** dist folder
