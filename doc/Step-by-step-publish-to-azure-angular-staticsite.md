@@ -63,14 +63,14 @@ we will create a **RELEASE** pipeline here to do the following:
 
 #### Steps to create a Release Pipeline
 
-- Go to [Azure DevOps](https://dev.azure.com){target=_blank}
-- Click Pipelines from the side menu
-- Click Releases
-- Click *New* > *New release pipeline*
-- Click *Empty job*
-- Click *Add an artifcat* and select the source of the **AngularUI** dist folder
-- Click on *Stage 1* jobs link
-- Click + to add a new Task to the Agent job
+- Go to [Azure DevOps](https://dev.azure.com)
+- Click ````Pipelines```` from the side menu
+- Click ````Releases````
+- Click ````New```` > ````New release pipeline````
+- Click ````Empty job````
+- Click ````Add an artifcat```` and select the source of the **AngularUI** dist folder
+- Click on ````Stage 1```` jobs link
+- Click ````+```` to add a new Task to the Agent job
 - Add the following tasks *(in this order)*
   - Azure CLI
   - Azure File Copy
@@ -78,8 +78,8 @@ we will create a **RELEASE** pipeline here to do the following:
 
 ##### Azure CLI : Settings
 
-- Azure Subscription: (select your subscription)
-- Script Location: Inline Script
+- Azure Subscription: ````(select your subscription)````
+- Script Location: ````Inline Script````
 - Inline Script
   - ````az storage blob delete-batch --account-name [STORAGE-ACCOUNT-NAME] --source $web ````
 
@@ -87,13 +87,13 @@ we will create a **RELEASE** pipeline here to do the following:
 
 *note: (switch to Task Version 3 if it is not the default).*
 
-- Source: (select the source of the drop folder)
-- Azure Subscription: (select your subscription)
-- Destination Type: Azure Blob
-- RM Storage Account: (storage account name)
-- Container Name: $web
+- Source: ````(select the source of the drop folder)````
+- Azure Subscription: ````(select your subscription)````
+- Destination Type: ````Azure Blob````
+- RM Storage Account: ````(storage account name)````
+- Container Name: ````$web````
 
-That is it, now you can queue a release once a build has completed and droped an artifcat to be picked up from your release pipeline.
+That is it, now you can queue a release.
 
 <!-- ## BONUS: Custom Domain
 
