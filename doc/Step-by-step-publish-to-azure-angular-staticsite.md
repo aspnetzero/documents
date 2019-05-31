@@ -12,6 +12,7 @@ Also; using Azure Storage is much [cheaper](https://azure.microsoft.com/en-us/pr
 
 - Create Storage Account
 - Enable Static Website feature
+- **OPTIONAL** Enable Custom Domain
 - Publish files to Azure Storage
 
 ### Create Storage Account
@@ -29,13 +30,17 @@ go to the newly created storage account and navigate to **Static website** from 
 - Set **Index document name** : index.html
 - Set **Error document path** : index.html
 
-### Publish files to Azure Storage
+### OPTIONAL: Custom Domain
 
-once you enable the static website feature on Azure storage, it will automatically create a special container with the name **$web**.
+you can use Azure Storage Static website feature to have your Custom domain redirected to it with SSL enabled.
 
-*note: you can not change this name.*
+for that to work, you have to serve the contents of the static website from Azure CDN.
 
-I assume that you already have a *dist* folder built, you can use [this method](/docs/en/Deployment-Angular-Publish-Azure#prepare-the-publish-folder)
+follow [this article](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-https-custom-domain-cdn) to create Azure CDN end point that will serve the contents over HTTPS on a custom domain.
+
+remember to update the settings in ````appsettings.json```` files below to reflect the new URL for your static site, as now they will be served from the CDN over a custom domain.
+
+then add the task as described in the RELEASE pipeline below, to purge the cache on every release.
 
 #### Update appsettings.json
 
@@ -48,17 +53,25 @@ update the **AngulrUI** appsettings.json with the following:
 
 - appBaseUrl: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
 
+### Publish files to Azure Storage
+
+once you enable the static website feature on Azure storage, it will automatically create a special container with the name **$web**.
+
+*note: you can not change this name.*
+
+I assume that you already have a *dist* folder built and ready for publishing.
+
 #### Manual Publishing
 
 you can manually upload your *dist* files using [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) to the *$web* container.
 
 #### Automated publishing using Azure Pipelines
 
-I assume that you already have a **BUILD** pipeline created.
-we will create a **RELEASE** pipeline here to do the following:
+We will create a **RELEASE** pipeline here to do the following:
 
-- Pick up the *drop* folder from the **BUILD** pipeline
+- Pick up the *drop* folder from the **BUILD** pipeline or any other source
 - Delete everything that exists in **$web** *(always clean the storage container before we upload a new version)*
+- **OPTIONAL (with custom domain)** purge the Azure CDN cache if using a custom domain
 - Publish the files to the **$web** container
 
 #### Steps to create a Release Pipeline
@@ -73,20 +86,31 @@ we will create a **RELEASE** pipeline here to do the following:
 - Click ````+```` to add a new Task to the Agent job
 - Add the following tasks *(in this order)*
   - Azure CLI
+  - Azure CLI (optional with custom domain)
   - Azure File Copy
 - configure the tasks settings as below
 
 ##### Azure CLI : Settings
 
+- Name: Delete all $web container  files
 - Azure Subscription: ````(select your subscription)````
 - Script Location: ````Inline Script````
 - Inline Script
-  - ````az storage blob delete-batch --account-name [STORAGE-ACCOUNT-NAME] --source $web ````
+  - ````az storage blob delete-batch --account-name [STORAGE-ACCOUNT-NAME] --source $web````
+
+##### OPTIONAL (with custom domain): Azure CLI : Settings
+
+- Name: Purge the Azure CDN cache end point
+- Azure Subscription: ````(select your subscription)````
+- Script Location: ````Inline Script````
+- Inline Script
+  - ````az cdn endpoint purge -n [AZURE-CDN-END-POINT-NAME] -g [AZURE-CDN-RESOURCE-GROUP-NAME] --profile-name [AZURE-CDN-PROFILE-NAME] --content-paths "/*"````
 
 ##### Azure File Copy : Settings
 
 *note: (switch to Task Version 3 if it is not the default).*
 
+- Name: Copy new files to $web container
 - Source: ````(select the source of the drop folder)````
 - Azure Subscription: ````(select your subscription)````
 - Destination Type: ````Azure Blob````
@@ -94,16 +118,3 @@ we will create a **RELEASE** pipeline here to do the following:
 - Container Name: ````$web````
 
 That is it, now you can queue a release.
-
-<!-- ## BONUS: Custom Domain
-
-you can use Azure Storage Static website feature to have your Custom domain redirected to it with SSL enabled.
-
-for that to work, you have to serve the contents of the static website from Azure CDN.
-
-### Steps to has a Custom Domain for your static website
-
-- Create Azure CDN End point
-- 
-
-Azure Documentation: [Custom Domains](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website#custom-domain-names) -->
