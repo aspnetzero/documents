@@ -26,15 +26,15 @@ go to the newly created storage account and navigate to **Static website** from 
 
 *if you do not see this option: make sure that you are using at least **StorageV2 (general purpose v2)** account kind.*
 
-- Set **Static website** : Enabled
-- Set **Index document name** : index.html
-- Set **Error document path** : index.html
+- Set **Static website**: Enabled
+- Set **Index document name**: index.html
+- Set **Error document path**: index.html
 
 ### OPTIONAL: Custom Domain
 
 you can use Azure Storage Static website feature to have your Custom domain redirected to it with SSL enabled.
 
-for that to work, you have to serve the contents of the static website from Azure CDN.
+for that to work, you must serve the contents of the static website from Azure CDN.
 
 follow [this article](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-https-custom-domain-cdn) to create Azure CDN end point that will serve the contents over HTTPS on a custom domain.
 
@@ -57,7 +57,7 @@ update the **AngulrUI** appsettings.json with the following:
 
 once you enable the static website feature on Azure storage, it will automatically create a special container with the name **$web**.
 
-*note: you can not change this name.*
+*note you cannot change this name.*
 
 I assume that you already have a *dist* folder built and ready for publishing.
 
@@ -81,7 +81,7 @@ We will create a **RELEASE** pipeline here to do the following:
 - Click ````Releases````
 - Click ````New```` > ````New release pipeline````
 - Click ````Empty job````
-- Click ````Add an artifcat```` and select the source of the **AngularUI** dist folder
+- Click ````Add an artifact```` and select the source of the **AngularUI** dist folder
 - Click on ````Stage 1```` jobs link
 - Click ````+```` to add a new Task to the Agent job
 - Add the following tasks *(in this order)*
@@ -90,7 +90,7 @@ We will create a **RELEASE** pipeline here to do the following:
   - Azure File Copy
 - configure the tasks settings as below
 
-##### Azure CLI : Settings
+##### Azure CLI: Settings
 
 - Name: Delete all $web container  files
 - Azure Subscription: ````(select your subscription)````
@@ -98,7 +98,7 @@ We will create a **RELEASE** pipeline here to do the following:
 - Inline Script
   - ````az storage blob delete-batch --account-name [STORAGE-ACCOUNT-NAME] --source $web````
 
-##### OPTIONAL (with custom domain): Azure CLI : Settings
+##### OPTIONAL (with custom domain): Azure CLI: Settings
 
 - Name: Purge the Azure CDN cache end point
 - Azure Subscription: ````(select your subscription)````
@@ -106,7 +106,7 @@ We will create a **RELEASE** pipeline here to do the following:
 - Inline Script
   - ````az cdn endpoint purge -n [AZURE-CDN-END-POINT-NAME] -g [AZURE-CDN-RESOURCE-GROUP-NAME] --profile-name [AZURE-CDN-PROFILE-NAME] --content-paths "/*"````
 
-##### Azure File Copy : Settings
+##### Azure File Copy: Settings
 
 *note: (switch to Task Version 3 if it is not the default).*
 
@@ -117,4 +117,4 @@ We will create a **RELEASE** pipeline here to do the following:
 - RM Storage Account: ````(storage account name)````
 - Container Name: ````$web````
 
-That is it, now you can queue a release.
+That's it, now you can queue a release.
