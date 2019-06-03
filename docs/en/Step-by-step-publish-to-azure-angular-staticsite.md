@@ -17,7 +17,7 @@ Also; using Azure Storage is much [cheaper](https://azure.microsoft.com/en-us/pr
 
 ### Create Storage Account
 
-follow this article: [Create a storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account)
+Follow this article: [Create a storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account)
 and make sure that you are using at least **StorageV2 (general purpose v2)** account kind.
 
 ### Enable Static Site feature
@@ -49,7 +49,7 @@ update the **HOST** appsettings.json with the following:
 - ClientRootAddress: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
 - CorsOrigins: add the static website primary end point
 
-update the **AngulrUI** appsettings.json with the following:
+update the **AngularUI** appsettings.json with the following:
 
 - appBaseUrl: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
 
@@ -59,7 +59,7 @@ once you enable the static website feature on Azure storage, it will automatical
 
 *note you cannot change this name.*
 
-I assume that you already have a *dist* folder built and ready for publishing.
+It is assumed that you already have a *dist* folder built and ready for publishing.
 
 #### Manual Publishing
 
