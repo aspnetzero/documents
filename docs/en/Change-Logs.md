@@ -6,6 +6,12 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+## v7.0.0 (2019-06-03)
+
+* Upgraded to Metronic v6.
+* Upgraded to Angular v8.
+* Upgraded to Xamarin.Forms v4.
+
 ## v6.9.0 (2019-04-02)
 
 * Use WebPack instead of gulp to bundle assets for MVC app
@@ -89,8 +95,8 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 ## v5.5.1 (2018-06-28)
 
-* Created an Alert system to show alerts on UI for MVC application. 
-*  Upgraded to Metronic v5.3. 
+* Created an Alert system to show alerts on UI for MVC application.
+* Upgraded to Metronic v5.3. 
 * Upgraded to PrimeNG v6. 
 * Bug fixes and enhancements.
 

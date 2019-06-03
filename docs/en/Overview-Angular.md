@@ -23,7 +23,7 @@ Note that ASP.NET Core solution does not have any HTML, JS or CSS code. It simpl
 
 After you create and [download](https://aspnetzero.com/Download) your project, you have a solution structure as shown below for **\*.Web.sln**:
 
-<img src="D:/Github/documents/docs/en/images/solution-overall-host.png" alt="ASP.NET Core solution" class="img-thumbnail" />
+<img src="images/solution-overall-host.png" alt="ASP.NET Core solution" class="img-thumbnail" />
 
 There are two more solutions:
 

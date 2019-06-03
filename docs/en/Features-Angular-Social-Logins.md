@@ -48,7 +48,7 @@ ASP.NET Zero enables and configures social and external login providers in the P
 You can find many documents on the web to learn how to obtain authentication keys for social platforms. So, we will not go to details of creating apps on social media platforms. Once you get your keys, you can write
 them into `appsettings.json`. When you enable it, social media logos are automatically shown on the login page as shown below:
 
-<img src="D:/Github/documents/docs/en/images/social-login-logos-3.png" alt="Social Login Icons" class="img-thumbnail" />
+<img src="images/social-login-logos-3.png" alt="Social Login Icons" class="img-thumbnail" />
 
 Just note that, social media logins and external logins are only available on Tenant scope. So, a tenant must be selected on the login page to see those logos, otherwise there will be no logos on the login page.
 

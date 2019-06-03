@@ -152,7 +152,7 @@
               "path": "Public-Website.md"
             },
             {
-              "text": "GrapQL API",
+              "text": "GraphQL API",
               "path": "GraphQL.md"
             },
             {
@@ -176,6 +176,10 @@
             {
               "text": "Publishing to Docker",
               "path": "Deployment-Mvc-Core-Docker.md"
+            },
+            {
+              "text": "Setting Up an Azure Pipeline",
+              "path": "Setting-Up-an-Azure-Pipeline-Mvc-Core.md"
             }
           ]
         }

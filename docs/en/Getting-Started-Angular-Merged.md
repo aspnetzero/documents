@@ -77,7 +77,7 @@ If you log in to host application, then you will see a page like below:
 
 <img src="images/host-home-page.png" alt="Swagger UI" class="img-thumbnail" />
 
-You can navigate to **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground** from this page. Note that, by default only Swagger UI is enabled, you can enable Hangfire by following [Hangfire documentation](Hangfire) and GraphQL by following [GraphQL documentation](GraphQL).
+You can navigate to **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground** from this page. Note that, by default only Swagger UI is enabled, you can enable Hangfire by following [Hangfire documentation](Hangfire-Angular) and GraphQL by following [GraphQL documentation](GraphQL).
 
 For example when you navigate **Swagger UI**, you will see following page:
 
