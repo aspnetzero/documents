@@ -22,7 +22,7 @@ and make sure that you are using at least **StorageV2 (general purpose v2)** acc
 
 ### Enable Static Site feature
 
-go to the newly created storage account and navigate to **Static website** from the side menu.
+Go to the newly created storage account and navigate to **Static website** from the side menu.
 
 *if you do not see this option: make sure that you are using at least **StorageV2 (general purpose v2)** account kind.*
 
@@ -32,30 +32,30 @@ go to the newly created storage account and navigate to **Static website** from 
 
 ### OPTIONAL: Custom Domain
 
-you can use Azure Storage Static website feature to have your Custom domain redirected to it with SSL enabled.
+You can use Azure Storage Static website feature to have your Custom domain redirected to it with SSL enabled.
 
-for that to work, you must serve the contents of the static website from Azure CDN.
+For that to work, you must serve the contents of the static website from Azure CDN.
 
-follow [this article](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-https-custom-domain-cdn) to create Azure CDN end point that will serve the contents over HTTPS on a custom domain.
+Follow [this article](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-https-custom-domain-cdn) to create Azure CDN end point that will serve the contents over HTTPS on a custom domain.
 
-remember to update the settings in ````appsettings.json```` files below to reflect the new URL for your static site, as now they will be served from the CDN over a custom domain.
+Remember to update the settings in ````appsettings.json```` files below to reflect the new URL for your static site, as now they will be served from the CDN over a custom domain.
 
-then add the task as described in the RELEASE pipeline below, to purge the cache on every release.
+Then add the task as described in the RELEASE pipeline below, to purge the cache on every release.
 
 #### Update appsettings.json
 
-update the **HOST** appsettings.json with the following:
+Update the **HOST** appsettings.json with the following:
 
 - ClientRootAddress: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
 - CorsOrigins: add the static website primary end point
 
-update the **AngularUI** appsettings.json with the following:
+Update the **AngularUI** appsettings.json with the following:
 
 - appBaseUrl: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
 
 ### Publish files to Azure Storage
 
-once you enable the static website feature on Azure storage, it will automatically create a special container with the name **$web**.
+Once you enable the static website feature on Azure storage, it will automatically create a special container with the name **$web**.
 
 *note you cannot change this name.*
 
@@ -63,7 +63,7 @@ It is assumed that you already have a *dist* folder built and ready for publishi
 
 #### Manual Publishing
 
-you can manually upload your *dist* files using [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) to the *$web* container.
+You can manually upload your *dist* files using [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) to the *$web* container.
 
 #### Automated publishing using Azure Pipelines
 
