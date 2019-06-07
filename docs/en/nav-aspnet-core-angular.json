@@ -186,6 +186,10 @@
             {
               "text": "Publishing to Docker",
               "path": "Deployment-Angular-Docker.md"
+            },
+            {
+              "text": "Publishing Angular Application to Azure Storage",
+              "path": "Step-by-step-publish-to-azure-angular-staticsite.md"
             }
           ]
         }

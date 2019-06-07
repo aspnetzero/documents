@@ -1020,7 +1020,7 @@ files are supported, you can extend it.
 
 A user can download his/her collected data using this menu item.
 
-<img src="D:/Github/documents/doc/images/gdpr_download_item.png" alt="Login attempts" class="img-thumbnail" />
+<img src="images/gdpr_download_item.png" alt="Login attempts" class="img-thumbnail" />
 
 ##### Logout
 

@@ -9,4 +9,4 @@ In your `aspnet-core\docker\mvc\` folder, you will see;
 * `up.ps1`  which starts the Docker container with the configuration defined in `docker-compose.yml`
 * `down.ps1`  which shuts down the Docker container with the configuration defined in `docker-compose.yml`
 
-![docker-folder-angular](images\docker-folder-core-mvc.jpg)
+![docker-folder-angular](images/docker-folder-core-mvc.jpg)
