@@ -23,5 +23,8 @@ Publishing ASP.NET Zero Core MVC project is no different to any other ASP.NET Co
 
 <img src="images/iis-core-publish-configure-app-pool.png">
 
+
+For instructions on how to install the ASP.NET Core Module, see [Install the .NET Core Hosting Bundle](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/index?view=aspnetcore-2.1#install-the-net-core-hosting-bundle).
+
 For more information see [Host ASP.NET Core on Windows with IIS](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/index?view=aspnetcore-2.1) document
 
