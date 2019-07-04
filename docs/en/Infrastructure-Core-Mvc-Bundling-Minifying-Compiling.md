@@ -1,6 +1,6 @@
 # Bundling, Minifying and Compiling
 
-ASP.NET Zero uses [webpack](https://webpack.js.org/) for bundling & minifying script and style files. ASP.NET Zero also watches style and script files used for bundling and automatically updates bundles when one of the style or script file is changed in development time.
+ASP.NET Zero uses [Gulp](https://gulpjs.com/) for bundling & minifying script and style files. ASP.NET Zero also watches style and script files used for bundling and automatically updates only the related bundle when one of the style or script file is changed in development time.
 
 Bundle definitions are store in **bundles.json** file. Here is a sample screenshot of bundles.json file:
 
@@ -16,7 +16,9 @@ All input sections in **bundles.json **supports wildcard syntax. So, you can inc
 
 By default, ASP.NET Zero has two commands for bundling style and script files "**npm run create-bundles**" and "**npm run build**".
 
-* **npm run create-bundles**: This command is introduced for development time usage. It watches your style and script files for changes and automatically updates bundles. If you modify **bundles.json** file, you need to re-run this command. It also writes output to console about the bundling progress. Script bundles are not minified when using this command. 
-* **npm run build**: This command is introduced for publishing your app. It doesn't write any output to console and it doesn't watch files for any change. It also minifies script bundles unline "create-bundles"  command.
+* **npm run create-bundles**: This command is introduced for development time usage. It watches your style and script files for changes and automatically updates bundle(s). If you modify **bundles.json** file, you need to re-run this command. It also writes output to console about the bundling progress. Script and style bundles are not minified when using this command. 
+* **npm run build**: This command is introduced for publishing your app. It doesn't write any output to console and it doesn't watch files for any change. It also minifies script and style bundles unlike "create-bundles"  command.
 
-If you need to make any change about ASP.NET Zero's bundling and minification process, you can modify **webpack.config.js**.
+If you need to make any change about ASP.NET Zero's bundling and minification process, you can modify **gulpfile.js** in the root directory of the ***.Web.Mvc** project. 
+
+Same approach is used for ***.Web.Public** website project.
