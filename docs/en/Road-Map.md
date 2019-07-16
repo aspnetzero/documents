@@ -3,14 +3,10 @@
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
 -   Customizable **dashboard/widget** system.
--   **Webhook** system.
--   Improvements on the **Rapid Application Development** tooling.
--   Improvements on the **Xamarin** mobile application.
--   Sending **mass notifications/emails** to users.
 -   Option to allow only one **concurrent login** per user.
--   **Calendar** module.
 -   Session timeout & **lock screen**.
--   User based **menu customization**.
+-   Sending **mass notifications/emails** to users.
+-   **Webhook** system.
 -   **Improvements** on current features.
 -   More **tutorials**, **examples** & **video courses**.
 
