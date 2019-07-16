@@ -116,9 +116,9 @@ And in .Web\\Areas\\{AppAreaName}\Views\\Users\\**Index.cshtml**, add Address co
                 </table>
 ```
 
-That's all. Let's run the application and open the **users page**:
+That's all. Now let's navigate to root directory of ***.Web.Mvc** project and run **npm run create-bundles** command. Then we can start the application and open the **users page**:
 
-<img src="images/extend-entities-user-address-in-table-2.png" alt="Address in table" class="img-thumbnail" width="1381" height="478" />
+<img src="images/extend-entities-user-address-in-table-2.png" alt="Address in table" class="img-thumbnail" width="297" height="240" />
 
 ### Add Address On User Create/Edit
 
@@ -145,7 +145,7 @@ Since **UserAppService** use **auto mapping**, no need to manually map Address t
                         </div>
 ```
 
-This code is written to .Web\\Areas\\{AppAreaName}\Views\\Users\\createOrEditModal.cshtml**. After adding, new Address field is shown on the create/edit form as shown below:
+This code is written to ***.Web\\Areas\\{AppAreaName}\Views\\Users\\createOrEditModal.cshtml**. After adding, new Address field is shown on the create/edit form as shown below:
 
 <img src="images/extend-entities-user-address-in-edit-form.png" alt="Address on user edit form" class="img-thumbnail" width="614" height="906" />
 
