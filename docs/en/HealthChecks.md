@@ -16,7 +16,8 @@ Health checks settings are located in the `appsettings.json` file
       "HealthChecks": [
         {
           "Name": "MyCompanyName.AbpZeroTemplate.Web.MVC",//your app name
-          "Uri": "http://localhost:62114/healthz"//you should change your url before you publish project
+          "Uri": "http://localhost:62114/healthz"/* your_project_url/healthz
+			you should change that url before you publish your project*/
         }
       ],
       "EvaluationTimeOnSeconds": 10,
@@ -38,38 +39,13 @@ Health checks settings are located in the `appsettings.json` file
 There are a lot of libraries which you can add to your health check easily.
 
 ```
-Install-Package AspNetCore.HealthChecks.System
-Install-Package AspNetCore.HealthChecks.Network
-Install-Package AspNetCore.HealthChecks.SqlServer
-Install-Package AspNetCore.HealthChecks.MongoDb
-Install-Package AspNetCore.HealthChecks.Npgsql
-Install-Package AspNetCore.HealthChecks.Elasticsearch
-Install-Package AspNetCore.HealthChecks.Redis
-Install-Package AspNetCore.HealthChecks.EventStore
-Install-Package AspNetCore.HealthChecks.AzureStorage
-Install-Package AspNetCore.HealthChecks.AzureServiceBus
-Install-Package AspNetCore.HealthChecks.AzureKeyVault
-Install-Package AspNetCore.HealthChecks.MySql
-Install-Package AspNetCore.HealthChecks.DocumentDb
-Install-Package AspNetCore.HealthChecks.SqLite
-Install-Package AspNetCore.HealthChecks.RavenDB
-Install-Package AspNetCore.HealthChecks.Kafka
-Install-Package AspNetCore.HealthChecks.RabbitMQ
-Install-Package AspNetCore.HealthChecks.OpenIdConnectServer
-Install-Package AspNetCore.HealthChecks.DynamoDB
-Install-Package AspNetCore.HealthChecks.Oracle
-Install-Package AspNetCore.HealthChecks.Uris
-Install-Package AspNetCore.HealthChecks.Aws.S3
-Install-Package AspNetCore.HealthChecks.Consul
-Install-Package AspNetCore.HealthChecks.Hangfire
-Install-Package AspNetCore.HealthChecks.SignalR
-Install-Package AspNetCore.HealthChecks.Kubernetes
-Install-Package AspNetCore.HealthChecks.Gcp.CloudFirestore
+AspNetCore.HealthChecks.System
+AspNetCore.HealthChecks.Network
+AspNetCore.HealthChecks.SqlServer
+...
 ```
 
 See their own documentation.
-
-
 
 ###### Adding your custom health check
 
@@ -120,11 +96,29 @@ After adding your new health check here, you will be able to see its status in j
 
 ------
 
+**Endpoint:**
+
+- *MyCompanyName.AbpZeroTemplate.Web.Mvc*
+
+  Health checks ui endpoint: http://localhost:62114/healthchecks-ui   (if it is enabled)
+
+  Health checks json result endpoint: http://localhost:62114/healthz  (if it is enabled)
+
+- *MyCompanyName.AbpZeroTemplate.Web.Host (Angular projects can use that health check)*
+
+  Health checks ui endpoint: http://localhost:22742/healthchecks-ui   (if it is enabled)
+
+  Health checks json result endpoint: http://localhost:22742/healthz  (if it is enabled)
+
+- MyCompanyName.AbpZeroTemplate.Web.Public
+
+  Health checks ui endpoint: http://localhost:45776/healthchecks-ui   (if it is enabled)
+
+  Health checks json result endpoint: http://localhost:45776/healthz  (if it is enabled)
 
 
-Health checks ui endpoint is: http://localhost:62114/healthchecks-ui   (if it is enabled)
 
-Health checks json result endpoint is: http://localhost:62114/healthz  (if it is enabled)
+> Note: 
 
 see also: https://github.com/xabaril/AspNetCore.Diagnostics.HealthChecks
 
