@@ -20,7 +20,9 @@ Health checks settings are located in the `appsettings.json` file
         }
       ],
       "EvaluationTimeOnSeconds": 10,
-      "MinimumSecondsBetweenFailureNotifications": 60
+      "MinimumSecondsBetweenFailureNotifications": 60,
+      //"HealthCheckDatabaseConnectionString": "Data Source=[PUT-MY-PATH-HERE]\\healthchecksdb" //-> Optional, default on WebContentRoot,
+      //for example, if you use azure you may need to set this connection string
     }
   }
 ```
