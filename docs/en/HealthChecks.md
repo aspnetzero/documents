@@ -117,9 +117,8 @@ After adding your new health check here, you will be able to see its status in j
   Health checks json result endpoint: http://localhost:45776/healthz  (if it is enabled)
 
 
-see also: https://github.com/xabaril/AspNetCore.Diagnostics.HealthChecks
+see also:  
+https://github.com/xabaril/AspNetCore.Diagnostics.HealthChecks
 
-​		https://docs.docker.com/engine/reference/builder/#healthcheck
-
-
-​                
+https://docs.docker.com/engine/reference/builder/#healthcheck
+            
