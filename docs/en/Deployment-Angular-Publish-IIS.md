@@ -12,7 +12,7 @@ Publishing ASP.NET Zero Host project is no different to any other ASP.NET Core A
 <img src="images/iis-core-publish-select-folder-and-publish.png">
 
 - Create a folder on the server where **IIS** is located. (for example: `C:\inetpub\wwwroot\mywebsite`).
-- Copy extracted files to server. (from `\*.Web.Host/bin/Release/netcoreapp2.1/publish/` to `C:\inetpub\wwwroot\mywebsite`).
+- Copy extracted files to server. (from `*.Web.Host/bin/Release/netcoreapp2.1/publish/` to `C:\inetpub\wwwroot\mywebsite`).
 - Change `appsettings.production.json` configurations with your own settings.
 
 ### Create IIS Web Site
