@@ -168,6 +168,10 @@
             {
               "text": "Swagger UI",
               "path": "Features-Angular-Swagger-UI.md"
+            },
+			{
+              "text": "Healt Checks",
+              "path": "HealthChecks.md"
             }
           ]
         },
