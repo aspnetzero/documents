@@ -5,7 +5,7 @@
 [![Power Tools Marketplace](images/power-tools-marketplace.png)](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
 
 
-Notice that the RAD tool is only available for **ASP.NET Core backend** (not available for ASP.NET MVC 5.x).
+Notice that the Power Tools is only available for **ASP.NET Core backend** (not available for ASP.NET MVC 5.x).
 
 
 
@@ -13,7 +13,7 @@ Notice that the RAD tool is only available for **ASP.NET Core backend** (not ava
 
 [Watch a demonstration of the Power Tools](https://youtu.be/OsSdNkwmC7I?t=1001)
 
-[![RAD tool demonstration](images/RadToolVideo.jpg)](https://youtu.be/OsSdNkwmC7I?t=1001)
+[![Power Tools demonstration](images/RadToolVideo.jpg)](https://youtu.be/OsSdNkwmC7I?t=1001)
 
 ## Documentation
 

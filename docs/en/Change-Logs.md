@@ -112,8 +112,8 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Allow changing primary theme color.
 * Improved Accessibility.
 * Entity Change History User Interface.
-* Rad Tool: Regenerating an entity.
-* Rad Tool: Selecting an entity from database (SQL Server & MySql).
+* Power Tools: Regenerating an entity.
+* Power Tools: Selecting an entity from database (SQL Server & MySql).
 * Upgraded to Angular v6.0. 
 * Bug fixes and enhancements.
 
@@ -128,7 +128,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 ## v5.2.0 (2018-02-20)
 
-* Enum and templating support for the RAD tool.
+* Enum and templating support for the Power Tools.
 * Upgraded to angular v5.2.5 and angular-cli to v1.7.
 * Bug fixes and enhancements.
 

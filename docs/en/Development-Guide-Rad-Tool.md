@@ -38,6 +38,12 @@ To create a new template, do the same process as editing a pre-defined template.
 
  You can report your issues or ask questions on [GitHub](https://github.com/aspnetzero/aspnet-zero-core) or [support.aspnetzero.com](https://support.aspnetzero.com).
 
+## How To Change Destination Path Of New Files?
+
+To change the destination path of a template, find the template folder of it in "AspNetZeroRadTool/FileTemplates" directory and edit the content of **TemplateInfo.txt** file.
+
+Also, if you have moved a file that is going to be modified during rad tool generation, you can modify "AspNetZeroRadTool/**config.json**" file and set the new path of this file.
+
 
 ## Generated Files
 

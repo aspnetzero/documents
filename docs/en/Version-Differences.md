@@ -39,8 +39,8 @@ Angular framework. </p>
 <tbody>
 <tr>
 	<td>User Interface (theme)</td>
-	<td>Metronic v5.x</td>
-	<td>Metronic v5.x</td>
+	<td>Metronic v6.x</td>
+	<td>Metronic v6.x</td>
 	<td>Metronic v4.6.x</td>
 	<td>Metronic v4.6.x</td>
 </tr>

@@ -182,7 +182,16 @@
               "path": "Setting-Up-an-Azure-Pipeline-Mvc-Core.md"
             }
           ]
-        }
+        },
+		{
+			"text": "Miscellaneous",
+			"items":[
+				{
+					"text": "Customization",
+					"path": "Customization-Core-Mvc.md"
+				}
+			]
+		}
       ]
     },
     {

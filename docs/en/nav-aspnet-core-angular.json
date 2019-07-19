@@ -192,7 +192,16 @@
               "path": "Step-by-step-publish-to-azure-angular-staticsite.md"
             }
           ]
-        }
+        },
+		{
+			"text": "Miscellaneous",
+			"items":[
+				{
+					"text": "Customization",
+					"path": "Customization-Angular.md"
+				}
+			]
+		}
       ]
     },
     {

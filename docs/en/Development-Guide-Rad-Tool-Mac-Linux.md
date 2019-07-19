@@ -4,7 +4,7 @@
 
  In this document, we will explain how to use **ASP.NET Zero Power Tools** without the Visual Studio extension.
 
- Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file for the rad tool. So, in order to use it without extension, input file should be created manually. 
+ Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file. So, in order to use it without extension, input file should be created manually. 
 
 ## Sample Input File
 
@@ -137,7 +137,7 @@ A property should be one of those types:
 
  or one of the enums you declared in "EnumDefinitions".
 
-## How To Run Rad Tool
+## How To Run Power Tools
 
 You can use that command to run it on any device:
 
