@@ -1,8 +1,8 @@
 # Health Checks
 
-Aspnet zero has an implementation of the health checks and health checks ui. 
+AspNet Zero has an implementation of health checks and health checks UI. 
 
-You can enable or disable health checks and health checks ui.
+You can enable or disable health checks and health checks UI.
 
 ###### Settings
 
@@ -10,13 +10,13 @@ Health checks settings are located in the `appsettings.json` file
 
 ```json
 "HealthChecks": {
-    "HealthChecksEnabled": true,//enable/disable all health checks.
+    "HealthChecksEnabled": true, //enable/disable all health checks.
     "HealthChecksUI": {
-      "HealthChecksUIEnabled": true,//enable/disable health checks ui
+      "HealthChecksUIEnabled": true, //enable/disable health checks ui
       "HealthChecks": [
         {
-          "Name": "MyCompanyName.AbpZeroTemplate.Web.MVC",//your app name
-          "Uri": "http://localhost:62114/healthz"/* your_project_url/healthz
+          "Name": "MyCompanyName.AbpZeroTemplate.Web.MVC", //your app name
+          "Uri": "http://localhost:62114/healthz" /* your_project_url/healthz
 			you should change that url before you publish your project*/
         }
       ],
@@ -30,13 +30,13 @@ Health checks settings are located in the `appsettings.json` file
 
 
 
-> Note: If you enable health checks ui, don't forget to change your `healthz` url before you publish your website.
+> Note: If you enable Health Checks UI, don't forget to change your `healthz` URL before you publish your website.
 
 
 
 #### Adding new health check
 
-There are a lot of libraries which you can add to your health check easily.
+There are a lot of libraries which you can add to your health check easily. To see a full list of libraries and used package in AspNet Zero, see [https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks](https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks). Here are some sample package names:
 
 ```
 AspNetCore.HealthChecks.System
@@ -45,11 +45,9 @@ AspNetCore.HealthChecks.SqlServer
 ...
 ```
 
-See their own documentation.
-
 ###### Adding your custom health check
 
-To add your own health check you should create a class inherited from `IHealthCheck`. ( We locate our health checks `.Application` )
+To add your own health check, you should create a class inherited from `IHealthCheck`. ( Already implemented health check classes are located under **HealthChecks** folder of `.Application`  project.)
 
 ```c#
   public class MyCustomHealthCheck : IHealthCheck
@@ -72,7 +70,7 @@ To add your own health check you should create a class inherited from `IHealthCh
     }
 ```
 
-In both cases, you should add your health checks to HealthCheckBuilder. Our HealthCheckBuilder is located in `.Web.Core` project.  `( .Web.Core -> HealthCheck -> AbpZeroHealthCheck.cs  -> AddAbpZeroHealthCheck )` .  
+In both cases, you should add your health checks to **HealthCheckBuilder**. HealthCheckBuilder is located in `.Web.Core` project.  `( .Web.Core -> HealthCheck -> AbpZeroHealthCheck.cs  -> AddAbpZeroHealthCheck )` .  
 
 ```c#
 public static class AbpZeroHealthCheck
@@ -92,30 +90,29 @@ public static class AbpZeroHealthCheck
     }
 ```
 
-After adding your new health check here, you will be able to see its status in json and ui automatically.
+After adding your new health check here, you will be able to see its status in JSON and UI automatically.
 
 ------
 
-**Endpoint:**
+**Endpoints:**
 
-- *MyCompanyName.AbpZeroTemplate.Web.Mvc*
+- *MVC project (Only exists in ASP.NET Core & jQuery version)*
 
-  Health checks ui endpoint: http://localhost:62114/healthchecks-ui   (if it is enabled)
+  Health checks UI endpoint: http://localhost:62114/healthchecks-ui   (if it is enabled)
 
-  Health checks json result endpoint: http://localhost:62114/healthz  (if it is enabled)
+  Health checks JSON result endpoint: http://localhost:62114/healthz  (if it is enabled)
 
-- *MyCompanyName.AbpZeroTemplate.Web.Host (Angular projects can use that health check)*
+- *Host project (Available in ASP.NET Core versions but designed for Angular project)*
 
-  Health checks ui endpoint: http://localhost:22742/healthchecks-ui   (if it is enabled)
+  Health checks UI endpoint: http://localhost:22742/healthchecks-ui   (if it is enabled)
 
-  Health checks json result endpoint: http://localhost:22742/healthz  (if it is enabled)
+  Health checks JSON result endpoint: http://localhost:22742/healthz  (if it is enabled)
 
-- MyCompanyName.AbpZeroTemplate.Web.Public
+- *Public Website*
 
-  Health checks ui endpoint: http://localhost:45776/healthchecks-ui   (if it is enabled)
+  Health checks UI endpoint: http://localhost:45776/healthchecks-ui   (if it is enabled)
 
-  Health checks json result endpoint: http://localhost:45776/healthz  (if it is enabled)
-
+  Health checks JSON result endpoint: http://localhost:45776/healthz  (if it is enabled)
 
 see also:  
 https://github.com/xabaril/AspNetCore.Diagnostics.HealthChecks
