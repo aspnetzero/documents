@@ -118,4 +118,6 @@ see also:
 https://github.com/xabaril/AspNetCore.Diagnostics.HealthChecks
 
 https://docs.docker.com/engine/reference/builder/#healthcheck
-            
+           
+
+> Note: If you enable health checks, it will create its dbContext. That's why, when you try to create new migration or update database you should also use `-c [YourProjectName]DbContext` command.
