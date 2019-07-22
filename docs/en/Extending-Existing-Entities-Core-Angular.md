@@ -142,7 +142,7 @@ Since **UserAppService** use **auto mapping**, no need to manually map Address t
 ```html
 <div class="form-group">
      <label for="Address">{{"Address" | localize}}</label>
-     <input id="Address" #surnameInput="ngModel" type="text" name="Address" class="form-control" [(ngModel)]="user.address">
+     <input id="Address" #addressInput="ngModel" type="text" name="Address" class="form-control" [(ngModel)]="user.address">
 </div>
 ```
 
