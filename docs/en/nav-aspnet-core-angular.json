@@ -170,7 +170,7 @@
               "path": "Features-Angular-Swagger-UI.md"
             },
 			{
-              "text": "Healt Checks",
+              "text": "Health Checks",
               "path": "HealthChecks.md"
             }
           ]

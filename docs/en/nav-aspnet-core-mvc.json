@@ -160,7 +160,7 @@
               "path": "Features-Mvc-Core-Swagger-UI.md"
             },
 			{
-              "text": "Healt Checks",
+              "text": "Health Checks",
               "path": "HealthChecks.md"
             }
           ]
