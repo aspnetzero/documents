@@ -61,4 +61,4 @@ Under this tab, there is only one setting which is used to enable/disable quick 
 
 ## Next
 
-- [Tenant Settings](Features-Angular-Tenant-Settings)
+- [Tenant Settings](Features-Mvc-Core-Tenant-Settings)
