@@ -1,4 +1,4 @@
-# Bundling, Minifying and Compiling
+# Dynamic Asset Bundling and Minifying
 
 AspNet Zero uses [Angular CLI](https://cli.angular.io/) to build the Angular application and it creates style and script bundles. But for some cases, an Angular app might decide which style/script file to use at runtime and loads this style/script file dynamically. For such cases, AspNet Zero provides a bundling and minification system.
 
