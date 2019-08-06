@@ -269,6 +269,10 @@
         {
           "text": "Penetration Test",
           "path": "Security-Report-Angular.md"
+        },
+		{
+          "text": "Dynamic Asset Bundling and Minifying",
+          "path": "Infrastructure-Angular-Bundling-Minifying-Compiling.md"
         }
       ]
     },
