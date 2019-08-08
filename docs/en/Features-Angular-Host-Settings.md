@@ -33,7 +33,7 @@ User related settings can be configured under this tab. You can force email conf
 
 ## Security
 
-<img src="images/host-settings-security-4.png" alt="Security Settings" class="img-thumbnail" />
+<img src="images/host-settings-security-5.png" alt="Security Settings" class="img-thumbnail" />
 
 **Security** tab in host settings page contains password complexity settings. Host can define system wide password complexity settings in this tab. Each tenant can override this setting in tenant settings page. 
 
