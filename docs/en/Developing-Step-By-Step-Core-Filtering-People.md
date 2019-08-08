@@ -39,12 +39,6 @@ And added Filter property to the IndexViewModel:
 public class IndexViewModel : ListResultDto<PersonListDto>
 {
     public string Filter { get; set; }
-
-    public IndexViewModel(ListResultDto<PersonListDto> output, string filter = null)
-    {
-        output.MapTo(this);
-        Filter = filter;
-    }
 }
 ```
 
@@ -55,7 +49,8 @@ Lastly, changed PhoneBookController's **Index** action to pass the
 public ActionResult Index(GetPeopleInput input)
 {
     var output = _personAppService.GetPeople(input);
-    var model = new IndexViewModel(output, input.Filter);
+    var model = ObjectMapper.MapTo<IndexViewModel>(output);
+    model.Filter = input.Filter;
 
     return View(model);
 }
