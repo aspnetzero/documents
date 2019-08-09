@@ -374,14 +374,14 @@ public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
             .ThenBy(p => p.Surname)
             .ToList();
 
-        return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
+        return new ListResultDto<PersonListDto>(ObjectMapper.MapTo<List<PersonListDto>>(persons));
     }
 }
 ```
 
 We're injecting **person repository** (it's automatically created by ABP) and using it to filter and get people from database.
 
-**WhereIf** is an extension method here (defined in Abp.Linq.Extensions namespace). It performs Where condition, only if filter is not null or empty. **IsNullOrEmpty** is also an extension method (defined in Abp.Extensions namespace). ABP has many similar shortcut extension methods. **MapTo** method automatically converts list of Person entities to list of PersonListDto objects using **AutoMapper** library.
+**WhereIf** is an extension method here (defined in Abp.Linq.Extensions namespace). It performs Where condition, only if filter is not null or empty. **IsNullOrEmpty** is also an extension method (defined in Abp.Extensions namespace). ABP has many similar shortcut extension methods. **ObjectMapper's MapTo** method automatically converts list of Person entities to list of PersonListDto objects using **AutoMapper** library.
 
 ### Connection & Transaction Management
 
@@ -618,7 +618,7 @@ Here, the implementation of CreatePerson method:
 ```csharp
 public async Task CreatePerson(CreatePersonInput input)
 {
-    var person = input.MapTo<Person>();
+    var person = ObjectMapper.MapTo<Person>(input);
     await _personRepository.InsertAsync(person);
 }
 ```
@@ -1385,7 +1385,7 @@ public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
         .ThenBy(p => p.Surname)
         .ToList();
 
-    return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
+    return new ListResultDto<PersonListDto>(ObjectMapper.MapTo<List<PersonListDto>>(persons));
 }
 ```
 
@@ -1436,12 +1436,12 @@ public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 {
     var person = _personRepository.Get(input.PersonId);
 
-    var phone = input.MapTo<Phone>();
+    var phone = ObjectMapper.MapTo<Phone>(input);
     person.Phones.Add(phone);
 
     await CurrentUnitOfWork.SaveChangesAsync();
 
-    return phone.MapTo<PhoneInPersonListDto>();
+    return ObjectMapper.MapTo<PhoneInPersonListDto>(phone);
 }
 ```
 

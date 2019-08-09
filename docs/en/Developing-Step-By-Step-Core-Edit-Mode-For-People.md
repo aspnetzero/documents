@@ -75,10 +75,7 @@ namespace Acme.PhoneBook.Web.Areas.App.Models.PhoneBook
     [AutoMapFrom(typeof(GetPersonForEditOutput))]
     public class EditPersonModalViewModel : GetPersonForEditOutput
     {
-        public EditPersonModalViewModel(GetPersonForEditOutput output)
-        {
-            output.MapTo(this);
-        }
+
     }
 }
 ```
@@ -144,7 +141,7 @@ Add Those lines to **PhoneBookController.cs**:
         public async Task<PartialViewResult> EditPersonModal(int id)
         {
             var output = await _personAppService.GetPersonForEdit(new EntityDto { Id = id });
-            var viewModel = new EditPersonModalViewModel(output);
+            var viewModel = ObjectMapper.MapTo<EditPersonModalViewModel>(output);
 
             return PartialView("_EditPersonModal", viewModel);
         }

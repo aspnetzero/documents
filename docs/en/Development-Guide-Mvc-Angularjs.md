@@ -1225,11 +1225,11 @@ shown below:
 [AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
 public async Task<TenantEditDto> GetTenantForEdit(EntityRequestInput input)
 {
-    return (await TenantManager.GetByIdAsync(input.Id)).MapTo<TenantEditDto>();
+    return ObjectMapper.MapTo<TenantEditDto>((await TenantManager.GetByIdAsync(input.Id)));
 }
 ```
 
-**MapTo** method does mapping.
+**ObjectMapper's MapTo** method does mapping.
 
 #### Custom Object Mappings
 

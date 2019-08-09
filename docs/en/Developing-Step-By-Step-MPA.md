@@ -400,7 +400,7 @@ public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
             .ThenBy(p => p.Surname)
             .ToList();
 
-        return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
+        return new ListResultDto<PersonListDto>(ObjectMapper.MapTo<List<PersonListDto>>(persons));
     }
 }
 ```
@@ -412,7 +412,7 @@ ABP) and using it to filter and get people from database.
 namespace). It performs Where condition, only if filter is not null or
 empty. **IsNullOrEmpty** is also an extension method (defined in
 Abp.Extensions namespace). ABP has many similar shortcut extension
-methods. **MapTo** method automatically converts list of Person entities
+methods. **ObjectMapper's MapTo** method automatically converts list of Person entities
 to list of PersonListDto objects using **AutoMapper** library.
 
 ### Connection & Transaction Management
@@ -572,7 +572,7 @@ public class PhoneBookController : PhoneBookControllerBase
     public ActionResult Index(GetPeopleInput input)
     {
         var output = _personAppService.GetPeople(input);
-        var model = new IndexViewModel(output);
+        var model = ObjectMapper.MapTo<IndexViewModel>(output);
 
         return View(model);
     }
@@ -588,10 +588,7 @@ created a ViewModel object and passes to the view. Let's see the
 [AutoMapFrom(typeof (ListResultDto<PersonListDto>))]
 public class IndexViewModel : ListResultDto<PersonListDto>
 {
-    public IndexViewModel(ListResultDto<PersonListDto> output)
-    {
-        output.MapTo(this);
-    }
+
 }
 ```
 
@@ -711,7 +708,7 @@ Here, the implementation of CreatePerson method:
 ```csharp
 public async Task CreatePerson(CreatePersonInput input)
 {
-    var person = input.MapTo<Person>();
+    var person = ObjectMapper.MapTo<Person>(input);
     await _personRepository.InsertAsync(person);
 }
 ```
@@ -1348,12 +1345,6 @@ And added Filter property to the IndexViewModel:
 public class IndexViewModel : ListResultDto<PersonListDto>
 {
     public string Filter { get; set; }
-
-    public IndexViewModel(ListResultDto<PersonListDto> output, string filter = null)
-    {
-        output.MapTo(this);
-        Filter = filter;
-    }
 }
 ```
 
@@ -1364,7 +1355,8 @@ Lastly, changed PhoneBookController's **Index** action to pass the
 public ActionResult Index(GetPeopleInput input)
 {
     var output = _personAppService.GetPeople(input);
-    var model = new IndexViewModel(output, input.Filter);
+    var model = ObjectMapper.MapTo<IndexViewModel>(output);
+    model.Filter = input.Filter;
 
     return View(model);
 }
@@ -1578,7 +1570,7 @@ public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
         .ThenBy(p => p.Surname)
         .ToList();
 
-    return new ListResultDto<PersonListDto>(persons.MapTo<List<PersonListDto>>());
+    return new ListResultDto<PersonListDto>(ObjectMapper.MapTo<List<PersonListDto>>(persons));
 }
 ```
 
@@ -1629,12 +1621,12 @@ public async Task<PhoneInPersonListDto> AddPhone([FromBody]AddPhoneInput input)
 {
     var person = _personRepository.Get(input.PersonId);
 
-    var phone = input.MapTo<Phone>();
+    var phone = ObjectMapper.MapTo<Phone>(input);
     person.Phones.Add(phone);
 
     await CurrentUnitOfWork.SaveChangesAsync();
 
-    return phone.MapTo<PhoneInPersonListDto>();
+    return ObjectMapper.MapTo<PhoneInPersonListDto>(phone);
 }
 ```
 
