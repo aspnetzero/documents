@@ -103,7 +103,13 @@
             },
             {
               "text": "Host Settings",
-              "path": "Features-Mvc-Core-Host-Settings.md"
+              "path": "Features-Mvc-Core-Host-Settings.md",
+			  "items": [
+				{
+                  "text": "Google Authenticator",
+                  "path": "Google-Authenticator-Usage.md"
+                }
+			  ]
             },
             {
               "text": "Tenant Settings",

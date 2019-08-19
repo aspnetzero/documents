@@ -117,7 +117,13 @@
             },
             {
               "text": "Host Settings",
-              "path": "Features-Angular-Host-Settings.md"
+              "path": "Features-Angular-Host-Settings.md",
+			  "items": [
+				{
+                  "text": "Google Authenticator",
+                  "path": "Google-Authenticator-Usage.md"
+                }
+			  ]
             },
             {
               "text": "Tenant Settings",
