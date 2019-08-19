@@ -43,7 +43,7 @@ This tab also contains user lock-out settings and two factor login settings as w
 >
 > * To use two factor login with **SMS verification** you have to enable **Phone number verification enabled (via SMS)** setting in **User Management** tab.
 >
-> * If user does not have verified phone number they will allow to login.
+> * If user does not have a verified phone number, user will be logged in without sms verification.
 
 ## Email
 
