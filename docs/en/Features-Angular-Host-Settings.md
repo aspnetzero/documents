@@ -39,6 +39,12 @@ User related settings can be configured under this tab. You can force email conf
 
 This tab also contains user lock-out settings and two factor login settings as well.
 
+> Note:
+>
+> * To use two factor login with **SMS verification** you have to enable **Phone number verification enabled (via SMS)** setting in **User Management** tab.
+>
+> * If user does not have a verified phone number, user will be logged in without sms verification.
+
 ## Email
 
 <img src="images/host-settings-email.png" alt="Email Settings" class="img-thumbnail" />
