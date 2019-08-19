@@ -1,39 +1,33 @@
 # Google Authenticator
 
-To use google authenticator enable **two factor user login** then enable **Google Authenticator** in host settings Security tab.
+To use Google Authenticator, enable **two factor user login** then enable **Google Authenticator** in host settings Security tab.
 
 ## Usage
 
-
-
-* Download Google Authenticator mobile app.
-
-  [Android](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=tr)
-  [IOS](https://apps.apple.com/us/app/google-authenticator/id388497605)
-
-* Go to **My settings** -> **Two Factor Login** tab and enable Google Authenticator.
+* Install Google Authenticator mobile app to your mobile phone (Search for "Google Authenticator" to install).
+* In AspNet Zero, go to **My settings** -> **Two Factor Login** tab and enable Google Authenticator.
 
 ![mysettings-two-factor-login-1](images\mysettings-two-factor-login.png)
 
 
 
-* After you enable it you will see qr code like below. Open your app and scan QR code.
+* After enabling Google Authenticator, you will see a QR Code like below. Open your app and scan QR code.
 
   ![mysettings-two-factor-login-1](images\mysettings-two-factor-login-qr.png)
 
 
 
-After that you will be able to use **Google Authenticator** with to factor. 
+After that you will be able to use **Google Authenticator** during two-factor login. 
 
-* When you try to login you will see google authenticator option to login. 
+* When you try to login, you will see Google Authenticator option:
 
-  ![login-page-google-auth](C:\Users\Musa\Desktop\documents\docs\en\images\login-page-google-auth.png)
+  ![login-page-google-auth](images\login-page-google-auth.png)
 
-* Select **GoogleAuthenticator** then open your application. 
+* Select **GoogleAuthenticator** and then open Google Authenticator mobile app on your mobile phone. 
 
-  ![google-auth-mobile-screenshot](C:\Users\Musa\Desktop\documents\docs\en\images\google-auth-mobile-screenshot.jpeg)
+  ![google-auth-mobile-screenshot](images\google-auth-mobile-screenshot.jpeg)
 
-* Use your temporary password which google gives you to login system.
+* Enter the code you see on the Google Authenticator app as the verification code:
 
-![google-auth-verify-security-code](C:\Users\Musa\Desktop\documents\docs\en\images\google-auth-verify-security-code.png)
+  ![google-auth-verify-security-code](images\google-auth-verify-security-code.png)
 
