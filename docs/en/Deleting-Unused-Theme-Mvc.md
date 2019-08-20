@@ -4,7 +4,7 @@ Its how to delete unused theme step by step.
 
 Let's say that we are deleting Theme2.
 
-* Go to  `*Application.Shared` project. Open `AppConts.cs`  and delete Theme2 field. 
+* Go to  `*Application.Shared` project. Open `AppConsts.cs`  and delete Theme2 field. 
 
 * Go to `*.Web.Core` project.
   * Delete `Theme2UiCustomizer.cs`
