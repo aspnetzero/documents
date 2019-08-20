@@ -15,6 +15,6 @@ Let's say that we are deleting Theme2.
     * Go to **UICustomization** folder
       * Delete `_Theme2Settings.cshtml`	
       * Open `Index.cshml` and delete Theme2 code parts
-    * Go to **Shared -> Components **folder. Delete `AppTheme2Brand` `AppTheme2Footer` folders.
+    * Go to **Shared -> Components **folder. Delete `AppAreaNameTheme2Brand` `AppAreaNameTheme2Footer` folders.
   * Go to **wwwroot -> metronic -> themes** folder and delete theme2 folder.
   * Open `bundles.json`. Search Theme2 and delete all founded bundles.
