@@ -8,7 +8,7 @@ Let's say that we are deleting Theme2.
 
 * Go to `*.Web.Core` project.
   * Delete `Theme2UiCustomizer.cs`
-  * Open `GetUiCustomizerInternal.cs` and delete Theme2 code parts in `GetUiCustomizerInternal` function.
+  * Open `UiThemeCustomizerFactory.cs` and delete Theme2 code parts in `GetUiCustomizerInternal` function.
 * Go to `*.Core`  project. Open `AppSettingProvider.cs` and delete `GetTheme2Settings` function
 * Go to `*.Web.Mvc`
   * Go to **Areas -> App -> Views **folder
