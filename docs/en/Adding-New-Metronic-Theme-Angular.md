@@ -55,10 +55,10 @@ Let's say that we are adding theme named "ThemeX"
 
 * Go to  **src-> app -> shared -> layout** folder
   * Go to **themes** folder.
-    * Create folder named `themeX`.
-    * Create components named  `themeX-brand` and `themeX-layout`
-    * Copy their body from default theme components (from `default-brand` and `default-layout`) and change needed changes.
-    * Create `ThemeXThemeAssetContributor` and copy its content from `DefaultThemeAssetContributor` .This class returns additional assets so change needed changes for your new themeX.
+    * Create folder named `themeX`. And Go to **themeX** folder.
+      * Create components named  `themeX-brand` and `themeX-layout`
+      * Copy their body from default theme components (from `default-brand` and `default-layout`) and change needed changes.
+      * Create `ThemeXThemeAssetContributor` and copy its content from `DefaultThemeAssetContributor` .This class returns additional assets so change needed changes for your new themeX.
   * Go to **theme-selection** folder. Open `theme-selection-panel.component.html` and add themeX to list.
 * Go to **src-> app -> shared -> helper**  and open `DynamicResourceHelpers.ts`. Add `ThemeXThemeAssetContributor` to `getAdditionalThemeAssets` function
 
