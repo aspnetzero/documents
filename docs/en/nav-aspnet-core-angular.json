@@ -208,7 +208,17 @@
 			"items":[
 				{
 					"text": "Customization",
-					"path": "Customization-Angular.md"
+					"path": "Customization-Angular.md",
+					"items": [
+						{
+							"text": "Adding a new Metronic theme",
+							"path": "Adding-New-Metronic-Theme-Angular.md"
+						},
+						{
+							"text": "Deleting an existing Metronic theme",
+							"path": "Deleting-A-Metronic-Theme-Angular.md"
+						}
+					]
 				}
 			]
 		}

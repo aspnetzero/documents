@@ -198,7 +198,17 @@
 			"items":[
 				{
 					"text": "Customization",
-					"path": "Customization-Core-Mvc.md"
+					"path": "Customization-Core-Mvc.md",
+					"items": [
+						{
+							"text": "Adding a new Metronic theme",
+							"path": "Adding-New-Metronic-Theme-Mvc-Core.md"
+						},
+						{
+							"text": "Deleting an existing Metronic theme",
+							"path": "Deleting-A-Metronic-Theme-Mvc-Core.md "
+						}
+					]
 				}
 			]
 		}
