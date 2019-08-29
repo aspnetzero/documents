@@ -1,16 +1,16 @@
 # Adding New Metronic Theme
 
-Its how to add new theme to your project step by step.
+Metronic theme currently has 12 different themes and AspNet Zero includes them all. However, you might want to add a new theme option designed by your team to those options. This document explains step by step to add a new theme option to AspNet Zero. Just note that, the added theme must be a Metronic theme or at least it must be compatible with Metronic.
 
-Let's say that we are adding theme named "ThemeX"
+Rest of the document will use **ThemeX** as the new theme name.
 
-* Go to  `*Application.Shared` project. Open `AppConsts.cs`  and add new field named ThemeX. 
+* Go to  `*Application.Shared` project. Open `AppConsts.cs`  and add a new field named ThemeX. 
 
 * Go to `*.Web.Core` project.
 
   - Create new UICustomizer named `ThemeXUiCustomizer.cs` . Copy `ThemeDefaultUiCustomizer.cs` into  `ThemeXUiCustomizer.cs` and change necessary settings. (It has setting methods, If your new ThemeX also have that settings keep them otherwise delete them)
 
-  - Open `UiThemeCustomizerFactory.cs` and add ThemeX code parts in `GetUiCustomizerInternal` function.
+  - Open `UiThemeCustomizerFactory.cs` and add ThemeX code parts in `GetUiCustomizerInternal` method.
 
     ```csharp
     ...
@@ -23,7 +23,7 @@ Let's say that we are adding theme named "ThemeX"
 
 * Go to `*.Core`  project. Open `AppSettingProvider.cs` 
 
-  *  Add function  named `GetThemeXSettings`  which return ThemeX settings. (Where you turn back settings. If you did same changes in `ThemeDefaultUiCustomizer.cs` , return that settings too.)
+  *  Add a function named `GetThemeXSettings` which returns ThemeX settings. 
 
   * Call it in `GetSettingDefinitions` function
 
@@ -51,7 +51,7 @@ Let's say that we are adding theme named "ThemeX"
 
   * Go to **Areas -> App -> Views** folder.
 
-    * Create new view named `_ThemeXSettings.cshtml` . Copy `_DefaultSettings.chtml` content into `_ThemeXSettings.cshtml`. (It where theme settings defined. Make same changes which you did in `ThemeXUiCustomizer`)
+    * Create new view named `_ThemeXSettings.cshtml` . Copy `_DefaultSettings.chtml` content into `_ThemeXSettings.cshtml`. (Make same changes which you did in `ThemeXUiCustomizer`)
     * Open `Index.cshtml` and add your new theme.
 
     ```html
@@ -81,7 +81,7 @@ Let's say that we are adding theme named "ThemeX"
 
     Copy **AppAreaNameDefaultBrandViewComponent** and **AppAreaNameDefaultFooterViewComponent ** folders. These folders has 2 component Change their name and necessary parts.
 
-  * Go to **wwwroot -> metronic -> themes** and create folder named themeX.  Copy default folder content here and change what you need.(change css, js as you wish)
+  * Go to **wwwroot -> metronic -> themes** and create folder named themeX.  Copy default folder content here and change what you need (change css, js as you wish).
 
   * Open `bundle.json` and add new bundles that you add **wwwroot -> metronic -> themes -> themeX** 
 
