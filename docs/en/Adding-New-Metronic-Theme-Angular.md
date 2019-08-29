@@ -1,12 +1,12 @@
 # Adding New Metronic Theme
 
-Its how to add new theme to your project step by step.
+Metronic theme currently has 12 different themes and AspNet Zero includes them all. However, you might want to add a new theme option designed by your team to those options. This document explains step by step to add a new theme option to AspNet Zero. Just note that, the added theme must be a Metronic theme or at least it must be compatible with Metronic.
 
-Let's say that we are adding theme named "ThemeX"
+Rest of the document will use **ThemeX** as the new theme name.
 
 ##### 		*.Net Part*
 
-* Go to  `*Application.Shared` project. Open `AppConsts.cs`  and add new field named ThemeX. 
+* Go to  `*Application.Shared` project, open `AppConsts.cs`  and add new field named ThemeX. 
 
 * Go to `*.Web.Core` project.
 
@@ -25,7 +25,7 @@ Let's say that we are adding theme named "ThemeX"
 
 * Go to `*.Core`  project. Open `AppSettingProvider.cs` 
 
-  - Add function  named `GetThemeXSettings`  which return ThemeX settings. (Where you turn back settings. If you did same changes in `ThemeDefaultUiCustomizer.cs` , return that settings too.)
+  - Add a method named `GetThemeXSettings`  which returns ThemeX settings.
 
   - Call it in `GetSettingDefinitions` function
 
@@ -55,10 +55,10 @@ Let's say that we are adding theme named "ThemeX"
 
 * Go to  **src-> app -> shared -> layout** folder
   * Go to **themes** folder.
-    * Create folder named `themeX`. And Go to **themeX** folder.
+    * Create a folder named `themeX` and go to **themeX** folder.
       * Create components named  `themeX-brand` and `themeX-layout`
       * Copy their body from default theme components (from `default-brand` and `default-layout`) and change needed changes.
-      * Create `ThemeXThemeAssetContributor` and copy its content from `DefaultThemeAssetContributor` .This class returns additional assets so change needed changes for your new themeX.
+      * Create `ThemeXThemeAssetContributor` and copy its content from `DefaultThemeAssetContributor` .This class returns additional assets so make needed changes for your new themeX.
   * Go to **theme-selection** folder. Open `theme-selection-panel.component.html` and add themeX to list.
 * Go to **src-> app -> shared -> helper**  and open `DynamicResourceHelpers.ts`. Add `ThemeXThemeAssetContributor` to `getAdditionalThemeAssets` function
 
@@ -74,7 +74,7 @@ if (theme === 'themeX') {
 
   * Go to **ui-customization** folder.
 
-    * Create `themex-theme-ui-settings` component. Copy its content from `default-theme-ui-settings` component. This is where you select ui settings, If your new ThemeX also have that settings keep them otherwise delete them and add what is needed.
+    * Create `themex-theme-ui-settings` component. Copy its content from `default-theme-ui-settings` component. This is where you select UI settings, If your new ThemeX also have that settings keep them otherwise delete them and add what is needed.
 
     * Open `ui-customization.component.html` and add your component.
 
