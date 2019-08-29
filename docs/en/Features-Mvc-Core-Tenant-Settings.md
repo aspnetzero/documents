@@ -22,7 +22,9 @@ Under the appearance tab, each tenant can upload a logo file and upload a custom
 
 Under the user management tab, each tenant can configure some user management settings related to their account. Each tenant can enable/disable user registration for their account. Tenants can also make newly registered users for their account active or passive by default.
 
-Each tenant can also enable/disable captcha on user registration and login page  for their account.
+Each tenant can also enable/disable captcha on user registration and login page for their account.
+
+> Note: **Token Based Authentication** has `ReCaptchaIgnoreWhiteList` located in `WebConsts`. If whitelist contains `User-Agent` header, does not control captcha.
 
 Each tenant can also enable/disable session timeout control. If it is enable and the user does not provide any input to the site during the timeout period, the modal is turned on. If the user still does not provide any input to the site during the modal countdown period, user will be log out.
 
