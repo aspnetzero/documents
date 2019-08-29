@@ -1,8 +1,6 @@
-# Deleting Unused Theme
+# Deleting a Metronic Theme
 
-Its how to delete unused theme step by step.
-
-Let's say that we are deleting Theme2.
+Metronic theme currently has 12 different themes and AspNet Zero includes them all. However, you might want to use only specific themes and delete some others. This document explains how to delete a theme option from AspNet Zero. In this document, deleting **Theme2** will be explained. You can apply same steps to delete other theme options.
 
 ​		***.Net Part***
 
@@ -17,6 +15,7 @@ Let's say that we are deleting Theme2.
   
 
   ***Angular Part***
+  
 * Go to **src-> app -> shared -> layout** folder
   * Go to **themes** folder. Delete **theme2** folder	
   * Go to **theme-selection** folder. Open `theme-selection-panel.component.html` and delete Theme2 code parts.
@@ -36,3 +35,7 @@ Let's say that we are deleting Theme2.
 * Go to **src -> app**. Open `app.component.html` and delete Theme2 code parts.
 
 * Open `bundles.js` and delete Theme2 bundles.
+
+
+
+Just note that, if you are deleting a theme on an already published application, don't forget to delete records with the name equals to "**App.UiManagement.Theme**" and name starts with "**Theme2.***" in AbpSettings table. 
