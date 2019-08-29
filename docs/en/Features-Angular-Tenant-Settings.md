@@ -24,7 +24,7 @@ Under the user management tab, each tenant can configure some user management se
 
 Each tenant can also enable/disable captcha on user registration and login page for their account.
 
-Each tenant can also enable/disable session timeout control. If it is enable and the user does not provide any input to the site during the timeout period, the modal is turned on. If the user still does not provide any input to the site during the modal time out period, user will be log out.
+Each tenant can also enable/disable session timeout control. If it is enable and the user does not provide any input to the site during the timeout period, the modal is turned on. If the user still does not provide any input to the site during the modal countdown period, user will be log out.
 
 Also, each tenant can enable/disable cookie consent so ASP.NET Zero shows a cookie consent bar for the users of that tenant to accept cookie policy of the application.
 
