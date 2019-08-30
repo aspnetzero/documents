@@ -18,11 +18,15 @@ Under the appearance tab, each tenant can upload a logo file and upload a custom
 
 ## User Management
 
-<img src="images/tenant-settings-core-user-management.png" alt="User management settings" class="img-thumbnail" />
+<img src="images/tenant-settings-core-user-management-2.png" alt="User management settings" class="img-thumbnail" />
 
 Under the user management tab, each tenant can configure some user management settings related to their account. Each tenant can enable/disable user registration for their account. Tenants can also make newly registered users for their account active or passive by default.
 
-Each tenant can also enable/disable captcha on user registration page for their account.
+Each tenant can also enable/disable captcha on user registration and login page for their account.
+
+> Note: **Token Based Authentication** has `ReCaptchaIgnoreWhiteList` located in `WebConsts`. If you want a client app to be ignored for reCaptcha control during login, add a value to `ReCaptchaIgnoreWhiteList` and send the same value in the `User-Agent` request header for your login request from the client app. You can check the Xamarin mobile app in AspNet Zero to see how `ReCaptchaIgnoreWhiteList` works.
+
+Each tenant can also enable/disable session timeout control for tenant users. If it is enable and the user does not provide any input to the site during the timeout period, a countdown modal will be displayed to user. If the user still does not provide any input to the site during the modal countdown period, user will be log out.
 
 Also, each tenant can enable/disable cookie consent so ASP.NET Zero shows a cookie consent bar for the users of that tenant to accept cookie policy of the application.
 
