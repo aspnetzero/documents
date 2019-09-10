@@ -112,7 +112,7 @@ Open the **phonebook.component.html** view and add the permission **Pages.Tenant
 <button *ngIf="'Pages.Tenant.PhoneBook.CreatePerson' | permission" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{"CreateNewPerson" | localize}}</button>
 ```
 
-In this way, the "Create New Person" button does not rendered in server and user can not see this button.
+In this way, the "Create New Person" button is not rendered in server and user can not see this button.
 
 ### Grant permission
 
