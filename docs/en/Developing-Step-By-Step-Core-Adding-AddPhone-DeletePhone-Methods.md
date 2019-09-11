@@ -60,15 +60,15 @@ and set to \_phoneRepository field)
 
 **DeletePhone** method is simple. It only deletes phone with given id.
 
-**AddPhone** method **gets** the person from database and add new phone
-to person.Phones collection. Then is **save changes**. Saving changes
-causes inserting new added phone to database and get its **Id**.
-Because, we are returning a DTO that contains newly created phone
-informations including Id. So, it should be assigned before mapping in
-the last line. (Notice that; normally it's not needed to call
-CurrentUnitOfWork.SaveChangesAsync. It's automatically called at the end
-of the method. We called it in the method since we need to save entity
-and get its Id immediately. See [UOW
+**AddPhone** method **gets** the person from the database and adds a new phone
+to the person's Phones collection. After that **save changes** is called. Saving changes
+causes inserting newly added phone to the database and getting back its **Id**.
+Because, we are returning a DTO that contains newly created phone's 
+information (including the Id), it would be assigned before the mapping in the last line.
+(Note however that;  it's not normally needed to call
+CurrentUnitOfWork.SaveChangesAsync since it is automatically called at the end
+of the method. We called it in the method bacause we need to save entity
+and get back its Id immediately. See [UOW
 document](https://aspnetboilerplate.com/Pages/Documents/Unit-Of-Work#DocAutoSaveChanges)
 for more.)
 
