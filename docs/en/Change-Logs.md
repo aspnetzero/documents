@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
+## v7.2.0 (2019-09-12)
+
+* Session timeout feature added.
+* Only one concurrent login per user feature added.
+* Added reCAPTCHA to login page. 
+* Upgarded to Metronic 6.0.6.
+
 ## v7.1.0 (2019-07-23)
 
 * Added Healthchecks.
