@@ -4,13 +4,13 @@
 
 # Customizable Dashboard
 
-You can create new dashboards, widgets and widget filters for the customizable dashboards.
+You can create new widgets and widget filters for the customizable dashboards.
 
 Let's create a new widget and widget filter step by step.
 
 Pre-Note: Customizable dashboard configurations are stored in two places.
 
-- Definitions which include permission, multitenancy side, etc. which should be controlled by the server are located in `*.Core -> DashboardCustomization -> Definitions -> DashboardConfiguration.cs` so that application layer can handle permission and other stuff things.
+- Definitions which include permission, multitenancy side, etc. which should be controlled by the server are located in `*.Core -> DashboardCustomization -> Definitions -> DashboardConfiguration.cs` so that application layer can handle permission and other stuff.
 - View side definition like CSS JS file located in the UI project. 
 - UI applications get data from the server about the dashboard and use their view information to show it.
 
@@ -27,15 +27,13 @@ Our widget filter name will be `FilterHelloWorld` . It will have one input and b
 ```html
 <div class="form-group filter-hello-world-container">
     <div class="input-group">
-        <input type="text" class="form-control" name="input-filter-hello" placeholder="Search for...">
+        <input type="text" class="form-control" name="input-filter-hello" placeholder="@L('SearchWithThreeDot')">
         <div class="input-group-append">
             <button class="btn btn-primary" name="btn-filter-hello" type="button">Go!</button>
         </div>
     </div>
 </div>
 ```
-
-
 
 * Create folder named FilterHelloWorld into `*.Web.Mvc  -> wwwroot -> view-resources -> Areas -> [YourAppAreaName] -> Views -> CustomizableDashboard -> Widgets`  and create `FilterHelloWorld.css` and `FilterHelloWorld.js` file for into that folder.
 
@@ -124,6 +122,12 @@ Our widget name will be `WidgetHelloWorld`
 Create an API which your widgets needs. In this scenario, I will create one endpoint into `TenantDashboardAppService.cs` named `GetHelloWorldData`.
 
 ```csharp
+public interface ITenantDashboardAppService : IApplicationService
+{
+  ...
+  GetHelloWorldOutput GetHelloWorldData(GetHelloWorldInput input);
+  ...
+}
 public class TenantDashboardAppService ...
 {
     ...
