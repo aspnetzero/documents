@@ -2,7 +2,7 @@
   "Languages":[
     {
       "DisplayName" : "English",
-      "Code" : "en",
+      "Code" : "en-US",
       "IsDefault": true
     }
   ]
