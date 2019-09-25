@@ -12,7 +12,7 @@ But we suggest a solution:
 
 - Create a 'dev' branch. Make all your development in this branch.
 
-  ![version-update-new-brach](C:\Users\Musa\Desktop\documents\docs\en\images\version-update-new-brach.png)
+  ![version-update-new-brach](images\version-update-new-brach.png)
 
 - When a new version of ASP.NET ZERO is released, re-create your project from scratch with the same name, 'Acme.PhoneBook'. (Make sure you create the new project with the same name as the old project. Otherwise, you can not merge them.)
 
@@ -20,7 +20,7 @@ But we suggest a solution:
 
 - Switch to dev branch and merge branch master into dev. There will be conflicts, resolve them manually.
 
-![version-update-update-from-master](C:\Users\Musa\Desktop\documents\docs\en\images\version-update-update-from-master.png)
+![version-update-update-from-master](images\version-update-update-from-master.png)
 
 That's all. Your dev and master branches will have a new ASP.NET ZERO version.
 
