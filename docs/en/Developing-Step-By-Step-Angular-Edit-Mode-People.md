@@ -150,7 +150,7 @@ export class EditPersonModalComponent extends AppComponentBase {
     this.saving = true;
     this._personService.editPerson(this.person)
       .subscribe(() => {
-        this.notify.info(this.l('SavedSuccessfully' | localize));
+        this.notify.info(this.l('SavedSuccessfully'));
         this.close();
         this.modalSave.emit(this.person);
       });

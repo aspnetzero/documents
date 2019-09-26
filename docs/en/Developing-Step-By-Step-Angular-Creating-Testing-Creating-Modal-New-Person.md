@@ -61,7 +61,7 @@ export class CreatePersonModalComponent extends AppComponentBase {
         this._personService.createPerson(this.person)
             .pipe(finalize(() => this.saving = false))
             .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully' | localize));
+                this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(this.person);
             });

@@ -124,7 +124,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
             isConfirmed => {
                 if (isConfirmed) {
                     this._personService.deletePerson(person.id).subscribe(() => {
-                        this.notify.info(this.l('SuccessfullyDeleted' | localize));
+                        this.notify.info(this.l('SuccessfullyDeleted'));
                         _.remove(this.people, person);
                     });
                 }
@@ -147,11 +147,11 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
     getPhoneTypeAsString(phoneType: PhoneInPersonListDtoType): string {
         switch (phoneType) {
             case PhoneInPersonListDtoType._0:
-                return this.l('PhoneType_Mobile' | localize);
+                return this.l('PhoneType_Mobile');
             case PhoneInPersonListDtoType._1:
-                return this.l('PhoneType_Home' | localize);
+                return this.l('PhoneType_Home');
             case PhoneInPersonListDtoType._2:
-                return this.l('PhoneType_Business' | localize);
+                return this.l('PhoneType_Business');
             default:
                 return '?';
         }
@@ -159,7 +159,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
 
     deletePhone(phone, person): void {
         this._personService.deletePhone(phone.id).subscribe(() => {
-            this.notify.success(this.l('SuccessfullyDeleted' | localize));
+            this.notify.success(this.l('SuccessfullyDeleted'));
             _.remove(person.phones, phone);
         });
     };
@@ -174,7 +174,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
             this.editingPerson.phones.push(result);
             this.newPhone.number = '';
 
-            this.notify.success(this.l('SavedSuccessfully' | localize));
+            this.notify.success(this.l('SavedSuccessfully'));
         });
     };
 }

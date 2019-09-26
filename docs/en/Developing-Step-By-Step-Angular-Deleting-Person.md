@@ -92,11 +92,11 @@ Now, we can add **deletePerson** method to **phonebook.component.ts**:
 ```typescript
 deletePerson(person: PersonListDto): void {
     this.message.confirm(
-        this.l('AreYouSureToDeleteThePerson' | localize: person.name),
+        this.l('AreYouSureToDeleteThePerson', person.name),
         isConfirmed => {
             if (isConfirmed) {
                 this._personService.deletePerson(person.id).subscribe(() => {
-                    this.notify.info(this.l('SuccessfullyDeleted' | localize));
+                    this.notify.info(this.l('SuccessfullyDeleted'));
                     _.remove(this.people, person);
                 });
             }
