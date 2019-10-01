@@ -8,27 +8,30 @@ We added a search input to filter people (showing the related part of
 the code):
 
 ```html
-<div class="portlet light">
-    <div class="portlet-title portlet-title-filter">
-        <h5 class="m-subheader__title m-subheader">@L("AllPeople") (@Model.Items.Count)</h5>
-        <div class="inputs inputs-full-width">
-            <div class="portlet-input">
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                @L("AllPeople") (@Model.Items.Count)
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
                 <form action="@Url.Action("Index")" method="GET">
                     <div class="input-group">
-                        <input id="FilterPeopleText" name="Filter" value="@Model.Filter" class="form-control" placeholder="@L("SearchWithThreeDot")" type="text">
+                        <input id="FilterPeopleText" name="Filter" value="@Model.Filter" class="form-control"
+                            placeholder="@L(" SearchWithThreeDot")" type="text">
                         <span class="input-group-btn">
-                            <button id="FilterPeopleButton" class="btn default btn-success" type="submit"><i class="la la-search-plus"></i></button>
+                            <button id="FilterPeopleButton" class="btn default btn-success" type="submit"><i
+                                    class="la la-search-plus"></i></button>
                         </span>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <div class="portlet-body">
-
+    <div class="kt-portlet__body">
         ...
-
     </div>
 </div>
 ```

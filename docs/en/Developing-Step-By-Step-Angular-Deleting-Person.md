@@ -14,19 +14,17 @@ We're changing **phonebook.component.html** view to add a delete button
 ```html
 ...
 <h3>{{"AllPeople" | localize}}</h3>
-<div class="m-widget1">
-    <div class="m-widget1__item" *ngFor="let person of people">
-        <div class="row m-row--no-padding align-items-center">
-            <div class="col">
-                <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
-                <span class="m-widget1__desc">{{person.emailAddress}}</span>
-            </div>
-            <div class="col m--align-right">
-                <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
-                    <i class="fa fa-times"></i>
-                </button>
-            </div>
-        </div>
+<div class="row kt-row--no-padding align-items-center" *ngFor="let person of people">
+    <div class="col">
+        <h4>{{person.name + ' ' + person.surname}}</h4>
+        <span>{{person.emailAddress}}</span>
+    </div>
+    <div class="col kt-align-right">
+        <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}"
+            class="btn  btn-outline-hover-danger btn-icon"
+            href="javascript:;">
+            <i class="fa fa-times"></i>
+        </button>
     </div>
 </div>
 ...

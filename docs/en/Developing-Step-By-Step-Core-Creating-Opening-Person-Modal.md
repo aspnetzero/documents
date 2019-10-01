@@ -23,7 +23,7 @@ So, changing the **Index.cshtml** view header as shown below:
     </environment>
 }
 
-<div class="row margin-bottom-5">
+<div class="row kt-margin-b-5">
     <div class="col-xs-6">
         <div class="page-head">
             <div class="page-title">

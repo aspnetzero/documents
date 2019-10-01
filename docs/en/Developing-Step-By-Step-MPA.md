@@ -114,7 +114,7 @@ Creating an empty view, **Index.cshtml** under
     ViewBag.CurrentPageName = PageNames.App.Tenant.PhoneBook;
 }
 
-<div class="row margin-bottom-5">
+<div class="row kt-margin-b-5">
     <div class="col-xs-12">
         <div class="page-head">
             <div class="page-title">
@@ -882,7 +882,7 @@ So, changing the **Index.cshtml** view header as shown below:
     @Html.IncludeScript("~/Areas/Mpa/Views/PhoneBook/_CreatePersonModal.js")
     @Html.IncludeScript("~/Areas/Mpa/Views/PhoneBook/Index.js")
 }
-<div class="row margin-bottom-5">
+<div class="row kt-margin-b-5">
     <div class="col-xs-6">
         <div class="page-head">
             <div class="page-title">

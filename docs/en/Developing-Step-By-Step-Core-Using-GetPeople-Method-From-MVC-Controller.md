@@ -69,7 +69,7 @@ below:
 ...
 @model Acme.PhoneBookDemo.Web.Areas.App.Models.PhoneBook.IndexViewModel
 ...
-        <h5 class="m-subheader__title m-subheader">@L("AllPeople")</h5>
+        <h5 class="kt-subheader__title">@L("AllPeople")</h5>
 
     <div class="list-group">
     @foreach (var person in Model.Items)

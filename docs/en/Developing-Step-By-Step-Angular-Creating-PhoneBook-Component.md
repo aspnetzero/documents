@@ -38,19 +38,21 @@ As we declared in **phonebook.component.ts** we should create a
 
 ```html
 <div [@routerTransition]>
-    <div class="m-subheader ">
-        <div class="d-flex align-items-center">
-            <div class="mr-auto col-sm-6">
-                <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{"PhoneBook" | localize}}</span>
-                </h3>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div class="kt-container ">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{"PhoneBook" | localize}}</span>
+                    </h3>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="m-content">
-        <div class="m-portlet m-portlet--mobile">
-            <div class="m-portlet__body">
-                <p>PHONE BOOK CONTENT COMES HERE!</p>
+        <div class="kt-container kt-grid__item kt-grid__item--fluid">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body  kt-portlet__body--fit">
+                    <p>PHONE BOOK CONTENT COMES HERE!</p>
+                </div>
             </div>
         </div>
     </div>

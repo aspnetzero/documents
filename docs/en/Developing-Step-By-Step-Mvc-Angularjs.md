@@ -133,7 +133,7 @@ Creating an empty view, **index.cshtml** under **App/tenant/views/phonebook** fo
 
 ```html
 <div ng-controller="tenant.views.phonebook.index as vm">
-    <div class="row margin-bottom-5">
+    <div class="row kt-margin-b-5">
         <div class="col-xs-12">
             <div class="page-head">
                 <div class="page-title">

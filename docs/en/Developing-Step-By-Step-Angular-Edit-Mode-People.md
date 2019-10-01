@@ -84,13 +84,13 @@ Add those lines to **phonebook.component.html:**:
         
 	// Other Code lines...	
 
-		<button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+		<button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn  btn-outline-hover-primary btn-icon">
             <i class="fa fa-plus"></i>
         </button>
-        <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="editPersonModal.show(person.id)" title="{{'EditPerson' | localize}}" class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+        <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="editPersonModal.show(person.id)" title="{{'EditPerson' | localize}}" class="btn  btn-outline-hover-success btn-icon">
             <i class="fa fa-pencil"></i>
         </button>
-       <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+       <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn  btn-outline-hover-danger btn-icon" href="javascript:;">
             <i class="fa fa-times"></i>
         </button>
                 

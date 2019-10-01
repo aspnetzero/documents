@@ -71,31 +71,29 @@ Now, we can use this people member from the view,
 
 ```html
 <div [@routerTransition]>
-    <div class="m-subheader ">
-        <div class="d-flex align-items-center">
-            <div class="mr-auto col-sm-6">
-                <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{"PhoneBook" | localize}}</span>
-                </h3>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div class="kt-container ">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{"PhoneBook" | localize}}</span>
+                    </h3>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="m-content">
-        <div class="m-portlet m-portlet--mobile">
-            <div class="m-portlet__body">
-
-                <h3>{{"AllPeople" | localize}}</h3>
-                <div class="m-widget1">
-                    <div class="m-widget1__item" *ngFor="let person of people">
-                        <div class="row m-row--no-padding align-items-center">
+        <div class="kt-container kt-grid__item kt-grid__item--fluid">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body  kt-portlet__body--fit">
+                    <h3>{{"AllPeople" | localize}}</h3>
+                    <div *ngFor="let person of people">
+                        <div class="row kt-row--no-padding align-items-center">
                             <div class="col">
-                                <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
-                                <span class="m-widget1__desc">{{person.emailAddress}}</span>
+                                <h4>{{person.name + ' ' + person.surname}}</h4>
+                                <span>{{person.emailAddress}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
