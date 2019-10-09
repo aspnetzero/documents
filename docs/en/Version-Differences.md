@@ -120,10 +120,10 @@ Angular framework. </p>
 <p>See <strong>development guide</strong> documents for details of all features 
 in different versions:</p>
 <ul>
-	<li><a href="https://docs.aspnetzero.com/documents/aspnet-core-mvc/latest/Features-Mvc-Core">ASP.NET Core &amp; jQuery</a></li>
-	<li><a href="https://docs.aspnetzero.com/documents/aspnet-core-angular/latest/Features-Angular">ASP.NET Core &amp; Angular</a></li>
-	<li><a href="https://docs.aspnetzero.com/documents/aspnet-mvc-angularjs/latest/Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; jQuery</a></li>
-	<li><a href="https://docs.aspnetzero.com/documents/aspnet-mvc-angularjs/latest/Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; Angularjs 1.x</a></li>
+	<li><a href="https://docs.aspnetzero.com/documents/en/aspnet-core-mvc/latest/Features-Mvc-Core">ASP.NET Core &amp; jQuery</a></li>
+	<li><a href="https://docs.aspnetzero.com/documents/en/aspnet-core-angular/latest/Features-Angular">ASP.NET Core &amp; Angular</a></li>
+	<li><a href="https://docs.aspnetzero.com/documents/en/aspnet-mvc-angularjs/latest/Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; jQuery</a></li>
+	<li><a href="https://docs.aspnetzero.com/documents/en/aspnet-mvc-angularjs/latest/Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; Angularjs 1.x</a></li>
 </ul>
 </body>
 
