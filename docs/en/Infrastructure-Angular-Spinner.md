@@ -1,10 +1,10 @@
 # Spinner
 
-We use [ngx-spinner](https://github.com/Napster2210/ngx-spinner) block UI element and loading effect.
+AspNet Zero uses [ngx-spinner](https://github.com/Napster2210/ngx-spinner) for blocking the UI elements and showing loading effect.
 
-#### Enable/Disable FullScreen Spinner
+#### Enable/Disable Full Screen Spinner
 
-To block screen you can use spinner service.
+To block entire screen, you can use spinner service.
 
 ```typescript
 export class DemoUiComponentsComponent extends AppComponentBase implements OnInit {
@@ -28,9 +28,9 @@ export class DemoUiComponentsComponent extends AppComponentBase implements OnIni
 
 
 
-#### Enable/Disable Spinner on Html Element
+#### Enable/Disable Spinner on Html Elements
 
-To use spinner on html element you can use `busyIf` directive.  
+To use spinner on specific html elements you can use `busyIf` directive.  
 
 The element which has `busyIf` directive will be blocked until input is false.
 
@@ -68,41 +68,8 @@ export class MyComponent extends AppComponentBase implements OnInit {
 
 #### Customize Spinner
 
-Since we use [ngx-spinner](https://github.com/Napster2210/ngx-spinner) you can customize your spinner.
+Since AspNet Zero uses [ngx-spinner](https://github.com/Napster2210/ngx-spinner), you can customize your spinner.
 
-Implementations are located in `busy-if.directive.ts` and `root.component.ts`
+Implementations are located in `busy-if.directive.ts` and `root.component.ts`.
 
-*busy-if.directive.ts*
-
-```typescript
-@Directive({
-    selector: '[busyIf]'
-})
-export class BusyIfDirective implements OnChanges {
-   ...
-    loadComponent() {
-       ...       
-        component.type = "ball-scale-multiple";//you can change fields of component to customize it
-        component.size = "medium";
-    }
-...
-}
-```
-
- *root.component.ts*
-
-```typescript
-import { Component } from '@angular/core';
-
-@Component({
-    selector: 'app-root',
-    template: `<router-outlet></router-outlet><ngx-spinner type = "ball-clip-rotate"></ngx-spinner>` //you can customize fullscreen spinner in here
-})
-export class RootComponent {
-
-}
-```
-
-
-
-Check **ngx-spinner** documentation for more customization.
+Check  [ngx-spinner](https://github.com/Napster2210/ngx-spinner) documentation for more details.
