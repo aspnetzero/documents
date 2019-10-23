@@ -31,8 +31,8 @@ export class CreatePersonModalComponent extends AppComponentBase {
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('modal') modal: ModalDirective;
-    @ViewChild('nameInput') nameInput: ElementRef;
+    @ViewChild('modal' , { static: false }) modal: ModalDirective;
+    @ViewChild('nameInput' , { static: false }) nameInput: ElementRef;
 
     person: CreatePersonInput = new CreatePersonInput();
 

@@ -19,7 +19,7 @@ Changes in view are shown below:
             <h4>{{person.name + ' ' + person.surname}}</h4>
             <span>{{person.emailAddress}}</span>
         </div>
-        <div class="col kt--align-right">
+        <div class="col kt-align-right">
             <button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn  btn-outline-hover-success btn-icon">
                 <i class="fa fa-pencil"></i>
             </button>
@@ -84,7 +84,7 @@ PhoneBookComponent as shown below:
 import { Component, Injector, OnInit } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto, PhoneInPersonListDto, AddPhoneInput, AddPhoneInputType, PhoneInPersonListDtoType } from '@shared/service-proxies/service-proxies';
+import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto, PhoneInPersonListDto, AddPhoneInput, PhoneType } from '@shared/service-proxies/service-proxies';
 
 import * as _ from 'lodash';
 
@@ -139,18 +139,18 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
             this.editingPerson = person;
 
             this.newPhone = new AddPhoneInput();
-            this.newPhone.type = AddPhoneInputType._0;
+            this.newPhone.type = PhoneType.Mobile;
             this.newPhone.personId = person.id;
         }
     };
 
     getPhoneTypeAsString(phoneType: PhoneInPersonListDtoType): string {
         switch (phoneType) {
-            case PhoneInPersonListDtoType._0:
+            case PhoneType.Mobile:
                 return this.l('PhoneType_Mobile');
-            case PhoneInPersonListDtoType._1:
+            case PhoneType.Home:
                 return this.l('PhoneType_Home');
-            case PhoneInPersonListDtoType._2:
+            case PhoneType.Business:
                 return this.l('PhoneType_Business');
             default:
                 return '?';
@@ -300,8 +300,8 @@ export class EditPersonModalComponent extends AppComponentBase {
 
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('modal') modal: ModalDirective;
-  @ViewChild('nameInput') nameInput: ElementRef;
+  @ViewChild('modal' , { static: false }) modal: ModalDirective;
+  @ViewChild('nameInput' , { static: false }) nameInput: ElementRef;
 
   person: EditPersonInput = new EditPersonInput();
 

@@ -14,7 +14,7 @@ defined. We will define two permission:
 Go to **AppAuthorizationProvider** class in the server side and add a new permission as shown below (you can add just below the dashboard permission):
 
 ```csharp
-pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook" | localize), multiTenancySides: MultiTenancySides.Tenant);
+pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
 ```
 
 A permission should have a unique name. We define permission names as constant strings in **AppPermissions** class. It's a simple constant string:
@@ -80,8 +80,8 @@ While a permission for a page is useful and probably always needed, we may want 
 Defining a permission is similar (in the `AppAuthorizationProvider` class):
 
 ```csharp
-var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook" | localize), multiTenancySides: MultiTenancySides.Tenant);
-phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L("CreateNewPerson" | localize), multiTenancySides: MultiTenancySides.Tenant);
+var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L("CreateNewPerson"), multiTenancySides: MultiTenancySides.Tenant);
 ```
 
 First permission was defined before. In the second line, we are creating a child permission of first one. Remember to create a constant in `AppPermissions` class:
