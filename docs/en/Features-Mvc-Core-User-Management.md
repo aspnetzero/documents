@@ -1,6 +1,6 @@
 # User Management
 
-When we click Administration/Users menu, we enter to the user management page:
+When we click Administration/Users menu, we enter the user management page:
 
 <img src="images/user-management-core-3.png" alt="User management" class="img-thumbnail" />
 
@@ -26,7 +26,7 @@ We can change user's **password**, make her **active/passive** and so on... A us
 
 ## User Impersonation
 
-As admin (or any allowed user), we may want to login as a user and perform operations in behalf of that user, without knowing his password. When we click "**Login as this user**" icon in the actions of a user, we
+As admin (or any allowed user), we may want to login as a user and perform operations on behalf of that user, without knowing his password. When we click "**Login as this user**" icon in the actions of a user, we
 are automatically redirected and logged in as this user. This is called as "**user impersonation**". When we impersonate a user, a "**back to my account**" option is added to the user profile menu:
 
 <img src="images/back-to-my-account-link-3.png" alt="Back to my account link" class="img-thumbnail" />
@@ -39,3 +39,5 @@ Impersonation is done in **AccountController** of the Web project.
 ## Next
 
 - [Language Management](Features-Mvc-Core-Language-Management)
+
+
