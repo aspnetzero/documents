@@ -6,13 +6,13 @@ Users can customize their dashboard.
 
 To do that. Go to dashboard and enable edit mode.
 
-![customizable-dashboard-edit-mode](\images\customizable-dashboard-edit-mode.png)
+![customizable-dashboard-edit-mode](images/customizable-dashboard-edit-mode.png)
 
 
 
 Then you will see dashboard customization bar.
 
-![customizable-dashboard-edit-bar](\images\customizable-dashboard-edit-bar.png)
+![customizable-dashboard-edit-bar](images/customizable-dashboard-edit-bar.png)
 
 
 
@@ -24,9 +24,9 @@ Then you will see dashboard customization bar.
 
 You can create new page by clicking "**Add Page"**" button.
 
-![customizable-dashboard-add-new-page](\images\customizable-dashboard-add-new-page.png)
+![customizable-dashboard-add-new-page](images/customizable-dashboard-add-new-page.png)
 
-![customizable-dashboard-new-page](\images\customizable-dashboard-new-page.png)
+![customizable-dashboard-new-page](images/customizable-dashboard-new-page.png)
 
 
 
@@ -34,7 +34,7 @@ You can create new page by clicking "**Add Page"**" button.
 
 Click "**Add Widget**" button and select the widgets that you want to see on selected page.
 
-![customizable-dashboard-add-widget](\images\customizable-dashboard-add-widget.png)
+![customizable-dashboard-add-widget](images/customizable-dashboard-add-widget.png)
 
 
 
@@ -42,8 +42,8 @@ Click "**Add Widget**" button and select the widgets that you want to see on sel
 
 Then you can resize and move widgets on page. 
 
-![customizable-dashboard-add-widget-in-page](\images\customizable-dashboard-add-widget-in-page.png)
+![customizable-dashboard-add-widget-in-page](images/customizable-dashboard-add-widget-in-page.png)
 
 
 
-![customizable-dashboard-example](C:\Users\Musa\Desktop\documents\docs\en\images\customizable-dashboard-example.png)
+![customizable-dashboard-example](images/customizable-dashboard-example.png)

@@ -176,7 +176,7 @@ public class TenantDashboardAppService ...
 ```javascript
 $(function () {
     var _tenantDashboardService = abp.services.app.tenantDashboard;
-
+	var _widgetBase = app.widgetBase.create();
     var _$Container = $('.HelloWorldContainer');
 
     var getHelloWorld = function (name) {
@@ -190,11 +190,16 @@ $(function () {
                 abp.ui.clearBusy(_$Container);
             });
     };
-
-    getHelloWorld("First Attempt");
+    
+     _widgetBase.runDelayed(function(){
+          getHelloWorld("First Attempt");
+     });
+    
 	 //event which your filter send
     abp.event.on('app.dashboardFilters.helloFilter.onNameChange', function (name) {
-        getHelloWorld(name);
+        _widgetBase.runDelayed(function(){
+          getHelloWorld(name);
+     	});
     });
 });
 ```
@@ -286,7 +291,7 @@ Add hello widget to the page as described in that article: [Customizable Dashboa
 
 After that, you will see that your widget is located on the page and works as expected.
 
-![customizable-dashboard-widget-hello-world](\images\customizable-dashboard-widget-hello-world.png)
+![customizable-dashboard-widget-hello-world](images/customizable-dashboard-widget-hello-world.png)
 
 
 
@@ -294,4 +299,4 @@ Since hello world widget needs hello world filter *(we defined it in DashboardCo
 
 As you can below, you will be able to see filters that your widgets need. Change input and click **Go**. Hello world widget will be changed by your filter.
 
-![customizable-dashboard-filter-hello-world](C:\Users\Musa\Desktop\documents\docs\en\images\customizable-dashboard-filter-hello-world.png)
+![customizable-dashboard-filter-hello-world](images/customizable-dashboard-filter-hello-world.png)

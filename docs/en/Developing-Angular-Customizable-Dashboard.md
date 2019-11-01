@@ -35,7 +35,7 @@ Our widget filter name will be `FilterHelloWorld` . It will have one input and b
     <div class="input-group">
         <input type="text" class="form-control" #inputFilterHello placeholder="{{'SearchWithThreeDot' | localize}}">
         <div class="input-group-append">
-            <button class="btn btn-primary" (click)="go(inputFilterHello.value)" type="button">Go!</button>
+            <button class="btn btn-primary" (click)="publishName(inputFilterHello.value)" type="button">Go!</button>
         </div>
     </div>
 </div>
@@ -58,7 +58,7 @@ export class FilterHelloWorldComponent extends AppComponentBase {
     super(injector)
   }
 
-  go(name: string): void {
+  publishName(name: string): void {
     abp.event.trigger('app.dashboardFilters.helloFilter.onNameChange', name);
   }
 }
@@ -204,7 +204,7 @@ public class TenantDashboardAppService ...
 
 *widget-hello-world-component.ts*
 
-```javascript
+```typescript
 import { Component, Injector } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TenantDashboardServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -214,29 +214,44 @@ import { TenantDashboardServiceProxy } from '@shared/service-proxies/service-pro
   templateUrl: './widget-hello-world.component.html',
   styleUrls: ['./widget-hello-world.component.css']
 })
-export class WidgetHelloWorldComponent extends AppComponentBase {
-
+export class WidgetHelloWorldComponent extends WidgetComponentBase implements OnInit, OnDestroy {
   helloResponse: string;
   constructor(injector: Injector,
     private _tenantDashboardService: TenantDashboardServiceProxy) {
-    super(injector);
-    this.getHelloWorld("First Attempt");
-    this.subHelloWorldFilter();
+    super(injector);    
   }
 
-  getHelloWorld(name: string): void {
+  ngOnInit(): void {
+    this.subHelloWorldFilter();
+    this.runDelayed(()=>{
+        this.getHelloWorld("First Attempt");  
+    });
+  }
+  
+  getHelloWorld = (name: string) => {
     this._tenantDashboardService
       .getHelloWorldData(name)
       .subscribe((data) => {
         this.helloResponse = data.outPutName;
       });
   }
-
-  subHelloWorldFilter() {
-    const self = this;
-    abp.event.on('app.dashboardFilters.helloFilter.onNameChange', function (name) {
-      self.getHelloWorld(name);
+  
+  onNameChange = (name) => {
+   this.runDelayed(()=>{
+        this.getHelloWorld(name);  
     });
+  }
+  
+  subHelloWorldFilter() {
+    abp.event.on('app.dashboardFilters.helloFilter.onNameChange', this.onNameChange);
+  }
+
+  unSubHelloWorldFilter() {
+    abp.event.off('app.dashboardFilters.helloFilter.onNameChange', this.onNameChange);
+  }
+
+  ngOnDestroy(): void {
+    this.unSubHelloWorldFilter();
   }
 }
 ```
@@ -367,7 +382,7 @@ Add hello widget to the page as described in that article: [Customizable Dashboa
 
 After that, you will see that your widget is located on the page and works as expected.
 
-![customizable-dashboard-widget-hello-world](\images\customizable-dashboard-widget-hello-world.png)
+![customizable-dashboard-widget-hello-world](images/customizable-dashboard-widget-hello-world.png)
 
 
 
@@ -375,4 +390,4 @@ Since hello world widget needs hello world filter *(we defined it in DashboardCo
 
 As you can below, you will be able to see filters that your widgets need. Change input and click **Go**. Hello world widget will be changed by your filter.
 
-![customizable-dashboard-filter-hello-world](C:\Users\Musa\Desktop\documents\docs\en\images\customizable-dashboard-filter-hello-world.png)
+![customizable-dashboard-filter-hello-world](images/customizable-dashboard-filter-hello-world.png)
