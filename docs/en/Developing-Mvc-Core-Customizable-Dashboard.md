@@ -27,7 +27,7 @@ Our widget filter name will be `FilterHelloWorld` . It will have one input and b
 ```html
 <div class="form-group filter-hello-world-container">
     <div class="input-group">
-        <input type="text" class="form-control" name="input-filter-hello" placeholder="@L('SearchWithThreeDot')">
+        <input type="text" class="form-control" name="input-filter-hello" placeholder="@L("SearchWithThreeDot")">
         <div class="input-group-append">
             <button class="btn btn-primary" name="btn-filter-hello" type="button">Go!</button>
         </div>
@@ -57,7 +57,7 @@ Our widget filter name will be `FilterHelloWorld` . It will have one input and b
 
 ##### View Definitions
 
-Widget's/widget filter's view consts are located in `*.Core.Shared -> [YourAppName]DashboardCustomizationConsts.cs`. Open `*DashboardCustomizationConsts.cs` create new id for hello world filter. (This id is also used in view page so be careful when selecting this value. It should not start with a number or special characters, etc.)
+Widget's/widget filter's view consts are located in `*.Core.Shared -> [YourAppName]DashboardCustomizationConsts.cs`. Open `[YourAppName]DashboardCustomizationConsts.cs` create new id for hello world filter. (This id is also used in view page so be careful when selecting this value. It should not start with a number or special characters, etc.)
 
 ```csharp
 public class [YourAppName]DashboardCustomizationConsts
@@ -299,4 +299,4 @@ Since hello world widget needs hello world filter *(we defined it in DashboardCo
 
 As you can below, you will be able to see filters that your widgets need. Change input and click **Go**. Hello world widget will be changed by your filter.
 
-![customizable-dashboard-filter-hello-world](images/customizable-dashboard-filter-hello-world.png)
+![customizable-dashboard-filter-hello-world](images/customizable-dashboard-filter-hello-world-2.png)

@@ -390,4 +390,4 @@ Since hello world widget needs hello world filter *(we defined it in DashboardCo
 
 As you can below, you will be able to see filters that your widgets need. Change input and click **Go**. Hello world widget will be changed by your filter.
 
-![customizable-dashboard-filter-hello-world](images/customizable-dashboard-filter-hello-world.png)
+![customizable-dashboard-filter-hello-world](images/customizable-dashboard-filter-hello-world-2.png)
