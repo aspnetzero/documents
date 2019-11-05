@@ -11,7 +11,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Session timeout feature added.
 * Only one concurrent login per user feature added.
 * Added reCAPTCHA to login page. 
-* Upgarded to Metronic 6.0.6.
+* Upgraded to Metronic v6.0.6.
 
 ## v7.1.0 (2019-07-23)
 
