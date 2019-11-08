@@ -289,6 +289,10 @@
 		{
           "text": "Dynamic Asset Bundling and Minifying",
           "path": "Infrastructure-Angular-Bundling-Minifying-Compiling.md"
+        },
+		{
+          "text": "Spinner service",
+          "path": "Infrastructure-Angular-Spinner.md"
         }
       ]
     },
