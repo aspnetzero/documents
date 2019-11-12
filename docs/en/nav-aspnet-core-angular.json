@@ -172,6 +172,20 @@
 			{
               "text": "Healt Checks",
               "path": "HealthChecks.md"
+            },
+			{
+              "text": "Customizable Dashboard",
+              "path": "Features-Angular-Customizable-Dashboard.md",
+			  "items": [
+				{
+				  "text": "Customizable Dashboard Feature",
+				  "path": "Features-Angular-Customizable-Dashboard.md"
+				},
+				{
+				  "text": "Developing Customizable Dashboard",
+				  "path": "Developing-Angular-Customizable-Dashboard.md"
+				}
+			  ]
             }
           ]
         },
