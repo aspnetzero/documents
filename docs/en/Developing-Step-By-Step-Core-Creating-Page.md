@@ -30,7 +30,7 @@ it has a disadvantage for your case.
 Creating an empty view, **Index.cshtml** under
 **Areas/App/Views/PhoneBook** folder:
 
-```csharp
+```html
 @using System.Threading.Tasks
 @using Acme.PhoneBookDemo.Web.Areas.App.Startup
 
@@ -38,21 +38,23 @@ Creating an empty view, **Index.cshtml** under
 ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
 }
 
-<div class="m-subheader">
-    <div class="d-flex align-items-center">
-        <div class="mr-auto">
-            <h3 class="m-subheader__title m-subheader__title--separator">
-                <span>@L("PhoneBook")</span>
-            </h3>
-            <span class="m-section__sub">
-                @L("PhoneBookInfo")
-            </span>
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+        <div class="kt-container ">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("PhoneBook")</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">
+                        @L("PhoneBookInfo")
+                </span>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="m-content">
-    <p>PHONE BOOK CONTENT COMES HERE!</p>
+    <div class="kt-container kt-grid__item kt-grid__item--fluid">
+        <p>PHONE BOOK CONTENT COMES HERE!</p>
+    </div>
 </div>
 ```
 

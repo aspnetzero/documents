@@ -13,23 +13,23 @@ the icon at left. We can add a new phone from the inputs at last line.
 Changes in view are shown below:
 
 ```html
-<div class="m-widget1__item" *ngFor="let person of people" [ngClass]="{'bg-secondary m--padding-10': person===editingPerson}">
-    <div class="row m-row--no-padding align-items-center">
+<div *ngFor="let person of people" [ngClass]="{'bg-secondary kt-padding-10': person===editingPerson}">
+    <div class="row kt-row--no-padding align-items-center">
         <div class="col">
-            <h3 class="m-widget1__title">{{person.name + ' ' + person.surname}}</h3>
-            <span class="m-widget1__desc">{{person.emailAddress}}</span>
+            <h4>{{person.name + ' ' + person.surname}}</h4>
+            <span>{{person.emailAddress}}</span>
         </div>
-        <div class="col m--align-right">
-            <button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+        <div class="col kt-align-right">
+            <button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn  btn-outline-hover-primary btn-icon">
                 <i class="fa fa-pencil"></i>
             </button>
-            <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" href="javascript:;">
+            <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn  btn-outline-hover-danger btn-icon" href="javascript:;">
                 <i class="fa fa-times"></i>
             </button>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12 m--margin-top-20" *ngIf="person===editingPerson">
+        <div class="col-sm-12 kt-margin-t-20" *ngIf="person===editingPerson">
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -41,7 +41,7 @@ Changes in view are shown below:
                 <tbody>
                     <tr *ngFor="let phone of person.phones">
                         <td>
-                            <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="deletePhone(phone, person)" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill">
+                            <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="deletePhone(phone, person)" class="btn  btn-outline-hover-danger btn-icon">
                                 <i class="fa fa-times"></i>
                             </button>
                         </td>
@@ -124,7 +124,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
             isConfirmed => {
                 if (isConfirmed) {
                     this._personService.deletePerson(person.id).subscribe(() => {
-                        this.notify.info(this.l('SuccessfullyDeleted' | localize));
+                        this.notify.info(this.l('SuccessfullyDeleted'));
                         _.remove(this.people, person);
                     });
                 }
@@ -147,11 +147,11 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
     getPhoneTypeAsString(phoneType: PhoneInPersonListDtoType): string {
         switch (phoneType) {
             case PhoneInPersonListDtoType._0:
-                return this.l('PhoneType_Mobile' | localize);
+                return this.l('PhoneType_Mobile');
             case PhoneInPersonListDtoType._1:
-                return this.l('PhoneType_Home' | localize);
+                return this.l('PhoneType_Home');
             case PhoneInPersonListDtoType._2:
-                return this.l('PhoneType_Business' | localize);
+                return this.l('PhoneType_Business');
             default:
                 return '?';
         }
@@ -159,7 +159,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
 
     deletePhone(phone, person): void {
         this._personService.deletePhone(phone.id).subscribe(() => {
-            this.notify.success(this.l('SuccessfullyDeleted' | localize));
+            this.notify.success(this.l('SuccessfullyDeleted'));
             _.remove(person.phones, phone);
         });
     };
@@ -174,7 +174,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
             this.editingPerson.phones.push(result);
             this.newPhone.number = '';
 
-            this.notify.success(this.l('SavedSuccessfully' | localize));
+            this.notify.success(this.l('SavedSuccessfully'));
         });
     };
 }

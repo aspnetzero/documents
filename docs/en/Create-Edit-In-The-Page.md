@@ -10,189 +10,249 @@ First, create a new html page named **create-tenant.component.html **with the co
 
 ````html
 <div [@routerTransition]>
-    <div class="m-subheader">
-        <div class="row align-items-center">
-            <div class="mr-auto col-auto">
-                <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{"CreateNewTenant" | localize}}</span>
-                </h3>
-                <span class="m-section__sub">
-                    {{"CreateTenantHeaderInfo" | localize}}
-                </span>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div class="kt-container ">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{"CreateNewTenant" | localize}}</span>
+                    </h3>
+                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                    <span class="kt-subheader__desc">
+                        {{"CreateTenantHeaderInfo" | localize}}
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="m-content">
-        <div class="m-portlet m-portlet--mobile">
-            <div class="m-portlet__body">
-
+        <div class="kt-container kt-grid__item kt-grid__item--fluid">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body  kt-portlet__body--fit">
+                    <p>PHONE BOOK CONTENT COMES HERE!</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 ````
 
-After doing that, copy the form element from **create-tenant-modal.component.html** into div with "**m-portlet__body**" class. Now, there are still modal related html code in our file, so we need to remove them.
+After doing that, copy the form element from **create-tenant-modal.component.html** into div with "**kt-portlet__body**" class. Now, there are still modal related html code in our file, so we need to remove them.
 
 First, remove the html item with **modal-header** class since we don't need it anymore.
 
 Now, move all content of the div with class **modal-body** into the **form** tag. After that, we can remove the div with class **modal-body**. 
 
-Finally, change the class of the div which contains Save and Cancel buttons from **modal-footer** to **m--margin-top-40**.
+Finally, change the class of the div which contains Save and Cancel buttons from **modal-footer** to **kt-margin-t-40**.
 
 Here is final version of **create-tenant.component.html**:
 
 ````html
 <div [@routerTransition]>
-    <div class="m-subheader">
-        <div class="row align-items-center">
-            <div class="mr-auto col-auto">
-                <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{"CreateNewTenant" | localize}}</span>
-                </h3>
-                <span class="m-section__sub">
-                    {{"CreateTenantHeaderInfo" | localize}}
-                </span>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div class="kt-container ">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{"CreateNewTenant" | localize}}</span>
+                    </h3>
+                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                    <span class="kt-subheader__desc">
+                        {{"CreateTenantHeaderInfo" | localize}}
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="m-content">
-        <div class="m-portlet m-portlet--mobile">
-            <div class="m-portlet__body">
-                <form #tenantCreateForm="ngForm" role="form" novalidate class="form-validation" *ngIf="active" (submit)="save()">
-                    <div class="form-group">
-                        <label for="TenancyName">{{"TenancyName" | localize}} *</label>
-                        <input id="TenancyName" #tenancyNameInput="ngModel" class="form-control" type="text" [ngClass]="{'edited':tenant.tenancyName}" name="tenancyName" [(ngModel)]="tenant.tenancyName" #tenancyName="ngModel" required maxlength="64" pattern="^[a-zA-Z][a-zA-Z0-9_-]{1,}$">
-                        <validation-messages [formCtrl]="tenancyNameInput"></validation-messages>
-                    </div>
-                    <div>
-                        <span class="help-block text-danger" *ngIf="!tenancyName.valid && !tenancyName.pristine">{{"TenantName_Regex_Description" | localize}}</span>
-                    </div>
+        <div class="kt-container kt-grid__item kt-grid__item--fluid">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body  kt-portlet__body--fit">
+                    <form #tenantCreateForm="ngForm" role="form" novalidate class="form-validation" *ngIf="active"
+                        (submit)="save()">
+                        <div class="form-group">
+                            <label for="TenancyName">{{"TenancyName" | localize}} *</label>
+                            <input id="TenancyName" #tenancyNameInput="ngModel" class="form-control" type="text"
+                                [ngClass]="{'edited':tenant.tenancyName}" name="tenancyName"
+                                [(ngModel)]="tenant.tenancyName" #tenancyName="ngModel" required maxlength="64"
+                                pattern="^[a-zA-Z][a-zA-Z0-9_-]{1,}$">
+                            <validation-messages [formCtrl]="tenancyNameInput"></validation-messages>
+                        </div>
+                        <div>
+                            <span class="help-block text-danger"
+                                *ngIf="!tenancyName.valid && !tenancyName.pristine">{{"TenantName_Regex_Description" | localize}}</span>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="Name">{{"TenantName" | localize}} *</label>
-                        <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control" [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
-                        <validation-messages [formCtrl]="nameInput"></validation-messages>
-                    </div>
+                        <div class="form-group">
+                            <label for="Name">{{"TenantName" | localize}} *</label>
+                            <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control"
+                                [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
+                            <validation-messages [formCtrl]="nameInput"></validation-messages>
+                        </div>
 
-                    <div class="m-checkbox-list">
-                        <label class="m-checkbox">
-                            <input id="CreateTenant_UseHostDb" type="checkbox" name="UseHostDb" [(ngModel)]="useHostDb">
-                            {{"UseHostDatabase" | localize}}
-                            <span></span>
-                        </label>
-                    </div>
+                        <div class="kt-checkbox-list">
+                            <label class="kt-checkbox">
+                                <input id="CreateTenant_UseHostDb" type="checkbox" name="UseHostDb"
+                                    [(ngModel)]="useHostDb">
+                                {{"UseHostDatabase" | localize}}
+                                <span></span>
+                            </label>
+                        </div>
 
-                    <div class="form-group" *ngIf="!useHostDb">
-                        <label for="DatabaseConnectionString">{{"DatabaseConnectionString" | localize}} *</label>
-                        <input id="DatabaseConnectionString" #connectionStringInput="ngModel" type="text" name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString" [ngClass]="{'edited':tenant.connectionString}" required maxlength="1024">
-                        <validation-messages [formCtrl]="connectionStringInput"></validation-messages>
-                    </div>
+                        <div class="form-group" *ngIf="!useHostDb">
+                            <label for="DatabaseConnectionString">{{"DatabaseConnectionString" | localize}} *</label>
+                            <input id="DatabaseConnectionString" #connectionStringInput="ngModel" type="text"
+                                name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString"
+                                [ngClass]="{'edited':tenant.connectionString}" required maxlength="1024">
+                            <validation-messages [formCtrl]="connectionStringInput"></validation-messages>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="AdminEmailAddress">{{"AdminEmailAddress" | localize}} *</label>
-                        <input id="AdminEmailAddress" #adminEmailAddressInput="ngModel" type="email" name="AdminEmailAddress" class="form-control" [(ngModel)]="tenant.adminEmailAddress" [ngClass]="{'edited':tenant.adminEmailAddress}" required pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" maxlength="256">
-                        <validation-messages [formCtrl]="adminEmailAddressInput"></validation-messages>
-                    </div>
+                        <div class="form-group">
+                            <label for="AdminEmailAddress">{{"AdminEmailAddress" | localize}} *</label>
+                            <input id="AdminEmailAddress" #adminEmailAddressInput="ngModel" type="email"
+                                name="AdminEmailAddress" class="form-control" [(ngModel)]="tenant.adminEmailAddress"
+                                [ngClass]="{'edited':tenant.adminEmailAddress}" required
+                                pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" maxlength="256">
+                            <validation-messages [formCtrl]="adminEmailAddressInput"></validation-messages>
+                        </div>
 
-                    <div class="m-checkbox-list">
-                        <label class="m-checkbox">
-                            <input id="CreateTenant_SetRandomPassword" type="checkbox" name="SetRandomPassword" [(ngModel)]="setRandomPassword">
-                            {{"SetRandomPassword" | localize}}
-                            <span></span>
-                        </label>
-                    </div>
+                        <div class="kt-checkbox-list">
+                            <label class="kt-checkbox">
+                                <input id="CreateTenant_SetRandomPassword" type="checkbox" name="SetRandomPassword"
+                                    [(ngModel)]="setRandomPassword">
+                                {{"SetRandomPassword" | localize}}
+                                <span></span>
+                            </label>
+                        </div>
 
-                    <div class="form-group" *ngIf="!setRandomPassword">
-                        <label for="AdminPassword">{{"AdminPassword" | localize}}</label>
-                        <input id="AdminPassword" type="password" name="adminPassword" class="form-control" id="adminPassword"
-                               [(ngModel)]="tenant.adminPassword" [ngClass]="{'edited':tenant.adminPassword}" [required]="!setRandomPassword"
-                               #adminPassword="ngModel" validateEqual="adminPasswordRepeat" reverse="true" maxlength="32" [requireDigit]="passwordComplexitySetting.requireDigit" [requireLowercase]="passwordComplexitySetting.requireLowercase"
-                               [requireUppercase]="passwordComplexitySetting.requireUppercase" [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric" [requiredLength]="passwordComplexitySetting.requiredLength">
-                    </div>
+                        <div class="form-group" *ngIf="!setRandomPassword">
+                            <label for="AdminPassword">{{"AdminPassword" | localize}}</label>
+                            <input id="AdminPassword" type="password" name="adminPassword" class="form-control"
+                                id="adminPassword" [(ngModel)]="tenant.adminPassword"
+                                [ngClass]="{'edited':tenant.adminPassword}" [required]="!setRandomPassword"
+                                #adminPassword="ngModel" validateEqual="adminPasswordRepeat" reverse="true"
+                                maxlength="32" [requireDigit]="passwordComplexitySetting.requireDigit"
+                                [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                                [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                                [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                                [requiredLength]="passwordComplexitySetting.requiredLength">
+                        </div>
 
-                    <div [hidden]="tenantCreateForm.form.valid || tenantCreateForm.form.pristine">
-                        <ul class="help-block text-danger" *ngIf="tenantCreateForm.controls['adminPassword'] && tenantCreateForm.controls['adminPassword'].errors">
-                            <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireDigit">{{"PasswordComplexity_RequireDigit_Hint" | localize}}</li>
-                            <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireLowercase">{{"PasswordComplexity_RequireLowercase_Hint" | localize}}</li>
-                            <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireUppercase">{{"PasswordComplexity_RequireUppercase_Hint" | localize}}</li>
-                            <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireNonAlphanumeric">{{"PasswordComplexity_RequireNonAlphanumeric_Hint" | localize}}</li>
-                            <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requiredLength">{{"PasswordComplexity_RequiredLength_Hint" | localize:passwordComplexitySetting.requiredLength}}</li>
-                        </ul>
-                    </div>
+                        <div [hidden]="tenantCreateForm.form.valid || tenantCreateForm.form.pristine">
+                            <ul class="help-block text-danger"
+                                *ngIf="tenantCreateForm.controls['adminPassword'] && tenantCreateForm.controls['adminPassword'].errors">
+                                <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireDigit">
+                                    {{"PasswordComplexity_RequireDigit_Hint" | localize}}</li>
+                                <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireLowercase">
+                                    {{"PasswordComplexity_RequireLowercase_Hint" | localize}}</li>
+                                <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireUppercase">
+                                    {{"PasswordComplexity_RequireUppercase_Hint" | localize}}</li>
+                                <li
+                                    [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireNonAlphanumeric">
+                                    {{"PasswordComplexity_RequireNonAlphanumeric_Hint" | localize}}</li>
+                                <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requiredLength">
+                                    {{"PasswordComplexity_RequiredLength_Hint" | localize:passwordComplexitySetting.requiredLength}}
+                                </li>
+                            </ul>
+                        </div>
 
-                    <div class="form-group" *ngIf="!setRandomPassword">
-                        <label for="AdminPasswordRepeat">{{"AdminPasswordRepeat" | localize}}</label>
-                        <input id="AdminPasswordRepeat" type="password" name="adminPasswordRepeat" class="form-control"
-                               [(ngModel)]="tenant.adminPasswordRepeat" [ngClass]="{'edited':tenant.adminPasswordRepeat}" [required]="!setRandomPassword"
-                               #adminPasswordRepeat="ngModel" [requireDigit]="passwordComplexitySetting.requireDigit" [requireLowercase]="passwordComplexitySetting.requireLowercase"
-                               [requireUppercase]="passwordComplexitySetting.requireUppercase" [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric" [requiredLength]="passwordComplexitySetting.requiredLength"
-                               validateEqual="adminPassword"
-                               maxlength="32">
-                    </div>
+                        <div class="form-group" *ngIf="!setRandomPassword">
+                            <label for="AdminPasswordRepeat">{{"AdminPasswordRepeat" | localize}}</label>
+                            <input id="AdminPasswordRepeat" type="password" name="adminPasswordRepeat"
+                                class="form-control" [(ngModel)]="tenant.adminPasswordRepeat"
+                                [ngClass]="{'edited':tenant.adminPasswordRepeat}" [required]="!setRandomPassword"
+                                #adminPasswordRepeat="ngModel" [requireDigit]="passwordComplexitySetting.requireDigit"
+                                [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                                [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                                [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                                [requiredLength]="passwordComplexitySetting.requiredLength"
+                                validateEqual="adminPassword" maxlength="32">
+                        </div>
 
-                    <div [hidden]="tenantCreateForm.form.valid || tenantCreateForm.form.pristine">
-                        <ul class="help-block text-danger" *ngIf="tenantCreateForm.controls['adminPasswordRepeat'] && tenantCreateForm.controls['adminPasswordRepeat'].errors">
-                            <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireDigit">{{"PasswordComplexity_RequireDigit_Hint" | localize}}</li>
-                            <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireLowercase">{{"PasswordComplexity_RequireLowercase_Hint" | localize}}</li>
-                            <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireUppercase">{{"PasswordComplexity_RequireUppercase_Hint" | localize}}</li>
-                            <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireNonAlphanumeric">{{"PasswordComplexity_RequireNonAlphanumeric_Hint" | localize}}</li>
-                            <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requiredLength">{{"PasswordComplexity_RequiredLength_Hint" | localize:passwordComplexitySetting.requiredLength}}</li>
-                            <li [hidden]="tenantCreateForm.controls['adminPasswordRepeat'].valid">{{"PasswordsDontMatch" | localize}}</li>
-                        </ul>
-                    </div>
+                        <div [hidden]="tenantCreateForm.form.valid || tenantCreateForm.form.pristine">
+                            <ul class="help-block text-danger"
+                                *ngIf="tenantCreateForm.controls['adminPasswordRepeat'] && tenantCreateForm.controls['adminPasswordRepeat'].errors">
+                                <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireDigit">
+                                    {{"PasswordComplexity_RequireDigit_Hint" | localize}}</li>
+                                <li
+                                    [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireLowercase">
+                                    {{"PasswordComplexity_RequireLowercase_Hint" | localize}}</li>
+                                <li
+                                    [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireUppercase">
+                                    {{"PasswordComplexity_RequireUppercase_Hint" | localize}}</li>
+                                <li
+                                    [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireNonAlphanumeric">
+                                    {{"PasswordComplexity_RequireNonAlphanumeric_Hint" | localize}}</li>
+                                <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requiredLength">
+                                    {{"PasswordComplexity_RequiredLength_Hint" | localize:passwordComplexitySetting.requiredLength}}
+                                </li>
+                                <li [hidden]="tenantCreateForm.controls['adminPasswordRepeat'].valid">
+                                    {{"PasswordsDontMatch" | localize}}</li>
+                            </ul>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="edition">{{"Edition" | localize}}</label>
-                        <select id="edition" name="edition" class="form-control" [(ngModel)]="tenant.editionId" (change)="onEditionChange($event)">
-                            <option *ngFor="let edition of editions" [value]="edition.value">{{edition.displayText}}</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="edition">{{"Edition" | localize}}</label>
+                            <select id="edition" name="edition" class="form-control" [(ngModel)]="tenant.editionId"
+                                (change)="onEditionChange($event)">
+                                <option *ngFor="let edition of editions" [value]="edition.value">{{edition.displayText}}
+                                </option>
+                            </select>
+                        </div>
 
-                    <div [hidden]="!isSubscriptionFieldsVisible" class="m-checkbox-list">
-                        <label for="CreateTenant_IsUnlimited" class="m-checkbox">
-                            <input id="CreateTenant_IsUnlimited" type="checkbox" name="IsUnlimited" [(ngModel)]="isUnlimited" />
-                            {{"UnlimitedTimeSubscription" | localize}}
-                            <span></span>
-                        </label>
-                    </div>
+                        <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
+                            <label for="CreateTenant_IsUnlimited" class="kt-checkbox">
+                                <input id="CreateTenant_IsUnlimited" type="checkbox" name="IsUnlimited"
+                                    [(ngModel)]="isUnlimited" />
+                                {{"UnlimitedTimeSubscription" | localize}}
+                                <span></span>
+                            </label>
+                        </div>
 
-                    <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group" [ngClass]="{'has-error': !subscriptionEndDateIsValid()}">
-                        <label for="SubscriptionEndDate">{{"SubscriptionEndDate" | localize}}</label>
-                        <input id="SubscriptionEndDate" type="text" #SubscriptionEndDateUtc name="SubscriptionEndDateUtc" class="form-control" bsDatepicker [(ngModel)]="tenant.subscriptionEndDateUtc" autocomplete="off">
-                    </div>
+                        <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group"
+                            [ngClass]="{'has-error': !subscriptionEndDateIsValid()}">
+                            <label for="SubscriptionEndDate">{{"SubscriptionEndDate" | localize}}</label>
+                            <input id="SubscriptionEndDate" type="text" #SubscriptionEndDateUtc
+                                name="SubscriptionEndDateUtc" class="form-control" bsDatepicker
+                                [(ngModel)]="tenant.subscriptionEndDateUtc" autocomplete="off">
+                        </div>
 
-                    <div [hidden]="!isSubscriptionFieldsVisible" class="m-checkbox-list">
-                        <label for="CreateTenant_IsInTrialPeriod" class="m-checkbox">
-                            <input id="CreateTenant_IsInTrialPeriod" type="checkbox" name="IsInTrialPeriod" [disabled]="isSelectedEditionFree" [(ngModel)]="tenant.isInTrialPeriod">
-                            {{"IsInTrialPeriod" | localize}}
-                            <span></span>
-                        </label>
-                    </div>
+                        <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
+                            <label for="CreateTenant_IsInTrialPeriod" class="kt-checkbox">
+                                <input id="CreateTenant_IsInTrialPeriod" type="checkbox" name="IsInTrialPeriod"
+                                    [disabled]="isSelectedEditionFree" [(ngModel)]="tenant.isInTrialPeriod">
+                                {{"IsInTrialPeriod" | localize}}
+                                <span></span>
+                            </label>
+                        </div>
 
-                    <div class="m-checkbox-list">
-                        <label for="CreateTenant_ShouldChangePasswordOnNextLogin" class="m-checkbox">
-                            <input id="CreateTenant_ShouldChangePasswordOnNextLogin" type="checkbox" name="ShouldChangePasswordOnNextLogin" [(ngModel)]="tenant.shouldChangePasswordOnNextLogin">
-                            {{"ShouldChangePasswordOnNextLogin" | localize}}
-                            <span></span>
-                        </label>
-                        <label for="CreateTenant_SendActivationEmail" class="m-checkbox">
-                            <input id="CreateTenant_SendActivationEmail" type="checkbox" name="SendActivationEmail" [(ngModel)]="tenant.sendActivationEmail">
-                            {{"SendActivationEmail" | localize}}
-                            <span></span>
-                        </label>
-                        <label for="CreateTenant_IsActive" class="m-checkbox">
-                            <input id="CreateTenant_IsActive" type="checkbox" name="IsActive" [(ngModel)]="tenant.isActive">
-                            {{"Active" | localize}}
-                            <span></span>
-                        </label>
-                    </div>
-                    <div class="m--margin-top-40">
-                        <button type="button" [disabled]="saving" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
-                        <button type="submit" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')" class="btn btn-primary" [disabled]="!tenantCreateForm.form.valid || saving || !subscriptionEndDateIsValid()"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
-                    </div>
-                </form>
+                        <div class="kt-checkbox-list">
+                            <label for="CreateTenant_ShouldChangePasswordOnNextLogin" class="kt-checkbox">
+                                <input id="CreateTenant_ShouldChangePasswordOnNextLogin" type="checkbox"
+                                    name="ShouldChangePasswordOnNextLogin"
+                                    [(ngModel)]="tenant.shouldChangePasswordOnNextLogin">
+                                {{"ShouldChangePasswordOnNextLogin" | localize}}
+                                <span></span>
+                            </label>
+                            <label for="CreateTenant_SendActivationEmail" class="kt-checkbox">
+                                <input id="CreateTenant_SendActivationEmail" type="checkbox" name="SendActivationEmail"
+                                    [(ngModel)]="tenant.sendActivationEmail">
+                                {{"SendActivationEmail" | localize}}
+                                <span></span>
+                            </label>
+                            <label for="CreateTenant_IsActive" class="kt-checkbox">
+                                <input id="CreateTenant_IsActive" type="checkbox" name="IsActive"
+                                    [(ngModel)]="tenant.isActive">
+                                {{"Active" | localize}}
+                                <span></span>
+                            </label>
+                        </div>
+                        <div class="kt-margin-t-40">
+                            <button type="button" [disabled]="saving" class="btn btn-secondary"
+                                (click)="close()">{{"Cancel" | localize}}</button>
+                            <button type="submit" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"
+                                class="btn btn-primary"
+                                [disabled]="!tenantCreateForm.form.valid || saving || !subscriptionEndDateIsValid()"><i
+                                    class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -492,113 +552,131 @@ createTenant(): void {
 
 First, create a new html page named **edit-tenant.component.html **with the content below. 
 
-````ts
+````html
 <div [@routerTransition]>
-    <div class="m-subheader">
-        <div class="row align-items-center">
-            <div class="mr-auto col-auto">
-                <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{"EditTenant" | localize}}: {{tenant.tenancyName}}</span>
-                </h3>
-                <span class="m-section__sub">
-                    {{"EditTenantHeaderInfo" | localize}}
-                </span>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div class="kt-container ">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{"EditTenant" | localize}}: {{tenant.tenancyName}}</span>
+                    </h3>
+                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                    <span class="kt-subheader__desc">
+                        {{"EditTenantHeaderInfo" | localize}}
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="m-content">
-        <div class="m-portlet m-portlet--mobile">
-            <div class="m-portlet__body">
-
+        <div class="kt-container kt-grid__item kt-grid__item--fluid">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body  kt-portlet__body--fit">
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 ````
 
-After doing that, copy the form element from **edit-tenant-modal.component.html** into div with "**m-portlet__body**" class. Now, there are still modal related html code in our file, so we need to remove them.
+After doing that, copy the form element from **edit-tenant-modal.component.html** into div with "**kt-portlet__body**" class. Now, there are still modal related html code in our file, so we need to remove them.
 
 First, remove the html item with **modal-header** class since we don't need it anymore.
 
 Now, move all content of the div with class **modal-body** into the **form** tag. After that, we can remove the div with class **modal-body**. 
 
-Finally, change the class of the div which contains Save and Cancel buttons from **modal-footer** to **m--margin-top-40**.
+Finally, change the class of the div which contains Save and Cancel buttons from **modal-footer** to **kt-margin-t-40**.
 
 Here is final version of **edit-tenant.component.html**:
 
 `````html
 <div [@routerTransition]>
-    <div class="m-subheader">
-        <div class="row align-items-center">
-            <div class="mr-auto col-auto">
-                <h3 class="m-subheader__title m-subheader__title--separator">
-                    <span>{{"EditTenant" | localize}}: {{tenant.tenancyName}}</span>
-                </h3>
-                <span class="m-section__sub">
-                    {{"EditTenantHeaderInfo" | localize}}
-                </span>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div class="kt-container ">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{"EditTenant" | localize}}: {{tenant.tenancyName}}</span>
+                    </h3>
+                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                    <span class="kt-subheader__desc">
+                        {{"EditTenantHeaderInfo" | localize}}
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="m-content">
-        <div class="m-portlet m-portlet--mobile">
-            <div class="m-portlet__body">
-                <form #tenantEditForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()" *ngIf="tenant && active">
-                    <div class="form-group">
-                        <label for="Name">{{"TenantName" | localize}} *</label>
-                        <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control" [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
-                        <validation-messages [formCtrl]="nameInput"></validation-messages>
-                    </div>
-                    <div class="form-group" *ngIf="currentConnectionString">
-                        <label for="DatabaseConnectionString">{{"DatabaseConnectionString" | localize}} *</label>
-                        <input id="DatabaseConnectionString" #connectionStringInput="ngModel" type="text" name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString" required maxlength="1024">
-                        <validation-messages [formCtrl]="connectionStringInput"></validation-messages>
-                    </div>
-                    <div *ngIf="currentConnectionString">
-                        <span class="help-block text-warning">{{"TenantDatabaseConnectionStringChangeWarningMessage" | localize}}</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="edition">{{"Edition" | localize}}</label>
-                        <select id="edition" name="edition" class="form-control" [(ngModel)]="tenant.editionId" (change)="onEditionChange($event)">
-                            <option *ngFor="let edition of editions" [value]="edition.value">{{edition.displayText}}</option>
-                        </select>
-                    </div>
-                    <div [hidden]="!isSubscriptionFieldsVisible" class="m-checkbox-list">
-                        <label class="m-checkbox">
-                            <input id="CreateTenant_IsUnlimited" type="checkbox" name="IsUnlimited" [(ngModel)]="isUnlimited" (ngModelChange)="onUnlimitedChange()" />
-                            {{"UnlimitedTimeSubscription" | localize}}
-                            <span></span>
-                        </label>
-                    </div>
-                    <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group" [ngClass]="{'has-error': !subscriptionEndDateUtcIsValid }">
-                        <label for="SubscriptionEndDateUtc">{{"SubscriptionEndDateUtc" | localize}}</label>
-                        <input id="SubscriptionEndDateUtc" type="datetime" #SubscriptionEndDateUtc name="SubscriptionEndDateUtc" class="form-control"
-                               [ngClass]="{'edited':tenant.subscriptionEndDateUtc}"
-                               (bsValueChange)="subscriptionEndDateChange($event)"
-                               bsDatepicker
-                               [(ngModel)]="tenant.subscriptionEndDateUtc"
-                               [required]="!isUnlimited">
-                    </div>
-                    <div [hidden]="!isSubscriptionFieldsVisible" class="m-checkbox-list">
-                        <label class="m-checkbox">
-                            <input id="CreateTenant_IsInTrialPeriod" type="checkbox" name="IsInTrialPeriod" [disabled]="selectedEditionIsFree()" [(ngModel)]="tenant.isInTrialPeriod">
-                            {{"IsInTrialPeriod" | localize}}
-                            <span></span>
-                        </label>
-                    </div>
-                    <div class="m-checkbox-list">
-                        <label class="m-checkbox">
-                            <input id="EditTenant_IsActive" type="checkbox" name="IsActive" [(ngModel)]="tenant.isActive">
-                            {{"Active" | localize}}
-                            <span></span>
-                        </label>
-                    </div>
-                    <div class="m--margin-top-40">
-                        <button type="button" [disabled]="saving" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
-                        <button type="submit" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')" class="btn btn-primary" [disabled]="!tenantEditForm.form.valid || saving || !subscriptionEndDateUtcIsValid"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
-                    </div>
-                </form>
+        <div class="kt-container kt-grid__item kt-grid__item--fluid">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body  kt-portlet__body--fit">
+                    <form #tenantEditForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()"
+                        *ngIf="tenant && active">
+                        <div class="form-group">
+                            <label for="Name">{{"TenantName" | localize}} *</label>
+                            <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control"
+                                [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
+                            <validation-messages [formCtrl]="nameInput"></validation-messages>
+                        </div>
+                        <div class="form-group" *ngIf="currentConnectionString">
+                            <label for="DatabaseConnectionString">{{"DatabaseConnectionString" | localize}} *</label>
+                            <input id="DatabaseConnectionString" #connectionStringInput="ngModel" type="text"
+                                name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString"
+                                required maxlength="1024">
+                            <validation-messages [formCtrl]="connectionStringInput"></validation-messages>
+                        </div>
+                        <div *ngIf="currentConnectionString">
+                            <span
+                                class="help-block text-warning">{{"TenantDatabaseConnectionStringChangeWarningMessage" | localize}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="edition">{{"Edition" | localize}}</label>
+                            <select id="edition" name="edition" class="form-control" [(ngModel)]="tenant.editionId"
+                                (change)="onEditionChange($event)">
+                                <option *ngFor="let edition of editions" [value]="edition.value">{{edition.displayText}}
+                                </option>
+                            </select>
+                        </div>
+                        <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
+                            <label class="kt-checkbox">
+                                <input id="CreateTenant_IsUnlimited" type="checkbox" name="IsUnlimited"
+                                    [(ngModel)]="isUnlimited" (ngModelChange)="onUnlimitedChange()" />
+                                {{"UnlimitedTimeSubscription" | localize}}
+                                <span></span>
+                            </label>
+                        </div>
+                        <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group"
+                            [ngClass]="{'has-error': !subscriptionEndDateUtcIsValid }">
+                            <label for="SubscriptionEndDateUtc">{{"SubscriptionEndDateUtc" | localize}}</label>
+                            <input id="SubscriptionEndDateUtc" type="datetime" #SubscriptionEndDateUtc
+                                name="SubscriptionEndDateUtc" class="form-control"
+                                [ngClass]="{'edited':tenant.subscriptionEndDateUtc}"
+                                (bsValueChange)="subscriptionEndDateChange($event)" bsDatepicker
+                                [(ngModel)]="tenant.subscriptionEndDateUtc" [required]="!isUnlimited">
+                        </div>
+                        <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
+                            <label class="kt-checkbox">
+                                <input id="CreateTenant_IsInTrialPeriod" type="checkbox" name="IsInTrialPeriod"
+                                    [disabled]="selectedEditionIsFree()" [(ngModel)]="tenant.isInTrialPeriod">
+                                {{"IsInTrialPeriod" | localize}}
+                                <span></span>
+                            </label>
+                        </div>
+                        <div class="kt-checkbox-list">
+                            <label class="kt-checkbox">
+                                <input id="EditTenant_IsActive" type="checkbox" name="IsActive"
+                                    [(ngModel)]="tenant.isActive">
+                                {{"Active" | localize}}
+                                <span></span>
+                            </label>
+                        </div>
+                        <div class="kt-margin-t-40">
+                            <button type="button" [disabled]="saving" class="btn btn-secondary"
+                                (click)="close()">{{"Cancel" | localize}}</button>
+                            <button type="submit" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"
+                                class="btn btn-primary"
+                                [disabled]="!tenantEditForm.form.valid || saving || !subscriptionEndDateUtcIsValid"><i
+                                    class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

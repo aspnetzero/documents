@@ -103,7 +103,13 @@
             },
             {
               "text": "Host Settings",
-              "path": "Features-Mvc-Core-Host-Settings.md"
+              "path": "Features-Mvc-Core-Host-Settings.md",
+			  "items": [
+				{
+                  "text": "Google Authenticator",
+                  "path": "Google-Authenticator-Usage.md"
+                }
+			  ]
             },
             {
               "text": "Tenant Settings",
@@ -160,7 +166,7 @@
               "path": "Features-Mvc-Core-Swagger-UI.md"
             },
 			{
-              "text": "Healt Checks",
+              "text": "Health Checks",
               "path": "HealthChecks.md"
             }
           ]
@@ -192,7 +198,17 @@
 			"items":[
 				{
 					"text": "Customization",
-					"path": "Customization-Core-Mvc.md"
+					"path": "Customization-Core-Mvc.md",
+					"items": [
+						{
+							"text": "Adding a new Metronic theme",
+							"path": "Adding-New-Metronic-Theme-Mvc-Core.md"
+						},
+						{
+							"text": "Deleting an existing Metronic theme",
+							"path": "Deleting-A-Metronic-Theme-Mvc-Core.md "
+						}
+					]
 				}
 			]
 		}

@@ -1,6 +1,6 @@
 # User Management
 
-When we click Administration/Users menu, we enter to the user management page:
+When we click Administration/Users menu, we enter the user management page:
 
 <img src="images/user-management-core-3.png" alt="User management" class="img-thumbnail" />
 
@@ -35,9 +35,9 @@ When you import users from Excel, if there are errors while importing users to A
 
 ### User Unlock
 
-If a user is locked out (had a specific count of failed access), user can be unlocked on the user list page. You can click "Actions" button on the user page and click "**Unlcok**" item on the opened dropdown list.
+If a user is locked out (had a specific count of failed access), user can be unlocked on the user list page. You can click "Actions" button on the user page and click "**Unlock**" item on the opened dropdown list.
 
-Lockout options can be configured in the **IdentityRegistrar.cs** class under the "Identity" folder in the ***.Core** project. In the sample below, MaxFailedAccessAttempts is configured as 10, so if a user makes 10 failed login attemps in a row, the user will be locked out for a period of time.
+Lockout options can be configured in the **IdentityRegistrar.cs** class under the "Identity" folder in the ***.Core** project. In the sample below, MaxFailedAccessAttempts is configured as 10, so if a user makes 10 failed login attempts in a row, the user will be locked out for a period of time.
 
 ````csharp
 return services.AddAbpIdentity<Tenant, User, Role>(options =>
@@ -62,3 +62,4 @@ Notice that also a **red 'back' icon** shown near to the user name to indicate t
 ## Next
 
 - [Language Management](Features-Angular-Language-Management)
+

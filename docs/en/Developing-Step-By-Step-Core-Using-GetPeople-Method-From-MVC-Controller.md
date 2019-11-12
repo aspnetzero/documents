@@ -17,7 +17,7 @@ public class PhoneBookController : PhoneBookDemoControllerBase
     public ActionResult Index(GetPeopleInput input)
     {
         var output = _personAppService.GetPeople(input);
-        var model = new IndexViewModel(output);
+        var model = ObjectMapper.MapTo<IndexViewModel>(output);
 
         return View(model);
     }
@@ -33,10 +33,7 @@ created a ViewModel object and passes to the view. Let's see the
 [AutoMapFrom(typeof(ListResultDto<PersonListDto>))]
 public class IndexViewModel : ListResultDto<PersonListDto>
 {
-    public IndexViewModel(ListResultDto<PersonListDto> output)
-    {
-        output.MapTo(this);
-    }
+
 }
 ```
 
@@ -72,7 +69,7 @@ below:
 ...
 @model Acme.PhoneBookDemo.Web.Areas.App.Models.PhoneBook.IndexViewModel
 ...
-        <h5 class="m-subheader__title m-subheader">@L("AllPeople")</h5>
+        <h5 class="kt-subheader__title">@L("AllPeople")</h5>
 
     <div class="list-group">
     @foreach (var person in Model.Items)

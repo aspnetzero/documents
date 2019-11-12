@@ -2,9 +2,9 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
+-   ASP.NET Core 3.0 support.
 -   Customizable **dashboard/widget** system.
--   Option to allow only one **concurrent login** per user.
--   Session timeout & **lock screen**.
+-   Session **lock screen**.
 -   Sending **mass notifications/emails** to users.
 -   **Webhook** system.
 -   **Improvements** on current features.

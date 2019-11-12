@@ -117,7 +117,13 @@
             },
             {
               "text": "Host Settings",
-              "path": "Features-Angular-Host-Settings.md"
+              "path": "Features-Angular-Host-Settings.md",
+			  "items": [
+				{
+                  "text": "Google Authenticator",
+                  "path": "Google-Authenticator-Usage.md"
+                }
+			  ]
             },
             {
               "text": "Tenant Settings",
@@ -170,7 +176,7 @@
               "path": "Features-Angular-Swagger-UI.md"
             },
 			{
-              "text": "Healt Checks",
+              "text": "Health Checks",
               "path": "HealthChecks.md"
             }
           ]
@@ -202,7 +208,17 @@
 			"items":[
 				{
 					"text": "Customization",
-					"path": "Customization-Angular.md"
+					"path": "Customization-Angular.md",
+					"items": [
+						{
+							"text": "Adding a new Metronic theme",
+							"path": "Adding-New-Metronic-Theme-Angular.md"
+						},
+						{
+							"text": "Deleting an existing Metronic theme",
+							"path": "Deleting-A-Metronic-Theme-Angular.md"
+						}
+					]
 				}
 			]
 		}
@@ -277,6 +293,9 @@
 		{
           "text": "Identity Server 4 Integration",
           "path": "Infrastructure-Core-Angular-Identity-Server4-Integration.md"
+       },
+      {    "text": "Spinner service",
+          "path": "Infrastructure-Angular-Spinner.md"
         }
       ]
     },
@@ -396,7 +415,7 @@
             },
             {
               "text": "Extending Existing Entities",
-              "path": "Extending-Existing-Entities.md"
+              "path": "Extending-Existing-Entities-Core-Angular.md"
             },
             {
               "text": "Converting Create & Edit Modals to Angular Pages",

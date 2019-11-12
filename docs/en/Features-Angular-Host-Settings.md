@@ -45,6 +45,12 @@ You can also enable/disable session timeout control. If it is enable and the use
 
 This tab also contains user lock-out settings and two factor login settings as well.
 
+> Note:
+>
+> * To use two factor login with **SMS verification** you have to enable **Phone number verification enabled (via SMS)** setting in **User Management** tab.
+>
+> * If user does not have a verified phone number, user will be logged in without sms verification.
+
 ## Email
 
 <img src="images/host-settings-email.png" alt="Email Settings" class="img-thumbnail" />

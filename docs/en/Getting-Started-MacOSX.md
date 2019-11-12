@@ -38,15 +38,7 @@ You need to get EF Core for dotnet.
 
 Go here: [https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet) and see Installing the Tools section. 
 
-Edit the **Web.Host** project file (right click project name and there is an Tools->Edit File option) and add following:
-
-```xml
-<ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-</ItemGroup>
-```
-
-Then back in Terminal:
+Open the terminal in the `EntityFrameworkCore` project folder(eg `Acme.PhoneBookDemo.EntityFrameworkCore`, The ef cli commands in this article are all executed under this folder):
 
 	> dotnet add package Microsoft.EntityFrameworkCore.Design 
 	> dotnet restore

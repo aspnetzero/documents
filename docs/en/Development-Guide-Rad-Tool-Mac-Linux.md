@@ -8,7 +8,7 @@
 
 ## Sample Input File
 
- Input file includes a JSON string and it's name is the same as your entity's name. Here is a sample Product.json:
+ Input file includes a JSON string and it's name is the same as your entity's name. Here is a sample Products.Product.json:
 
 ```json
 {
