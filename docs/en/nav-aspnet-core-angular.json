@@ -273,6 +273,10 @@
 		{
           "text": "Dynamic Asset Bundling and Minifying",
           "path": "Infrastructure-Angular-Bundling-Minifying-Compiling.md"
+        },
+		{
+          "text": "Identity Server 4 Integration",
+          "path": "Infrastructure-Core-Angular-Identity-Server4-Integration.md"
         }
       ]
     },
