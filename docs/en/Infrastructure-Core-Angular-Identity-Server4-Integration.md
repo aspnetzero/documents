@@ -47,7 +47,7 @@ ASP.NET Zero solution has a sample console application (ConsoleApiClient) that c
 
 ## Testing with MVC Client
 
-You can use [aspnet-zero-samples](https://github.com/aspnetzero/aspnet-zero-samples)  -> `IdentityServerClient` project to test identity server with mvc client. 
+You can use [aspnet-zero-samples](https://github.com/aspnetzero/aspnet-zero-samples)  -> `IdentityServerClient` project to test identity server with MVC client. 
 
 Add a new client to `*.Web.Host` appsettings.json
 
