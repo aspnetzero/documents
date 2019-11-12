@@ -293,8 +293,9 @@
 		{
           "text": "Identity Server 4 Integration",
           "path": "Infrastructure-Core-Angular-Identity-Server4-Integration.md"
-       },
-      {    "text": "Spinner service",
+		},
+		{
+		  "text": "Spinner service",
           "path": "Infrastructure-Angular-Spinner.md"
         }
       ]
