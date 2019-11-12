@@ -1,6 +1,6 @@
 # Identity Server 4 Integration
 
-[IdentityServer4](http://identityserver.io/) is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core. ASP.NET Zero is integrated to IdentityServer4. It's **enabled by default**.
+[IdentityServer4](http://identityserver.io/) is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core. ASP.NET Zero is integrated to IdentityServer4. It's **disabled by default**. Its located in `*.Web.Host` project.
 
 ## Configuration
 
@@ -8,7 +8,7 @@ You can enable/disable or configure it from **appsettings.json** file
 
 ```json
 "IdentityServer": {
-  "IsEnabled": "true",
+  "IsEnabled": "false",
   "Clients": [
     {
       "ClientId": "client",
@@ -47,9 +47,9 @@ ASP.NET Zero solution has a sample console application (ConsoleApiClient) that c
 
 ## Testing with MVC Client
 
-You can use [aspnet-zero-samples](https://github.com/aspnetzero/aspnet-zero-samples)  -> `IdentityServerClient` project to test identity server with mvc client. 
+You can use [aspnet-zero-samples](https://github.com/aspnetzero/aspnet-zero-samples)  -> `IdentityServerClient` project to test identity server with MVC client. 
 
-Add a new client to `*.Web.Mvc` appsettings.json
+Add a new client to `*.Web.Host` appsettings.json
 
 ```json
 ...
@@ -79,7 +79,7 @@ Download the `IdentityServerClient` project and open it's `Startup.cs` and modif
 {
     options.SignInScheme = "Cookies";
 
-    options.Authority = "http://localhost:62114";//change with your project url
+    options.Authority = "http://localhost:22742";//change with your project url
     options.RequireHttpsMetadata = false;
 
     options.ClientId = "mvcdemo";
@@ -92,23 +92,17 @@ Download the `IdentityServerClient` project and open it's `Startup.cs` and modif
 
 
 
-That is all. Now you can test it.
+That is all. Now you can test it. 
 
-Run both projects. Go to `IdentityServerClient `project's  secure .
-
-![identity-server-4-test-mvc-secure](images\identity-server-4-test-mvc-secure.png)
+Run both projects. Go to `IdentityServerClient` project's secure.![identity-server-4-test-mvc-secure](images\identity-server-4-test-mvc-secure.png)
 
 It will redirect you to the login page.
 
-![identity-server-4-test-mvc-login](images\identity-server-4-test-mvc-login.png)
+![identity-server-4-test-mvc-login](images\identity-server-4-test-host-login.png)
 
-After you successfully, login you will see the consent page.
+After you successfully login, you will see the consent page.![identity-server-4-test-mvc-consent](images\identity-server-4-test-host-consent.png)
 
-![identity-server-4-test-mvc-consent](images\identity-server-4-test-mvc-consent.png)
-
-After you allow consents, you will redirect to secure page and get user claims.
-
-![identity-server-4-test-mvc-secure-after-login](images\identity-server-4-test-mvc-secure-after-login.png)
+After you allow consents, you will redirect to the secure page and get user claims.![identity-server-4-test-mvc-secure-after-login](images\identity-server-4-test-mvc-secure-after-login.png)
 
 ## OpenId Connect Integration
 
