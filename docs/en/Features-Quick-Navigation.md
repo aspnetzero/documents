@@ -17,6 +17,6 @@ It places on the top menu or left menu depends on your theme menu location.
 
 ![quick-navigation-on-left-menu](images/quick-navigation-on-left-menu.png)
 
-*And it is also available on mobile screen:*
+*And it is also available on mobile screens:*
 
 ![quick-navigation-on-mobile-menu](images/quick-navigation-on-mobile-menu.png)
