@@ -106,7 +106,7 @@ export class DashboardViewConfigurationService {
 
 Open server project.
 
-Open ``*.Core.Shared -> [YourAppName]DashboardCustomizationConsts.cs` and define the same id in here too.
+Open `*.Core.Shared -> [YourAppName]DashboardCustomizationConsts.cs` and define the same id in here too.
 
 ```csharp
 public class [YourAppName]DashboardCustomizationConsts
