@@ -9,7 +9,13 @@ Users who have permission to see this page will see the same item in the applica
 
 In this page, users can change visual settings for Layout, Header, Menu and Footer of the application.
 
-<img src="images/visual-settings-core.png" alt="Visual settings" class="img-thumbnail" />
+<img src="images/visual-settings-core-1.png" alt="Visual settings" class="img-thumbnail" />
+
+ASP.NET Zero contains all 12 demos of the Metronic theme implemented and users can select one of those themes using the visual settings page. After selecting a theme, some more configuration can be made for the selected theme.
+
+ASP.NET Zero also contains a quick theme selection icon next to the language selection dropdown on the layout of the application. By clicking this icon, users can easily switch between available themes by using the default settings of the selected theme. If you don't want to use this quick theme selection option in your app, you can login as host admin and disable it under the "other settings" tab of the settings page.
+
+
 
 ## Next
 
