@@ -169,7 +169,7 @@ public class TenantDashboardAppService ...
 
 * Create a folder named HelloWorld into `*.Web.Mvc  -> wwwroot -> view-resources -> Areas -> [YourAppAreaName] -> Views -> CustomizableDashboard -> Widgets`  and create `HelloWorld.css` and `HelloWorld.js` file for into that folder.
 
-![customizable-dashboard-mvc-css-js](\images\customizable-dashboard-mvc-css-js.png)
+![customizable-dashboard-mvc-css-js](images/customizable-dashboard-mvc-css-js.png)
 
 * Open `HelloWorld.js` and change it as seen below.
 
