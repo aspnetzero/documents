@@ -6,6 +6,78 @@
 
  Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file. So, in order to use it without extension, input file should be created manually. 
 
+***Settings***
+
+| Name                 | Description                                                  |
+| :------------------- | ------------------------------------------------------------ |
+| IsRegenerate         | ------------                                                 |
+| MenuPosition         | ------------                                                 |
+| RelativeNamespace    | Namespace of your entity                                     |
+| EntityName           | Entity Name                                                  |
+| EntityNamePlural     | Entity Name Plural                                           |
+| TableName            | Database Table Name (might be same with plural name)         |
+| PrimaryKeyType       | Type of primay key. <br />Can be `int`, `long`, `string`, `Guid` |
+| BaseClass            | Base class of your entity. <br />Can be `Entity`, `AuditedEntity`, `CreationAuditedEntity`, `FullAuditedEntity` |
+| EntityHistory        | Should Track Entity History                                  |
+| AutoMigration        | `true` add-migration automatically, `false` do not add migration (you need to add migration manually) |
+| UpdateDatabase       | `true` update-database automatically, `false` do not update-database (you need to update-database manually) |
+| CreateUserInterface  | ----------                                                   |
+| CreateViewOnly       | ----------                                                   |
+| CreateExcelExport    | `true` add excel report button                               |
+| PagePermission       | Multitenancy<br />`"PagePermission":{"Host": [ISHOSTALLOWED],"Tenant":[ISTENANTALLOWED]}` |
+| Properties           | Properties of your entity. See 'Table 2' for more.           |
+| NavigationProperties | Navigation properties of your entity. See 'Table 3' for more. |
+| EnumDefinitions      | Enum definitions you use on your entity. See 'Table 4' for more. |
+
+*Table 1*
+
+
+
+***Properties:***
+
+| Name          | Description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| Name          | Property Name                                                |
+| Type          | Type of property. <br />Can be `string`, `bool`, `byte`, `short`, `DateTime`, `decimal`, `double`, `Guid`, `int`, `long`, `enum` |
+| MaxLength     | If type is `string` max length of string                     |
+| MinLength     | If type is `string` min length of string                     |
+| Range         | If type can have range value range of property<br />`"Range": {"IsRangeSet": [ISRANGESET],"MinimumValue": [MINVAL],"MaximumValue": [MAXVAL]}` |
+| Required      | Is property required                                         |
+| Nullable      | Is property nullable                                         |
+| Regex         | ------                                                       |
+| UserInterface | ------<br />`"UserInterface": {"List": true,"AdvancedFilter": true,"CreateOrUpdate": true}` |
+
+*Table 2*
+
+
+
+***NavigationProperties:***
+
+| Name                | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| Namespace           | Namespace of entity                                          |
+| ForeignEntityName   | Entity Name                                                  |
+| IdType              | Type of Foreign Key. See Entity -> PrimaryKeyType            |
+| IsNullable          | Is nullable                                                  |
+| PropertyName        | Property name (Property name for that entity which will store Foreign Key) |
+| DisplayPropertyName | Property name of foreign entity. It will be displayed by that property on pages. |
+| DuplicationNumber   | ----                                                         |
+| RelationType        | Relation type.<br />Can be `single` (one to one),----Add other types |
+
+*Table 3*
+
+
+
+***EnumDefinitions***
+
+| Name           | Description                                                  |
+| -------------- | ------------------------------------------------------------ |
+| Name           | Name                                                         |
+| Namespace      | Namespace                                                    |
+| EnumProperties | Properties <br />`"EnumProperties":[{"Name":"[PROPERYNAME]","Value":[PROPERYVALUE]}]` |
+
+
+
 ## Sample Input File
 
  Input file includes a JSON string and it's name is the same as your entity's name. Here is a sample Products.Product.json:
