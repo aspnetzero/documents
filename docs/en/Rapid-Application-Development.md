@@ -19,3 +19,4 @@ Notice that the Power Tools is only available for **ASP.NET Core backend** (not 
 
 * [Development Guide for Windows & Visual Studio](Development-Guide-Rad-Tool.md)
 * [Development Guide for Mac/Linux](Development-Guide-Rad-Tool-Mac-Linux.md)
+* [Power Tools Config](Rad-Tool-Config.md)
