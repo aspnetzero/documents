@@ -6,7 +6,7 @@ In this document we will explain how to convert AspNet Zero's tenant create & ed
 
 ### Create tenant page html
 
-First, create a new html page named **create-tenant.component.html **with the content below. This is an empty page template for AspNet Zero's Angular pages.
+First, create a new html page named **create-tenant.component.html** with the content below. This is an empty page template for AspNet Zero's Angular pages.
 
 ````html
 <div [@routerTransition]>
