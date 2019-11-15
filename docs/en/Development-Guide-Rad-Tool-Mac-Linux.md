@@ -4,26 +4,26 @@
 
  In this document, we will explain how to use **ASP.NET Zero Power Tools** without the Visual Studio extension.
 
- Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file. So, in order to use it without extension, input file should be created manually. 
+ Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file. So, in order to use it without extension, input file needs to be created manually. 
 
 ***Settings***
 
 | Name                 | Description                                                  |
 | :------------------- | ------------------------------------------------------------ |
-| IsRegenerate         | ------------                                                 |
-| MenuPosition         | ------------                                                 |
-| RelativeNamespace    | Namespace of your entity                                     |
+| IsRegenerate         | Set `true` if you have generated this entity before.         |
+| MenuPosition         | `main` or `administration`                                   |
+| RelativeNamespace    | Namespace of your entity (not including project's namespace) |
 | EntityName           | Entity Name                                                  |
 | EntityNamePlural     | Entity Name Plural                                           |
 | TableName            | Database Table Name (might be same with plural name)         |
 | PrimaryKeyType       | Type of primay key. <br />Can be `int`, `long`, `string`, `Guid` |
 | BaseClass            | Base class of your entity. <br />Can be `Entity`, `AuditedEntity`, `CreationAuditedEntity`, `FullAuditedEntity` |
-| EntityHistory        | Should Track Entity History                                  |
+| EntityHistory        | Set `true` to track history of this entity.                  |
 | AutoMigration        | `true` add-migration automatically, `false` do not add migration (you need to add migration manually) |
 | UpdateDatabase       | `true` update-database automatically, `false` do not update-database (you need to update-database manually) |
-| CreateUserInterface  | ----------                                                   |
-| CreateViewOnly       | ----------                                                   |
-| CreateExcelExport    | `true` add excel report button                               |
+| CreateUserInterface  | `true` creates/modifies ui layer files                       |
+| CreateViewOnly       | `true` creates a view-only modal in actions button in table of your entity in ui |
+| CreateExcelExport    | `true` adds excel report button in ui                        |
 | PagePermission       | Multitenancy<br />`"PagePermission":{"Host": [ISHOSTALLOWED],"Tenant":[ISTENANTALLOWED]}` |
 | Properties           | Properties of your entity. See 'Table 2' for more.           |
 | NavigationProperties | Navigation properties of your entity. See 'Table 3' for more. |
@@ -44,8 +44,8 @@
 | Range         | If type can have range value range of property<br />`"Range": {"IsRangeSet": [ISRANGESET],"MinimumValue": [MINVAL],"MaximumValue": [MAXVAL]}` |
 | Required      | Is property required                                         |
 | Nullable      | Is property nullable                                         |
-| Regex         | ------                                                       |
-| UserInterface | ------<br />`"UserInterface": {"List": true,"AdvancedFilter": true,"CreateOrUpdate": true}` |
+| Regex         | specifies the regex that this property should match          |
+| UserInterface | Will this property be listed, have a filter and editable in ui?<br />`"UserInterface": {"List": true,"AdvancedFilter": true,"CreateOrUpdate": true}` |
 
 *Table 2*
 
@@ -61,8 +61,8 @@
 | IsNullable          | Is nullable                                                  |
 | PropertyName        | Property name (Property name for that entity which will store Foreign Key) |
 | DisplayPropertyName | Property name of foreign entity. It will be displayed by that property on pages. |
-| DuplicationNumber   | ----                                                         |
-| RelationType        | Relation type.<br />Can be `single` (one to one),----Add other types |
+| DuplicationNumber   | If you have two navigation property that navigates to same foreign entity, number them starting from 1. If not, just skip this. |
+| RelationType        | `single` is the only option. |
 
 *Table 3*
 
