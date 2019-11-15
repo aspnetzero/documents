@@ -1,6 +1,6 @@
 # Power Tools Configuration
 
-The Power Tools usually does not need a manual config.  But sometimes (for example when you change default file locations) you may need to change some config so that Power Tools can work as expected.
+The Power Tools usually does not need a manual config.  But sometimes (for example when you change the file locations) you may need to change some config so that Power Tools can work as expected.
 
 Config.json file is located in `*YourAppFolder/aspnet-core/AspNetZeroRadTool`
 
@@ -48,6 +48,6 @@ Note:
 
 1.  It combines base paths to get MVC and Angular file paths.
 
-   For example: It uses `CoreSrcPath + Mvc.AppNavigationProvider` for **AppNavigationProvider** path or `AngularSrcPath + Angular.AppNavigationService` for **AppNavigationService** path 
+   For example: It uses `CoreSrcPath + Mvc.AppNavigationProvider` for **AppNavigationProvider** path or `AngularSrcPath + Angular.AppNavigationService` for **AppNavigationService** path. 
 
 2. It uses **AngularSrcPath** for splitted angular projects and use **AngularMergedSrcPath** for merged project. Make your changes according to the type of your project.
