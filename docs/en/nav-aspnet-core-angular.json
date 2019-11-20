@@ -59,7 +59,13 @@
             },
             {
               "text": "Main Menu and Layout",
-              "path": "Features-Angular-Main-Menu-Layout.md"
+              "path": "Features-Angular-Main-Menu-Layout.md",
+			  "items": [
+                {
+                  "text": "Quick Navigation",
+                  "path": "Features-Quick-Navigation.md"
+                }
+              ]
             },
             {
               "text": "Edition Management",

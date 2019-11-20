@@ -45,7 +45,13 @@
             },
             {
               "text": "Main Menu and Layout",
-              "path": "Features-Mvc-Core-Main-Menu-Layout.md"
+              "path": "Features-Mvc-Core-Main-Menu-Layout.md",
+			  "items": [
+                {
+                  "text": "Quick Navigation",
+                  "path": "Features-Quick-Navigation.md"
+                }
+              ]
             },
             {
               "text": "Edition Management",
