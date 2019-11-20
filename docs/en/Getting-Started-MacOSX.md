@@ -15,7 +15,9 @@ Download an ASP.NET CORE & Angular project with .NET Core framework as described
 
 In the terminal, go to base_folder/angular and run the `yarn` command:
 
-	> yarn
+```bash
+yarn
+```
 
 ## Configuration & Build
 
