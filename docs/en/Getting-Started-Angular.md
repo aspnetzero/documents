@@ -96,7 +96,9 @@ For example when you navigate **Swagger UI**, you will see following page:
 
 Navigate to the **angular** folder, open a command line and run the following command to restore the packages:
 
-    yarn
+```bash
+yarn
+```
 
 We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
 
@@ -104,11 +106,15 @@ We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow an
 
 Run the following command in the command line:
 
-    npm start
+```bash
+npm start
+```
 
 Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
 
-    npm run hmr
+```bash
+npm run hmr
+```
 
 ### Login
 
