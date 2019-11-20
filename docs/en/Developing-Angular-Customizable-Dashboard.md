@@ -147,6 +147,16 @@ Our widget name will be `WidgetHelloWorld`
 * Create an API which your widgets needs. In this scenario, We will create one endpoint into `TenantDashboardAppService.cs` named `GetHelloWorldData`.
 
 ```csharp
+public class GetHelloWorldInput
+{
+    public string Name { get; set; }
+}
+
+public class GetHelloWorldOutput
+{
+    public string OutPutName { get; set; }
+}
+
 public interface ITenantDashboardAppService : IApplicationService
 {
   ...
@@ -323,7 +333,7 @@ public class DashboardConfiguration
 var helloWorld = new WidgetDefinition(
     id:AbpZeroTemplateDashboardCustomizationConsts.Widgets.Tenant.HelloWorld,
     name:"WidgetRecentTenants",//localized string key
-    side: WidgetMultiTenancySides.Tenant,
+    side: MultiTenancySides.Tenant,
     usedWidgetFilters: new List<string>() { helloWorldFilter.Id },// you can use any filter you need
     permissions: tenantWidgetsDefaultPermission);
         
