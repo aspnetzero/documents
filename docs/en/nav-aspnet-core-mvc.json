@@ -487,6 +487,10 @@
             {
               "text": "Extending Existing Entities",
               "path": "Extending-Existing-Entities.md"
+            },
+            {
+              "text": "Converting Create & Edit Modals to MVC Pages",
+              "path": "Converting-Create-Edit-Modal-To-Page-Mvc-Core.md"
             }
           ]
         },
