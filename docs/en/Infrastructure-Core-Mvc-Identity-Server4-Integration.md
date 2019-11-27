@@ -96,19 +96,19 @@ That is all. Now you can test it.
 
 Run both projects. Go to `IdentityServerClient `project's  secure .
 
-![identity-server-4-test-mvc-secure](images\identity-server-4-test-mvc-secure.png)
+<img src="images/identity-server-4-test-mvc-secure.png">
 
 It will redirect you to the login page.
 
-![identity-server-4-test-mvc-login](images\identity-server-4-test-mvc-login.png)
+<img src="images/identity-server-4-test-mvc-login.png">
 
 After you successfully, login you will see the consent page.
 
-![identity-server-4-test-mvc-consent](images\identity-server-4-test-mvc-consent.png)
+<img src="images/identity-server-4-test-mvc-consent.png">
 
 After you allow consents, you will redirect to secure page and get user claims.
 
-![identity-server-4-test-mvc-secure-after-login](images\identity-server-4-test-mvc-secure-after-login.png)
+<img src="images/identity-server-4-test-mvc-secure-after-login.png">
 
 ## OpenId Connect Integration
 
