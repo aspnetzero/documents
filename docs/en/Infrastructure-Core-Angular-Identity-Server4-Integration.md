@@ -94,15 +94,15 @@ Download the `IdentityServerClient` project and open it's `Startup.cs` and modif
 
 That is all. Now you can test it. 
 
-Run both projects. Go to `IdentityServerClient` project's secure.![identity-server-4-test-mvc-secure](images\identity-server-4-test-mvc-secure.png)
+Run both projects. Go to `IdentityServerClient` project's secure. <img src="images/identity-server-4-test-mvc-secure.png">
 
 It will redirect you to the login page.
 
-![identity-server-4-test-mvc-login](images\identity-server-4-test-host-login.png)
+<img src="images/identity-server-4-test-host-login.png">
 
-After you successfully login, you will see the consent page.![identity-server-4-test-mvc-consent](images\identity-server-4-test-host-consent.png)
+After you successfully login, you will see the consent page. <img src="images/identity-server-4-test-host-consent.png">
 
-After you allow consents, you will redirect to the secure page and get user claims.![identity-server-4-test-mvc-secure-after-login](images\identity-server-4-test-mvc-secure-after-login.png)
+After you allow consents, you will redirect to the secure page and get user claims. <img src="images/identity-server-4-test-mvc-secure-after-login.png">
 
 ## OpenId Connect Integration
 
