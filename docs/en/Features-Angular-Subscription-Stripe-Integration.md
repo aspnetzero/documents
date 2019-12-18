@@ -33,7 +33,7 @@ Then you can forward webhooks to AspNet Zero with running listener.
 stripe listen --forward-to http://localhost:22742/Stripe/WebHooks
 ```
 
-That will forward any events to your local project.  For more information check:  https://github.com/stripe/stripe-cli/wiki/listen-command 
+That will forward all events to your local project.  For more information check:  https://github.com/stripe/stripe-cli/wiki/listen-command 
 
 *After you connect successfully your device will be listed.* 
 
