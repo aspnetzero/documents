@@ -2,8 +2,6 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   ASP.NET Core 3.0 support.
--   Customizable **dashboard/widget** system.
 -   Session **lock screen**.
 -   Sending **mass notifications/emails** to users.
 -   **Webhook** system.
