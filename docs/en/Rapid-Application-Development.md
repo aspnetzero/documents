@@ -5,7 +5,7 @@
 [![Power Tools Marketplace](images/power-tools-marketplace.png)](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
 
 
-Notice that the Power Tools is only available for **ASP.NET Core backend** (not available for ASP.NET MVC 5.x).
+Notice that the Power Tools is only available for **ASP.NET Core** templates, not available for ASP.NET MVC 5.x templates.
 
 
 
