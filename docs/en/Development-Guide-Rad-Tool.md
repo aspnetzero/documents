@@ -4,7 +4,7 @@
 
 ## Introduction
 
-In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new entity. It creates all the related layers (including UI) by defining an entity. This tool supports v5.0.0 and later versions.
+In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new CRUD page. It creates all the related layers from the database to the user interface by just defining an entity. This tool supports ASP.NET Zero v5.0.0 and later versions.
 
 ## Download And Install
 
