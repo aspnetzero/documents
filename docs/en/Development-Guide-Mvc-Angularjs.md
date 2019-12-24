@@ -12,8 +12,6 @@ Before reading this document, you should run the application and explore the use
 The following tools are needed in order to use the ASP.NET Zero solution:
 
 -   Visual Studio 2017 v15.3.5 or higher
--   Visual Studio Extensions:
-    -   [Typescript 2+](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
 -   SQL Server
 
 ### Solution Structure (Layers)

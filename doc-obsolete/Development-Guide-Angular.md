@@ -27,7 +27,6 @@ too.
 Following tools are needed in order to use the solution:
 
 -   [nodejs 6.9+ and Npm 3.10+](https://nodejs.org)
--   [Typescript 2.0+](https://www.typescriptlang.org/)
 -   [yarn](https://yarnpkg.com/)
 
 In addition, see [ASP.NET Core](Development-Guide-Core.md)

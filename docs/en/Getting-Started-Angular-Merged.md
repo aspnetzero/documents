@@ -17,7 +17,6 @@ Select **ASP.NET Core & Angular** as Project Type and fill other required fields
 ## Pre Requirements
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
-- [Typescript 2.0+](https://www.microsoft.com/en-us/download/details.aspx?id=48593)
 - [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
 - [Yarn](https://yarnpkg.com/)
 

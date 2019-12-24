@@ -112,7 +112,6 @@ which can be used to investigate the API:
 Angular application needs the following tools to be installed:
 
 -   [nodejs](https://nodejs.org/en/download/) 6.9+ with npm 3.10+
--   [Typescript 2.0+](https://www.typescriptlang.org/)
 -   [yarn](https://yarnpkg.com/)
 
 ### Restore Packages
