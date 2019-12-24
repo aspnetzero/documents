@@ -8,14 +8,18 @@ When we click the magnifier icon, we can see all the details about a change log:
 
 <img src="images/entity-history-log-detail.png" alt="Change Log Detail" class="img-thumbnail" />
 
-You should add entity type that you want to track to ***.Core\EntityHistory\EntityHistoryHelper.TrackedTypes**.  And make sure you uncomment following lines in ***.EntityFrameworkCore\EntityFrameworkCore\{YourProjectName}EntityFrameworkCoreModule.cs**
+You should add entity type that you want to track to ***.Core\EntityHistory\EntityHistoryHelper.TrackedTypes**.  Make sure you uncomment following lines in ***.EntityFrameworkCore\EntityFrameworkCore\{YourProjectName}EntityFrameworkCoreModule.cs** and set **Configuration.EntityHistory.IsEnabled** to **true**.
 
 ```csharp
-//Configuration.EntityHistory.Selectors.Add("AbpZeroTemplateEntities", EntityHistoryHelper.TrackedTypes);
-//Configuration.CustomConfigProviders.Add(new EntityHistoryConfigProvider(Configuration));
+// Set this setting to true for enabling entity history.
+Configuration.EntityHistory.IsEnabled = false;
+
+// Uncomment below line to write change logs for the entities below:
+// Configuration.EntityHistory.Selectors.Add("AbpZeroTemplateEntities", EntityHistoryHelper.TrackedTypes);
+// Configuration.CustomConfigProviders.Add(new EntityHistoryConfigProvider(Configuration));
 ```
 
-The first line here adds entity types defined in `EntityHistoryHelper.TrackedTypes` to entity history config, so changes on those entities will be recorded. The second line adds a custom config provider to `CustomConfigProviders` list. ASP.NET Zero executes `GetConfig` method of each `CustomConfigProvider` and returns the result of `GetConfig` to Angular client app. 
+The first commented line here adds entity types defined in `EntityHistoryHelper.TrackedTypes` to entity history config, so changes on those entities will be recorded. The second commented line adds a custom config provider to `CustomConfigProviders` list. ASP.NET Zero executes `GetConfig` method of each `CustomConfigProvider` and returns the result of `GetConfig` to Angular client app. 
 
 So, in this particular case, `EntityHistoryConfigProvider` returns if entity history feature is enabled or not and if enabled, it returns list of entities enabled for entity history. Angular client app uses those information to show entity history related buttons on each entity page.
 
