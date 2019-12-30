@@ -326,7 +326,9 @@ The result will be like seen below:
 And finally go **Index.cshtml** and change **Create new tenant** button as seen below
 
 ```html
-<a href="/[AppAreaName]/Tenants/Create" class="btn btn-primary"><i class="fa fa-plus"></i> @L("CreateNewTenant")</a>
+<a href="/[AppAreaName]/Tenants/Create" class="btn btn-primary">
+    <i class="fa fa-plus"></i> @L("CreateNewTenant")
+</a>
 ```
 
 ### Result
