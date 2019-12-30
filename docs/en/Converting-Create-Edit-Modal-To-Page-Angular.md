@@ -550,7 +550,7 @@ createTenant(): void {
 
 ### Edit tenant page html
 
-First, create a new html page named **edit-tenant.component.html **with the content below. 
+First, create a new html page named **edit-tenant.component.html** with the content below. 
 
 ````html
 <div [@routerTransition]>
