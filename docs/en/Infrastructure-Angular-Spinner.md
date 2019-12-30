@@ -24,7 +24,7 @@ export class DemoUiComponentsComponent extends AppComponentBase implements OnIni
 }
 ```
 
-![infrastructure-angular-spinner-fullscreen](images\infrastructure-angular-spinner-fullscreen.png)
+![infrastructure-angular-spinner-fullscreen](images/infrastructure-angular-spinner-fullscreen.png)
 
 
 
@@ -62,7 +62,7 @@ export class MyComponent extends AppComponentBase implements OnInit {
 }
 ```
 
-![infrastructure-angular-spinner-on-html](images\infrastructure-angular-spinner-on-html.png)
+![infrastructure-angular-spinner-on-html](images/infrastructure-angular-spinner-on-html.png)
 
 
 
