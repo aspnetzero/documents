@@ -23,7 +23,7 @@ If "Automatically bill my account" option is not selected on the payment page, t
 
 You can use stripe-cli in order to get Stripe's WebHooks requests on your local environment. To download it, go to  https://dashboard.stripe.com/webhooks page. And install stripe-cli
 
-![stripe-test-stripe-cli-download](D:/GitHub/documents/docs/en/images/stripe-test-stripe-cli-download.png)
+![stripe-test-stripe-cli-download](images/stripe-test-stripe-cli-download.png)
 
 After you download it, login to stripe-cli  https://github.com/stripe/stripe-cli/wiki/login-command 
 
@@ -37,7 +37,7 @@ That will forward all events to your local project.  For more information check:
 
 *After you connect successfully your device will be listed.* 
 
-![stripe-test-stripe-cli-list](D:/GitHub/documents/docs/en/images/stripe-test-stripe-cli-list.png)
+![stripe-test-stripe-cli-list](images/stripe-test-stripe-cli-list.png)
 
 ##### Webhookrelay
 
