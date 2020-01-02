@@ -15,6 +15,10 @@ Stripe supports recurring payments. If a tenant wants to pay via Stripe and acce
 
 If "Automatically bill my account" option is not selected on the payment page, tenants should login to the system and manually extend their subscription by clicking the "**Extend**" button on the subscription page and pay manually.	
 
+##### Important Note
+
+ASP.Net Zero uses webhooks to get results from the stripe. That's why you must go https://dashboard.stripe.com/webhooks and add a new webhook with `https://[www.yoursite.com]/Stripe/WebHooks` endpoint. And subscribe to `invoice.payment_succeeded` and `checkout.session.completed` events. 
+
 
 
 ## Testing Stripe WebHooks on Localhost
