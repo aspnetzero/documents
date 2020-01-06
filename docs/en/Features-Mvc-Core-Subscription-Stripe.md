@@ -17,7 +17,7 @@ If "Automatically bill my account" option is not selected on the payment page, t
 
 ##### Important Note
 
-AspNet Zero uses webhooks to get results from the stripe. That's why you must go https://dashboard.stripe.com/webhooks and add a new webhook with `https://[www.yoursite.com]/Stripe/WebHooks` endpoint. And subscribe to `invoice.payment_succeeded` and `checkout.session.completed` events. 
+AspNet Zero uses webhooks to get results from the stripe. That's why you must go to the https://dashboard.stripe.com/webhooks and add a new webhook with `https://[www.yoursite.com]/Stripe/WebHooks` endpoint. And subscribe to `invoice.payment_succeeded` and `checkout.session.completed` events. 
 
 
 
