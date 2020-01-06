@@ -9,7 +9,7 @@ In order to configure Stripe, open `appsettings.json` file in ***.Web.Host** pro
 - **WebhookSecret:** Your Stripe WebHookSecret which is used to validate WebHook requests.
 - **PaymentMethodTypes** (array containing strings): Supported payment method types, check [stripe payment method types](https://stripe.com/docs/payments/payment-methods) 
 
-Stripe supports recurring payments. If a tenant wants to pay via Stripe and accepts automatically billing the account used for the initial payment, then Stripe charges the amount from Tenants account on each subscription cycle and notifies ASP.NET Zero. Then, ASP.NET Zero extends the subscription for the paid period (either monthly or annual).
+Stripe supports recurring payments. If a tenant wants to pay via Stripe and accepts automatically billing the account used for the initial payment, then Stripe charges the amount from Tenants account on each subscription cycle and notifies AspNet Zero. Then, ASP.NET Zero extends the subscription for the paid period (either monthly or annual).
 
 <img src="images/subscription-stripe-recurring-payments.png" alt="Stripe recurring payments" class="img-thumbnail" />
 
