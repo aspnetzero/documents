@@ -272,7 +272,7 @@ export class WidgetHelloWorldComponent extends WidgetComponentBase implements On
 
 ##### View Definitions
 
-Widget's/widget filter's view consts are located in `src\app\shared\common\customizable-dashboard.DashboardCustomizationConsts.ts` Open `*DashboardCustomizationConsts.ts` create new id for hello world widget. (This id is also used in view pages so be careful when selecting this value. It should not start with a number or special characters, etc.)
+Widget's/widget filter's view consts are located in `src\app\shared\common\customizable-dashboard\DashboardCustomizationConsts.ts` Open `*DashboardCustomizationConsts.ts` create new id for hello world widget. (This id is also used in view pages so be careful when selecting this value. It should not start with a number or special characters, etc.)
 
 ```typescript
 export class DashboardCustomizationConst {
@@ -285,9 +285,9 @@ export class DashboardCustomizationConst {
 }
 ```
 
-Go to `*.Web.Core -> DashboardCustomization -> DashboardViewConfiguration.cs`. Add your hello world widget's view definition.
+Go to `src\app\shared\common\customizable-dashboard\dashboard-view-configuration.service.ts`. Add your hello world widget's view definition.
 
-```csharp
+```typescript
 export class DashboardViewConfigurationService {
     ...
     //add your tenant side widgets here
