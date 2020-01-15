@@ -1,6 +1,6 @@
 # Development Guide
 
-<img src="images/RadToolCarsTable2.jpg" alt="Generated User Interface" class="img-thumbnail" width="1369" height="612" />
+![Generated page result](images/RadToolCarsTable2.jpg)
 
 ## Introduction
 
@@ -10,13 +10,12 @@ In this document, we will introduce **ASP.NET Zero Power Tools** and explain it.
 
  If your project version is 5.1.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from [marketplace](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) or Extension and Updates.
 
-<img src="images/rad-extension-install.png" alt="Extension installation" class="img-thumbnail" width="508" height="441" />
-
+![Extension installation](images/rad-extension-install.png)
 ## How To Use It?
 
  The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
 
- <img src="images/RadToolUI3New.jpg" alt="Extension UI" class="img-thumbnail" width="508" height="441" />
+![Extension UI](images/RadToolUI3New.jpg)
 
  A simple console will appear and give you information about the process. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
 
@@ -77,7 +76,7 @@ Also, if you have moved a file that is going to be modified during rad tool gene
 
 ### Server Side
 
-**Created**
+**Files that are being created**
 
  -   Car.cs
  -   CarDto.cs
@@ -93,7 +92,7 @@ Also, if you have moved a file that is going to be modified during rad tool gene
  -   CarsExcelExporter.cs
  -   ICarsExcelExporter.cs
 
-**Modified**
+**Files that are being modified**
 
  -   AppAuthorizationProvider.cs
  -   AppPermissions.cs
@@ -108,7 +107,7 @@ Also, if you have moved a file that is going to be modified during rad tool gene
 
 #### Angular
 
-**Created**
+**Files that are being created**
 
  -   cars.component.ts
  -   cars.component.html
@@ -118,7 +117,7 @@ Also, if you have moved a file that is going to be modified during rad tool gene
  -   Lookup-Table-modal.component.html
  -   Lookup-Table-modal.component.less
 
-**Modified**
+**Files that are being modified**
 
  -   app-navigation.service.ts
  -   service-proxy.module.ts
@@ -127,7 +126,7 @@ Also, if you have moved a file that is going to be modified during rad tool gene
 
 #### Mvc
 
-**Created**
+**Files that are being created**
 
  -   CarsController.cs
  -   CarsViewModel.cs
@@ -140,13 +139,19 @@ Also, if you have moved a file that is going to be modified during rad tool gene
  -   LookupTableModal.js
  -   LookupTableModal.cshtml
 
-**Modified**
+**Files that are being modified**
 
  -   (AppArea)NavigationProvider.cs
  -   (AppArea)PageNames.cs
 
-  (Lookup files are created per foreign key.)
+>   Note that lookup files are being created per foreign key.
+>
 
+ 
 
- <img src="images/RadToolCarsTable3.jpg" alt="Generated User Interface" class="img-thumbnail" width="1312" height="440" />
- <img src="images/RadToolEditModal.jpg" alt="Generated User Interface" class="img-thumbnail" width="1192" height="677" />
+## Final Result
+
+The below image shows a generated page which list records, allows filtering, inserting, deleting, updating and exporting excel functionalities.![Final result: generated page](images/RadToolCarsTable3.jpg)
+
+This is the record edit model where you can update an existing record.
+![Edit model](images/RadToolEditModal.jpg)
