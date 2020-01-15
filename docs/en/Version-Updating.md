@@ -1,32 +1,39 @@
 # Version Updating
 
-ASP.NET ZERO is designed to be a startup template. Updatability of templates is not automatic and straightforward as you know. We do not officially support updating the ASP.NET ZERO version.
+AspNet Zero is designed to be a startup template. Updatability of AspNet Zero is not automatic and straightforward. But, it is possible to upgrade an AspNet Zero solution with the latest version using source control.
 
-But we suggest a solution:
+### New Projects
 
-- In the beginning, create your project, for example, named 'Acme.PhoneBook' from aspnetzero.com
+If you haven't created your project or if you haven't started development on your project, it is easier to create an upgradable repository structure.
 
-- Add it to source control (like Git). But do not add it publicly to Github since our source code is private :)
+- First, create your project from aspnetzero.com with the name you want or use your unchanged project.
+- Add it to source control (like GitHub). According to AspNet Zero license rules, your repository must be private.
+- Push it to the 'master' branch.
+- Create a branch named **dev** from master branch. This branch will be used for your daily development.
+- Create another branch from dev branch named **aspnetzero**. This branch will be used for updating your solution with the latest version of AspNet Zero.
+- When a new version of AspNet Zero is released, re-create your project from scratch with the same name.
+- Switch to **aspnetzero** branch in your source control and copy new AspNet Zero version into this branch. 
+- Switch to dev branch and merge branch **aspnetzero** into **dev**. There will be conflicts, resolve them manually.
 
-- For example, push it to the 'master' branch.
+That's all. Your dev branch will have a new ASP.NET ZERO version. You can merge changes from dev branch to master branch before releasing your app or publishing your app to production. 
 
-- Create a 'dev' branch. Make all your development in this branch.
+The important thing here is, you must not make any changes in **aspnetzero** branch other than overwriting it with the latest version of AspNet Zero.
 
-  ![version-update-new-brach](images/version-update-new-brach.png)
+![version-update-new-project](images/version-update-new-projects.png)
 
-- When a new version of ASP.NET ZERO is released, re-create your project from scratch with the same name, 'Acme.PhoneBook'. (Make sure you create the new project with the same name as the old project. Otherwise, you can not merge them.)
+### Existing Projects
 
-- Override all files to your master branch and commit.
+If you have already created your project and make some development on your project, it is also possible to update your solution with the latest version of AspNet Zero but it requires a bit more work to do.
 
-- Switch to dev branch and merge branch master into dev. There will be conflicts, resolve them manually.
+* First, create a new repository 
+* Create an empty project from AspNet Zero website using your existing project name but select the version when you started development for your project. If you don't remember the initial AspNet Zero version you have started your project, you can check [*.Core/**AppVersionHelper.cs**].
+* Add downloaded source code to your new repository and push to master branch.
+* Create a branch named **dev** from master branch.
+* Create two branches named **aspnetzero** and **migrate** from dev branch.
+* Copy your existing project's source code to **migrate** branch.
+* Switch to **dev** branch and update it from **migrate** branch. In this step, you will face conflicts. You have to resolve those conflicts manually.
+* After merging changes in **migrate** branch to **dev** branch, you will have a structure as explained in "New Projects" section above. You can read "New Projects" section to update your solution for the next releases of AspNet Zero.
 
-![version-update-update-from-master](images/version-update-update-from-master.png)
+You can delete **migrate** branch after merging it to **dev** branch because you will not need it anymore. 
 
-That's all. Your dev and master branches will have a new ASP.NET ZERO version.
-
-Notes:
-
- Deploy always from the dev branch.
-
- Do not use the branch where you keep the main code for other things. (in this example it was master branch)
-
+![version-update-existing-project](images/version-update-existing-projects.png)
