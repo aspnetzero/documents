@@ -27,6 +27,10 @@
         {
           "text": "ASP.NET Boilerplate vs ASP.NET Zero",
           "path": "Abp-Template-vs-AspNet-Zero.md"
+        },
+		{
+          "text": "Version Upgrade",
+          "path": "Version-Updating.md"
         }
       ]
     },
