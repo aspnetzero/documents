@@ -30,6 +30,32 @@ DLLs (that are inside the folder mentioned above) do all the work. The extension
 
 On Mac and Linux, you have to manually do some of the work that is done by the extension. This involves just creating a short and basic[ JSON file](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux) as input.
 
+## Navigation Properties
+
+A navigation property is a type of property on an entity that allows for navigation from one end of an association to the other end. Unlike other properties, navigation properties do not carry data.
+
+Navigation properties provide a way to navigate an association between two entity types. Every object can have a navigation property for every relationship in which it participates. In ASP.NET Zero, a navigation property allows you create a button on the data table, where you can pick a record from a look up table.
+
+Power Tools allow you to create a navigation property for only **1-to-many (1:N)** relationships.
+
+In this scenario there are multiple records from one entity associated with a single record from another entity. This means you have a parent (or primary) entity and many related (or child) entities.
+
+- `Car` entity (1) is associated to `Producer` entity (N). 
+- `Car` entity (1) is associated to `Country` entity (N).
+
+>
+> Currently there's no support for many-to-1 (N:1) or many-to-many (N:N) relationships!
+>
+
+A foreign keys is automatically being created for each navigation property.
+
+The diagram below shows a conceptual model with three entity types: `Car`, `Producer` and `Country`. 
+Navigation properties are `Producer` and `Country` that are defined on the `Car` entity. 
+
+![Navigation property creation example](images/rad-tool-navigation-property-create.png)
+
+![Navigation property example](images/rad-tool-navigation-property-example.png)
+
 ## How To Edit Pre-defined Templates Or Create A New Template?
 
  The templates are inside "/AspNetZeroRadTool/FileTemplates" directory in your project's root directory. Every template is split into three files: "MainTemplate.txt", "PartialTemplates.txt" and "TemplateInfo.txt". If you want to edit any file, just copy it in same directory and change it's extension to ".custom.txt" from ".txt".  For example, you can create "MainTemplate.custom.txt" to override "MainTemplate.txt" in same directory. Please don't make any changes to the original templates.
