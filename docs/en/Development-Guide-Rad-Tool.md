@@ -42,9 +42,7 @@ In this scenario there are multiple records from one entity associated with a si
 - `Car` entity (1) is associated to `Producer` entity (N). 
 - `Car` entity (1) is associated to `Country` entity (N).
 
->
-> Currently there's no support for many-to-1 (N:1) or many-to-many (N:N) relationships!
->
+*Currently there's no support for many-to-1 (N:1) or many-to-many (N:N) relationships!*
 
 A foreign keys is automatically being created for each navigation property.
 
