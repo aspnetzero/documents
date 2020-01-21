@@ -48,7 +48,7 @@ We add a DbSet property for Person entity to **PhoneBookDemoDbContext**
 class defined in **.EntityFrameworkCore** project.
 
 ```csharp
-public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User>
+public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User, PhoneBookDemoDbContext>
 {
     public virtual DbSet<Person> Persons { get; set; }
 
