@@ -1,6 +1,6 @@
 ## Enabling LDAP (Active Directory) Authentication
 
-LDAP (Active Directory) Authentication is disabled by default. To make it work, we should disable multi-tenancy since LDAP auth is not used in a multi-tenant system normally. In CoreModule class in .Core project, we should enable the following line:
+LDAP (Active Directory) Authentication is disabled by default. In CoreModule class in .Core project, we should enable the following line:
 
 ```
 Configuration.Modules.ZeroLdap().Enable(typeof(AppLdapAuthenticationSource));
