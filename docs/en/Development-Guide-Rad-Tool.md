@@ -11,6 +11,11 @@ In this document, we will introduce **ASP.NET Zero Power Tools** and explain it.
  If your project version is 5.1.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from [marketplace](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) or Extension and Updates.
 
 ![Extension installation](images/rad-extension-install.png)
+
+**The Rad tool may require the EF Core tool during database migration. Please refer to its documentation to install it properly.**
+
+https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
+
 ## How To Use It?
 
  The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
