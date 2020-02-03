@@ -2,13 +2,22 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   ASP.NET Core 3.0 support.
--   Customizable **dashboard/widget** system.
--   Session **lock screen**.
--   Sending **mass notifications/emails** to users.
--   **Webhook** system.
--   **Improvements** on current features.
--   More **tutorials**, **examples** & **video courses**.
+-   User Delegation
+-   Calendar system
+-   Sending mass notifications/emails to users
+-   User Sync/Link feature
+-   Tenant login page customization
+-   Password expiration policy
+-   Orderable menu items
+-   Code Analysis Rules
+-   Power Tools enhancements
+-   Gravatar support
+-   Coupon for Subscriptions
+-   Send error messages via email
+-   Session **lock screen**
+-   **Webhook** system
+-   **Improvements** on current features
+-   More **tutorials**, **examples** & **video courses**
 
 We are adding new items here as we clarify them. All these features and
 **much more** will be available also for current customers in their
