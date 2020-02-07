@@ -59,7 +59,7 @@ ASP.NET Zero solution contains three applications:
 `appsettings.json` in Web.Host project contains many settings but **ServerRootAddress**, **ClientRootAddress** and **CorsOrigins** are required to run the application:
 
 ```csharp
-"ServerRootAddress": "http://localhost:22742/",
+"ServerRootAddress": "https://localhost:44301/",
 "ClientRootAddress ": "http://localhost:4200/",
 "CorsOrigins": "http://localhost:4200/"
 ```
@@ -134,7 +134,7 @@ In addition to those fundamental modules, there are some shared modules:
 
 Angular solution contains src/assets/**appconfig.json** file which contains some fundamental settings for the client side:
 
-- **remoteServiceBaseUrl**: Used to configure base address of the server side APIs. Default value: ```http://localhost:22742```
+- **remoteServiceBaseUrl**: Used to configure base address of the server side APIs. Default value: ```https://localhost:44301```
 - **appBaseUrl**: Used to configure base address of the client application. Default value: ```http://localhost:4200```
 - **localeMappings**: Used to configure localizations of third-party libraries those are incompatible with existing localizations.
 

@@ -122,7 +122,7 @@ download this file, and use it to calculate the address of the server-side
 API:
 
 -   **remoteServiceBaseUrl**: Used to configure the base address of the
-    server side APIs. Default value: http://localhost:22742
+    server side APIs. Default value: https://localhost:44301
 -   **appBaseUrl**: Used to configure the base address of the client
     application. Default value: http://localhost:4200
 
@@ -1043,7 +1043,7 @@ applications or if you want to work with host users):
 
 <img src="images/postman-ng2-auth-headers.png" alt="Postman auth headers" width="523" height="112" />
 
-Then we can send username and password as a **POST** request to http://localhost:22742/api/TokenAuth/Authenticate
+Then we can send username and password as a **POST** request to https://localhost:44301/api/TokenAuth/Authenticate
 
 <img src="images/postman-ng2-auth.png" alt="SPostman authentication" class="img-thumbnail" />
 
@@ -1059,7 +1059,7 @@ of users**:
 <img src="images/postman-ng2-userlist.png" alt="Postman get user list" class="img-thumbnail" width="755" height="1040" />
 
 We sent a GET request to
-http://localhost:22742**/api/services/app/User/GetUsers** and added
+https://localhost:44301**/api/services/app/User/GetUsers** and added
 Authorization to the header as "**Bearer &lt;accessToken&gt;**".
 Returning JSON contains the list of users.
 
@@ -1067,7 +1067,7 @@ Returning JSON contains the list of users.
 
 [Swagger UI](http://swagger.io/swagger-ui/) is **integrated** to ASP.NET
 Zero **by default**. You can browse **swagger ui** from
-http://localhost:22742**/swagger/ui/** URL. Notice that this is [server
+https://localhost:44301**/swagger/ui/** URL. Notice that this is [server
 side](Development-Guide-Core.md) URL of the application. In this page
 (which is the default page of server side API application) you can see
 all available API:

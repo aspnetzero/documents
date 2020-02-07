@@ -51,7 +51,7 @@ ASP.NET Zero solution contains four applications:
 `appsettings.json` in Web.Mvc project contains a setting **WebSiteRootAddress**, which stores the root URL of the web application:
 
 ```csharp
-"WebSiteRootAddress": "http://localhost:62114/"
+"WebSiteRootAddress": "https://localhost:44302/"
 ```
 
 It's used to calculate some URLs in the application. So, you need to change this on production.

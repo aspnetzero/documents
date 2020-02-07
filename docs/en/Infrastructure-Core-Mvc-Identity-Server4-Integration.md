@@ -79,7 +79,7 @@ Download the `IdentityServerClient` project and open it's `Startup.cs` and modif
 {
     options.SignInScheme = "Cookies";
 
-    options.Authority = "http://localhost:62114";//change with your project url
+    options.Authority = "https://localhost:44302";//change with your project url
     options.RequireHttpsMetadata = false;
 
     options.ClientId = "mvcdemo";

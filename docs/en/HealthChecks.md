@@ -16,7 +16,7 @@ Health checks settings are located in the `appsettings.json` file
       "HealthChecks": [
         {
           "Name": "MyCompanyName.AbpZeroTemplate.Web.MVC", //your app name
-          "Uri": "http://localhost:62114/healthz" /* your_project_url/healthz
+          "Uri": "https://localhost:44302/healthz" /* your_project_url/healthz
 			you should change that url before you publish your project*/
         }
       ],
@@ -98,15 +98,15 @@ After adding your new health check here, you will be able to see its status in J
 
 - *MVC project (Only exists in ASP.NET Core & jQuery version)*
 
-  Health checks UI endpoint: http://localhost:62114/healthchecks-ui   (if it is enabled)
+  Health checks UI endpoint: https://localhost:44302/healthchecks-ui   (if it is enabled)
 
-  Health checks JSON result endpoint: http://localhost:62114/healthz  (if it is enabled)
+  Health checks JSON result endpoint: https://localhost:44302/healthz  (if it is enabled)
 
 - *Host project (Available in ASP.NET Core versions but designed for Angular project)*
 
-  Health checks UI endpoint: http://localhost:22742/healthchecks-ui   (if it is enabled)
+  Health checks UI endpoint: https://localhost:44301/healthchecks-ui   (if it is enabled)
 
-  Health checks JSON result endpoint: http://localhost:22742/healthz  (if it is enabled)
+  Health checks JSON result endpoint: https://localhost:44301/healthz  (if it is enabled)
 
 - *Public Website*
 
