@@ -11,7 +11,7 @@ see all details an audit log:
 
 Audit log report is provided by **AuditLogAppService** class.
 
-### Periodic log deletion 
+### Periodic Log Deletion 
 
 ASP.NET Zero has built-in periodic log deletion system. To enable it, go to `*.Application/Auditing/ExpiredAuditLogDeleterWorker.cs`  and set `IsEnabled` to true;
 
