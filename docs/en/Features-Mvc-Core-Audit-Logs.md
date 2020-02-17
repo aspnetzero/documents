@@ -11,6 +11,26 @@ see all details an audit log:
 
 Audit log report is provided by **AuditLogAppService** class.
 
+### Periodic log deletion 
+
+ASP.NET Zero has built-in periodic log deletion system. To enable it, go to `*.Application/Auditing/ExpiredAuditLogDeleterWorker.cs`  and set `IsEnabled` to true;
+
+```csharp
+ public class ExpiredAuditLogDeleterWorker : PeriodicBackgroundWorkerBase, ISingletonDependency
+    {
+   		...
+		public const bool IsEnabled = false;//default is false
+		...
+```
+
+It has two more parameter.
+
+**CheckPeriodAsMilliseconds:** Time to wait between two controls.
+
+**MaxDeletionCount:** The maximum number of records that can be deleted at once.
+
+> Note: To perform smaller operations with more frequent intervals you can decrease `MaxDeletionCount` and `CheckPeriodAsMilliseconds`. 
+
 ## Next
 
 - [Entity History](Features-Mvc-Core-Entity-History)
