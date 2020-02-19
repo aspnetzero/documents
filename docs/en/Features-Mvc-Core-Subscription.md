@@ -20,7 +20,7 @@ AspNet Zeros subscription system allows using two payment gateways, one is [PayP
 
 #### Minimum Update Amount
 
-Since payment systems have accepted the minimum payment amount, you may need to set the minimum payment amount according to your payment system. Settings are located in [`*.Core.Shared/AbpZeroTemplateConsts.cs`](https://github.com/aspnetzero/aspnet-zero-core/blob/218d375bb11609ce924a1d873aff7540ed8468b0/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Core.Shared/AbpZeroTemplateConsts.cs#L19-L24)
+Since payment systems have accepted the minimum payment amount, you may need to set the minimum payment amount according to your payment system. Settings are located in [`*.Core.Shared/AbpZeroTemplateConsts.cs`](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Core.Shared/AbpZeroTemplateConsts.cs#L24)
 
 ```csharp
 // Note:
@@ -31,7 +31,7 @@ Since payment systems have accepted the minimum payment amount, you may need to 
 public const decimal MinimumUpgradePaymentAmount = 1M;
 ```
 
- and [`angular/src/shared/AppConsts.ts`](https://github.com/aspnetzero/aspnet-zero-core/blob/218d375bb11609ce924a1d873aff7540ed8468b0/angular/src/shared/AppConsts.ts#L31) . 
+ and [`angular/src/shared/AppConsts.ts`](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/angular/src/shared/AppConsts.ts#L31) . 
 
 ```typescript
 static readonly MinimumUpgradePaymentAmount = 1;
