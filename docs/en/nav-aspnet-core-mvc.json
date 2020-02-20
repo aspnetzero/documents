@@ -188,6 +188,10 @@
 				  "path": "Developing-Mvc-Core-Customizable-Dashboard.md"
 				}
 			  ]
+            },
+			{
+              "text": "Webhooks",
+              "path": "Features-Webhooks.md"
             }
           ]
         },
