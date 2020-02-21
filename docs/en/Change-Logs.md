@@ -6,7 +6,14 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
 
-### v8.1.0 (2019-12-20)
+
+## v8.2.0 (2020-02-20)
+
+* Webhook Feature
+* Session Lock Screen
+* Periodic Audit Log Deletion
+
+## v8.1.0 (2019-12-20)
 
 * ASP.NET Core 3.1 support
 * Multitenant LDAP support
