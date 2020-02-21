@@ -27,6 +27,31 @@ When the subscription of a Tenant is expired, **SubscriptionExpirationCheckWorke
 * If "**deactive tenant**" option is selected for the Edition of the Tenant, tenant will be disabled and will not be able to use the system.
 * If the subscription expires for a tenant who subscribed for trial usage, the tenant will be disabled and will not be able to use the system.
 
+#### Minimum Update Amount
+
+Since payment systems have accepted the minimum payment amount, you may need to set the minimum payment amount according to your payment system. Settings are located in [`*.Core.Shared/AbpZeroTemplateConsts.cs`](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Core.Shared/AbpZeroTemplateConsts.cs#L24)
+
+```csharp
+// Note:
+// Minimum accepted payment amount. If a payment amount is less then that minimum value payment progress will continue without charging payment
+// Even though we can use multiple payment methods, users always can go and use the highest accepted payment amount.
+//For example, you use Stripe and PayPal. Let say that Stripe accepts min 5$ and PayPal accepts min 3$. If your payment amount is 4$.
+// User will prefer to use a payment method with the highest accept value which is a Stripe in this case.
+public const decimal MinimumUpgradePaymentAmount = 1M;
+```
+
+ and [`angular/src/shared/AppConsts.ts`](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/angular/src/shared/AppConsts.ts#L31) . 
+
+```typescript
+static readonly MinimumUpgradePaymentAmount = 1;
+```
+
+Default value is **1**. 
+
+Payment progress will be continued without charging any amount if the payment amount is less than given value.
+
+
+
 ## Next
 
 * [PayPal Integration](Features-Angular-Subscription-PayPal-Integration)
