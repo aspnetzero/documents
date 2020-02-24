@@ -96,7 +96,7 @@ We will create a **RELEASE** pipeline here to do the following:
 - Azure Subscription: ````(select your subscription)````
 - Script Location: ````Inline Script````
 - Inline Script
-  - ````az storage blob delete-batch --account-name [STORAGE-ACCOUNT-NAME] --source $web````
+  - ````az storage blob delete-batch --account-name [STORAGE-ACCOUNT-NAME] --source '$web'````
 
 ##### OPTIONAL (with custom domain): Azure CLI: Settings
 

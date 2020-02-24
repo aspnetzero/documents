@@ -16,7 +16,7 @@ Health checks settings are located in the `appsettings.json` file
       "HealthChecks": [
         {
           "Name": "MyCompanyName.AbpZeroTemplate.Web.MVC", //your app name
-          "Uri": "https://localhost:44302/healthz" /* your_project_url/healthz
+          "Uri": "https://localhost:44302/health" /* your_project_url/health
 			you should change that url before you publish your project*/
         }
       ],
@@ -30,7 +30,7 @@ Health checks settings are located in the `appsettings.json` file
 
 
 
-> Note: If you enable Health Checks UI, don't forget to change your `healthz` URL before you publish your website.
+> Note: If you enable Health Checks UI, don't forget to change your `health` URL before you publish your website.
 
 
 
@@ -100,19 +100,19 @@ After adding your new health check here, you will be able to see its status in J
 
   Health checks UI endpoint: https://localhost:44302/healthchecks-ui   (if it is enabled)
 
-  Health checks JSON result endpoint: https://localhost:44302/healthz  (if it is enabled)
+  Health checks JSON result endpoint: https://localhost:44302/health  (if it is enabled)
 
 - *Host project (Available in ASP.NET Core versions but designed for Angular project)*
 
   Health checks UI endpoint: https://localhost:44301/healthchecks-ui   (if it is enabled)
 
-  Health checks JSON result endpoint: https://localhost:44301/healthz  (if it is enabled)
+  Health checks JSON result endpoint: https://localhost:44301/health  (if it is enabled)
 
 - *Public Website*
 
   Health checks UI endpoint: http://localhost:45776/healthchecks-ui   (if it is enabled)
 
-  Health checks JSON result endpoint: http://localhost:45776/healthz  (if it is enabled)
+  Health checks JSON result endpoint: http://localhost:45776/health  (if it is enabled)
 
 see also:  
 https://github.com/xabaril/AspNetCore.Diagnostics.HealthChecks
