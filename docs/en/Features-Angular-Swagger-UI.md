@@ -1,6 +1,6 @@
 # Swagger UI
 
-[Swagger UI](http://swagger.io/swagger-ui/) is **integrated** to ASP.NET Zero **by default**. You can browse **Swagger UI** from `http://localhost:22742/swagger/ui/` URL.
+[Swagger UI](http://swagger.io/swagger-ui/) is **integrated** to ASP.NET Zero **by default**. You can browse **Swagger UI** from `https://localhost:44301/swagger/ui/` URL.
 
 Notice that this is working in the server-side Host project. 
 

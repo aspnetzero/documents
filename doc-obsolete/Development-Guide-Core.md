@@ -114,7 +114,7 @@ if you are building multi-tenant applications.
 **appsettings.json** in Web.Mvc project contains a setting, named
 "**WebSiteRootAddress**", which stores root URL of the web application:
 
-    "WebSiteRootAddress": "http://localhost:62114/"
+    "WebSiteRootAddress": "https://localhost:44302/"
 
 It's used to calculate some URLs in the application. So, you need to
 change this on deployment. For multi-tenant applications, this URL can
@@ -1582,7 +1582,7 @@ applications or if you want to work with host users):
 <img src="images/postman-ng2-auth-headers.png" alt="Postman auth headers" class="img-thumbnail" width="523" height="112" />
 
 Then we can send username and password as a **POST** request to
-http://localhost:62114**/api/TokenAuth/Authenticate**
+https://localhost:44302**/api/TokenAuth/Authenticate**
 
 <img src="images/postman-authenticate-core-2.png" alt="Postman get user list" class="img-thumbnail" width="919" height="1023" />
 
@@ -1599,7 +1599,7 @@ of users**:
 <img src="images/postman-getusers-core-2.png" alt="Postman authentication" class="img-thumbnail" width="919" height="1023" />
 
 We sent a GET request to
-http://localhost:62114**/api/services/app/User/GetUsers** and added
+https://localhost:44302**/api/services/app/User/GetUsers** and added
 Authorization to the header as "**Bearer &lt;accessToken&gt;**".
 Returning JSON contains the list of users.
 

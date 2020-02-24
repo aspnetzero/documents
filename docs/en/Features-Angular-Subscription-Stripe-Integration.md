@@ -34,7 +34,7 @@ After you download it, login to stripe-cli  https://github.com/stripe/stripe-cli
 Then you can forward webhooks to AspNet Zero with running listener.
 
 ```powershell
-stripe listen --forward-to http://localhost:22742/Stripe/WebHooks
+stripe listen --forward-to https://localhost:44301/Stripe/WebHooks
 ```
 
 That will forward all events to your local project.  For more information check:  https://github.com/stripe/stripe-cli/wiki/listen-command 
@@ -50,7 +50,7 @@ In order to get Stripe's webhook  request on your local environment, you can als
 Then, you need to run relay.exe like this;
 
 ```powershell
-./relay.exe forward --bucket stripe http://localhost:22742/Stripe/WebHooks
+./relay.exe forward --bucket stripe https://localhost:44301/Stripe/WebHooks
 ```
 
 This will give you an url something like "https://my.webhookrelay.com/v1/webhooks/aa180d45-87d5-4e9c-8bfa-e535a91df3fc". You need to enter this url as an webhook endpoint on Stripe's webhook dashboard ([https://dashboard.stripe.com/account/webhooks](https://dashboard.stripe.com/account/webhooks)).

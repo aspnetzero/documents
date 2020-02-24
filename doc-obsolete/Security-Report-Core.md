@@ -22,7 +22,7 @@ The Path Traversal attack technique allows an attacker access to files, director
 
 The report has stated some CSS, JS links are open to path traversal attack. But these alerts are false-positive. You can see the reasons why they are evaluated as false-positive.
 
-- URL: [http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.css](http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.css)
+- URL: [https://localhost:44302/view-resources/Areas/App/Views/_Bundles/app-layout-libs.css](https://localhost:44302/view-resources/Areas/App/Views/_Bundles/app-layout-libs.css)
   - Method: `GET`
   - Parameter: `.AspNetCore.Antiforgery.DPAjufeZt_4`
   - Attack: `c:/`
@@ -33,7 +33,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
   <img src="images/security-report-path-traversal.png" alt="Path Traversal" class="img-thumbnail" />
 
 
-- URL: [http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.js](http://localhost:62114/view-resources/Areas/App/Views/_Bundles/app-layout-libs.js)
+- URL: [https://localhost:44302/view-resources/Areas/App/Views/_Bundles/app-layout-libs.js](https://localhost:44302/view-resources/Areas/App/Views/_Bundles/app-layout-libs.js)
   - Method: `GET`
   - Parameter: `.AspNetCore.Antiforgery.DPAjufeZt_4`
   - Attack: `c:/Windows/system.ini`
@@ -43,7 +43,7 @@ The report has stated some CSS, JS links are open to path traversal attack. But 
 
   <img src="images/security-report-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
 
-- URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
+- URL: [https://localhost:44302/Account/Login](https://localhost:44302/Account/Login)
   - Method: `POST`
   - Parameter: `Expires`
   - Attack: `/Login`
@@ -78,7 +78,7 @@ SQL Injection refers to an injection attack wherein an attacker can execute mali
 
 Asp.Net Zero uses `Entity Framework`  as data access technology. And `Entity Framework` uses parameterized queries which prevents SQL injections by default. 
 
-- URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
+- URL: [https://localhost:44302/Account/Login](https://localhost:44302/Account/Login)
   - Method: `POST`
   - Parameter: `User-Agent`
   - Attack: `Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36 OR 1=1 -- `
@@ -105,7 +105,7 @@ Cross-site Scripting (XSS) is an attack technique that involves echoing attacker
 
 There are several attacks that are marked as suspicious. When it's inspected these attack instances, it can be seen that the response is JSON and reflected value is handled as string in alert dialogs. The scripts are not being evaluated by JavaScript. Therefore these instances are false-positive. 
 
-- URL: [http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:62114/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
+- URL: [https://localhost:44302/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](https://localhost:44302/api/services/app/User/GetUsers?filter=&permission=&role=&maxResultCount=10&skipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
 
   - Method: `GET`
   - Parameter: `skipCount`
@@ -198,7 +198,7 @@ https://www.owasp.org/index.php/Format_string_attack
 
 If a page contains an error/warning message that may disclose sensitive information, this can be used to launch further attacks against the web application. 
 
-- URL: [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login)
+- URL: [https://localhost:44302/Account/Login](https://localhost:44302/Account/Login)
   - Method: `POST`
   - Evidence: `HTTP/1.1 500 Internal Server Error`
 
@@ -222,21 +222,21 @@ A cookie has been set without the `HttpOnly` flag, which means that the cookie c
 
 Asp.Net Zero uses `HttpOnly` flag wherever it needs. In some cases the tool reports false-positive alerts. See the following instances to understand why they are false-positive.
 
-- URL: [http://localhost:62114/Account/SwitchToLinkedAccountSignIn?tokenId=86d58f40-1db2-4fc9-9ee7-56cf70cb7bd6](http://localhost:62114/Account/SwitchToLinkedAccountSignIn?tokenId=86d58f40-1db2-4fc9-9ee7-56cf70cb7bd6)
+- URL: [https://localhost:44302/Account/SwitchToLinkedAccountSignIn?tokenId=86d58f40-1db2-4fc9-9ee7-56cf70cb7bd6](https://localhost:44302/Account/SwitchToLinkedAccountSignIn?tokenId=86d58f40-1db2-4fc9-9ee7-56cf70cb7bd6)
   - Method: `GET`
   - Parameter: `idsrv.session`
   - Evidence: `Set-Cookie: idsrv.session`
 
   In the above request, `idsrv.session`  cookie is being set by [Microsoft Identity Server](https://github.com/IdentityServer/IdentityServer4). By design this is not `HttpOnly` . It is required by the OIDC session management spec for SPA clients. For the related spec see https://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification .
 
-- URL: [http://localhost:62114/App/Dashboard](http://localhost:62114/App/Dashboard)
+- URL: [https://localhost:44302/App/Dashboard](https://localhost:44302/App/Dashboard)
   - Method: `GET`
   - Parameter: `XSRF-TOKEN`
   - Evidence: `Set-Cookie: XSRF-TOKEN`
 
   Setting `XSRF-TOKEN` as `HttpOnly` is pointless because in Angular UI client must access this cookie. 
 
-- URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)- 
+- URL: [https://localhost:44302/Account/SwitchToLinkedAccount](https://localhost:44302/Account/SwitchToLinkedAccount)- 
   - Method: `POST`
   - Parameter: `Identity.TwoFactorUserId`
   - Evidence: `Set-Cookie: Identity.TwoFactorUserId`
@@ -245,7 +245,7 @@ This is a false-positive too because set cookie is removing `Identity.TwoFactorU
 
   <img src="images/security-report-http-only-identity-two-factor-user-id.png" alt="HttpOnly Cookie for Identity.TwoFactorUserId" class="img-thumbnail" />
 
-- URL: [http://localhost:62114/Account/SwitchToLinkedAccount](http://localhost:62114/Account/SwitchToLinkedAccount)
+- URL: [https://localhost:44302/Account/SwitchToLinkedAccount](https://localhost:44302/Account/SwitchToLinkedAccount)
   - Method: `POST`
   - Parameter: `Identity.External`
   - Evidence: `Set-Cookie: Identity.External`
@@ -254,14 +254,14 @@ This is a false-positive too because set cookie is removing `Identity.TwoFactorU
 
   <img src="images/security-report-http-only-identity-external.png" alt="HttpOnly Identity External" class="img-thumbnail" />
 
-- URL: [http://localhost:62114/Account/Logout](http://localhost:62114/Account/Logout)
+- URL: [https://localhost:44302/Account/Logout](https://localhost:44302/Account/Logout)
   - Method: `GET`
   - Parameter: `.AspNetCore.Identity.Application`
   - Evidence: `Set-Cookie: .AspNetCore.Identity.Application`
 
   It's false-positive as well because same as above instances it's removing cookie with an empty value.
 
-- URL: [http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard](http://localhost:62114/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard)
+- URL: [https://localhost:44302/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard](https://localhost:44302/AbpLocalization/ChangeCulture?cultureName=en&returnUrl=/App/Dashboard)
 
   - Method: `GET`
   - Parameter: `.AspNetCore.Culture`
@@ -291,7 +291,7 @@ Asp.Net Boilerplate framework **v3.4.X** adds the `X-XSS-Protection` header to a
 
 A private IP (such as 10.x.x.x, 172.x.x.x, 192.168.x.x) or an Amazon EC2 private hostname (for example, ip-10-0-56-78) has been found in the HTTP response body. This information might be helpful for further attacks targeting internal systems.
 
-- URL: [http://localhost:62114/App/Users/LoginAttemptsModal](http://localhost:62114/App/Users/LoginAttemptsModal)
+- URL: [https://localhost:44302/App/Users/LoginAttemptsModal](https://localhost:44302/App/Users/LoginAttemptsModal)
   - Method: `POST`
   - Evidence: `192.168.1.46`
 

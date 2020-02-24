@@ -56,8 +56,8 @@ public static class WebConsts
 
 The default GraphQL endpoints are;
 
-* [http://localhost:62114/graphql](http://localhost:62114/graphql) `MVC`
-* [http://localhost:22742/graphql](http://localhost:22742/graphql) `Angular`
+* [https://localhost:44302/graphql](https://localhost:44302/graphql) `MVC`
+* [https://localhost:44301/graphql](https://localhost:44301/graphql) `Angular`
 
 ### Changing The Default GraphQL Endpoint
 
@@ -74,8 +74,8 @@ This will change your endpoint to ` yourdomain.com/mygraphql`.
 GraphQL Playground is an extension tool that helps you write your GraphQL queries easily. It supports  autocompletion & error highlighting. It is included AspNet Zero but disabled by default.
 The default GraphQL Playground endpoints are;
 
-- [http://localhost:62114/ui/playground](http://localhost:62114/ui/playground)  `MVC`
-- [http://localhost:22742/ui/playground](http://localhost:22742/ui/playground)  `Angular`
+- [https://localhost:44302/ui/playground](https://localhost:44302/ui/playground)  `MVC`
+- [https://localhost:44301/ui/playground](https://localhost:44301/ui/playground)  `Angular`
 
 There is also a desktop version of the GraphQL Playground. The desktop app is the same as the web version but includes these additional features:
 
@@ -150,9 +150,9 @@ Playground gives you the advantage of writing the queries with intellisense and 
 #### Authenticating With Cookie
 
 MVC project uses cookie authentication. Before running any queries that need authentication, you need to login to your website to retrieve the authentication cookie. 
-Start your ***.Web.Mvc** project, open your browser and navigate to [http://localhost:62114/Account/Login](http://localhost:62114/Account/Login).
+Start your ***.Web.Mvc** project, open your browser and navigate to [https://localhost:44302/Account/Login](https://localhost:44302/Account/Login).
 After successful login, you will have a valid authentication cookie in your browser's storage.
-Now you can go to [http://localhost:62114/ui/playground](http://localhost:62114/ui/playground) and run your query as authenticated.
+Now you can go to [https://localhost:44302/ui/playground](https://localhost:44302/ui/playground) and run your query as authenticated.
 
 ### Authenticating Playground Requests in Angular Project
 
@@ -160,14 +160,14 @@ Angular project uses both token (Bearer) authentication and cookie authenticatio
 
 #### Authenticating With Cookie
 
-Start your ***.Web.Host** project and go to [http://localhost:22742/ui/login](http://localhost:22742/ui/login).
+Start your ***.Web.Host** project and go to [https://localhost:44301/ui/login](https://localhost:44301/ui/login).
 After the successful login, you will see the GraphQL Playground box in the redirected page.
-Click the link that goes to [http://localhost:22742/ui/playground](http://localhost:22742/ui/playground) and run your query as authenticated.
+Click the link that goes to [https://localhost:44301/ui/playground](https://localhost:44301/ui/playground) and run your query as authenticated.
 
 #### Authenticating With Token
 
 Alternatively you can use token authentication in `Angular ` project.
-Make a post request to [http://localhost:22742/api/TokenAuth/Authenticate](http://localhost:22742/api/TokenAuth/Authenticate) to get the token.
+Make a post request to [https://localhost:44301/api/TokenAuth/Authenticate](https://localhost:44301/api/TokenAuth/Authenticate) to get the token.
 See the below request to get the token:
 
 ```json
@@ -465,8 +465,8 @@ public class AuditLog : Entity<long>, IMayHaveTenant
 
    To run the final query with `[AbpAuthorize]` attribute, you need to get an authentication cookie. Go to your login page:
 
-   * http://localhost:62114/Account/Login  `MVC `.
-   * http://localhost:22742/ui/login `Angular`
+   * https://localhost:44302/Account/Login  `MVC `.
+   * https://localhost:44301/ui/login `Angular`
 
    After successful login, you will have your authentication cookie and you can run the query.
 

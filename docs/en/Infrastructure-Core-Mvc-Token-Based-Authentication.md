@@ -10,7 +10,7 @@ Following headers should be configured for all requests (`Abp.TenantId` is Id of
 
 <img src="images/postman-ng2-auth-headers.png" alt="Postman auth headers" class="img-thumbnail" width="523" height="112" />
 
-Then we can send username and password as a **POST** request to http://localhost:62114/api/TokenAuth/Authenticate
+Then we can send username and password as a **POST** request to https://localhost:44302/api/TokenAuth/Authenticate
 
 <img src="images/postman-authenticate-core-2.png" alt="Postman get user list" class="img-thumbnail" width="919" height="1023" />
 
@@ -22,5 +22,5 @@ After authenticate and get the access token, we can use it to call any **authori
 
 <img src="images/postman-getusers-core-2.png" alt="Postman authentication" class="img-thumbnail" width="919" height="1023" />
 
-We sent a GET request to http://localhost:62114/api/services/app/User/GetUsers and added
+We sent a GET request to https://localhost:44302/api/services/app/User/GetUsers and added
 Authorization to the header as "**Bearer &lt;accessToken&gt;**". Returning JSON contains the list of users.
