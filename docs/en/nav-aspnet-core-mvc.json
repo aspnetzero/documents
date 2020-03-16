@@ -192,6 +192,10 @@
 			{
               "text": "Webhooks",
               "path": "Features-Webhooks.md"
+            },
+			{
+              "text": "User Delegation",
+              "path": "Features-Mvc-Core-User-Delegation.md"
             }
           ]
         },
