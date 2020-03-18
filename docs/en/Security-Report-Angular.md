@@ -12,7 +12,9 @@ The automated scanner has been reported several alerts.  Asp.Net Zero Team has f
 
 ### Path Traversal
 
-##### High (Medium)
+##### Risk: High
+
+**Confidence: Medium**
 
 #### Description
 
@@ -22,72 +24,15 @@ The Path Traversal attack technique allows an attacker access to files, director
 
 The report has stated some CSS, JS links are open to path traversal attack. But these alerts are false-positive. You can see the reasons why they are evaluated as false-positive.
 
-- URL: [http://localhost:8082/swagger/swagger-ui.min.js](http://localhost:8082/swagger/swagger-ui.min.js)
-  - Method: `GET`
-  - Parameter: `Host`
-  - Attack: `c:/`
-  - Evidence: `etc`
-
-  When we inspect the below response, it returns **etc** in the code. And this is exactly not a path.
-  
-  <img src="images/security-report-angular-path-traversal-1.png" alt="Path Traversal" class="img-thumbnail" />
-
-
-
-
-
-- URL: [http://localhost:8083/styles.1bb8c7ba47e327d9d46c.bundle.css?query=c%3A%2F](http://localhost:8083/styles.1bb8c7ba47e327d9d46c.bundle.css?query=c%3A%2F)
-
-  - Method: `GET`
-  - Parameter: `query`
-  - Attack: `c:/`
-  - Evidence: `etc`
-
-  When we inspect the below response it returns **etc** in the comments. And this is not a path as well!
-  
-  <img src="images/security-report-angular-path-traversal-2.png" alt="Path Traversal 2" class="img-thumbnail" />
-
-
-
-- URL: [http://localhost:8083/scripts.c971f5b7e715876e89e1.bundle.js?query=c%3A%2F](http://localhost:8083/scripts.c971f5b7e715876e89e1.bundle.js?query=c%3A%2F)
-
-  - Method: `GET`
-  - Parameter: `query`
-  - Attack: `c:/`
-  - Evidence: `etc`
-
-  When we inspect the below response it returns **etc** in the code. And this is not a path as well!  
-  
-  <img src="images/security-report-angular-path-traversal-3.png" alt="Path Traversal 2" class="img-thumbnail" />
-
-
-
-- URL: [http://localhost:8082/api/services/app/OrganizationUnit/CreateOrganizationUnit](http://localhost:8082/api/services/app/OrganizationUnit/CreateOrganizationUnit)
-
+- URL: https://localhost:44301/Ui/Login
   - Method: `POST`
-  - Parameter: `displayName`
-  - Attack: `CreateOrganizationUnit`
+  - Parameter: `returnUrl`
+  - Attack: `Login`
+  - Evidence: `etc`
 
-  When we inspect the below request & response, **CreateOrganizationUnit** string is being sent in the request and it returns in response data. The tool thinks **CreateUnitOrganization** is a folder and is being traversed. But this is not a path as well!
+  When we inspect the below response, it returns to login page which contains `Login.css` reference in the code. 
   
-  <img src="images/security-report-angular-path-traversal-4.png" alt="Path Traversal 2" class="img-thumbnail" />
-
-  The same pattern is valid for the following alerts. Same as above, the action name is being sent as a parameter and either the response size is changing or the action name itself is being taken part in the response. All of the following attacks are false-positive.
-
-  - URL: [http://localhost:8082/api/services/app/TenantRegistration/RegisterTenant](http://localhost:8082/api/services/app/TenantRegistration/RegisterTenant)
-    - Method: `POST`
-    - Parameter: `tenancyName`
-    - Attack: `RegisterTenant`
-
-  - URL: [http://localhost:8082/api/services/app/Tenant/UpdateTenant](http://localhost:8082/api/services/app/Tenant/UpdateTenant)
-    - Method: `PUT`
-    - URL: [http://localhost:8082/api/services/app/User/CreateOrUpdateUser](http://localhost:8082/api/services/app/User/CreateOrUpdateUser)
-    - Method: `POST`
-
-  - URL: [http://localhost:8082/api/services/app/Role/CreateOrUpdateRole](http://localhost:8082/api/services/app/Role/CreateOrUpdateRole)
-    - Method: `POST` 
-    - Parameter: `displayName` 
-    - Attack: `CreateOrUpdateRole`
+  <img src="images/security-report-angular-path-traversal-5.png" alt="Path Traversal" class="img-thumbnail" />
 
 
 
@@ -104,54 +49,107 @@ If you use **MapPath** to map a supplied virtual path to a physical path on the 
 
 ### Application Error Disclosure
 
-##### Medium (Medium)
+##### Risk: Medium
+
+**Confidence: Low**
 
 #### Description
 
-If a page contains an error/warning message that may disclose sensitive information, this can be used to launch further attacks against the web application. 
+This page contains an error/warning message that may disclose sensitive information like the location of the file that produced the unhandled exception. This information can be used to launch further attacks against the web application. The alert could be a false positive if the error message is found inside a documentation page.
 
-- URL: [http://localhost:8082/api/TokenAuth/Authenticate](http://localhost:8082/api/TokenAuth/Authenticate)
+#### Comment
 
-  - Method: `POST`
-  - Evidence: `HTTP/1.1 500 Internal Server Error`
+- Method: `Delete`
 
-  This is false-positive alert. As seen in the below screenshot, Asp.Net Zero returns a HTPP 500 Internal Server Error without any sensitive information. Actually it's not an exception result. While the error detail is not being sent to the client, it is logged on the server.
-  
-  <img src="images/security-report-angular-app-error-disclosure-1.png" alt="Application Error Disclosure" class="img-thumbnail" />
+  - Urls: 
 
+    https://localhost:44301/api/services/app/DashboardCustomization/DeletePage, 
+    https://localhost:44301/api/services/app/Role/DeleteRole, 
+    https://localhost:44301/api/services/app/Tenant/DeleteTenant, 
+    https://localhost:44301/api/services/app/User/DeleteUser
 
+- Method: `Get`
 
-Asp.Net Zero never returns error details, if only developer sends it deliberatively.  When the project runs on development, exceptions are being sent to client. But publishing application in release mode prevents exception details to be sent. `Web.Host` project sends a JSON with including the message: "*An internal error occurred during your request!*"
+  - Urls:
 
-The following alerts are same as the above alert. No sensitive data is being exposed. 
+    https://localhost:44301/api/services/app/DashboardCustomization/GetAllWidgetDefinitions, 
+    https://localhost:44301/api/services/app/DashboardCustomization/GetDashboardDefinition, 
+    https://localhost:44301/api/services/app/DashboardCustomization/GetUserDashboard, 
+    https://localhost:44301/api/services/app/DemoUiComponents/GetCountries, 
+    https://localhost:44301/api/services/app/Payment/GetLastCompletedPayment, 
+    https://localhost:44301/api/services/app/Payment/GetPaymentHistory, 
+    https://localhost:44301/api/services/app/Payment/GetPaymentHistory?Sorting=Sorting&MaxResultCount=10&SkipCount=10,https://localhost:44301/api/services/app/StripePayment/GetPayment, 
+    https://localhost:44301/api/services/app/StripePayment/GetPayment?StripeSessionId=StripeSessionId, 
+    https://localhost:44301/api/services/app/Tenant/GetTenantForEdit, 
+    https://localhost:44301/api/services/app/TenantRegistration/GetEditionsForSelect, 
+    https://localhost:44301/api/services/app/Timing/GetTimezoneComboboxItems, 
+    https://localhost:44301/api/services/app/Timing/GetTimezoneComboboxItems?SelectedTimezoneId=SelectedTimezoneId, 
+    https://localhost:44301/api/services/app/User/GetUserPermissionsForEdit, 
+    https://localhost:44301/api/services/app/WebhookEvent/Get, 
+    https://localhost:44301/api/services/app/WebhookSendAttempt/GetAllSendAttempts, 
+    https://localhost:44301/api/services/app/WebhookSendAttempt/GetAllSendAttemptsOfWebhookEvent, 
+    https://localhost:44301/api/services/app/WebhookSubscription/GetSubscription, 
+    https://localhost:44301/api/TokenAuth/LogOut
 
-- URL: [http://localhost:8082/api/services/app/UserLink/LinkToUser](http://localhost:8082/api/services/app/UserLink/LinkToUser)
-  - Method: `POST`
-  - Evidence: `HTTP/1.1 500 Internal Server Error`
-  
-  <img src="images/security-report-angular-app-error-disclosure-2.png" alt="Application Error Disclosure" class="img-thumbnail" />
+- Method `POST`
 
+  - Urls: 
+  - https://localhost:44301/api/services/app/Account/ActivateEmail, 
+    https://localhost:44301/api/services/app/Account/BackToImpersonator, 
+    https://localhost:44301/api/services/app/Account/Register, 
+    https://localhost:44301/api/services/app/Account/ResetPassword, 
+    https://localhost:44301/api/services/app/Account/ResolveTenantId, 
+    https://localhost:44301/api/services/app/Account/SendEmailActivationLink, 
+    https://localhost:44301/api/services/app/Account/SendPasswordResetCode, 
+    https://localhost:44301/api/services/app/Account/SwitchToLinkedAccount, 
+    https://localhost:44301/api/services/app/DashboardCustomization/AddNewPage, 
+    https://localhost:44301/api/services/app/DashboardCustomization/AddWidget, 
+    https://localhost:44301/api/services/app/DashboardCustomization/RenamePage, 
+    https://localhost:44301/api/services/app/DashboardCustomization/SavePage, 
+    https://localhost:44301/api/services/app/Friendship/CreateFriendshipRequestByUserName, 
+    https://localhost:44301/api/services/app/HostSettings/SendTestEmail, 
+    https://localhost:44301/api/services/app/Install/Setup, 
+    https://localhost:44301/api/services/app/Language/CreateOrUpdateLanguage, 
+    https://localhost:44301/api/services/app/Payment/CancelPayment, 
+    https://localhost:44301/api/services/app/Payment/CreatePayment, 
+    https://localhost:44301/api/services/app/Payment/SwitchBetweenFreeEditions, 
+    https://localhost:44301/api/services/app/Payment/SwitchBetweenFreeEditions?upgradeEditionId=10, 
+    https://localhost:44301/api/services/app/Payment/UpgradeSubscriptionCostsLessThenMinAmount, 
+    https://localhost:44301/api/services/app/Payment/UpgradeSubscriptionCostsLessThenMinAmount?editionId=10, 
+    https://localhost:44301/api/services/app/Profile/ChangePassword, 
+    https://localhost:44301/api/services/app/Profile/VerifySmsCode, 
+    https://localhost:44301/api/services/app/Role/CreateOrUpdateRole,
+    https://localhost:44301/api/services/app/Subscription/EnableRecurringPayments,
+    https://localhost:44301/api/services/app/Tenant/UnlockTenantAdmin,
+    https://localhost:44301/api/services/app/TenantSettings/SendTestEmail,
+    https://localhost:44301/api/services/app/UiCustomizationSettings/ChangeThemeWithDefaultValues,
+    https://localhost:44301/api/services/app/User/CreateOrUpdateUser,
+    https://localhost:44301/api/services/app/User/ResetUserSpecificPermissions,
+    https://localhost:44301/api/services/app/User/UnlockUser,
+    https://localhost:44301/api/services/app/UserLink/LinkToUser,
+    https://localhost:44301/api/services/app/UserLink/UnlinkUser,
+    https://localhost:44301/api/services/app/WebhookSendAttempt/Resend,
+    https://localhost:44301/api/TokenAuth/Authenticate,
+    https://localhost:44301/api/TokenAuth/ExternalAuthenticate,
+    https://localhost:44301/api/TokenAuth/ImpersonatedAuthenticate,
+    https://localhost:44301/api/TokenAuth/ImpersonatedAuthenticate?impersonationToken=impersonationToken,
+    https://localhost:44301/api/TokenAuth/LinkedAccountAuthenticate,
+    https://localhost:44301/api/TokenAuth/LinkedAccountAuthenticate?switchAccountToken=switchAccountToken,
+    https://localhost:44301/api/TokenAuth/RefreshToken,
+    https://localhost:44301/api/TokenAuth/RefreshToken?refreshToken=refreshToken,
+    https://localhost:44301/api/TokenAuth/SendTwoFactorAuthCode
 
+- Method: `PUT` 
 
+  - Urls:
 
-- URL: [http://localhost:8082/AbpUserConfiguration/GetAll](http://localhost:8082/AbpUserConfiguration/GetAll)
-  - Method: `GET`
-  - Evidence: `internal error`
-  
-  <img src="images/security-report-angular-app-error-disclosure-3.png" alt="Application Error Disclosure" class="img-thumbnail" />
+    https://localhost:44301/api/TokenAuth/SendTwoFactorAuthCode,
+    https://localhost:44301/api/services/app/Language/UpdateLanguageText,
+    https://localhost:44301/api/services/app/Profile/UpdateCurrentUserProfile,
+    https://localhost:44301/api/services/app/Profile/UpdateProfilePicture,
+    https://localhost:44301/api/services/app/Session/UpdateUserSignInToken
 
-  There is "**internal error**" statement in the JSON response. This is only a translation file and not an exception message.
-
-
-
-- URL: [http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip](http://localhost:8082/File/DownloadTempFile?fileType=application/zip&fileToken=224448551ff749689b7a8e4ae0652de8&fileName=WebSiteLogs.zip)
-
-  - Method: `GET`
-  - Evidence: `HTTP/1.1 500 Internal Server Error`  
-  
-  <img src="images/security-report-angular-app-error-disclosure-4.png" alt="Application Error Disclosure" class="img-thumbnail" />
-
-The response of "**File/DownloadTempFile**" resulted with Http-500, because there's no file to download. The action result returns empty data (Content-Length: 0) and does not disclose any information about the problem.
+These requests are false-positive because the tool is checking whether the response contains **"internal error"** text. The responses contains translations which includes **"internal error"** text.
 
 ### Recommendation
 
@@ -159,115 +157,11 @@ If your website must return error then review the source code of the action and 
 
 
 
-### X-Frame-Options Header Not Set
-
-##### Medium (Medium)
-
-#### Description
-
-The `X-Frame-Options` HTPP header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>`, `<iframe>` or `<object>` . Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
-
-- URL: [http://localhost:8082](http://localhost:8082)
-  - Method: `GET`
-  - Parameter: `X-Frame-Options`
-
-- URL: [http://localhost:8082/swagger/](http://localhost:8082/swagger/)
-  - Method: `GET`
-  - Parameter: `X-Frame-Options`
-
-
-
-ASP.NET Zero uses [ASP.NET Boilerplate](https://aspnetboilerplate.com/) framework. After version **3.4.X**, the framework adds `X-Frame-Options` header to all responses with the value `SAMEORIGIN`. If you want to remove the header you can do it via `UseAbp()` options in `Configure ` method of `Startup` class.
-
-```c#
-public class Startup
-{
-	public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-	{
-		app.UseAbp(options =>
-		{
-			options.AddSecurityHeaders = false;
-		});
-	}
-}
-```
-
-### Recommendation
-
-Most modern Web browsers support the X-Frame-Options HTTP header. Ensure it's set on all web pages returned by your site (if you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. ALLOW-FROM allows specific websites to frame the web page in supported web browsers).
-
-http://blogs.msdn.com/b/ieinternals/archive/2010/03/30/combating-clickjacking-with-x-frame-options.aspx
-
-
-
-### X-Content-Type-Options Header Missing
-
-##### Low (Medium)
-
-#### Description
-
-The `X-Content-Type-Options` HTTP header is a marker used by the server to indicate that the [MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) advertised in the [`Content-Type`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) headers should not be changed and be followed. This allows to opt-out of [MIME type sniffing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#MIME_sniffing), or, in other words, it is a way to say that the webmasters knew what they were doing.   Some of the requests which are alerted to have the **X-Content-Type-Options** header; 
-
-- URL: [http://localhost:8082/api/services/app/Role/GetRoleForEdit](http://localhost:8082/api/services/app/Role/GetRoleForEdit)
-
-  - Method: `GET`
-  - Parameter: `X-Content-Type-Options`
-
-- URL: [http://localhost:8082/api/services/app/Language/GetLanguageTexts?MaxResultCount=10&SkipCount=0&SourceName=AbpZeroTemplate&BaseLanguageName=en&TargetLanguageName=de&TargetValueFilter=ALL&FilterText=](http://localhost:8082/api/services/app/Language/GetLanguageTexts?MaxResultCount=10&SkipCount=0&SourceName=AbpZeroTemplate&BaseLanguageName=en&TargetLanguageName=de&TargetValueFilter=ALL&FilterText=)
-  - Method: `GET`
-  - Parameter: `X-Content-Type-Options`
-
-- URL: [http://localhost:8082/api/services/app/Tenant/CreateTenant](http://localhost:8082/api/services/app/Tenant/CreateTenant)
-  - Method: `POST`
-  - Parameter: `X-Content-Type-Options`
-
-- URL: [http://localhost:8082/swagger/css/screen.css](http://localhost:8082/swagger/css/screen.css)
-  - Method: `GET`
-  - Parameter: `X-Content-Type-Options`
-
-#### Comment
-
-ASP.NET Boilerplate framework **v3.4.X** adds the `X-Content-Type-Options` header to all responses with the value `nosniff`. If you want to remove the header you can do it via `UseAbp()` options in `Configure ` method of `Startup` class.
-
-### Recommendation
-
-Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages. If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.
-
-
-
-### Web Browser XSS Protection Not Enabled
-
-##### Low (Medium)
-
-#### Description
-
-Web Browser XSS Protection is not enabled, or is disabled by the configuration of the 'X-XSS-Protection' HTTP response header on the web server.
-
-- URL: [http://localhost:8082/swagger/](http://localhost:8082/swagger/)
-
-  - Method: `GET`
-  - Parameter: `X-XSS-Protection`
-
-- URL: [http://localhost:8082](http://localhost:8082)
-
-  - Method: `GET`
-  - Parameter: `X-XSS-Protection`
-
-#### Comment
-
-Asp.Net Boilerplate framework **v3.4.X** adds the `X-XSS-Protection` header to all responses with the value `1; mode=block`.  If you want to remove the header you can do it via `UseAbp()` options in `Configure ` method of `Startup` class.
-
-### Recommendation
-
-Ensure that the web browser's XSS filter is enabled, by setting the X-XSS-Protection HTTP response header to '1'.
-
-
-
 ### Cross Site Scripting Weakness (Reflected in JSON Response)
 
-##### Low (Low)
+##### Risk: Low
 
-
+**Confidence: Low**
 
 #### Description
 
@@ -275,54 +169,19 @@ A XSS attack was reflected in a JSON response, this might leave content consumer
 
 #### Comment
 
-There are about 180 instances of this alert. AspNet Zero doesn't return any HTML response in `Web.Host` project. Thus all of the instances are raised with LOW confidence as the Content-Type is not HTML. In reflected XSS the it's important where this result is being evaluated. The responses are being evaluated by Angular. Angular has built-in protections against common web-application vulnerabilities including XSS attacks. We have used the tree library JsTree which was open to XSS. It is fixed by [this commit](https://github.com/aspnetzero/aspnet-zero-core/commit/b63b790aecdff6e9180b927351d5d6ceec735d1a).   
+There are 31 instances of this alert. AspNet Zero doesn't return any HTML response in `Web.Host` project. Thus all of the instances are raised with LOW confidence as the Content-Type is not HTML. In reflected XSS the it's important where this result is being evaluated. The responses are being evaluated by Angular. Angular has built-in protections against common web-application vulnerabilities including XSS attacks. We have used the tree library JsTree which was open to XSS. It is fixed by [this commit](https://github.com/aspnetzero/aspnet-zero-core/commit/b63b790aecdff6e9180b927351d5d6ceec735d1a).   
 
-- URL: [http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&onlyFreeItems=false](http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&onlyFreeItems=false)
-
-  - Method: `GET`
-  - Parameter: `addAllItem`
-  - Attack: `<script>alert(1);</script>`
-
-  **GetEditionComboboxItems** action returns data for edition combo box and these items are being rendered in drop down list. As seen in the below screenshot, scripts are not being evaluated.
-  
-  <img src="images/security-report-angular-xss-1.png" alt="XSS" class="img-thumbnail" />
-
-
-
-- URL: [http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=true&onlyFreeItems=false](http://localhost:8082/api/services/app/Edition/GetEditionComboboxItems?selectedEditionId=0&addAllItem=true&onlyFreeItems=false)
+- URL: https://localhost:44301/api/services/app/Edition/GetTenantCount?editionId=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E
 
   - Method: `GET`
-  - Parameter: `Origin`
+  - Parameter: `editionId`
   - Attack: `<script>alert(1);</script>`
 
-  The same component as above with different parameters. It is false-positive too.
-
-
-
-- URL: [http://localhost:8082/api/services/app/UserLink/GetLinkedUsers?MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:8082/api/services/app/UserLink/GetLinkedUsers?MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
-
-  - Method: `GET`
-  - Parameter: `SkipCount`
-  - Attack: `<script>alert(1);</script>`
-
-  This action is called after successful login. It retrieves the data for impersonating user. But even the request is poisoned with malicious script, it's not being evaluated as seen in the below screenshot. 
-  
-  <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
-
-- URL: [http://localhost:8082/api/services/app/Tenant/GetTenants?Filter=&SubscriptionEndDateStart=2018-01-25T21%3A00%3A00.000Z&SubscriptionEndDateEnd=2018-02-25T20%3A59%3A59.999Z&CreationDateStart=2018-01-18T21%3A00%3A00.000Z&CreationDateEnd=2018-01-26T20%3A59%3A59.999Z&EditionId=1&EditionIdSpecified=true&MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E](http://localhost:8082/api/services/app/Tenant/GetTenants?Filter=&SubscriptionEndDateStart=2018-01-25T21%3A00%3A00.000Z&SubscriptionEndDateEnd=2018-02-25T20%3A59%3A59.999Z&CreationDateStart=2018-01-18T21%3A00%3A00.000Z&CreationDateEnd=2018-01-26T20%3A59%3A59.999Z&EditionId=1&EditionIdSpecified=true&MaxResultCount=10&SkipCount=%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E)
-
-  - Method: `GET`
-  - Parameter: `SkipCount`
-  - Attack: `<script>alert(1);</script>`
-
-  This action is called in tenants page. When we alter the request and add script tags into SkipCount parameter, it's not being evaluated as seen in the below screenshot. 
-  
-  <img src="images/security-report-angular-xss-2.png" alt="XSS" class="img-thumbnail" />
+  <img src="images/security-report-angular-xss-4.png" alt="XSS" class="img-thumbnail" />
 
 
 
   The other requests are same instances of different actions and marked as false-positive. 
-
 
 
 
@@ -331,8 +190,122 @@ There are about 180 instances of this alert. AspNet Zero doesn't return any HTML
 To block XSS attacks, you must prevent malicious code from entering the DOM. When a value is inserted into the DOM from a template, via property, attribute, style, class binding, or interpolation, you need to sanitize and escape untrusted values.
 
 - http://projects.webappsec.org/Cross-Site-Scripting
-
 - http://cwe.mitre.org/data/definitions/79.html
+
+
+
+### Incomplete or No Cache-control and Pragma HTTP Header Set
+
+##### Risk: Low
+
+**Confidence: Medium**
+
+#### Description
+
+The cache-control and pragma HTTP header have not been set properly or are missing allowing the browser and proxies to cache content.
+
+#### Comment
+
+It is not a security problem, but we can do an enhancement which adds `Cache-Control: no-cache` header to all app service as a default. 
+
+
+
+### Cookie No HttpOnly Flag
+
+##### Risk: Low
+
+**Confidence: Medium**
+
+#### Description
+
+A cookie has been set without the `HttpOnly` flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.
+
+#### Comment
+
+There are 2 instances of this alert.   
+
+- URL: https://localhost:44301/Ui
+
+  - Method: `GET`
+  - Parameter: `XSRF-TOKEN`
+  - Evidence: `Set-Cookie: XSRF-TOKEN`
+
+  Since we use `XSRF-TOKEN` in ajax requests, it is not possible to add `HttpOnly` flag.
+
+* URL: https://localhost:44301/Ui/Login
+
+  - Method: `GET`
+  - Parameter: `XSRF-TOKEN`
+  - Evidence: `Set-Cookie: XSRF-TOKEN`
+
+  Since we use `XSRF-TOKEN` in ajax requests, it is not possible to add `HttpOnly` flag.
+
+
+
+### Cookie Without SameSite Attribute
+
+##### Risk: Low
+
+**Confidence: Medium**
+
+#### Description
+
+A cookie has been set without the `SameSite` attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The `SameSite` attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.
+
+#### Comment
+
+* URL: https://localhost:44301/Ui
+  * Method: `GET`
+  * Parameter: `XSRF-TOKEN`
+  * Evidence: `Set-Cookie: XSRF-TOKEN`
+
+  Created an issue about it: https://github.com/aspnetzero/aspnet-zero-core/issues/3076
+
+* URL: https://localhost:44301/Ui/Login
+
+  * Method: `GET`
+  * Parameter: `XSRF-TOKEN`
+  * Evidence: `Set-Cookie: XSRF-TOKEN`
+
+  Created an issue about it: https://github.com/aspnetzero/aspnet-zero-core/issues/3076
+
+
+
+### Cookie Without Secure Flag
+
+##### Risk: Low
+
+**Confidence: Medium**
+
+#### Description
+
+A cookie has been set without the `SameSite` attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The `SameSite` attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.
+
+#### Comment
+
+* URL: https://localhost:44301/Ui
+
+  * Method: `GET`
+  * Parameter: `XSRF-TOKEN`
+  * Evidence: `Set-Cookie: XSRF-TOKEN`
+
+  Created an issue about it: https://github.com/aspnetzero/aspnet-zero-core/issues/3076
+
+* URL: https://localhost:44301/Ui/Login
+
+  * Method: `GET`
+  * Parameter: `XSRF-TOKEN`
+  * Evidence: `Set-Cookie: XSRF-TOKEN`
+
+  Created an issue about it: https://github.com/aspnetzero/aspnet-zero-core/issues/3076
+
+* URL: https://localhost:44301/Ui/Login
+
+  * Method: `GET`
+  * Parameter: `AspNetCore.Antiforgery`
+  * Evidence: `Set-Cookie: .AspNetCore.Antiforgery`
+
+  Created an issue about it: https://github.com/aspnetzero/aspnet-zero-core/issues/3076
 
 
 
