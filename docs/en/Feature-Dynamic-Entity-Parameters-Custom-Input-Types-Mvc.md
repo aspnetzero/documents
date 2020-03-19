@@ -1,6 +1,6 @@
 
 
-# Crate Custom Input Types
+# Create Custom Input Types
 
 In this document we will create a custom input type step by step. Our input type is multi-select combobox input type.
 
