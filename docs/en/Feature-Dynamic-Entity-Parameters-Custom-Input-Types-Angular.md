@@ -113,7 +113,22 @@ In this document we will create a custom input type step by step. Our input type
    
    ```
 
-   
+7. Go to `angular\src\app\shared\common\app-common.module.ts` and add your component to entryComponents:
+
+   ```typescript
+   @NgModule({
+     	...
+       declarations: [
+         	...
+           MultipleSelectComboboxInputTypeComponent
+       ],
+       ...,    
+       entryComponents: [
+           ...
+           MultipleSelectComboboxInputTypeComponent
+       ]
+   })
+   ```
 
 All done. Your custom input type is ready to use in dynamic parameter. Create new dynamic parameter which uses that input type, add it to an entity. Then you can go to manage page and use it. 
 
