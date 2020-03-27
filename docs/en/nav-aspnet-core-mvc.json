@@ -196,6 +196,10 @@
 			{
               "text": "User Delegation",
               "path": "Features-Mvc-Core-User-Delegation.md"
+            },
+			{
+              "text": "Dynamic Entity Parameters",
+              "path": "Feature-Dynamic-Entity-Parameters-Mvc.md"
             }
           ]
         },
