@@ -22,7 +22,7 @@ Here's the list of all libraries.
   - [Swashbuckle](https://github.com/domaindrivendev/Ahoy)
   - [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
   - [System.Linq.Dynamic.Core](https://github.com/StefH/System.Linq.Dynamic.Core)
-  - [EPPlus](http://epplus.codeplex.com/)
+  - [NPOI](https://github.com/tonyqus/npoi)
 - Client side
   - [Metronic Theme](http://keenthemes.com/metronic-theme/)
   - [Twitter Bootstrap](http://getbootstrap.com/)

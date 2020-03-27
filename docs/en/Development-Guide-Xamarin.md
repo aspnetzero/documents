@@ -100,136 +100,109 @@ There are 6 projects in the mobile solution:
 To start debugging Xamarin app you need to configure host settings. You
 can use **Web.Host** to feed the Xamarin app.  
 Open Windows Command Prompt. Go to the folder where your **Web.Host csproj** file is located.  
-Then run the commands below to start hosting your Web API.
+Then run the command below to start hosting your Web API:
 
 ```bash
-SET ASPNETCORE_ENVIRONMENT=Development
-SET ASPNETCORE_URLS=http://*:22742
-dotnet run
+dotnet run --launch-profile Mobile
 ```
 
-In order to every time write these lines, you can download the batch
-file below and run it to host your web api.
+> This will start the Web.Host project from the address "https://0.0.0.0:44301" which enables to access it from external networks.
 
-[Download Start-Host.zip](https://github.com/aspnetzero/documents/tree/master/doc/etc/start-host.zip)
-
-Note that you can feed the Xamarin app with **Web.Mvc** project as well. If you want to use **Web.Mvc**, it runs on port **62114** (default). Don't forget to use the port **62114**  instead of 22742
+Alternatively, there's `start-host-mobile.bat` file in your **Web.Host** directory which does the same for Windows users.
 
 **Warning**
 
-Before running the batch file, open it in notepad and replace the
-Web.Host or Web.Mvc directory path with yours!
+If you want to start **Web.Host** from Visual Studio, set **Web.Host** as startup project and choose the `Mobile` profile.
 
-After you successfully run the host or mvc project you will see the
-output as below;
-
-**Host started successfully:**  
-<img src="images/xamarin-host-started.png" alt="Host Started" class="img-thumbnail" />
-
-**Mvc started successfully:**  
-<img src="images/xamarin-mvc-started.png" alt="MVC Started" class="img-thumbnail" />
-
-**Warning**
-
-Do not start Web.Mvc or Web.Host project via Visual Studio. Default
-settings of Visual Studio does not allow external connections. For more
-info you can read [External Network Access to Kestrel and IIS Express in
-ASP.NET
-Core](https://weblog.west-wind.com/posts/2016/Sep/28/External-Network-Access-to-Kestrel-and-IIS-Express-in-ASPNET-Core)
-
-We have successfully started host. Now we can configure Xamarin app to
-connect this host.
-
-### Debugging Xamarin App
-
-To start debugging you need to change the IP address in
-**DebugServerIpAddresses** class. In the below screen you see the IP
-address 192.168.1.39, this is the IP of host computer. If you host
-Web.Mvc or Web.Host from your computer then change this IP with your
-computer's LAN IP.  
-If you host Web.Mvc or Web.Host from another computer then you have to
-change this IP address with that computer's IP address.
-
-**Info**
-If you are using an emulator and the emulator is running on the same computer with host, you can use loopback IP addresses. Eg: Android emulator loopback IP address is 10.0.2.2
-
-<img src="images/xamarin-debug-server-ip-address.png" alt="Debug IP Address" class="img-thumbnail" />  
+![Host project](images/xamarin-mobile-profile-for-host.png)
 
 
-**Warning**
-When you publish your Xamarin app for production you need to change **DefaultHostUrl** in **ApiUrlConfig** class! 
+
+## Create a development certificate
+
+Installing the .NET Core SDK installs the ASP.NET Core HTTPS development  certificate to the local user certificate store. However, while the  certificate has been installed, it's not trusted. To trust the  certificate, perform the following one-time step to run the dotnet `dev-certs` tool:
+
+```bash
+dotnet dev-certs https --trust
+```
+
+This will allow to trust the self-signed ASP.NET Core HTTPS development certificate in your computer.
+
+For more information, see [Connect to Local Web Services from iOS Simulators and Android Emulators]( https://docs.microsoft.com/en-us/xamarin/cross-platform/deploy-test/connect-to-local-web-services#create-a-development-certificate)
+
+We have successfully started host. Now we can configure Xamarin app to connect this host.
+
+### Prepare for production
+
+When you release your Xamarin app for production you need to change **DefaultHostUrl** in **ApiUrlConfig** class! 
+
+```
+ApiUrlConfig.DefaultHostUrl = "https://mywebapi.com/"
+```
 
 **Important**
-Be aware that connecting over WiFi needs both the device and the computer to be on the same WiFi network! (To avoid confusions to you can completely turn off your mobile data connection)
-
-
-For further information read Xamarin official document about [how to set up device for development](https://developer.xamarin.com/guides/android/getting_started/installation/set_up_device_for_development/)
-
+Be aware that connecting over Wi-Fi needs both the device and the computer to be on the same Wi-Fi network! To avoid confusions to you can completely turn off your mobile data connection.
 
 <img src="images/xamarin-api-url-config.png" alt="Debug IP Address" class="img-thumbnail" />
 
 ### Debugging Android
 
-There are a few installation steps and configuration details required to
-install Xamarin.Android. It's highly recommended you to read the
-[Xamarin Android Setup and Deployment
-document](https://developer.xamarin.com/guides/android/getting_started/installation/)
+There are a few installation steps and configuration details required to install `Xamarin.Android`. It's highly recommended you to read the [Xamarin Android Setup and Deployment document](https://developer.xamarin.com/guides/android/getting_started/installation/)
 for necessary setups.
 
-After successful setup, set **\*.Mobile.Droid** as startup project.
-Choose an Android emulator from list and press start button.
+* If you are using the default Android Emulator, you don't need to change anything. The default loopback address for the Android emulator is `10.0.2.2` and it's written in the `StartApplication()`method of  `SplashActivity.cs`
+
+  ````bash
+  DebugServerIpAddresses.Current = "10.0.2.2";
+  ````
+
+* If you are using [Genymotion Emulator](https://www.genymotion.com/), change it as below:
+
+  ```bash
+  DebugServerIpAddresses.Current = "10.0.3.2"
+  ```
+
+* If you are using a real Android device, change it as your computer's local IP and make sure your Android device and your computer is connecting from the same network (your local Wi-Fi). To connect your real mobile device, make sure your computer's firewall is off (or create an exception in your firewall to allow the port `44301`)
+
+  ````bash
+  DebugServerIpAddresses.Current = "XXX.XXX.XXX.XXX"
+  ````
+
+After successful setup, set **Mobile.Droid** as startup project. Choose an Android emulator from list and press start button.
 
 <img src="images/xamarin-emulator-selection.png" alt="Android Emulator Selection" class="img-thumbnail" />  
 
 
 ### Debugging iOS
 
-There are a few requirements that must be adhered to when developing for
-iOS in Visual Studio. A Mac is required to compile IPA files.
-Applications cannot be deployed to a device without Apple's certificates
-and code-signing tools. Also, the iOS simulator can be used only on a
-Mac.
+There are a few requirements that must be adhered to when developing for iOS in Visual Studio. A Mac is required to compile IPA files. Applications cannot be deployed to a device without Apple's certificates and code-signing tools. Also, the iOS simulator can be used only on a Mac.
+
+The IP address for the **Web.Host** backend service is written in the `FinishedLaunching()` method of `AppDelegate.cs`.  You need to set this address as your local IP. Eg: `192.168.1.120`
+
+````bash
+DebugServerIpAddresses.Current = "XXX.XXX.XXX.XXX";
+````
 
 **Information**
 
-There are a number of configuration options available to debug iOS app.
-It's highly recommended you to read the [Xamarin iOS Getting started
-document](https://developer.xamarin.com/guides/iOS/getting_started/installation/windows/introduction_to_xamarin_iOS_for_visual_studio/)
-to build an iOS application and debug using a networked Mac to host
-Apple's compiler and simulator.  
+There are a number of configuration options available to debug iOS app. It's highly recommended you to read the [Xamarin iOS Getting started document](https://developer.xamarin.com/guides/iOS/getting_started/installation/windows/introduction_to_xamarin_iOS_for_visual_studio/) to build an iOS application and debug using a networked Mac to host Apple's compiler and simulator.  
 
-After you successfully configure and connect to a Mac, choose an iPhone
-simulator from list and press start button.
+After you successfully configure and connect to a Mac, choose an iPhone simulator from list and press start button.
 
 <img src="images/xamarin-simulator-selection.png" alt="iOS Simulator Selection" class="img-thumbnail" />  
 
+You can also, see the following docs from Microsoft:
 
- [Xamarin Live Player](https://www.xamarin.com/live/) currently does not
-support some of the key features. Thus ASP.NET Zero Xamarin application
-cannot be debugged on Xamarin Live Player. Further information read
-[Xamarin Live Player
-limitations.](https://developer.xamarin.com/guides/cross-platform/live/limitations/)
-
- [LiveXAML](https://www.livexaml.com/) is a Xaml previewer runs while
-you are debugging your application. Whenever you save any XAML file, it
-automatically updates the running application. LiveXAML is a paid
-product. If you want to purchase LiveXAML, ASP.NET Zero customers get
-30% discount.
+* [Set Up Device for Development](https://docs.microsoft.com/en-us/xamarin/android/get-started/installation/set-up-device-for-development)
+* [Create backend services for native mobile apps with ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/mobile/native-mobile-backend?view=aspnetcore-3.1)
 
 ## Xamarin.Forms
 
-A key component of building cross-platform applications is being able to
-share code across various platform-specific projects. ASP.NET Zero
-Xamarin is using Xamarin.Forms to maximize code sharing between two end
-platforms (iOS & Android). It is expected to write shared codes in
-Mobile.Shared project so that it will be used in both iOS and Android.
-If you need platform specific development then try to use class
-abstractions in shared project and implement/extend in end platforms.
+A key component of building cross-platform applications is being able to share code across various platform-specific projects. ASP.NET Zero Xamarin is using `Xamarin.Forms` to maximize code sharing between two end platforms (iOS & Android). It is expected to write shared codes in `Mobile.Shared` project so that it will be used in both iOS and Android. If you need platform specific development then try to use class abstractions in shared project and implement/extend in end platforms.
 
 ### Mobile.Droid
 
-Xamarin Android project has a very basic structure. ASP.NET Zero adds or
-modifies these files in the default project;
+Xamarin Android project has a very basic structure. ASP.NET Zero adds or modifies these files in the default project;
 
 <img src="images/xamarin-android-project-structure.png" alt="Android Project Structure" class="img-thumbnail" />
 

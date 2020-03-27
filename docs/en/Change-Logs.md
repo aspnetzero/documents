@@ -4,8 +4,23 @@
 jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 [version comparison table](Version-Differences.md) for more details.
 
-The change logs in this page are just a summary of major changes. Detailed release notes are shared on the Github repository (only available to the customers).
+The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## v8.4.0 (2020-03-19)
+
+* Dynamic Entity Properties
+* User Delegation
+
+## v8.3.1 (2020-03-06)
+
+* Fixed SignalR not defined error in MVC project.
+
+## v8.3.0 (2020-03-05)
+
+* Added Microsoft Login for Angular
+* Upgraded to ABP 5.3
+* Added support for ASP.NET Core Generic Host
+* Upgraded to @microsoft/signalr NPM package
 
 ## v8.2.0 (2020-02-20)
 
