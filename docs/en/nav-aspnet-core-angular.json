@@ -206,6 +206,10 @@
 			{
               "text": "User Delegation",
               "path": "Features-Angular-User-Delegation.md"
+            },
+			{
+              "text": "Dynamic Entity Parameters",
+              "path": "Feature-Dynamic-Entity-Parameters-Angular.md"
             }
           ]
         },
