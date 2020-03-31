@@ -14,14 +14,12 @@ there are still some differences between different versions. In this document,
 we will highlight these differences.</p>
 <h4>ASP.NET Core v.s. ASP.NET MVC 5.x</h4>
 <p>Beginning from <a href="https://docs.aspnetzero.com/en/common/latest/Change-Logs">v4.1</a>, we are more focused to
-<strong>ASP.NET Core</strong> based solutions (rather than ASP.NET MVC 5.x) 
-since ASP.NET Core is Microsoft&#39;s new ASP.NET version. That means our new major 
+<strong>ASP.NET Core</strong> based solutions (rather than ASP.NET MVC 5.x). That means our new major 
 features will be implemented for ASP.NET Core version (.NET Core &amp; Full .Net 
 Framework).</p>
 <h4>Angular v.s. Angularjs 1.x</h4>
 <p>Beginning from <a href="https://docs.aspnetzero.com/en/common/latest/Change-Logs">v4.1</a>, we are more focused to 
-<strong>Angular</strong> based solution (rather than Angularjs 1.x) since Angular is Google&#39;s 
-new SPA framework. That means our new major features will be implemented for 
+<strong>Angular</strong> based solution (rather than Angularjs 1.x). That means our new major features will be implemented for 
 Angular framework. </p>
 <h3>Version Differences Table</h3>
 <p>The table below shows <strong style="color: red">only the differences, not all features</strong>.</p>
@@ -53,45 +51,45 @@ Angular framework. </p>
 	</tr>
 <tr>
 	<td>Xamarin Application</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>-</td>
-	<td>-</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Rapid Application Development Tool</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>-</td>
-	<td>-</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td style="height: 37px">Tenant Subscription Management &amp; Paypal Integration</td>
-	<td style="height: 37px">OK</td>
-	<td style="height: 37px">OK</td>
-	<td style="height: 37px">-</td>
-	<td style="height: 37px">-</td>
+	<td style="height: 37px"><i class="fa fa-check text-success"></i></td>
+	<td style="height: 37px"><i class="fa fa-check text-success"></i></td>
+	<td style="height: 37px"><i class="fa fa-times text-danger"></i></td>
+	<td style="height: 37px"><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Host Statistics Dashboard</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>-</td>
-	<td>-</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Identity Server Integration</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>-</td>
-	<td>-</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Social Logins (Facebook, Twitter, Microsoft, Google+)</td>
-	<td>OK (Facebook, Google)</td>
-	<td>OK (all)</td>
-	<td>OK (all)</td>
-	<td>OK (all)</td>
+	<td>OK (Facebook, Microsoft, Google)</td>
+	<td><i class="fa fa-check text-success"></i> (All)</td>
+	<td><i class="fa fa-check text-success"></i> (All)</td>
+	<td><i class="fa fa-check text-success"></i> (All)</td>
 </tr>
 <tr>
 	<td>Two Factor Auth</td>
@@ -102,18 +100,46 @@ Angular framework. </p>
 </tr>
 <tr>
 	<td>Application Setup Screen</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>-</td>
-	<td>-</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Code generation extension</td>
-	<td>OK</td>
-	<td>OK</td>
-	<td>-</td>
-	<td>-</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
+<tr>
+	<td>Webhook Feature</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+</tr>
+<tr>
+	<td>Customizable Dashboard</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+</tr>
+<tr>
+	<td>Dynamic Entity Parameters</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+</tr>
+<tr>
+	<td>Log Notification System</td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-check text-success"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+	<td><i class="fa fa-times text-danger"></i></td>
+</tr> 
 </tbody>
 </table>
 
