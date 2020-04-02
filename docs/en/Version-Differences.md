@@ -7,7 +7,6 @@
 <body>
 
 <h1>Project Types Differences</h1>
-
 <h3 id="DocIntro">Overall</h3>
 <p>While base functionalities are identical for all versions of ASP.NET Zero, 
 there are still some differences between different versions. In this document, 
@@ -23,7 +22,6 @@ Framework).</p>
 Angular framework. </p>
 <h3>Version Differences Table</h3>
 <p>The table below shows <strong style="color: red">only the differences, not all features</strong>.</p>
-
 <table class="table">
 <thead>
 <tr>
@@ -128,13 +126,6 @@ Angular framework. </p>
 </tr>
 <tr>
 	<td>Dynamic Entity Parameters</td>
-	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-</tr>
-<tr>
-	<td>Log Notification System</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-times text-danger"></i></td>
