@@ -209,7 +209,13 @@
             },
 			{
               "text": "Dynamic Entity Parameters",
-              "path": "Feature-Dynamic-Entity-Parameters-Angular.md"
+              "path": "Feature-Dynamic-Entity-Parameters-Angular.md",
+			  "items": [
+				{
+				  "text": "Create Custom Input Types",
+				  "path": "Feature-Dynamic-Entity-Parameters-Custom-Input-Types-Angular.md"
+				}
+			  ]
             }
           ]
         },

@@ -199,7 +199,13 @@
             },
 			{
               "text": "Dynamic Entity Parameters",
-              "path": "Feature-Dynamic-Entity-Parameters-Mvc.md"
+              "path": "Feature-Dynamic-Entity-Parameters-Mvc.md",
+			  "items": [
+				{
+				  "text": "Create Custom Input Types",
+				  "path": "Feature-Dynamic-Entity-Parameters-Custom-Input-Types-Mvc.md"
+				}
+			  ]
             }
           ]
         },
