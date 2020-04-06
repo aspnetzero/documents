@@ -2,7 +2,6 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   User Delegation
 -   Calendar system
 -   Sending mass notifications/emails to users
 -   User Sync/Link feature
@@ -14,8 +13,6 @@ We are constantly getting feedbacks from our customers to improve ASP.NET Zero. 
 -   Gravatar support
 -   Coupon for Subscriptions
 -   Send error messages via email
--   Session lock screen
--   Webhook system
 -   Improvements on current features
 -   More tutorials, examples & video courses
 
