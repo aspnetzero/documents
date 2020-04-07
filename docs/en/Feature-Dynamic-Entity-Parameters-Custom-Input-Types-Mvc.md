@@ -129,6 +129,7 @@ In this document we will create a custom input type step by step. Our input type
            <td>The function that manager will trigger after view initialized.</td>
        </tr>
    </tbody>
+   </table>
 
 6. Create `MultiSelectComboBoxInputTypeProvider` that create new input type object for each request. Then add that provider to `abp.inputTypeProviders`
 
