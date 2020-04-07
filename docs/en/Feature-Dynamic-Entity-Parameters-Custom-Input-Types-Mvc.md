@@ -1,5 +1,3 @@
-
-
 # Create Custom Input Types
 
 In this document we will create a custom input type step by step. Our input type is multi-select combobox input type.
@@ -35,7 +33,7 @@ In this document we will create a custom input type step by step. Our input type
 
 4. Go to `*.Web.Mvc\wwwroot\view-resources\Areas\AppAreaName\Views\Common\IInputTypes\` folder
 
-5. Create new javascript file named `MultiSelectComboboxInputType.js` and fill required functions.
+5. Create new JavaScript file named `MultiSelectComboboxInputType.js` and fill required functions.
 
    ```javascript
    var MultiSelectComboBoxInputType = (function () {
@@ -84,7 +82,7 @@ In this document we will create a custom input type step by step. Our input type
                init: init,
                getSelectedValues: getSelectedValues,
                getView: getView,
-               hasValues: true,//is that input type need values to work. For example dropdown need values to select.
+               hasValues: true, // is that input type need values to work. For example dropdown need values to select.
                afterViewInitialized: afterViewInitialized
            };
        };
@@ -148,4 +146,4 @@ In this document we will create a custom input type step by step. Our input type
 
 All done. Your custom input type is ready to use in dynamic parameter. Create new dynamic parameter which uses that input type, add it to an entity. Then you can go to manage page and use it. 
 
-![custom-input-type-multi-select-combobox-mvc](images\custom-input-type-multi-select-combobox-mvc.png)
+![custom-input-type-multi-select-combobox-mvc](images/custom-input-type-multi-select-combobox-mvc.png)

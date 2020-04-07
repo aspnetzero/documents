@@ -1,5 +1,3 @@
-
-
 # Create Custom Input Types
 
 In this document we will create a custom input type step by step. Our input type is multi-select combobox input type.
@@ -132,4 +130,4 @@ In this document we will create a custom input type step by step. Our input type
 
 All done. Your custom input type is ready to use in dynamic parameter. Create new dynamic parameter which uses that input type, add it to an entity. Then you can go to manage page and use it. 
 
-![custom-input-type-multi-select-combobox-mvc](images\custom-input-type-multi-select-combobox-angular.png)
+![custom-input-type-multi-select-combobox-mvc](images/custom-input-type-multi-select-combobox-angular.png)
