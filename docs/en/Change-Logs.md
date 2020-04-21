@@ -6,6 +6,12 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 8.6.0 (2020-04-20)
+
+* Upgraded to ABP v5.6.
+* Upgraded to reCAPTCHA v3.
+* Enhancements and bug fixes.
+
 ## v8.5.0 (2020-04-06)
 
 * Upgraded to Angular v9.1.
