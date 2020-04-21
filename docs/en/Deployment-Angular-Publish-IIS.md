@@ -25,6 +25,8 @@ Publishing ASP.NET Zero Host project is no different to any other ASP.NET Core A
 
 <img src="images/iis-core-publish-configure-app-pool.png">
 
+The project contains a `web.config` file, its contents may be changed during development, please check the` web.config` file after publishing, especially the `ASPNETCORE_ENVIRONMENT` setting.
+
 Check [Host ASP.NET Core on Windows with IIS](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/index?view=aspnetcore-2.1) document for more detail.
 
 ## Angular Application Publishing
