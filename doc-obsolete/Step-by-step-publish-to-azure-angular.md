@@ -83,14 +83,14 @@ Select "**azure-publish-demo-server**" and click "**OK**", then click "**Publish
 The details will be explained in the next lines. Here are the quick steps to publish the **AngularUI** to the Azure
 
 - Run the `yarn` command to restore packages
-- Run the `ng build --prod`
+- Run the `npm run publish`
 - Copy the web.config file that is placed in **angular** folder root to dist folder
 - Configure the **angular/dist/assets/appconfig.json**
 - Send the required files to the Azure
 
 ### Prepare The Publish Folder
 
-Run the `yarn` command to restore packages and run the `ng build --prod` to create publish folder that named **dist**.
+Run the `yarn` command to restore packages and run the `npm run publish` to create publish folder that named **dist**.
 
 <img src="images/azure-publish-angular-publish-angular.png">
 

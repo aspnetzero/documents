@@ -9,7 +9,7 @@ For example: Move files in `.Host/wwwroot/dist` to `C:\inetpub\wwwroot\my-websit
 We are using [angular-cli](https://cli.angular.io/) for development & deployment. Angular CLI has it's own build command that can be used to build your application:
 
 ```
-ng build --prod
+npm run publish
 ```
 
 This command uses **dist** folder as output. Just remember to change **assets/appconfig.json** file with your own configuration.

@@ -33,7 +33,7 @@ Check [Host ASP.NET Core on Windows with IIS](https://docs.microsoft.com/en-us/a
 
 We are using angular-cli for development & deployment. Angular CLI has it's own build command that can be used to build your application:
 
-- Run `ng build --prod`. This command uses dist folder as output. 
+- Run `npm run publish`. This command uses dist folder as output. 
 - Change `assets/appconfig.production.json` file with your own configuration.
 - After ng build command, dist folder contains all necessary files to create a web site under IIS. (For example: copy files from `\*.dist` to `C:\inetpub\wwwroot\angularwebsite`).
 
