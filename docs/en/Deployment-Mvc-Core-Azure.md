@@ -83,7 +83,7 @@ Following screen will be shown:
 
 Select "**azure-publish-demo-server**" and click "**OK**", then click "**Publish**" button. **Web.Mvc** application is live now:
 
-<img src="images/azure-publish-core-mvc-ui-admin.png">
+<img src="images/azure-publish-core-mvc-ui-admin-2.png">
 
 ## Publish Public Website to The Azure
 
@@ -96,8 +96,6 @@ The details will be explained in the next lines. Here are the quick steps to pub
 ### Update Bundles
 
 Run the **npm run build** command to create js and css bundles.
-
-<img src="images/azure-publish-core-mvc-bundle-public.png">
 
 ### Configure the appsettings.production.json
 
