@@ -42,11 +42,23 @@ Below you can see **docker-compose-mvc-only** running:
 There are three docker solutions you can set as startup project to run;
 
 1. **docker-compose-all:** Runs Web.Host, Web.MVC and Web.Public projects together.
-2. **docker-compose-host-only:** Run only Web.Host project.
+2. **docker-compose-host-only:** Runs only Web.Host project.
 3. **docker-compose-mvc-only:** Runs only Web.MVC project.
 
 Each docker-compose files have override.yml files to set the other environments like certification informations, docker volumes or AspnetCore Environment.
 
+<img src="images/development-docker-mvc/docker-override-configuration.png" alt="docker-override-configuration"  style="zoom:100%;" />
+
 Configuration is separated between **docker development** and default **IIS development**. 
 
-If you want to change the default connection string when running on containers; you need to change the environment variable **ConnectionStrings__Default** in corresponding **docker-compose.yml** file since it overrides the connection string set it appsettings.json. This way you can use both development environments without mixing up the configurations.
+If you want to change the default connection string when running on containers; you need to change the environment variable **ConnectionStrings__Default** in corresponding **docker-compose.yml** shown below:
+
+<img src="images/development-docker-mvc/docker-cs-configuration.png" alt="docker-cs-configuration"  style="zoom:100%;" />
+
+This environment variable overrides the connection string which has been set it appsettings.json. This way you can use both development environments without mixing up the configurations.
+
+In some cases, you may get **container conflict errors** when switching between docker projects; like debugging **docker-compose-mvc-only** first then start debugging **docker-compose-all** after stopping the first one.
+
+<img src="images/development-docker-mvc/docker-container-conflict.png" alt="docker-cs-configuration"  style="zoom:100%;" />
+
+This occurs because the mvc container is still alive even if you stop debugging. To avoid container conflicts, you need to **Clean** the solution (right click to docker project and clean option) to remove the container completely before running the **docker-compose-all** which uses common containers.
