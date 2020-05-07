@@ -10,7 +10,7 @@ To get started with using docker for development, there are some prerequisites.
 
 Infrastructure contains **mssql-server-linux** as a replacement for your LocalDb and **redis** server for your applications.
 
-In your `aspnet-core\docker\mvc\` folder, you will find **run-infrastructure.ps1** file which uses **docker-compose.infrastructure.yml** file to setup your infrastructure. Running the shell script should have a similar output like below.
+In your `aspnet-core\docker\infrastructure\` folder, you will find **run-infrastructure.ps1** file which uses **docker-compose.infrastructure.yml** file to setup your infrastructure. Running the shell script should have a similar output like below.
 
 <img src="images/development-docker-mvc/docker-infrastructure-run.png" alt="docker-infrastructure-run"/>
 
@@ -20,7 +20,7 @@ After running the script, powershell will be hanging (non interactive) for you t
 
 Your applications need certificate to enable https. Normally Visual Studio creates this certificate for you when you run your application for the first time however sometimes it doesn't when docker is involved. To overcome the issue, we create our own self-signed certificate for development.
 
-In your `aspnet-core\docker\mvc\` folder, you will find **create-certificate.ps1** file to create the certificate. After running the shell script, you should have a similar output like below.
+In your `aspnet-core\docker\certificate\` folder, you will find **create-certificate.ps1** file to create the certificate. After running the shell script, you should have a similar output like below.
 <img src="images/development-docker-mvc/docker-create-dev-certificate.png" alt="docker-create-dev-certificate"/>
 
 ### 3. Running the migrator
@@ -35,17 +35,17 @@ In your `aspnet-core\docker\mvc\` folder, you will find **run-migrator** file to
 
 In your applications **.Web** solution under **docker folder**, set as startup project you want to debug. Visual studio will instantly begin building the container. **Building containers may take some time** for the first time since it will be downloading required base images.
 
-Below you can see **docker-compose-mvc-only** running:
+Below you can see **docker-compose-mvc** debugging:
 
 <img src="images/development-docker-mvc/docker-mvc-running.png" alt="docker-mvc-running"  style="zoom:100%;" />
 
 There are three docker solutions you can set as startup project to run;
 
-1. **docker-compose-all:** Runs Web.Host, Web.MVC and Web.Public projects together.
-2. **docker-compose-host-only:** Runs only Web.Host project.
-3. **docker-compose-mvc-only:** Runs only Web.MVC project.
+1. **docker-compose-host:** Runs Web.Host project.
+2. **docker-compose-mvc:** Runs only Web.Mvc project.
+3. **docker-compose-public:** Runs Web.Mvc and Web.Public projects together.
 
-Each docker-compose files have override.yml files to set the other environments like certification informations, docker volumes or AspnetCore Environment.
+Each docker-compose files have override.yml files to set the other environments like certification informations, docker volumes or AspnetCore environment.
 
 <img src="images/development-docker-mvc/docker-override-configuration.png" alt="docker-override-configuration"  style="zoom:100%;" />
 
@@ -55,10 +55,10 @@ If you want to change the default connection string when running on containers; 
 
 <img src="images/development-docker-mvc/docker-cs-configuration.png" alt="docker-cs-configuration"  style="zoom:100%;" />
 
-This environment variable overrides the connection string which has been set it appsettings.json. This way you can use both development environments without mixing up the configurations.
+This environment variable overrides the connection string which has been set in appsettings.json. This way you can use both development environments without mixing up the configurations.
 
-In some cases, you may get **container conflict errors** when switching between docker projects; like debugging **docker-compose-mvc-only** first then start debugging **docker-compose-all** after stopping the first one.
+In some cases, you may get **container conflict errors** when switching between docker projects; like debugging **docker-compose-mvc** first then start debugging **docker-compose-public** after stopping the first one.
 
 <img src="images/development-docker-mvc/docker-container-conflict.png" alt="docker-cs-configuration"  style="zoom:100%;" />
 
-This occurs because the mvc container is still alive even if you stop debugging. To avoid container conflicts, you need to **Clean** the solution (right click to docker project and clean option) to remove the container completely before running the **docker-compose-all** which uses common containers.
+This occurs because the mvc container is still alive even if you stop debugging. To avoid container conflicts, you need to **Clean** the solution (right click to docker project and clean option) to remove the container completely before running the **docker-compose-public** which uses common containers like mvc container.
