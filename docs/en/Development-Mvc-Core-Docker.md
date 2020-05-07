@@ -25,7 +25,7 @@ In your `aspnet-core\docker\certificate\` folder, you will find **create-certifi
 
 ### 3. Running the migrator
 
-In your `aspnet-core\docker\mvc\` folder, you will find **run-migrator** file to apply migrations for your application. Running the shell script should have a similar output like below.
+In your `aspnet-core\docker\migrator\` folder, you will find **run-migrator** file to apply migrations for your application. Running the shell script should have a similar output like below.
 
 <img src="images/development-docker-mvc/docker-migrate.png" alt="docker-migrate"/>
 
