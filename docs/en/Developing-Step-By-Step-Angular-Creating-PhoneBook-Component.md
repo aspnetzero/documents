@@ -40,7 +40,7 @@ As we declared in **phonebook.component.ts** we should create a
 <div [@routerTransition]>
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
         <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
+            <div [class]="containerClass">
                 <div class="kt-subheader__main">
                     <h3 class="kt-subheader__title">
                         <span>{{"PhoneBook" | localize}}</span>
