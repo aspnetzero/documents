@@ -48,7 +48,7 @@ As we declared in **phonebook.component.ts** we should create a
                 </div>
             </div>
         </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'"
             <div class="kt-portlet kt-portlet--mobile">
                 <div class="kt-portlet__body  kt-portlet__body--fit">
                     <p>PHONE BOOK CONTENT COMES HERE!</p>
