@@ -216,7 +216,11 @@
 				  "path": "Feature-Dynamic-Entity-Parameters-Custom-Input-Types-Angular.md"
 				}
 			  ]
-            }
+            },
+			{
+				"text": "Azure Key Vault Configuration",
+				"path": "Features-Angular-Azure-Key-Vault.md"
+			}
           ]
         },
         {
