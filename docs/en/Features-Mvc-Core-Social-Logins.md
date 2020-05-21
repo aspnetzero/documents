@@ -4,6 +4,7 @@ ASP.NET Zero supports social media logins. To enable it, we should change the fo
 
 ```json
   "Authentication": {
+    "AllowSocialLoginSettingsPerTenant": false,
     "Facebook": {
       "IsEnabled": "false",
       "AppId": "",
@@ -30,7 +31,21 @@ ASP.NET Zero supports social media logins. To enable it, we should change the fo
 You can find many documents on the web to learn how to obtain authentication keys for social platforms. So, we will not go to details of creating apps on social medias. Once you get your keys, you can write
 them into `appsettings.json`. When you enable it, social media logos are automatically shown on the login page as shown below:
 
-<img src="images/social-login-logos-3.png" alt="Social Login Icons" class="img-thumbnail" />
+<img src="images/social-login-logos-4.png" alt="Social Login Icons" class="img-thumbnail" />
+
+## Social Login Settings Per Tenant
+
+You can allow tenants to change social logins settings. To enable it you should set `AllowSocialLoginSettingsPerTenant` to true in `appsettings.json`
+
+```json
+"AllowSocialLoginSettingsPerTenant": true
+```
+
+Then your tenant will be able to change their social login settings. If tenants don't set it, host settings will be used.
+
+<img src="images/social-login-logos-5.png" alt="Social Login Icons" class="img-thumbnail" />
+
+
 
 ## OpenId Connect Login
 
