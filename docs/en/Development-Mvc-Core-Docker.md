@@ -45,7 +45,7 @@ There are three docker solutions you can set as startup project to run;
 2. **docker-compose-mvc:** Runs only Web.Mvc project.
 3. **docker-compose-public:** Runs Web.Mvc and Web.Public projects together.
 
-Each docker-compose files have override.yml files to set the other environments like certification informations, docker volumes or AspnetCore environment.
+Each docker-compose files have override.yml files to set the other environments like certification information, docker volumes or AspnetCore environment.
 
 <img src="images/development-docker-mvc/docker-override-configuration.png" alt="docker-override-configuration"  style="zoom:100%;" />
 
