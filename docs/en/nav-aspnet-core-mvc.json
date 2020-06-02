@@ -509,6 +509,10 @@
             {
               "text": "Converting Create & Edit Modals to MVC Pages",
               "path": "Converting-Create-Edit-Modal-To-Page-Mvc-Core.md"
+            },
+			{
+              "text": "Development with Docker Containers",
+              "path": "Development-Mvc-Core-Docker.md"
             }
           ]
         },
