@@ -36,6 +36,10 @@ All login attempts (success of failed) are logged in the application. A user can
 
 A user can change own profile picture. **ProfileController** is used to upload and get user profile pictures. Currently, JPG, JPEG, GIF and PNG files are supported, you can extend it.
 
+A user can also use Gravatar image for profile picture using change profile picture modal window.
+
+<img src="images/change-profile-picture.png" alt="Change profile picture" class="img-thumbnail" />
+
 ## Change Password
 
 **ProfileAppService** is used to change password.

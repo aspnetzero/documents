@@ -18,7 +18,7 @@ Under the appearance tab, each tenant can upload a logo file and upload a custom
 
 ## User Management
 
-<img src="images/tenant-settings-core-user-management-2.png" alt="User management settings" class="img-thumbnail" />
+<img src="images/tenant-settings-core-user-management-3.png" alt="User management settings" class="img-thumbnail" />
 
 Under the user management tab, each tenant can configure some user management settings related to their account. Each tenant can enable/disable user registration for their account. Tenants can also make newly registered users for their account active or passive by default.
 
@@ -31,6 +31,8 @@ Each tenant can also enable/disable session timeout control. If it is enable and
 Also, each tenant can enable/disable cookie consent so ASP.NET Zero shows a cookie consent bar for the users of that tenant to accept cookie policy of the application.
 
 Each tenant can force email confirmation for login.
+
+Each tenant can allow tenant users to use Gravatar profile picture or not.
 
 ## Security
 

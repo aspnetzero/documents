@@ -27,7 +27,7 @@ You can also select a default edition, so a newly registered tenant will be assi
 
 ## User Management
 
-<img src="images/host-settings-user-management-2.png" alt="User Management Settings" class="img-thumbnail" />
+<img src="images/host-settings-user-management-3.png" alt="User Management Settings" class="img-thumbnail" />
 
 User related settings can be configured under this tab. You can force email confirmation for login. You can enable phone number verification. Also, you can enable cookie consent so ASP.NET Zero shows a cookie consent bar for the users to accept cookie policy of your application.
 
@@ -36,6 +36,8 @@ You can enable/disable captcha on login page.
 > Note: **Token Based Authentication** has `ReCaptchaIgnoreWhiteList` located in `WebConsts`. If you want a client app to be ignored for reCaptcha control during login, add a value to `ReCaptchaIgnoreWhiteList` and send the same value in the `User-Agent` request header for your login request from the client app. You can check the Xamarin mobile app in AspNet Zero to see how `ReCaptchaIgnoreWhiteList` works.
 
 You can also enable/disable session timeout control. If it is enable and the user does not provide any input to the site during the timeout period, a countdown modal will be displayed to user. If the user still does not provide an entry to the site during the modal countdown period, user will be log out.
+
+Each tenant can allow tenant users to use Gravatar profile picture or not.
 
 ## Security
 

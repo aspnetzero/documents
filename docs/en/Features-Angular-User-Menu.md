@@ -30,6 +30,10 @@ All login attempts (succeed of failed) are logged in the application. A user can
 
 A user can change his/her own profile picture. Currently JPG, JPEG, GIF and PNG files are supported.
 
+A user can also use Gravatar image for profile picture using change profile picture modal window.
+
+<img src="D:/GitHub/documents/docs/en/images/change-profile-picture.png" alt="Change profile picture" class="img-thumbnail" />
+
 ## My Settings
 
 My settings modal is used to change user profile settings:
