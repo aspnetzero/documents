@@ -6,6 +6,19 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 8.8.0 (2020-05-22)
+
+* Social login settings per tenant (Mvc project).
+* Azure Key Vault support.
+* Upgraded to ABP v5.8.
+* Enhancements and bug fixes.
+
+## 8.7.0 (2020-05-07)
+
+* Added Non-Modal CRUD pages generation to Power Tools.
+* Upgraded to ABP v5.7. 
+* Enhancements and bug fixes.
+
 ## 8.6.0 (2020-04-20)
 
 * Upgraded to ABP v5.6.

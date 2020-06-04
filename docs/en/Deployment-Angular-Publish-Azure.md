@@ -96,7 +96,7 @@ The details will be explained in the next lines. Here are the quick steps to pub
 
 ### Prepare The Publish Folder
 
-Run the `yarn` command to restore packages and run the `ng build --prod` to create publish folder that named **dist**.
+Run the `yarn` command to restore packages and run the `npm run publish` to create publish folder that named **dist**.
 
 <img src="images/azure-publish-angular-publish-angular.png">
 
