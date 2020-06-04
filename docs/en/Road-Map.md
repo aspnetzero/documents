@@ -10,7 +10,6 @@ We are constantly getting feedbacks from our customers to improve ASP.NET Zero. 
 -   Orderable menu items
 -   Code Analysis Rules
 -   Power Tools enhancements
--   Gravatar support
 -   Coupon for Subscriptions
 -   Send error messages via email
 -   Improvements on current features
