@@ -1,6 +1,6 @@
 # Development with Docker Containers for MVC
 
-ASP.NET Zero **Web** solution has a **docker folder** which contains various docker projects for your application  to debug for your preferences. 
+ASP.NET Zero `aspnet-core` folder contains various docker projects for your application to debug using docker containers. You can add these projects to your **.Web** or **.All** solutions by **Add Existing Project** to your preferred solution.
 
 <img src="images/development-docker-mvc/docker-projects-folder-core-mvc.png" alt="docker-projects-folder-core-mvc" style="zoom:150%;" />
 
