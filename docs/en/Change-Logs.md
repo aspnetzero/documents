@@ -6,6 +6,12 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 9.0.0 (2020-07-01)
+
+* Upgraded to Metronic 7.
+* Social login per tenant for Angular UI (OpenIdConnect, WsFederation).
+* Upgraded to ABP v5.10.1.
+
 ## 8.9.0 (2020-06-04)
 
 * External login (Facebook, Google, Microsoft) settings per tenant (Angular project).
