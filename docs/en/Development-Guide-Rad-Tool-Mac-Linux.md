@@ -24,6 +24,7 @@
 | CreateUserInterface  | `true` creates/modifies ui layer files                       |
 | CreateViewOnly       | `true` creates a view-only modal in actions button in table of your entity in ui |
 | CreateExcelExport    | `true` adds excel report button in ui                        |
+| IsNonModalCRUDPage   | `true` creates non-modal pages.                              |
 | PagePermission       | Multitenancy<br />`"PagePermission":{"Host": [ISHOSTALLOWED],"Tenant":[ISTENANTALLOWED]}` |
 | Properties           | Properties of your entity. See 'Table 2' for more.           |
 | NavigationProperties | Navigation properties of your entity. See 'Table 3' for more. |
@@ -98,6 +99,7 @@
   "CreateUserInterface": true,
   "CreateViewOnly": true,
   "CreateExcelExport": true,
+  "IsNonModalCRUDPage":false,
   "PagePermission": {
        "Host": true,
        "Tenant": true
