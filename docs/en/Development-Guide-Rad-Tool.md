@@ -20,7 +20,7 @@ https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
 
  The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
 
-![Extension UI](images/RadToolUI3New.jpg)
+![Extension UI](images/RadToolUI3New_2.png)
 
  A simple console will appear and give you information about the process. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
 
@@ -114,8 +114,10 @@ Also, if you have moved a file that is going to be modified during rad tool gene
 
  -   cars.component.ts
  -   cars.component.html
- -   create-or-edit-car-modal.component.ts
- -   create-or-edit-car-modal.component.html
+ -   create-or-edit-car-modal.component.ts or create-or-edit-car.component.ts (if "Create Non-modal  CRUD Page" is selected)
+ -   create-or-edit-car-modal.component.html or create-or-edit-car.component.html (if "Create Non-modal  CRUD Page" is selected)
+ -   view-car-modal.component.ts or view-car.component.ts (if "Create Non-modal  CRUD Page" is selected)
+ -   view-car-modal.component.html or view-car.component.ts (if "Create Non-modal  CRUD Page" is selected)
  -   Lookup-Table-modal.component.ts
  -   Lookup-Table-modal.component.html
  -   Lookup-Table-modal.component.less
@@ -136,8 +138,9 @@ Also, if you have moved a file that is going to be modified during rad tool gene
  -   CreateOrEditCarViewModel.cs
  -   Index.js
  -   Index.cshtml
- -   createOrEditModal.js
- -   createOrEditModal.cshtml
+ -   CreateOrEditModal.js or CreateOrEdit.js (if "Create Non-modal  CRUD Page" is selected)
+ -   CreateOrEditModal.cshtml  or CreateOrEdit.cshtml (if "Create Non-modal  CRUD Page" is selected)
+ -   ViewCarModal.cshtml  or ViewCar.cshtml (if "Create Non-modal  CRUD Page" is selected)
  -   LookupTableViewModel.cshtml
  -   LookupTableModal.js
  -   LookupTableModal.cshtml
