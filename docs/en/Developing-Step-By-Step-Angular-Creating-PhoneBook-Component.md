@@ -43,7 +43,7 @@ As we declared in **phonebook.component.ts** we should create a
             <div [class]="containerClass">
                 <div class="kt-subheader__main">
                     <h3 class="kt-subheader__title">
-                        <span>{%{{{ "PhoneBook" | localize }}}%}</span>
+                        <span>{{"PhoneBook" | localize}}</span>
                     </h3>
                 </div>
             </div>
