@@ -209,7 +209,7 @@
             },
 			{
 				"text": "Azure Key Vault Configuration",
-				"path": "Features-MVC-Azure-Key-Vault.md"
+				"path": "Features-Mvc-Azure-Key-Vault.md"
 			}
           ]
         },
