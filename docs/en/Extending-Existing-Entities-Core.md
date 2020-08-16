@@ -29,7 +29,7 @@ public class User : AbpUser<User>
 }
 ```
 
-Here, we hided existing code in the User class to show it simpler. You can add Address property after existing properties.
+Here, we hid the existing code in the User class to show it simpler. You can add Address property after existing properties.
 
 ### Add Migration
 
