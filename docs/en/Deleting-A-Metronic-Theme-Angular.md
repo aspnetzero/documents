@@ -26,8 +26,8 @@ Metronic theme currently has 12 different themes and AspNet Zero includes them a
 
   * Open `admin.module.ts`  and delete Theme2 code parts.
   * Go to **ui-customization** folder
-    * Open `theme2-theme-ui-settings.component.ts` and delete Theme2 code parts.
-    * Open `theme2-theme-ui-settings.component.html` and delete Theme2 code parts.
+    * Delete `theme2-theme-ui-settings.component.ts`.
+    * Delete `theme2-theme-ui-settings.component.html`.
     * Open `ui-customization.component.html` and delete Theme2 code parts.
 
 * Go to **src -> app** . Open `app.module.ts` and delete Theme2 code parts.
