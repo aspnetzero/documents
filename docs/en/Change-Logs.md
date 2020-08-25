@@ -6,6 +6,12 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 9.1.0 (2020-08-25)
+
+* Upgraded to Angular 10
+* Upgraded to ABP v5.12.
+* Enhancements and bug fixes.
+
 ## 9.0.0 (2020-07-01)
 
 * Upgraded to Metronic 7.
