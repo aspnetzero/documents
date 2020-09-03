@@ -2,7 +2,8 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   Calendar system
+-   .NET 5 support
+-   Master-Detail table generation support for Power Tools.
 -   Sending mass notifications/emails to users
 -   User Sync/Link feature
 -   Tenant login page customization
