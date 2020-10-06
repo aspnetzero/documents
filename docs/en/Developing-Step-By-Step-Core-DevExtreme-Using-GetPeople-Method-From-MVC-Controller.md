@@ -113,4 +113,4 @@ We successfully retrieved list of people from database to the page.
 
 ## Next
 
-- [Creating a New Person](Developing-Step-By-Step-Core-Creating-New-Person.md)
+- [Creating a New Person](Developing-Step-By-Step-Core-DevExtreme-Creating-New-Person.md)

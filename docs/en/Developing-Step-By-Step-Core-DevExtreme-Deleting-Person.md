@@ -109,6 +109,4 @@ If we click Yes, it simply calls **DeletePerson** method of **PhoneBookControlle
 
 ## Next
 
-- [Filtering People](Developing-Step-By-Step-Core-Filtering-People.md)
-
-  
+- [Editing Person](Developing-Step-By-Step-Core-DevExtreme-Editing-Person.md)

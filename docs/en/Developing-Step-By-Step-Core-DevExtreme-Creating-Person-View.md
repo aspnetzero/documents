@@ -83,3 +83,7 @@ Then Update **Index.cshml** as seen below:
 
 <img src="images/phonebook-devextreme-create-person.png" alt="Phonebook peoples" class="img-thumbnail"/>
 
+## Next
+
+- [Deletin Person](Developing-Step-By-Step-Core-DevExtreme-Deleting-Person.md)
+
