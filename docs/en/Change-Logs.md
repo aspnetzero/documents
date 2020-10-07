@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 9.2.0 (2020-10-06)
+
+* Power Tools: Generate master detail tables
+* Metronic 7 RTL support.
+* Upgraded to ABP v5.13.
+* Enhancements and bug fixes.
+
 ## 9.1.0 (2020-08-25)
 
 * Upgraded to Angular 10
