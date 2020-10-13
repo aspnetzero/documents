@@ -162,7 +162,9 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
    * **Display name**: Generate Migration Scripts
 * **Main Project Path**: `src/MyPortalDemo.EntityFrameworkCore/MyPortalDemo.EntityFrameworkCore.csproj`
+   
    * **DbContexts**: `MyPortalDemoDbContext`
+   
 * **Startup Project Path**: `src/MyPortalDemo.Web.Mvc/MyPortalDemo.Web.Mvc.csproj`
    * **Target Folder**: `$(build.artifactstagingdirectory)/migrations`
    
@@ -174,6 +176,15 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
    ![Save changes](/images/azure-pipelines-save.png)
 
 
+
+IMPORTANT NOTE: If your project is a .NET Core 3.x project, dotnet-ef tool must be installed using the Azure pipelines, so that "Generate Migration Scripts Task" can generate migration scripts using this tool. Normally, an `Entity Framework Core Migrations Script Generator` step contains a selection for installing this tool but it doesn't work. So, first thing to do here is not selecting "**Install dependencies for .NET Core 3**" option for "Generate Migration Scripts Task". 
+
+After that, add a new Command Line item just before "Generate Migration Scripts Task" and change it's content as below;
+
+````bash
+dotnet new tool-manifest
+dotnet tool install --local dotnet-ef
+````
 
 We are ready to run the job for the first time. Click **Save & queue** button on toolbar. The pipeline will start for the first time.
 
