@@ -507,6 +507,126 @@
               ]
             },
             {
+              "text": "Developing Step By Step (DevExtreme)",
+              "path": "Developing-Step-By-Step-Core-DevExtreme-Introduction.md",
+              "items": [
+                {
+                  "text": "Creating & Running The Project",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Running-Project.md"
+                },
+                {
+                  "text": "Adding a New Menu Item",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Adding-New-Menu-Item.md"
+                },
+                {
+                  "text": "Creating the Page",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Page.md",
+                  "items": [
+                    {
+                      "text": "Creating Person Entity",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Person-Entity.md"
+                    },
+                    {
+                      "text": "Database Migrations for Person",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Database-Migrations-Person.md"
+                    },
+                    {
+                      "text": "Creating Person Application Service",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Person-Application-Service.md"
+                    },
+                    {
+                      "text": "Creating Unit Tests For PersonAppService",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Unit-Tests-PersonAppService.md"
+                    },
+                    {
+                      "text": "Testing PersonAppService from Browser Console",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Testing-PersonAppService-From-Browser-Console.md"
+                    },
+                    {
+                      "text": "Using GetPeople Method From MVC Controller",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Using-GetPeople-Method-From-MVC-Controller.md"
+                    }
+                  ]
+                },
+                {
+                  "text": "Creating a New Person",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-New-Person.md",
+                  "items": [
+                    {
+                      "text": "Testing CreatePerson Method",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Testing-CreatePerson-Method.md"
+                    },
+                    {
+                      "text": "Creating Modal for New Person",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Modal-Person.md"
+                    },
+                    {
+                      "text": "Opening the Person Modal",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Opening-Person-Modal.md"
+                    },
+                    {
+                      "text": "Saving Person",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Saving-Person.md"
+                    }
+                  ]
+                },
+                {
+                  "text": "Authorization For Phone Book",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Authorization-For-Phone-Book.md"
+                },
+                {
+                  "text": "Deleting a Person",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Deleting-Person.md"
+                },
+                {
+                  "text": "Filtering People",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Filtering-People.md"
+                },
+                {
+                  "text": "Adding Phone Numbers",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Adding-Phone-Numbers.md",
+                  "items": [
+                    {
+                      "text": "Creating Phone Entity",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Phone-Entity.md"
+                    },
+                    {
+                      "text": "Database Migration of Phone Entity",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Database-Migration-Phone-Entity.md"
+                    },
+                    {
+                      "text": "Changing GetPeople Method",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Changing-GetPeople-Method.md"
+                    },
+                    {
+                      "text": "Adding AddPhone and DeletePhone Methods",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Adding-AddPhone-DeletePhone-Methods.md"
+                    },
+                    {
+                      "text": "Edit Mode For Phone Numbers",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Edit-Mode-For-Phone-Numbers.md"
+                    },
+                    {
+                      "text": "Edit Mode For People",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Edit-Mode-For-People.md"
+                    }
+                  ]
+                },
+                {
+                  "text": "Multi Tenancy",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Multi-Tenancy.md"
+                },
+                {
+                  "text": "Running the Application",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Running-Application.md"
+                },
+                {
+                  "text": "Conclusion",
+                  "path": "Developing-Step-By-Step-Core-DevExtreme-Conclusion.md"
+                }
+              ]
+            },
+            {
               "text": "Extending Existing Entities",
               "path": "Extending-Existing-Entities.md"
             },
