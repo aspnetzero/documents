@@ -363,7 +363,7 @@ public class AuditLog : Entity<long>, IMayHaveTenant
    		_auditLogRepository = auditLogRepository;
    	}
    
-   	protected override Task<List<AuditLogDto>> Resolve(ResolveFieldContext<object> context)
+   	public override Task<List<AuditLogDto>> Resolve(IResolveFieldContext context)
    	{
    		throw new NotImplementedException();
    	}
@@ -373,7 +373,7 @@ public class AuditLog : Entity<long>, IMayHaveTenant
    Let's write the content of `Resolve()` method. Basically we need to return a list of `AuditLogDto` filtered with the given arguments.  To keep it simple, we will return only the 10 records. In the below code, `ContainsArgument` is an extension method that helps us to add a condition to the query if there is an argument. If the client sends `UserId` or `ServiceName` arguments, they will be filtered in the query. On the last row, `ProjectToListAsync` is a base method and maps the queryable list to the list of `AuditLogDto`. 
 
    ```csharp
-   protected override async Task<List<AuditLogDto>> Resolve(ResolveFieldContext<object> context)
+   public override async Task<List<AuditLogDto>> Resolve(IResolveFieldContext context)
    {
    	var query = _auditLogRepository.GetAll().Take(10).AsNoTracking();
    
@@ -451,7 +451,7 @@ public class AuditLog : Entity<long>, IMayHaveTenant
 
    ```csharp
    [AbpAuthorize(AppPermissions.Pages_Administration_AuditLogs)]
-   protected override async Task<List<AuditLogDto>> Resolve(ResolveFieldContext<object> context)
+   public override async Task<List<AuditLogDto>> Resolve(IResolveFieldContext context)
    {
    	var query = _auditLogRepository.GetAll().Take(10).AsNoTracking();
    
