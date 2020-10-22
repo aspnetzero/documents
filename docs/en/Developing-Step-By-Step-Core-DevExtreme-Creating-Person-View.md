@@ -85,5 +85,5 @@ Then Update **Index.cshml** as seen below:
 
 ## Next
 
-- [Deletin Person](Developing-Step-By-Step-Core-DevExtreme-Deleting-Person.md)
+- [Deleting a Person](Developing-Step-By-Step-Core-DevExtreme-Deleting-Person.md)
 

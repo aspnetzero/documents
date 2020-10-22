@@ -557,61 +557,19 @@
                       "path": "Developing-Step-By-Step-Core-DevExtreme-Testing-CreatePerson-Method.md"
                     },
                     {
-                      "text": "Creating Modal for New Person",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Modal-Person.md"
-                    },
-                    {
-                      "text": "Opening the Person Modal",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Opening-Person-Modal.md"
-                    },
-                    {
-                      "text": "Saving Person",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Saving-Person.md"
+                      "text": "Adding Creation To Grid",
+                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Person-View"
                     }
                   ]
-                },
-                {
-                  "text": "Authorization For Phone Book",
-                  "path": "Developing-Step-By-Step-Core-DevExtreme-Authorization-For-Phone-Book.md"
                 },
                 {
                   "text": "Deleting a Person",
                   "path": "Developing-Step-By-Step-Core-DevExtreme-Deleting-Person.md"
                 },
                 {
-                  "text": "Filtering People",
+                  "text": "Editing a Person",
                   "path": "Developing-Step-By-Step-Core-DevExtreme-Filtering-People.md"
-                },
-                {
-                  "text": "Adding Phone Numbers",
-                  "path": "Developing-Step-By-Step-Core-DevExtreme-Adding-Phone-Numbers.md",
-                  "items": [
-                    {
-                      "text": "Creating Phone Entity",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Creating-Phone-Entity.md"
-                    },
-                    {
-                      "text": "Database Migration of Phone Entity",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Database-Migration-Phone-Entity.md"
-                    },
-                    {
-                      "text": "Changing GetPeople Method",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Changing-GetPeople-Method.md"
-                    },
-                    {
-                      "text": "Adding AddPhone and DeletePhone Methods",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Adding-AddPhone-DeletePhone-Methods.md"
-                    },
-                    {
-                      "text": "Edit Mode For Phone Numbers",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Edit-Mode-For-Phone-Numbers.md"
-                    },
-                    {
-                      "text": "Edit Mode For People",
-                      "path": "Developing-Step-By-Step-Core-DevExtreme-Edit-Mode-For-People.md"
-                    }
-                  ]
-                },
+                },               
                 {
                   "text": "Multi Tenancy",
                   "path": "Developing-Step-By-Step-Core-DevExtreme-Multi-Tenancy.md"
@@ -619,10 +577,6 @@
                 {
                   "text": "Running the Application",
                   "path": "Developing-Step-By-Step-Core-DevExtreme-Running-Application.md"
-                },
-                {
-                  "text": "Conclusion",
-                  "path": "Developing-Step-By-Step-Core-DevExtreme-Conclusion.md"
                 }
               ]
             },

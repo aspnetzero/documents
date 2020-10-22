@@ -27,4 +27,4 @@ public class PhoneBookDemoConsts
 
 ## Next
 
-- [Adding a New Menu Item](Developing-Step-By-Step-Core-DexEtreme-Adding-New-Menu-Item.md)
+- [Adding a New Menu Item](Developing-Step-By-Step-Core-DevExtreme-Adding-New-Menu-Item.md)
