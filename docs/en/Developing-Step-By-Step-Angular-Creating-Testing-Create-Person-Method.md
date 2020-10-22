@@ -40,7 +40,7 @@ perform database operations.
 This method successfully works since all required fields are supplied.
 Let's try to create a test for **invalid arguments**:
 
-```typescript
+```csharp
 [Fact]
 public async Task Should_Not_Create_Person_With_Invalid_Arguments()
 {
