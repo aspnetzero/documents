@@ -1,8 +1,8 @@
-# Power Tools Master Detail Pages
+# Power Tools Master Detail Tables
 
-You can create master detail pages using Power Tools.
+You can create master detail tables using Power Tools.
 
-To create master-detail pages you can follow that steps.
+To create master-detail tables you can follow that steps.
 
 1. **Creating a child entity**
    You should create necessary child entities using Power Tools 
