@@ -6,6 +6,14 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 9.3.0 (2020-11-03)
+
+* Implement Twitter social login for Angular
+* Load Entities from PostgreSQL (Power Tools)
+* Allow social login to be turned on/off per Tenant
+* Upgrade to ABP 5.14
+* Enhancements and bug fixes.
+
 ## 9.2.0 (2020-10-06)
 
 * Power Tools: Generate master detail tables
