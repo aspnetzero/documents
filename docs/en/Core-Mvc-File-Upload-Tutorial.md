@@ -4,7 +4,7 @@ You can implement two different way of file upload to MVC projects. Ajax based i
 
 ### Form Based Implementation
 
-Create a class named **FileUploadViewModel** in **\*.Web.Mvc\Areas\AppAreaName\Models** folder.
+* Create a class named **FileUploadViewModel** in **\*.Web.Mvc\Areas\AppAreaName\Models** folder.
 
 ```csharp
 using Microsoft.AspNetCore.Http;
@@ -16,9 +16,7 @@ public class FileUploadImageViewModel
 }
 ```
 
-
-
-Create a controller named **FileUploadController** in **\*.Web.Mvc\Areas\AppAreaName\Controllers** folder.
+* Create a controller named **FileUploadController** in **\*.Web.Mvc\Areas\AppAreaName\Controllers** folder.
 
 ```csharp
 [Area("AppAreaName")]
@@ -66,7 +64,7 @@ public class FileUploadController : AbpZeroTemplateControllerBase
 }
 ```
 
-Create a cshtml file named **Index.cshtml** in **\*.Web.Mvc\Areas\AppAreaName\Views\FileUpload** folder.
+* Create a cshtml file named **Index.cshtml** in **\*.Web.Mvc\Areas\AppAreaName\Views\FileUpload** folder.
 
 ```html
 <div class="content d-flex flex-column flex-column-fluid">
@@ -94,7 +92,7 @@ Create a cshtml file named **Index.cshtml** in **\*.Web.Mvc\Areas\AppAreaName\Vi
 </div>
 ```
 
-Then you will have a file upload page as seen below.
+* Then you will have a file upload page as seen below.
 
 ![file-upload-tutorial-page-result](images/file-upload-tutorial-page-result.png)
 
@@ -104,19 +102,16 @@ After you fill the description area, select a file and click to upload, you will
 
 ### Ajax Based Implementation
 
-Create a class named **FileUploadViewModel** in **\*.Web.Mvc\Areas\AppAreaName\Models** folder.
+* Create a class named **FileUploadViewModel** in **\*.Web.Mvc\Areas\AppAreaName\Models** folder.
 
 ```csharp
-using Microsoft.AspNetCore.Http;
 public class FileUploadImageViewModel
 {
     public string Description { get; set; }
 }
 ```
 
-
-
-Create a controller named **FileUploadController** in **\*.Web.Mvc\Areas\AppAreaName\Controllers** folder.
+* Create a controller named **FileUploadController** in **\*.Web.Mvc\Areas\AppAreaName\Controllers** folder.
 
 ```csharp
 [Area("AppAreaName")]
@@ -166,9 +161,7 @@ public class FileUploadController : AbpZeroTemplateControllerBase
 }
 ```
 
-
-
-Create a cshtml file named **Index.cshtml** in **\*.Web.Mvc\Areas\AppAreaName\Views\FileUpload** folder.
+* Create a cshtml file named **Index.cshtml** in **\*.Web.Mvc\Areas\AppAreaName\Views\FileUpload** folder.
 
 ```html
  @section Scripts{
@@ -210,7 +203,7 @@ Create a cshtml file named **Index.cshtml** in **\*.Web.Mvc\Areas\AppAreaName\Vi
 </div>
 ```
 
-Then you will have same file upload page.
+* Then you will have same file upload page.
 
 ![file-upload-tutorial-page-result](images/file-upload-tutorial-page-result.png)
 
