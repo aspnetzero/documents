@@ -92,6 +92,19 @@ public class FileUploadController : AbpZeroTemplateControllerBase
 </div>
 ```
 
+* Go to **\*.Web.Mvc\Areas\AppAreaName\Startup\AppAreaNameNavigationProvider.cs** and add new menu item.
+
+  ```csharp
+  .AddItem(new MenuItemDefinition(
+      AppAreaNamePageNames.FileUpload,
+      L("FileUpload"),
+      url: "AppAreaName/FileUpload",
+      icon: "flaticon-file-1",
+      permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_FileUpload)
+      )
+  )
+  ```
+
 * Then you will have a file upload page as seen below.
 
 ![file-upload-tutorial-page-result](images/file-upload-tutorial-page-result.png)
