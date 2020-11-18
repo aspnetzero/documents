@@ -303,7 +303,7 @@ table**. Open .Web\\App\\host\\views\\editions\\**index.js** and add Price colum
 {
     name: app.localize('CreationTime'),
     field: 'creationTime',
-    cellFilter: 'momentFormat: \'L\''
+    cellFilter: 'luxonFormat:\'F\''
 }
 ```
 
