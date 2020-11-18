@@ -776,7 +776,7 @@ export class EditTenantComponent extends AppComponentBase implements OnInit, Aft
     saving = false;
     isUnlimited = false;
     subscriptionEndDateUtcIsValid = false;
-    subscriptionEndDateUtcx: Datetime;
+    subscriptionEndDateUtcx: DateTime;
 
     tenant: TenantEditDto = undefined;
     currentConnectionString: string;
