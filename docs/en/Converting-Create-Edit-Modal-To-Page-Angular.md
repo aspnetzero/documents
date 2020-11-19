@@ -301,7 +301,7 @@ import {
     PasswordComplexitySetting, ProfileServiceProxy,
     TenantServiceProxy, SubscribableEditionComboboxItemDto
 } from '@shared/service-proxies/service-proxies';
-import * as _ from 'lodash';
+import { filter as _filter } from 'lodash-es';
 import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -366,7 +366,7 @@ export class CreateTenantComponent extends AppComponentBase implements OnInit, A
                 this.editions.unshift(notAssignedItem);
 
                 this._commonLookupService.getDefaultEditionName().subscribe((getDefaultEditionResult) => {
-                    let defaultEdition = _.filter(this.editions, { 'displayText': getDefaultEditionResult.name });
+                    let defaultEdition = _filter(this.editions, { 'displayText': getDefaultEditionResult.name });
                     if (defaultEdition && defaultEdition[0]) {
                         this.tenant.editionId = parseInt(defaultEdition[0].value);
                         this.toggleSubscriptionFields();
@@ -380,7 +380,7 @@ export class CreateTenantComponent extends AppComponentBase implements OnInit, A
     }
 
     selectedEditionIsFree(): boolean {
-        let selectedEditions = _.filter(this.editions, { 'value': this.tenant.editionId.toString() })
+        let selectedEditions = _filter(this.editions, { 'value': this.tenant.editionId.toString() })
             .map(u => Object.assign(new SubscribableEditionComboboxItemDto(), u));
 
         if (selectedEditions.length !== 1) {
@@ -755,12 +755,13 @@ Here is final version of **edit-tenant.component.ts**:
 import { Component, ElementRef, EventEmitter, Injector, Output, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CommonLookupServiceProxy, SubscribableEditionComboboxItemDto, TenantEditDto, TenantServiceProxy } from '@shared/service-proxies/service-proxies';
-import * as _ from 'lodash';
-import * as moment from 'moment';
+import { filter as _filter } from 'lodash-es';;
+import { DateTime } from 'luxon';
 import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
     templateUrl: './edit-tenant.component.html',
@@ -775,7 +776,7 @@ export class EditTenantComponent extends AppComponentBase implements OnInit, Aft
     saving = false;
     isUnlimited = false;
     subscriptionEndDateUtcIsValid = false;
-    subscriptionEndDateUtcx: moment.Moment = moment().startOf('day');
+    subscriptionEndDateUtcx: DateTime;
 
     tenant: TenantEditDto = undefined;
     currentConnectionString: string;
@@ -787,12 +788,15 @@ export class EditTenantComponent extends AppComponentBase implements OnInit, Aft
         private _tenantService: TenantServiceProxy,
         private _commonLookupService: CommonLookupServiceProxy,
         private _activatedRoute: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private _dateTimeService: DateTimeService
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
+        this.subscriptionEndDateUtcx = _dateTimeService.getStartOfDay();
+        
         this.active = true;
 
         var tenantId = this._activatedRoute.snapshot.queryParams['tenantId'];
@@ -831,7 +835,7 @@ export class EditTenantComponent extends AppComponentBase implements OnInit, Aft
             return true;
         }
 
-        let selectedEditions = _.filter(this.editions, { value: this.tenant.editionId + '' });
+        let selectedEditions = _filter(this.editions, { value: this.tenant.editionId + '' });
         if (selectedEditions.length !== 1) {
             return true;
         }
