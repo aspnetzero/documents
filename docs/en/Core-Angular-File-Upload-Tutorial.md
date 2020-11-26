@@ -1,6 +1,10 @@
 # File Upload Tutorial
 
-* Create a class named **FileUploadViewModel** in **\*.Web.Host\Areas\AppAreaName\Models** folder.
+Uploading a file in an ASP.NET Zero application is not different than a regular ASP.NET Core & Angular application. In this tutorial, we will implement a file upload functionality in ASP.NET Zero. We will also send an additional field to server while uploading a file.
+
+This tutorial assumes that, you already have a valid ASP.NET Zero license and already created an empty project by following [Getting Started](Getting-Started-Angular.md) document.
+
+First, create a class named **FileUploadViewModel** in **\*.Web.Host\Areas\AppAreaName\Models** folder. This class will be used to transfer additional parameters during the upload process.
 
 ```csharp
 public class FileUploadImageViewModel
@@ -9,7 +13,7 @@ public class FileUploadImageViewModel
 }
 ```
 
-* Create a controller named **FileUploadController** in **\*.Web.Host\Controllers** folder.
+Then, create a controller named **FileUploadController** in **\*.Web.Host\Controllers** folder. This controller will handle the upload process.
 
 ```csharp
 [AbpMvcAuthorize(AppPermissions.Pages_FileUpload)]
@@ -53,9 +57,9 @@ public class FileUploadController : AbpZeroTemplateControllerBase
 }
 ```
 
+The server side of the implementation is done. Let's move to Angular application.
 
-
-* Go to angular project.
+* Go to angular folder in your project.
 
 * Open a terminal and run `cd src\app\admin`.
 
@@ -70,7 +74,7 @@ public class FileUploadController : AbpZeroTemplateControllerBase
 * Go to **src\app\admin\admin-routing.module.ts** and add new route for file upload page
 
   ```typescript
-  { path: 'fileUpload', component: FileUploadTestComponent, data: { permission: 'Pages.Tenant.Dashboard' } },
+  { path: 'fileUpload', component: FileUploadTestComponent },
   ```
 
 * Go to generated **file-upload.component.html** file and change the content as seen below
