@@ -1,10 +1,14 @@
 # File Upload Tutorial
 
+Uploading a file in an ASP.NET Zero application is not different than a regular ASP.NET Core application. In this tutorial, we will implement a file upload functionality in ASP.NET Zero. We will also send an additional field to server while uploading a file.
+
+This tutorial assumes that, you already have a valid ASP.NET Zero license and already created an empty project by following [Getting Started](Getting-Started-Angular.md) document.
+
 You can implement two different way of file upload to MVC projects. Ajax based implementation and form based implementation.
 
 ### Form Based Implementation
 
-* Create a class named **FileUploadViewModel** in **\*.Web.Mvc\Areas\AppAreaName\Models** folder.
+* First, create a class named **FileUploadViewModel** in **\*.Web.Mvc\Areas\AppAreaName\Models** folder. This class will be used to transfer additional parameters during the upload process.
 
 ```csharp
 using Microsoft.AspNetCore.Http;
@@ -16,7 +20,7 @@ public class FileUploadImageViewModel
 }
 ```
 
-* Create a controller named **FileUploadController** in **\*.Web.Mvc\Areas\AppAreaName\Controllers** folder.
+* Then, create a controller named **FileUploadController** in **\*.Web.Mvc\Areas\AppAreaName\Controllers** folder.
 
 ```csharp
 [Area("AppAreaName")]
@@ -92,7 +96,7 @@ public class FileUploadController : AbpZeroTemplateControllerBase
 </div>
 ```
 
-* Go to **\*.Web.Mvc\Areas\AppAreaName\Startup\AppAreaNameNavigationProvider.cs** and add new menu item.
+* Go to **\*.Web.Mvc\Areas\AppAreaName\Startup\AppAreaNameNavigationProvider.cs** and add a new menu item.
 
   ```csharp
   .AddItem(new MenuItemDefinition(
@@ -115,7 +119,7 @@ After you fill the description area, select a file and click to upload, you will
 
 ### Ajax Based Implementation
 
-* Create a class named **FileUploadViewModel** in **\*.Web.Mvc\Areas\AppAreaName\Models** folder.
+* First, create a class named **FileUploadViewModel** in **\*.Web.Mvc\Areas\AppAreaName\Models** folder. This class will be used to transfer additional parameters during the upload process.
 
 ```csharp
 public class FileUploadImageViewModel
@@ -124,7 +128,7 @@ public class FileUploadImageViewModel
 }
 ```
 
-* Create a controller named **FileUploadController** in **\*.Web.Mvc\Areas\AppAreaName\Controllers** folder.
+* Then, create a controller named **FileUploadController** in **\*.Web.Mvc\Areas\AppAreaName\Controllers** folder.
 
 ```csharp
 [Area("AppAreaName")]
