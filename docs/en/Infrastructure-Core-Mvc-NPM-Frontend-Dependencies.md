@@ -4,5 +4,5 @@ ASP.NET Zero solution uses [NPM](https://www.npmjs.com/) package manager to obta
 
 <img src="images/npm-dependencies-core.png" alt="NPM dependencies" class="img-thumbnail" />
 
-In order to create css and javascript bundles ASP.NET Zero uses [webpack](https://webpack.js.org/). Bundle definitions are stored in **bundles.json** file. For more details, see [Bundling, Minifying and Compiling](Infrastructure-Core-Mvc-NPM-Frontend-Dependencies.md) documentation.
+In order to create css and javascript bundles ASP.NET Zero uses [Gulp](https://gulpjs.com/). Bundle definitions are stored in **bundles.json** file. For more details, see [Bundling, Minifying and Compiling](Infrastructure-Core-Mvc-Bundling-Minifying-Compiling.md) documentation.
 
