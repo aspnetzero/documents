@@ -180,7 +180,7 @@ public class ProjectNameDbContext : AbpZeroDbContext<Tenant, Role, User>
 
 ### Add Migration
 
-Since we added a new entity class, our database schema is changed. Whever we change our entities, we should add a new database migration. Open Console Package Manager and write new migration code:
+Since we added a new entity class, our database schema is changed. Whenever we change our entities, we should add a new database migration. Open Console Package Manager and write new migration code:
 
     Add-Migration "Added_MyEdition_Entity"
 
