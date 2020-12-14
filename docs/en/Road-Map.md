@@ -2,14 +2,13 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   .NET 5 support
+-   Power Tools enhancements
 -   Sending mass notifications/emails to users
 -   User Sync/Link feature
 -   Tenant login page customization
 -   Password expiration policy
 -   Orderable menu items
 -   Code Analysis Rules
--   Power Tools enhancements
 -   Coupon for Subscriptions
 -   Send error messages via email
 -   Improvements on current features

@@ -95,7 +95,7 @@ deletePerson(person: PersonListDto): void {
             if (isConfirmed) {
                 this._personService.deletePerson(person.id).subscribe(() => {
                     this.notify.info(this.l('SuccessfullyDeleted'));
-                    _.remove(this.people, person);
+                    _remove(this.people, person);
                 });
             }
         }
@@ -111,11 +111,11 @@ If we click Yes, it simply calls **deletePerson** method of
 **PersonAppService** and shows a
 **[notification](https://aspnetboilerplate.com/Pages/Documents/Javascript-API/Notification)**
 if operation succeed. Also, removes the person from the person array
-using [lodash](https://lodash.com/) library. We also added an import
+using [lodash-es](https://lodash.com/) library. We also added an import
 statement before the @Component declaration:
 
 ```typescript
-import * as _ from 'lodash';
+import { remove as _remove } from 'lodash-es';
 ```
 
 ## Next

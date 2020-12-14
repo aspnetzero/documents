@@ -456,12 +456,86 @@
               ]
             },
             {
+              "text": "Using ASP.NET Zero with DevExtreme",
+              "path": "Developing-Step-By-Step-Angular-DevExtreme-Introduction.md",
+              "items": [
+                {
+                  "text": "Creating & Running The Project",
+                  "path": "Developing-Step-By-Step-Angular-DevExtreme-Creating-Running-Project.md"
+                },
+                {
+                  "text": "Adding a New Menu Item",
+                  "path": "Developing-Step-By-Step-Angular-DevExtreme-Adding-New-Menu-Item.md"
+                },
+                {
+                  "text": "Creating PhoneBook Component",
+                  "path": "Developing-Step-By-Step-Angular-DevExtreme-Creating-PhoneBook-Component.md",
+                  "items": [
+                    {
+                      "text": "Creating Person Entity",
+                      "path": "Developing-Step-By-Step-Angular-DevExtreme-Creating-Person-Entity.md"
+                    },
+                    {
+                      "text": "Database Migrations for Person",
+                      "path": "Developing-Step-By-Step-Angular-DevExtreme-Database-Migrations-Person-Entity.md"
+                    },
+                    {
+                      "text": "Creating Unit Tests for Person Application Service",
+                      "path": "Developing-Step-By-Step-Angular-DevExtreme-Creating-Unit-Tests-for-Person-Application-Service.md"
+                    },
+                    {
+                      "text": "Creating Person Application Service",
+                      "path": "Developing-Step-By-Step-Angular-DevExtreme-Creating-Person-Application-Service.md"
+                    },
+                    {
+                      "text": "Using GetPeople Method From Angular Component",
+                      "path": "Developing-Step-By-Step-Angular-DevExtreme-Using-GetPeople-Method-from-Angular.md"
+                    }
+                  ]
+                },
+                {
+                  "text": "Creating a New Person",
+                  "path": "Developing-Step-By-Step-Angular-DevExtreme-Creating-New-Person.md",
+                  "items": [
+                    {
+                      "text": "Testing CreatePerson Method",
+                      "path": "Developing-Step-By-Step-Angular-DevExtreme-Creating-Testing-Create-Person-Method.md"
+                    },
+                    {
+                      "text": "Adding Create New Person To Index",
+                      "path": "Developing-Step-By-Step-Angular-DevExtreme-Creating-Testing-Create-Person-Method.md"
+                    }
+                  ]
+                },
+                {
+                  "text": "Deleting a Person",
+                  "path": "Developing-Step-By-Step-Angular-DevExtreme-Deleting-Person.md"
+                },
+                {
+                  "text": "Editing a Person",
+                  "path": "Developing-Step-By-Step-Angular-DevExtreme-Editing-Person.md"
+                },
+                {
+                  "text": "Multi Tenancy",
+                  "path": "Developing-Step-By-Step-Angular-DevExtreme-Multi-Tenancy.md"
+                },
+                {
+                  "text": "Running the Application",
+                  "path": "Developing-Step-By-Step-Angular-DevExtreme-Running-Application.md"
+                }
+              ]
+            },
+            {
               "text": "Extending Existing Entities",
               "path": "Extending-Existing-Entities-Core-Angular.md"
             },
             {
               "text": "Converting Create & Edit Modals to Angular Pages",
               "path": "Converting-Create-Edit-Modal-To-Page-Angular.md"
+            },
+            {
+              "text": "File Upload",
+              "path": "Core-Angular-File-Upload-Tutorial.md"
             }
           ]
         },

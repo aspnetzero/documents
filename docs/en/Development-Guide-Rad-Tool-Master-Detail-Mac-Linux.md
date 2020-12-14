@@ -165,11 +165,11 @@ To create master-detail tables you can follow that steps.
 
 After that you can use new master detail page.
 
-<img src="D:/GitHub/documents/docs/en/images/rad-tool-master-detail-screenshot-2.png" alt="Rad Tool Child Entity" class="img-thumbnail" />
+<img src="images/rad-tool-master-detail-screenshot-2.png" alt="Rad Tool Child Entity" class="img-thumbnail" />
 
 Note: You can create list views for child entities too. Power Tools will change base entity page and child page. It will add base entity to child entity as a navigation property.
 
-<img src="D:/GitHub/documents/docs/en/images/rad-tool-master-detail-screenshot-1.png" alt="Rad Tool Child Entity" class="img-thumbnail" />
+<img src="images/rad-tool-master-detail-screenshot-1.png" alt="Rad Tool Child Entity" class="img-thumbnail" />
 
 (If you manage child entity in base entity page everything about the base entity will be automatically managed.)
 
