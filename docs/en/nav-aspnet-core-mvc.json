@@ -591,6 +591,10 @@
 			{
               "text": "Development with Docker Containers",
               "path": "Development-Mvc-Core-Docker.md"
+            },
+            {
+              "text": "File Upload",
+              "path": "Core-Mvc-File-Upload-Tutorial.md "
             }
           ]
         },
