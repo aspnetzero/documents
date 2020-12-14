@@ -86,7 +86,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto, PhoneInPersonListDto, AddPhoneInput, PhoneType } from '@shared/service-proxies/service-proxies';
 
-import * as _ from 'lodash';
+import { remove as _remove } from 'lodash-es';
 
 @Component({
     templateUrl: './phonebook.component.html',
@@ -125,7 +125,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
                 if (isConfirmed) {
                     this._personService.deletePerson(person.id).subscribe(() => {
                         this.notify.info(this.l('SuccessfullyDeleted'));
-                        _.remove(this.people, person);
+                        _remove(this.people, person);
                     });
                 }
             }
@@ -160,7 +160,7 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
     deletePhone(phone, person): void {
         this._personService.deletePhone(phone.id).subscribe(() => {
             this.notify.success(this.l('SuccessfullyDeleted'));
-            _.remove(person.phones, phone);
+            _remove(person.phones, phone);
         });
     };
 

@@ -107,7 +107,7 @@ Open **src\app\admin\users\users.component.html** file and add Address column ri
 
            <td style="width: 200px">
                  <span class="ui-column-title"> {{'CreationTime' | localize}}</span>
-                 {{record.creationTime | momentFormat:'L'}}
+                 {{record.creationTime | luxonFormat:\'F\'}}
            </td>
            <td style="width: 200px">
                   <span class="ui-column-title"> {{'address' | localize}}</span>

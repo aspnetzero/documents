@@ -7,7 +7,7 @@
 
 Notice that the Power Tools is only available for **ASP.NET Core** templates, not available for ASP.NET MVC 5.x templates.
 
-
+Note: ASP.NET Zero Power Tools requires [.NET Core 2.2 Runtime](https://dotnet.microsoft.com/download/dotnet-core/2.2).
 
 ## Demonstration
 

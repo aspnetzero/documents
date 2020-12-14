@@ -507,7 +507,7 @@
               ]
             },
             {
-              "text": "Developing Step By Step (DevExtreme)",
+              "text": "Using ASP.NET Zero with DevExtreme",
               "path": "Developing-Step-By-Step-Core-DevExtreme-Introduction.md",
               "items": [
                 {
@@ -591,6 +591,10 @@
 			{
               "text": "Development with Docker Containers",
               "path": "Development-Mvc-Core-Docker.md"
+            },
+            {
+              "text": "File Upload",
+              "path": "Core-Mvc-File-Upload-Tutorial.md "
             }
           ]
         },

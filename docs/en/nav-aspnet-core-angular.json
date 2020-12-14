@@ -532,6 +532,10 @@
             {
               "text": "Converting Create & Edit Modals to Angular Pages",
               "path": "Converting-Create-Edit-Modal-To-Page-Angular.md"
+            },
+            {
+              "text": "File Upload",
+              "path": "Core-Angular-File-Upload-Tutorial.md"
             }
           ]
         },

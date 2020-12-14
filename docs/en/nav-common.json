@@ -6,7 +6,17 @@
     },
     {
       "text": "Power Tools",
-      "path": "Rapid-Application-Development.md"
+      "path": "Rapid-Application-Development.md",
+      "items":[
+        {
+          "text": "Master Detail Tables",
+          "path": "Development-Guide-Rad-Tool-Master-Detail.md",
+        },
+        {
+          "text": "Master Detail Tables (for non-Windos OS)",
+          "path": "Development-Guide-Rad-Tool-Master-Detail-Mac-Linux.md",
+        }
+      ]
     },
     {
       "text": "Change Logs",
