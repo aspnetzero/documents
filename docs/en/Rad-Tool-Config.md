@@ -17,6 +17,7 @@ Config.json file is located in `*YourAppFolder/aspnet-core/AspNetZeroRadTool`
   "AngularSrcPath": "\\..\\..\\angular\\src\\",
   "AngularMergedSrcPath": "\\..\\src\\{{Namespace_Here}}.Web.Host\\src\\",
   "CoreSrcPath": "\\..\\src\\",
+  "FormatGeneratedFiles": true,
   "FileLocations": {
     "DbContext": "{{Namespace_Here}}.EntityFrameworkCore\\EntityFrameworkCore\\{{Project_Name_Here}}DbContext.cs",
     "CustomDtoMapper": "{{Namespace_Here}}.Application\\CustomDtoMapper.cs",
