@@ -57,12 +57,6 @@ As we declared in **phonebook.component.ts** we should create a
 to easily localize texts. **\[@routerTransition\]** attribute is
 required for page transition animation.
 
-
-
-Now, we can return back to
-**main-routing.module.ts** and add import statement for the newly
-created PhoneBookComponent class:
-
 Now we should create a **phonebook.module.ts** and **phonebook-routing.module.ts**  view in the same phonebook folder:
 
 *phonebook-routing.module.ts*
