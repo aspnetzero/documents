@@ -346,15 +346,14 @@ export class EditPersonModalComponent extends AppComponentBase {
 }
 ```
 
-Add those lines to **main.module.ts:**:
+Add those lines to **phonebook.module.ts:**:
 
 ```typescript
-    import { EditPersonModalComponent } from './phonebook/edit-person-modal.component';
+    import { EditPersonModalComponent } from './edit-person-modal.component';
 
 	// Other Code lines...
 	
     declarations: [
-      DashboardComponent,
       PhoneBookComponent,
       CreatePersonModalComponent,
       EditPersonModalComponent
