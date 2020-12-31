@@ -2,7 +2,25 @@
   "items": [
     {
       "text": "Getting Started",
-      "path": "Getting-Started.md"
+      "path": "Getting-Started.md",
+      "items": [
+        {
+            "text": "ASP.NET Core MVC",
+            "path": "../../aspnet-core-mvc/latest/Getting-Started-Core"
+        },
+        {
+            "text": "ASP.NET Core & Angular",
+            "path": "../../aspnet-core-angular/latest/Getting-Started-Angular"
+        },
+        {
+            "text": "ASP.NET MVC 5.x",
+            "path": "../../aspnet-mvc-jquery/latest/Getting-Started-Mvc-Angularjs"
+        },
+        {
+            "text": "ASP.NET MVC 5.x & AngularJS",
+            "path": "../../aspnet-mvc-angularjs/latest/Getting-Started-Mvc-Angularjs"
+        }
+      ]
     },
     {
       "text": "Power Tools",
@@ -19,30 +37,20 @@
       ]
     },
     {
-      "text": "Change Logs",
-      "path": "Change-Logs.md"
-    },
-    {
       "text": "Version Differences",
       "path": "Version-Differences.md"
     },
     {
-      "text": "Road Map",
-      "path": "Road-Map.md"
-    },
-
-    {
-      "text": "Other",
-      "items": [
-        {
-          "text": "ASP.NET Boilerplate vs ASP.NET Zero",
-          "path": "Abp-Template-vs-AspNet-Zero.md"
-        },
-		{
           "text": "Version Upgrade",
           "path": "Version-Updating.md"
-        }
-      ]
+    },
+    {
+      "text": "Change Logs",
+      "path": "Change-Logs.md"
+    },
+    {
+      "text": "Road Map",
+      "path": "Road-Map.md"
     },
     {
       "text": "External Links",
@@ -53,7 +61,7 @@
         },
         {
           "text": "Metronic Theme",
-          "path": "http://www.keenthemes.com/preview/metronic/"
+          "path": "https://keenthemes.com/metronic/"
         }
       ]
     }

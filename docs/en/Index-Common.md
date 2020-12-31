@@ -35,6 +35,10 @@ ASP.NET Zero Power Tools helps you create an entity and its corresponding layers
 
 ASP.NET Zero uses [Metronic](https://keenthemes.com/metronic/) theme and includes its source code. ASP.NET Zero customers can access Metronic's GitHub repository and its source code by filling the form on [https://keenthemes.com/metronic/?page=github](https://keenthemes.com/metronic/?page=github). To get your Metronic Purchase Code, please send an email to info@aspnetzero.com
 
+### Upgrade
+
+You can upgrade your ASP.NET Zero solution when a new version is available. Before starting development, please follow [Version Upgrade](Version-Updating.md) document to set up your branching strategy so that you can get updates of ASP.NET Zero easily.
+
 ### Change Logs
 
 See the [change logs](Change-Logs.md) to learn the features released with the previous versions.
