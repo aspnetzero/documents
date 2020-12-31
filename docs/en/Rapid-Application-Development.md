@@ -7,16 +7,14 @@
 
 Notice that the Power Tools is only available for **ASP.NET Core** templates, not available for ASP.NET MVC 5.x templates.
 
-Note: ASP.NET Zero Power Tools requires [.NET Core 2.2 Runtime](https://dotnet.microsoft.com/download/dotnet-core/2.2).
+## Pre Requirements
+
+* [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com/)
+* [.NET Core 2.2 Runtime](https://dotnet.microsoft.com/download/dotnet-core/2.2).
+* [EF Core Tools](https://docs.microsoft.com/en-us/ef/core/cli/dotnet)
 
 ## Demonstration
 
-[Watch a demonstration of the Power Tools](https://youtu.be/OsSdNkwmC7I?t=1001)
+You can see ASP.NET Zero Power Tools in action by watching the [YouTube video](https://youtu.be/OsSdNkwmC7I?t=1001). This video demonstrates some of ASP.NET Zero Power Tools features starting from its installation on Visual Studio. 
 
 [![Power Tools demonstration](images/RadToolVideo.jpg)](https://youtu.be/OsSdNkwmC7I?t=1001)
-
-## Documentation
-
-* [Development Guide for Windows & Visual Studio](Development-Guide-Rad-Tool.md)
-* [Development Guide for Mac/Linux](Development-Guide-Rad-Tool-Mac-Linux.md)
-* [Power Tools Config](Rad-Tool-Config.md)

@@ -1,38 +1,34 @@
 # Development Guide
 
-![Generated page result](images/RadToolCarsTable2.jpg)
+In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. ASP.NET Zero Power Tools minimizes the effort for creating CRUD pages. It generates all the layers from the database to the user interface by just defining an entity. 
 
-## Introduction
-
-In this document, we will introduce **ASP.NET Zero Power Tools** and explain it. This tool is developed to minimize the effort of creating a new CRUD page. It creates all the related layers from the database to the user interface by just defining an entity. This tool supports ASP.NET Zero v5.0.0 and later versions.
+ASP.NET Zero Power Tools supports ASP.NET Zero v5.0.0 and above versions.
 
 ## Download And Install
 
- If your project version is 5.1.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from [marketplace](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) or Extension and Updates.
+If your project version is 5.0.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from [marketplace](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) or from Visual Studio's Extension and Updates menu.
 
 ![Extension installation](images/rad-extension-install.png)
 
-**The Rad tool may require the EF Core tool during database migration. Please refer to its documentation to install it properly.**
-
-https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet
-
 ## How To Use It?
 
- The extension can be found inside the **Tools** menu (Tools -> Asp.Net Zero -> Create An Entity). When you run it, you will see the interface for creating an entity. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
+After the installation, you need to restart the Visual Studio. You can then find the extension inside the Visual Studio's **Tools** menu (Tools -> Asp.Net Zero). 
+
+For example, clicking the "Tools -> Asp.Net Zero -> Create Entity" opens the window shown below. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
 
 ![Extension UI](images/RadToolUI3New_2.png)
 
- A simple console will appear and give you information about the process. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
+ A console will appear and give you information about the process during the code generation. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
 
-Warning: If you are working on ASP.NET Core & Angular template, after generating the entity via Power Tools, run your ***.Web.Host** project and then run "**./angular/nswag/refresh.bat**" to update **service-proxies.ts**.
+> If you are working on ASP.NET Core & Angular template, after generating the entity via Power Tools, run your ***.Web.Host** project and then run "**./angular/nswag/refresh.bat**" to update **service-proxies.ts**. Otherwise, you will see errors when building your Angular application.
 
- Warning: Be sure that you have saved your work before running this tool since it will add new files and modify some of the existing files. We strongly recommend using a source control system (like Git).  Otherwise, backup your project.
+> Be sure that you have saved your work before running this tool since it will add new files and modify some of the existing files. We strongly recommend using a source control system (like Git).  Otherwise, backup your project.
 
 ## How It Works?
 
-DLLs (that are inside the folder mentioned above) do all the work. The extension is just a user interface. This design is required, otherwise it would only be available for Visual Studio Windows users. However, since the tool is built on .NET Core platform, **Mac** or **Linux** users can safely use the tool. 
+DLLs (that are inside the ```aspnet-core\AspNetZeroRadTool``` folder in your solution) do all the work. The extension is just a user interface. Since the tool is built with .NET Core, **Mac** or **Linux** users can safely use it without the user interface.
 
-On Mac and Linux, you have to manually do some of the work that is done by the extension. This involves just creating a short and basic[ JSON file](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux) as input.
+Using ASP.NET Zero Power Tools on Mac and Linux requires a bit more effort. You have to create a [ JSON file](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool-Mac-Linux) as input for code generation manually. For using ASP.NET Zero Power Power Tools in Mac or Linux, please check [Development Guide(Max/Linux) document](Development-Guide-Rad-Tool-Mac-Linux).
 
 ## Navigation Properties
 

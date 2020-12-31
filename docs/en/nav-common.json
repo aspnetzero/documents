@@ -24,15 +24,34 @@
     },
     {
       "text": "Power Tools",
-      "path": "Rapid-Application-Development.md",
       "items":[
         {
-          "text": "Master Detail Tables",
-          "path": "Development-Guide-Rad-Tool-Master-Detail.md",
+          "text": "Overview",
+          "path": "Rapid-Application-Development.md",
         },
         {
-          "text": "Master Detail Tables (for non-Windos OS)",
-          "path": "Development-Guide-Rad-Tool-Master-Detail-Mac-Linux.md",
+          "text": "Development Guide (Windows)",
+          "path": "Development-Guide-Rad-Tool.md",
+          "items": [
+            {
+              "text": "Master Detail Tables",
+              "path": "Development-Guide-Rad-Tool-Master-Detail.md",
+            }
+          ]
+        },
+        {
+          "text": "Development Guide (MAC/Linux)",
+          "path": "Development-Guide-Rad-Tool-Mac-Linux.md",
+          "items": [
+            {
+              "text": "Master Detail Tables (for non-Windos OS)",
+              "path": "Development-Guide-Rad-Tool-Master-Detail-Mac-Linux.md",
+            }
+          ]
+        },
+        {
+          "text": "Configuration",
+          "path": "Rad-Tool-Config.md",
         }
       ]
     },
