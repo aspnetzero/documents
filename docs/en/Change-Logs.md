@@ -6,6 +6,14 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 10.0.0 (2021-01-07)
+
+* Upgraded to Angular 11.
+* Upgrade to ABP 6.1.
+* Using DevExtreme Angular components with AspNet Zero tutorial.
+* File upload tutorial
+* Enabled Health Check feature for .NET 5 version.
+
 ## 10.0.0 (2020-12-04)
 
 * .NET 5 support
