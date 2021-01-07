@@ -9,9 +9,17 @@ Notice that the Power Tools is only available for **ASP.NET Core** templates, no
 
 ## Pre Requirements
 
-* [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com/)
+* [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com/) (Only for Windows)
 * [.NET Core 2.2 Runtime](https://dotnet.microsoft.com/download/dotnet-core/2.2).
 * [EF Core Tools](https://docs.microsoft.com/en-us/ef/core/cli/dotnet)
+
+## Download And Install
+
+If your project version is 5.0.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from [marketplace](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) or from Visual Studio's Extension and Updates menu. 
+
+> If you are a non-Windows user, you can use binaries of ASP.NET Zero Power Tools included in your ASP.NET Zero solution. See [Development Guide for Mac/Linux](Development-Guide-Rad-Tool-Mac-Linux)
+
+![Extension installation](D:/GitHub/documents/docs/en/images/rad-extension-install.png)
 
 ## Demonstration
 
