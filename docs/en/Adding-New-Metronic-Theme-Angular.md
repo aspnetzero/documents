@@ -101,3 +101,6 @@ if (theme === 'themeX') {
   ```
 
 * If your theme use dynamic bundles. Open `bundle.js` add your bundles.
+
+  _AspNet Zero has custom css file for datepicker ([bs-datepicker.css](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/angular/src/assets/ngx-bootstrap/bs-datepicker.css)). If the default design is not compatible with your theme, you can change that css file._
+
