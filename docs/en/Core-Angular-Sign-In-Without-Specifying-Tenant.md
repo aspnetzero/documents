@@ -2,7 +2,7 @@
 
 Normally, **ASP.NET Zero** uses tenant information during the login process. This document shows you how to implement the login process without tenant information. 
 
-***Important Note:*** *To implement that, your user's email addresses have to be unique. Otherwise, that solution may not works properly.*
+***Important Note:*** *Your user's email addresses have to be unique to implement this solution. Otherwise, this solution may not work correctly.*
 
 #### Updating LogInManager
 
