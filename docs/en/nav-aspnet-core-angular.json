@@ -536,6 +536,10 @@
             {
               "text": "File Upload",
               "path": "Core-Angular-File-Upload-Tutorial.md"
+            },
+            {
+              "text": "Sign In Without Specifying Tenant",
+              "path": "Core-Angular-Sign-In-Without-Specifying-Tenant.md"
             }
           ]
         },

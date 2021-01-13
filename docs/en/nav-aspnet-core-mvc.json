@@ -595,6 +595,10 @@
             {
               "text": "File Upload",
               "path": "Core-Mvc-File-Upload-Tutorial.md "
+            },
+            {
+              "text": "Sign In Without Specifying Tenant",
+              "path": "Core-Mvc-Sign-In-Without-Specifying-Tenant.md"
             }
           ]
         },
