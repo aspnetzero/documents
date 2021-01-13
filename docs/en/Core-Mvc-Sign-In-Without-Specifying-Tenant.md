@@ -8,7 +8,7 @@ Normally, **ASP.NET Zero** uses tenant information in login transactions. This d
 
 * First of all, open `LogInManager`. *(It is located in **aspnet-core\src\\[YOURAPPNAME].Application\Authorization** folder.)*
 
-* Add lines of codes shown below
+* Add lines shown below
 
   ``````csharp
   UserStore _userStore
