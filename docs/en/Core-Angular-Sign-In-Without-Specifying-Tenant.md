@@ -1,6 +1,6 @@
 ## Sign In Without Specifying Tenant
 
-Normally, **ASP.NET Zero** uses tenant information in login transactions. This document shows you how to implement tenant information independent login. 
+Normally, **ASP.NET Zero** uses tenant information during the login process. This document shows you how to implement the login process without tenant information. 
 
 ***Important Note:*** *To implement that, your user's email addresses have to be unique. Otherwise, that solution may not works properly.*
 
@@ -310,4 +310,3 @@ Go to **aspnet-zero-core\angular\src\account\account.component.ts** and add add 
 <img src="images/login-page-with-tenant-change.png" class="img-thumbnail" />
 
 <img src="images/login-page-without-tenant-change.png" class="img-thumbnail" />
-
