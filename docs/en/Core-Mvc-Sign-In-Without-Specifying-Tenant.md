@@ -223,7 +223,7 @@ public async Task<int?> TryGetTenantIdOfUser(string userEmail)
   }
   ```
 
-Then your project will be able to use without specifying tenant.
+Then your users will be able to login without specifying a tenant.
 
 #### More
 
