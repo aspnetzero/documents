@@ -71,7 +71,7 @@ Normally, **ASP.NET Zero** uses tenant information in login transactions. This d
   
 * Go to `UserManager`. *(It is located in **aspnet-core\src\\[YOURAPPNAME].Core\Authorization\Users** folder.)*
 
-* And add following lines of codes
+* And add following lines;
 
   ```csharp
 public async Task<int?> TryGetTenantIdOfUser(string userEmail)
