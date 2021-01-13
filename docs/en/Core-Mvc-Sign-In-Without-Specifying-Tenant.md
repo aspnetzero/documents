@@ -63,7 +63,7 @@ Normally, **ASP.NET Zero** uses tenant information in login transactions. This d
   }
   ``````
 
-  Then, your `LogInManager` will be able to use given user's tenant to try log in.
+  Then, your `LogInManager` will be able to use given user's tenant for login process.
   
   
   
