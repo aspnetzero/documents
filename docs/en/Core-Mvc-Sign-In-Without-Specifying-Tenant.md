@@ -2,7 +2,7 @@
 
 Normally, **ASP.NET Zero** uses tenant information in login transactions. This document shows you how to implement tenant information independent login. 
 
-***Important Note:*** *To implement that, your user's email addresses have to be unique. Otherwise, that solution may not works properly.*
+***Important Note:*** *Your user's email addresses have to be unique to implement this solution. Otherwise, this solution may not work correctly.*
 
 #### Updating LogInManager
 
@@ -240,4 +240,3 @@ Go to **aspnet-core\src\}[YOURAPPNAME].Web.Mvc\Views\Account\Login.cshtml** and 
 <img src="images/login-page-with-tenant-change.png" class="img-thumbnail" />
 
 <img src="images/login-page-without-tenant-change.png" class="img-thumbnail" />
-
