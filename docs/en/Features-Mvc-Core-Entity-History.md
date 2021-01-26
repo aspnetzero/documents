@@ -2,11 +2,11 @@
 
 In change logs under audit logs menu, we can see all change logs (entity history) in the application:
 
-<img src="D:/Github/documents/docs/en/images/change-logs-core.png" alt="Change Logs" class="img-thumbnail" />
+<img src="images/change-logs-core.png" alt="Change Logs" class="img-thumbnail" />
 
 When we click the magnifier icon, we can see all the details about a change log:
 
-<img src="D:/Github/documents/docs/en/images/entity-history-log-detail.png" alt="Change Log Detail" class="img-thumbnail" />
+<img src="images/entity-history-log-detail.png" alt="Change Log Detail" class="img-thumbnail" />
 
 You should add entity type that you want to track to ***.Core\EntityHistory\EntityHistoryHelper.TrackedTypes**.  Make sure you uncomment following lines in ***.EntityFrameworkCore\EntityFrameworkCore\{YourProjectName}EntityFrameworkCoreModule.cs** and set **Configuration.EntityHistory.IsEnabled** to **true**.
 
@@ -25,7 +25,7 @@ So, in this particular case, `EntityHistoryConfigProvider` returns if entity his
 
 For example, when entity history is enabled for an Entity, Angular client shows history dropdown menu item for each entity record on the related page. Here is a sample screenshot for role list:
 
-<img src="D:/Github/documents/docs/en/images/change-logs-history-action-item.png" alt="Entity History Action" class="img-thumbnail" />
+<img src="images/change-logs-history-action-item.png" alt="Entity History Action" class="img-thumbnail" />
 
 In this way, history of an entity can be retrieved both on change logs tab in audit logs page or on the list page of the entity itself.
 
@@ -42,7 +42,7 @@ The abp.custom.EntityHistory object contains properties below:
 
 Here is a sample screenshot which show the value of **abp.custom.EntityHistory**:
 
-<img src="D:/Github/documents/docs/en/images/change-logs-custom-config-result-core.png" alt="Entity history custom config" class="img-thumbnail" />
+<img src="images/change-logs-custom-config-result-core.png" alt="Entity history custom config" class="img-thumbnail" />
 
 
 ## Next
