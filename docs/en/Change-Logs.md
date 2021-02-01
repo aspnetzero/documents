@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 10.2.0 (2021-01-29)
+
+* Separete module for each page (Angular).
+* Article: Sign in with unique email without specifying tenant.
+* Upgraded to ABP 6.2.
+* Enhancements and bug fixes.
+
 ## 10.1.0 (2021-01-07)
 
 * Upgraded to Angular 11.
