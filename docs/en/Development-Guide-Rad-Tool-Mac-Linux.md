@@ -2,9 +2,11 @@
 
 ## Introduction
 
- In this document, we will explain how to use **ASP.NET Zero Power Tools** without the Visual Studio extension.
+In this document, we will explain how to use **ASP.NET Zero Power Tools** without the Visual Studio extension.
 
- Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file. So, in order to use it without extension, input file needs to be created manually. 
+Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file. So, in order to use it without extension, input file needs to be created manually. 
+
+You can find specification of the JSON file fields in the table below;
 
 ***Settings***
 
@@ -30,11 +32,9 @@
 | NavigationProperties | Navigation properties of your entity. See 'Table 3' for more. |
 | EnumDefinitions      | Enum definitions you use on your entity. See 'Table 4' for more. |
 
-*Table 1*
 
 
-
-***Properties:***
+***Properties (Array):***
 
 | Name          | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
@@ -48,11 +48,9 @@
 | Regex         | specifies the regex that this property should match          |
 | UserInterface | Will this property be listed, have a filter and editable in ui?<br />`"UserInterface": {"List": true,"AdvancedFilter": true,"CreateOrUpdate": true}` |
 
-*Table 2*
 
 
-
-***NavigationProperties:***
+***NavigationProperties (Array):***
 
 | Name                | Description                                                  |
 | ------------------- | ------------------------------------------------------------ |
@@ -64,8 +62,6 @@
 | DisplayPropertyName | Property name of foreign entity. It will be displayed by that property on pages. |
 | DuplicationNumber   | If you have two navigation property that navigates to same foreign entity, number them starting from 1. If not, just skip this. |
 | RelationType        | `single` is the only option. |
-
-*Table 3*
 
 
 
@@ -177,7 +173,7 @@
 
 ## Guide To Create A New Input File
 
-You have to fill the fields of json file according to your entity. However, some of the fields must match our constants. Here is the list of them:
+You have to fill the fields of the JSON file for your entity. However, some of the fields must match our constants. Here is the list of them:
 
 - MenuPosition : "main" | "admin"
   
@@ -194,7 +190,7 @@ You have to fill the fields of json file according to your entity. However, some
 
 ### Properties
 
- Properties are written as an array in JSON file. Add an object to that array for every property of your entity. There will be some unnecessary fields depending on property type. For example, you don't have to set regular expression for a numeric property or don't have to set range for a string. 
+Properties are written as an array in JSON file. Add an object to that array for every property of your entity. There will be some unnecessary fields depending on property type. For example, you don't have to set regular expression for a numeric property or don't have to set range for a string. 
 
 A property should be one of those types:
 
@@ -209,17 +205,17 @@ A property should be one of those types:
  - long
  - string
 
- or one of the enums you declared in "EnumDefinitions".
+or one of the ENUMs you declared in "EnumDefinitions".
 
 ## How To Run Power Tools
 
-You can use that command to run it on any device:
+You can use the command below to run it:
 
     dotnet AspNetZeroRadTool.dll YourEntity.Json
 
 ## Notes
 
- - AspNetZeroRadTool folder is placed in your solution's directory. You have to place the json file and run the command in there.
- - Please Keep in mind that JSON file is completely case sensitive. 
+ - AspNetZeroRadTool folder is placed under aspnet-core folder of your solution. You have to place the json file and run the command in there.
+ - Please Keep in mind that JSON file is completely **case sensitive**. 
  - Auto add-migration and update-database functions are disabled.
  - If you are working on ASP.NET Core & Angular template, after generating the entity via Power Tools, run your ***.Web.Host** project and then run "**./angular/nswag/refresh.bat**" to update **service-proxies.ts**.
