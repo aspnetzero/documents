@@ -6,7 +6,12 @@ In this document, we will introduce **ASP.NET Zero Power Tools** and explain it.
 
 ## How To Use It?
 
-You can use ASP.NET Zero Power Tools in two ways: a Visual Studio Extension or using its DLL files directly with a command line. Visual Studio Extension is available for Windows version of Visual Studio. Mac and Linux users can use DLL of ASP.NET Zero Power Tools to generate CRUD pages.
+You can use ASP.NET Zero Power Tools in two ways: 
+
+1. as a Visual Studio Extension 
+2. Using its DLL files directly with a command line. 
+
+Visual Studio Extension is available for Windows version of Visual Studio. Mac and Linux users can use DLL of ASP.NET Zero Power Tools to generate CRUD pages.
 
 ## How It Works?
 
