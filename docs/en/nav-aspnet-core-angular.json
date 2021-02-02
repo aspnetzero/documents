@@ -277,10 +277,6 @@
       ]
     },
     {
-      "text": "Power Tools",
-      "path": "Rapid-Application-Development.md"
-    },
-    {
       "text": "Infrastructure & Concepts",
       "path": "Infrastructure-Angular.md",
       "items": [
@@ -477,12 +473,53 @@
       ]
     },
     {
+      "text": "Power Tools",
+      "items":[
+        {
+          "text": "Overview",
+          "path": "Rapid-Application-Development.md",
+        },
+        {
+          "text": "Development Guide (Windows)",
+          "path": "Development-Guide-Rad-Tool.md",
+          "items": [
+            {
+              "text": "Master Detail Tables",
+              "path": "Development-Guide-Rad-Tool-Master-Detail.md",
+            }
+          ]
+        },
+        {
+          "text": "Development Guide (MAC/Linux)",
+          "path": "Development-Guide-Rad-Tool-Mac-Linux.md",
+          "items": [
+            {
+              "text": "Master Detail Tables (for non-Windos OS)",
+              "path": "Development-Guide-Rad-Tool-Master-Detail-Mac-Linux.md",
+            }
+          ]
+        },
+        {
+          "text": "Configuration",
+          "path": "Rad-Tool-Config.md",
+        }
+      ]
+    },
+    {
       "text": "Change Logs",
       "path": "Change-Logs.md"
     },
     {
       "text": "Road Map",
       "path": "Road-Map.md"
+    },
+    {
+      "text": "Version Upgrade",
+      "path": "Version-Updating.md"
+    },
+    {
+        "text": "Version Differences",
+        "path": "Version-Differences.md"
     },
     {
       "text": "External Links",
@@ -493,7 +530,7 @@
         },
         {
           "text": "Metronic Theme",
-          "path": "http://www.keenthemes.com/preview/metronic/"
+          "path": "https://keenthemes.com/metronic/"
         }
       ]
     }

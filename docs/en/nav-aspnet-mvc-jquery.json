@@ -30,6 +30,14 @@
       "path": "Road-Map.md"
     },
     {
+      "text": "Version Upgrade",
+      "path": "Version-Updating.md"
+    },
+    {
+        "text": "Version Differences",
+        "path": "Version-Differences.md"
+    },
+    {
       "text": "External Links",
       "items": [
         {
@@ -38,7 +46,7 @@
         },
         {
           "text": "Metronic Theme",
-          "path": "http://www.keenthemes.com/preview/metronic/"
+          "path": "https://keenthemes.com/metronic/"
         }
       ]
     }
