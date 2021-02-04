@@ -73,7 +73,7 @@ Normally, **ASP.NET Zero** uses tenant information during the login process. Thi
 
 * And add following lines;
 
-  ```csharp
+```csharp
 public async Task<int?> TryGetTenantIdOfUser(string userEmail)
   {
       using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
