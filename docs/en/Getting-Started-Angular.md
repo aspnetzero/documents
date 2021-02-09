@@ -109,7 +109,15 @@ Run the following command in the command line:
 npm start
 ```
 
-Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
+Once the application compiled, you can browse <http://localhost:4200> in your browser. 
+
+This command doesn't build style files under the folder "angular\src\assets\\**" because these style files shouldn't be modified in most cases. If you modify any style file under this folder, you need to run following command:
+
+```bash
+npm start:full
+```
+
+ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
 
 ```bash
 npm run hmr

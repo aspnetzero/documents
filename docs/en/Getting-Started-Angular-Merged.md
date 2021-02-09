@@ -96,11 +96,23 @@ We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow an
 
 Open the command line and run the following command:
 
-    npm start
+```bash
+npm start
+```
 
-Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
+Once the application compiled, you can browse <http://localhost:4200> in your browser. 
 
-    npm run hmr
+This command doesn't build style files under the folder "angular\src\assets\\**" because these style files shouldn't be modified in most cases. If you modify any style file under this folder, you need to run following command:
+
+```bash
+npm start:full
+```
+
+ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
+
+```bash
+npm run hmr
+```
 
 In development time, since we use **angular-cli** and it is a separate process, we need to run *.Web.Host project and Angular UI separately. However, merged Angular solution can be published to a single website or two separate websites.
 
