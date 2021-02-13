@@ -19,7 +19,7 @@ If your project version is 5.0.0+, all you have to do is just install the **ASP.
 
 > If you are a non-Windows user, you can use binaries of ASP.NET Zero Power Tools included in your ASP.NET Zero solution. See [Development Guide for Mac/Linux](Development-Guide-Rad-Tool-Mac-Linux)
 
-![Extension installation](D:/GitHub/documents/docs/en/images/rad-extension-install.png)
+![Extension installation](/images/rad-extension-install.png)
 
 ## Demonstration
 

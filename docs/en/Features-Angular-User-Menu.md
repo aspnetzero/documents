@@ -32,7 +32,7 @@ A user can change his/her own profile picture. Currently JPG, JPEG, GIF and PNG 
 
 A user can also use Gravatar image for profile picture using change profile picture modal window.
 
-<img src="D:/GitHub/documents/docs/en/images/change-profile-picture.png" alt="Change profile picture" class="img-thumbnail" />
+<img src="/images/change-profile-picture.png" alt="Change profile picture" class="img-thumbnail" />
 
 ## My Settings
 
