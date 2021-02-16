@@ -50,7 +50,11 @@ We get an error message. This exception is thrown when any method of `PersonAppS
 We got an exception about permission. Server did not send the data but we can still enter the page. To prevent it, open **main-routing.module.ts** and change the route definition like that:
 
 ```json
-{ path: 'phonebook', component: PhoneBookComponent, data: { permission: 'Pages.Tenant.PhoneBook' } }
+{
+	path: 'phonebook',
+	loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhonebookModule),
+	data: { permission: 'Pages.Tenant.PhoneBook' }
+}
 ```
 
 **AuthRouteGuard** class automatically checks route permission data and prevents entering to the view if specified permission is not granted. Try to click Phone Book menu!

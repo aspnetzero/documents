@@ -180,7 +180,6 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
 }
 ```
 
-
 ## Next
 
 - [Edit Mode For People](Developing-Step-By-Step-Angular-Edit-Mode-People)

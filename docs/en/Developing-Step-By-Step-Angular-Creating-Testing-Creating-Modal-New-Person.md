@@ -138,23 +138,20 @@ below:
 Most of this code is similar for all modals. The important part is how
 we binded model to the view using the ngModel directive. As like all
 components, Angular requires to relate it to a module. We should add it to
-**declarations** array of **main.module.ts** as like shown below:
+**declarations** array of **phonebook.module.ts** as like shown below:
 
 ```typescript
-...previous imports
-import { CreatePersonModalComponent } from './phonebook/create-person-modal.component';
+import {NgModule} from '@angular/core';
+import {AppSharedModule} from '@app/shared/app-shared.module';
+import {PhoneBookRoutingModule} from './phonebook-routing.module';
+import {PhoneBookComponent} from './phonebook.component';
+import {CreatePersonModalComponent} from './create-person-modal.component';
 
 @NgModule({
-    imports: [
-        ...existing module imports...
-    ],
-    declarations: [
-        DashboardComponent,
-        PhoneBookComponent,
-        CreatePersonModalComponent
-    ]
+    declarations: [PhoneBookComponent, CreatePersonModalComponent],
+    imports: [AppSharedModule, PhoneBookRoutingModule]
 })
-export class MainModule { }
+export class PhoneBookModule {}
 ```
 
 We need to put a "Create new person" button to the 'people list page' to
