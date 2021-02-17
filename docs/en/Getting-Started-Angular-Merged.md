@@ -88,20 +88,28 @@ For example when you navigate **Swagger UI**, you will see following page:
 
 Navigate to the root folder of ***.Web.Host** project, open a command line and run the following command to restore the packages:
 
-    yarn
+```bash
+yarn
+```
+
+Then, run the following command to create dynamic bundles *(This is only required for the first time when you download the project or when you update dynamic bundles)*:
+
+```bash
+npm run create-dynamic-bundles
+```
 
 We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
 
 ### Running The Application
 
 Open the command line and run the following command:
-
-    npm start
-
+```bash
+npm start
+```
 Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
-
-    npm run hmr
-
+```bash
+npm run hmr
+```
 In development time, since we use **angular-cli** and it is a separate process, we need to run *.Web.Host project and Angular UI separately. However, merged Angular solution can be published to a single website or two separate websites.
 
 ### Login

@@ -15,7 +15,7 @@ Bundle definitions are store in **bundles.json** file. Here is a sample screensh
 
 All input sections in **bundles.json **supports wildcard syntax. So, you can include all files under a folder (ex: *.js) or all files under a folder and its subfolders (ex: /**/*.css) or you can exclude some files (ex: !wwwroot/**/*.min.css) using wildcard syntax.
 
-By default, if you use `npm start` command, AspNet Zero will automatically create dynamic bundle(s). ASP.NET Zero has command for bundling style and script files "**npm run create-dynamic-bundles**".
+ASP.NET Zero has command for bundling style and script files "**npm run create-dynamic-bundles**".
 
 * **npm run create-dynamic-bundles**: This command is introduced for development time usage. It automatically updates bundle(s). If you modify **bundles.json** file, you need to re-run this command. It also writes output to console about the bundling progress. Script and style bundles are not minified when using this command. 
 

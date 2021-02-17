@@ -99,6 +99,12 @@ Navigate to the **angular** folder, open a command line and run the following co
 yarn
 ```
 
+Then, run the following command to create dynamic bundles *(This is only required for the first time when you download the project or when you update dynamic bundles)*:
+
+```bash
+npm run create-dynamic-bundles
+```
+
 We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
 
 ### Running The Application
