@@ -92,7 +92,7 @@ Navigate to the root folder of ***.Web.Host** project, open a command line and r
 yarn
 ```
 
-Then, run the following command to create dynamic bundles *(Only require in the first time you download the project or when you update dynamic bundles)*:
+Then, run the following command to create dynamic bundles *(This is only required for the first time when you download the project or when you update dynamic bundles)*:
 
 ```bash
 npm run create-dynamic-bundles
