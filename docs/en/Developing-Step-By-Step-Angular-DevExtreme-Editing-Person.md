@@ -11,6 +11,17 @@ side. We are adding it to the service interface, **IPersonAppService:**:
 Task EditPerson(EditPersonInput input);
 ```
 
+And add the necessary DTOs to transfer people's id, name, surgname, and email.
+
+```csharp
+public class EditPersonInput: EntityDto
+{
+    public string Name {get;set;}
+    public string Surname {get;set;}
+    public string EmailAddress {get;set;}
+}
+```
+
 **EntityDto** is a shortcut of ABP if we only get an id value. Implementation (in **PersonAppService**) is very simple:
 
 ```csharp
