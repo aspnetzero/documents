@@ -11,7 +11,7 @@ side. We are adding it to the service interface, **IPersonAppService:**:
 Task EditPerson(EditPersonInput input);
 ```
 
-And add the necessary DTO to transfer people's id, name, surgname, and email.
+And add the necessary DTO to transfer person's id, name, surname, and email.
 
 ```csharp
 public class EditPersonInput: EntityDto
