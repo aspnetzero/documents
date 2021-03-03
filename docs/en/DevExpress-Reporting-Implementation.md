@@ -1,10 +1,10 @@
 # DevExpress Reporting
 
-In this document, we will implement [DevExpress Reporting](https://www.devexpress.com/subscriptions/reporting/) to ASP.NET Zero (ASP.NET Core version) step by step.
+In this document, we will integrate [DevExpress Reporting](https://www.devexpress.com/subscriptions/reporting/) to ASP.NET Zero (ASP.NET Core version) step by step.
 
-1. Download DevExpress Reporting.
+1. Download [DevExpress Reporting](https://www.devexpress.com/subscriptions/reporting/).
 
-2. Open your ASP.NET Zero project 
+2. Open your ASP.NET Zero project.
 
 3. Import `DevExpress.AspNetCore.Reporting` package to `[YOURAPPNAME].Web.Mvc` project.
 
@@ -14,19 +14,19 @@ In this document, we will implement [DevExpress Reporting](https://www.devexpres
 public IServiceProvider ConfigureServices(IServiceCollection services)
 {
     //...
-    services.AddDevExpressControls(); //add that
+    services.AddDevExpressControls(); //add this line
 }
 
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
 {
     //...
-    app.UseDevExpressControls(); //add that
+    app.UseDevExpressControls(); //add this line
 }
 ```
 
    
 
-5. Now, We can create a sample report to test if it all works. Go to  `[YOURAPPNAME].Web.Mvc`  and create a folder named `Reports`.
+5. Now, you can create a sample report to test if it all works. Go to  `[YOURAPPNAME].Web.Mvc`  and create a folder named `Reports`.
 6. Right click on the `Reports` folder then click `Add` -> `New Item`, then select `DevExpress Report` item. 
 7. Select `Blank` report in the opening wizard, and create new empty report named SampleReport.
 
@@ -85,7 +85,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
     ![header-scripts](images/devexpress-reporting-header-scripts.png)
 
-11. Create new controller named `SampleReportController` in mvc project's Areas/App folder.
+11. Create new controller named `SampleReportController` in MVC project's Areas/App folder.
 
     ```csharp
     [Area("App")]
@@ -135,7 +135,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
 Your reporting file is ready to use.
 
-Note: If you get reference error about `WebDocumentViewerController`, `QueryBuilderController` or `ReportDesignerController`, you can follow that solution.
+Note: If you get a reference error about `WebDocumentViewerController`, `QueryBuilderController` or `ReportDesignerController`, you can follow the solution below:
 
 * Go to you `[YOURAPPNAME]WebMvcModule` .
 
@@ -152,3 +152,5 @@ Note: If you get reference error about `WebDocumentViewerController`, `QueryBuil
   ```
 
   
+
+You can visit **/App/SampleReport** URL under your website to see your report.
