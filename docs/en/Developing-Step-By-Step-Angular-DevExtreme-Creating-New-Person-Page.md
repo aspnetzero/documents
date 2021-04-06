@@ -65,7 +65,7 @@ Go to **phonebook.component.html** and add `dxo-editing` tag with `allowAdding` 
                         <dxo-editing
                             mode="row"
                             [refreshMode]="refreshMode"
-                            [allowAdding]="true"
+                            [allowAdding]="true">
                         </dxo-editing>
 
                         <dxi-column dataField="name" caption="{{'Name' | localize}}"></dxi-column>
