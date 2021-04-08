@@ -20,7 +20,7 @@ Our widget filter name will be `FilterHelloWorld` . It will have one input and b
 
 #### Step 1. Create Filter View 
 
-* Go to `*.Web.Mvc  -> Areas -> [YouAppAreaName] -> Views -> Shared -> CustomizableDashboard -> Widgets` and create a partial view named `FilterHelloWorld` and change it as seen below.
+* Go to `*.Web.Mvc  -> Areas -> [YouAppAreaName] -> Views -> Shared -> Components -> CustomizableDashboard -> Widgets` and create a partial view named `FilterHelloWorld` and change it as seen below.
 
 *FilterHelloWorld.cshtml*
 
