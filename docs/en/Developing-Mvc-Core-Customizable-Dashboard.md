@@ -72,7 +72,7 @@ public class [YourAppName]DashboardCustomizationConsts
 
 
 
-Go to `*.Web.Core -> DashboardCustomization -> DashboardViewConfiguration.cs`. Add your new widget filter's view definition.
+Go to `*.Web.Mvc -> Areas -> [YourAppAreaName] -> Startup -> DashboardCustomization -> DashboardViewConfiguration.cs`. Add your new widget filter's view definition.
 
 ```csharp
 public class DashboardViewConfiguration
@@ -157,7 +157,7 @@ public class TenantDashboardAppService ...
 
 #### Step 2. Create Widget View
 
-* Go to `*.Web.Mvc  -> Areas -> [YouAppAreaName] -> Views -> Shared -> CustomizableDashboard -> Widgets` and create a partial view named `WidgetHelloWorld` and change it as seen below.
+* Go to `*.Web.Mvc  -> Areas -> [YouAppAreaName] -> Views -> Shared -> Components -> CustomizableDashboard -> Widgets` and create a partial view named `WidgetHelloWorld` and change it as seen below.
 
 *WidgetHelloWorld.cshtml*
 
@@ -235,7 +235,7 @@ public class [YourAppName]DashboardCustomizationConsts
       ...
 ```
 
-Go to `*.Web.Core -> DashboardCustomization -> DashboardViewConfiguration.cs`. Add your hello world widget's view definition.
+Go to `*.Web.Mvc -> Areas -> [YourAppAreaName] -> Startup -> DashboardCustomization -> DashboardViewConfiguration.cs`. Add your hello world widget's view definition.
 
 ```csharp
 public class DashboardViewConfiguration
