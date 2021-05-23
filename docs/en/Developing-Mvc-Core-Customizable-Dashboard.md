@@ -162,15 +162,20 @@ public class TenantDashboardAppService ...
 *WidgetHelloWorld.cshtml*
 
 ```html
-<div class="kt-portlet kt-portlet--height-fluid HelloWorldContainer">
-    <div class="kt-portlet__head">
-        <div class="kt-portlet__head-label">
-            <h3 class="kt-portlet__head-title">
-                Hello World
+<div class="card card-custom EditionStatisticsContainer h-100">
+    <div class="card-header align-items-center border-0 mt-4">
+        <div class="card-title">
+            <span class="card-icon">
+                <i class="la la-pie-chart text-success"></i>
+            </span>
+            <h3 class="card-label">
+                <span class="font-weight-bolder text-dark">@L("HelloWorld")</span>
+                <small class="sub-title"></small>
             </h3>
         </div>
     </div>
-    <div class="kt-portlet__body">
+
+    <div class="card-body">
         Hello World Works! <br/>
         Response: <span class="hello-response">NULL</span>
     </div>
@@ -184,34 +189,40 @@ public class TenantDashboardAppService ...
 * Open `HelloWorld.js` and change it as seen below.
 
 ```javascript
-$(function () {
-    var _tenantDashboardService = abp.services.app.tenantDashboard;
-	var _widgetBase = app.widgetBase.create();
-    var _$Container = $('.HelloWorldContainer');
-
-    var getHelloWorld = function (name) {
-        abp.ui.setBusy(_$Container);
-
-        _tenantDashboardService
-            .getHelloWorldData({name:name})
-            .done(function (result) {
-                 _$Container.find(".hello-response").text(result.outPutName);
-            }).always(function () {
-                abp.ui.clearBusy(_$Container);
+(function () {
+    //Widgets_Tenant_HelloWorld must match with the WidgetViewDefinition name defined in Step 3.
+    app.widgets.Widgets_Tenant_HelloWorld = function () {
+        var _tenantDashboardService = abp.services.app.tenantDashboard;
+		var _widgetBase = app.widgetBase.create();
+        var _widget;
+        
+        this.init = function (widgetManager) {
+            _widget = widgetManager.getWidget();
+            _widgetBase.runDelayed(function(){
+                getHelloWorld("First Attempt");
             });
-    };
-    
-     _widgetBase.runDelayed(function(){
-          getHelloWorld("First Attempt");
-     });
-    
-	 //event which your filter send
-    abp.event.on('app.dashboardFilters.helloFilter.onNameChange', function (name) {
-        _widgetBase.runDelayed(function(){
-          getHelloWorld(name);
-     	});
-    });
-});
+        };
+		
+		var getHelloWorld = function (name) {
+			 abp.ui.setBusy(_widget);
+			_tenantDashboardService
+				.getHelloWorldData({name:name})
+				.done(function (result) {				
+					 _widget.find(".hello-response")//it is how you should select item in widget
+					 .text(result.outPutName);					 
+				}).always(function () {
+					abp.ui.clearBusy(_widget);
+				});
+		};
+		
+		//event which your filter send
+		abp.event.on('app.dashboardFilters.helloFilter.onNameChange', function (name) {
+			_widgetBase.runDelayed(function(){
+				getHelloWorld(name);
+			});
+		});
+    }
+})();
 ```
 
 
@@ -224,14 +235,12 @@ Widget's/widget filter's view consts are located in `*.Core.Shared -> [YourAppNa
 
 ```csharp
 public class [YourAppName]DashboardCustomizationConsts
-{
-    
+{    
     public class Widgets
     {
         public class Tenant
         {
             public const string HelloWorld = "Widgets_Tenant_HelloWorld";
-
       ...
 ```
 
@@ -241,17 +250,14 @@ Go to `*.Web.Mvc -> Areas -> [YourAppAreaName] -> Startup -> DashboardCustomizat
 public class DashboardViewConfiguration
 {
     ...
-		WidgetViewDefinitions.Add(
-            AbpZeroTemplateDashboardCustomizationConsts.Widgets.Tenant.HelloWorld,
-            new WidgetViewDefinition(
-                AbpZeroTemplateDashboardCustomizationConsts.Widgets.Tenant.HelloWorld,
-                viewFileRoot + "WidgetHelloWorld.cshtml",
-                jsAndCssFileRoot + "HelloWorld/HelloWorld.min.js",
-                jsAndCssFileRoot + "HelloWorld/HelloWorld.min.css",
-                defaultWidth:6,
-                defaultHeight:4)
-        );
-	...
+	WidgetViewDefinitions.Add(AbpZeroTemplateDashboardCustomizationConsts.Widgets.Tenant.DailySales,
+		new WidgetViewDefinition(
+			AbpZeroTemplateDashboardCustomizationConsts.Widgets.Tenant.HelloWorld,
+			"AppAreaName/Widgets/WidgetHelloWorld",//widget url
+			"/Areas/AppAreaName/Views/CustomizableDashboard/Widgets/HelloWorld/HelloWorld.min.js", //widget's js file
+			"/Areas/AppAreaName/Views/CustomizableDashboard/Widgets/HelloWorld/HelloWorld.min.css"
+		)
+	);
 }
 ```
 
@@ -261,28 +267,39 @@ Go to `*.Core -> DashboardCustomization -> Definitions -> DashboardConfiguration
 
 ```csharp
 public class DashboardConfiguration
-  {
+{
     public DashboardConfiguration()
-      {
-        ...
-var helloWorld = new WidgetDefinition(
-    id:AbpZeroTemplateDashboardCustomizationConsts.Widgets.Tenant.HelloWorld,
-    name:"WidgetRecentTenants",//localized string key
-    side: MultiTenancySides.Tenant,
-    usedWidgetFilters: new List<string>() { helloWorldFilter.Id },// you can use any filter you need
-    permissions: tenantWidgetsDefaultPermission);
-        
-helloWorld.Permissions.Add(AppPermissions.HelloWorldPermission);
-        ...
-        
-        ...
-var defaultTenantDashboard = new DashboardDefinition(
-    AbpZeroTemplateDashboardCustomizationConsts.DashboardNames.DefaultTenantDashboard,
-    new List<string>()
     {
-        generalStats.Id, dailySales.Id, profitShare.Id, memberActivity.Id, regionalStats.Id, topStats.Id, salesSummary.Id, helloWorld.Id //add your widget to dashboard
-    });
         ...
+        var helloWorld = new WidgetDefinition(
+            id: AbpZeroTemplateDashboardCustomizationConsts.Widgets.Tenant.HelloWorld,
+            name: "WidgetHelloWorld",//localized string key
+            side: MultiTenancySides.Tenant,
+            usedWidgetFilters: new List<string>() { helloWorldFilter.Id },// you can use any filter you need
+            permissions: tenantWidgetsDefaultPermission
+        );
+        
+		helloWorld.Permissions.Add(AppPermissions.HelloWorldPermission);
+        ...
+        
+        ...
+        var defaultTenantDashboard = new DashboardDefinition(
+            AbpZeroTemplateDashboardCustomizationConsts.DashboardNames.DefaultTenantDashboard,
+            new List<string>()
+            {
+                generalStats.Id,
+                dailySales.Id,
+                profitShare.Id,
+                memberActivity.Id,
+                regionalStats.Id,
+                topStats.Id,
+                salesSummary.Id,
+                helloWorld.Id //add your widgets to dashboard
+            }
+        );
+        ...
+    }
+}
 ```
 
 
