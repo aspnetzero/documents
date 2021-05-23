@@ -67,7 +67,6 @@ public class [YourAppName]DashboardCustomizationConsts
     {
       ...
          public const string HelloWorldFilter = "Filters_HelloWorld";
-      ...
 ```
 
 
@@ -98,14 +97,16 @@ Go to `*.Core -> DashboardCustomization -> Definitions -> DashboardConfiguration
 
 ```csharp
 public class DashboardConfiguration
-  {
+{
     public DashboardConfiguration()
-      {
+    {
         ...
-var helloWorldFilter = new WidgetFilterDefinition(
-            AbpZeroTemplateDashboardCustomizationConsts.Filters.HelloWorldFilter, "FilterHelloWorld");
+		var helloWorldFilter = new WidgetFilterDefinition(
+            AbpZeroTemplateDashboardCustomizationConsts.Filters.HelloWorldFilter,
+            "FilterHelloWorld"
+        );
         
-WidgetFilterDefinitions.Add(helloWorldFilter);
+		WidgetFilterDefinitions.Add(helloWorldFilter);
         ...
 ```
 
@@ -136,8 +137,8 @@ public interface ITenantDashboardAppService : IApplicationService
 {
   ...
   GetHelloWorldOutput GetHelloWorldData(GetHelloWorldInput input);
-  ...
 }
+
 public class TenantDashboardAppService ...
 {
     ...
@@ -149,7 +150,6 @@ public class TenantDashboardAppService ...
              OutPutName = "Hello " + input.Name + " (" + Clock.Now.Millisecond + ")"
         };
     }
-    ...
 }
 ```
 
