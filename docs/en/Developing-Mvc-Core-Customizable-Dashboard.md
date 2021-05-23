@@ -196,27 +196,26 @@ public class TenantDashboardAppService ...
         var _widgetBase = app.widgetBase.create();
         var _widget;
         
-        this.init = function (widgetManager) {
-            _widget = widgetManager.getWidget();
-            _widgetBase.runDelayed(function(){
-                getHelloWorld("First Attempt");
-            });
-			
+		this.init = function (widgetManager) {
+			_widget = widgetManager.getWidget();
+			_widgetBase.runDelayed(function(){
+				getHelloWorld("First Attempt");
+			});
+
 			//event which your filter send
 			abp.event.on('app.dashboardFilters.helloFilter.onNameChange', function (name) {
 				_widgetBase.runDelayed(function(){
 					getHelloWorld(name);
 				});
 			});		
-        };
+		};
 		
 		var getHelloWorld = function (name) {
-			 abp.ui.setBusy(_widget);
-			_tenantDashboardService
-				.getHelloWorldData({name:name})
+			abp.ui.setBusy(_widget);
+			_tenantDashboardService.getHelloWorldData({name:name})
 				.done(function (result) {				
-					 _widget.find(".hello-response")//it is how you should select item in widget
-					 .text(result.outPutName);					 
+					_widget.find(".hello-response")//it is how you should select item in widget
+					.text(result.outPutName);					 
 				}).always(function () {
 					abp.ui.clearBusy(_widget);
 				});
