@@ -162,7 +162,7 @@ public class TenantDashboardAppService ...
 *WidgetHelloWorld.cshtml*
 
 ```html
-<div class="card card-custom EditionStatisticsContainer h-100">
+<div class="card card-custom h-100">
     <div class="card-header align-items-center border-0 mt-4">
         <div class="card-title">
             <span class="card-icon">
