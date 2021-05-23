@@ -193,7 +193,7 @@ public class TenantDashboardAppService ...
     //Widgets_Tenant_HelloWorld must match with the WidgetViewDefinition name defined in Step 3.
     app.widgets.Widgets_Tenant_HelloWorld = function () {
         var _tenantDashboardService = abp.services.app.tenantDashboard;
-		var _widgetBase = app.widgetBase.create();
+        var _widgetBase = app.widgetBase.create();
         var _widget;
         
         this.init = function (widgetManager) {
@@ -201,6 +201,13 @@ public class TenantDashboardAppService ...
             _widgetBase.runDelayed(function(){
                 getHelloWorld("First Attempt");
             });
+			
+			//event which your filter send
+			abp.event.on('app.dashboardFilters.helloFilter.onNameChange', function (name) {
+				_widgetBase.runDelayed(function(){
+					getHelloWorld(name);
+				});
+			});		
         };
 		
 		var getHelloWorld = function (name) {
@@ -214,13 +221,6 @@ public class TenantDashboardAppService ...
 					abp.ui.clearBusy(_widget);
 				});
 		};
-		
-		//event which your filter send
-		abp.event.on('app.dashboardFilters.helloFilter.onNameChange', function (name) {
-			_widgetBase.runDelayed(function(){
-				getHelloWorld(name);
-			});
-		});
     }
 })();
 ```
