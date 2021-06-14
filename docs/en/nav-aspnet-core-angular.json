@@ -338,6 +338,10 @@
         },
         {    "text": "Spinner service",
           "path": "Infrastructure-Angular-Spinner.md"
+        },
+        {
+          "text": "UI Testing",
+          "path": "Playwright-UI-Testing.md"
         }
       ]
     },
