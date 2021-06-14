@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Before reading this document, it's suggested to read [Getting Started](https://aspnetzero.com/Documents/Getting-Started-Angular) to run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
+Before reading this document, it's suggested to read [Getting Started](Getting-Started-Angular) to run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
 
 ## Create The Azure Website
 
@@ -12,29 +12,23 @@ So, go to your Azure Portal and create two websites, one for **Web.Host** projec
 
 ### Creating an Azure Website for Host
 
-We will be using "**Web App + SQL**" for **Web.Host** project but if you already have an SQL Database, you can just create Web App and use the connection string of your Azure SQL Database.
+On Azure portal menu, go to App Services and click "Create App Service" button. Fill the App Service creation for correctly and create the app service for admin website.
 
-So, select "**Web App + SQL**" and click create: 
-
-<img src="images/azure-publish-angular-create-azure-host-website.png">
-
-And configure it according to your needs. A sample setting is shown below:
-
-<img src="images/azure-publish-angular-create-azure-host-website-configuration.png">
+<img src="images/azure-publish-angular-create-admin-website.png">
 
 ### Creating an Azure Website for Angular
 
-Select "**Web App**" and click create. Since we already created the database for **Web.Host** application, we don't need it here.
+Just like we did for Host website, create a new app service for Angular website with a different name.
 
-<img src="images/azure-publish-angular-create-azure-angular-website.png">
+## Create the Database Service
 
-And configure it according to your needs. A sample setting is shown below:
+On Azure portal, go to SQL databases menu and create a new empty database. If you haven't create a new Server on Azure, click "create new" link under the Server selection combobox and first create a Server.
 
-<img src="images/azure-publish-angular-create-azure-angular-website-configuration.png">
+<img src="D:\GitHub\documents\docs\en\images\azure-publish-mvc-create-database.png">
 
 ## Publish Host Application to The Azure
 
-The details will be explained in the next lines. Here are the quick steps to publish the **Host Application** to the Azure.
+Here are the quick steps to publish the **Host Application** to the Azure.
 
 - Run the migrations on the Azure
 - Configure the **.Web.Host/appsettings.production.json**
@@ -64,11 +58,15 @@ Open Package Manager Console in Visual Studio, set **.EntityFrameworkCore** as t
 
 <img src="images/azure-publish-angular-update-database.png">
 
+As an alternative, you can change connection string on the Migrator project in your solution and execute it instead of running Update-Database command. It is suggested to use Migrator project for migration operations.
+
 ### Configure the appsettings.production.json
 
-Azure is using **appsettings.production.json**, so this file should be configured like following:
+Since your application will run in Production environment, Azure will use **appsettings.production.json** that is placed in the **Web.Host**, so this file should be configured like following:
 
 <img src="images/azure-publish-angular-appsttings-production.png">
+
+```ServerRootAddress``` value here represents the URL of your Host application's Azure URL. ClientRootAddress represents your Angular UI's URL. CorsOriign represents the allowed websites which can make request to your Host application remotely. So, in this scenario, ClientRootAddress and CorstOrigins must be equal to your Angular app's URL on Azure.
 
 ### Publish
 
@@ -80,25 +78,23 @@ Following screen will be shown:
 
 <img src="images/azure-publish-angular-select-azure-website.png">
 
-Select "**azure-publish-demo-server**" and click "**OK**", then click "**Publish**" button. **Host** application is live now:
+Select "**your-host-app-service-name**" and click "**OK**", then click "**Publish**" button. **Host** application is live now:
 
 <img src="images/azure-publish-angular-swagger-ui.png">
 
 ## Publish Angular to The Azure
 
-The details will be explained in the next lines. Here are the quick steps to publish the **AngularUI** to the Azure
+Here are the quick steps to publish the **AngularUI** to the Azure
 
 - Run the `yarn` command to restore packages
-- Run the `ng build -prod`
+- Run the `npm run publish` command to publish Angular app.
 - Copy the web.config file that is placed in **angular** folder to **dist** folder
-- Configure the **angular/dist/assets/appconfig.json**
-- Upload required files to the Azure
+- Configure the **angular/dist/assets/appconfig.json** with your production URLs.
+- Upload all files under "angular/dist" folder to your website on Azure created for the Angular UI.
 
 ### Prepare The Publish Folder
 
-Run the `yarn` command to restore packages and run the `npm run publish` to create publish folder that named **dist**.
-
-<img src="images/azure-publish-angular-publish-angular.png">
+Run the `yarn` command to restore packages and run the `npm run publish` to publish the Angular app.
 
 ### Copy the web.config
 
