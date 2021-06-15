@@ -308,7 +308,7 @@
         },
         {
           "text": "Background Jobs & HangFire",
-          "path": "Infrastructure-Core-Mvc-Background-Jobs.md"
+          "path": "Infrastructure-Background-Jobs.md"
         },
         {
           "text": "SignalR",
@@ -373,6 +373,10 @@
         {
           "text": "Penetration Test",
           "path": "Security-Report-Core.md"
+        },
+        {
+          "text": "UI Testing",
+          "path": "Playwright-UI-Testing.md"
         }
       ]
     },

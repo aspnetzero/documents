@@ -21,3 +21,5 @@ You can browse **swagger ui** with this URL: "/**swagger/ui**".
 <img src="images/swagger-ui-core.png" alt="Swagger UI" width="974" height="753" />
 
 Thus, anyone (or any application) can explore, test and use the API easily.
+
+In order to enable comments on Swagger UI, set ```Swagger:ShowSummaries``` to true in appsettings.json. After that, Swagger UI will show summaries written on your application services and controllers.

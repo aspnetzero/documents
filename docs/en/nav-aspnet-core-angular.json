@@ -316,6 +316,10 @@
           "text": "SignalR Integration",
           "path": "Infrastructure-Angular-SignalR-Integration.md"
         },
+                {
+          "text": "Background Jobs & HangFire",
+          "path": "Infrastructure-Background-Jobs.md"
+        },
         {
           "text": "Used Libraries & Frameworks",
           "path": "Infrastructure-Angular-Used-Libraries-Frameworks.md"
@@ -331,9 +335,13 @@
 		{
           "text": "Identity Server 4 Integration",
           "path": "Infrastructure-Core-Angular-Identity-Server4-Integration.md"
-       },
-      {    "text": "Spinner service",
+        },
+        {    "text": "Spinner service",
           "path": "Infrastructure-Angular-Spinner.md"
+        },
+        {
+          "text": "UI Testing",
+          "path": "Playwright-UI-Testing.md"
         }
       ]
     },
