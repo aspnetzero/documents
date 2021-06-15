@@ -1,6 +1,8 @@
 # DevExpress Reporting
 
-In this document, we will integrate [DevExpress Reporting](https://www.devexpress.com/subscriptions/reporting/) to ASP.NET Zero (ASP.NET Core version) step by step.
+In this document, we will integrate [DevExpress Reporting](https://www.devexpress.com/subscriptions/reporting/) to ASP.NET Zero (ASP.NET Core & Angular version) step by step.
+
+## Server Side
 
 1. Download [DevExpress Reporting](https://www.devexpress.com/subscriptions/reporting/).
 
@@ -24,8 +26,6 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 }
 ```
 
-   
-
 5. Now, you can create a sample report to test if it all works. Go to  `[YOURAPPNAME].Web.Host`  and create a folder named `Reports`.
 6. Right click on the `Reports` folder then click `Add` -> `New Item`, then select `DevExpress Report` item. 
 7. Select `Blank` report in the opening wizard, and create new empty report named SampleReport.
@@ -34,7 +34,13 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
 *(Design your report as you wish)*
 
-8. Go to `package.json` and add following dependencies. (It is located in `[YOURAPPNAME].Web.Host` project)
+If you add the report using Visual Studio, it will create a report file with .vsrepx extension but we need a report with .repx extension. So, convert .vsrepx report to .repx report by following the document below;
+
+[https://docs.devexpress.com/XtraReports/14989/get-started-with-devexpress-reporting/create-a-report-in-visual-studio#convert-vsrepx-files-to-repx](https://docs.devexpress.com/XtraReports/14989/get-started-with-devexpress-reporting/create-a-report-in-visual-studio#convert-vsrepx-files-to-repx)
+
+## Client Side
+
+1. Go to `package.json` and add following dependencies. (It is located in `angular` project)
 
    ```json
    dependencies: [
@@ -46,7 +52,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
    *Note: Version of the nuget and npm packages should match*
 
-9. Create new component named sample-report 
+2. Create new component named sample-report 
    _sample-report.component.html_
 
    ```html
@@ -108,7 +114,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
    
    ```
 
-10. Create sample-report module
+3. Create sample-report module
 
     ```typescript
     import {NgModule} from '@angular/core';
@@ -152,7 +158,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
     }
     ```
 
-11. Add sample report route to admin-routing.module.ts
+4. Add sample report route to admin-routing.module.ts
 
     ```typescript
     {
