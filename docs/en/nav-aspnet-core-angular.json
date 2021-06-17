@@ -544,6 +544,10 @@
             {
               "text": "Sign In Without Specifying Tenant",
               "path": "Core-Angular-Sign-In-Without-Specifying-Tenant.md"
+            },
+            {
+              "test": "Using DevExpress Reporting with ASP.NET Zero",
+              "path": "DevExpress-Reporting-Implementation-Angular.md"
             }
           ]
         },
