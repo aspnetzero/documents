@@ -601,7 +601,7 @@
               "path": "Core-Mvc-Sign-In-Without-Specifying-Tenant.md"
             },
             {
-              "test": "Using DevExpress Reporting with ASP.NET Zero",
+              "text": "Using DevExpress Reporting with ASP.NET Zero",
               "path": "DevExpress-Reporting-Implementation.md"
             }
           ]
