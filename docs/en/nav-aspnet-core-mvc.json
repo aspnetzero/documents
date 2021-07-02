@@ -373,6 +373,10 @@
         {
           "text": "Penetration Test",
           "path": "Security-Report-Core.md"
+        },
+        {
+          "text": "UI Testing",
+          "path": "Playwright-UI-Testing.md"
         }
       ]
     },
@@ -599,6 +603,10 @@
             {
               "text": "Using DevExpress Reporting with ASP.NET Zero",
               "path": "DevExpress-Reporting-Implementation.md"
+            },
+            {
+              "text": "Using Elsa Workflow with ASP.NET Zero",
+              "path": "Core-Mvc-Elsa-Integration.md"
             }
           ]
         },
