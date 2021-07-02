@@ -5,8 +5,11 @@ Let's begin from UI and create a new page named "**Phone book**".
 ## Defining a menu item
 
 **AppNavigationProvider** class defines menus in the application. When
-we change this class, menus are automatically changed. Open this class
-and create new menu item as shown below (You can add it right after the
+we change this class, menus are automatically changed. 
+
+**AppNavigationProvider** class can be found in **.Web.Mvc** under APP (Or Application Area Name ) > Startup 
+
+Open this class and create new menu item as shown below (You can add it right after the
 dashboard menu item).
 
 ```csharp
@@ -23,6 +26,8 @@ Every menu item must have a **unique name** to identify this menu item.
 Menu names are defined in AppPageNames class as constants. We add a new
 constant: "**PhoneBook**".
 
+**AppPageNames** class can be found in **.Web.Mvc** under APP (Or Application Area Name ) > Startup 
+
 
 
 ## Localizing Menu Item Display Name
@@ -33,7 +38,7 @@ our new menu. **L** method is a helper method gets a localization key
 and simply returns a **LocalizableString** object (see
 AppNavigationProvider class).
 
-Localization strings are defined in **XML** files in **.Core** project
+Localization strings are defined in **XML** files under Localization folder in **.Core** project
 as shown below:
 
 <img src="images/localization-files-5.png" alt="Localization files" class="img-thumbnail" />
