@@ -6,6 +6,16 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 10.4.0 (2021-07-23)
+
+* UI Tests with Playwright
+* Upgraded to Angular 12
+* Allow using same widget multiple times in same Dsahboard
+* Upgraded to ABP 6.4
+* French localization
+* Performance improvements
+* Enhancements and bug fixes.
+
 ## 10.3.0 (2021-04-16)
 
 * Power Tools: File upload feature
