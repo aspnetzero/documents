@@ -5,5 +5,5 @@ Real time notification and chat systems use it. You can also direcly use
 SignalR in your applications.
 
 See [SignalR
-integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-Integration)
+integration](https://aspnetboilerplate.com/Pages/Documents/SignalR-AspNetCore-Integration)
 document for more information.
