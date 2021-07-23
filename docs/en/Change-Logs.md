@@ -10,11 +10,11 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 * UI Tests with Playwright
 * Upgraded to Angular 12
-* Allow using same widget multiple times in same Dsahboard
+* Allow using same widget multiple times in same Dashboard
 * Upgraded to ABP 6.4
 * French localization
 * Performance improvements
-* Enhancements and bug fixes.
+* Enhancements and bug fixes
 
 ## 10.3.0 (2021-04-16)
 
