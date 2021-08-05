@@ -331,7 +331,7 @@ As you can below, you will be able to see filters that your widgets need. Change
 
 ## Changing Default Dashboard View
 
-AspNet Zero uses [gridstack](https://gridstackjs.com/) grid system in dashboard and stored needed view data in [app settings](https://aspnetboilerplate.com/Pages/Documents/Setting-Management). To change default view of dashboard you should change related part of the settings located in [AppSettingProvider](https://github.com/aspnetzero/aspnet-zero-core/blob/46aac958aa330771b37a3e4d5bc220d4e1221549/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Core/Configuration/AppSettingProvider.cs#L522-L541). To change default dashboard view you should open dashboard and design the dashboard by following the [document](Features-Mvc-Core-Customizable-Dashboard) . Then open browser's developer console. Click to the save button in the page and follow the request named `SavePage`. 
+AspNet Zero uses [gridstack](https://gridstackjs.com/) grid system in dashboard and stores needed view data in [app settings](https://aspnetboilerplate.com/Pages/Documents/Setting-Management). To change default view of dashboard you should change related part of the settings located in [AppSettingProvider](https://github.com/aspnetzero/aspnet-zero-core/blob/46aac958aa330771b37a3e4d5bc220d4e1221549/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Core/Configuration/AppSettingProvider.cs#L522-L541). To change default dashboard view you should open dashboard and design the dashboard by following the [document](Features-Mvc-Core-Customizable-Dashboard) . Then open browser's developer console. Click to the save button in the page and follow the request named `SavePage`. 
 
 ![customizable-dashboard-angular-savePage](images/customizable-dashboard-mvc-save-page-request.png)
 
