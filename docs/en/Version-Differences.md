@@ -28,8 +28,6 @@ Angular framework. </p>
 	<th>Feature</th>
 	<th>ASP.NET Core &amp; Angular</th>
 	<th>ASP.NET Core &amp; JQuery</th>
-	<th>ASP.NET MVC 5.x &amp; Angularjs</th>
-	<th>ASP.NET MVC 5.x &amp; JQuery</th>
 </tr>
 </thead>
 <tbody>
@@ -37,99 +35,71 @@ Angular framework. </p>
 	<td>User Interface (theme)</td>
 	<td>Metronic v6.x</td>
 	<td>Metronic v6.x</td>
-	<td>Metronic v4.6.x</td>
-	<td>Metronic v4.6.x</td>
 </tr>
 	<tr>
 	<td>ORM</td>
 	<td>EF Core</td>
 	<td>EF Core</td>
-	<td>EF 6.x</td>
-	<td>EF 6.x</td>
 	</tr>
 <tr>
 	<td>Xamarin Application</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Rapid Application Development Tool</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td style="height: 37px">Tenant Subscription Management &amp; Paypal Integration</td>
 	<td style="height: 37px"><i class="fa fa-check text-success"></i></td>
 	<td style="height: 37px"><i class="fa fa-check text-success"></i></td>
-	<td style="height: 37px"><i class="fa fa-times text-danger"></i></td>
-	<td style="height: 37px"><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Host Statistics Dashboard</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Identity Server Integration</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Social Logins (Facebook, Twitter, Microsoft, Google+)</td>
 	<td>OK (Facebook, Microsoft, Google)</td>
-	<td><i class="fa fa-check text-success"></i> (All)</td>
-	<td><i class="fa fa-check text-success"></i> (All)</td>
 	<td><i class="fa fa-check text-success"></i> (All)</td>
 </tr>
 <tr>
 	<td>Two Factor Auth</td>
 	<td>SMS, Email, Google Auth</td>
 	<td>SMS, Email, Google Auth</td>
-	<td>SMS, Email</td>
-	<td>SMS, Email</td>
 </tr>
 <tr>
 	<td>Application Setup Screen</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Code generation extension</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Webhook Feature</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Customizable Dashboard</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr>
 <tr>
 	<td>Dynamic Entity Parameters</td>
 	<td><i class="fa fa-check text-success"></i></td>
 	<td><i class="fa fa-check text-success"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
-	<td><i class="fa fa-times text-danger"></i></td>
 </tr> 
 </tbody>
 </table>
@@ -139,8 +109,6 @@ in different versions:</p>
 <ul>
 	<li><a href="https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core">ASP.NET Core &amp; jQuery</a></li>
 	<li><a href="https://docs.aspnetzero.com/en/aspnet-core-angular/latest/Features-Angular">ASP.NET Core &amp; Angular</a></li>
-	<li><a href="https://docs.aspnetzero.com/en/aspnet-mvc-angularjs/latest/Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; jQuery</a></li>
-	<li><a href="https://docs.aspnetzero.com/en/aspnet-mvc-angularjs/latest/Development-Guide-Mvc-Angularjs">ASP.NET MVC 5.x &amp; Angularjs 1.x</a></li>
 </ul>
 </body>
 
