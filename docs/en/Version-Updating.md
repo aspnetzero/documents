@@ -32,8 +32,13 @@ If you have already created your project and make some development on your proje
 * Create two branches named **aspnetzero** and **migrate** from dev branch.
 * Copy your existing project's source code to **migrate** branch.
 * Switch to **dev** branch and update it from **migrate** branch. In this step, you will face conflicts. You have to resolve those conflicts manually.
-* After merging changes in **migrate** branch to **dev** branch, you will have a structure as explained in "New Projects" section above. You can read "New Projects" section to update your solution for the next releases of AspNet Zero.
+* After merging changes from **migrate** branch to **dev** branch, you will have a structure as explained in "New Projects" section above. You can read "New Projects" section to update your solution for the next releases of AspNet Zero.
 
 You can delete **migrate** branch after merging it to **dev** branch because you will not need it anymore. 
 
 ![version-update-existing-project](images/version-update-existing-projects.png)
+
+
+
+Note: Both approaches explained above doesn't delete the files which are renamed or deleted in the original AspNet Zero repository. You can use a tool similar to [WinMerge](https://winmerge.org/) to find not used (deletet or renamed) files and delete them from your main branch if you want.
+
