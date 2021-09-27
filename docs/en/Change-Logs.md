@@ -6,6 +6,14 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 10.5.0 (2021-09-27)
+
+* Security Test with OWASP & Helm Charts (MVC)
+* Plugin module sample with a Web UI
+* Upgraded to ABP 6.5.
+* Option to disable alternative payment methods for PayPal 
+* Enhancements and bug fixes
+
 ## 10.4.0 (2021-07-23)
 
 * UI Tests with Playwright
