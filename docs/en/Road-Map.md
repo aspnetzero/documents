@@ -2,6 +2,8 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
+-   .NET 6 Support
+-   Metronic 8 Upgrade
 -   Power Tools enhancements
 -   Sending mass notifications/emails to users
 -   User Sync/Link feature
