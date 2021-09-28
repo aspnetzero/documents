@@ -91,7 +91,7 @@ npm run test:ci angular
 
 ## How to Create Tests
 
-Please examine `tests/mvc/editions.spec.ts` to see an example spec.
+Please examine `tests/angular/editions.spec.ts` to see an example spec.
 
 There are two ways to create a test.
 
