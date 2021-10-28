@@ -212,7 +212,6 @@
 <td><i class="fa fa-minus text-secondary"></i></td>
 <td><i class="fa fa-check text-success"></i></td></tr>
 <tr>
-<tr>
 <td colspan="3"><strong>Mobile Application</strong></td>
 </tr>
 <tr>
