@@ -90,6 +90,16 @@ Finally you will have a CRUD page with insert, update, delete, list and excel ex
 
 [https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
 
+______
+
+### Note
+
+You should change default pass phrase which ASP.NET Zero uses for SimpleStringCipher decrypt/encrypt operations. It is located in `[YOURAPPNAME].Application.Shared` -> [AppConsts.cs](https://github.com/aspnetzero/aspnet-zero-core/blob/4d3594892329ff787be83bcade7abe1296443134/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Application.Shared/AppConsts.cs#L23)
+
+_______
+
+
+
 ## Next
 
 * [Solution Overview](Overview-Core.md)
