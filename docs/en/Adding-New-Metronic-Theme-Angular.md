@@ -60,7 +60,7 @@ Rest of the document will use **ThemeX** as the new theme name.
       * Copy their body from default theme components (from `default-brand` and `default-layout`) and change needed changes.
       * Create `ThemeXThemeAssetContributor` and copy its content from `DefaultThemeAssetContributor` .This class returns additional assets so make needed changes for your new themeX.
   * Go to **theme-selection** folder. Open `theme-selection-panel.component.html` and add themeX to list.
-* Go to **src -> shared -> helpers**  and open `DynamicResourceHelpers.ts`. Add `ThemeXThemeAssetContributor` to `getAdditionalThemeAssets` function
+* Go to **src -> shared -> helpers** and open `ThemeAssetContributorFactory.ts`. Add `ThemeXThemeAssetContributor` to `getCurrent` function
 
 ```csharp
 ...
