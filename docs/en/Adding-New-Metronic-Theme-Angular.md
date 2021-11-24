@@ -87,7 +87,7 @@ if (theme === 'themeX') {
       </tab>
       ```
 
-  * Open `admin.module.ts` and add `ThemeXThemeUiSettingsComponent`to declarations.
+  * Open `ui-customization.module.ts` and add `ThemeXThemeUiSettingsComponent`to declarations.
 
 * Go to **src -> app** . Open `app.module.ts` and add `ThemeXLayoutComponent` and `ThemeXBrandComponent` to declarations.
 
