@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 11.0.0 (2021-12-21)
+
+* Upgraded to .NET 6
+* Upgraded to Metronic 8
+* Upgraded to Bootstrap 5
+* Upgraded to Angular 13
+* VS2022 support for Power Tools
+* Security Test with OWASP & Helm Charts (Angular)
+
 ## 10.5.0 (2021-09-27)
 
 * Security Test with OWASP & Helm Charts (MVC)
