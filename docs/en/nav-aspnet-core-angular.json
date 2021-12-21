@@ -325,8 +325,8 @@
           "path": "Infrastructure-Angular-Used-Libraries-Frameworks.md"
         },
         {
-          "text": "Penetration Test",
-          "path": "Security-Report-Angular.md"
+          "text": "Penetration/Security Test",
+          "path": "Security-Test-Angular.md"
         },
 		{
           "text": "Dynamic Asset Bundling and Minifying",
