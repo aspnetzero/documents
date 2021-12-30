@@ -17,7 +17,7 @@ dashboard menu item).
     AppPageNames.Tenant.PhoneBook,
     L("PhoneBook"),
     url: "App/PhoneBook",
-    icon: "glyphicon glyphicon-book"
+    icon: "flaticon-book"
     )
 )
 ```

@@ -35,25 +35,17 @@ Creating an empty view, **Index.cshtml** under
 @using Acme.PhoneBookDemo.Web.Areas.App.Startup
 
 @{
-ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
+	ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
 }
 
-<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-    <div class="kt-subheader kt-grid__item">
-        <div class="kt-container ">
-            <div class="kt-subheader__main">
-                <h3 class="kt-subheader__title">
-                    <span>@L("PhoneBook")</span>
-                </h3>
-                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                <span class="kt-subheader__desc">
-                        @L("PhoneBookInfo")
-                </span>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("PhoneBook")" description="@L("PhoneBookInfo")"></abp-page-subheader>
+    <div class="@(await GetContainerClass())">
+        <div class="card">
+            <div class="card-body">
+                PHONE BOOK CONTENT COMES HERE!
             </div>
         </div>
-    </div>
-    <div class="kt-container kt-grid__item kt-grid__item--fluid">
-        <p>PHONE BOOK CONTENT COMES HERE!</p>
     </div>
 </div>
 ```
@@ -62,7 +54,7 @@ We set ViewBag.CurrentPageName to the current page's name to
 automatically highlight the related menu item when this page is active.
 Now, it's time to run application and see the new phone book page:
 
-<img src="images/phonebook-empty-mpa2.png" alt="Phone book empty screen" class="img-thumbnail" />
+<img src="images/phonebook-empty-mpa3.png" alt="Phone book empty screen" class="img-thumbnail" />
 
 Menu item display name and page title are localized. Try to change UI
 language to see difference.

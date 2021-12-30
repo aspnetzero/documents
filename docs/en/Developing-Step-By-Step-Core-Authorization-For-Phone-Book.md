@@ -53,7 +53,7 @@ new MenuItemDefinition(
     L("PhoneBook"),
     url: "tenant.phonebook",
     icon: "glyphicon glyphicon-book",
-    requiredPermissionName: AppPermissions.Pages_Tenant_PhoneBook
+    permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenant_PhoneBook)
 )
 ```
 

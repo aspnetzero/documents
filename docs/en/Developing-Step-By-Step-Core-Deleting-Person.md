@@ -2,7 +2,7 @@
 
 Let's add a delete button in people list as shown below:
 
-<img src="images/phonebook-people-delete-button3.png" alt="Delete person" class="img-thumbnail" />
+<img src="images/phonebook-people-delete-button-4.png" alt="Delete person" class="img-thumbnail" />
 
 We're starting from UI in this case.
 
@@ -12,55 +12,50 @@ We're changing **index.cshtml** view to add a button (related part is
 shown here):
 
 ```html
-<div id="AllPeopleList" class="list-group">
-    @foreach (var person in Model.Items)
+<table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="AllPeopleList">
+    <thead>
+    <tr>
+        <th style="width:50px"></th>
+        <th>@L("Name")</th>
+        <th>@L("Surname")</th>
+        <th>@L("EmailAddress")</th>
+    </tr>
+    </thead>
+    <tbody>
+   @foreach (var person in Model.Items)
     {
-        <a href="javascript:;" class="list-group-item" data-person-id="@person.Id">
-            <h4 class="list-group-item-heading">
-                @person.Name @person.Surname
-        @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
-        {
-            <button title="@L("Delete")" class="btn btn-circle btn-icon-only btn-danger delete-person" href="javascript:;">
-                <i class="la la-trash"></i>
-            </button>
-        }
-            </h4>
-            <p class="list-group-item-text">
-                @person.EmailAddress
-            </p>
-        </a>
+        <tr data-person-id="@person.Id">
+            <td>
+                <div class="dropdown dropdown-inline ml-2">
+                    <button class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="fa fa-cog"></i> 
+                        <span class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">@L("Actions")</span> 
+                        <span class="caret"></span>
+                    </button>
+                    
+                    <!--begin::Navigation-->
+                    <ul class="dropdown-menu dropdown-menu-md dropdown-menu-right" x-placement="bottom-end">
+                        @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
+                        {
+                            <li>
+                                <button class="dropdown-item btn-delete-person text-danger">
+                                    @L("Delete")
+                                </button>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </td>
+            <td>@person.Name</td>
+            <td>@person.Surname</td>
+            <td>@person.EmailAddress</td>
+        </tr>
     }
-</div>
+    </tbody>
+</table>
 ```
 
 Surely, we defined 'delete person' permission as like before.
-
-### Style
-
-We're using a **[LESS](http://lesscss.org/)** style here to take button
-right. Created a file named **index.less** and added following lines:
-
-```css
-#AllPeopleList {
-    .list-group-item-heading {
-        button.delete-person {
-            float: right;
-        }
-    }
-}
-```
-
-And add the style to your Index.cshtml page (You can also add minified
-versions of styles for other environments like production and staging):
-
-```html
-@section Styles
-{
-    <environment names="Development">
-        <link rel="stylesheet" href="~/view-resources/Areas/App/Views/PhoneBook/Index.css" asp-append-version="true" />
-    </environment>
-}
-```
 
 ### Javascript
 
@@ -69,21 +64,22 @@ Now, adding code to delete person (to Index.js):
 ```javascript
 var _personService = abp.services.app.person;
 
-$('#AllPeopleList button.delete-person').click(function (e) {
+$('#AllPeopleList button.btn-delete-person').click(function (e) {
     e.preventDefault();
 
-    var $listItem = $(this).closest('.list-group-item');
-    var personId = $listItem.attr('data-person-id');
+    var $row = $(this).closest('tr');
+    var personId = $row.attr('data-person-id');
 
     abp.message.confirm(
-        app.localize('AreYouSureToDeleteThePerson'),
+        app.localize('AreYouSureToDeleteThePerson'),//message
+        app.localize('AreYouSure'),//title
         function(isConfirmed) {
             if (isConfirmed) {
                 _personService.deletePerson({
                     id: personId
                 }).done(function () {
                     abp.notify.info(app.localize('SuccessfullyDeleted'));
-                    $listItem.remove();
+                    $row.remove();
                 });
             }
         }
@@ -93,7 +89,7 @@ $('#AllPeopleList button.delete-person').click(function (e) {
 
 It first shows a confirmation message when we click the delete button:
 
-<img src="images/confirmation-delete-person2.png" alt="Confirmation message" class="img-thumbnail" />
+<img src="images/confirmation-delete-person-3.png" alt="Confirmation message" class="img-thumbnail" />
 
 If we click Yes, it simply calls **deletePerson** method of
 **PersonAppService** and shows a

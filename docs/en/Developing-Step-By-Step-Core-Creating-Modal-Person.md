@@ -19,20 +19,19 @@ Copied and modified the view code as shown below
 @Html.Partial("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewPerson")))
 
 <div class="modal-body">
-    <form role="form" novalidate class="form-validation">
-        <div class="form-group form-md-line-input form-md-floating-label no-hint">
-            <input class="form-control" type="text" name="Name" required maxlength="@PersonConsts.MaxNameLength">
-            <label>@L("Name")</label>
+      <form>
+        <div class="my-3">
+            <label for="name" class="form-label">@L("Name")</label>
+            <input id="name" class="form-control" type="text" name="Name" required  maxlength="@PersonConsts.MaxNameLength">
         </div>
-
-        <div class="form-group form-md-line-input form-md-floating-label no-hint">
-            <input type="text" name="Surname" class="form-control" required maxlength="@PersonConsts.MaxSurnameLength">
-            <label>@L("Surname")</label>
+        <div class="my-3">
+            <label for="surname" class="form-label">@L("Surname")</label>
+            <input id="surname" class="form-control" type="text" name="Surname" required  maxlength="@PersonConsts.MaxSurnameLength">
         </div>
-
-        <div class="form-group form-md-line-input form-md-floating-label no-hint">
-            <input type="email" name="EmailAddress" class="form-control" maxlength="@PersonConsts.MaxEmailAddressLength">
-            <label>@L("EmailAddress")</label>
+        
+        <div class="my-3">
+            <label for="emailAddress" class="form-label">@L("EmailAddress")</label>
+            <input id="emailAddress" class="form-control" type="text" name="EmailAddress" required  maxlength="@PersonConsts.MaxEmailAddressLength">
         </div>
     </form>
 </div>

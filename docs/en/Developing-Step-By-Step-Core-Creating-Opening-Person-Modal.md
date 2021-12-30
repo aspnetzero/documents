@@ -23,41 +23,42 @@ So, changing the **Index.cshtml** view header as shown below:
     </environment>
 }
 
-<div class="row kt-margin-b-5">
-    <div class="col-xs-6">
-        <div class="page-head">
-            <div class="page-title">
-                <h1>
-                    <span>@L("PhoneBook")</span>
-                </h1>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("PhoneBook")" description="@L("PhoneBookInfo")">
+        <button id="CreateNewPersonButton" class="btn btn-primary">
+            <i class="fa fa-plus"></i> @L("CreateNewPerson")
+        </button>
+    </abp-page-subheader>
+    
+    <div class="@(await GetContainerClass())">
+        <div class="card">
+            <div class="card-header py-5">
+                <h3 class="card-title">
+                    <span class="card-label">@L("AllPeople")</span>
+                </h3>
+            </div>
+            <div class="card-body">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer">
+                    <thead>
+                        <tr>
+                            <th>@L("Name")</th>
+                            <th>@L("Surname")</th>
+                            <th>@L("EmailAddress")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                   @foreach (var person in Model.Items)
+                    {
+                        <tr>
+                            <td>@person.Name</td>
+                            <td>@person.Surname</td>
+                            <td>@person.EmailAddress</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
-
-    <div class="col-xs-6 text-right">
-        <button id="CreateNewPersonButton" class="btn btn-primary"><i class="fa fa-plus"></i> @L("CreateNewPerson")</button>
-    </div>
-</div>
-
-<div class="portlet light">
-    <div class="portlet-body">
-
-        <h3>@L("AllPeople")</h3>
-
-        <div class="list-group">
-            @foreach (var person in Model.Items)
-            {
-                <a href="javascript:;" class="list-group-item">
-                    <h4 class="list-group-item-heading">
-                        @person.Name @person.Surname
-                    </h4>
-                    <p class="list-group-item-text">
-                        @person.EmailAddress
-                    </p>
-                </a>
-            }
-        </div>
-
     </div>
 </div>
 ```
@@ -102,7 +103,7 @@ public PartialViewResult CreatePersonModal()
 Now, we can run the application and open the modal by clicking the
 'Create New Person' button:
 
-<img src="images/phonebook-create-person-dialog2.png" alt="Create Person Dialog" class="img-thumbnail" />
+<img src="images/phonebook-create-person-dialog3.png" alt="Create Person Dialog" class="img-thumbnail" />
 
 ## Next
 
