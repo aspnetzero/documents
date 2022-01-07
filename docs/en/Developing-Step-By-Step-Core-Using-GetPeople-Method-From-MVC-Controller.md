@@ -14,36 +14,20 @@ public class PhoneBookController : PhoneBookDemoControllerBase
         _personAppService = personAppService;
     }
 
-    public ActionResult Index(GetPeopleInput input)
-    {
-        var output = _personAppService.GetPeople(input);
-        var model = ObjectMapper.Map<IndexViewModel>(output);
-
-        return View(model);
+    public ActionResult Index()
+    {       
+        return View();
     }
 }
 ```
 
-We inject **IPersonAppService** and call its **GetPeople** method
-(which is created and tested before) to get list of people. Then we
-created a ViewModel object and passes to the view. Let's see the
-**IndexViewModel** class:
-
-```csharp
-[AutoMapFrom(typeof(ListResultDto<PersonListDto>))]
-public class IndexViewModel : ListResultDto<PersonListDto>
-{
-
-}
-```
 
 Here, we're extending the output of the PersonAppService.GetPeople method.
 We get the output from the constructor and map it to this object.
 
 ## Application Services and ViewModels
 
-We created an **Application Service** (PersonAppService) and used it
-from the **Controller**. Instead, we could access **Repository**
+We created an **Application Service** (PersonAppService) and used it. Instead, we could access **Repository**
 directly from Controller and completely discard the application service.
 ASP.NET Zero does not enforce any architecture here. In ASP.NET Zero, we
 use the application layer (application services and DTOs). Therefore, we
@@ -66,44 +50,87 @@ We show people on the page is most basic form. See the changed view
 below:
 
 ```html
-...
-@model Acme.PhoneBookDemo.Web.Areas.App.Models.PhoneBook.IndexViewModel
-...
-        <h5 class="kt-subheader__title">@L("AllPeople")</h5>
+@{
+    ViewBag.CurrentPageName = "Phonebook";
+}
 
-    <div class="list-group">
-    @foreach (var person in Model.Items)
-    {
-        <a href="javascript:;" style="color: black" class="list-group-item">
-            <h5 class="list-group-item-heading" style="font-weight: lighter">
-                @person.Name @person.Surname
-            </h5>
-            <p class="list-group-item-text">
-                @person.EmailAddress
-            </p>
-        </a>
-    }
+@section Scripts
+{
+    <script src="~/view-resources/Areas/App/Views/PhoneBook/Index.js" asp-append-version="true"></script>
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("PhoneBook")" description="@L("PhoneBookInfo")">
+    </abp-page-subheader>
+    <div class="@(await GetContainerClass())">
+        <div class="card">
+            <div class="card-body">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="AllPeopleList">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>@L("Name")</th>
+                        <th>@L("Surname")</th>
+                        <th>@L("EmailAddress")</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
-...
+</div>
 ```
 
-We declared the **@model** and used a foreach loop to render people. See
-the result:
+We declared the table, now we can load data using javascript.
+
+Create **Index.js** file in **view-resources/Areas/App/Views/PhoneBook** as seen below.
+
+```javascript
+(function () {
+    $(function () {
+        var _$phonebookTable = $('#PhoneBookTable');
+        var _personService = abp.services.app.person;//Aspnet zero generates client side of your app service
+        
+        var dataTable = _$phonebookTable.DataTable({   
+          listAction: {
+            ajaxFunction: _personService.getPeople,
+          },
+          columnDefs: [
+            {//to make your view responsive
+              className: 'control responsive',
+              orderable: false,
+              render: function () {
+                return '';
+              },
+              targets: 0,
+            },     
+            {
+              targets: 1,
+              data: 'name',
+            },
+            {
+              targets: 2,
+              data: 'surname',
+            },
+            {
+              targets: 3,
+              data: 'emailAddress',
+            },
+          ],
+        });
+    });
+})();
+
+```
+
+See the result:
 
 <img src="images/phonebook-people-view-4.png" alt="Phonebook peoples" class="img-thumbnail"/>
 
 We successfully retrieved list of people from database to the page.
 
-## About Showing Tabular Data
-
-We normally use a javascript based rich table/grid library to show
-tabular data, instead of manually rendering data like that. For example,
-we used to use [datatables](https://datatables.net/) library to show users on the
-Users page of ASP.NET Zero. Always use such components since they make
+Pages of ASP.NET Zero. Always use such components since they make
 things much more easier and provides a much better user experience.
-
-We did not use a table component here, because we want to show basics of
-MVC instead of going details of a 3rd party library.
 
 ## Next
 

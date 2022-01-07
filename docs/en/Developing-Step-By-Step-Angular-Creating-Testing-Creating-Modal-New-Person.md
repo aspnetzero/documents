@@ -18,7 +18,7 @@ We are starting from creating a new component, named
 
 ```typescript
 import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PersonServiceProxy, CreatePersonInput } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { finalize } from 'rxjs/operators';
@@ -72,6 +72,7 @@ export class CreatePersonModalComponent extends AppComponentBase {
         this.active = false;
     }
 }
+
 ```
 
 Let me explain some parts of this class:
@@ -99,7 +100,8 @@ As declared in the component, we are creating the
 below:
 
 ```html
-<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
@@ -107,32 +109,57 @@ below:
                     <h4 class="modal-title">
                         <span>{{"CreateNewPerson" | localize}}</span>
                     </h4>
-                    <button type="button" class="close" (click)="close()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        [attr.aria-label]="l('Close')"
+                        [disabled]="saving"
+                    >
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>{{"Name" | localize}}</label>
-                        <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">
+                    <div class="my-3">
+                        <label class="form-label">{{"Name" | localize}}</label>
+                        <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name"
+                               required maxlength="32">
                     </div>
-                    <div class="form-group">
-                        <label>{{"Surname" | localize}}</label>
-                        <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
+                    <div class="my-3">
+                        <label class="form-label">{{"Surname" | localize}}</label>
+                        <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required
+                               maxlength="32">
                     </div>
-                    <div class="form-group">
-                        <label>{{"EmailAddress" | localize}}</label>
-                        <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
+                    <div class="my-3">
+                        <label class="form-label">{{"EmailAddress" | localize}}</label>
+                        <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress"
+                               required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
-                    <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
+                    <button
+                        [disabled]="saving"
+                        type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        (click)="close()"
+                    >
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold"
+                        [disabled]="!personForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ 'Save' | localize }}</span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 ```
 
 Most of this code is similar for all modals. The important part is how
@@ -160,42 +187,98 @@ following changes in **phonebook.component.html**:
 
 ```html
 <div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"PhoneBook" | localize}}</span>
-                    </h3>
-                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                    <span class="kt-subheader__desc">
-                        {{"EditTenantHeaderInfo" | localize}}
-                    </span>
-                </div>
-                <div class="kt-subheader__toolbar">
-                    <div class="kt-subheader__wrapper">
-                        <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i>
-                            {{"CreateNewPerson" | localize}}</button>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'PhoneBook' | localize" [description]="'PhoneBookInfo' | localize">
+            <div role="actions"><!--Add Actions-->
+                <button
+                    (click)="createPersonModal.show()"
+                    class="btn btn-primary"
+                >
+                    <i class="fa fa-plus"></i>
+                    {{ 'CreateNewPerson' | localize }}
+                </button>
+            </div>
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <!--<Primeng-TurboTable-Start>-->
+                        <div class="primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                            <p-table
+                                #dataTable
+                                sortMode="multiple"
+                                (onLazyLoad)="getPeople($event)"
+                                [value]="primengTableHelper.records"
+                                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                                [paginator]="false"
+                                [lazy]="true"
+                                [scrollable]="true"
+                                ScrollWidth="100%"
+                                scrollDirection="horizontal"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="name">
+                                            {{ 'Name' | localize }}
+                                            <p-sortIcon field="name"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="surname">
+                                            {{ 'Surname' | localize }}
+                                            <p-sortIcon field="surname"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="emailAddress">
+                                            {{ 'EmailAddress' | localize }}
+                                            <p-sortIcon field="emailAddress"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit">
+                                    <tr>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ 'FirstName' | localize }}</span>
+                                            {{ record.name }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ 'Surname' | localize }}</span>
+                                            {{ record.surname }}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="p-column-title">{{ 'EmailAddress' | localize }}</span>
+                                            {{ record.emailAddress }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                {{ 'NoData' | localize }}
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator
+                                    [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                    #paginator
+                                    (onPageChange)="getPeople($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                    [showCurrentPageReport]="true"
+                                    [currentPageReportTemplate]="
+                                        'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
+                                    "
+                                ></p-paginator>
+                            </div>
+                        </div>
+                        <!--<Primeng-TurboTable-End>-->
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                    <h3>{{"AllPeople" | localize}}</h3>
-                    <div class="row kt-row--no-padding align-items-center" *ngFor="let person of people">
-                        <div class="col">
-                            <h4>{{person.name + ' ' + person.surname}}</h4>
-                            <span>{{person.emailAddress}}</span>
-                        </div>                        
-                    </div>
-                </div>
-            </div>
+            <!---End Modal-->
             <createPersonModal #createPersonModal (modalSave)="getPeople()"></createPersonModal>
         </div>
     </div>
 </div>
+
 ```
 
 Made some minor changes in the view; Added a **button** to open the

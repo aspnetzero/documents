@@ -32,19 +32,12 @@ As we declared in **phonebook.component.ts** we should create a
 
 ```html
 <div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div [class]="containerClass">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"PhoneBook" | localize}}</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'PhoneBook' | localize" [description]="'PhoneBookInfo' | localize">
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
                     <p>PHONE BOOK CONTENT COMES HERE!</p>
                 </div>
             </div>
@@ -86,17 +79,18 @@ import {NgModule} from '@angular/core';
 import {AppSharedModule} from '@app/shared/app-shared.module';
 import {PhoneBookRoutingModule} from './phonebook-routing.module';
 import {PhoneBookComponent} from './phonebook.component';
+import {SubheaderModule} from "@app/shared/common/sub-header/subheader.module";
 
 @NgModule({
     declarations: [PhoneBookComponent],
-    imports: [AppSharedModule, PhoneBookRoutingModule]
+    imports: [AppSharedModule, SubheaderModule, PhoneBookRoutingModule]
 })
 export class PhoneBookModule {}
 ```
 
 Now, we can refresh the page to see the new added page:
 
-<img src="images/phonebook-empty-ng2.png" alt="Phonebook empty" class="img-thumbnail" style="width:100.0%" />
+<img src="images/phonebook-empty-ng-3.png" alt="Phonebook empty" class="img-thumbnail" style="width:100.0%" />
 
 Note: Angular-cli automatically re-compiles and refreshes the page when
 any changes made to any file in the application.

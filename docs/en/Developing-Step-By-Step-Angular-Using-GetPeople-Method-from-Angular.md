@@ -23,21 +23,26 @@ stop it and re-run **npm start** command.
 
 ## PhoneBookComponent Typescript Class
 
-Change **phonebook.component.ts** as like below:
+We will use [prime-ng](https://www.primefaces.org/primeng/) turbotable to show data in ui. First of all go to the **phonebook.component.ts** and change it as like below:
 
 ```typescript
-import { Component, Injector, OnInit } from '@angular/core';
-import { AppComponentBase } from '@shared/common/app-component-base';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto } from '@shared/service-proxies/service-proxies';
+import {Component, Injector, ViewChild} from '@angular/core';
+import {AppComponentBase} from '@shared/common/app-component-base';
+import {appModuleAnimation} from '@shared/animations/routerTransition';
+import {PersonServiceProxy} from "@shared/service-proxies/service-proxies";
+import {LazyLoadEvent} from "@node_modules/primeng/api";
+import {finalize} from "@node_modules/rxjs/operators";
+import {Table} from "@node_modules/primeng/table";
+import {Paginator} from "@node_modules/primeng/paginator";
 
 @Component({
     templateUrl: './phonebook.component.html',
     animations: [appModuleAnimation()]
 })
-export class PhoneBookComponent extends AppComponentBase implements OnInit {
+export class PhoneBookComponent extends AppComponentBase{
+    @ViewChild('dataTable', {static: true}) dataTable: Table;
+    @ViewChild('paginator', {static: true}) paginator: Paginator;
 
-    people: PersonListDto[] = [];
     filter: string = '';
 
     constructor(
@@ -47,76 +52,124 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
         super(injector);
     }
 
-    ngOnInit(): void {
-        this.getPeople();
-    }
+    getPeople(event?: LazyLoadEvent) {
+        if (this.primengTableHelper.shouldResetPaging(event)) {
+            this.paginator.changePage(0);
 
-    getPeople(): void {
-        this._personService.getPeople(this.filter).subscribe((result) => {
-            this.people = result.items;
-        });
+            return;
+        }
+
+        this.primengTableHelper.showLoadingIndicator();
+
+        this._personService.getPeople(this.filter)
+            .pipe(finalize(() => this.primengTableHelper.hideLoadingIndicator()))
+            .subscribe((result) => {
+                this.primengTableHelper.totalRecordsCount = result?.items?.length;
+                this.primengTableHelper.records = result.items;
+                this.primengTableHelper.hideLoadingIndicator();
+            });
     }
 }
+
 ```
 
 We inject **PersonServiceProxy**, call its **getPeople** method and
-**subscribe** to get the result. We do this in **ngOnInit** function
-(defined in Angular's **OnInit** interface). Assigned returned items to
-the **people** class member.
+**subscribe** to get the result. Primeng's turbotable will call it and load data.
 
 ## Rendering People In Angular View
 
-Now, we can use this people member from the view,
+Now, define table for view,
 **phonebook.component.html**:
 
 ```html
 <div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"PhoneBook" | localize}}</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                    <h3>{{"AllPeople" | localize}}</h3>
-                    <div *ngFor="let person of people">
-                        <div class="row kt-row--no-padding align-items-center">
-                            <div class="col">
-                                <h4>{{person.name + ' ' + person.surname}}</h4>
-                                <span>{{person.emailAddress}}</span>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'PhoneBook' | localize" [description]="'PhoneBookInfo' | localize">
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <!--<Primeng-TurboTable-Start>-->
+                        <div class="primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                            <p-table
+                                #dataTable
+                                sortMode="multiple"
+                                (onLazyLoad)="getPeople($event)"
+                                [value]="primengTableHelper.records"
+                                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                                [paginator]="false"
+                                [lazy]="true"
+                                [scrollable]="true"
+                                ScrollWidth="100%"
+                                scrollDirection="horizontal"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="name">
+                                            {{ 'Name' | localize }}
+                                            <p-sortIcon field="name"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="surname">
+                                            {{ 'Surname' | localize }}
+                                            <p-sortIcon field="surname"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="emailAddress">
+                                            {{ 'EmailAddress' | localize }}
+                                            <p-sortIcon field="emailAddress"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit">
+                                    <tr>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ 'FirstName' | localize }}</span>
+                                            {{ record.name }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ 'Surname' | localize }}</span>
+                                            {{ record.surname }}
+                                        </td>
+                                        <td style="width: 250px">
+                                            <span class="p-column-title">{{ 'EmailAddress' | localize }}</span>
+                                            {{ record.emailAddress }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                {{ 'NoData' | localize }}
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator
+                                    [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                    #paginator
+                                    (onPageChange)="getPeople($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                    [showCurrentPageReport]="true"
+                                    [currentPageReportTemplate]="
+                                        'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
+                                    "
+                                ></p-paginator>
                             </div>
                         </div>
+                        <!--<Primeng-TurboTable-End>-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 ```
+See the result:
 
-We simply used **ngFor** directive to loop and render people data. See
-the result:
-
-<img src="images/phonebook-people-view-2.png" alt="Phonebook peoples" class="img-thumbnail" />
+<img src="images/phonebook-people-view-angular-2.png" alt="Phonebook peoples" class="img-thumbnail" />
 
 We successfully retrieved list of people from database to the page.
-
-## About Showing Tabular Data
-
-We normally use a javascript based rich table/grid library to show
-tabular data, instead of manually rendering data like that. For example,
-we used [TurboTable](https://www.primefaces.org/primeng/#/table) library to show users on the Users
-page of ASP.NET Zero. Always use such components since they make things
-much more easier and provides a much better user experience.
-
-We did not use a table component here, because we want to show basics of
-Angular instead of going details of a 3rd party library.
 
 ## Next
 

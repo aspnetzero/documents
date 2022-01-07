@@ -4,6 +4,7 @@ We are adding two more methods to IPersonAppService interface as shown
 below:
 
 ```csharp
+Task<PersonListDto> GetPerson(EntityDto input);
 Task DeletePhone(EntityDto<long> input);
 Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
 ```
@@ -30,6 +31,16 @@ public class AddPhoneInput
 Now, we can implement these methods:
 
 ```csharp
+public async Task<PersonListDto> GetPerson(EntityDto input)
+{
+    var persons = await _personRepository
+        .GetAll()
+        .Include(p => p.Phones)
+        .FirstOrDefaultAsync(p => p.Id == input.Id);
+
+    return ObjectMapper.Map<PersonListDto>(persons);
+}
+
 public async Task DeletePhone(EntityDto<long> input)
 {
     await _phoneRepository.DeleteAsync(input.Id);
@@ -78,4 +89,4 @@ different pros and cons. It's your choice.
 
 ## Next
 
-* [Edit Mode For Phone Numbers](Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers)
+* [Show Phone Numbers In Veiew](Developing-Step-By-Step-Core-Show-Phone-Numbers-In-View)

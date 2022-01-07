@@ -15,43 +15,13 @@ shown here):
 <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="AllPeopleList">
     <thead>
     <tr>
-        <th style="width:50px"></th>
+        <th></th>
+        <th>@L("Actions")</th><!--Add actions here-->
         <th>@L("Name")</th>
         <th>@L("Surname")</th>
         <th>@L("EmailAddress")</th>
     </tr>
-    </thead>
-    <tbody>
-   @foreach (var person in Model.Items)
-    {
-        <tr data-person-id="@person.Id">
-            <td>
-                <div class="dropdown dropdown-inline ml-2">
-                    <button class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <i class="fa fa-cog"></i> 
-                        <span class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">@L("Actions")</span> 
-                        <span class="caret"></span>
-                    </button>
-                    
-                    <!--begin::Navigation-->
-                    <ul class="dropdown-menu dropdown-menu-md dropdown-menu-right" x-placement="bottom-end">
-                        @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
-                        {
-                            <li>
-                                <button class="dropdown-item btn-delete-person text-danger">
-                                    @L("Delete")
-                                </button>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </td>
-            <td>@person.Name</td>
-            <td>@person.Surname</td>
-            <td>@person.EmailAddress</td>
-        </tr>
-    }
-    </tbody>
+    </thead>   
 </table>
 ```
 
@@ -62,29 +32,73 @@ Surely, we defined 'delete person' permission as like before.
 Now, adding code to delete person (to Index.js):
 
 ```javascript
-var _personService = abp.services.app.person;
+//add permission check
+var _permissions = {
+    delete: abp.auth.hasPermission('Pages.Tenant.PhoneBook.DeletePerson')
+};
+//update datatable to add action buttons
 
-$('#AllPeopleList button.btn-delete-person').click(function (e) {
-    e.preventDefault();
-
-    var $row = $(this).closest('tr');
-    var personId = $row.attr('data-person-id');
-
-    abp.message.confirm(
-        app.localize('AreYouSureToDeleteThePerson'),//message
-        app.localize('AreYouSure'),//title
-        function(isConfirmed) {
-            if (isConfirmed) {
-                _personService.deletePerson({
-                    id: personId
-                }).done(function () {
-                    abp.notify.info(app.localize('SuccessfullyDeleted'));
-                    $row.remove();
-                });
+var dataTable = _$phonebookTable.DataTable({   
+    listAction: {
+    ajaxFunction: _personService.getPeople,
+    },
+    columnDefs: [
+        {//to make your view responsive
+            className: 'control responsive',
+            orderable: false,
+            render: function () {
+            return '';
+            },
+            targets: 0,
+        },
+        {//add  buttons to first coloumn
+            targets: 1,
+            data: null,
+            orderable: false,
+            autoWidth: false,
+            defaultContent: '',
+            rowAction: {
+                text:
+                '<i class="fa fa-cog"></i> <span class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">' +
+                app.localize('Actions') +
+                '</span> <span class="caret"></span>',
+                items: [//buttons to add in action dropdown
+                    {
+                        text: app.localize('Edit'),
+                        visible: function () {
+                            return true;
+                        },
+                        action: function (data) {
+                            //will be filled
+                        },
+                    },
+                    {
+                        text: app.localize('Delete'),
+                        visible: function (data) {//will be visible only if user has required permission
+                            return _permissions.delete;
+                        },
+                        action: function (data) {//on button click
+                            deletePerson(data.record.id);
+                        },
+                    }
+                ],
             }
-        }
-    );
+        },    
+        {
+            targets: 2,
+            data: 'name',
+        },
+        {
+            targets: 3,
+            data: 'surname',
+        },
+        {
+            targets: 4,
+            data: 'emailAddress',
+        },
+    ],
 });
+
 ```
 
 It first shows a confirmation message when we click the delete button:

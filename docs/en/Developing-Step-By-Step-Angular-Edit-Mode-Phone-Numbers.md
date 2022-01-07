@@ -1,105 +1,116 @@
 # Edit Mode For Phone Numbers
 
-Final UI is shown below:
+We will create an edit modal which has two tabs for person (first tab for **Person** second tab for **Phones for that person**).Lets implement editing phone numbers firs. Final UI is shown below:
 
 <img src="images/phone-book-edit-mode1.png" alt="Phone book edit mode" class="img-thumbnail" />
 
-When we click the **edit icon** for a person, its row is expanded and
-all phone numbers are shown. Then we can delete any phone by clicking
-the icon at left. We can add a new phone from the inputs at last line.
+# Creating EditPersonModal
 
 ## View
 
-Changes in view are shown below:
+Create new component named **EditPersonModal** in phonebook folder. And change it's view as seen below:
 
 ```html
-<div *ngFor="let person of people" [ngClass]="{'bg-secondary kt-padding-10': person===editingPerson}">
-    <div class="row kt-row--no-padding align-items-center">
-        <div class="col">
-            <h4>{{person.name + ' ' + person.surname}}</h4>
-            <span>{{person.emailAddress}}</span>
-        </div>
-        <div class="col kt-align-right">
-            <button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn  btn-outline-hover-success btn-icon">
-                <i class="fa fa-pencil"></i>
-            </button>
-            <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn  btn-outline-hover-danger btn-icon" href="javascript:;">
-                <i class="fa fa-times"></i>
-            </button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 kt-margin-t-20" *ngIf="person===editingPerson">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th style="width:10%"></th>
-                        <th style="width:15%">{{"Type" | localize}}</th>
-                        <th style="width:75%">{{"PhoneNumber" | localize}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let phone of person.phones">
-                        <td>
-                            <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="deletePhone(phone, person)" class="btn btn-outline-danger kt-btn kt-btn--icon kt-btn--icon-only kt-btn--pill">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </td>
-                        <td>{{getPhoneTypeAsString(phone.type)}}</td>
-                        <td>{{phone.number}}</td>
-                    </tr>
-                    <tr *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission">
-                        <td>
-                            <button (click)="savePhone()" class="btn btn-sm btn-success">
-                                <i class="fa fa-floppy-o"></i>
-                            </button>
-                        </td>
-                        <td>
-                            <select name="Type" [(ngModel)]="newPhone.type"class="form-control">
-                                <option value="0">{{"PhoneType_Mobile" | localize}}</option>
-                                <option value="1">{{"PhoneType_Home" | localize}}</option>
-                                <option value="2">{{"PhoneType_Business" | localize}}</option>
-                            </select>
-                        </td>
-                        <td><input type="text" name="number" [(ngModel)]="newPhone.number" class="form-control" /></td>
-                    </tr>
-                </tbody>
-            </table>
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{"EditPerson" | localize}}</span>
+                </h4>
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    [attr.aria-label]="l('Close')"
+                    [disabled]="saving"
+                >
+                </button>
+            </div>
+            <div class="modal-body">
+                <tabset>
+                    <tab class="pt-5" heading="{{ 'Person' | localize }}">
+                        Person Edit Will Be Here
+                    </tab>
+                    <tab class="pt-5" heading="{{ 'Phones' | localize }}">
+                        <form>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <select name="Type" class="form-control" [(ngModel)]="addPhoneInput.type">
+                                        <option value="0" selected>{{'PhoneType_Mobile' | localize}}</option>
+                                        <option value="1">{{'PhoneType_Home' | localize}}</option>
+                                        <option value="2">{{'PhoneType_Business' | localize}}</option>
+                                    </select>
+                                </div>
+                                <input class="form-control" type="text" name="Number" [(ngModel)]="addPhoneInput.number"
+                                       [placeholder]="l('PhoneNumber')" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" (click)="addPhone()" type="button">
+                                        {{'AddPhone' | localize}}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" *ngIf="personToEdit">
+                                <tbody>
+                                    <tr *ngFor="let phone of personToEdit.phones">
+                                        <td>{{getPhoneTypeString(phone.type)}}</td>
+                                        <td>{{phone.number}}</td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" (click)="deletePhone(phone.id)">
+                                                <i class="la la-floppy-o"></i>
+                                                {{'Delete' | localize}}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+            <div class="modal-footer">
+                <button
+                    [disabled]="saving"
+                    type="button"
+                    class="btn btn-light-primary font-weight-bold"
+                    (click)="close()"
+                >
+                    {{ 'Close' | localize }}
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
 ```
 
-We added an edit button for each person. Then added a table for each
-person that shows phones of the related person and allows adding a new
-phone. Phones table is only shown if we click the edit button.
-
-## PhoneBook Component Class
-
-Before changing PhoneBookComponent, we should re-generate
-service-proxies using nswag as did above. And finally we can change
-PhoneBookComponent as shown below:
+## Edit Person Component Class
 
 ```typescript
-import { Component, Injector, OnInit } from '@angular/core';
-import { AppComponentBase } from '@shared/common/app-component-base';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto, PhoneInPersonListDto, AddPhoneInput, PhoneType } from '@shared/service-proxies/service-proxies';
-
-import { remove as _remove } from 'lodash-es';
+import {Component, ViewChild, Injector, ElementRef, Output, EventEmitter} from '@angular/core';
+import {ModalDirective} from 'ngx-bootstrap/modal';
+import {PersonServiceProxy, AddPhoneInput, PersonListDto, PhoneType} from '@shared/service-proxies/service-proxies';
+import {AppComponentBase} from '@shared/common/app-component-base';
+import {finalize} from 'rxjs/operators';
 
 @Component({
-    templateUrl: './phonebook.component.html',
-    styleUrls: ['./phonebook.component.less'],
-    animations: [appModuleAnimation()]
+    selector: 'editPersonModal',
+    templateUrl: './edit-person-modal.component.html',
 })
-export class PhoneBookComponent extends AppComponentBase implements OnInit {
+export class EditPersonModalComponent extends AppComponentBase {
+    @Output() onClosedWithChanges: EventEmitter<any> = new EventEmitter<any>();
 
-    people: PersonListDto[] = [];
-    filter: string = '';
+    @ViewChild('modal', {static: false}) modal: ModalDirective;
 
-    editingPerson: PersonListDto = null;
-    newPhone: AddPhoneInput = null;
+    hasChanges: boolean = false;
+    active: boolean = false;
+    saving: boolean = false;
+
+    addPhoneInput: AddPhoneInput = new AddPhoneInput();
+    personToEdit: PersonListDto;
 
     constructor(
         injector: Injector,
@@ -108,76 +119,115 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
         super(injector);
     }
 
-    ngOnInit(): void {
-        this.getPeople();
-    }
-
-    getPeople(): void {
-        this._personService.getPeople(this.filter).subscribe((result) => {
-            this.people = result.items;
+    show(personId: number): void {
+        this.active = true;
+        this.addPhoneInput = new AddPhoneInput();
+        this._personService.getPerson(personId).subscribe((person) => {
+            this.personToEdit = person;
+            this.modal.show();
         });
     }
 
-    deletePerson(person: PersonListDto): void {
+    close(): void {
+        this.modal.hide();
+        this.active = false;
+        if (this.hasChanges) {
+            this.onClosedWithChanges.emit(null);
+        }
+    }
+
+    addPhone() {
+        this.saving = true;
+        this.addPhoneInput.personId = this.personToEdit.id;
+
+        this._personService.addPhone(this.addPhoneInput)
+            .pipe(
+                finalize(() => {
+                    this.saving = false;
+                })
+            )
+            .subscribe((callback) => {
+                abp.notify.info(this.l('SavedSuccessfully'));
+                this.hasChanges = true;
+                this.personToEdit.phones.push(callback);
+            });
+    }
+
+    deletePhone(phoneId) {
+        if (!phoneId) {
+            return;
+        }
+
         this.message.confirm(
-            this.l('AreYouSureToDeleteThePerson' | localize: person.name),
+            this.l('DeletePhoneWarningMessage'),
+            this.l('AreYouSure'),
             isConfirmed => {
                 if (isConfirmed) {
-                    this._personService.deletePerson(person.id).subscribe(() => {
-                        this.notify.info(this.l('SuccessfullyDeleted'));
-                        _remove(this.people, person);
-                    });
+                    this.saving = true;
+                    this._personService.deletePhone(phoneId)
+                        .pipe(
+                            finalize(() => {
+                                this.saving = false;
+                            })
+                        )
+                        .subscribe(() => {
+                            abp.notify.info(this.l('SavedSuccessfully'));
+                            this.hasChanges = true;
+                            this.personToEdit.phones = this.personToEdit.phones.filter(p => p.id != phoneId);
+                        })
                 }
             }
         );
     }
 
-    editPerson(person: PersonListDto): void {
-        if (person === this.editingPerson) {
-            this.editingPerson = null;
-        } else {
-            this.editingPerson = person;
 
-            this.newPhone = new AddPhoneInput();
-            this.newPhone.type = PhoneType.Mobile;
-            this.newPhone.personId = person.id;
-        }
-    };
-
-    getPhoneTypeAsString(phoneType: PhoneInPersonListDtoType): string {
+    getPhoneTypeString(phoneType: PhoneType): string {
         switch (phoneType) {
-            case PhoneType.Mobile:
-                return this.l('PhoneType_Mobile');
-            case PhoneType.Home:
-                return this.l('PhoneType_Home');
-            case PhoneType.Business:
-                return this.l('PhoneType_Business');
+            case 1:
+                return this.l('Home');
+            case 2:
+                return this.l('Business');
             default:
-                return '?';
+                return this.l('Mobile');
         }
-    };
-
-    deletePhone(phone, person): void {
-        this._personService.deletePhone(phone.id).subscribe(() => {
-            this.notify.success(this.l('SuccessfullyDeleted'));
-            _remove(person.phones, phone);
-        });
-    };
-
-    savePhone(): void {
-        if (!this.newPhone.number) {
-            this.message.warn('Please enter a number!');
-            return;
-        }
-
-        this._personService.addPhone(this.newPhone).subscribe(result => {
-            this.editingPerson.phones.push(result);
-            this.newPhone.number = '';
-
-            this.notify.success(this.l('SavedSuccessfully'));
-        });
-    };
+    }
 }
+
+```
+
+
+
+Now we can add edit button to index view and call edit person modal on button click.
+
+## View
+
+Changes in view are shown below:
+
+```html
+<!--...-->
+<ul
+    id="dropdownMenu"
+    class="dropdown-menu"
+    role="menu"
+    *dropdownMenu
+    aria-labelledby="dropdownButton"
+>
+    <li
+        *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission"
+        role="menuitem"
+    >
+        <a
+            href="javascript:;"
+            class="dropdown-item"
+            (click)="editPersonModal.show(record.id)"
+        >
+            {{ 'Edit' | localize }}
+        </a>
+    </li>
+
+<!--...-->
+    <createPersonModal #createPersonModal (modalSave)="getPeople()"></createPersonModal>
+    <editPersonModal #editPersonModal (onClosedWithChanges)="getPeople()"></editPersonModal><!--Add edit-->
 ```
 
 ## Next

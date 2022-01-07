@@ -7,55 +7,33 @@ button.
 So, changing the **Index.cshtml** view header as shown below:
 
 ```html
-@using System.Threading.Tasks
-@using Acme.PhoneBook.Web.Areas.App.Startup
-@model Acme.PhoneBook.Web.Areas.App.Models.PhoneBook.IndexViewModel
 
 @{
     ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
 }
-
 @section Scripts
 {
-    <environment names="Development">
-        <script src="~/view-resources/Areas/App/Views/PhoneBook/_CreatePersonModal.js" asp-append-version="true"></script>
-        <script src="~/view-resources/Areas/App/Views/PhoneBook/Index.js" asp-append-version="true"></script>
-    </environment>
+    <script src="~/view-resources/Areas/AppAreaName/Views/PhoneBook/Index.js" asp-append-version="true"></script>
 }
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <abp-page-subheader title="@L("PhoneBook")" description="@L("PhoneBookInfo")">
         <button id="CreateNewPersonButton" class="btn btn-primary">
             <i class="fa fa-plus"></i> @L("CreateNewPerson")
-        </button>
+        </button>        
     </abp-page-subheader>
-    
     <div class="@(await GetContainerClass())">
         <div class="card">
-            <div class="card-header py-5">
-                <h3 class="card-title">
-                    <span class="card-label">@L("AllPeople")</span>
-                </h3>
-            </div>
             <div class="card-body">
-                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="PhoneBookTable">
                     <thead>
-                        <tr>
-                            <th>@L("Name")</th>
-                            <th>@L("Surname")</th>
-                            <th>@L("EmailAddress")</th>
-                        </tr>
+                    <tr>
+                        <th></th>
+                        <th>@L("Name")</th>
+                        <th>@L("Surname")</th>
+                        <th>@L("EmailAddress")</th>
+                    </tr>
                     </thead>
-                    <tbody>
-                   @foreach (var person in Model.Items)
-                    {
-                        <tr>
-                            <td>@person.Name</td>
-                            <td>@person.Surname</td>
-                            <td>@person.EmailAddress</td>
-                        </tr>
-                    }
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -63,22 +41,23 @@ So, changing the **Index.cshtml** view header as shown below:
 </div>
 ```
 
-We included modal's javascript (\_CreatePersonModal.js) and a
-**Index.js** file which is defined as shown below:
+We included modal's javascript (\_CreatePersonModal.js). Now add following to **Index.js** file which is defined before:
 
 ```javascript
 (function () {
-    var _createPersonModal = new app.ModalManager({
-        viewUrl: abp.appPath + 'App/PhoneBook/CreatePersonModal',
-        scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/PhoneBook/_CreatePersonModal.js',
-        modalClass: 'CreatePersonModal'
-    });
+    $(function () {
+        //...
+        var _createPersonModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/PhoneBook/CreatePersonModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/PhoneBook/_CreatePersonModal.js',
+            modalClass: 'CreatePersonModal'
+        });
 
-    $('#CreateNewPersonButton').click(function (e) {
-        e.preventDefault();
-        _createPersonModal.open();
-    });
-})();
+        $('#CreateNewPersonButton').click(function (e) {
+            e.preventDefault();
+            _createPersonModal.open();
+        });
+//...
 ```
 
 **ModalManager** is a predefined modal helper javascript class of AspNet

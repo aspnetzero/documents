@@ -55,7 +55,7 @@ Package Manager Console, we write **Update-Database** command in order
 to apply the new migration to database. After updating, we can see that
 **PbPersons table** is added to database.
 
-<img src="images/phonebook-tables-spa.png" alt="Phonebook tables" class="img-thumbnail" />
+<img src="images/phonebook-tables-mpa-2.png" alt="Phonebook tables" class="img-thumbnail" />
 
 But this new table is empty. In ASP.NET Zero, there are some classes to
 fill initial data for users and settings:

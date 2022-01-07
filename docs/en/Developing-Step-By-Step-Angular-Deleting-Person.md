@@ -2,60 +2,89 @@
 
 Let's add a delete button in people list as shown below:
 
-<img src="images/phonebook-people-delete-button1.png" alt="Delete person" class="img-thumbnail" />
+<img src="images/phonebook-people-delete-button-angular-1.png" alt="Delete person" class="img-thumbnail" />
 
 We're starting from UI in this case.
 
 ## View
 
 We're changing **phonebook.component.html** view to add a delete button
-(related part is shown here):
 
 ```html
-...
-<h3>{{"AllPeople" | localize}}</h3>
-<div class="row kt-row--no-padding align-items-center" *ngFor="let person of people">
-    <div class="col">
-        <h4>{{person.name + ' ' + person.surname}}</h4>
-        <span>{{person.emailAddress}}</span>
-    </div>
-    <div class="col kt-align-right">
-        <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}"
-            class="btn  btn-outline-hover-danger btn-icon"
-            href="javascript:;">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-</div>
-...
+ <p-table>
+	<ng-template pTemplate="header">
+		<tr>
+			<!--Add Actions-->
+			<th
+				style="width: 130px"
+				[hidden]="
+					!(
+						[
+							'Pages.Administration.PhoneBook.DeletePerson',
+						] | permissionAny
+					)
+				"
+			>
+				{{ 'Actions' | localize }}
+			</th>
+			<!--...-->
+	</ng-template>
+	<ng-template pTemplate="body" let-record="$implicit">
+		<tr>
+			<!--Add Actions-->
+			<td
+				style="width: 130px"
+				[hidden]="
+					!(
+						[
+						   'Pages.Administration.PhoneBook.DeletePerson',
+						] | permissionAny
+					)
+				"
+			>
+				<div class="btn-group" dropdown placement="bottom left" container="body">
+					<button
+						id="dropdownButton"
+						type="button"
+						class="btn btn-primary btn-sm dropdown-toggle"
+						dropdownToggle
+						aria-controls="dropdownMenu"
+					>
+						<i class="fa fa-cog"></i>
+						<span class="caret"></span>
+						{{ 'Actions' | localize }}
+					</button>
+					<ul
+						id="dropdownMenu"
+						class="dropdown-menu"
+						role="menu"
+						*dropdownMenu
+						aria-labelledby="dropdownButton"
+					>
+						<li
+							*ngIf="'Pages.Administration.PhoneBook.DeletePerson' | permission"
+							role="menuitem"
+						>
+							<a
+								href="javascript:;"
+								class="dropdown-item"
+								(click)="deletePerson(record)"
+							>
+								{{ 'Delete' | localize }}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</td>
+			<!--...-->
+		</tr>
+	</ng-template>
+</p-table>
 ```
 
-We simply added a button which calls **deletePerson** method (will be
+We simply added a dropdown button which has delete button(We will add more buttons later). Delete button calls **deletePerson** method (will be
 defined) when it's clicked. You can define a permission for 'deleting
 person' as we did for 'creating person' above.
-
-## Style
-
-We're using **[LESS](http://lesscss.org/)** files for styling the components. We created a file named **phonebook.component.less** (in
-phonebook folder) with an empty content.
-
-```css
-/* styles */
-```
-
-And adding the style to the **phonebook.component.ts** Component
-declaration:
-
-```typescript
-@Component({
-    templateUrl: './phonebook.component.html',
-    styleUrls: ['./phonebook.component.less'],
-    animations: [appModuleAnimation()]
-})
-```
-
-Now, we can now see the buttons, but they don't work since we haven't
-defined the deletePerson method yet.
 
 ## Application Service
 
@@ -105,7 +134,7 @@ deletePerson(person: PersonListDto): void {
 
 It first shows a confirmation message when we click the delete button:
 
-<img src="images/confirmation-delete-person1.png" alt="Confirmation message" class="img-thumbnail" />
+<img src="images/confirmation-delete-person-2.png" alt="Confirmation message" class="img-thumbnail" />
 
 If we click Yes, it simply calls **deletePerson** method of
 **PersonAppService** and shows a

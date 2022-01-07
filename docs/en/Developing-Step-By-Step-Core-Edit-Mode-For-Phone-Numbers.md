@@ -2,250 +2,382 @@
 
 Up to here , final UI is shown below:
 
-<img src="images/phone-book-edit-mode2.png" alt="Phone book edit mode" class="img-thumbnail" width="762" height="642" />
+<img src="images/phone-book-edit-mode-3.png" alt="Phone book edit mode" class="img-thumbnail"/>
 
-When we click the **green edit icon** for a person, its row is expanded
-and all phone numbers are shown. Then we can delete any number by
-clicking the icon at left. We can add a new phone from the inputs at
-last line.
+We will create modal that has two tabs. First for editing person, second editing phones of person.
+
+## Controller
+
+Go to `PhonebookController` and `EditPersonModal` `PartialViewResult`.
+
+```csharp
+[Area("App")]
+public class PhoneBookController : AbpZeroTemplateControllerBase
+{
+    private readonly IPersonAppService _personAppService;
+
+    public PhoneBookController(IPersonAppService personAppService)
+    {
+        _personAppService = personAppService;
+    }
+    //...
+    public async Task<PartialViewResult> EditPersonModal(EntityDto input)
+    {
+        var model = await _personAppService.GetPerson(input);
+        return PartialView("_EditPersonModal", model);
+    }
+}
+```
 
 ## View
 
-Changes in view are shown below:
+Create new view named **_EditPersonModal.cshtml** and fill edit phones tab.
 
+`EditPersonModal.cshtml`
 ```html
-<div id="AllPeopleList" class="list-group">
-    @foreach (var person in Model.Items)
-    {
-        <a href="javascript:;" class="list-group-item" data-person-id="@person.Id">
-            <h4 class="list-group-item-heading">
-                @person.Name @person.Surname
 
-                <span class="person-buttons">
-                    <button title="@L("Edit")" class="btn btn-circle btn-icon-only green edit-person">
-                        <i class="la la-pencil"></i>
-                    </button>
-                    @if (IsGranted(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson))
-                    {
-                        <button title="@L("Delete")" class="btn btn-circle btn-icon-only red delete-person" href="javascript:;">
-                            <i class="la la-trash"></i>
-                        </button>
-                    }
-                </span>
-            </h4>
-            <p class="list-group-item-text">
-                @person.EmailAddress
-            </p>
-            <div class="table-scrollable table-phones">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:10%"></th>
-                            <th style="width:15%">@L("Type")</th>
-                            <th style="width:75%">@L("PhoneNumber")</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var phone in person.Phones)
-                        {
-                            @Html.Partial("_PhoneRowInPersonList", new PhoneRowInPersonListViewModel(phone))
-                        }
-                        <tr>
-                            <td>
-                                <button class="btn btn-sm green button-save-phone">
-                                    <i class="la la-floppy-o"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <select name="Type">
-                                    <option value="0">@L("PhoneType_Mobile")</option>
-                                    <option value="1">@L("PhoneType_Home")</option>
-                                    <option value="2">@L("PhoneType_Business")</option>
-                                </select>
-                            </td>
-                            <td><input type="text" name="Number" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </a>
-    }
+@model .PersonListDto
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditPerson")))
+
+<div class="modal-body">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#Person" class="nav-link active" data-bs-toggle="tab" role="tab">
+                @L("Person")
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#PhoneNumbers" data-bs-toggle="tab" role="tab" class="nav-link">
+                @L("PhoneNumbers")
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane pt-5 active" id="Person" role="tabpanel">
+            <!--We will add person edit here-->
+        </div>
+        <div class="tab-pane pt-5" id="PhoneNumbers" role="tabpanel">
+            <form id="addPhoneForm">
+                <input type="hidden" name="PersonId" value="@Model.Id">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <select name="Type" class="form-control">
+                            <option value="0">@L("PhoneType_Mobile")</option>
+                            <option value="1">@L("PhoneType_Home")</option>
+                            <option value="2">@L("PhoneType_Business")</option>
+                        </select>
+                    </div>
+                    <input class="form-control" type="text" name="Number" placeholder="@L("PhoneNumber")" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-success" id="BtnAddPhone" type="button">@L("AddPhone")</button>
+                    </div>
+                </div>
+            </form>
+            <hr/>
+            <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="tablePhoneNumbers">
+                <tbody>
+                @foreach (var phone in Model.Phones)
+                {
+                    <tr id="phoneNumberRow-@phone.Id">
+                        <td>@phone.GetPhoneTypeAsString()</td>
+                        <td>@phone.Number</td>
+                         <td style="width:100px;">
+                            <button class="btn btn-danger btn-delete-phone btn-sm" data-phone-id="@phone.Id">
+                                <i class="la la-floppy-o"></i>
+                                @L("Delete")
+                            </button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
 ```
 
-We added an edit button for each person. Then added a table for each
-person that shows phones of the related person and allows adding a new
-phone. Phones table is only shown if we click the edit button. This is
-implemented using a bit CSS and javascript (we will see in next
-sections).
+Then, create **_EditPersonModal.js**.
 
-One important thing here is we rendered phone rows in a **partial
-view**. This is done to make this part re-usable. Because we will use
-the same partial view when we create a new phone. The
-**\_PhoneRowInPersonList** partial view is here:
+```javascript
+(function ($) {
+    app.modals.EditPersonModal = function () {
+        var _modalManager;
+        var _personService = abp.services.app.person;
+        var _$addPhoneForm = null;
+        var _$phoneNumbersTable = null;
 
-```html
-@model Acme.PhoneBookDemo.Web.Areas.App.Models.PhoneBook.PhoneRowInPersonListViewModel
-<tr data-phone-id="@Model.Phone.Id">
-    <td>
-        <button class="btn btn-sm default button-delete-phone">
-            <i class="la la-trash"></i>
-        </button>
-    </td>
-    <td>@Model.GetPhoneTypeAsString()</td>
-    <td>@Model.Phone.Number</td>
-</tr>
-```
+        var hasChanges = false;
 
-And the **PhoneRowInPersonListViewModel** is here:
-
-```csharp
-public class PhoneRowInPersonListViewModel
-{
-    public PhoneInPersonListDto Phone { get; set; }
-
-    public PhoneRowInPersonListViewModel(PhoneInPersonListDto phone)
-    {
-        Phone = phone;
-    }
-
-    public string GetPhoneTypeAsString()
-    {
-        return LocalizationHelper.GetString(PhoneBookDemoConsts.LocalizationSourceName, "PhoneType_" + Phone.Type);
-    }
-}
-```
-
-## Styles
-
-Changed **Index.less** a bit to adapt to the changed view:
-
-```css
-#AllPeopleList {
-    .list-group-item-heading {
-        span.person-buttons {
-            float: right;
-        }
-    }
-
-    .table-phones {
-        display: none;
-    }
-
-    .person-editing {
-        background-color: #ccffcc;
-
-        h4 {
-            font-weight: bold;
+        function getPhoneTypeString(phoneType) {
+            switch (phoneType) {
+                case 1:
+                    return app.localize('Home');
+                case 2:
+                    return app.localize('Business');
+                default:
+                    return app.localize('Mobile');
+            }
         }
 
-        .table-phones {
-            display: table;
+        function addPhoneToPhoneNumbersTable(phone) {
+            var row = `<tr id="phoneNumberRow-${phone.id}">
+                        <td>${getPhoneTypeString(phone.type)}</td>
+                        <td>${phone.number}</td>
+                         <td style="width:100px;">
+                            <button class="btn btn-danger btn-delete-phone btn-sm" data-phone-id="${phone.id}">
+                                <i class="la la-floppy-o"></i>
+                                ${app.localize('Delete')}
+                            </button>
+                        </td>
+                    </tr>`;
+            _$phoneNumbersTable.find('tbody').append(row);
         }
-    }
-}
+
+        function addPhone() {
+            if (!_$addPhoneForm.valid()) {
+                return;
+            }
+
+            var phone = _$addPhoneForm.serializeFormToObject();
+
+            _modalManager.setBusy(true);
+            _personService.addPhone(phone).done(function () {
+                addPhoneToPhoneNumbersTable(phone);
+                abp.notify.info(app.localize('SavedSuccessfully'));
+                hasChanges = true;
+            }).always(function () {
+                _modalManager.setBusy(false);
+            });
+        }
+
+        function deletePhone(phoneId) {
+            if (!phoneId) {
+                return;
+            }
+            
+            abp.message.confirm(
+                app.localize('DeletePhoneWarningMessage'),
+                app.localize('AreYouSure'),
+                function (isConfirmed) {
+                    if (isConfirmed) {
+                        _modalManager.setBusy(true);
+                        _personService.deletePhone({id: phoneId}).done(function () {
+                            $('#phoneNumberRow-' + phoneId).remove();
+                            abp.notify.info(app.localize('SavedSuccessfully'));
+                            hasChanges = true;
+                        }).always(function () {
+                            _modalManager.setBusy(false);
+                        });
+                    }
+                }
+            );            
+        }
+
+        this.init = function (modalManager) {
+            _modalManager = modalManager;
+
+            _$addPhoneForm = _modalManager.getModal().find('#addPhoneForm');
+            _$addPhoneForm.validate();
+
+            _$phoneNumbersTable = _modalManager.getModal().find('#tablePhoneNumbers');
+
+            _$addPhoneForm.find('#BtnAddPhone').click(function (e) {
+                addPhone();
+            });
+
+            _modalManager.getModal().find('.btn-delete-phone').click(function (e) {
+                deletePhone($(this).data('phone-id'));
+            });
+
+            _modalManager.getModal().find('.close-button').click(function () {
+                if (hasChanges) {
+                    abp.event.trigger('app.personEditClosed');
+                }
+            })
+        };
+
+        this.save = function () {
+
+        };
+    };
+})(jQuery);
+
 ```
 
 ## Scripts
 
-Added following codes into **Index.js**:
+The final of the **Index.js** is:
 
 ```javascript
-//Edit person button
-$('#AllPeopleList button.edit-person').click(function (e) {
-    e.preventDefault();
+(function () {
+    $(function () {
+        var _permissions = {
+            delete: abp.auth.hasPermission('Pages.Tenant.PhoneBook.DeletePerson'),
+            edit: abp.auth.hasPermission('Pages.Tenant.PhoneBook.EditPerson')
+        };
 
-    var $listItem = $(this).closest('.list-group-item');
+        var _$phonebookTable = $('#PhoneBookTable');
+        var _personService = abp.services.app.person;
 
-    $listItem
-        .toggleClass('person-editing')
-        .siblings().removeClass('person-editing');
-});
+        var _editPersonModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/PhoneBook/EditPersonModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/PhoneBook/_EditPersonModal.js',
+            modalClass: 'EditPersonModal'
+        });
+        
+        var dataTable = _$phonebookTable.DataTable({
+            listAction: {
+                ajaxFunction: _personService.getPeople,
+                inputFilter: function () {
+                    return {
+                        filter: $("#UsersTableFilter").val(),
+                    };
+                },
+            },
+            columnDefs: [
+                {//to make your view responsive
+                    className: 'control responsive',
+                    orderable: false,
+                    render: function () {
+                        return '';
+                    },
+                    targets: 0,
+                },
+                {
+                    targets: 1,
+                    data: null,
+                    orderable: false,
+                    autoWidth: false,
+                    defaultContent: '',
+                    rowAction: {
+                        text:
+                            '<i class="fa fa-cog"></i> <span class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">' +
+                            app.localize('Actions') +
+                            '</span> <span class="caret"></span>',
+                        items: [
+                            {
+                                text: app.localize('Edit'),
+                                visible: function () {
+                                    return _permissions.edit;
+                                },
+                                action: function (data) {
+                                    _editPersonModal.open({id:data.record.id});
+                                },
+                            },
+                            {
+                                text: app.localize('Delete'),
+                                visible: function (data) {
+                                    return _permissions.delete;
+                                },
+                                action: function (data) {
+                                    deletePerson(data.record.id);
+                                },
+                            }
+                        ],
+                    },
+                },
+                {
+                    targets: 2,
+                    data: 'name',
+                },
+                {
+                    targets: 3,
+                    data: 'surname',
+                },
+                {
+                    targets: 4,
+                    data: 'emailAddress',
+                },
+                {
+                    targets: 5,
+                    data: 'phones',
+                    render: function (phones, type, row, meta) {
+                        var $table = $('<table/>');
+                        var $body = $('<tbody/>');
 
-//Save phone button
-$('#AllPeopleList .button-save-phone').click(function (e) {
-    e.preventDefault();
+                        for (var i = 0; i < phones.length; i++) {
+                            var $row = $('<tr/>');
+                            $row.append('<td>(' + getPhoneTypeString(phones[i].type) + ')</td>');
+                            $row.append('<td>' + phones[i].number + '</td>');
+                            $body.append($row);
+                        }
+                        $table.append($body);
+                        return $table[0].outerHTML;
+                    },
+                },
+            ],
+        });
 
-    var $phoneEditorRow = $(this).closest('tr');
+        var _createPersonModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/PhoneBook/CreatePersonModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/PhoneBook/_CreatePersonModal.js',
+            modalClass: 'CreatePersonModal'
+        });
 
-    abp.ajax({
-        url: abp.appPath + 'App/PhoneBook/AddPhone',
-        dataType: 'html',
-        data: JSON.stringify({
-            personId: $phoneEditorRow.closest('.list-group-item').attr('data-person-id'),
-            Type: $phoneEditorRow.find('select[name=Type]').val(),
-            Number: $phoneEditorRow.find('input[name=Number]').val()
-        })
-    }).done(function (result) {
-        $(result).insertBefore($phoneEditorRow);
+        $('#CreateNewPersonButton').click(function (e) {
+            e.preventDefault();
+            _createPersonModal.open();
+        });
+
+        function getPeople() {
+            dataTable.ajax.reload();
+        }
+
+        abp.event.on('app.createPersonModalSaved', getPeople);
+        abp.event.on('app.personEditClosed', getPeople);
+
+        function deletePerson(personId) {
+            abp.message.confirm(
+                app.localize('AreYouSureToDeleteThePerson'),
+                app.localize('AreYouSure'),
+                function (isConfirmed) {
+                    if (isConfirmed) {
+                        _personService.deletePerson({
+                            id: personId
+                        }).done(function () {
+                            abp.notify.info(app.localize('SuccessfullyDeleted'));
+                            getPeople();
+                        });
+                    }
+                }
+            );
+        }
+
+        $('#FilterUsersButton').click(function (e) {
+            getPeople();
+        });
+
+        $('#UsersTableFilter').keypress(function (e) {
+            if (e.which == 13) {
+                getPeople();
+                return false;
+            }
+        });
+
+        function getPhoneTypeString(phoneType) {
+            switch (phoneType) {
+                case 1:
+                    return app.localize('Home');
+                case 2:
+                    return app.localize('Business');
+                default:
+                    return app.localize('Mobile');
+            }
+        }
     });
-});
+})();
 
-//Delete phone button
-$('#AllPeopleList').on('click', '.button-delete-phone', function (e) {
-    e.preventDefault();
-
-    var $phoneRow = $(this).closest('tr');
-    var phoneId = $phoneRow.attr('data-phone-id');
-
-    _personService.deletePhone({
-        id: phoneId
-    }).done(function () {
-        abp.notify.success(app.localize('SuccessfullyDeleted'));
-        $phoneRow.remove();
-    });
-});
 ```
 
-When click to '**edit person**' button, we simple open/close
-(**toggle**) the phones table of related person by using **css**
-classes.
+When click to '**edit person**' button, we simplely open person edit modal. Then click to the phones tabs. 
 
-In the '**save phone**' button's click, we make an **AJAX** request to
-PhoneBookController's **AddPhone** action. Server returns an HTML which
-is then inserted to the table. That's why we did this part partial (We
-will see PhoneBookController.AddPhone action in the next section).
+In the **Add New Phone** button's click, we make an **AJAX** request to the PersonAppService's **AddPhone** action and add the related phone row (tr) to DOM.
 
-Lastly, we deleting the phone when clicking to the '**delete phone**'
-button and remove the related phone row (tr) from DOM. Notice the event
-registration here. We used **on** function of jquery. Thus, the selector
-becomes **live**. That means, if we add new elements to the page and any
-element matches to the selector, its click event is automatically
-binded.
-
-## AddPhone Action
-
-We added AddPhone action to the PhoneController as shown below:
-
-```csharp
-[HttpPost]
-public async Task<PartialViewResult> AddPhone([FromBody]AddPhoneInput input)
-{
-    PhoneInPersonListDto phoneInPersonList = await _personAppService.AddPhone(input);
-    var model = new PhoneRowInPersonListViewModel(phoneInPersonList);
-
-    return PartialView("_PhoneRowInPersonList", model);
-}
-```
-
-It simply uses PersonAppService.AddPhone and returns
-**\_PhoneRowInPersonList** partial view as response. Thus, we directly
-insert returning value to the table. A sample return value is shown
-below:
-
-```html
-<tr data-phone-id="19">
-    <td>
-        <button class="btn btn-sm default button-delete-phone">
-            <i class="icon-trash"></i>
-        </button>
-    </td>
-    <td>Mobile</td>
-    <td>129838172</td>
-</tr>
-```
-
-As you see, this can be directly inserted to the table, as we already do.
+Lastly, we deleting the phone when clicking to the '**Delete**'
+button and remove the related phone row (tr) from DOM. 
 
 ## Next
 
