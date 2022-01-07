@@ -1,6 +1,6 @@
 # Edit Mode For Phone Numbers
 
-We will create an edit modal which has two tabs for person (first tab for **Person** second tab for **Phones for that person**).Lets implement editing phone numbers firs. Final UI is shown below:
+We will create an edit modal which has two tabs for person (first tab for **Person** second tab for **Phones for that person**).Lets implement editing phone numbers first. Final UI is shown below:
 
 <img src="images/phone-book-edit-mode1.png" alt="Phone book edit mode" class="img-thumbnail" />
 
