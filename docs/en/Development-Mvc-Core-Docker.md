@@ -62,3 +62,20 @@ In some cases, you may get **container conflict errors** when switching between 
 <img src="images/development-docker-mvc/docker-container-conflict.png" alt="docker-cs-configuration"  style="zoom:100%;" />
 
 This occurs because the mvc container is still alive even if you stop debugging. To avoid container conflicts, you need to **Clean** the solution (right click to docker project and clean option) to remove the container completely before running the **docker-compose-public** which uses common containers like mvc container.
+
+Note: You can also run your projects using following commands
+
+_mvc_
+```shell
+docker compose -f docker-compose-mvc.yml -f docker-compose-mvc.override.yml up
+```
+
+_host_
+```shell
+docker compose -f docker-compose-host.yml -f docker-compose-host.override.yml up
+```
+
+_public_
+```shell
+docker compose -f docker-compose-public.yml -f docker-compose-public.override.yml up
+```
