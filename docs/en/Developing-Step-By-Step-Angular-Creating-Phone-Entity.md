@@ -3,21 +3,28 @@
 Let's start by creating a new Entity, **Phone** in **.Core** project:
 
 ```csharp
-[Table("PbPhones")]
-public class Phone : CreationAuditedEntity<long>
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities.Auditing;
+
+namespace Acme.PhoneBookDemo.PhoneBook
 {
-    public const int MaxNumberLength = 16;
+    [Table("PbPhones")]
+    public class Phone : CreationAuditedEntity<long>
+    {
+        public const int MaxNumberLength = 16;
 
-    [ForeignKey("PersonId")]
-    public virtual Person Person { get; set; }
-    public virtual int PersonId { get; set; }
+        [ForeignKey("PersonId")]
+        public virtual Person Person { get; set; }
+        public virtual int PersonId { get; set; }
 
-    [Required]
-    public virtual PhoneType Type { get; set; }
+        [Required]
+        public virtual PhoneType Type { get; set; }
 
-    [Required]
-    [MaxLength(MaxNumberLength)]
-    public virtual string Number { get; set; }
+        [Required]
+        [MaxLength(MaxNumberLength)]
+        public virtual string Number { get; set; }
+    }
 }
 ```
 
@@ -37,7 +44,7 @@ public class Person : FullAuditedEntity
 }
 ```
 
-We have a **PhoneType** enum as shown below: (in **.Core**
+We have a **PhoneType** enum as shown below: (in **.Core.Shared**
 project)
 
 ```csharp

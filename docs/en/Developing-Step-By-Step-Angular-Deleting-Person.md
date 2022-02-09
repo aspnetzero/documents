@@ -20,7 +20,7 @@ We're changing **phonebook.component.html** view to add a delete button
 				[hidden]="
 					!(
 						[
-							'Pages.Administration.PhoneBook.DeletePerson',
+							'Pages.Tenant.PhoneBook.DeletePerson',
 						] | permissionAny
 					)
 				"
@@ -37,7 +37,7 @@ We're changing **phonebook.component.html** view to add a delete button
 				[hidden]="
 					!(
 						[
-						   'Pages.Administration.PhoneBook.DeletePerson',
+						   'Pages.Tenant.PhoneBook.DeletePerson',
 						] | permissionAny
 					)
 				"
@@ -62,7 +62,7 @@ We're changing **phonebook.component.html** view to add a delete button
 						aria-labelledby="dropdownButton"
 					>
 						<li
-							*ngIf="'Pages.Administration.PhoneBook.DeletePerson' | permission"
+							*ngIf="'Pages.Tenant.PhoneBook.DeletePerson' | permission"
 							role="menuitem"
 						>
 							<a
@@ -104,6 +104,18 @@ public async Task DeletePerson(EntityDto input)
 {
     await _personRepository.DeleteAsync(input.Id);
 }
+```
+
+Similar to what we did before, go to **AppPermissions** class and define the Delete permission name as shown below;
+
+```csharp
+public const string Pages_Tenant_PhoneBook_DeletePerson = "Pages.Tenant.PhoneBook.DeletePerson";
+```
+
+And then, go to **AppAuthorizationProvider** and define the delete permissions as shown below;
+
+```csharp
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson, L("DeletePerson"), multiTenancySides: MultiTenancySides.Tenant);
 ```
 
 ## Service Proxy Generation

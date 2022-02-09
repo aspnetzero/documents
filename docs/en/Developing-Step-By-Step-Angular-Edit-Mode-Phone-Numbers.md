@@ -8,7 +8,7 @@ We will create an edit modal which has two tabs for person (first tab for **Pers
 
 ## View
 
-Create new component named **EditPersonModal** in phonebook folder. And change it's view as seen below:
+Create new component named **edit-person-modal.component.html** in phonebook folder and change it's view as seen below:
 
 ```html
 <div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
@@ -88,6 +88,8 @@ Create new component named **EditPersonModal** in phonebook folder. And change i
 ```
 
 ## Edit Person Component Class
+
+Create new component named **edit-person-modal.component.ts** in phonebook folder and change it's view as seen below:
 
 ```typescript
 import {Component, ViewChild, Injector, ElementRef, Output, EventEmitter} from '@angular/core';
@@ -229,6 +231,8 @@ Changes in view are shown below:
     <createPersonModal #createPersonModal (modalSave)="getPeople()"></createPersonModal>
     <editPersonModal #editPersonModal (onClosedWithChanges)="getPeople()"></editPersonModal><!--Add edit-->
 ```
+
+Finally, you need to refresh the service proxies by running **refresh.bat** under angular/nswag folder.
 
 ## Next
 

@@ -37,7 +37,7 @@ public class PhoneConsts
 }
 ```
 
-Now, we can implement these methods:
+Now, we can implement these methods as shown below. Just note that, you have to inject ```IRepository<Phone, long>``` to the constructor of PersonAppService just like ```IRepository<Person>``` we did before.
 
 ```csharp
 [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
@@ -60,6 +60,18 @@ public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 
     return ObjectMapper.Map<PhoneInPersonListDto>(phone);
 }
+```
+
+After creating the AddPhone method, define edit permisison string in AppPermissions.cs as shown below;
+
+```csharp
+public const string Pages_Tenant_PhoneBook_EditPerson = "Pages.Tenant.PhoneBook.EditPerson";
+```
+
+And, define the permisison itself in AppAuthorizationProvider.cs as shown below;
+
+```csharp
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_EditPerson, L("EditPerson"), multiTenancySides: MultiTenancySides.Tenant);
 ```
 
 Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
