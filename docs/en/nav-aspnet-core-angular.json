@@ -376,12 +376,12 @@
                       "path": "Developing-Step-By-Step-Angular-Database-Migrations-Person-Entity.md"
                     },
                     {
-                      "text": "Creating Unit Tests for Person Application Service",
-                      "path": "Developing-Step-By-Step-Angular-Creating-Unit-Tests-for-Person-Application-Service.md"
-                    },
-                    {
                       "text": "Creating Person Application Service",
                       "path": "Developing-Step-By-Step-Angular-Creating-Person-Application-Service.md"
+                    },
+                    {
+                      "text": "Creating Unit Tests for Person Application Service",
+                      "path": "Developing-Step-By-Step-Angular-Creating-Unit-Tests-for-Person-Application-Service.md"
                     },
                     {
                       "text": "Using GetPeople Method From Angular Component",

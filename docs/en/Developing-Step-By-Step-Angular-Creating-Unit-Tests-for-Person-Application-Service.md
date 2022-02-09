@@ -18,8 +18,8 @@ multitenancy).
 Let's create first test to verify getting people without any filter:
 
 ```csharp
-using Acme.PhoneBookDemo.People;
-using Acme.PhoneBookDemo.People.Dtos;
+using Acme.PhoneBookDemo.PhoneBook;
+using Acme.PhoneBookDemo.PhoneBook.Dto;
 using Shouldly;
 using Xunit;
 

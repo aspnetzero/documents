@@ -50,30 +50,41 @@ configuration.CreateMap<Person, PersonListDto>();
 After defining interface, we can implement it as shown below: (in **.Application** project)
 
 ```csharp
-public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
+using System.Collections.Generic;
+using System.Linq;
+using Abp.Application.Services.Dto;
+using Abp.Collections.Extensions;
+using Abp.Domain.Repositories;
+using Abp.Extensions;
+using Acme.PhoneBookDemo.PhoneBook.Dto;
+
+namespace Acme.PhoneBookDemo.PhoneBook
 {
-    private readonly IRepository<Person> _personRepository;
-
-    public PersonAppService(IRepository<Person> personRepository)
+    public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
     {
-        _personRepository = personRepository;
-    }
+        private readonly IRepository<Person> _personRepository;
 
-    public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
-    {
-        var people = _personRepository
-            .GetAll()
-            .WhereIf(
-                !input.Filter.IsNullOrEmpty(),
-                p => p.Name.Contains(input.Filter) ||
-                     p.Surname.Contains(input.Filter) ||
-                     p.EmailAddress.Contains(input.Filter)
-            )
-            .OrderBy(p => p.Name)
-            .ThenBy(p => p.Surname)
-            .ToList();
+        public PersonAppService(IRepository<Person> personRepository)
+        {
+            _personRepository = personRepository;
+        }
 
-        return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(people));
+        public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
+        {
+            var people = _personRepository
+                .GetAll()
+                .WhereIf(
+                    !input.Filter.IsNullOrEmpty(),
+                    p => p.Name.Contains(input.Filter) ||
+                         p.Surname.Contains(input.Filter) ||
+                         p.EmailAddress.Contains(input.Filter)
+                )
+                .OrderBy(p => p.Name)
+                .ThenBy(p => p.Surname)
+                .ToList();
+
+            return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(people));
+        }
     }
 }
 ```

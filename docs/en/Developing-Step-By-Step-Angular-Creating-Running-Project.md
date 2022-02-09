@@ -17,6 +17,8 @@ public class PhoneBookDemoConsts
     public const bool MultiTenancyEnabled = false;
 
     public const int PaymentCacheDurationInMinutes = 30;
+    
+    // Other code blocks
 }
 ```
 

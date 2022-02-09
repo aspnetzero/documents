@@ -66,6 +66,10 @@ So, we can add a separated class to fill some people to database as
 shown below:
 
 ```csharp
+using System.Linq;
+using Acme.PhoneBookDemo.EntityFrameworkCore;
+using Acme.PhoneBookDemo.PhoneBook;
+
 namespace Acme.PhoneBookDemo.Migrations.Seed.Host
 {
     public class InitialPeopleCreator

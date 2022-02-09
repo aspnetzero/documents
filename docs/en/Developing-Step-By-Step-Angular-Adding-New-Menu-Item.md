@@ -10,7 +10,7 @@ Open **src\\app\\shared\\layout\\nav\\app-navigation.service.ts** in the client 
 new AppMenuItem("PhoneBook", null, "flaticon-book", "/app/main/phonebook")
 ```
 
-**PhoneBook** is the menu name (will localize below), **null** is for permission name (will set it later), **flaticon-book** is just an arbitrary icon class (from [this set](http://keenthemes.com/metronic/preview/?page=components/icons/flaticon&demo=default)) and **/phonebook** is the Angular route.
+**PhoneBook** is the menu name (we will localize it later), **null** is for permission name (we will set it later), **flaticon-book** is just an arbitrary icon class (from [this set](http://keenthemes.com/metronic/preview/?page=components/icons/flaticon&demo=default)) and **/phonebook** is the Angular route.
 
 If you run the application, you can see a new menu item on the left menu, but it won't work (it redirects to default route) if you click to the menu item, since we haven't defined the Angular route yet.
 
@@ -32,17 +32,22 @@ If we don't define "PhoneBook"s value for other localization dictionaries, defau
 <text name="PhoneBook">Telefon Rehberi</text>
 ```
 
-Note: Any change in server side (including change localization texts) requires recycle of the server application. We suggest to use Ctrl+F5 if you don't need to debugging for a faster startup. In that case, it's
+Note: Any change in server side (including localization text changes) requires recycle of the server application. We suggest to use Ctrl+F5 if you don't need to debugging for a faster startup. In that case, it's
 enough to make a re-build to recycle the application.
 
 ## Angular Route
 
 Angular has a powerful URL routing system. ASP.NET Zero has defined routes in a few places (for modularity, see [main menu & layout](Features-Angular-Main-Menu-Layout.md)). We want to add phone book page to the main module. So, open **src\\app\\main\\main-routing.module.ts** in the client side and add a new route just below to the dashboard:
 
-```json
+```js
+{
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+    data: { permission: 'Pages.Tenant.Dashboard' },
+},
 {
 	path: 'phonebook',
-	loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhonebookModule)
+	loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhoneBookModule)
 }
 ```
 
