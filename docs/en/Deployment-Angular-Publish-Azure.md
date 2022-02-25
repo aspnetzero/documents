@@ -24,7 +24,7 @@ Just like we did for Host website, create a new app service for Angular website 
 
 On Azure portal, go to SQL databases menu and create a new empty database. If you haven't create a new Server on Azure, click "create new" link under the Server selection combobox and first create a Server.
 
-<img src="D:\GitHub\documents\docs\en\images\azure-publish-mvc-create-database.png">
+<img src="/images/azure-publish-mvc-create-database.png">
 
 ## Publish Host Application to The Azure
 
