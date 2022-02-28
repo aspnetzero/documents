@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 11.1.0 (2022-02-28)
+
+* Password expiration feature
+* Async JWT validation
+* Upgraded to ABP 7.1
+* Upgraded to ngx-bootstrap v8
+* Upgraded to PrimeNG 13.0.4
+* Enhancements and bug fixes
+
 ## 11.0.0 (2021-12-21)
 
 * Upgraded to .NET 6
