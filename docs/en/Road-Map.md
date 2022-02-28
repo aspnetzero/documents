@@ -6,7 +6,6 @@ We are constantly getting feedbacks from our customers to improve ASP.NET Zero. 
 -   Sending mass notifications/emails to users
 -   User Sync/Link feature
 -   Tenant login page customization
--   Password expiration policy
 -   Orderable menu items
 -   Code Analysis Rules
 -   Coupon for Subscriptions
