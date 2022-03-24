@@ -13,6 +13,10 @@ You can use ASP.NET Zero Power Tools in two ways:
 
 Visual Studio Extension is available for Windows version of Visual Studio. Mac and Linux users can use DLL of ASP.NET Zero Power Tools to generate CRUD pages.
 
+Warning: If you are working on ASP.NET Core & Angular template, after generating the entity via Power Tools, run your ***.Web.Host** project and then run "**./angular/nswag/refresh.bat**" to update **service-proxies.ts**.
+
+Warning: Be sure that you have saved your work before running this tool since it will add new files and modify some of the existing files. We strongly recommend using a source control system (like Git).  Otherwise, backup your project.
+
 ## How It Works?
 
 DLLs (that are inside the ```aspnet-core\AspNetZeroRadTool``` folder in your solution) do all the work. The extension is just a user interface. Since the tool is built with .NET Core, **Mac** or **Linux** users can safely use it without the user interface.
