@@ -29,4 +29,4 @@ You can see ASP.NET Zero Power Tools in action by watching the quick introductio
 
 For the detalied usage of ASP.NET Zero Power Tools, you can watch the detailed introduction video.
 
-[![Power Tools demonstration](images/RadToolVideo.jpg)](https://www.youtube.com/watch?v=bFe28oxPVHU)
+[![Power Tools demonstration](images/RadToolVideo-1.png)](https://www.youtube.com/watch?v=bFe28oxPVHU)
