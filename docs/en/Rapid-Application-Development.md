@@ -23,6 +23,10 @@ If your project version is 5.0.0+, all you have to do is just install the **ASP.
 
 ## Demonstration
 
-You can see ASP.NET Zero Power Tools in action by watching the [YouTube video](https://youtu.be/OsSdNkwmC7I?t=1001). This video demonstrates some of ASP.NET Zero Power Tools features starting from its installation on Visual Studio. 
+You can see ASP.NET Zero Power Tools in action by watching the quick introduction video [YouTube video](https://youtu.be/OsSdNkwmC7I?t=1001). This video demonstrates some of ASP.NET Zero Power Tools features starting from its installation on Visual Studio. 
 
 [![Power Tools demonstration](images/RadToolVideo.jpg)](https://youtu.be/OsSdNkwmC7I?t=1001)
+
+For the detalied usage of ASP.NET Zero Power Tools, you can watch the detailed introduction video.
+
+[![Power Tools demonstration](images/RadToolVideo.jpg)](https://www.youtube.com/watch?v=bFe28oxPVHU)
