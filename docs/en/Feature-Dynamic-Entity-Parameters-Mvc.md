@@ -1,14 +1,85 @@
-# Dynamic Parameter System
+# Dynamic Property System
 
-**Dynamic Parameter System** is a system that allows you to add and manage new parameters on entity objects at runtime without any code changes. With this system, you can define dynamic parameters on entity objects and perform operations on these objects easily. For example, it can be used for cities, counties, gender, status codes etc.
+**Dynamic Property System** is a system that allows you to add and manage new properties on entity objects at runtime without any code changes. With this system, you can define dynamic propeties on entity objects and perform operations on these objects easily. For example, it can be used for cities, counties, gender, status codes etc.
 
-In **Dynamic Parameters** page, you can see all of your dynamic parameters:
+Check AspNet Boilerplate side of [Dynamic Property System](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Property-System)
 
-<img src="images/feature-dynamic-parameter-1.png" alt="Audit logs" class="img-thumbnail" />
+### Defining
 
-You can use **Add A New Dynamic Parameter** button to create a new dynamic parameter. 
+* Firs of all you need to define input types and entities you want to use with dynamic properties as described [here](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Parameter-System#dynamic-property-definition)
 
-<img src="images/feature-dynamic-parameter-2.png" alt="Audit logs" class="img-thumbnail" />
+* Then go to https://localhost:44302/App/DynamicProperty
+
+* Add Dynamic Properties that you need
+
+* Assign Dynamic Properties to your entity
+
+
+<img src="images/adding-dynamic-properties-to-entity.gif" alt="dynamic-properties" class="img-thumbnail" />
+
+* Then you will be able to use dynamic property for the items of your entity.
+
+You can use `DynamicEntityPropertyManager` to manager dynamic properties of an entity
+
+Add javascript
+
+```html
+<script abp-src="/view-resources/Areas/AppAreaName/Views/Common/_DynamicEntityPropertyManager.js" asp-append-version="true"></script>
+```
+Then you can use it to show modal
+```javascript
+var _dynamicEntityPropertyManager = new DynamicEntityPropertyManager();
+
+var canShow = _dynamicEntityPropertyManager.canShow('YOURENTITYNAME');//is entity defined and user has related permission to edit dynamic entities
+if(canShow){
+    _dynamicEntityPropertyManager.modal.open({
+        entityFullName: 'MyCompanyName.AbpZeroTemplate.Authorization.Users.User',
+        rowId: data.record.id,
+    });
+}
+```
+For example you can use it in list page action
+```javascript
+var dataTable = _$usersTable.DataTable({
+        //...
+        columnDefs: [
+            {
+                targets: 1,
+                data: null,
+                orderable: false,
+                autoWidth: false,
+                defaultContent: '',
+                rowAction: {
+                    text:
+                        '<i class="fa fa-cog"></i> <span class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">' +
+                        app.localize('Actions') +
+                        '</span> <span class="caret"></span>',
+                    items: [
+                        //..
+                        {
+                            text: app.localize('DynamicProperties'),
+                            visible: function () {
+                                return _dynamicEntityPropertyManager.canShow(
+                                    'MyCompanyName.AbpZeroTemplate.Authorization.Users.User'
+                                );
+                            },
+                            action: function (data) {
+                                _dynamicEntityPropertyManager.modal.open({
+                                    entityFullName: 'MyCompanyName.AbpZeroTemplate.Authorization.Users.User',
+                                    rowId: data.record.id,
+                                });
+                            },
+                        }
+                    ]
+                }
+            }
+
+        ],
+    });
+```
+<img src="images/managing-dynamic-property-of-entity.gif" alt="dynamic-propert-of-entity" class="img-thumbnail" />
+
+_____
 
 <table>
     <thead>
@@ -32,17 +103,3 @@ You can use **Add A New Dynamic Parameter** button to create a new dynamic param
         </tr>   
     </tbody>
 </table>
-
-In **Dynamic Parameter Detail Page**, you can manage a dynamic parameter and it's values(If your dynamic parameter's input types need values to select, for example: `ComboboxInputType`)
-
-<img src="images/feature-dynamic-parameter-3.png" alt="Audit logs" class="img-thumbnail" />
-
-In **Entity Dynamic Parameters** page, you can manage dynamic parameter of entities. 
-
-<img src="images/feature-dynamic-parameter-4.png" alt="Audit logs" class="img-thumbnail" />
-
-To manage dynamic parameter values of an entity row you should go to "https://localhost:44302/AppAreaName/EntityDynamicParameterValue/ManageAll/**{YourEntityName}**/**{EntityRowId}**". It will open value manager for entities dynamic parameter types.
-
-For example, yo should go to https://localhost:44302/AppAreaName/EntityDynamicParameterValue/ManageAll/MyCompanyName.AbpZeroTemplate.Authorization.Users.User/1 to manage the first row of User entity table.
-
-<img src="images/feature-dynamic-parameter-5.png" alt="Audit logs" class="img-thumbnail" />
