@@ -14,17 +14,42 @@ Audit log report is provided by **AuditLogAppService** class.
 
 ### Periodic Log Deletion 
 
-ASP.NET Zero has built-in periodic log deletion system. To enable it, go to `*.Application/Auditing/ExpiredAuditLogDeleterWorker.cs`  and set `IsEnabled` to true;
+ASP.NET Zero has built-in periodic log deletion system (`*.Application/Auditing/ExpiredAuditLogDeleterWorker.cs`). To enable it, go to `appsettings.json` and set `App:AuditLog:AutoDeleteExpiredLogs:IsEnabled` to true; (default `false`)
 
-```csharp
- public class ExpiredAuditLogDeleterWorker : PeriodicBackgroundWorkerBase, ISingletonDependency
-    {
-   		...
-		public const bool IsEnabled = false;//default is false
-		...
+```json
+"App": {
+    "AuditLog": {
+      "AutoDeleteExpiredLogs": {
+        "IsEnabled": true
+      }
+    }
+}
 ```
 
-It has two more parameter.
+Then periodic log deletion will be enabled.
+
+#### Periodic Log Deletion Backup
+
+Periodic log deletion system also has backup implementation. It uses `IExpiredAndDeletedAuditLogBackupService` to backup deleted items. It's default implementation uses excel to create backup. To enable it, go to `appsettings.json` and set `App:AuditLog:AutoDeleteExpiredLogs:ExcelBackup:IsEnabled` to true; (default `false`). Then deleted items will be stored in the given file path as an excel file.
+
+```json
+"App": {
+    "AuditLog": {
+      "AutoDeleteExpiredLogs": {
+        "IsEnabled": true,
+        "ExcelBackup": {
+          "IsEnabled": true,
+          "FilePath": "App_Data/AuditLogsBackups/"
+        }
+      }
+    }
+}
+```
+
+________
+
+
+`*.Application/Auditing/ExpiredAuditLogDeleterWorker.cs` has two more parameter.
 
 **CheckPeriodAsMilliseconds:** Time to wait between two controls.
 
