@@ -1,14 +1,74 @@
-# Dynamic Parameter System
+# Dynamic Property System
 
-**Dynamic Parameter System** is a system that allows you to add and manage new parameters on entity objects at runtime without any code changes. With this system, you can define dynamic parameters on entity objects and perform operations on these objects easily. For example, it can be used for cities, counties, gender, status codes etc.
+**Dynamic Property System** is a system that allows you to add and manage new properties on entity objects at runtime without any code changes. With this system, you can define dynamic propeties on entity objects and perform operations on these objects easily. For example, it can be used for cities, counties, gender, status codes etc.
 
-In **Dynamic Parameters** page, you can see all of your dynamic parameters:
+Check AspNet Boilerplate side of [Dynamic Property System](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Property-System)
 
-<img src="images/feature-dynamic-parameter-1.png" alt="Audit logs" class="img-thumbnail" />
+### Defining
 
-You can use **Add A New Dynamic Parameter** button to create a new dynamic parameter. 
+* Firs of all you need to define input types and entities you want to use with dynamic properties as described [here](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Parameter-System#dynamic-property-definition)
 
-<img src="images/feature-dynamic-parameter-2.png" alt="Audit logs" class="img-thumbnail" />
+* Then go to http://localhost:4200/app/admin/dynamic-property
+
+* Add Dynamic Properties that you need
+
+* Assign Dynamic Properties to your entity
+
+
+<img src="images/adding-dynamic-properties-to-entity.gif" alt="dynamic-properties" class="img-thumbnail" />
+
+* Then you will be able to use dynamic property for the items of your entity.
+
+You can use `DynamicEntityPropertyManagerComponent` to manager dynamic properties of an entity
+
+_*.html_
+```html
+<!--...-->
+<li
+    *ngIf="
+        dynamicEntityPropertyManager.canShow(
+            'MyCompanyName.AbpZeroTemplate.Authorization.Users.User'
+        )
+    "
+    role="menuitem"
+>
+    <a
+        href="javascript:;"
+        class="dropdown-item"
+        (click)="showDynamicProperties(record)"
+    >
+        {{ 'DynamicProperties' | localize }}
+    </a>
+</li>
+<!--...-->
+<dynamic-entity-property-manager #dynamicEntityPropertyManager></dynamic-entity-property-manager>
+```
+
+_*.ts_
+```typescript
+import { DynamicEntityPropertyManagerComponent } from '@app/shared/common/dynamic-entity-property-manager/dynamic-entity-property-manager.component';
+@Component({
+    templateUrl: './users.component.html',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./users.component.less'],
+    animations: [appModuleAnimation()],
+})
+export class UsersComponent extends AppComponentBase implements AfterViewInit {
+    @ViewChild('dynamicEntityPropertyManager', { static: true }) dynamicEntityPropertyManager: DynamicEntityPropertyManagerComponent;
+
+    showDynamicProperties(user: UserListDto): void {
+        this.dynamicEntityPropertyManager
+            .getModal()
+            .show('MyCompanyName.AbpZeroTemplate.Authorization.Users.User', user.id.toString());
+    }
+    //...
+}
+
+```
+
+<img src="images/managing-dynamic-property-of-entity.gif" alt="dynamic-propert-of-entity" class="img-thumbnail" />
+
+_____
 
 <table>
     <thead>
@@ -32,17 +92,3 @@ You can use **Add A New Dynamic Parameter** button to create a new dynamic param
         </tr>   
     </tbody>
 </table>
-
-In **Dynamic Parameter Detail Page**, you can manage a dynamic parameter and it's values(If your dynamic parameter's input types need values to select, for example: `ComboboxInputType`)
-
-<img src="images/feature-dynamic-parameter-3.png" alt="Audit logs" class="img-thumbnail" />
-
-In **Entity Dynamic Parameters** page, you can manage dynamic parameter of entities. 
-
-<img src="images/feature-dynamic-parameter-4.png" alt="Audit logs" class="img-thumbnail" />
-
-To manage dynamic parameter values of an entity row you should go to "http://localhost:4200/app/admin/entity-dynamic-parameter-value/manage-all/**{YourEntityName}**/**{EntityRowId}**". It will open value manager for entities dynamic parameter types.
-
-For example, yo should go to http://localhost:4200/app/admin/entity-dynamic-parameter-value/manage-all/MyCompanyName.AbpZeroTemplate.Authorization.Users.User/1 to manage the first row of User entity table.
-
-<img src="images/feature-dynamic-parameter-5.png" alt="Audit logs" class="img-thumbnail" />
