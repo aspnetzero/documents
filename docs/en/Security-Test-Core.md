@@ -6,6 +6,7 @@ To test the web application, you need to install following tools;
 
 * [Docker](https://www.docker.com/)
 * [Helm](https://helm.sh/)
+* [NGINX ingress](https://kubernetes.github.io/ingress-nginx/deploy/) for k8s
 * [Owasp ZAP Tool](https://www.zaproxy.org/)
 
 After installing the Docker, be sure that you enabled the Kubernetes on Docker by following [https://docs.docker.com/desktop/kubernetes/](https://docs.docker.com/desktop/kubernetes/). 
