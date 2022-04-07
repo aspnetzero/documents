@@ -59,6 +59,32 @@ If you are not using Windows OS, you need to do the same for your OS.
 
 Now, if you go to a browser and type [https://abpzerotemplate-host-www/swagger](https://abpzerotemplate-host-www/swagger), you can visit the Host API application. You can visit the Angular app on  [https://abpzerotemplate-angular-www](https://abpzerotemplate-angular-www).
 
+### About Nginx Ingress Controller
+
+By default, nginx doesn't allow "." character in request headers. We need to change ```ignore_invalid_headers``` setting for nginx. To do that, follow the steps below:
+
+- Run ```kubectl get pods -A``` command and find the ingress-nginx pod name. It should have a name similar to ```ingress-nginx-controller-756f546d89-52r5t```.
+
+- Then run the command below to enter to this pod:
+
+  ```bash
+  kubectl exec -it ingress-nginx-controller-756f546d89-52r5t -n ingress-nginx sh
+  ```
+
+- In this pod, run ```vi nginx.conf```. This will print content of nginx.conf and will allow you to edit its content.
+
+- Go to the line which contains **ignore_invalid_headers** setting by using arrow keys. Click ```i``` key to enter to edit mode and change **on** value to **off**. Now, the setting should be like this:
+
+
+
+<img src="images/nginx-ingress-ignore-invalid-headers.png" alt="Nginx ignore-invalid-headers." class="thumbnail" />
+
+* press ```:w``` to save the changes and then press ```:q!``` to exit from edit mode.
+* Finally run ```nginx -s reload``` to restart the Nginx to load this change.
+
+After all, Nginx ingress controller will allow AspNet Zero app tp use "." in request headers.
+
+
 ## Preparing ZAP for Testing
 
 Open the OWASP ZAP application and load the script from "aspnet-core\etc\owasp\abpzerotemplate-angular\abpzerotemplate-angular-http-sender-script.js" by clicking the scripts area and then load icon as shown below;
