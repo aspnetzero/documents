@@ -14,7 +14,7 @@ After installing the Docker, be sure that you enabled the Kubernetes on Docker b
 
 The security test will be runned on an instance of the app which works in Kubernetes. To run our application on Kubernetes, ASP.NET Zero includes Helm charts out of the box. To run our web application on Kubernetes, we must create 3 Docker images. 
 
-To do that, go to folder which contains *.Web.Host.sln file and execute the command below (Don't forget to replace MyCompanyName.AbpZeroTemplate with your project name);
+To do that, go to folder which contains *.Web.sln file and execute the command below (Don't forget to replace MyCompanyName.AbpZeroTemplate with your project name);
 
 ```bash
 docker build -t abpzerotemplate-host -f src\MyCompanyName.AbpZeroTemplate.Web.Host\Dockerfile .
