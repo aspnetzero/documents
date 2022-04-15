@@ -25,7 +25,8 @@ ASP.NET Zero supports social media logins and external logins as well. To enable
         "ClientId": "",
         "Authority": "",
         "LoginUrl": "",
-        "ValidateIssuer": "true"
+        "ValidateIssuer": "true",
+        "ClaimsMapping: []
     },
     "WsFederation": {
         "IsEnabled": "false",
@@ -62,9 +63,21 @@ In addition to social logins, ASP.NET Zero includes OpenId Connect Login integra
   "ClientId": "",
   "Authority": "",
   "LoginUrl": "",
-  "ValidateIssuer": "true"
+  "ValidateIssuer": "true",
+  "ClaimsMapping: []
 }
 ```
+
+In some cases, OpenId Connect provider doesn't return claims we want to use. For example, Azure AD doesn't return "nameidentifier" claim but ASP.NET Core Identity uses it to find id of the user. So, in such cases, we can use **ClaimsMapping** to map claims of provider to custom claims. AspNet Zero will find the claim with **key** and will map it to internal claim with **claim** value in the mapping. For the following configuration, external **objectidentifier** will be mapped to internal **nameidentifier** claim.
+
+````json
+"ClaimsMapping": [
+	{
+	  "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+	  "key": "http://schemas.microsoft.com/identity/claims/objectidentifier"
+	}
+]
+````
 
 If you are using Azure AD for OpenID Connect and your app is multi-tenant on Azure side, then you need to disable issuer validation, so all Azure AD users can use your app. Note that, multi-tenant app here is the one you have created oSocial logins can be enabled and configured from [server-side](Features-Mvc-Core-Social-Logins). Once they are properly configured, they are  automatically shown in the user interface. 
 
