@@ -41,9 +41,9 @@ Each tenant can allow tenant users to use Gravatar profile picture or not.
 
 ##### Password
 
-You can set enable/disable password expiration. If you enable it user's will have to change their password after defined day passed.
+You can enable/disable password expiration on the settings page. If you enable it, users will have to change their password after defined days passed.
 
-You can also prevent user's new password from being same as any of last x passwords. If you enable it, you will need to define how many password you want to store (it stores the passwords as encrypted). User will not be able to use last defined count password as a new password.
+You can also prevent user's new password from being same as any of last x passwords. If you enable it, you will need to define how many previous password you want to prevent. Users will not be able to use some of the previously used password as a new password.
 
 ## Security
 
