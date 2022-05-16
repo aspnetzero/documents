@@ -38,10 +38,10 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
    ```json
    dependencies: [
-       "devextreme": "20.2.5",
-       "@devexpress/analytics-core": "20.2.5",
-       "devexpress-reporting": "20.2.5",
-       "jquery-ui-dist": "1.12.1"
+    "devextreme": "21.2.*",
+    "@devexpress/analytics-core": "21.2.*",
+    "devexpress-reporting": "21.2.*",
+    "jquery-ui-dist": "^1.12.1"
    ]
    ```
 
@@ -85,7 +85,16 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
     ![header-scripts](images/devexpress-reporting-header-scripts.png)
 
-11. Create new controller named `SampleReportController` in MVC project's Areas/App folder.
+11. Create new controller named `CustomWebDocumentViwerController` for devexpress in MVC project's Areas/App folder.
+
+```csharp
+    public class CustomWebDocumentViewerController : WebDocumentViewerController
+    {
+        public CustomWebDocumentViewerController(IWebDocumentViewerMvcControllerService controllerService) : base(controllerService) { }
+    }
+ ```
+
+12. Create new controller named `SampleReportController` in MVC project's Areas/App folder.
 
     ```csharp
     [Area("App")]
@@ -98,7 +107,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
     }
     ```
 
-12. Create `Index.cshtml` and add following code into it.
+13. Create `Index.cshtml` and add following code into it.
 
     ```cshtml
     @using DevExpress.AspNetCore
@@ -135,8 +144,6 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
 Your reporting file is ready to use.
 
-Note: If you get a reference error about `WebDocumentViewerController`, `QueryBuilderController` or `ReportDesignerController`, you can follow the solution below:
-
 * Go to you `[YOURAPPNAME]WebMvcModule` .
 
 * Add following code into `PreInitialize` function
@@ -145,9 +152,7 @@ Note: If you get a reference error about `WebDocumentViewerController`, `QueryBu
   public override void PreInitialize()
   {
       //...
-      IocManager.Register(typeof(WebDocumentViewerController), DependencyLifeStyle.Transient);
-      IocManager.Register(typeof(QueryBuilderController), DependencyLifeStyle.Transient);
-      IocManager.Register(typeof(ReportDesignerController), DependencyLifeStyle.Transient);
+      IocManager.Register(typeof(CustomWebDocumentViewerController), DependencyLifeStyle.Transient);
   }
   ```
 
