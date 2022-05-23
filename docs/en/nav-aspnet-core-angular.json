@@ -208,7 +208,7 @@
               "path": "Features-Angular-User-Delegation.md"
             },
 			{
-              "text": "Dynamic Entity Parameters",
+              "text": "Dynamic Property System",
               "path": "Feature-Dynamic-Entity-Parameters-Angular.md",
 			  "items": [
 				{

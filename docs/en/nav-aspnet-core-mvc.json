@@ -198,7 +198,7 @@
               "path": "Features-Mvc-Core-User-Delegation.md"
             },
 			{
-              "text": "Dynamic Entity Parameters",
+              "text": "Dynamic Property System",
               "path": "Feature-Dynamic-Entity-Parameters-Mvc.md",
 			  "items": [
 				{
