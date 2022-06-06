@@ -6,6 +6,16 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 11.2.0 (2022-06-06)
+
+* Quick switch button for dark mode.
+* Allow removing a friend on chat.
+* Automatically backup audit logs to excel file.
+* Migrated to SixLabors.ImageSharp for supporting non-Windows OSs.
+* Upgraded to ABP 7.2.
+* Updated German localization
+* Enhancements and bug fixes
+
 ## 11.1.0 (2022-02-28)
 
 * Password expiration feature
