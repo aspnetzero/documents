@@ -2,7 +2,26 @@
 
 Our entity model has changed, so we need to add a new migration:
 
+## Package Manager Console
+
+Open **Package Manager Console**, run the **Add-Migration
+"Added_Phones_Table"** command as shown below:
+
 <img src="images/phonebook-migrations-core-4.png" alt="Entity Framework Migration" class="img-thumbnail" />
+
+## Dotnet Cli
+
+Open project in terminal, change your working directory to **.EntityFrameworkCore** folder and run the following command:
+
+### Add Migration
+```shell 
+dotnet ef migrations add "Added_Phones_Table" -s "../Acme.PhoneBookDemo.Web.Mvc" -c "PhoneBookDemoDbContext"
+```
+
+### Update Database
+```shell
+dotnet ef database update -s "../Acme.PhoneBookDemo.Web.Mvc" -c "PhoneBookDemoDbContext"
+```
 
 This will create a new code based migration file to create **PbPhones**
 table:

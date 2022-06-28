@@ -1,8 +1,6 @@
 # Creating Person Entity
 
-We define entities in **.Core** (domain) project. We can define a
-**Person** entity (mapped to **PbPersons** table in database) to
-represent a person in phone book as shown below:
+We define entities at domain specific folders in **.Core** (domain) project. We can create a folder named **PhoneBook** and define a **Person** entity (mapped to **PbPersons** table in database) to represent a person in phone book as shown below:
 
 ```csharp
 [Table("PbPersons")]
@@ -29,7 +27,7 @@ a person, it's not deleted by database but marked as deleted (see
 [data
 filters](https://aspnetboilerplate.com/Pages/Documents/Data-Filters)
 documentations for more information). We created **PersonConsts** in
-**Core.Shared** project for **MaxLength** properties. This is a good
+**.Core.Shared** project for **MaxLength** properties. This is a good
 practice since we will use same values later.
 
 ```csharp

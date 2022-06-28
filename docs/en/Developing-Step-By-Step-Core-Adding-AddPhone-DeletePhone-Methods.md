@@ -1,6 +1,6 @@
 # AddPhone and DeletePhone Methods
 
-We are adding two more methods to IPersonAppService interface as shown
+We are adding three more methods to IPersonAppService interface as shown
 below:
 
 ```csharp

@@ -81,15 +81,15 @@ public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
 }
 ```
 
-We're injecting **person repository** (it's automatically created by
-ABP) and using it to filter and get people from database.
+We're injecting **person repository** [(it's automatically created by
+ABP)](https://aspnetboilerplate.com/Pages/Documents/Repositories) and using it to filter and get people from database.
 
-**WhereIf** is an extension method here (defined in Abp.Linq.Extensions
+**WhereIf** is an extension method here (defined in **Abp.Linq.Extensions**
 namespace). It performs Where condition, only if filter is not null or
 empty. **IsNullOrEmpty** is also an extension method (defined in
-Abp.Extensions namespace). ABP has many similar shortcut extension
+**Abp.Extensions** namespace). ABP has many similar shortcut extension
 methods. **ObjectMapper.Map** method automatically converts list of
-Person entities to list of PersonListDto objects with using
+Person entities to list of **PersonListDto** objects with using
 configurations in **CustomDtoMapper.cs** in **.Application** project.
 
 ## Connection & Transaction Management

@@ -13,7 +13,7 @@ Copied and modified the view code as shown below
 (\_CreatePersonModal.cshtml): 
 
 ```html
-@using Acme.PhoneBookDemo.People
+@using Acme.PhoneBookDemo.PhoneBook
 @using Acme.PhoneBookDemo.Web.Areas.App.Models.Common.Modals
 
 @Html.Partial("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewPerson")))

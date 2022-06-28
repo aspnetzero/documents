@@ -43,7 +43,7 @@ as shown below:
 
 <img src="images/localization-files-5.png" alt="Localization files" class="img-thumbnail" />
 
-Open PhoneBook.xml (the **default**, **English** localization
+Open **PhoneBook.xml** (the **default**, **English** localization
 dictionary) and add the following line:
 
 ```xml
@@ -52,7 +52,7 @@ dictionary) and add the following line:
 
 If we don't define "PhoneBook"s value for other localization
 dictionaries, default value is shown in all languages. We can define it
-also for Turkish in PhoneBook-tr.xml file:
+also for Turkish in **PhoneBook-tr.xml** file:
 
 ```xml
 <text name="PhoneBook">Telefon Rehberi</text>

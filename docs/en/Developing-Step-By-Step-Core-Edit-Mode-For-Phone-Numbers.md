@@ -29,11 +29,29 @@ public class PhoneBookController : AbpZeroTemplateControllerBase
 }
 ```
 
+## Dto
+
+Go to `PhoneInPersonListDto` and add `GetPhoneTypeAsString`.
+
+```csharp
+public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
+{
+    public PhoneType Type { get; set; }
+
+    public string Number { get; set; }
+    
+    public string GetPhoneTypeAsString()
+    {
+        return LocalizationHelper.GetString(PhoneBookDemoConsts.LocalizationSourceName, "PhoneType_" + Type);
+    }
+}
+```
+
 ## View
 
 Create new view named **_EditPersonModal.cshtml** and fill edit phones tab.
 
-`EditPersonModal.cshtml`
+`_EditPersonModal.cshtml`
 ```html
 
 @model .PersonListDto
@@ -219,7 +237,7 @@ The final of the **Index.js** is:
             edit: abp.auth.hasPermission('Pages.Tenant.PhoneBook.EditPerson')
         };
 
-        var _$phonebookTable = $('#PhoneBookTable');
+        var _$phonebookTable = $('#AllPeopleList');
         var _personService = abp.services.app.person;
 
         var _editPersonModal = new app.ModalManager({

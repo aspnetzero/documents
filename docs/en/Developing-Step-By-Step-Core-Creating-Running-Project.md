@@ -9,8 +9,7 @@ Also, run database migrations, create the database and login to the application 
 
 <img src="images/default-dashboard-5.png" alt="Dashboard" class="img-thumbnail" />
 
-Logout from the application for now. We will make our application **single-tenant** (we will convert it to multi-tenant later). So, we open PhoneBookDemoConsts class in the Acme.PhoneBookDemo.Core project
-and disable multi-tenancy as shown below:
+Logout from the application for now. We will make our application **single-tenant** (we will convert it to multi-tenant later). So, we open **PhoneBookDemoConsts** class in the **.Core.Shared** project and disable multi-tenancy as shown below:
 
 ```csharp
 public class PhoneBookDemoConsts

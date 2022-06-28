@@ -5,21 +5,20 @@ Now, we will implement **search** functionality of **GetPeople** method. UI is s
 <img src="images/search-people-3.png" alt="Searching people" class="img-thumbnail" width="770" height="328" />
 
 We added a search input to filter people (showing the related part of
-the code):
+the code. Insert code to inner **.card-body**):
 
 ```html
-<div class="card-body">
-	<div class="col-xl-12">
-		<div class="mb-5 align-items-center">			
-			<div class="input-group">
-				<input type="text" id="UsersTableFilter" name="Filter" class="form-control" placeholder="@L("SearchWithThreeDot")">
-				<button id="FilterUsersButton" class="btn btn-primary" type="submit">
-					<i class="flaticon-search-1" aria-label="Search"></i>
-				</button>
-			</div>
+<div class="col-xl-12">
+	<div class="mb-5 align-items-center">			
+		<div class="input-group">
+			<input type="text" id="UsersTableFilter" name="Filter" class="form-control" placeholder="@L("SearchWithThreeDot")">
+			<button id="FilterUsersButton" class="btn btn-primary" type="submit">
+				<i class="flaticon-search-1" aria-label="Search"></i>
+			</button>
 		</div>
 	</div>
-<!--...--->
+</div>
+<!-- people table starts --->
 ```
 Then go to the **Index.js** and add following code part.
 ```javascript

@@ -11,7 +11,7 @@ defined. We will define two permission:
 
 ### Define the permission
 
-Go to **AppAuthorizationProvider** class and add a new permission as shown below:
+Go to **AppAuthorizationProvider** class under **Authorization** folder in the **.Core** project  class and add a new permission as shown below:
 
 ```csharp
 pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
@@ -37,6 +37,14 @@ public class PersonAppService : PhoneBookAppServiceBase, IPersonAppService
 }
 ```
 
+### Update permission
+
+We are currently in an admin level account. We will update this user's permissions to test Phonebook authorization. Go to **Role Management page** and edit **admin** role:
+
+<img src="images/role-permissions-with-phonebook2.png" alt="Role permissions" class="img-thumbnail" width="839" height="898" />
+
+We see that a **new permission** named "**Phone book**" added to **permissions** tab. So, we can check it and save the role. After saving, we need to **refresh** the whole page to refresh permissions for the current user. We could also grant this permission for a specific user. Now, we can enter the Phone book page again.
+
 Now, let's try to enter Phone Book page by clicking the menu item:
 
 <img src="images/error-500.png" alt="500 Error" class="img-thumbnail" width="614" height="243" />
@@ -56,14 +64,6 @@ new MenuItemDefinition(
     permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenant_PhoneBook)
 )
 ```
-
-### Grant permission
-
-So, how we can enter the page now? Simple, go to **Role Management** page and edit **admin** role:
-
-<img src="images/role-permissions-with-phonebook2.png" alt="Role permissions" class="img-thumbnail" width="839" height="898" />
-
-We see that a **new permission** named "**Phone book**" added to **permissions** tab. So, we can check it and save the role. After saving, we need to **refresh** the whole page to refresh permissions for the current user. We could also grant this permission for a specific user. Now, we can enter the Phone book page again.
 
 ## Permission for Create New Person
 
@@ -109,7 +109,7 @@ Open the **index.cshtml** razor view and use **IsGranted** method:
 
 In this way, the "Create New Person" button does not rendered in server and user can not see this button.
 
-### Grant permission
+### Update permission
 
 To see the button again, we can go to role or user manager and grant related permission as shown below:
 

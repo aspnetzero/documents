@@ -22,7 +22,7 @@ public class PhoneBookController : PhoneBookDemoControllerBase
 ```
 
 
-Here, we're extending the output of the PersonAppService.GetPeople method.
+Here, we're extending the output of the PersonAppService.**GetPeople** method.
 We get the output from the constructor and map it to this object.
 
 ## Application Services and ViewModels

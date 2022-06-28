@@ -4,7 +4,7 @@ Now we want to edit name, surname and e-mail of people. Here is the final result
 
 <img src="images/edit-person-core-2.png" alt="Edit Person" class="img-thumbnail" width="548" height="333" />  
 
-Now go to **PersonAppservice** and add EditPerson.
+Now go to **PersonAppservice** and **IPersonAppService** add **EditPerson**.
 
 ```csharp       
 public class EditPersonInput : EntityDto

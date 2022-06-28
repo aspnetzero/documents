@@ -99,6 +99,22 @@ var dataTable = _$phonebookTable.DataTable({
     ],
 });
 
+function deletePerson(personId) {
+    abp.message.confirm(
+        app.localize('AreYouSureToDeleteThePerson'),
+        app.localize('AreYouSure'),
+        function (isConfirmed) {
+            if (isConfirmed) {
+                _personService.deletePerson({
+                    id: personId
+                }).done(function () {
+                    abp.notify.info(app.localize('SuccessfullyDeleted'));
+                    getPeople();
+                });
+            }
+        }
+    );
+}
 ```
 
 It first shows a confirmation message when we click the delete button:
