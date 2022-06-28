@@ -1,6 +1,6 @@
 # Deploying to a Clustered Environment
 
-This document introduces the topics that you should consider when you are deploying your application to a clustered environment where **multiple instances of your application run concurrently**, and explains how you can deal with these topics in your ABP based application.
+This document introduces the topics that you should consider when you are deploying your application to a clustered environment where **multiple instances of your application run concurrently**, and explains how you can deal with these topics in your ASP.NET Boilerplate or ASP.NET Zero based application.
 
 
 ## Understanding the Clustered Environment
@@ -40,7 +40,7 @@ Once multiple instances of your application run in parallel, you should carefull
 
 ASP.NET Core provides different kind of caching features. [In-memory cache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory) stores your objects in the memory of the local server and is only available to the application that stored the object. Non-sticky sessions in a clustered environment should use the [distributed caching](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed) except some specific scenarios (for example, you can cache a local CSS file into memory. It is read-only data and it is the same in all application instances. You can cache it in memory for performance reasons without any problem).
 
-[ASPNET Boilerplate caching system](https://aspnetboilerplate.com/Pages/Documents/Caching) extends [ASP.NET Core's distributed cache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed) infrastructure. It works in-memory by default. You should configure an actual distributed cache provider when you want to deploy your application to a clustered environment. ASPNET Boilerplate provides built-in redis implementation. It is already implemented in ASPNET Zero. You should go to the `[YOURAPPNAME]WebCoreModule` and uncomment following code.
+[ASPNET Boilerplate caching system](https://aspnetboilerplate.com/Pages/Documents/Caching) extends [ASP.NET Core's in-memory cache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-6.0) infrastructure. It works in-memory by default. You should configure an actual distributed cache provider when you want to deploy your application to a clustered environment. ASPNET Boilerplate provides built-in Redis implementation. It is already implemented in ASPNET Zero. You should go to the `[YOURAPPNAME]WebCoreModule` and uncomment following code.
 
 _[YOURAPPNAME]WebCoreModule.cs_
 ```csharp
@@ -57,7 +57,7 @@ For more information check [caching](https://aspnetboilerplate.com/Pages/Documen
 
 ASPNET Boilerplate's [background job system](https://aspnetboilerplate.com/Pages/Documents/Background-Jobs-And-Workers) is used to queue tasks to be executed in the background. Background job queue is persistent and a queued task is guaranteed to be executed (it is re-tried if it fails).
 
-If you want to run background jobs in multiple instances ASPNET Boilerplates provides you Hangfire implementation. You can replace background job system with hangfire. It is already implemented in ASPNET Zero. To enable Hangfire, go to the `WebConsts.cs` and set `HangfireDashboardEnabled` true.
+If you want to run background jobs in multiple instances ASPNET Boilerplates provides you Hangfire implementation. You can replace background job system with Hangfire. It is already implemented in ASPNET Zero. To enable Hangfire, go to the `WebConsts.cs` and set `HangfireDashboardEnabled` true.
 
 _WebConsts.cs_
 ```csharp
@@ -69,9 +69,9 @@ namespace MyCompanyName.AbpZeroTemplate.Web.Common
         public static bool HangfireDashboardEnabled = true;
 ```
 
-For more information check [hangfire integration](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Infrastructure-Background-Jobs) documentation.
+For more information check [Hangfire integration](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Infrastructure-Background-Jobs) documentation.
 
-If you dont want to run background jobs in multiple instances, you may stop the background job manager (set `Configuration.BackgroundJobs.IsJobExecutionEnabled` to `false`) in all application instances except one of them, so only the single instance executes the jobs (while other application instances can still queue jobs).
+If you don't want to run background jobs in multiple instances, you may stop the background job manager (set `Configuration.BackgroundJobs.IsJobExecutionEnabled` to `false`) in all application instances except one of them, so only the single instance executes the jobs (while other application instances can still queue jobs).
 
 ```csharp
 public class MyProjectWebModule : AbpModule
@@ -89,4 +89,4 @@ For more information check [background jobs and workers](https://aspnetboilerpla
 
 ## Scaling SignalR
 
-ASPNET Zero has built-in chat system and realtime notification system. They both uses [signalR](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction). Before you use multiple instance of your project you should check [signalR's scaling documentation](https://docs.microsoft.com/en-us/aspnet/core/signalr/scale) and choose signalR backplane providers or AzureSignalR. 
+ASPNET Zero has a built-in chat system and real-time notification system. They both use [signalR](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction). Before using multiple instances of your project, you should check [signalR's scaling documentation](https://docs.microsoft.com/en-us/aspnet/core/signalr/scale) and choose SignalR backplane providers or AzureSignalR. 
