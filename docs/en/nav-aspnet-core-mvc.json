@@ -232,6 +232,10 @@
             {
               "text": "Setting Up an Azure Pipeline",
               "path": "Setting-Up-an-Azure-Pipeline-Mvc-Core.md"
+            },
+			{
+              "text": "Deploying to a Clustered Environment",
+              "path": "Clustered-Environment.md"
             }
           ]
         },
