@@ -466,6 +466,10 @@
             {
               "text": "Extending Existing Entities",
               "path": "Extending-Existing-Entities-Core-Angular.md"
+            },
+            {
+              "text": "File Upload",
+              "path": "Core-Angular-File-Upload-Tutorial.md"
             }
           ]
         },
