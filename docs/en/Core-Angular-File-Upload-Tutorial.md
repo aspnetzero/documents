@@ -110,7 +110,7 @@ export class FileUploadComponent extends AppComponentBase implements OnInit {
     private _uploaderOptions: FileUploaderOptions = {};
     description: string;
 
-    constructor(injector: Injector, private _profileService: ProfileServiceProxy, private _tokenService: TokenService) {
+    constructor(injector: Injector, private _tokenService: TokenService) {
         super(injector);
     }
 
