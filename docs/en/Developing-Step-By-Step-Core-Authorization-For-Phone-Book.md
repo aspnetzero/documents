@@ -56,12 +56,13 @@ We get an error message. This exception is thrown when any method of PersonAppSe
 This secures the service, but we should also **hide** the Phone book **menu item**. It's easy, open **AppNavigationProvider** and add requiredPermissionName as shown below:
 
 ```csharp
-new MenuItemDefinition(
-    PageNames.App.Tenant.PhoneBook,
-    L("PhoneBook"),
-    url: "tenant.phonebook",
-    icon: "glyphicon glyphicon-book",
-    permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenant_PhoneBook)
+.AddItem(new MenuItemDefinition(
+        AppPageNames.Tenant.PhoneBook,
+        L("PhoneBook"),
+        url: "App/PhoneBook",
+        icon: "flaticon-book",
+        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenant_PhoneBook)
+    )
 )
 ```
 

@@ -44,7 +44,7 @@ public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)
         .ThenBy(p => p.Surname)
         .ToList();
 
-    return new ListResultDto<PersonListDto>(ObjectMapper.MapTo<List<PersonListDto>>(persons));
+    return new ListResultDto<PersonListDto>(ObjectMapper.Map<List<PersonListDto>>(persons));
 }
 ```
 

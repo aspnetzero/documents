@@ -78,19 +78,20 @@ Add related code part to **_EditPersonModal.js**. Here is the final result of th
 
         function getPhoneTypeString(phoneType) {
             switch (phoneType) {
-                case 1:
-                    return app.localize('Home');
-                case 2:
-                    return app.localize('Business');
-                default:
+                case "1":
                     return app.localize('Mobile');
+                case "2":
+                    return app.localize('Home');
+                default:
+                    return app.localize('Business');
             }
         }
 
         function addPhoneToPhoneNumbersTable(phone) {
-            var row = `<tr id="phoneNumberRow-${phone.id}">
-                        <td>${getPhoneTypeString(phone.type)}</td>
-                        <td>${phone.number}</td>
+            debugger;
+            var row = `<tr id="phoneNumberRow-${phone.PersonId}">
+                        <td>${getPhoneTypeString(phone.Type)}</td>
+                        <td>${phone.Number}</td>
                          <td style="width:100px;">
                             <button class="btn btn-danger btn-delete-phone btn-sm" data-phone-id="${phone.id}">
                                 <i class="la la-floppy-o"></i>
@@ -107,6 +108,8 @@ Add related code part to **_EditPersonModal.js**. Here is the final result of th
             }
 
             var phone = _$addPhoneForm.serializeFormToObject();
+            debugger;
+
 
             _modalManager.setBusy(true);
             _personService.addPhone(phone).done(function () {
@@ -192,7 +195,6 @@ Add related code part to **_EditPersonModal.js**. Here is the final result of th
         };
     };
 })(jQuery);
-
 ```
 
 ## Next

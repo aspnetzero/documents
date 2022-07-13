@@ -13,7 +13,7 @@ So, changing the **Index.cshtml** view header as shown below:
 }
 @section Scripts
 {
-    <script src="~/view-resources/Areas/AppAreaName/Views/PhoneBook/Index.js" asp-append-version="true"></script>
+    <script src="~/view-resources/Areas/App/Views/PhoneBook/Index.js" asp-append-version="true"></script>
 }
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">

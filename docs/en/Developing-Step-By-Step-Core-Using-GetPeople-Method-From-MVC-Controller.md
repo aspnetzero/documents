@@ -88,7 +88,7 @@ Create **Index.js** file in **view-resources/Areas/App/Views/PhoneBook** as seen
 ```javascript
 (function () {
     $(function () {
-        var _$phonebookTable = $('#PhoneBookTable');
+        var _$phonebookTable = $('#AllPeopleList');
         var _personService = abp.services.app.person;//Aspnet zero generates client side of your app service
         
         var dataTable = _$phonebookTable.DataTable({   

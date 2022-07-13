@@ -53,8 +53,9 @@ Create new view named **_EditPersonModal.cshtml** and fill edit phones tab.
 
 `_EditPersonModal.cshtml`
 ```html
-
-@model .PersonListDto
+@using Acme.PhoneBookDemo.Web.Areas.App.Models.Common.Modals
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PersonListDto
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditPerson")))
 
 <div class="modal-body">
@@ -80,9 +81,9 @@ Create new view named **_EditPersonModal.cshtml** and fill edit phones tab.
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <select name="Type" class="form-control">
-                            <option value="0">@L("PhoneType_Mobile")</option>
-                            <option value="1">@L("PhoneType_Home")</option>
-                            <option value="2">@L("PhoneType_Business")</option>
+                            <option value="1">@L("PhoneType_Mobile")</option>
+                            <option value="2">@L("PhoneType_Home")</option>
+                            <option value="3">@L("PhoneType_Business")</option>
                         </select>
                     </div>
                     <input class="form-control" type="text" name="Number" placeholder="@L("PhoneNumber")" required>
@@ -131,19 +132,20 @@ Then, create **_EditPersonModal.js**.
 
         function getPhoneTypeString(phoneType) {
             switch (phoneType) {
-                case 1:
-                    return app.localize('Home');
-                case 2:
-                    return app.localize('Business');
-                default:
+                case "1":
                     return app.localize('Mobile');
+                case "2":
+                    return app.localize('Home');
+                default:
+                    return app.localize('Business');
             }
         }
 
         function addPhoneToPhoneNumbersTable(phone) {
-            var row = `<tr id="phoneNumberRow-${phone.id}">
-                        <td>${getPhoneTypeString(phone.type)}</td>
-                        <td>${phone.number}</td>
+            debugger;
+            var row = `<tr id="phoneNumberRow-${phone.PersonId}">
+                        <td>${getPhoneTypeString(phone.Type)}</td>
+                        <td>${phone.Number}</td>
                          <td style="width:100px;">
                             <button class="btn btn-danger btn-delete-phone btn-sm" data-phone-id="${phone.id}">
                                 <i class="la la-floppy-o"></i>
@@ -160,6 +162,8 @@ Then, create **_EditPersonModal.js**.
             }
 
             var phone = _$addPhoneForm.serializeFormToObject();
+            debugger;
+
 
             _modalManager.setBusy(true);
             _personService.addPhone(phone).done(function () {
@@ -222,7 +226,6 @@ Then, create **_EditPersonModal.js**.
         };
     };
 })(jQuery);
-
 ```
 
 ## Scripts
