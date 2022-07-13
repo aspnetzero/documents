@@ -29,7 +29,7 @@ Create new component named **edit-person-modal.component.html** in phonebook fol
                 </button>
             </div>
             <div class="modal-body">
-                <tabset>
+                <tabset *ngIf="personToEdit">
                     <tab class="pt-5" heading="{{ 'Person' | localize }}">
                         Person Edit Will Be Here
                     </tab>
@@ -53,7 +53,7 @@ Create new component named **edit-person-modal.component.html** in phonebook fol
                             </div>
                         </form>
                         <div class="row">
-                            <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" *ngIf="personToEdit">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer">
                                 <tbody>
                                     <tr *ngFor="let phone of personToEdit.phones">
                                         <td>{{getPhoneTypeString(phone.type)}}</td>
@@ -197,13 +197,29 @@ export class EditPersonModalComponent extends AppComponentBase {
 
 ```
 
+## Update PhoneBookModule
 
+We should add **EditPersonModalComponent** to **PhoneBookModule**.
 
-Now we can add edit button to index view and call edit person modal on button click.
+```typescript
+import { NgModule } from '@angular/core';
+import { AppSharedModule } from '@app/shared/app-shared.module';
+import { PhoneBookRoutingModule } from './phone-book-routing.module';
+import { PhoneBookComponent } from './phone-book.component';
+import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module';
+import { CreatePersonModalComponent } from './create-person-modal.component';
+import { EditPersonModalComponent } from './edit-person-modal.component';
+
+@NgModule({
+    declarations: [PhoneBookComponent, CreatePersonModalComponent, EditPersonModalComponent],
+    imports: [AppSharedModule, PhoneBookRoutingModule, SubheaderModule],
+})
+export class PhoneBookModule {}
+```
 
 ## View
 
-Changes in view are shown below:
+Now we can add edit button to index view and call edit person modal on button click. Changes in view are shown below:
 
 ```html
 <!--...-->
@@ -231,8 +247,6 @@ Changes in view are shown below:
     <createPersonModal #createPersonModal (modalSave)="getPeople()"></createPersonModal>
     <editPersonModal #editPersonModal (onClosedWithChanges)="getPeople()"></editPersonModal><!--Add edit-->
 ```
-
-Finally, you need to refresh the service proxies by running **refresh.bat** under angular/nswag folder.
 
 ## Next
 

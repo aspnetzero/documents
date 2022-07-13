@@ -434,7 +434,11 @@
                     {
                       "text": "Adding AddPhone and DeletePhone Methods",
                       "path": "Developing-Step-By-Step-Angular-Adding-AddPhone-DeletePhone-Methods.md"
-                    },
+                  },
+                  {
+                    "text": "Show Phones in View",
+                    "path": "Developing-Step-By-Step-Angular-Show-Phones-In-View.md"
+                  },
                     {
                       "text": "Edit Mode For Phone Numbers",
                       "path": "Developing-Step-By-Step-Angular-Edit-Mode-Phone-Numbers.md"

@@ -14,8 +14,8 @@ the related part of the code):
         <div class="mb-5 align-items-center">
             <div class="input-group">
                 <input type="text" [(ngModel)]="filter"  name="Filter" class="form-control" [placeholder]="l('SearchWithThreeDot')">
-                <button class="btn btn-primary" type="button">
-                    <i class="flaticon-search-1" aria-label="Search" (click)="getPeople()" ></i>
+                <button class="btn btn-primary" type="button" (click)="getPeople()">
+                    <i class="flaticon-search-1" aria-label="Search"></i>
                 </button>
             </div>
         </div>

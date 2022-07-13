@@ -4,6 +4,11 @@ Final UI is shown below:
 
 <img src="images/phone-book-angular-show-phones-in-ui.png" alt="Phone book edit mode" class="img-thumbnail" />
 
+## Service Proxy Generation
+
+First, run (prefer Ctrl+F5 to be faster) the server side application (.Web.Host project). Then run **nswag/refresh.bat** file on the client side to re-generate service proxy classes (they are used to call server side service methods).
+
+Since we added a new service, we should add it to **src/shared/service-proxies/service-proxy.module.ts**. Just open it and add **ApiServiceProxies.PersonServiceProxy** to the providers array. This step is only required when we add a new service. If we change an existing service, it's not needed.
 
 ## View
 

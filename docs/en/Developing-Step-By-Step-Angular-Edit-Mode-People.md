@@ -4,9 +4,38 @@ Now we want to edit name, surname and e-mail of people:
 
 <img src="images/edit-person-core-2.png" alt="Edit Person" class="img-thumbnail" />  
 
-First of all, we create the necessary DTOs to transfer people's id, name,
-surname and e-mail. We can optionally configure auto-mapper, but this is not necessary because all properties match automatically. Then we create the functions in PersonAppService for
-editing people:  
+## Edit Person Method
+
+We are adding **EditPerson** method to IPersonAppService interface as shown
+below:
+
+```csharp
+Task EditPerson(EditPersonInput input);
+```
+
+EditPhoneInput DTO is shown below:
+
+```csharp
+public class EditPersonInput
+{
+    [Required]
+    public int Id { get; set; }
+    
+    [Required]
+    [MaxLength(PersonConsts.MaxNameLength)]
+    public string Name { get; set; }
+    
+    [Required]
+    [MaxLength(PersonConsts.MaxSurnameLength)]
+    public string Surname { get; set; }
+    
+    [Required]
+    [MaxLength(PersonConsts.MaxEmailAddressLength)]
+    public string EmailAddress { get; set; }
+}
+```
+
+Now, we can implement this method as shown below:
 
 ```csharp
 [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
@@ -19,6 +48,8 @@ public async Task EditPerson(EditPersonInput input)
     await _personRepository.UpdateAsync(person);
 }
 ```
+
+Then run **nswag/refresh.bat** file on the client side to re-generate service proxy classes. 
 
 Add following tab part to **EditPersonModal.html**
 
@@ -47,7 +78,7 @@ Add following tab part to **EditPersonModal.html**
 
 And create **savePerson** method in to **EditPersonModal.ts**
 
-Add those lines to **phonebook.component.html:**:
+Add those lines to **phonebook.component.html:**
 
 ```typescript
 savePerson(): void {

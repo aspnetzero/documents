@@ -5,10 +5,26 @@ schema. Since we added **Person entity**, our DbContext model is
 changed. So, we should create a **new migration** to create the new
 table in the database.
 
+## Package Manager Console
+
 Open **Package Manager Console**, run the **Add-Migration
 "Added\_Persons\_Table"** command as shown below:
 
 <img src="images/phonebook-migrations-core-3.png" alt="Entity Framework Code First Migration" class="img-thumbnail" />
+
+## Dotnet Cli
+
+Open project in terminal, change your working directory to **.EntityFrameworkCore** folder and run the following command:
+
+### Add Migration
+```shell 
+dotnet ef migrations add "Added_Persons_Table" -s "../Acme.PhoneBookDemo.Web.Host" -c "PhoneBookDemoDbContext"
+```
+
+### Update Database
+```shell
+dotnet ef database update -s "../Acme.PhoneBookDemo.Web.Host" -c "PhoneBookDemoDbContext"
+```
 
 This command will add a **migration class** named
 "**Added\_Persons\_Table**" as shown below:

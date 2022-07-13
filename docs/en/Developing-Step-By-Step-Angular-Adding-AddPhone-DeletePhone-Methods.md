@@ -1,11 +1,12 @@
-# Adding AddPhone and DeletePhone Methods
+# Adding GetPerson, AddPhone and DeletePhone Methods
 
-We are adding two more methods to IPersonAppService interface as shown
+We are adding three more methods to IPersonAppService interface as shown
 below:
 
 ```csharp
 Task DeletePhone(EntityDto<long> input);
 Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input);
+Task<PersonListDto> GetPerson(int id);
 ```
 
 We could create a new, separated IPhoneAppService. It's your choice.
@@ -59,6 +60,12 @@ public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
     await CurrentUnitOfWork.SaveChangesAsync();
 
     return ObjectMapper.Map<PhoneInPersonListDto>(phone);
+}
+
+public async Task<PersonListDto> GetPerson(int id)
+{
+    var person = await _personRepository.FirstOrDefaultAsync(id);
+    return ObjectMapper.Map<PersonListDto>(person);
 }
 ```
 

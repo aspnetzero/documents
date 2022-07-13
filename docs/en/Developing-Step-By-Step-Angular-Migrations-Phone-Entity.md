@@ -5,6 +5,27 @@ this command in the .EntityFramework project's directory:
 
 <img src="images/phonebook-migrations-core-4.png" alt="Entity Framework Migration" class="img-thumbnail" />
 
+## Package Manager Console
+
+Open **Package Manager Console**, run the **Add-Migration
+"Added\_Phones\_Table"** command as shown below:
+
+<img src="images/phonebook-migrations-core-3.png" alt="Entity Framework Code First Migration" class="img-thumbnail" />
+
+## Dotnet Cli
+
+Open project in terminal, change your working directory to **.EntityFrameworkCore** folder and run the following command:
+
+### Add Migration
+```shell 
+dotnet ef migrations add "Added_Phones_Table" -s "../Acme.PhoneBookDemo.Web.Host" -c "PhoneBookDemoDbContext"
+```
+
+### Update Database
+```shell
+dotnet ef database update -s "../Acme.PhoneBookDemo.Web.Host" -c "PhoneBookDemoDbContext"
+```
+
 This will create a new code based migration file to create **PbPhones**
 table:
 
