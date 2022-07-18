@@ -142,7 +142,6 @@ Then, create **_EditPersonModal.js**.
         }
 
         function addPhoneToPhoneNumbersTable(phone) {
-            debugger;
             var row = `<tr id="phoneNumberRow-${phone.PersonId}">
                         <td>${getPhoneTypeString(phone.Type)}</td>
                         <td>${phone.Number}</td>
@@ -162,7 +161,6 @@ Then, create **_EditPersonModal.js**.
             }
 
             var phone = _$addPhoneForm.serializeFormToObject();
-            debugger;
 
 
             _modalManager.setBusy(true);

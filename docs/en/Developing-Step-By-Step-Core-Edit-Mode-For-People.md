@@ -88,7 +88,6 @@ Add related code part to **_EditPersonModal.js**. Here is the final result of th
         }
 
         function addPhoneToPhoneNumbersTable(phone) {
-            debugger;
             var row = `<tr id="phoneNumberRow-${phone.PersonId}">
                         <td>${getPhoneTypeString(phone.Type)}</td>
                         <td>${phone.Number}</td>
@@ -108,7 +107,6 @@ Add related code part to **_EditPersonModal.js**. Here is the final result of th
             }
 
             var phone = _$addPhoneForm.serializeFormToObject();
-            debugger;
 
 
             _modalManager.setBusy(true);
