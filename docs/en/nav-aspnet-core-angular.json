@@ -153,6 +153,10 @@
               "text": "Notifications",
               "path": "Features-Angular-Notifications.md"
             },
+			{
+              "text": "Mass Notifications",
+              "path": "Features-Mass-Notifications.md"
+            },
             {
               "text": "Chat",
               "path": "Features-Angular-Chat.md"

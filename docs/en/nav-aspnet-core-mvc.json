@@ -139,6 +139,10 @@
               "text": "Notifications",
               "path": "Features-Mvc-Core-Notifications.md"
             },
+			{
+              "text": "Mass Notifications",
+              "path": "Features-Mass-Notifications.md"
+            },
             {
               "text": "Chat",
               "path": "Features-Mvc-Core-Chat.md"
