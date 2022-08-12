@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 11.3.0 (2022-08-12)
+
+* Send mass notifications & emails to users
+* Support authorization code flow for OpenID Connect with OAuth2
+* Allow defining precision for decimal fields in Power Tools
+* Migrate to Google Identity Service
+
 ## 11.2.0 (2022-06-06)
 
 * Quick switch button for dark mode.
