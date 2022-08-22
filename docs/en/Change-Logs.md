@@ -11,7 +11,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Send mass notifications & emails to users
 * Support authorization code flow for OpenID Connect with OAuth2
 * Allow defining precision for decimal fields in Power Tools
-* Migrate to Google Identity Service
+* Migrate Google Login feature to Google Identity Service
 
 ## 11.2.0 (2022-06-06)
 
