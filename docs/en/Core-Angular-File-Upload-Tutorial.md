@@ -28,7 +28,7 @@ pages.CreateChildPermission(AppPermissions.Pages_FileUpload, L("FileUpload"), mu
 A permission should have a unique name. We define permission names as constant strings in **AppPermissions** class. It's a simple constant string:
 
 ```csharp
-public const string Pages_Tenant_PhoneBook = "Pages.FileUpload";
+public const string Pages_FileUpload = "Pages.FileUpload";
 ```
 
 Unique name of this permission is "**Pages.FileUpload**". While you can set any string (as long as it's unique), it's suggested to use that convention. A permission can have a localizable display name: "**FileUpload**" here.
