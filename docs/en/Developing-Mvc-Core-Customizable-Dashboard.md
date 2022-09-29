@@ -307,6 +307,27 @@ After all of these, open any terminal and run `npm run create-bundles` command i
 
 After that you will be able to use your new widget. 
 
+## Resize Event
+
+You can subscribe to resize event of a widget. This event is triggered when a widget is resized. You can use this event to update your widget's content.
+
+```javascript
+(function () {
+  app.widgets.Widgets_MyWidget = function () {
+    var _widget;
+    this.init = function (widgetManager) {
+      _widget = widgetManager.getWidget();
+    };
+
+   //Add that function to your widget's script. It will be triggered for the one which was resized even if you have multiple Widgets_MyWidget in your page.
+    this.onResizeCompleted = function () {
+      //todo: reload graph or something.
+      console.log('resize completed');
+    }
+  };
+})();
+```
+
 ## Usage
 
 Since we create tenant side widget, open tenant dashboard. 
