@@ -382,6 +382,33 @@ export class AppCommonModule {
 
 After that you will be able to use your new widget. 
 
+## Resize Event
+
+You can subscribe to resize event of a widget. This event is triggered when a widget is resized. You can use this event to update your widget's content.
+
+```typescript
+import { Inject } from '@angular/core'; //import inject
+import { WidgetOnResizeEventHandler, WIDGETONRESIZEEVENTHANDLERTOKEN } from '../../customizable-dashboard.component'; // import WidgetOnResizeEventHandler and WIDGETONRESIZEEVENTHANDLERTOKEN from customizable-dashboard.component
+
+@Component({
+    //...
+})
+export class YOURCOMPONENT extends WidgetComponentBaseComponent {
+    //...
+    constructor(
+        //...
+        @Inject(WIDGETONRESIZEEVENTHANDLERTOKEN) private _widgetOnResizeEventHandler: WidgetOnResizeEventHandler //inject resize event handler
+    ) {
+        //...
+       //It will be triggered for the one which was resized even if you have multiple YOURCOMPONENT in your page.
+        _widgetOnResizeEventHandler.onResize.subscribe(() => {
+                //todo: reload graph or something.
+                console.log('resize completed');
+        });
+    }
+}
+```
+
 ## Usage
 
 Since we create tenant side widget, open tenant dashboard. 
