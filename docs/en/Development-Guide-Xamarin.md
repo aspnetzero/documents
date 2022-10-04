@@ -196,6 +196,10 @@ You can also, see the following docs from Microsoft:
 * [Set Up Device for Development](https://docs.microsoft.com/en-us/xamarin/android/get-started/installation/set-up-device-for-development)
 * [Create backend services for native mobile apps with ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/mobile/native-mobile-backend?view=aspnetcore-3.1)
 
+**Known Problems**
+
+- Long project name causes IOS app to not run on Windows machines while connecting to an IPhone or IPad. So, if you face such a problem, you can move your project to a directory with a shorter name.
+
 ## Xamarin.Forms
 
 A key component of building cross-platform applications is being able to share code across various platform-specific projects. ASP.NET Zero Xamarin is using `Xamarin.Forms` to maximize code sharing between two end platforms (iOS & Android). It is expected to write shared codes in `Mobile.Shared` project so that it will be used in both iOS and Android. If you need platform specific development then try to use class abstractions in shared project and implement/extend in end platforms.
