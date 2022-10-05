@@ -73,6 +73,10 @@ For multi-tenant applications, Web Site Root URL can contain dynamic tenancy nam
 "WebSiteRootAddress": "http://{TENANCY_NAME}.mydomain.com/"
 ```
 
+By default, if a user uses a non-existing tenancy name in the URL, it will be assumed as Host. If you want to change this behavior, you can configure;
+
+* ```PreventNotExistingTenantSubdomains``` to `true` in {YourProjectName}Consts.cs in the Core.Shared project for the MVC application.
+
 Thus, ASP.NET Zero can automatically detect current tenant from URLs. If you configure it as above, you should also redirect all subdomains to your application. To do that;
 
 1. You should configure DNS to redirect all subdomains to a static IP address. To declare 'all subdomains', you can use a wildcard e.g.

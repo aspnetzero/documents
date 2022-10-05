@@ -86,6 +86,11 @@ For multi-tenant applications, URLs can contain dynamic tenancy name. In that ca
 "ClientRootAddress": "http://{TENANCY_NAME}.app.mydomain.com/"
 ```
 
+By default, if a user uses a non-existing tenancy name in the URL, it will be assumed as Host. If you want to change this behavior, you can configure;
+
+* ```PreventNotExistingTenantSubdomains``` to `true` in {YourProjectName}Consts.cs in the Core.Shared project for the API application.
+* ```PreventNotExistingTenantSubdomains``` to `true` in AppConsts.ts for Angular application.
+
 For the CorsOrigins setting, you can use * character to allow all subdomains. For example:
 
 ```csharp
