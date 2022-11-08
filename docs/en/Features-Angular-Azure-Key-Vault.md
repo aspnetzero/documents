@@ -8,12 +8,18 @@ ASP.NET Zero provides built-in integration for Azure Key Vault. You can easily c
  "Configuration": {
     "AzureKeyVault": {
       "IsEnabled": "false",
-      "KeyVaultName": ""
+      "KeyVaultName": "",
+      "TenantId": "",
+      "ClientId": "",
+      "ClientSecret": ""
     }
   }
 ````
 
 * ```IsEnabled```: Enables or disables using Azure Key Vault configuration. 
 * ```KeyVaultName```: Key Vault Name.
+* ```TenantId```: Azure TenantId.
+* ```ClientId```: Key vault clientId.
+* ```ClientSecret```: Key vault client secret.
 
 For more information, you can check documentation of [https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets](https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets)

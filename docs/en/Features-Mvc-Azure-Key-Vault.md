@@ -9,8 +9,7 @@ ASP.NET Zero provides built-in integration for Azure Key Vault. There are two mo
     "AzureKeyVault": {
       "IsEnabled": "false",
       "KeyVaultName": "",
-      "AzureADApplicationId": "",
-      "AzureADCertThumbprint": "",
+      "TenantId": "",
       "ClientId": "",
       "ClientSecret": ""
     }
@@ -21,10 +20,9 @@ ASP.NET Zero provides built-in integration for Azure Key Vault. There are two mo
 
 * ```IsEnabled```: Enables or disables using Azure Key Vault configuration. 
 * ```KeyVaultName```: Key Vault Name.
-* ```AzureADApplicationId```: Azure AD Application ID.
-* ```AzureADCertThumbprint```: Azure AD Certificate Thumbprint
-* ```ClientId```: Azure Key Vault Client ID
-* ```ClientSecret```: Azure Key Vault Client Secret.
+* ```TenantId```: Azure TenantId.
+* ```ClientId```: Key vault clientId.
+* ```ClientSecret```: Key vault client secret.
 
 In order to use ```Certificate``` mode, ```KeyVaultName```, ```AzureADApplicationId``` and ```AzureADCertThumbprint``` values must be filled.
 
