@@ -78,7 +78,7 @@ public class ElasticSearchAuditingStore : AuditingStore
                             .Keyword(x => x.Name(d => d.ClientIpAddress))
                             .Keyword(x => x.Name(d => d.ClientName))
                             .Keyword(x => x.Name(d => d.BrowserInfo))
-                            .Text(x => x.Name(d => d.CustomData))
+                            .Text(x => x.Name(d => d.CustomData)));
                 }));
         }
     }
