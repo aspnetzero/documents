@@ -42,7 +42,7 @@ Angular has a powerful URL routing system. ASP.NET Zero has defined routes in a 
 ```json
 {
 	path: 'phonebook',
-	loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhonebookModule)
+	loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhoneBookModule)
 }
 ```
 
