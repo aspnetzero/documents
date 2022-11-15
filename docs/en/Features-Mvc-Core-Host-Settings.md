@@ -19,35 +19,31 @@ Clock.Provider = ClockProviders.Utc;
 
 <img src="images/host-settings-tenant-management.png" alt="Tenant Management Settings" class="img-thumbnail" />
 
-* You can configure settings related to tenant management under "Tenant Management" tab. 
+You can configure settings related to tenant management under "Tenant Management" tab. You can enable/disable tenants from registering the system. You can also make newly registered tenants active or passive.
 
-* You can enable/disable tenants from registering the system. 
+Enable/disable captcha on tenant registration page. 
 
-* You can make newly registered tenants active or passive.
-
-* Enable/disable captcha on tenant registration page. 
-
-* You can select a default edition, so a newly registered tenant will be assigned to this edition automatically unless the tenant subscribes to a specific edition.
+You can also select a default edition, so a newly registered tenant will be assigned to this edition automatically unless the tenant subscribes to a specific edition.
 
 ## User Management
 
-<img src="images/host-settings-user-management-3.png" alt="User Management Settings" class="img-thumbnail" />
+<img src="images/host-settings-user-management-4.png" alt="User Management Settings" class="img-thumbnail" />
 
-* You can force email confirmation for login. You can enable phone number verification. 
+User related settings can be configured under this tab. You can force email confirmation for login. You can enable phone number verification. Also, you can enable cookie consent so ASP.NET Zero shows a cookie consent bar for the users to accept cookie policy of your application.
 
-* You can enable cookie consent so ASP.NET Zero shows a cookie consent bar for the users to accept cookie policy of your application.
-
-* You can enable/disable captcha on login page.
-
-* You can enable/disable session timeout control. If it is enable and the user does not provide any input to the site during the timeout period, a countdown modal will be displayed to user. If the user still does not provide an entry to the site during the modal countdown period, user will be log out.
-
-* Each tenant can allow tenant users to use Gravatar profile picture or not.
-
-* You can enable password expiration. If it is enabled, users will be forced to change their password after a specific period of time.
-
-* You can update password reset code expiration time. If a user requests a password reset code, ASP.NET Zero will send a code to the user's email address. This code will be valid for a specific period of time. You can configure this period of time in this setting.
+You can enable/disable captcha on login page.
 
 > Note: **Token Based Authentication** has `ReCaptchaIgnoreWhiteList` located in `WebConsts`. If you want a client app to be ignored for reCaptcha control during login, add a value to `ReCaptchaIgnoreWhiteList` and send the same value in the `User-Agent` request header for your login request from the client app. You can check the Xamarin mobile app in AspNet Zero to see how `ReCaptchaIgnoreWhiteList` works.
+
+You can also enable/disable session timeout control. If it is enable and the user does not provide any input to the site during the timeout period, a countdown modal will be displayed to user. If the user still does not provide an entry to the site during the modal countdown period, user will be log out.
+
+Each tenant can allow tenant users to use Gravatar profile picture or not.
+
+##### Password
+
+You can enable/disable password expiration on the settings page. If you enable it, users will have to change their password after defined days passed.
+
+You can also prevent user's new password from being same as any of last x passwords. If you enable it, you will need to define how many previous password you want to prevent. Users will not be able to use some of the previously used password as a new password.
 
 ## Security
 

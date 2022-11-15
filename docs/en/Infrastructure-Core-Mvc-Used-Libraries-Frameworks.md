@@ -44,7 +44,7 @@ Here's the list of all libraries.
   - [jQuery Ajax Forms](http://malsup.com/jquery/form/)
   - [jQuery Timeago](https://github.com/rmm5t/jquery-timeago)
   - [Json2](https://github.com/douglascrockford/JSON-js)
-  - [Jcrop](https://github.com/tapmodo/Jcrop)
+  - [jquery-cropper](https://github.com/fengyuanchen/jquery-cropper)
   - [LocalForage](https://github.com/localForage/localForage)
   - [Js Cookie](https://github.com/js-cookie/js-cookie)
   - [Moment.js](http://momentjs.com/)
