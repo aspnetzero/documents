@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 11.4.0 (2022-11-15)
+
+* Notify users when a new version is released.
+* Upgraded to Angular 14.
+* Upgraded to ABP v7.4.
+* Upgraded to Metronic 8.1.2.
+
 ## 11.3.0 (2022-08-12)
 
 * Send mass notifications & emails to users
