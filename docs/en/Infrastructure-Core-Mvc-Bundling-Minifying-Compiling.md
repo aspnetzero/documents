@@ -17,7 +17,7 @@ All input sections in **bundles.json **supports wildcard syntax. So, you can inc
 By default, ASP.NET Zero has two commands for bundling style and script files "**npm run create-bundles**" and "**npm run build**".
 
 * **npm run create-bundles**: This command is introduced for development time usage. It watches your style and script files for changes and automatically updates bundle(s). If you modify **bundles.json** file, you need to re-run this command. It also writes output to console about the bundling progress. Script and style bundles are not minified when using this command. 
-* **npm run build**: This command is introduced for publishing your app. It doesn't write any output to console and it doesn't watch files for any change. It also minifies script and style bundles unlike "create-bundles"  command.
+* **npm run build**: This command is introduced for publishing your app. It doesn't write any output to console and it doesn't watch files for any change. It also minifies script and style bundles unlike "create-bundles" command. If you want to host your app under a subfolder, you need to pass subfolder name to this command and it will modify relative paths in used style files. For example, `npm run build -- --basePath my-mvc-app` can be used if app will be hosted under **my-mvc-app** subfolder.
 
 If you need to make any change about ASP.NET Zero's bundling and minification process, you can modify **gulpfile.js** in the root directory of the ***.Web.Mvc** project. 
 
