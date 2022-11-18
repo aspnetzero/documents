@@ -1,8 +1,8 @@
-# Dynamic Property System
+# Dynamic Parameter System
 
-**Dynamic Property System** is a system that allows you to add and manage new properties on entity objects at runtime without any code changes. With this system, you can define dynamic propeties on entity objects and perform operations on these objects easily. For example, it can be used for cities, counties, gender, status codes etc.
+**Dynamic Parameter System** is a system that allows you to add and manage new properties on entity objects at runtime without any code changes. With this system, you can define dynamic propeties on entity objects and perform operations on these objects easily. For example, it can be used for cities, counties, gender, status codes etc.
 
-Check AspNet Boilerplate side of [Dynamic Property System](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Property-System)
+Check AspNet Boilerplate side of [Dynamic Parameter System](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Parameter-System)
 
 ### Defining
 
