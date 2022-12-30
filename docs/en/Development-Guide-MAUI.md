@@ -12,7 +12,7 @@ For an overview of the ASP.NET Zero getting started see [ASP.NET Zero
 Getting Started.](Getting-Started-Core) The ASP.NET Zero MAUI is only
 available for ASP.NET Core included Angular UI and Mvc UI.
 
-ASP.NET Zero uses Blazor version of MAUI with [Metronic](https://keenthemes.com/metronic) theme. Since it is a blazor application, you can basically develop your application using html css.
+ASP.NET Zero uses Blazor version of MAUI with [Metronic](https://keenthemes.com/metronic) theme. Since it is a Blazor application, you can basically develop your application using html and css.
 
 ### Prerequisites
 
@@ -30,10 +30,9 @@ To build, sign, and deploy .NET MAUI apps for iOS, you'll also need:
 
 ### Solution Structure (Layers)
 
-After you [download](https://aspnetzero.com/Download) your project, you will see 3 types of
-solutions;
+After [downloading](https://aspnetzero.com/Download) your project, you will see 3 types of solutions;
 
--   **.Mobile** Xamarin and related projects included.
+-   **.Mobile** MAUI and related projects included.
 -   **.Web** Web and related projects included.
 -   **.All** All the projects included.
 
@@ -113,8 +112,7 @@ Be aware that connecting over Wi-Fi needs both the device and the computer to be
 
 ### Debugging Android
 
-There are a few installation steps and configuration details required to install `MAUI`. It's highly recommended you to read the [MAUI Android](https://learn.microsoft.com/en-us/dotnet/maui/android/emulator/hardware-acceleration)
-for necessary setups.
+There are a few installation steps and configuration details required to install `MAUI`. It's highly recommended you to read the [MAUI Android](https://learn.microsoft.com/en-us/dotnet/maui/android/emulator/hardware-acceleration) for necessary setups.
 
 * If you are using the default Android Emulator, you don't need to change anything. The default loopback address for the Android emulator is `10.0.2.2` and it's written in the `StartApplication()` method of  `MainLayout.razor.cs`
 
@@ -141,7 +139,7 @@ After successful setup, set **Mobile.MAUI** as startup project. Choose an Androi
 
 ### Debugging iOS
 
-There are a few requirements that must be adhered to when developing for iOS in Visual Studio. A Mac is required to compile IPA files. Applications cannot be deployed to a device without Apple's certificates and code-signing tools. Also, the iOS simulator can be used only on a Mac.
+There are a few requirements that must be adhered to when developing for iOS in Visual Studio. A Mac, an IPAD or an IPhone is required to compile IPA files. Applications cannot be deployed to a device without Apple's certificates and code-signing tools. Also, the iOS simulator can be used only on a Mac.
 
 You need to set DebugServerIpAddresses as your local IP. Eg: `192.168.1.120`
 
@@ -158,32 +156,26 @@ MAUI project has a very basic structure. ASP.NET Zero adds or modifies these fil
 
 Android Project Structure
 
--   **Pages** This is where all pages located. You can add your pages in that folder. Pages added here will be used in android and ios.
+-   **Pages** This is where all pages located. You can add your pages in that folder. Pages added here will be used in Android and IOS.
 -   **Platforms** This is where all platrform specific implemetations can be made. Every code written here is only published to the relevant platform.You can locate any platform specific codes in that folders. For example, If your service has platform based implementation, you can use that folder and implement it to DI container according to their platform.
--   **Resources** This is application resources located
+-   **Resources** This is where application resources located.
 -   **Services** This is where mobile based services implemented.
--   **Shared** This is where all blazor based shared items located. Layouts, base components, partial components are located in that folder.
--   **wwwroot** Since ASP.NET Zero uses Blazor version of MAUI all web based items(index.html, css, js etc) are located in that folder.
+-   **Shared** This is where all blazor based shared items located. Layouts, base components, partial components are located in this folder.
+-   **wwwroot** Since ASP.NET Zero uses Blazor version of MAUI, all web based items(index.html, css, js etc...) are located in this folder.
 
 
 #### Dependency Injection
 
 ASP.NET Zero MAUI uses ASP.NET Boilerplate Framework's dependency
 injection system. Therefore it uses [Castle
-Windsor](http://www.castleproject.org/projects/windsor/) as an Inversion
-of Control container. To resolve dependencies; you can use constructor
-or property injection, beside there's a shortcut class called
-*DependencyResolver,* which can be used to resolve dependencies as well.
+Windsor](http://www.castleproject.org/projects/windsor/) as an Inversion of Control container. To resolve dependencies; you can use constructor or property injection, beside there's a shortcut class called *DependencyResolver,* which can be used to resolve dependencies as well.
 ASP.NET Boilerplate provides *ITransientDependency* and
-*ISingletonDependency* interfaces as a shortcut to register classes. See
-[ASP.NET Boilerplate Dependency
-Injection](https://aspnetboilerplate.com/Pages/Documents/Dependency-Injection/)
+*ISingletonDependency* interfaces as a shortcut to register classes. See [ASP.NET Boilerplate Dependency Injection](https://aspnetboilerplate.com/Pages/Documents/Dependency-Injection/)
 
 #### Communicating with Host Api
 
 ***AbpApiClient*** class is used to communicate with host. In this
-class, *[FlurlClient](https://github.com/tmenier/Flurl)*  is used as
-http client. The host address *DefaultHostUrl* is stored in
+class, *[FlurlClient](https://github.com/tmenier/Flurl)*  is used as http client. The host address *DefaultHostUrl* is stored in
 *ApiUrlConfig* class. Before publishing application you need to change
 this address with your production host server address. In development
 time, it's important to change *LocalhostIp* as your computer's LAN IP
