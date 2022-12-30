@@ -38,7 +38,7 @@ After [downloading](https://aspnetzero.com/Download) your project, you will see 
 
 For MAUI development, you can open **.Mobile.sln**.
 
-Xamarin Architecture
+MAUI Architecture
 
 <img src="images/maui-mobile-solution-overview.png" alt="ASP.NET Zero Mobile Solution" class="img-thumbnail" />
 
@@ -212,7 +212,7 @@ first authorized menu item.
 
 ##### Login
 
-<img src="images/xamarin-login.png" alt="Shared Project Structure" class="img-thumbnail" />
+<img src="images/maui-login.png" alt="Login screen" class="img-thumbnail" />
 
 When user enters credentials *AccessTokenManager* authenticates user,
 stores access token in memory. For authentication needed Api calls, this
@@ -226,14 +226,14 @@ it can be retrieved with injecting *IApplicationContext*.
 
 ##### Menu
 
-<img src="images/maui-menu.png" alt="Shared Project Structure" class="img-thumbnail" />
+<img src="images/maui-menu.png" alt="Application menu" class="img-thumbnail" />
 
 Menu items are stored in *MenuProvider* class. A menu item is shown if
 only user has granted required permission.
 
 ##### Tenants View
 
-<img src="images/maui-tenant-page.png" alt="Shared Project Structure" class="img-thumbnail" />
+<img src="images/maui-tenant-page.png" alt="Tenants page" class="img-thumbnail" />
 
 In this page you can see all tenants in your application. You can create new tenant, edit tenant or delete tenant. (If you have necessary permissions, otherwise you will not be able to see related buttons or page)
 There is a search bar on the top
@@ -246,7 +246,7 @@ Create Tenant             |  Edit Tenant |  Delete Tenant
 
 ##### User View
 
-<img src="images/maui-user-list.png" alt="Shared Project Structure" class="img-thumbnail" />
+<img src="images/maui-user-list.png" alt="Users page" class="img-thumbnail" />
 
 This page lists users of the tenant or tenant owner. It is only shown if
 the user has permission to this page. Same as tenants view, there's a
@@ -254,7 +254,7 @@ search bar and a new user creation toolbar item. hen a user is being tapped, it'
 
 You can create new user or manage existing one.
 
-Create Tenant             |  Edit Tenant |  Delete Tenant
+Create User             |  Edit User |  Delete User
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="images/maui-create-user.png" alt="Create Tenant" class="img-thumbnail" />  |  <img src="images/maui-edit-user.png" alt="Edit Tenant" class="img-thumbnail" /> | <img src="images/maui-delete-user.png" alt="Delete Tenant" class="img-thumbnail" />
 
