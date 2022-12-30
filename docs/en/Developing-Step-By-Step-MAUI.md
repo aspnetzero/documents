@@ -1,12 +1,12 @@
-# Xamarin Step by Step Development
+# MAUI Step by Step Development
 
 ## Introduction
 
-In this document, we will create a sample **Xamarin phonebook application** step by step integrated with ASP.NET Zero website. Be aware that only ASP.NET Core version is supported.
+In this document, we will create a sample **MAUI phonebook application** step by step integrated with ASP.NET Zero website. Be aware that only ASP.NET Core version is supported.
 
 ## Downloading Phonebook-Core Sample
 
-In the **Developing Step By Step**  document we have already seen how to create a phonebook on server side and web client. In this document we will resume this project. We will build a phonebook application on ASP.NET Zero Xamarin project. Download the solution [Acme.PhoneBookDemo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/PhoneBook-Core) and open the **Acme.PhoneBookDemo.Mobile.sln** file.
+In the **Developing Step By Step**  document we have already seen how to create a phonebook on server side and web client. In this document we will resume this project. We will build a phonebook application on ASP.NET Zero MAUI project. Download the solution [Acme.PhoneBookDemo](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/PhoneBook-Core) and open the **Acme.PhoneBookDemo.Mobile.sln** file.
 
 ## Configuring Host Address
 
@@ -111,7 +111,7 @@ start to create person and person detail view for mobile.
 
 ### Creating 
 
-PeopleView is going to list all the persons. When we tap one of the
+PeopleView is going to list all the people. When we tap one of the
 person, we'll navigate to person details. In **Acme.PhoneBookDemo.Mobile.MAUI** project, there's **Pages** folder. Add new folder named **People** in that folder. And create new razor page in it named **Index**.
 
 <img src="images/maui-add-people-index.png" alt="Creating Person App Service Client" class="img-thumbnail" />
@@ -309,13 +309,12 @@ Let's set the properties of the new *NavigationMenuItem*:
 2.  **Icon:** Icon for menu
 
 3.  **NavigationUrl:** Url to go to the page
-4.  **RequiredPermissionName:** A permission key has to be assigned to be
-    able to show/hide the new menu according to the user's permission.
-    In the previous document, it's already declared in "[Define the
-    permission](https://www.aspnetzero.com/Documents/Developing-Step-By-Step-Core#define-the-permission)"
-    section as "**Pages.Tenant.PhoneBook**". We need to use the same
-    string for permission key. So what you have to do is add the below
-    line to **PermissionKey** class like below:  
+4.  **RequiredPermissionName:** A permission key has to be assigned to be able to show/hide the new menu according to the user's permission.
+In the previous document, it's already declared in "[Define the
+permission](https://www.aspnetzero.com/Documents/Developing-Step-By-Step-Core#define-the-permission)"
+section as "**Pages.Tenant.PhoneBook**". We need to use the same
+string for permission key. So what you have to do is add the below
+line to **PermissionKey** class like below:  
 
     ```c#
     public const string Phonebook = "Pages.Tenant.PhoneBook";
@@ -342,7 +341,7 @@ button and enter **default** into the textbox in the opened modal. If the tenant
 label. If the tenant is not active or does not exist, then you'll get an
 alert about that.
 
-<img src="images/maui-phonebook-android-emulator-login-screen.png" alt="Login Screen" class="img-thumbnail" />
+<img src="images/maui-login.png" alt="Login Screen" class="img-thumbnail" />
 
 Enter your credentials and tap **Log In** button.
 When you successfully login, you can see the below screen with new
