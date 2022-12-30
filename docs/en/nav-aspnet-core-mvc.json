@@ -265,11 +265,15 @@
       ]
     },
     {
-      "text": "Mobile (Xamarin)",
+      "text": "Mobile",
       "path": "Xamarin.md",
       "items": [
         {
-          "text": "Development Guide",
+          "text": "MAUI Development Guide",
+          "path": "Development-Guide-MAUI.md"
+        },
+        {
+          "text": "Xamarin Development Guide",
           "path": "Development-Guide-Xamarin.md"
         }
       ]
@@ -521,10 +525,14 @@
           ]
         },
         {
-          "text": "Mobile (Xamarin)",
+          "text": "Mobile",
           "items": [
             {
-              "text": "Developing Step By Step",
+              "text": "Developing Step By Step for MAUI",
+              "path": "Developing-Step-By-Step-MAUI.md"
+            },
+            {
+              "text": "Developing Step By Step for Xamarin",
               "path": "Developing-Step-By-Step-Xamarin.md"
             }
           ]
