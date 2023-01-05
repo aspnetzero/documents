@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 12.0.0 (2023-01-05)
+
+* Created MAUI and Blazor mobile app template.
+* Upgraded to .NET 7.
+* Upgraded to Angular 15.
+* Allow tenants to set dark and light logos.
+* Implemented Authenticator app recovery codes.
+* Enhancements and bug fixes
+
 ## 11.4.0 (2022-11-15)
 
 * Notify users when a new version is released.
