@@ -1,12 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-</head>
-<body>
-
 <h1>Project Types Differences</h1>
+
 <h3 id="DocIntro">Overall</h3>
 <p>While base functionalities are identical for all versions of ASP.NET Zero, 
 there are still some differences between different versions. In this document, 
@@ -110,6 +103,3 @@ in different versions:</p>
 	<li><a href="https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core">ASP.NET Core &amp; jQuery</a></li>
 	<li><a href="https://docs.aspnetzero.com/en/aspnet-core-angular/latest/Features-Angular">ASP.NET Core &amp; Angular</a></li>
 </ul>
-</body>
-
-</html>
