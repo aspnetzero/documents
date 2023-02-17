@@ -11,7 +11,7 @@ The following topics will be covered in this section:
 - [User Secrets](Infrastructure-Core-Mvc-User-Secrets)
 - [Providers](Infrastructure-Core-Mvc-Providers)
 - [Caching](Infrastructure-Core-Mvc-Caching)
-- [Background Jobs & HangFire](Infrastructure-Core-Mvc-Background-Jobs)
+- [Background Jobs & HangFire](Infrastructure-Background-Jobs)
 - [SignalR Integration](Infrastructure-Core-Mvc-SignalR)
 - [Logging](Infrastructure-Core-Mvc-Logging)
 - [Dto Mappings](Infrastructure-Core-Mvc-Dto-Mappings)
