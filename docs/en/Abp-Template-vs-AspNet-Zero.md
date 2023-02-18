@@ -1,11 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-</head>
-<body>
-
 <h1>ASP.NET Boilerplate Free Templates vs ASP.NET Zero</h1>
 
 [ASP.NET Boilerplate](<https://aspnetboilerplate.com/>) is an open-source web application framework which is also developed by the same team who develops ASP.NET Zero. [ASP.NET Boilerplate](<https://aspnetboilerplate.com/>) also provides free startup templates. Here you can see the differences between ASP.NET Boilerplate's free templates and ASP.NET Zero.
@@ -243,8 +235,3 @@
 </tr>
 </tbody>
 </table>
-
-
-</body>
-
-</html>
