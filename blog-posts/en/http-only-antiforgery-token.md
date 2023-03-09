@@ -1,6 +1,6 @@
 # Enhancing Security with HTTP-Only Anti-Forgery Tokens in ASP.NET Zero
 
-In this article, we'll explore how to set **AntiForgery** cookie **HttpOnly** in ASP.NET Zero. We'll start by **explaining** what **AntiForgery** is and why it's **important**, then provide code examples to help you **implement** HttpOnly AntiForgery in **your** own **ASP.NET Zero** projects.
+In this article, we'll explore how to set **AntiForgery** cookie **HttpOnly** in ASP.NET Zero. We'll start by **explaining** what **AntiForgery** is and why it's **important**, then provide code examples to help you **implement** HttpOnly AntiForgery in **your** own **ASP.NET Zero** MVC projects.
 
 First, let me explain what AntiForgery is and why it's important.
 
