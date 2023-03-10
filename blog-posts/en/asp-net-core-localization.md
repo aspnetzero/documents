@@ -14,7 +14,7 @@ To start, **create** an Asp.Net Core application. You can **choose to use** eith
 
 Configure localization by adding the **following code** to either the `Program.cs` or `Startup.cs` file, as per your **application structure**, as **shown** in this [Microsoft documentation](https://learn.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-7.0):
 
-This code **configure** the **localization service** in the application and **specify** the **default** and **supported cultures** that will be used to **localize** the application's **content**.
+This code **configures** the **localization service** in the application and **specifies** the **default** and **supported cultures** that will be used to **localize** the application's **content**.
 
 The first section of the code **sets up** the **path** to the **localization resources**, which are typically **stored** in **files** such as **.resx** or **.json** files. The **AddLocalization** method is used to **register** the **localization service** with the **dependency injection** system.
 
@@ -65,7 +65,7 @@ In the **.resx** file, you can add **key/value** pairs for each localized string
 
 Localization in **Razor Pages** and **localization** in **MVC** are **very similar**.
 
-Once you've created your localization resources, you can **access** them** in your code**. To do this, you'll need to **inject** an **instance** of the `IStringLocalizer<T>`, `IHtmlLocalizer<T>` or `IViewLocalizer<T>` (According to your requirement) interface into your class.
+Once you've created your localization resources, you can **access** them **in your code**. To do this, you'll need to **inject** an **instance** of the `IStringLocalizer<T>`, `IHtmlLocalizer<T>` or `IViewLocalizer<T>` (According to your requirement) interface into your class.
 
 Here's an **example** of **how to access** a **localized string** in **C#**:
 
@@ -145,7 +145,7 @@ services.Configure<RequestLocalizationOptions>(options =>
 ### Custom Request Culture Provider
 You can also create **custom** request culture **providers** to support **custom ways** of **determining** the user's preferred **culture**.
 
-To create a custom **Request Culture Provider**, you'll need to implement the `IRequestCultureProvider` interface and **override** the `DetermineProviderCultureResult`(HttpContext) method. This method should return a `ProviderCultureResult` object that **contains** the user's preferred **culture**.
+To create a custom **Request Culture Provider**, you'll need to implement the `IRequestCultureProvider` interface and **override** the `DetermineProviderCultureResult(HttpContext)` method. This method should return a `ProviderCultureResult` object that **contains** the user's preferred **culture**.
 
 Here's an **example** of a **custom request culture provider** that determines the user's preferred culture based on a custom HTTP header:
 
@@ -231,10 +231,10 @@ builder.Services.AddRazorPages().AddDataAnnotationsLocalization();
 ```
 
 Default language
-![Data Annotations](/images/data-annotation.png)
+![Data Annotations](images/data-annotation.png)
 
 Turkish language
-![Data Annotations](/images/data-annotation-turkish.png)
+![Data Annotations](images/data-annotation-turkish.png)
 
 ## Using Shared Resources
 
@@ -242,7 +242,7 @@ In some cases, you may want to **share** localization **resources** **between pa
 
 To share localization resources between pages, you'll need to **create** a **shared resource file**.
 
-![Shared Resource File](/images/shared-resource-file.png)
+![Shared Resource File](images/shared-resource-file.png)
 
 ### Using Shared Resources in ASP.NET Core
 
@@ -314,11 +314,11 @@ builder.Services.AddRazorPages().AddDataAnnotationsLocalization(options =>
 });
 ```
 
-## Asp.Net Zero Solution
+## ASP.NET Zero Solution
 
-Asp.Net Zero is a **starting point** for **new** web applications with a modern **architecture**, best **practices** and most used tools. It is a **framework** that can be used to **create** a new application from **scratch**.
+ASP.NET Zero is a **starting point** for **new** web applications with a modern **architecture**, best **practices** and most used tools. It is a **framework** that can be used to **create** a new application from **scratch**.
 
-Asp.Net Zero comes with **built-in** localization and **language management** capabilities, requiring **no setup** upon installation. You can manage your language files using **RESX**, **XML**, and **JSON** formats. Additionally, the language management page enables you to **add new languages** and **edit translations** for existing languages. With the **multi-tenancy** feature in Asp.Net Zero, your tenants can customize language **translations** according to their needs. For more information, please refer to our detailed [documentation](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core-Language-Management).
+ASP.NET Zero comes with **built-in** localization and **language management** capabilities, requiring **no setup** upon installation. You can manage your language files using **RESX**, **XML**, and **JSON** formats. Additionally, the language management page enables you to **add new languages** and **edit translations** for existing languages. With the **multi-tenancy** feature in Asp.Net Zero, your tenants can customize language **translations** according to their needs. For more information, please refer to our detailed [documentation](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core-Language-Management).
 
 ## Conclusion
 In this article, we've **covered** the **basics** of implementing **localization** in an **ASP.NET Core** application. By adding localization **middleware**, creating localization **resources**, **accessing them in code**, and using them in **views**, you can create a **multilingual** website or application that's **accessible** to users.
