@@ -25,7 +25,7 @@ If you have selected this option, please follow [Getting Started](Getting-Starte
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
 - [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
-- [Yarn](https://yarnpkg.com/)
+- [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
 
 ## ASP.NET Core Application
 
@@ -105,7 +105,7 @@ Then, run the following command to create dynamic bundles *(This is only require
 npm run create-dynamic-bundles
 ```
 
-We use [yarn](https://yarnpkg.com/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
+We use [yarn v1.x](https://classic.yarnpkg.com/lang/en/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
 
 ### Running The Application
 

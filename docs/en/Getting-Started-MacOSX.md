@@ -7,7 +7,7 @@ Download an ASP.NET CORE & Angular project with .NET Core framework as described
  -  Visual Studio for Mac: [<https://visualstudio.microsoft.com/vs/mac/>](<https://visualstudio.microsoft.com/vs/mac/>)
 -  .Net core SDK: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
 
- -  Yarn [https://yarnpkg.com/en/docs/install#mac-stable](https://yarnpkg.com/en/docs/install#mac-stable)
+ -  Yarn v1.x [https://classic.yarnpkg.com/en/docs/install#mac-stable](https://classic.yarnpkg.com/en/docs/install#mac-stable)
  -  NVM with node version 8.11.1+: [https://github.com/creationix/nvm](https://github.com/creationix/nvm)
  -  Angular-cli ([https://cli.angular.io/](https://cli.angular.io/))
 

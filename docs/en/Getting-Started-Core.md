@@ -14,7 +14,7 @@ Select **ASP.NET Core & jQuery** as Project Type and fill other required fields.
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com)
 - [Node.js](https://nodejs.org/en/download/) 6.9+ with NPM 3.10+
-- [Yarn](https://yarnpkg.com/)
+- [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
 
 ## Configure The Project
 

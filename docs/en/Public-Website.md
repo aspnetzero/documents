@@ -2,7 +2,7 @@
 
 ASP.NET Zero contains a separated application that can be a starting point for your public web site or a landing page for your application. 
 
-Before running the project, we need to install NPM packages using **yarn**. In order to do that, open a command prompt, navigate to root directory of ***.Web.Public** project and run "**yarn**" command. Yarn must be installed globally in order to do that. If you haven't installed it yet, please go to [https://yarnpkg.com](https://yarnpkg.com/) and install it.
+Before running the project, we need to install NPM packages using **yarn**. In order to do that, open a command prompt, navigate to root directory of ***.Web.Public** project and run "**yarn**" command. Yarn must be installed globally in order to do that. If you haven't installed it yet, please go to [https://classic.yarnpkg.com/lang/en/](https://classic.yarnpkg.com/lang/en/) and install it.
 
 After installing the packages, run "**npm run create-bundles**" command to generate bundles for JavaScript, CSS and LESS files. ASP.NET Zero automatically watches JavaScript and Style files and updates the bundles. 
 
