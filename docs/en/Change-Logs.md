@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 12.1.0 (2023-03-28)
+
+* Added LDAPS support
+* 2nd level menu support for MAUI & Blazor app
+* Upgrade to ABP 8.1
+* Enhancements & Bug fixes
+
 ## 12.0.0 (2023-01-05)
 
 * Created MAUI and Blazor mobile app template.
