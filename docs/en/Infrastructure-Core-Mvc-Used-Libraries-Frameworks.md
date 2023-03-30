@@ -22,7 +22,7 @@ Here's the list of all libraries.
   - [Swashbuckle](https://github.com/domaindrivendev/Ahoy)
   - [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
   - [System.Linq.Dynamic.Core](https://github.com/StefH/System.Linq.Dynamic.Core)
-  - [NPOI](https://github.com/tonyqus/npoi)
+  - [MiniExcel](https://github.com/mini-software/MiniExcel)
 - Client side
   - [Metronic Theme](http://keenthemes.com/metronic-theme/)
   - [Twitter Bootstrap](http://getbootstrap.com/)
