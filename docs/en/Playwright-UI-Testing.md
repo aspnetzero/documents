@@ -1,93 +1,60 @@
-# Aspnet Zero UI Tests
+# UI Tests
 
-AspNet Zero provides an infrastructure for UI tests. It employs browser automation, screenshots, and image comparison to do so.
+ASP.NET Zero provides an infrastructure for UI tests using [Playwright](https://playwright.dev/). You can check Playwright documentation to learn more about its features.
 
 ## Project Setup & Structure
 
 You should have the following installed in your system:
 
 - [Node.js](https://nodejs.org/en/) is the runtime. Please make sure you have v12+ (LTS recommended) in your system before you start.
-- [npm] is the package manager and will help you install your dependencies and run scripts. It will be available when you install Node.js in your system.
+- [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
 
 After making sure these exist in your system, follow the steps below:
 
 1. Open your terminal.
-2. Navigate to the root folder of this project (if not already there).
-3. Run `npm install`.
-
-The following dependencies will be installed:
-
-- [TypeScript](https://github.com/microsoft/TypeScript) is the language we use in this project. All utilities, spec files, and extensions to Jest are in TypeScript.
-- [ES Lint](https://github.com/eslint/eslint) is the JavaScript/TypeScript linter. It finds and fixes problems in your code and thus ensures code quality and consistency.
-- [Prettier](https://github.com/prettier/prettier) formats your code. The current configuration in this project makes Prettier play well with ES Lint.
-- [dotenv](https://github.com/motdotla/dotenv) loads environment variables from the `.env` file.
-- [Jest](https://github.com/facebook/jest) is the testing framework. Jest is also a test runner, so you do not need a separate one. It also is highly extensible. This project benefits from the extensibility of Jest a lot.
-- [Playwright](https://github.com/microsoft/playwright) provides browser automation and screenshots. Playwright has a CLI which lets us generate the test code without writing (almost) any.
-- [Pixelmatch](https://github.com/mapbox/pixelmatch) compares screenshots. It takes two images and returns an image and a numeric value representing the difference (a.k.a. diff).
-- [pngjs](https://github.com/lukeapage/pngjs) is a PNG utility. It reads the PNG screenshots and materializes (writes) the diff as a PNG file.
-- [EJS](https://github.com/mde/ejs) is a simple JavaScript template engine. It renders the issue template based on given variables.
-- [fs-extra](https://github.com/jprichardson/node-fs-extra) provides promise-based file system methods. It reads, writes, and deletes files with great ease.
-- [Lodash](https://github.com/lodash/lodash) is a utility library for JavaScript. It provides methods to help you work with strings, arrays, objects, and more.
-- [Simple Git](https://github.com/steveukx/git-js) is a Node.js wrapper around git commands. We use it to create local branches, commit changes, and push commits to the remote.
-- [Octokit](https://github.com/octokit/rest.js) is the SDK of GitHub. We create issues and pull requests with it.
+2. Navigate to the `ui-tests-playwright` folder of this project.
+3. Run `yarn`.
 
 There are two parts of the project that requires your close attention.
 
-- The `jest.config.js` and the files under the `jest` folder establish the base for testing. You are not expected to make any changes to these files.
+- The `playwright.config.ts` is the configuration file for Playwright. You can check [https://playwright.dev/docs/test-configuration](https://playwright.dev/docs/test-configuration) to learn its options.
 - The `tests` folder includes the actual tests and utilities to create them with less effort. **This is where you will place your test suites.**
 
-Another important file you need to know about is the `.env` file. This file contains project configuration. It does not exist in the repo for security reasons. Please find the `.env.example` file and create a local `.env` file based on the descriptions. You will need a GitHub personal access token. Please refer to [the GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) for details.
+Another important file you need to know about is the `.env` file. This file contains website URL to test, a username and a password to login. 
 
-After installing dependencies and creating a valid `.env` file, the project will be ready-to-run.
+After installing dependencies, the project will be ready-to-run.
 
-## Running Tests in Development Mode
+### Running the tests
 
-Before you start, make sure your frontend and backend projects are running.
+Before running the UI tests, be sure that your MVC app is  running with a brand new database.
 
-The following steps take place upon running `npm test` in terminal:
+When you run the UI tests, a screenshot will be created for each UI test and this screenshot will be compared to new ones for the following executions of the same UI test. 
 
-1. The `jest` folder gets compiled.
-2. Jest starts based on the configurations in `jest.config.js`.
-3. All `.spec.ts` files in the `tests` folder get tested.
-4. Any changes to screenshots are saved.
-
-However, this command runs all tests, and you will most likely want to run a single test most of the time. Insert the relative file path to the end of the same command for that.
+Because of that, if you are running the UI tests for the first time, you must add `--update-snapshots` parameter to your test execution command.
 
 ```shell
-npm test mvc/editions
+npx playwright test --update-snapshots
+```
+
+For the following executions, you need to run same command without `--update-snapshots` parameter;
+
+```shell
+npx playwright test
+```
+
+This command runs all tests, but sometimes you may want to run a single test or a test group. For such cases, insert the relative file path to the end of the same command for that.
+
+```shell
+npx playwright test mvc/editions
 ```
 
 If you want to run all specs for one project
 
 ```shell
-npm test mvc
+npx playwright test mvc
 ```
 
-## Running Tests in CI Mode
-
-Before you start, make sure your frontend and backend projects are running.
-
-The following steps take place upon running `npm run test:ci` in terminal:
-
-1. Every step in the "Development Mode" happens.
-2. Changes on each project are committed to separate branches.
-3. Generated branches are pushed to the remote.
-4. A single issue (per project with change) is created on the original project repo. The `/jest/diff_report.md` file is the issue template.
-5. A pull request is created for each branch. The PR refers to the issue on the original project repo.
-
-Please note that this command creates actual commits, branches, issues, and pull requests. Therefore, you should run the "Development Mode" unless you want these to happen.
-
-If you want the tests to run only for a single file, insert the relative file path to the end of the same command.
-
-```shell
-npm run test:ci mvc/editions
-```
-
-Using base project folder instead will run all specs for that particular project.
-
-```shell
-npm run test:ci mvc
-```
+In your own repository, you can store screenshots in your repository and this will allow you to easily run UI tests for your app.
 
 ## How to Create Tests
 
@@ -98,12 +65,41 @@ There are two ways to create a test.
 - Write directives to Playwright manually.
 - Use the Playwright CLI to generate code.
 
-The first option requires you to know about the Playwright API. The second one, on the other hand, is quite easy. Please refer to [this section](https://github.com/microsoft/playwright-cli#generate-code) for details.
+ASP.NET Zero's default UI tests are executed in serial. So, tests are executed one by one and next test uses the state of previous test. We suggest using this approach when you are writing a UI test in your project as well.
 
-Although Playwright CLI helps you create tests, you will notice that it sometimes produces element selectors that are too tied to implementation. Please refer to [the documentation for selectors](https://github.com/microsoft/playwright/blob/master/docs/selectors.md#element-selectors) to see different approaches you can take. Also, the example spec demonstrates how to use imported functions for reusable selectors.
+Also, ASP.NET ZEro's default UI tests removes all data created during the UI tests. For example, this UI test creates a new Role with the name 'test' (Input fields are filled in a previous step which is not shown here). 
 
-**Tip:** If you want to run tests in debug mode, uncomment `DEBUG=pw:api` line in your `.env` file.
+````typescript
+/* Step 5 */
+test('should save record when "Save" button is clicked', async () => {
+    await rolesPage.saveForm();
+    await rolesPage.waitForResponse();
+    await rolesPage.replaceLastColoumnOfTable();
 
-**Tip:** If you want to see the browser when tests are running, uncomment `HEADFUL=` line in your `.env` file.
+    await expect(page).toHaveScreenshot(ROLES_CRUD_NEW_SAVE);
+});
+````
+
+And after that, this final step in Role UI test group removes the created record.
+
+````typescript
+/* Step 12 */
+test('should delete record on click to "Yes" button', async () => {
+    await rolesPage.openActionsDropdown(2);
+    await rolesPage.waitForDropdownMenu();
+    await rolesPage.triggerDropdownAction('Delete');
+    await rolesPage.waitForConfirmationDialog();
+    await rolesPage.confirmConfirmation();
+    await rolesPage.waitForResponse();
+    await rolesPage.replaceLastColoumnOfTable();
+
+    await expect(page).toHaveScreenshot(ROLES_CRUD_DELETE_CONFIRM);
+});
+````
+
+In this way, you can run your UI test during development.
+
+**Tip:** If you want to see the browser when tests are running, set `headless: true` in **playwright.config.ts**.
 
 **Tip:** If you use VSCode to write your tests you can use debugging.
+
