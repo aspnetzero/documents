@@ -40,5 +40,5 @@ You can delete **migrate** branch after merging it to **dev** branch because you
 
 
 
-Note: Both approaches explained above doesn't delete the files which are renamed or deleted in the original AspNet Zero repository. You can use a tool similar to [WinMerge](https://winmerge.org/) to find not used (deletet or renamed) files and delete them from your main branch if you want.
+Note: Both approaches explained above doesn't delete the files which are renamed or deleted in the original AspNet Zero repository. You can use a tool similar to [WinMerge](https://winmerge.org/) to find not used (deleted or renamed) files and delete them from your main branch if you want.
 
