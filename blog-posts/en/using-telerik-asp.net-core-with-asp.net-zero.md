@@ -1,14 +1,12 @@
 # Using Asp.Net Zero with Telerik UI
 
-## Introduction
-
 Hi, in this article we will see how we can integrate the **Telerik UI** for ASP.NET Core (Kendo) components with our **Asp.Net Zero** MVC app. We will create a product crud app with the [Telerik UI grid component](https://www.telerik.com/aspnet-core-ui/grid).
 
 Let's create a solution named **TelerikUIDemo** as described in [Getting Started](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Getting-Started-Core) document. Using this project name guarantees that the namespace from the code snippets in this tutorial will match your project. 
 
 Follow the steps in the [Getting Started](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Getting-Started-Core) document and run your application. If you have successfully completed all the steps, you will get a view as below:
- 
-<img src="images/dashboardV3.png" alt="Dashboard" class="img-thumbnail"/>
+
+![Asp.Net Zero Dashboard](/Images/Blog/dashboardV3.png)
 
 ## Telerik UI Integration with Asp.Net Zero
 
@@ -110,7 +108,8 @@ To avoid conflicting jQuery files, remove jQuery from `app-layout-libs.min.js` a
 ```
 
 * If you have successfully completed all the steps, you will get a view as below:
-<img src="images/telerik-ui-installation.png" alt="Telerik UI" class="img-thumbnail"/>
+
+![Telerik UI Date Picker](/Images/Blog/telerik-ui-installation.png)
 
 ## Simple CRUD with Asp.Net Zero using Telerik UI
 
@@ -120,7 +119,7 @@ Before starting the Asp.Net Zero and Telerik UI Crud part, if you do not have ex
 
 ### Creating Product Entity
 
-We define entities at domain specific folders in **.Core** (domain) project. We can create a folder named **TelerikUI** and define a **Product** entity as shown below:
+We define entities at domain specific folders in `.Core` (domain) project. We can create a folder named `TelerikUI` and define a `Product` entity as shown below:
 ```csharp
 public class Product : FullAuditedEntity
 {
@@ -137,7 +136,7 @@ public class Product : FullAuditedEntity
 }
 ```
 
-We created **PersonConsts** in **.Core.Shared** project for **MaxLength** properties. This is a good practice since we will use same values later.
+We created `PersonConsts` in `.Core.Shared` project for `MaxLength` properties. This is a good practice since we will use same values later.
 
 ```csharp
 public class ProductConsts
@@ -147,7 +146,7 @@ public class ProductConsts
 }
 ```
 
-We add a **DbSet** property for **Product** entity to **TelerikUIDemoDbContext** class defined in **.EntityFrameworkCore** project. Then **add migration** and **update the database**. If you're having trouble doing this, you can have a look [here](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Developing-Step-By-Step-Core-Database-Migrations-Person).
+We add a `DbSet` property for `Product` entity to `TelerikUIDemoDbContext` class defined in `.EntityFrameworkCore` project. Then `add migration` and **update the database**. If you're having trouble doing this, you can have a look [here](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Developing-Step-By-Step-Core-Database-Migrations-Person).
 
 ```csharp
 public class TelerikUIDemoDbContext : AbpZeroDbContext<Tenant, Role, User, TelerikUIDemoDbContext>
@@ -259,7 +258,7 @@ public class ProductAppService : TelerikUIDemoAppServiceBase, IProductAppService
 }
 ```
 
-We are adding the following mappings to **CustomDtoMapper.cs** in **.Application** project:
+We are adding the following mappings to `CustomDtoMapper.cs` in `.Application` project:
 
 ```csharp
 configuration.CreateMap<Product, ProductListDto>();
@@ -354,7 +353,7 @@ public class ProductController : TelerikUIDemoControllerBase
                     .Destroy(destroy => destroy.Action("DELETE", "Product", new { id = "{0}" }))
             )
             )
-    </div>
+</div>
 
 <script>
 	
@@ -371,4 +370,4 @@ function error_handler(e) {
 
 The final result of CRUD with Asp.Net Zero using Telerik UI is the following:
 
-<img src="images/telerik-ui-final-result.png" alt="Sample Crud with Asp.Net Zero Using Telerik UI" class="img-thumbnail"/>
+![Sample Crud with Asp.Net Zero Using Telerik UI](/Images/Blog/telerik-ui-final-result.png)

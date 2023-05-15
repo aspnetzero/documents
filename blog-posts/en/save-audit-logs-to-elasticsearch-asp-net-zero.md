@@ -1,12 +1,12 @@
-# How to Save Audit Logs to ElasticSearch
+# Save Audit Logs to ElasticSearch in ASP.NET Zero
 
-ASP.NET Zero provides AuditLogging functionality out of the box and all audit logs are saved to database by default. 
+ASP.NET Zero provides **AuditLogging** functionality out of the box and all audit logs are saved to **database** by **default**. 
 
 In this article we will log all audit log data to [Elastic Search](https://www.elastic.co/). We assume that, you already have a working  [Elastic Search](https://www.elastic.co/) which you can use for this article. If not, please install it to your PC first.
 
 [ASP.NET Boilerplate](https://aspnetboilerplate.com/) uses [IAuditingStore](https://github.com/aspnetboilerplate/aspnetboilerplate/blob/dev/src/Abp/Auditing/IAuditingStore.cs) to store any audit log data. See: [AuditingHelper.cs](https://github.com/aspnetboilerplate/aspnetboilerplate/blob/dev/src/Abp/Auditing/AuditingHelper.cs#L130-L146). To save audit logs to elasticsearch, we should create a service that implements `IAuditingStore`, then replace it with current implementation.
 
-We will use [NEST](https://github.com/elastic/elasticsearch-net#nest) the offical elasticsearch .net library. Install NEST package to your project using the command below or NuGet Package Manager.
+We will use [NEST](https://github.com/elastic/elasticsearch-net#nest) the **offical** elasticsearch .net library. Install **NEST** package to your project using the command below or NuGet Package Manager.
 
 ```shell
 PM> Install-Package NEST
@@ -85,7 +85,7 @@ public class ElasticSearchAuditingStore : AuditingStore
 }
 ```
 
-Now, we need to replace the default AuditingStore implementation with our new ElasticSearchAuditingStore. To do that, add following code to your module's `PreInitialize` method.
+Now, we need to replace the default `AuditingStore` implementation with our new `ElasticSearchAuditingStore`. To do that, add following code to your module's `PreInitialize` method.
 
 ```csharp
 public override void PreInitialize()
@@ -97,4 +97,3 @@ public override void PreInitialize()
 ```
 
 After all, audit logs will be saved to elastic search. Now, you can make better search operations on your audit logs using ElasticSearch.
-
