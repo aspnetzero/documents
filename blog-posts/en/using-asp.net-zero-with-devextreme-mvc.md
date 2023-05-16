@@ -1,6 +1,10 @@
 # Using ASP.NET Zero with DevExtreme MVC
 
-In this document, we will create a sample **phonebook application** based on ASP.NET Zero (ASP.NET Core version) step by step. After all steps, we will have a multi-tenant, localized, authorized, configurable,
+In this tutorial, we will guide you through the process of creating a robust and feature-rich phonebook application using ASP.NET Zero, which is built on ASP.NET Core and Mvc. By following the steps outlined here, you will learn how to develop a multi-tenant application that supports localization, authorization, configurability, and testability.
+
+ASP.NET Zero provides a solid foundation for building enterprise-level applications with its comprehensive set of pre-built features and functionalities. By leveraging the power of ASP.NET Core on the server-side and Mvc on the client-side, you can create a modern and responsive web application.
+
+By the end of this tutorial, you will have a solid understanding of how to use ASP.NET Zero and DevExtreme Mvc together to develop powerful applications that are both user-friendly and highly functional. So, let's dive in and start building our phonebook application step by step.
 
 First of all you should follow that directions and implement DevExtreme to your existing project.
 
