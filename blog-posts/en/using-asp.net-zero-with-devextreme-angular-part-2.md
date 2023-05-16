@@ -49,7 +49,7 @@ configuration.CreateMap<Person, PersonListDto>();
 //configuration.CreateMap<Phone, PhoneInPersonListDto>();
 ```
 
-After defining interface, we can implement it as shown below: (in **.Application** project)
+After defining interface, we can implement it as shown below: (in `.Application` project)
 
 ```csharp
 public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
@@ -98,34 +98,24 @@ By writing unit test, we can test `GetPeople` method of `PersonAppService` witho
 
 Since we disabled multitenancy, we should disable it for unit tests too. Open `PhoneBookDemoConsts` class in the `Acme.PhoneBook.Core` project and set `MultiTenancyEnabled` to false. After a rebuild and run unit tests, you will see that some tests are skipped (those are related to multitenancy).
 
-Let's create first test to verify getting people without any filter:
-
 ```csharp
-using Acme.PhoneBookDemo.People;
-using Acme.PhoneBookDemo.People.Dtos;
-using Shouldly;
-using Xunit;
-
-namespace Acme.PhoneBookDemo.Tests.People
+public class PersonAppService_Tests : AppTestBase
 {
-    public class PersonAppService_Tests : AppTestBase
+    private readonly IPersonAppService _personAppService;
+
+    public PersonAppService_Tests()
     {
-        private readonly IPersonAppService _personAppService;
+        _personAppService = Resolve<IPersonAppService>();
+    }
 
-        public PersonAppService_Tests()
-        {
-            _personAppService = Resolve<IPersonAppService>();
-        }
+    [Fact]
+    public void Should_Get_All_People_Without_Any_Filter()
+    {
+        //Act
+        var persons = _personAppService.GetPeople(new GetPeopleInput());
 
-        [Fact]
-        public void Should_Get_All_People_Without_Any_Filter()
-        {
-            //Act
-            var persons = _personAppService.GetPeople(new GetPeopleInput());
-
-            //Assert
-            persons.Items.Count.ShouldBe(2);
-        }
+        //Assert
+        persons.Items.Count.ShouldBe(2);
     }
 }
 ```

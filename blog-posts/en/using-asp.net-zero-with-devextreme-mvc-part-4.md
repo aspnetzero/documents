@@ -1,6 +1,6 @@
-# Using ASP.NET Zero with DevExtreme Angular Part 4
+# Using ASP.NET Zero with DevExtreme Mvc Part 3
 
-The ASP.NET Zero framework provides a robust foundation for building web applications with Angular and ASP.NET Core. In this blog post series, we explore the integration of ASP.NET Zero with DevExtreme Angular, a powerful UI component library.
+The ASP.NET Zero framework provides a robust foundation for building web applications with Mvc and ASP.NET Core. In this blog post series, we explore the integration of ASP.NET Zero with DevExtreme Mvc, a powerful UI component library.
 
 In the last part of the series, we focus on implementing the **editing** functionality in the phone book application. We start by adding a `EditPerson` method to the server-side application service, `IPersonAppService`, and define the necessary DTO (Data Transfer Object) to transfer person information.
 
@@ -33,6 +33,7 @@ The `EntityDto` is a convenient shortcut provided by ABP (ASP.NET Boilerplate) w
 
 The implementation of the `EditPerson` method in the PersonAppService is straightforward. We retrieve the person entity based on the provided `Id` and update its properties with the values from the input DTO. Finally, we save the changes using the `_personRepository`. Here's the implementation:
 
+
 ```csharp
 public async Task EditPerson(EditPersonInput input)
 {
@@ -56,114 +57,77 @@ public async Task EditPerson(EditPersonInput input)
 }
 ```
 
-### Service Proxy Generation
+Then add `UpdatePerson` method in `PhoneBookController`
 
-Since we have made changes to the server-side services, it is important to regenerate the client-side service proxies using **NSwag**. Ensure that the server-side application is running, and then run the `userefresh.bat` script, as explained in the previous parts of this series. 
+```cs
+[HttpPut]
+public async Task UpdatePerson(int key, string values)
+{
+    var editPersonInput = new EditPersonInput {Id = key};
+    JsonConvert.PopulateObject(values, editPersonInput);
 
-### Component Script
-
-To incorporate the update functionality into the phone book component, we need to make changes to the `phonebook.component.ts` file.
-
-First, import the necessary dependencies and update the `PhoneBookComponent` class definition as follows:
-
-```typescript
-import {Component, Injector} from '@angular/core';
-import {AppComponentBase} from '@shared/common/app-component-base';
-import {appModuleAnimation} from '@shared/animations/routerTransition';
-import {EditPersonInput, PersonServiceProxy} from "@shared/service-proxies/service-proxies";
-import CustomStore from "@node_modules/devextreme/data/custom_store";
-
-@Component({
-    templateUrl: './phonebook.component.html',
-    animations: [appModuleAnimation()]
-})
-
-export class PhoneBookComponent extends AppComponentBase {
-
-    dataSource: any;
-    refreshMode: string;
-
-    constructor(
-        injector: Injector,
-        private _personService: PersonServiceProxy
-    ) {
-        super(injector);
-        this.getData();
-    }
-
-    getData() {
-        this.refreshMode = "full";
-
-        this.dataSource = new CustomStore({
-            key: "id",
-            load: (loadOptions) => {
-                return this._personService.getPeople("").toPromise();
-            },
-            insert: (values) => {
-                return this._personService.createPerson(values).toPromise()
-            },
-            update: (key, values) => {
-                return this._personService.editPerson(new EditPersonInput({
-                    id: key,
-                    name: values.name,
-                    emailAddress: values.emailAddress,
-                    surname: values.surname
-                })).toPromise();
-            },
-            remove: (key) => {
-                return this._personService.deletePerson(key).toPromise();
-            }
-        });
-    }
+    await _personAppService.EditPerson(editPersonInput);
 }
-
 ```
 
-Go to `phonebook.component.html` and add `dxo-editing` tag with `allowUpdating` true option:
+### View
+
+Update `Index.cshtml` as seen below.
 
 ```html
-<div [@routerTransition]>
-    <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'PhoneBook' | localize">
-        </sub-header>
+@using Acme.PhoneBookDemo.Web.Areas.App.Startup
+@using DevExtreme.AspNet.Mvc
+@{
+    ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
+}
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("PhoneBook")" description="@L("PhoneBookInfo")"></abp-page-subheader>
 
-        <div [class]="containerClass">
-            <div class="card card-custom">
+    <div class="@(await GetContainerClass())">
+        <div class="col-12">
+            <div class="card card-custom gutter-b">
                 <div class="card-body">
-                    <dx-data-grid
-                        id="phonebookgrid"
-                        [dataSource]="dataSource"
-                        [repaintChangesOnly]="true"
-                        [showBorders]="true">
-
-                        <dxo-scrolling mode="virtual"></dxo-scrolling>
-                        <dxo-editing
-                            mode="row"
-                            [refreshMode]="refreshMode"
-                            [allowAdding]="true"
-                            [allowUpdating]="true"
-                            [allowDeleting]="true">
-                        </dxo-editing>
-
-                        <dxi-column dataField="name" caption="{{'Name' | localize}}"></dxi-column>
-                        <dxi-column dataField="surname" caption="{{'Surname' | localize}}"></dxi-column>
-                        <dxi-column dataField="emailAddress" caption="{{'EmailAddress' | localize}}"></dxi-column>
-                    </dx-data-grid>
+                    @(Html.DevExtreme()
+                        .DataGrid()              
+                        .Editing(editing => {
+                            editing.Mode(GridEditMode.Row);
+                            editing.AllowAdding(true);
+                            editing.AllowDeleting(true);
+                            editing.AllowUpdating(true);
+                        })
+                        .DataSource(d => d.Mvc()
+                            .Controller("PhoneBook")
+                            .LoadAction("LoadPeople")
+                            .InsertAction("CreatePerson")
+                            .UpdateAction("UpdatePerson")
+                            .DeleteAction("DeletePerson")
+                            .Key("id")
+                        )
+                        .Columns(columns =>
+                        {
+                            columns.Add()
+                                .DataField("name")
+                                .Caption(L("Name"));
+                            
+                            columns.Add()
+                                .DataField("surname")
+                                .Caption(L("Surname"));
+                            
+                            columns.Add()
+                                .DataField("emailAddress")
+                                .Caption(L("EmailAddress"));                       
+                        })
+                    )
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 ```
 
-It first shows a confirmation message when we click the edit  button:
+<img src="/Images/Blog/devextreme-confirmation-edit-person.png" alt="Phonebook peoples" class="img-thumbnail"/>
 
-<img src="/Images/Blog/phonebook-edit-person-view-1.png" alt="Confirmation message" class="img-thumbnail" />
-
-<img src="/Images/Blog/phonebook-edit-person-view-2.png" alt="Confirmation message" class="img-thumbnail" />
-
-## Multi Tenancy
+## Multi-Tenancy
 
 We have built a fully functional application until here. Now, we will see how to **convert** it to a **multi-tenant** application easily. **Logout** from the application before any change.
 
@@ -175,7 +139,7 @@ We disabled multi-tenancy at the beginning of this document. Now, **re-enabling*
 public const bool MultiTenancyEnabled = true;
 ```
 
-### Make Entities Multi Tenant
+## Make Entities Multi Tenant
 
 In a multi-tenant application, a tenant's entities should be **isolated** by other tenants. For this example project, every tenant **should** have own phone book with isolated people and phone numbers.
 
@@ -238,13 +202,13 @@ It's empty because **trio** tenant has a completely **isolated** people list. Yo
 
 ## Conclusion
 
-In this blog post series, we have explored the integration of **ASP.NET Zero** with **DevExtreme** Angular, showcasing the **implementation** of various features in the phone book application. We started by adding the necessary **server-side** methods and DTOs for editing a person's information. Then, we regenerated the **client-side** service proxies to ensure seamless communication between the Angular application and the ASP.NET Zero backend.
+In this blog post series, we have explored the integration of **ASP.NET Zero** with **DevExtreme** Mvc, showcasing the **implementation** of various features in the phone book application. We started by adding the necessary **server-side** methods and DTOs for editing a person's information. Then, we regenerated the **client-side** service proxies to ensure seamless communication between the Mvc application and the ASP.NET Zero backend.
 
-ASP.NET Zero empowers developers to build **sophisticated** web applications by providing a **solid architectural** foundation and **flexibility** for customization. The **integration** with DevExtreme Angular further enhances the user interface and improves the overall user experience.
+ASP.NET Zero empowers developers to build **sophisticated** web applications by providing a **solid architectural** foundation and **flexibility** for customization. The **integration** with DevExtreme Mvc further enhances the user interface and improves the overall user experience.
 
-We hope this blog post series has been insightful and helpful in understanding the **integration of ASP.NET Zero with DevExtreme Angular**. By leveraging these **powerful frameworks**, you can create **feature-rich** applications with ease.
+We hope this blog post series has been insightful and helpful in understanding the **integration of ASP.NET Zero with DevExtreme Mvc**. By leveraging these **powerful frameworks**, you can create **feature-rich** applications with ease.
 
-Thank you for joining us on this journey, and we wish you success in building your own applications using ASP.NET Zero and DevExtreme Angular!
+Thank you for joining us on this journey, and we wish you success in building your own applications using ASP.NET Zero and DevExtreme Mvc!
 
 ### Source Code
 

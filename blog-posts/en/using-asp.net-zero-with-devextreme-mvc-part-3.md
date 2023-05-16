@@ -1,8 +1,8 @@
-# Using ASP.NET Zero with DevExtreme Angular Part 3
+# Using ASP.NET Zero with DevExtreme Mvc Part 3
 
-Welcome to Part 3 of the tutorial series on using ASP.NET Zero with DevExtreme Angular. In this tutorial, we will focus on creating a new person in the phone book application by adding a modal for adding a new item, and deleting an item from the phone book.
+Welcome to Part 3 of the tutorial series on using ASP.NET Zero with DevExtreme Mvc. In this tutorial, we will focus on creating a new person in the phone book application by adding a modal for adding a new item, and deleting an item from the phone book.
 
-## Adding a CreatePerson Method to PersonAppService
+## Adding CreatePerson Method to PersonAppService
 
 We will start by defining a `CreatePerson` method in the `IPersonAppService` interface. The method will have the following signature:
 
@@ -105,91 +105,90 @@ public async Task Should_Not_Create_Person_With_Invalid_Arguments()
 
 We did not set `Surname` property of `CreatePersonInput` despite it being **required**. So, it throws `AbpValidationException` automatically. Also, we can not send null to `CreatePerson` method since validation system also checks it. This test calls CreatePerson with invalid arguments and asserts that it throws `AbpValidationException`. See [validation document](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects) for more information.
 
-## Adding Create New Person To Index
+## Creating New Person
 
-First of all, we should use `nswag/refresh.bat` to re-generate service-proxies. This will generate the code that is needed to call `PersonAppService`.`CreatePerson` method from client side. Notice that you should rebuild & run the server side application before re-generating the proxy scripts.
+Create a controller action to create a person.
 
-Go to `phonebook.component.ts` and add insert option to `CustomStore`
+*PhoneBookController.cs* 
 
-```typescript
-import {Component, Injector} from '@angular/core';
-import {AppComponentBase} from '@shared/common/app-component-base';
-import {appModuleAnimation} from '@shared/animations/routerTransition';
-import {PersonServiceProxy} from "@shared/service-proxies/service-proxies";
-import CustomStore from "@node_modules/devextreme/data/custom_store";
+```cs
+[Area("App")]
+public class PhoneBookController : PhoneBookDemoControllerBase
+{
+    private readonly IPersonAppService _personAppService;
 
-@Component({
-    templateUrl: './phonebook.component.html',
-    animations: [appModuleAnimation()]
-})
-
-export class PhoneBookComponent extends AppComponentBase {
-    dataSource: any;
-    refreshMode: string;
-
-    constructor(
-        injector: Injector,
-        private _personService: PersonServiceProxy
-    ) {
-        super(injector);
-        this.init();
+    public PhoneBookController(IPersonAppService personAppService)
+    {
+        _personAppService = personAppService;
     }
+    
+    //...
+    public async Task<IActionResult> CreatePerson(string values)
+    {
+        var input = new CreatePersonInput();
+        JsonConvert.PopulateObject(values, input);
 
-    init() {
-        this.refreshMode = "full";
+        if(!TryValidateModel(input))
+            return BadRequest(ModelState.GetFullErrorMessage());
 
-        this.dataSource = new CustomStore({
-            key: "id",
-            load: (loadOptions) => {
-                return this._personService.getPeople("").toPromise();
-            },
-            insert: (values) => {
-                return this._personService.createPerson(values).toPromise()
-            }
-        });
+        await _personAppService.CreatePerson(input);
+        return Ok();
     }
 }
 ```
 
-Go to `phonebook.component.html` and add `dxo-editing` tag with `allowAdding` true option:
+Then Update `Index.cshml` as seen below:
+
+*Index.cshtml*
 
 ```html
-<div [@routerTransition]>
-    <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'PhoneBook' | localize">
-        </sub-header>
+@using Acme.PhoneBookDemo.Web.Areas.App.Startup
+@using DevExtreme.AspNet.Mvc
+@{
+    ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
+}
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("PhoneBook")" description="@L("PhoneBookInfo")"></abp-page-subheader>
 
-        <div [class]="containerClass">
-            <div class="card card-custom">
+    <div class="@(await GetContainerClass())">
+        <div class="col-12">
+            <div class="card card-custom gutter-b">
                 <div class="card-body">
-                    <dx-data-grid
-                        id="phonebookgrid"
-                        [dataSource]="dataSource"
-                        [repaintChangesOnly]="true"
-                        [showBorders]="true">
-
-                        <dxo-scrolling mode="virtual"></dxo-scrolling>
-                        <dxo-editing
-                            mode="row"
-                            [refreshMode]="refreshMode"
-                            [allowAdding]="true">
-                        </dxo-editing>
-
-                        <dxi-column dataField="name" caption="{{'Name' | localize}}"></dxi-column>
-                        <dxi-column dataField="surname" caption="{{'Surname' | localize}}"></dxi-column>
-                        <dxi-column dataField="emailAddress" caption="{{'EmailAddress' | localize}}"></dxi-column>
-                    </dx-data-grid>
+                    @(Html.DevExtreme()
+                        .DataGrid()              
+                        .Editing(editing => {
+                            editing.Mode(GridEditMode.Row);
+                            editing.AllowAdding(true);
+                        })
+                        .DataSource(d => d.Mvc()
+                            .Controller("PhoneBook")
+                            .LoadAction("LoadPeople")
+                            .InsertAction("CreatePerson")
+                            .Key("id")
+                        )
+                        .Columns(columns =>
+                        {
+                            columns.Add()
+                                .DataField("name")
+                                .Caption(L("Name"));
+                            
+                            columns.Add()
+                                .DataField("surname")
+                                .Caption(L("Surname"));
+                            
+                            columns.Add()
+                                .DataField("emailAddress")
+                                .Caption(L("EmailAddress"));                       
+                        })
+                    )
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 ```
 
-*The result:*
-
-<img src="/Images/Blog/phonebook-create-person-view-1.png" alt="Create Person Dialog" class="img-thumbnail" />
+<img src="/Images/Blog/phonebook-devextreme-create-person.png" alt="Phonebook peoples" class="img-thumbnail"/>
 
 ## Deleting a Person
 
@@ -206,93 +205,83 @@ Task DeletePerson(EntityDto input);
 *PersonAppService.cs*
 
 ```csharp
+[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_DeletePerson)]
 public async Task DeletePerson(EntityDto input)
 {
     await _personRepository.DeleteAsync(input.Id);
 }
 ```
 
-### Service Proxy Generation
+We also **authorized** deleting a person as did before for creating a person. We also need to define `Pages_Tenant_PhoneBook_DeletePerson` constant in AppPermissions and define related permission in `AppAuthorizationProvider`.
 
-Since we made changes to the server-side services, we need to regenerate the client-side service proxies using **NSwag**. This step ensures that the updated service methods are available on the client-side.
+### Controller
 
-### Component Script
+```csharp
+[Area("App")]
+public class PhoneBookController : PhoneBookDemoControllerBase
+{
+    private readonly IPersonAppService _personAppService;
 
-Go to `phonebook.component.ts` and add delete option to `CustomStore`:
-
-```typescript
-import {Component, Injector} from '@angular/core';
-import {AppComponentBase} from '@shared/common/app-component-base';
-import {appModuleAnimation} from '@shared/animations/routerTransition';
-import {EditPersonInput, PersonServiceProxy} from "@shared/service-proxies/service-proxies";
-import CustomStore from "@node_modules/devextreme/data/custom_store";
-
-@Component({
-    templateUrl: './phonebook.component.html',
-    animations: [appModuleAnimation()]
-})
-
-export class PhoneBookComponent extends AppComponentBase {
-
-    dataSource: any;
-    refreshMode: string;
-
-    constructor(
-        injector: Injector,
-        private _personService: PersonServiceProxy
-    ) {
-        super(injector);
-        this.init();
+    public PhoneBookController(IPersonAppService personAppService)
+    {
+        _personAppService = personAppService;
     }
-
-    init() {
-        this.refreshMode = "full";
-
-        this.dataSource = new CustomStore({
-            key: "id",
-            load: (loadOptions) => {
-                return this._personService.getPeople("").toPromise();
-            },
-            insert: (values) => {
-                return this._personService.createPerson(values).toPromise()
-            },
-            remove: (key) => {
-                return this._personService.deletePerson(key).toPromise();
-            }
-        });
+    
+    //...
+    [HttpDelete]
+    public async Task DeletePerson(int key)
+    {
+        await _personAppService.DeletePerson(new EntityDto(key));
     }
 }
 ```
 
-Go to `phonebook.component.html` and add `dxo-editing` tag with `allowDeleting` true option:
+### View
+
+We're changing `Index.cshtml` view to add a button;
 
 ```html
-<div [@routerTransition]>
-    <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'PhoneBook' | localize">
-        </sub-header>
+@using Acme.PhoneBookDemo.Web.Areas.App.Startup
+@using DevExtreme.AspNet.Mvc
+@{
+    ViewBag.CurrentPageName = AppPageNames.Tenant.PhoneBook;
+}
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("PhoneBook")" description="@L("PhoneBookInfo")"></abp-page-subheader>
 
-        <div [class]="containerClass">
-            <div class="card card-custom">
+    <div class="@(await GetContainerClass())">
+        <div class="col-12">
+            <div class="card card-custom gutter-b">
                 <div class="card-body">
-                    <dx-data-grid
-                        id="phonebookgrid"
-                        [dataSource]="dataSource"
-                        [repaintChangesOnly]="true"
-                        [showBorders]="true">
-
-                        <dxo-scrolling mode="virtual"></dxo-scrolling>
-                        <dxo-editing
-                            mode="row"
-                            [refreshMode]="refreshMode"
-                            [allowAdding]="true"
-                            [allowDeleting]="true">
-                        </dxo-editing>
-
-                        <dxi-column dataField="name" caption="{{'Name' | localize}}"></dxi-column>
-                        <dxi-column dataField="surname" caption="{{'Surname' | localize}}"></dxi-column>
-                        <dxi-column dataField="emailAddress" caption="{{'EmailAddress' | localize}}"></dxi-column>
-                    </dx-data-grid>
+                    @(Html.DevExtreme()
+                        .DataGrid()              
+                        .Editing(editing => {
+                            editing.Mode(GridEditMode.Row);
+                            editing.AllowAdding(true);
+                    		editing.AllowDeleting(true);
+                        })
+                        .DataSource(d => d.Mvc()
+                            .Controller("PhoneBook")
+                            .LoadAction("LoadPeople")
+                            .InsertAction("CreatePerson")
+                    		.DeleteAction("DeletePerson")
+                            .Key("id")
+                        )
+                        .Columns(columns =>
+                        {
+                            columns.Add()
+                                .DataField("name")
+                                .Caption(L("Name"));
+                            
+                            columns.Add()
+                                .DataField("surname")
+                                .Caption(L("Surname"));
+                            
+                            columns.Add()
+                                .DataField("emailAddress")
+                                .Caption(L("EmailAddress"));                       
+                        })
+                    )
                 </div>
             </div>
         </div>
@@ -302,17 +291,19 @@ Go to `phonebook.component.html` and add `dxo-editing` tag with `allowDeleting` 
 
 It first shows a confirmation message when we click the delete button:
 
-<img src="/Images/Blog/phonebook-delete-person-view-1.png" alt="Confirmation message" class="img-thumbnail" />
+<img src="/Images/Blog/phonebook-devextreme-delete-person.png" alt="Confirmation message" class="img-thumbnail" />
 
-<img src="/Images/Blog/phonebook-delete-person-view-2.png" alt="Confirmation message" class="img-thumbnail" />
+<img src="/Images/Blog/devextreme-confirmation-delete-person.png" alt="Confirmation message" class="img-thumbnail" />
+
+If we click Yes, it simply calls `DeletePerson` method of `PhoneBookController`.
 
 ## Conclusion
 
-In this blog post, we covered two important functionalities in the phone book application built with ASP.NET Zero and DevExtreme Angular: creating a new person and deleting a person.
+In this blog post, we covered two important functionalities in the phone book application built with ASP.NET Zero and DevExtreme Mvc: creating a new person and deleting a person.
 
 ### Summary
 
-* Creating a new person with ASP.NET Zero and DevExtreme Angular.
+* Creating a new person with ASP.NET Zero and DevExtreme Mvc.
 * Adding a `CreatePerson` method to the `PersonAppService`.
 * Testing the `CreatePerson` method with valid and invalid arguments.
 * Adding the **ability** to create a new person in the **client-side** application.
@@ -324,4 +315,4 @@ In this blog post, we covered two important functionalities in the phone book ap
 
 In the upcoming blog post, we will cover several important topics related to our application. We'll start by exploring the process of **editing** a person's information, allowing us to update their **details** as needed. Next, we'll focus on **adding new phone** numbers to a person, enhancing their contact information. We'll also learn how to **delete phone** numbers from a person's record, providing **flexibility** in managing their data. Additionally, we'll guide you through **running the application**, ensuring a smooth execution of the developed features. Finally, we'll **conclude** the blog series, summarizing our journey and achievements. Stay tuned for an informative and engaging read!
 
-https://aspnetzero.com/blog/using-asp.net-zero-with-devextreme-angular-part-4
+https://aspnetzero.com/blog/using-asp.net-zero-with-devextreme-mvc-part-4
