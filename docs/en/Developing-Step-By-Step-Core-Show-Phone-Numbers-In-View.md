@@ -63,4 +63,4 @@ When you add the sample data from the database, the view will be as follows.
 
 ## Next
 
-* [Edit Mode For Phone Numbers](Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers)
+* [Edit Mode For Phone Numbers](Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers.md)

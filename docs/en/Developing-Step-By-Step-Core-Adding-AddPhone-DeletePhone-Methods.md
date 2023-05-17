@@ -89,4 +89,4 @@ different pros and cons. It's your choice.
 
 ## Next
 
-* [Show Phone Numbers In View](Developing-Step-By-Step-Core-Show-Phone-Numbers-In-View)
+* [Show Phone Numbers In View](Developing-Step-By-Step-Core-Show-Phone-Numbers-In-View.md)
