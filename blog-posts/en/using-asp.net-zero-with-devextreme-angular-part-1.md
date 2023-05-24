@@ -370,4 +370,4 @@ In this tutorial, we have explored the process of creating a phonebook applicati
 
 In the next tutorial, we will add a **application service** to manage the phonebook. We will also add a **unit test** for the application service. Finally, we will add a **new page** to the **Angular** application to display the phonebook.
 
-https://aspnetzero.com/blog/using-asp.net-zero-with-devextreme-angular-part-2
+See the [next part](https://aspnetzero.com/blog/using-asp.net-zero-with-devextreme-angular-part-2) of this tutorial.

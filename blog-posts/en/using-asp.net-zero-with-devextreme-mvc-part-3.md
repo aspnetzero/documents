@@ -315,4 +315,4 @@ In this blog post, we covered two important functionalities in the phone book ap
 
 In the upcoming blog post, we will cover several important topics related to our application. We'll start by exploring the process of **editing** a person's information, allowing us to update their **details** as needed. Next, we'll focus on **adding new phone** numbers to a person, enhancing their contact information. We'll also learn how to **delete phone** numbers from a person's record, providing **flexibility** in managing their data. Additionally, we'll guide you through **running the application**, ensuring a smooth execution of the developed features. Finally, we'll **conclude** the blog series, summarizing our journey and achievements. Stay tuned for an informative and engaging read!
 
-https://aspnetzero.com/blog/using-asp.net-zero-with-devextreme-mvc-part-4
+See the [next part](https://aspnetzero.com/blog/using-asp.net-zero-with-devextreme-mvc-part-4) of this tutorial.

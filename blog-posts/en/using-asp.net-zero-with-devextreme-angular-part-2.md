@@ -266,5 +266,4 @@ In this blog post, we've seen how to create a new **application service** and us
 
 In our upcoming blog post, we will focus on the implementation of the `CreatePerson` method. We'll create a new page dedicated to creating new people and ensure the functionality is thoroughly tested through unit tests. Additionally, we'll explore the capabilities of **DevExtreme** controls within the Angular framework.
 
-https://aspnetzero.com/blog/using-asp.net-zero-with-devextreme-angular-part-3
-
+See the [next part](https://aspnetzero.com/blog/using-asp.net-zero-with-devextreme-angular-part-3) of this tutorial.
