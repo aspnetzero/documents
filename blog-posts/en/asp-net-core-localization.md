@@ -14,9 +14,9 @@ To start, **create** an Asp.Net Core application. You can **choose to use** eith
 
 Configure localization by adding the **following code** to either the `Program.cs` or `Startup.cs` file, as per your **application structure**, as **shown** in this [Microsoft documentation](https://learn.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-7.0):
 
-This code **configures** the **localization service** in the application and **specifies** the **default** and **supported cultures** that will be used to **localize** the application's **content**.
+This code configures the **localization service** in the application and **specifies** the **default** and **supported cultures** that will be used to **localize** the application's content.
 
-The first section of the code **sets up** the **path** to the **localization resources**, which are typically **stored** in **files** such as **.resx** or **.json** files. The **AddLocalization** method is used to **register** the **localization service** with the **dependency injection** system.
+The first section of the code **sets up** the **path** to the **localization resources**, which are typically **stored** in **files** such as `.resx` or `.json` files. The `AddLocalization` method is used to **register** the **localization service** with the **dependency injection** system.
 
 ```csharp
 builder.Services.AddLocalization(options =>
@@ -25,7 +25,7 @@ builder.Services.AddLocalization(options =>
 });
 ```	
 
-The last section of the code **configures** the **request localization** options for the **application**. The **DefaultRequestCulture** property is set to the **default culture**, and the **SupportedCultures** and **SupportedUICultures** properties are set to the **array of supported cultures**.
+The last section of the code configures the **request localization** options for the **application**. The `DefaultRequestCulture` property is set to the **default culture**, and the `SupportedCultures` and `SupportedUICultures` properties are set to the **array of supported cultures**.
 
 ```csharp
 const string defaultCulture = "en";
@@ -43,7 +43,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options => {
 });
 ```
 
-Add **middleware** to the request **pipeline** by adding the **following code**:
+Add **middleware** to the request **pipeline** by adding the following code:
 
 ```csharp
 app.UseRequestLocalization();
@@ -51,15 +51,15 @@ app.UseRequestLocalization();
 
 ### Create Localization Resources
 
-The next step is to **create** the localization **resources** for your application. These resources **include** text strings, images, and other **content** that **needs to be localized**.
+The next step is to **create** the localization **resources** for your application. These resources include text strings, images, and other **content** that **needs to be localized**.
 
-By **convention**, resource files **should be separated** into a separate folder called **Resources**. When **naming** these files, they should follow the **name of the class** that **will consume them**, as well as **include** the **language** they **represent**.
+By **convention**, resource files **should be separated** into a separate folder called `Resources`. When **naming** these files, they should follow the **name of the class** that **will consume them**, as well as **include** the **language** they **represent**.
 
-We can either **organize** the files into **separate folders**, such as Resources/Pages/IndexModel.resx, or leave them in the root **Resources folder**, **ensuring to name them appropriately**, in this case Resources/Pages.IndexModel.resx.
+We can either **organize** the files into **separate folders**, such as `Resources/Pages/IndexModel.resx`, or leave them in the root `Resources` folder, **ensuring to name them appropriately**, in this case `Resources/Pages.IndexModel.resx`.
 
-In the **.resx** file, you can add **key/value** pairs for each localized string or other resource. For example, you might add a key called **Greeting** with a value of **Bonjour** for **French** or **Merhaba** for **Turkish**.
+In the `.resx` file, you can add **key/value** pairs for each localized string or other resource. For example, you might add a key called **Greeting** with a value of **Bonjour** for **French** or **Merhaba** for **Turkish**.
 
-![Resource file](images/resource-file.png)
+![Resource file](/Images/Blog/resource-file.png)
 
 ### Access Localization Resources in Code
 
@@ -92,7 +92,7 @@ public class IndexModel : PageModel
 }
 ```
 
-Here's an **example** of **how to use** localization in a **Razor view**:
+Here's an example of **how to use** localization in a **Razor view**:
 
 ```html
 @page
@@ -110,13 +110,13 @@ Here's an **example** of **how to use** localization in a **Razor view**:
 </div>
 ```
 
-Default language
-![Default language](images/default-language.png)
+*Default language*
+![Default language](/Images/Blog/default-language.png)
 
-Turkish language
-![Turkish language](images/turkish-language.png)
+*Turkish language*
+![Turkish language](/Images/Blog/turkish-language.png)
 
-## Asp.net Core Request Culture Providers
+## ASP.NET Core Request Culture Providers
 
 **Request Culture Providers** are a mechanism for **determining** the user's **preferred** culture based on **information provided** in the **HTTP request**. When a request is made to your application, the **Request Culture Provider** will examine the **request** headers and **query parameters** to **determine** the user's **preferred** culture.
 
@@ -230,11 +230,11 @@ Add data annotations localization to your application by calling the `AddDataAnn
 builder.Services.AddRazorPages().AddDataAnnotationsLocalization();
 ```
 
-Default language
-![Data Annotations](images/data-annotation.png)
+*Default language*
+![Data Annotations](/Images/Blog/data-annotation.png)
 
-Turkish language
-![Data Annotations](images/data-annotation-turkish.png)
+*Turkish language*
+![Data Annotations](/Images/Blog/data-annotation-turkish.png)
 
 ## Using Shared Resources
 
@@ -242,7 +242,7 @@ In some cases, you may want to **share** localization **resources** **between pa
 
 To share localization resources between pages, you'll need to **create** a **shared resource file**.
 
-![Shared Resource File](images/shared-resource-file.png)
+![Shared Resource File](/Images/Blog/shared-resource-file.png)
 
 ### Using Shared Resources in ASP.NET Core
 

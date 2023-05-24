@@ -12,7 +12,7 @@ Now, we can create a project to make the AntiForgery cookie HttpOnly and add the
 
 To make the AntiForgery cookie HttpOnly, update the following code inside `Layout\_Layout.cshtml`:
 
-> **Note:** If you are using many layouts, you can add this code to all of them. (Example: `Account\Login.cshtml`)
+**Note:** If you are using many layouts, you can add this code to all of them. (Example: `Account\Login.cshtml`)
 
 ```csharp
 AbpAntiForgeryManager.SetCookie(Context, null, new CookieOptions
@@ -21,7 +21,7 @@ AbpAntiForgeryManager.SetCookie(Context, null, new CookieOptions
 });
 ```
 
-This code sets the AntiForgery cookie to be HttpOnly.
+This code sets the **AntiForgery** cookie to be **HttpOnly**.
 
 Next, we'll **create** a **middleware** to add the **incoming cookie** to the **request headers**. To do this, create a middleware class named `XsrfMiddleware` in the `Startup` folder of your project. Then, add the following code to the class:
 
@@ -62,4 +62,4 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 
 That's it! With these changes, your application is now **more secure** against session **hijacking** and **fake transactions**.
 
-![AntiForgery](images/http-only-antiforgery-token.png)
+![AntiForgery](/Images/Blog/http-only-antiforgery-token.png)
