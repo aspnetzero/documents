@@ -22,5 +22,5 @@ After authenticate and get the access token, we can use it to call any **authori
 
 <img src="images/postman-getusers-core-2.png" alt="Postman authentication" class="img-thumbnail" width="919" height="1023" />
 
-We sent a GET request to https://localhost:44302/api/services/app/User/GetUsers and added
+We sent a POST request to https://localhost:44302/api/services/app/User/GetUsers and added
 Authorization to the header as "**Bearer &lt;accessToken&gt;**". Returning JSON contains the list of users.

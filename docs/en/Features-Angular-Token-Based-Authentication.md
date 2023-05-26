@@ -25,7 +25,7 @@ of users**:
 
 <img src="images/postman-ng2-userlist.png" alt="Postman get user list" class="img-thumbnail" width="755" height="1040" />
 
-We sent a GET request to **https://localhost:44301/api/services/app/User/GetUsers** and added
+We sent a POST request to **https://localhost:44301/api/services/app/User/GetUsers** and added
 Authorization to the header as "**Bearer &lt;accessToken&gt;**". And the result is a JSON that contains the list of users.
 
 ## Next
