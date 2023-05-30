@@ -1,7 +1,7 @@
 **Title:** Introducing ASP.NET Zero v.12.2
 **Description:** Introducing ASP.NET Zero's latest release! Xamarin to MAUI migration, bug fixes, and minor features. Power Tools: Revolutionize UI testing with streamlined automation. Effortlessly generate tests in a few clicks. Analyze UI, automate test cases, save time. Embrace efficiency, upgrade workflow, unlock ASP.NET Zero Power Tools!
 
-## What's new in ASP.NET Zero
+## What's new in ASP.NET Zero v12.2
 
 I wanted to share with you some of the **innovations** that I believe may be of **most interest** to you, alongside **numerous bug fixes**.
 
