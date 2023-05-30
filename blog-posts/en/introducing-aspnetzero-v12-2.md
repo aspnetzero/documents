@@ -11,15 +11,15 @@ I wanted to share with you some of the **innovations** that I believe may be of 
 
 By migrating from **jest-playwright** to **Playwright**, we are taking advantage of Playwright's extensive **features** and improved **performance**. Playwright offers enhanced support for modern web technologies, increased **stability**, and better **concurrency**. It also provides a broader range of **browser options**, including Chrome, Firefox, and WebKit, allowing you to test your application across **multiple browsers** easily.
 
-Take a look for playwright documentation -> https://playwright.dev/docs/intro
+Take a look for playwright documentation -> [https://playwright.dev/docs/intro](https://playwright.dev/docs/intro)
 
-For more information about our UI test doc -> https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Playwright-UI-Testing
+For more information about our UI test doc -> [https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Playwright-UI-Testing](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Playwright-UI-Testing)
 
 ### Power Tools
 
 **ASP.NET Zero Power Tools** further enhance the **development process** by enabling **faster** and **easier** project creation. You can utilize the developer interface, **command-line** interface, or **Visual Studio extension** to generate your project. In addition to **core features** like **user management** and **role-based authorization**, Power Tools support crud page generation, **multi-tenancy**, **audit logging**, **exception handling**, **background jobs**, **notifications**, **settings**, **localization**, **and more**.
 
-https://docs.aspnetzero.com/en/common/latest/Rapid-Application-Development
+[https://docs.aspnetzero.com/en/common/latest/Rapid-Application-Development](https://docs.aspnetzero.com/en/common/latest/Rapid-Application-Development)
 
 I'm **thrilled** to share some **exciting news** related to **ASP.NET Zero Power Tools** with all of you. 🥳
 
@@ -44,10 +44,10 @@ npm test tests/mvc
 ```
 
 UI Test Report
-![Ui Test](images/ui-test-report.png)
+![Ui Test](/images/blog/ui-test-report.png)
 
 UI Test Report Detail
-![Ui Test](images/ui-test-report-detail.png)
+![Ui Test](/images/blog/ui-test-report-detail.png)
 
 ### 🌙 Better contract for readibility in Dark mode
 
@@ -65,8 +65,8 @@ Moving forward, you will have the **flexibility** to **choose** the **authentica
 
 **Stay tuned** for **upcoming blog posts** and **documentation** that will **guide** you through the process of **integrating** alternative **authentication** providers into your ASP.NET Zero applications. We are **committed** to **assisting** you throughout this **transition** and providing you with the **necessary resources** to make the most of our product.
 
-https://documentation.openiddict.com/guides/index.html
-https://auth0.com/docs
+- [https://documentation.openiddict.com/guides/index.html](https://documentation.openiddict.com/guides/index.html)
+- [https://auth0.com/docs](https://auth0.com/docs)
 
 ### 📱Removed Xamarin template
 
@@ -74,9 +74,9 @@ We have decided to **remove** the **Xamarin** template from our product. This **
 
 **Don't worry** 😟, though! We are still **committed** to **providing** you with the best **mobile development** experience with **MAUI**. We will continue to support our **existing Xamarin** customers and provide them with the necessary resources **to migrate** to other platforms.
 
-![Xamarin](images/maui-application.png)
+![Xamarin](/images/blog/maui-application.png)
 
-Check out for more -> https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Development-Guide-MAUI
+Check out for more -> [https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Development-Guide-MAUI](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Development-Guide-MAUI)
 
 ### 🧷 Abp.HtmlSanitizer package
 
