@@ -110,6 +110,7 @@ Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
     config.CreateMap<IConnection, ConnectionModel>().ConvertUsing<ConnectionConverter>();
     config.CreateMap<WorkflowInstance, WorkflowInstanceSummaryModel>();
     config.CreateMap<WorkflowDefinition, WorkflowDefinitionSummaryModel>();
+    config.CreateMap<WorkflowDefinition, WorkflowDefinitionVersionModel>();
     
     // CloningProfile
     config.CreateMap<WorkflowDefinition, WorkflowDefinition>();
@@ -276,6 +277,7 @@ public override void Initialize()
     // Register controllers inside ELSA
     Register(typeof(Elsa.Server.Api.Endpoints.WebhookDefinitions.List).GetAssembly());
     Register(typeof(Elsa.Server.Api.Endpoints.WorkflowDefinitions.Save).GetAssembly());
+    Register(typeof(Elsa.Server.Authentication.Controllers.ElsaUserInfoController).GetAssembly());
 }
 
 private void Register(Assembly assembly)
@@ -430,10 +432,11 @@ In order to use Elsa Dashboard on our Angular app, add [@elsa-workflows/elsa-wor
 To copy some of the scripts/styles we will use, add items below to `assets` section of the angular.json file;
 
 ````json
-{ "glob": "**/*", "input": "node_modules/monaco-editor/min", "output": "./assets/monaco-editor/min" },
+{ "glob": "**/*", "input": "node_modules/monaco-editor/min", "output": "./assets/monaco" },
 { "glob": "**/*", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio/assets", "output": "./assets/elsa-workflows-studio/" },
 { "glob": "*.css", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio", "output": "./assets/elsa-workflows-studio/" },
-{ "glob": "*.js", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio", "output": "./assets/elsa-workflows-studio/" }
+{ "glob": "*.js", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio", "output": "./assets/elsa-workflows-studio/" },
+{ "glob": "*.png", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio/assets", "output": "./assets" }
 ````
 
 Finally, add items below to index.html file to use Elsa Workflow Studio and Monaco Editor related style and script files;
@@ -443,8 +446,6 @@ Finally, add items below to index.html file to use Elsa Workflow Studio and Mona
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/elsa-workflows-studio/images/favicon-16x16.png" />
 <link rel="stylesheet" href="/assets/elsa-workflows-studio/fonts/inter/inter.css" />
 <link rel="stylesheet" href="/assets/elsa-workflows-studio/elsa-workflows-studio.css" />
-<script src="/assets/monaco-editor/min/vs/loader.js"></script>
-<script type="module" src="/assets/elsa-workflows-studio/elsa-workflows-studio.esm.js"></script>
 ````
 
 ### Creating Elsa Component
@@ -471,15 +472,20 @@ export class ElsaModule {}
 Now, we can create `elsa.component.ts` as shown below;
 
 ````typescript
-import { AfterViewChecked, Component } from "@angular/core";
+import { AfterViewChecked, Component, OnInit } from "@angular/core";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import { AppComponentBase } from "@shared/common/app-component-base";
+import { ScriptLoaderService } from '@shared/utils/script-loader.service';
 
 @Component({
     templateUrl: './elsa.component.html',
     animations: [appModuleAnimation()],
 })
-export class ElsaComponent extends AppComponentBase implements AfterViewChecked {
+export class ElsaComponent extends AppComponentBase implements OnInit, AfterViewChecked {
+    
+    ngOnInit(): void {
+        new ScriptLoaderService().load('/assets/monaco/vs/loader.js');
+    }
 
     ngAfterViewChecked(): void {
         const elsaStudioRoot = document.querySelector('elsa-studio-root');
@@ -525,3 +531,133 @@ const routes: Routes = [
 })
 export class ElsaRoutingModule {}
 ````
+
+### Adding Elsa Component to Application
+
+In order to use the Elsa component we have created, we need to add it to our Angular application. Since ASP.NET Zero lazy loads the modules, we need to add Elsa module to our Admin routing module. To do this, modify `admin-routing.module.ts` as shown below;
+
+````typescript
+{
+	path: 'elsa',
+	loadChildren: () => import('./elsa/elsa.module').then((m) => m.ElsaModule),
+	data: { permission: 'Pages.Administration.Roles' },
+},
+````
+
+Add line below to `typings.d.ts`;
+
+````typescript
+declare let monaco: any;
+````
+
+In order to use monaco editor in our angular app, add below items to `admin.module.ts`;
+
+````typescript
+// existing imports
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+@NgModule({
+    imports: [
+        // existing imports
+    ],
+    declarations: [],
+    exports: [],
+    providers: [
+        existing providers
+    ],
+    ], 
+	schemas: [CUSTOM_ELEMENTS_SCHEMA] // ELSA integration
+})
+export class AdminModule {}
+````
+
+Add `CUSTOM_ELEMENTS_SCHEMA` to `app.module.ts` as shown below;
+
+````typescript
+// existing imports
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+@NgModule({
+    declarations: [
+        // existing declerations
+    ],
+    providers: [
+        // existing providers
+    ],
+    imports: [
+        // existing imports
+    ]
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule {}
+````
+
+Finally, modify `main.ts` and lines below;
+
+````typescript
+import { defineCustomElements as elsaCustomElements } from '@elsa-workflows/elsa-workflows-studio/loader';
+
+elsaCustomElements();
+````
+
+### Add Elsa Dashboard to Menu
+
+In order to show Elsa on the main application menu, add item below to `app-navigation.service.ts`;
+
+````typescript
+new AppMenuItem('Workflows', null, 'flaticon2-setup', '/app/admin/elsa'),
+````
+
+### Authentication of Elsa Dsahboard
+
+Elsa's Dashboard uses its own http client to call the server APIs. So, we need to send ASP.NET Zero's authentication token with Elsa's HTTP requests to server. In order to do this, we will be using Elsa Studio's custom plugin approach. For more info, you can check its [documentation](https://elsa-workflows.github.io/elsa-core/docs/next/extensibility/extensibility-designer-plugins#custom-plugins).
+
+So, we need to add code block below to `index.html` file;
+
+````javascript
+<script>
+	window.AuthPlugin = function (elsaStudio) {
+		const { eventBus } = elsaStudio;
+
+		const getAccessToken = async () => {
+			return abp.auth.getToken();
+		};
+
+		const configureAuthMiddleware = async (e) => {
+			const token = await getAccessToken();
+
+			if (!token) return;
+
+			e.service.register({
+				onRequest(request) {
+					request.headers = { Authorization: `Bearer ${token}` };
+					if(request.method === 'post'){
+						request.headers['Content-Type'] = 'application/json';
+					}
+					return request;
+				},
+			});
+		};
+
+		// Handle the "http-client-created" event so we con configure the http client.
+		eventBus.on('http-client-created', configureAuthMiddleware);
+	};
+</script>
+````
+
+### Styling
+
+There is a minor style problem when using Elsa Dashboard in ASP.NET Zero's Angular app. In order to fix this problem, add style below to `layout.less` file;
+
+````less
+elsa-modal-dialog .elsa-fixed {
+    margin-top: 120px !important;
+}
+````
+
+That's all. You can now run the application and navigate to Elsa Dashboard page by clicking the Elsa menu item.
+
+## Sample Workflow
+
+You can create a sample workflow as explained in [Elsa Documentation](https://elsa-workflows.github.io/elsa-core/docs/next/quickstarts/quickstarts-aspnetcore-server-dashboard-and-api-endpoints#the-workflow). This sample workflow starts with a request to `/hello-world` endpoint and returns the specified HTTP response.
