@@ -1,44 +1,35 @@
 # Identity Server 4 Integration
 
-**\*\*IMPORTANT NOTICE\*\***
-Identity Server 4 maintainance stopped on November 2022, see [official announcement](https://identityserver4.readthedocs.io/en/latest/). Because of that, it is removed from ASP.NET Zero. We suggest migrating to OpenIddict. Check out ASP.NET Zero's [OpenIddict integration document](Infrastructure-Core-Mvc-OpenIddict-Integration.md).
-
-[IdentityServer4](http://identityserver.io/) is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core. ASP.NET Zero is integrated to IdentityServer4. It's **enabled by default**.
+[OpenIddict](https://documentation.openiddict.com/) aims at providing a versatile solution to implement OpenID Connect client, server and token validation support in any ASP.NET Core 2.1 (and higher) application.
 
 ## Configuration
 
 You can enable/disable or configure it from **appsettings.json** file
 
 ```json
-"IdentityServer": {
-  "IsEnabled": "true",
-  "Clients": [
-    {
-      "ClientId": "client",
-      "AllowedGrantTypes": [ "password" ],
-      "ClientSecrets": [
-        {
-          "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
-        }
-      ],
-      "AllowedScopes": [ "default-api" ]
-    },
-    {
-      "ClientId": "demo",
-      "ClientName": "MVC Client Demo",
-      "AllowedGrantTypes": [ "hybrid", "client_credentials" ],
-      "RequireConsent": "true",
-      "ClientSecrets": [
-        {
-          "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
-        }
-      ],
-      "RedirectUris": [ "http://openidclientdemo.com:8001/signin-oidc" ],
-      "PostLogoutRedirectUris": [ "http://openidclientdemo.com:8001/signout-callback-oidc" ],
-      "AllowedScopes": [ "openid", "profile", "email", "phone", "default-api" ],
-      "AllowOfflineAccess": "true"
-    }
-  ]
+"OpenIddict": {
+    "IsEnabled": "true",
+    "Applications": [{
+        "ClientId": "client",
+        "ClientSecret": "def2edf7-5d42-4edc-a84a-30136c340e13",
+        "DisplayName": "AbpZeroTemplate_App",
+        "ConsentType": "Explicit",
+        "RedirectUris": ["https://oauthdebugger.com/debug"],
+        "PostLogoutRedirectUris": [],
+        "Scopes": [
+            "default-api",
+            "profile"
+        ],
+        "Permissions": [
+            "ept:token",
+            "ept:authorization",
+            "gt:password",
+            "gt:client_credentials",
+            "gt:authorization_code",
+            "rst:code",
+            "rst:code id_token"
+        ]
+    }]
 }
 ```
 
