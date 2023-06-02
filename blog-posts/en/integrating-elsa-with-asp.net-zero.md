@@ -8,9 +8,7 @@ Fully integrated Elsa sample project can be found on [GitHub](https://github.com
 
 In order to start integrating Elsa with ASP.NET Zero, first follow ASP.NET Zero's [Getting Started](Getting-Started-Core.md) document and create a new project. 
 
-## Configuring MVC Project
-
-### Adding Elsa Packages
+## Adding Elsa Packages
 
 After creating the empty project, we need to add required Elsa NuGet packages to our project. Elsa document uses `Elsa.Persistence.EntityFramework.Sqlite` for persistence but we will use `Elsa.Persistence.EntityFramework.SqlServer` because ASP.NET Zero use SQL Server by default. So, add packages below to your `*.Web.Mvc` project.
 
@@ -20,6 +18,8 @@ After creating the empty project, we need to add required Elsa NuGet packages to
 * [Elsa.Persistence.EntityFramework.SqlServer](https://www.nuget.org/packages/Elsa.Persistence.EntityFramework.SqlServer)
 * [Elsa.Server.Api](https://www.nuget.org/packages/Elsa.Server.Api)
 * [Elsa.Designer.Components.Web](https://www.nuget.org/packages/Elsa.Designer.Components.Web)
+
+## Configuring Elsa
 
 ### ConfigureServices Method
 
@@ -81,7 +81,7 @@ In this configuration, we are configuring Elsa to use existing ASP.NET Zero data
 ````json
 "Elsa": {
     "Server": {
-      "BaseUrl": "https://localhost:44301"
+      "BaseUrl": "https://localhost:44302"
     }
 }
 ````
@@ -96,7 +96,7 @@ There are some special configuration points here which doesn't exist in default 
 elsa.UseAutoMapper(() => { });
 ````
 
-Both Elsa and ASP.NET Boilerplate creates a `MapperConfiguration` and uses it to create an `IMapper`. Because of this, if we don't add this line to Elsa configuration, the app will only use Elsa's **AutoMapper** configuration. But, after making this configuration, we need to configure Elsa's AutoMapper mappings in our app manually. In order to do this, go to `*WebHostModule` and add below lines to its `PreInitialize` method.
+Both Elsa and ASP.NET Boilerplate creates a `MapperConfiguration` and uses it to create an `IMapper`. Because of this, if we don't add this line to Elsa configuration, the app will only use Elsa's **AutoMapper** configuration. But, after making this configuration, we need to configure Elsa's AutoMapper mappings in our app manually. In order to do this, go to `*WebMvcModule` and add below lines to its `PreInitialize` method.
 
 ```
 // ELSA AutoMapper
@@ -110,7 +110,6 @@ Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
     config.CreateMap<IConnection, ConnectionModel>().ConvertUsing<ConnectionConverter>();
     config.CreateMap<WorkflowInstance, WorkflowInstanceSummaryModel>();
     config.CreateMap<WorkflowDefinition, WorkflowDefinitionSummaryModel>();
-    config.CreateMap<WorkflowDefinition, WorkflowDefinitionVersionModel>();
     
     // CloningProfile
     config.CreateMap<WorkflowDefinition, WorkflowDefinition>();
@@ -261,13 +260,14 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 }
 ```
 
-There is one additions here;
+There are two additions here;
 
 1. `app.UseHttpActivities();` this line allows Elsa to handle HTTP request and execute if there are any workflows related to HTTP activities.
+2. `endpoints.MapFallbackToPage("/_Host");` this line redirects all not found requests to `_Host.cshtml` page which we will create in the next section. This page will contain Elsa Dashboard source code.
 
 ### Elsa Controllers
 
-By default Elsa controllers are not registered in ASP.NET Zero's dependency injection system. In order to do that, we must register Elsa Conrollers as shown below in the Initialize method of the Host Web Module;
+By default Elsa controllers are not registered in ASP.NET Zero's dependency injection system. In order to do that, we must register Elsa Conrollers as shown below in the Initialize method of the MVC Wed Module;
 
 ```c#
 public override void Initialize()
@@ -277,7 +277,6 @@ public override void Initialize()
     // Register controllers inside ELSA
     Register(typeof(Elsa.Server.Api.Endpoints.WebhookDefinitions.List).GetAssembly());
     Register(typeof(Elsa.Server.Api.Endpoints.WorkflowDefinitions.Save).GetAssembly());
-    Register(typeof(Elsa.Server.Authentication.Controllers.ElsaUserInfoController).GetAssembly());
 }
 
 private void Register(Assembly assembly)
@@ -315,7 +314,62 @@ private void Register(Assembly assembly)
 }
 ```
 
-### UserManager
+## Elsa Dashboard
+
+In order to add Elsa Dashboard into ASP.NET Zero, create a folder named `Pages` under the MVC project and create a razor page named `_Host.cshtml` with the content below;
+
+```html
+@page "/"
+@{
+    var serverUrl = $"{Request.Scheme}://{Request.Host}";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Elsa Workflows</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/_content/Elsa.Designer.Components.Web/elsa-workflows-studio/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/_content/Elsa.Designer.Components.Web/elsa-workflows-studio/assets/images/favicon-16x16.png">
+    <link rel="stylesheet" href="/_content/Elsa.Designer.Components.Web/elsa-workflows-studio/assets/fonts/inter/inter.css">
+    <link rel="stylesheet" href="/_content/Elsa.Designer.Components.Web/elsa-workflows-studio/assets/styles/tailwind.css">
+    <script src="/_content/Elsa.Designer.Components.Web/monaco-editor/min/vs/loader.js"></script>
+    <script type="module" src="/_content/Elsa.Designer.Components.Web/elsa-workflows-studio/elsa-workflows-studio.esm.js"></script>
+</head>
+<body class="h-screen" style="background-size: 30px 30px; background-image: url(/_content/Elsa.Designer.Components.Web/elsa-workflows-studio/assets/images/tile.png); background-color: #FBFBFB;">
+<elsa-studio-root server-url="@serverUrl" monaco-lib-path="_content/Elsa.Designer.Components.Web/monaco-editor/min"></elsa-studio-root>
+</body>
+</html>
+```
+
+ASP.NET Zero uses `WebHostBuilder` in its Program.cs but it has some problems with embedded static files. Elsa provides styles and scripts of its dashboard as static files. In order to load Elsa's static files, change the `Program.cs` as shown below;
+
+```c#
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        CurrentDirectoryHelpers.SetCurrentDirectory();
+        CreateWebHostBuilder(args).Build().Run();
+    }
+
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+    {
+        return WebHost.CreateDefaultBuilder()
+            .UseKestrel(opt =>
+            {
+                opt.AddServerHeader = false;
+                opt.Limits.MaxRequestLineSize = 16 * 1024;
+            })
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .UseIIS()
+            .UseIISIntegration()
+            .UseStartup<Startup>();
+    }
+}
+```
+
+## UserManager
 
 During the integration of Elsa, we faced an error of Serialization and Deserialization of `IdentityOptions` in UserManager's `InitializeOptionsAsync` method. To overcome this problem, you should override the related method in `UserManager.cs` as shown below;
 
@@ -423,240 +477,45 @@ private Task<T> GetSettingValueAsync<T>(string settingName, int? tenantId) where
 
 This approach manually creates a `IdentityOptions` and manually sets its fields one by one. The previous version uses **AutoMapper** which causes a problem.
 
-## Configuring Angular Project
+## Navigation
 
-### Adding NPM Packages
+Finally, let's add Elsa Dashboard as a menu item to our app. In order to do that, first create a new localization in the localization xml file as shown below;
 
-In order to use Elsa Dashboard on our Angular app, add [@elsa-workflows/elsa-workflows-studio](https://www.npmjs.com/package/@elsa-workflows/elsa-workflows-studio) NPM package to your Angualr project.
+```xml
+<text name="Workflows">Workflows</text>
+```
 
-To copy some of the scripts/styles we will use, add items below to `assets` section of the angular.json file;
+After that, define a constant in `AppPageNames.cs` as shown below right under `DynamicEntityProperties` definition;
 
-````json
-{ "glob": "**/*", "input": "node_modules/monaco-editor/min", "output": "./assets/monaco" },
-{ "glob": "**/*", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio/assets", "output": "./assets/elsa-workflows-studio/" },
-{ "glob": "*.css", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio", "output": "./assets/elsa-workflows-studio/" },
-{ "glob": "*.js", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio", "output": "./assets/elsa-workflows-studio/" },
-{ "glob": "*.png", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio/assets", "output": "./assets" }
-````
+```c#
+public const string Elsa = "Elsa.Main";
+```
 
-Finally, add items below to index.html file to use Elsa Workflow Studio and Monaco Editor related style and script files;
+Let's also define a permission for our new page. To do that, create a const in `AppPermisisons.cs` as shown below right under `Pages_Administration_DynamicEntityPropertyValue_Delete` ;
 
-````html
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/elsa-workflows-studio/images/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/elsa-workflows-studio/images/favicon-16x16.png" />
-<link rel="stylesheet" href="/assets/elsa-workflows-studio/fonts/inter/inter.css" />
-<link rel="stylesheet" href="/assets/elsa-workflows-studio/elsa-workflows-studio.css" />
-````
+```c#
+public const string Pages_Workflows = "Pages.Workflows";
+```
 
-### Creating Elsa Component
+and define a permission in `AppAuthorizationProvider.cs` as show below right after definition of `AppPermissions.Pages_DemoUiComponents` ;
 
-Before creating the Elsa component which will host Elsa Dashboard, let's create Elsa Module on our Angular app. To do this, create a folder named `elsa` under the `app\admin` folder.
+```c#
+pages.CreateChildPermission(AppPermissions.Pages_Workflows, L("Workflows"));
+```
 
-Then, create the Elsa Module as shown below under the newly created `elsa` folder named `elsa.module.ts`.
+after all, add a menu item to `AppNavigationProvider.cs` as shown below;
 
-````typescript
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ElsaRoutingModule } from './elsa-routing.module';
-import { AdminSharedModule } from '@app/admin/shared/admin-shared.module';
-import { AppSharedModule } from '@app/shared/app-shared.module';
-import { ElsaComponent } from './elsa.component';
+```c#
+.AddItem(new MenuItemDefinition(
+    AppPageNames.Common.Elsa,
+    L("Workflows"),
+    url: "/Workflows",
+    icon: "flaticon-map",
+    permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Workflows)
+)
+```
 
-@NgModule({
-    declarations: [ElsaComponent],
-    imports: [AppSharedModule, AdminSharedModule, ElsaRoutingModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-export class ElsaModule {}
-````
-
-Now, we can create `elsa.component.ts` as shown below;
-
-````typescript
-import { AfterViewChecked, Component, OnInit } from "@angular/core";
-import { appModuleAnimation } from "@shared/animations/routerTransition";
-import { AppComponentBase } from "@shared/common/app-component-base";
-import { ScriptLoaderService } from '@shared/utils/script-loader.service';
-
-@Component({
-    templateUrl: './elsa.component.html',
-    animations: [appModuleAnimation()],
-})
-export class ElsaComponent extends AppComponentBase implements OnInit, AfterViewChecked {
-    
-    ngOnInit(): void {
-        new ScriptLoaderService().load('/assets/monaco/vs/loader.js');
-    }
-
-    ngAfterViewChecked(): void {
-        const elsaStudioRoot = document.querySelector('elsa-studio-root');
-
-        elsaStudioRoot.addEventListener('initializing', e => {
-            const elsaStudio = (e as any).detail;
-            elsaStudio.pluginManager.registerPlugin((window as any).AuthPlugin);
-        });
-    }
-}
-````
-
-And, crate `elsa.component.html` as shown below;
-
-````html
-<div class="container-fluid">
-	<div>
-		<elsa-studio-root server-url="https://localhost:44302/" monaco-lib-path="assets/monaco">
-			<elsa-studio-dashboard></elsa-studio-dashboard>
-		</elsa-studio-root>
-    </div>
-</div>
-````
-
-Finally, create `elsa-routing.module.ts` to define routing for Elsa Dashboard;
-
-````typescript
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ElsaComponent } from './elsa.component';
-
-const routes: Routes = [
-    {
-        path: '',
-        component: ElsaComponent,
-        pathMatch: 'full',
-    },
-];
-
-@NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
-})
-export class ElsaRoutingModule {}
-````
-
-### Adding Elsa Component to Application
-
-In order to use the Elsa component we have created, we need to add it to our Angular application. Since ASP.NET Zero lazy loads the modules, we need to add Elsa module to our Admin routing module. To do this, modify `admin-routing.module.ts` as shown below;
-
-````typescript
-{
-	path: 'elsa',
-	loadChildren: () => import('./elsa/elsa.module').then((m) => m.ElsaModule),
-	data: { permission: 'Pages.Administration.Roles' },
-},
-````
-
-Add line below to `typings.d.ts`;
-
-````typescript
-declare let monaco: any;
-````
-
-In order to use monaco editor in our angular app, add below items to `admin.module.ts`;
-
-````typescript
-// existing imports
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
-@NgModule({
-    imports: [
-        // existing imports
-    ],
-    declarations: [],
-    exports: [],
-    providers: [
-        existing providers
-    ],
-    ], 
-	schemas: [CUSTOM_ELEMENTS_SCHEMA] // ELSA integration
-})
-export class AdminModule {}
-````
-
-Add `CUSTOM_ELEMENTS_SCHEMA` to `app.module.ts` as shown below;
-
-````typescript
-// existing imports
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
-@NgModule({
-    declarations: [
-        // existing declerations
-    ],
-    providers: [
-        // existing providers
-    ],
-    imports: [
-        // existing imports
-    ]
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-export class AppModule {}
-````
-
-Finally, modify `main.ts` and lines below;
-
-````typescript
-import { defineCustomElements as elsaCustomElements } from '@elsa-workflows/elsa-workflows-studio/loader';
-
-elsaCustomElements();
-````
-
-### Add Elsa Dashboard to Menu
-
-In order to show Elsa on the main application menu, add item below to `app-navigation.service.ts`;
-
-````typescript
-new AppMenuItem('Workflows', null, 'flaticon2-setup', '/app/admin/elsa'),
-````
-
-### Authentication of Elsa Dsahboard
-
-Elsa's Dashboard uses its own http client to call the server APIs. So, we need to send ASP.NET Zero's authentication token with Elsa's HTTP requests to server. In order to do this, we will be using Elsa Studio's custom plugin approach. For more info, you can check its [documentation](https://elsa-workflows.github.io/elsa-core/docs/next/extensibility/extensibility-designer-plugins#custom-plugins).
-
-So, we need to add code block below to `index.html` file;
-
-````javascript
-<script>
-	window.AuthPlugin = function (elsaStudio) {
-		const { eventBus } = elsaStudio;
-
-		const getAccessToken = async () => {
-			return abp.auth.getToken();
-		};
-
-		const configureAuthMiddleware = async (e) => {
-			const token = await getAccessToken();
-
-			if (!token) return;
-
-			e.service.register({
-				onRequest(request) {
-					request.headers = { Authorization: `Bearer ${token}` };
-					if(request.method === 'post'){
-						request.headers['Content-Type'] = 'application/json';
-					}
-					return request;
-				},
-			});
-		};
-
-		// Handle the "http-client-created" event so we con configure the http client.
-		eventBus.on('http-client-created', configureAuthMiddleware);
-	};
-</script>
-````
-
-### Styling
-
-There is a minor style problem when using Elsa Dashboard in ASP.NET Zero's Angular app. In order to fix this problem, add style below to `layout.less` file;
-
-````less
-elsa-modal-dialog .elsa-fixed {
-    margin-top: 120px !important;
-}
-````
-
-That's all. You can now run the application and navigate to Elsa Dashboard page by clicking the Elsa menu item.
+That's all. You can now run the application and navigate to `/Workflows` page and see Elsa Dashboard.
 
 ## Sample Workflow
 
