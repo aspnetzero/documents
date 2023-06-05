@@ -1,117 +1,114 @@
 # Identity Server 4 Integration
 
-**\*\*IMPORTANT NOTICE\*\***
-Identity Server 4 maintainance stopped on November 2022, see [official announcement](https://identityserver4.readthedocs.io/en/latest/). Because of that, it is removed from ASP.NET Zero. We suggest migrating to OpenIddict. Check out ASP.NET Zero's [OpenIddict integration document](Infrastructure-Core-Angular-OpenIddict-Integration.md).
-
-[IdentityServer4](http://identityserver.io/) is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core. ASP.NET Zero is integrated to IdentityServer4. It's **disabled by default**. Its located in `*.Web.Host` project.
+[OpenIddict](https://documentation.openiddict.com/) aims at providing a versatile solution to implement OpenID Connect client, server and token validation support in any ASP.NET Core 2.1 (and higher) application.
 
 ## Configuration
 
 You can enable/disable or configure it from **appsettings.json** file
 
 ```json
-"IdentityServer": {
-  "IsEnabled": "false",
-  "Clients": [
-    {
-      "ClientId": "client",
-      "AllowedGrantTypes": [ "password" ],
-      "ClientSecrets": [
-        {
-          "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
-        }
-      ],
-      "AllowedScopes": [ "default-api" ]
-    },
-    {
-      "ClientId": "demo",
-      "ClientName": "MVC Client Demo",
-      "AllowedGrantTypes": [ "hybrid", "client_credentials" ],
-      "RequireConsent": "true",
-      "ClientSecrets": [
-        {
-          "Value": "def2edf7-5d42-4edc-a84a-30136c340e13"
-        }
-      ],
-      "RedirectUris": [ "http://openidclientdemo.com:8001/signin-oidc" ],
-      "PostLogoutRedirectUris": [ "http://openidclientdemo.com:8001/signout-callback-oidc" ],
-      "AllowedScopes": [ "openid", "profile", "email", "phone", "default-api" ],
-      "AllowOfflineAccess": "true"
-    }
-  ]
+"OpenIddict": {
+    "IsEnabled": "true",
+    "Applications": [{
+        "ClientId": "client",
+        "ClientSecret": "def2edf7-5d42-4edc-a84a-30136c340e13",
+        "DisplayName": "AbpZeroTemplate_App",
+        "ConsentType": "Explicit",
+        "RedirectUris": ["https://oauthdebugger.com/debug"],
+        "PostLogoutRedirectUris": [],
+        "Scopes": [
+            "default-api",
+            "profile"
+        ],
+        "Permissions": [
+            "ept:token",
+            "ept:authorization",
+            "gt:password",
+            "gt:client_credentials",
+            "gt:authorization_code",
+            "rst:code",
+            "rst:code id_token"
+        ]
+    }]
 }
 ```
 
+* **IsEnabled**: Indicates if OpenIddict integration is enabled or not.
+* **Applications**: List of OpenIddict applications.
+  * **ClientId**: The client identifier associated with the current application.
+  * **ClientSecret**: The client secret associated with the current application.
+  * **DisplayName**: The display name associated with the current application.
+  * **ConsentType**: The consent type associated with the current application (see [possible values](https://github.com/openiddict/openiddict-core/blob/dev/src/OpenIddict.Abstractions/OpenIddictConstants.cs#L178)). 
+  * **RedirectUris**: The callback URLs associated with the current application, serialized as a JSON array.
+  * **PostLogoutRedirectUris**: The logout callback URLs associated with the current application, serialized as a JSON array.
+  * **Scopes**: The scopes associated with the current authorization, serialized as a JSON array (see [possible values](https://github.com/openiddict/openiddict-core/blob/dev/src/OpenIddict.Abstractions/OpenIddictConstants.cs#L402). You can also use custom values).
+  * **Permissions**: The permissions associated with the current application, serialized as a JSON array (see [possible values](https://github.com/openiddict/openiddict-core/blob/dev/src/OpenIddict.Abstractions/OpenIddictConstants.cs#L360)).
+
 ## Testing with Client
 
-ASP.NET Zero solution has a sample console application (ConsoleApiClient) that can connects to the application, authenticates through IdentityServer4 and calls an API.
+ASP.NET Zero solution has a sample console application (ConsoleApiClient) that can connects to the application, authenticates through OpenIddict and calls an API.
 
 
+## Testing with Web Client
 
-## Testing with MVC Client
+You can use [https://oauthdebugger.com/](https://oauthdebugger.com/) website to test openIddict with a web client. 
 
-You can use [aspnet-zero-samples](https://github.com/aspnetzero/aspnet-zero-samples)  -> `IdentityServerClient` project to test identity server with MVC client. 
-
-Add a new client to `*.Web.Host` appsettings.json
+Add a new Application to `*.Web.Host` appsettings.json
 
 ```json
 ...
-    {
-      "ClientId": "mvcdemo",
-      "ClientName": "MVC Client Demo 2",
-      "AllowedGrantTypes": [ "implicit", "client_credentials" ],
-      "RequireConsent": "true",
-      "ClientSecrets": [
-        {
-          "Value": "mysecret"
-        }
-      ],
-      "RedirectUris": [ "http://localhost:62964/signin-oidc" ],
-      "PostLogoutRedirectUris": [ "http://localhost:62964/signout-callback-oidc" ],
-      "AllowedScopes": [ "openid", "profile", "email", "phone", "default-api" ],
-      "AllowOfflineAccess": "true"
-    }
-...
-```
-
-Download the `IdentityServerClient` project and open it's `Startup.cs` and modify `AddOpenIdConnect` area as seen below
-
-```csharp
-...
-.AddOpenIdConnect("oidc", options =>
 {
-    options.SignInScheme = "Cookies";
-
-    options.Authority = "https://localhost:44301";//change with your project url
-    options.RequireHttpsMetadata = false;
-
-    options.ClientId = "mvcdemo";
-    options.ClientSecret = "mysecret";
-
-    options.SaveTokens = true;
-});
+    "ClientId": "client",
+    "ClientSecret": "def2edf7-5d42-4edc-a84a-30136c340e13",
+    "DisplayName": "AbpZeroTemplate_App",
+    "ConsentType": "Explicit",
+    "RedirectUris": ["https://oauthdebugger.com/debug"],
+    "PostLogoutRedirectUris": [],
+    "Scopes": [
+        "default-api",
+        "profile"
+    ],
+    "Permissions": [
+        "ept:token",
+        "ept:authorization",
+        "gt:password",
+        "gt:client_credentials",
+        "gt:authorization_code",
+        "rst:code",
+        "rst:code id_token"
+    ]
+}
 ...
 ```
 
+Then, go to [https://oauthdebugger.com/](https://oauthdebugger.com/) and create a URL for authorization code flow. A sample URL should be something like this;
 
+```bash
+https://localhost:44301/connect/authorize
+?client_id=client
+&redirect_uri=https://oauthdebugger.com/debug
+&scope=default-api
+&response_type=code
+&response_mode=query
+&state=krd0ddufuw
+&nonce=fbhw5it86l6
+```
 
-That is all. Now you can test it. 
+Visit this URL using a browser. If you are not logged into your ASP.NET Zero application, you will be redirected to Login page. If you are already logged in, you will be redirected back to [https://oauthdebugger.com/](https://oauthdebugger.com/). Here, you will see the result of the request as shown below;
 
-Run both projects. Go to `IdentityServerClient` project's secure. <img src="images/identity-server-4-test-mvc-secure.png">
+![oauthdebugger code](images/openiddict_oauthdebugger_code.png)
 
-It will redirect you to the login page.
+You can use this code to request an access token. You need to send a request to [https://localhost:44301/connect/token](https://localhost:44301/connect/token) endpoint. Here is a sample request using Postman.
 
-<img src="images/identity-server-4-test-host-login.png">
+![openiddict token endpoint](images/openiddict_token_endpoint.png)
 
-After you successfully login, you will see the consent page. <img src="images/identity-server-4-test-host-consent.png">
-
-After you allow consents, you will redirect to the secure page and get user claims. <img src="images/identity-server-4-test-mvc-secure-after-login.png">
+Using this token, you can get details of the user using [https://localhost:44301/connect/userinfo](https://localhost:44301/connect/userinfo) endpoint or you can make a request to any ASP.NET Zero API service (for example [https://localhost:44301/api/services/app/User/GetUsers](https://localhost:44301/api/services/app/User/GetUsers)).
 
 ## OpenId Connect Integration
 
-Once IdentityServer4 integration is enabled Web.Mvc application becomes an OpenId Connect server. That means another web application can use standard OpenId Connect protocol to authenticate users with your
+Once OpenIddict integration is enabled, Web.Host application becomes an OpenId Connect server. That means another web application can use standard OpenId Connect protocol to authenticate users with your
 application and get permission to share their information (a.k.a. consent screen).
 
 ## More
 
-See [IdentityServer4's own documentation](http://docs.identityserver.io/en/latest/) to understand and configure IdentityServer4.
+See [OpenIddict's own documentation](https://documentation.openiddict.com/) to understand and configure OpenIddict.
