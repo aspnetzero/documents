@@ -19,6 +19,7 @@ After creating the empty project, we need to add required Elsa NuGet packages to
 * [Elsa.Activities.Temporal.Quartz](https://www.nuget.org/packages/Elsa.Activities.Temporal.Quartz)
 * [Elsa.Persistence.EntityFramework.SqlServer](https://www.nuget.org/packages/Elsa.Persistence.EntityFramework.SqlServer)
 * [Elsa.Server.Api](https://www.nuget.org/packages/Elsa.Server.Api)
+* [Elsa.Server.Authentication](https://www.nuget.org/packages/Elsa.Server.Authentication)
 * [Elsa.Designer.Components.Web](https://www.nuget.org/packages/Elsa.Designer.Components.Web)
 
 ### ConfigureServices Method
@@ -54,7 +55,7 @@ private void ConfigureElsa(IServiceCollection services)
     );
     
     // Elsa API endpoints.
-    services.AddElsaApiEndpoints();
+    services.AddZeroElsaApiEndpoints();
     services.Configure<ApiVersioningOptions>(options =>
     {
         options.UseApiBehavior = false;
@@ -174,6 +175,18 @@ private void ReplaceResultFilter(MvcOptions options)
 This method replaces `AbpResultFilter` with `ElsaResultFilter`. Here is the content of `ElsaResultFilter`;
 
 ```c#
+using System.Linq;
+using System.Reflection;
+using Abp.AspNetCore.Configuration;
+using Abp.AspNetCore.Mvc.Extensions;
+using Abp.AspNetCore.Mvc.Results.Wrapping;
+using Abp.Dependency;
+using Abp.Reflection.Extensions;
+using Elsa.Server.Api.Endpoints.Activities;
+using Microsoft.AspNetCore.Mvc.Filters;
+
+namespace ElsaAngularDemo.Web.Startup;
+
 public class ElsaResultFilter : IResultFilter, ITransientDependency
 {
     private readonly IAbpAspNetCoreConfiguration _configuration;
@@ -265,7 +278,7 @@ public override void Initialize()
     // existing code blocks
 
     // Register controllers inside ELSA
-    Register(typeof(Elsa.Server.Api.Endpoints.WebhookDefinitions.List).GetAssembly());
+    Register(typeof(Elsa.Server.Api.Endpoints.WorkflowDefinitions.List).GetAssembly());
     Register(typeof(Elsa.Server.Api.Endpoints.WorkflowDefinitions.Save).GetAssembly());
     Register(typeof(Elsa.Server.Authentication.Controllers.ElsaUserInfoController).GetAssembly());
 }
@@ -549,16 +562,36 @@ services.AddSwaggerGen(options =>
 
 ### Adding NPM Packages
 
-In order to use Elsa Dashboard on our Angular app, add [@elsa-workflows/elsa-workflows-studio](https://www.npmjs.com/package/@elsa-workflows/elsa-workflows-studio) NPM package to your Angualr project.
+In order to use Elsa Dashboard on our Angular app, add [@elsa-workflows/elsa-workflows-studio](https://www.npmjs.com/package/@elsa-workflows/elsa-workflows-studio) NPM package to your Angular project.
 
 To copy some of the scripts/styles we will use, add items below to `assets` section of the angular.json file;
 
 ````json
-{ "glob": "**/*", "input": "node_modules/monaco-editor/min", "output": "./assets/monaco" },
-{ "glob": "**/*", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio/assets", "output": "./assets/elsa-workflows-studio/" },
-{ "glob": "*.css", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio", "output": "./assets/elsa-workflows-studio/" },
-{ "glob": "*.js", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio", "output": "./assets/elsa-workflows-studio/" },
-{ "glob": "*.png", "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio/assets", "output": "./assets" }
+  {
+    "glob": "**/*",
+    "input": "node_modules/monaco-editor/min",
+    "output": "./assets/monaco"
+  },
+  {
+    "glob": "**/*",
+    "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio/assets",
+    "output": "./assets/elsa-workflows-studio/"
+  },
+  {
+    "glob": "*.css",
+    "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio",
+    "output": "./assets/elsa-workflows-studio/"
+  },
+  {
+    "glob": "*.js",
+    "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio",
+    "output": "./assets/elsa-workflows-studio/"
+  },
+  {
+    "glob": "*.png",
+    "input": "node_modules/@elsa-workflows/elsa-workflows-studio/dist/elsa-workflows-studio/assets",
+    "output": "./assets"
+  },
 ````
 
 Finally, add items below to index.html file to use Elsa Workflow Studio and Monaco Editor related style and script files;
@@ -625,7 +658,7 @@ And, crate `elsa.component.html` as shown below;
 ````html
 <div class="container-fluid">
 	<div>
-		<elsa-studio-root server-url="https://localhost:44302/" monaco-lib-path="assets/monaco">
+		<elsa-studio-root server-url="https://localhost:44301/" monaco-lib-path="assets/monaco">
 			<elsa-studio-dashboard></elsa-studio-dashboard>
 		</elsa-studio-root>
     </div>
