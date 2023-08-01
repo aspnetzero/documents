@@ -26,7 +26,7 @@ ASP.NET Zero supports social media logins and external logins as well. To enable
         "Authority": "",
         "LoginUrl": "",
         "ValidateIssuer": "true",
-        "ClaimsMapping: []
+        "ClaimsMapping": []
     },
     "WsFederation": {
         "IsEnabled": "false",
@@ -64,7 +64,7 @@ In addition to social logins, ASP.NET Zero includes OpenId Connect Login integra
   "Authority": "",
   "LoginUrl": "",
   "ValidateIssuer": "true",
-  "ClaimsMapping: []
+  "ClaimsMapping": []
 }
 ```
 
