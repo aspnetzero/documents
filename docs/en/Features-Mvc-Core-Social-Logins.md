@@ -58,7 +58,7 @@ In addition to social logins, ASP.NET Zero includes OpenId Connect Login integra
   "ClientId": "",
   "ClientSecret": "",
   "ValidateIssuer": "true",
-  "ClaimsMapping: []
+  "ClaimsMapping": []
 }
 ```
 
