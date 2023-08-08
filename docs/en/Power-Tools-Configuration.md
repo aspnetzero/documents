@@ -8,7 +8,7 @@ Here are some key points to consider when modifying the `config.json` file:
 
 2. **Project Type and Version:** Set the **ProjectType** to **Angular** or **Mvc** and specify the appropriate **ProjectVersion**.
 
-3. **Application Area Name:** Ensure the **ApplicationAreaName** matches the relevant area name in your project.
+3. **Application Area Name:** Ensure the **ApplicationAreaName** matches the relevant area name in your project (used only for MVC projects).
 
 4. **License Code:** Replace **[YOURLICENSECODE]** with the valid license code for your project.
 
@@ -16,7 +16,7 @@ Here are some key points to consider when modifying the `config.json` file:
 
 6. **Base Paths:** The `config.json` file uses base paths (e.g., `AngularSrcPath`, `AngularMergedSrcPath`, `CoreSrcPath`) to build the final file paths. Make sure to set these base paths correctly according to your project's structure.
 
-7. **Angular Project Type:** Depending on whether your Angular project is split into multiple projects or merged into a single project, use the appropriate base path (`AngularSrcPath` for split projects or `AngularMergedSrcPath` for merged projects) for the Angular-related file paths.
+7. **Angular Project Type:** Depending on whether your Angular project is separate from server side Host project or merged with server side Host project, use the appropriate base path (`AngularSrcPath` for split projects or `AngularMergedSrcPath` for merged projects) for the Angular-related file paths.
 
 Always **double-check** the **changes** you make in the config.json file to avoid any errors or inconsistencies. It's crucial to keep the configuration updated to ensure the Power Tools can accurately locate the required files and function as expected with your project's structure.
 
