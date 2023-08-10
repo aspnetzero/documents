@@ -7,7 +7,7 @@ We're thrilled to introduce ASP.NET Zero v12.3, the latest version of our flagsh
 
 ## 🆔 OpenIddict Integration: Enhancing Authentication and Authorization
 
-![OpenIddict](images/blog/openiddict-core.png)
+![OpenIddict](/images/blog/openiddict-core.png)
 
 As you may know, ASP.NET Zero **ended** using the **Identity Server** as the default authentication and authorization provider in v12.0. However, we've received **feedback** from our customers that they **need to use** a authentication and authorization **provider** that is **lightweight** and easier to configure. That's why we've decided to integrate **OpenIddict**, a simple yet powerful **OpenID Connect** server, into ASP.NET Zero.
 
@@ -15,7 +15,7 @@ Incorporating OpenIddict into ASP.NET Zero v12.3 marks a significant step forwar
 
 ## 🌅 Upgrade to Angular 16: Embracing the Latest Technologies
 
-![Angular 16](images/blog/angular16.webp)
+![Angular 16](/images/blog/angular16.webp)
 
 Innovation never stops, and neither does ASP.NET Zero. With the **upgrade** to **Angular 16**, you gain access to cutting-edge features and performance enhancements. This transition underscores our commitment to staying current with **technology trends** and providing you with a **robust** development environment. 
 
@@ -35,13 +35,13 @@ ASP.NET Zero v12.3 introduces a new feature in Power Tools that allows you to **
 
 ## 🏰 Logo Management: Logo Icon Upload
 
-![Logo Icon Upload](images/blog/upload-logo-icon-aspnetzero.png)
+![Logo Icon Upload](/images/blog/upload-logo-icon-aspnetzero.png)
 
 In response to user demand, ASP.NET Zero v12.3 introduces **support** for logo icon upload. This **feature** allows you to upload your **logo icon** and display it in the top left corner of the application. You can also upload a logo icon for **each tenant**, which will be displayed in the top left corner of the tenant's page. That feature supports both **light** and **dark** themes.
 
 ## 🍀 New Blog Post: Elsa Integration with AspNet Zero Angular UI
 
-![Elsa](images/blog/integrating-elsa-with-asp.net-zero-angular.png)
+![Elsa](/images/blog/integrating-elsa-with-asp.net-zero-angular.png)
 
 We published a new blog post to explain integration of Elsa worflow library with AspNet Zero Angular UI. Elsa, a **dynamic workflow** automation system, seamlessly integrates with the powerful **Angular UI** of ASP.NET Zero. Look at this [blog post](https://aspnetzero.com/blog/integrating-elsa-with-aspnet-zero-angular) and explore how it enhances your application's capabilities.
 
