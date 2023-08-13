@@ -1,4 +1,4 @@
-# ASP.NET ZERO Power Tools How it Works
+# ASP.NET ZERO Power Tools - How it Works
 
 DLLs (that are inside the `aspnet-core\AspNetZeroRadTool` folder in your solution) do all the work. The visual studio extension is just a user interface. Since the tool is built with .NET Core, Mac or Linux users can safely use it without the user interface.
 
@@ -76,6 +76,10 @@ Here is the full list of the files that are created or modified by the tool, if 
 * LookupTableViewModel.cshtml
 * LookupTableModal.js
 * LookupTableModal.cshtml
+
+### Tests
+
+If you select options to create Unit Tests or UI Test on Power Tools, it will create files for unit testing the generated application service and files for running Playwright UI tests for generated UI pages.
 
 **Files that are being modified**
 
