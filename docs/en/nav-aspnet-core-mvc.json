@@ -562,6 +562,10 @@
               "path": "Power-Tools-Using-Visual-Studio-Extension.md"
             },
             {
+              "text": "Load Entity From Database",
+              "path": "Power-Tools-Load-Entity-From-Database.md"
+            },
+            {
               "text": "Creating Entity JSON File Manually",
               "path": "Power-Tools-Creating-Entity-Json-File-Manually.md"
             },
