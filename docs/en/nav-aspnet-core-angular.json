@@ -510,31 +510,48 @@
       "items": [
         {
           "text": "Overview",
-          "path": "Rapid-Application-Development.md"
+          "path": "Power-tools-overview.md"
         },
         {
-          "text": "Development Guide (Windows)",
-          "path": "Development-Guide-Rad-Tool.md",
-          "items": [
+          "text": "Getting Started",
+          "path": "Power-tools-getting-started.md"
+        },
+        {
+          "text": "How it Works",
+          "path": "Power-tools-how-it-works.md"
+        },
+        {
+          "text": "Development Guide",
+          "items" : [
+            {
+              "text": "Using Visual Studio Extension",
+              "path": "Power-Tools-Using-Visual-Studio-Extension.md"
+            },
+            {
+              "text": "Load Entity From Database",
+              "path": "Power-Tools-Load-Entity-From-Database.md"
+            },
+            {
+              "text": "Creating Entity JSON File Manually",
+              "path": "Power-Tools-Creating-Entity-Json-File-Manually.md"
+            },
             {
               "text": "Master Detail Tables",
-              "path": "Development-Guide-Rad-Tool-Master-Detail.md"
-            }
-          ]
-        },
-        {
-          "text": "Development Guide (MAC/Linux)",
-          "path": "Development-Guide-Rad-Tool-Mac-Linux.md",
-          "items": [
+              "path": "Power-Tools-Master-Detail-Tables.md"
+            },
             {
-              "text": "Master Detail Tables (for non-Windos OS)",
-              "path": "Development-Guide-Rad-Tool-Master-Detail-Mac-Linux.md"
+              "text": "How to Create & Edit Power Tools Templates",
+              "path": "How-To-Create-Edit-Power-Tools-Templates.md"
+            },
+            {
+              "text": "Understanding Power Tools Templates",
+              "path": "Power-Tools-Understanding-Power-Tools-Templates.md"
+            },
+            {
+              "text": "Configuration",
+              "path": "Power-Tools-Configuration.md"
             }
           ]
-        },
-        {
-          "text": "Configuration",
-          "path": "Rad-Tool-Config.md"
         }
       ]
     },
