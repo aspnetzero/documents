@@ -23,6 +23,7 @@ The ASP.NET ZERO Power Tools Visual Studio extension allows you to create a mast
 To create a master-detail table, follow these steps:
 
 * First, create a child entity that will be the detail table. In our example, we'll create a "Book" entity that will be the detail table for the "Author" entity, which will be the master table.
+<img alt="" src="images/power-tools-book-child-entity.png" class="img-thumbnail">
 
 * Next, create a parent entity that will be the master table. In our example, we'll create an "Author" entity that will be the master table for the "Book" entity. When creating the "Author" entity, select **Create Master-Detail Page** option and open **Navigation Property** tab.
 <img alt="" src="images/power-tools-author-master-detail.png" class="img-thumbnail">
@@ -123,3 +124,18 @@ To create a master-detail table, follow these steps:
   "DbContext": null
 }
 ```
+
+## Screenshots
+
+*Authors Page*
+<img src="images/power-tools-authors-screenshot.png" alt="Rad Tool Child Entity" class="img-thumbnail" />
+
+> **Note:** You can create list views for child entities too. Power Tools will change base entity page and child page. It will add base entity to child entity as a navigation property.
+
+*Authors > Create New Book*
+<img src="images/power-tools-authors-create-book.png" alt="Rad Tool Child Entity" class="img-thumbnail" />
+
+*Books > Create New Book*
+<img src="images/power-tools-books-create-book.png" alt="Rad Tool Child Entity" class="img-thumbnail" />
+
+> **Note:** If you manage child entity in base entity page everything about the base entity will be automatically managed.
