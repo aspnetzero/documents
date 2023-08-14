@@ -367,6 +367,10 @@
           "path": "Infrastructure-Core-Mvc-Token-Based-Authentication.md"
         },
         {
+          "text": "OpenIddict Integration",
+          "path": "Infrastructure-Core-Mvc-OpenIddict-Integration.md"
+        },        
+        {
           "text": "Identity Server 4 Integration",
           "path": "Infrastructure-Core-Mvc-Identity-Server4-Integration.md"
         },

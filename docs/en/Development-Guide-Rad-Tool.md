@@ -79,6 +79,13 @@ Here is the full list of the files that are created or modified by the tool, if 
 
  (Optionally, adds a database migration and updates the database.)
 
+#### Overridable Entity option
+
+When you select `Generate Overridable Entity` option (available for 3.4.0 and above), ASP.NET Zero Power Tools will create abstract base classes and their implementation for each server side class generated (expect excel exporter classes). There will be `ClassName.Extended.cs` files for each server side file.
+
+So, you can write your custom code into `ClassName.Extended.cs` classes and ASP.NET Zero Power Tools will not make any modification to those files when you re-generate an entity.
+
+ASP.NET Zero Power Tools is going to overwrite client side files (Cshtml, JavaScript, TypeScript and HTML). In order to keep changes on your client side files, you can make changes on these files in a single commit and [cherry pick](https://git-scm.com/docs/git-cherry-pick) this single commit after re-generating an entity.
 
 ### Client Side
 

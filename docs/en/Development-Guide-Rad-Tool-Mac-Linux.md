@@ -31,6 +31,9 @@ You can find specification of the JSON file fields in the table below;
 | Properties           | Properties of your entity. See 'Table 2' for more.           |
 | NavigationProperties | Navigation properties of your entity. See 'Table 3' for more. |
 | EnumDefinitions      | Enum definitions you use on your entity. See 'Table 4' for more. |
+| GenerateUnitTest      | Generates unit tests for created application service class. |
+| GenerateUiTest      | Generates UI tests for the created entity. |
+| GenerateOverridableEntity      | Creates abstract base classes and their implementations. So, for the regenerate operation, your custom code will not be overwritten. |
 
 
 

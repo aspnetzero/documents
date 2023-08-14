@@ -1,5 +1,8 @@
 # Identity Server 4 Integration
 
+**\*\*IMPORTANT NOTICE\*\***
+Identity Server 4 maintainance stopped on November 2022, see [official announcement](https://identityserver4.readthedocs.io/en/latest/). Because of that, it is removed from ASP.NET Zero. We suggest migrating to OpenIddict. Check out ASP.NET Zero's [OpenIddict integration document](Infrastructure-Core-Mvc-OpenIddict-Integration.md).
+
 [IdentityServer4](http://identityserver.io/) is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core. ASP.NET Zero is integrated to IdentityServer4. It's **enabled by default**.
 
 ## Configuration
