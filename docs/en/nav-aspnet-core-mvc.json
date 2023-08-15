@@ -548,15 +548,15 @@
       "items":[
         {
           "text": "Overview",
-          "path": "Power-tools-overview.md"
+          "path": "Power-Tools-Overview.md"
         },
         {
           "text": "Getting Started",
-          "path": "Power-tools-getting-started.md"
+          "path": "Power-Tools-Getting-Started.md"
         },
         {
           "text": "How it Works",
-          "path": "Power-tools-how-it-works.md"
+          "path": "Power-Tools-How-It-Works.md"
         },
         {
           "text": "Development Guide",

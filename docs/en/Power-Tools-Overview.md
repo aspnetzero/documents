@@ -42,4 +42,4 @@ Get started with the ASP.NET Zero Power Tools now and experience the productivit
 
 ## Next Steps
 
-* [Getting Started](power-tools-getting-started.md)
+* [Getting Started](Power-Tools-Getting-Started.md)
