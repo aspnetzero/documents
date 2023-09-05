@@ -15,7 +15,7 @@ You should add entity type that you want to track to ***.Core\EntityHistory\Enti
 Configuration.EntityHistory.IsEnabled = false;
 
 // Uncomment below line to write change logs for the entities below:
-// Configuration.EntityHistory.Selectors.Add("AbpZeroTemplateEntities", EntityHistoryHelper.TrackedTypes);
+// Configuration.EntityHistory.Selectors.Add(new NamedTypeSelector("AbpZeroTemplateEntities", type => EntityHistoryHelper.TrackedTypes.Contains(type)));
 // Configuration.CustomConfigProviders.Add(new EntityHistoryConfigProvider(Configuration));
 ```
 
