@@ -76,6 +76,8 @@ private void ConfigureElsa(IServiceCollection services)
 }
 ```
 
+> **Note:** ReplaceResultFilter is explained in the next section.
+
 In this configuration, we are configuring Elsa to use existing ASP.NET Zero database and we configure Elsa with Default connection string. In order for this configuration to work, we need to add below section to `appsettings.json`.
 
 ````json
@@ -173,6 +175,8 @@ private void ReplaceResultFilter(MvcOptions options)
 This method replaces `AbpResultFilter` with `ElsaResultFilter`. Here is the content of `ElsaResultFilter`;
 
 ```c#
+using Elsa.Server.Api.Endpoints.Activities;
+
 public class ElsaResultFilter : IResultFilter, ITransientDependency
 {
     private readonly IAbpAspNetCoreConfiguration _configuration;
@@ -230,6 +234,8 @@ public class ElsaResultFilter : IResultFilter, ITransientDependency
 }
 ```
 
+> **Note:** `using Elsa.Server.Api.Endpoints.Activities;` is required for `List` class.
+
 ### Configure Method
 
 The additions of Configure method are shown in the code block below;
@@ -275,7 +281,7 @@ public override void Initialize()
     // existing code blocks
 
     // Register controllers inside ELSA
-    Register(typeof(Elsa.Server.Api.Endpoints.WebhookDefinitions.List).GetAssembly());
+    Register(typeof(Elsa.Server.Api.Endpoints.WorkflowDefinitions.List).GetAssembly());
     Register(typeof(Elsa.Server.Api.Endpoints.WorkflowDefinitions.Save).GetAssembly());
 }
 

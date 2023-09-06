@@ -10,7 +10,7 @@ In order to start integrating Elsa with ASP.NET Zero, first follow ASP.NET Zero'
 
 ## Adding Elsa Packages
 
-After creating the empty project, we need to add required Elsa NuGet packages to our project. Elsa document uses ```Elsa.Persistence.EntityFramework.Sqlite``` for persistence but we will use ```Elsa.Persistence.EntityFramework.SqlServer``` because ASP.NET Zero use SQL Server by default. So, add packages below to your *.Web.Mvc project.
+After creating the empty project, we need to add required Elsa NuGet packages to our project. Elsa document uses `Elsa.Persistence.EntityFramework.Sqlite` for persistence but we will use `Elsa.Persistence.EntityFramework.SqlServer` because ASP.NET Zero use SQL Server by default. So, add packages below to your `*.Web.Mvc` project.
 
 * [Elsa](https://www.nuget.org/packages/Elsa)
 * [Elsa.Activities.Http](https://www.nuget.org/packages/Elsa.Activities.Http)
@@ -23,18 +23,18 @@ After creating the empty project, we need to add required Elsa NuGet packages to
 
 ### ConfigureServices Method
 
-After adding Elsa NuGet packages, we need to configure Elsa in Startup.cs. So, open ```Startup.cs``` under ***.Web.Mvc/Startup/** and configure it as shown below;
+After adding Elsa NuGet packages, we need to configure Elsa in Startup.cs. So, open `Startup.cs` under `.Web.Mvc/Startup/` and configure it as shown below;
 
-````c#
+```c#
 public IServiceProvider ConfigureServices(IServiceCollection services)
 {
     ConfigureElsa(services);
     
     // Existing code blocks
 }
-````
+```
 
-````c#
+```c#
 private void ConfigureElsa(IServiceCollection services)
 {
     services.AddElsa(elsa =>
@@ -74,9 +74,11 @@ private void ConfigureElsa(IServiceCollection services)
     	ReplaceResultFilter(options);
 	});
 }
-````
+```
 
-In this configuration, we are configuring Elsa to use existing ASP.NET Zero database and we configure Elsa with Default connection string. In order for this configuration to work, we need to add below section to **appsettings.json**.
+> **Note:** ReplaceResultFilter is explained in the next section.
+
+In this configuration, we are configuring Elsa to use existing ASP.NET Zero database and we configure Elsa with Default connection string. In order for this configuration to work, we need to add below section to `appsettings.json`.
 
 ````json
 "Elsa": {
@@ -96,9 +98,9 @@ There are some special configuration points here which doesn't exist in default 
 elsa.UseAutoMapper(() => { });
 ````
 
-Both Elsa and ASP.NET Boilerplate creates a ```MapperConfiguration``` and uses it to create an `IMapper`. Because of this, if we don't add this line to Elsa configuration, the app will only use Elsa's AutoMapper configuration. But, after making this configuration, we need to configure Elsa's AutoMapper mappings in our app manually. In order to do this, go to ***WebMvcModule** and add below lines to its ```PreInitialize``` method.
+Both Elsa and ASP.NET Boilerplate creates a `MapperConfiguration` and uses it to create an `IMapper`. Because of this, if we don't add this line to Elsa configuration, the app will only use Elsa's **AutoMapper** configuration. But, after making this configuration, we need to configure Elsa's AutoMapper mappings in our app manually. In order to do this, go to `*WebMvcModule` and add below lines to its `PreInitialize` method.
 
-````
+```
 // ELSA AutoMapper
 Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
 {
@@ -115,11 +117,11 @@ Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
     config.CreateMap<WorkflowDefinition, WorkflowDefinition>();
     config.CreateMap<WorkflowInstance, WorkflowInstance>();
 });
-````
+```
 
 #### API Versioning
 
-````
+```
 services.AddElsaApiEndpoints();
 services.Configure<ApiVersioningOptions>(options =>
 {
@@ -130,9 +132,9 @@ services.Configure<RouteOptions>(options =>
 {
     options.LowercaseUrls = false;
 });
-````
+```
 
-ASP.NET Zero doesn't support API versioning and Elsa uses it by default. But, disabling ```UseApiBehavior``` makes ASP.NET Zero and Elsa to work together. ```AddElsaApiEndpoints``` configures ```LowercaseUrls``` of ```RouteOptions``` to true but ASP.NET Zero requires case sensitive URLs. So, we are converting ```LowercaseUrls``` of ```RouteOptions``` to false.
+ASP.NET Zero doesn't support API versioning and Elsa uses it by default. But, disabling `UseApiBehavior` makes ASP.NET Zero and Elsa to work together. `AddElsaApiEndpoints` configures `LowercaseUrls` of `RouteOptions` to true but ASP.NET Zero requires case sensitive URLs. So, we are converting `LowercaseUrls` of `RouteOptions` to false.
 
 #### Result Filtering
 
@@ -143,11 +145,11 @@ services.PostConfigure<MvcOptions>(options =>
 });
 ````
 
-ASP.NET Zero wraps JSON results by default and adds some additional fields to JSON result. The actual result is accessed by ```result ``` property of the returned JSON result. But, Elsa doesn't work this way, so we should ignore result wrapping for Elsa's controllers. Unfortunately, ASP.NET Zero doesn't provide an easy configuration for doing that. Because of that, we need to replace default result filter with our own custom result filter using the configuration above. 
+ASP.NET Zero **wraps JSON** results by default and adds some additional fields to JSON result. The actual result is accessed by `result` property of the returned JSON result. But, Elsa doesn't work this way, so we should **ignore result wrapping** for Elsa's controllers. Unfortunately, ASP.NET Zero doesn't provide an easy configuration for doing that. Because of that, we need to replace default result filter with our own **custom result filter** using the configuration above. 
 
-Here is the content of ```ReplaceResultFilter``` method;
+Here is the content of `ReplaceResultFilter` method;
 
-````c#
+```c#
 private void ReplaceResultFilter(MvcOptions options)
 {
     for (var index = options.Filters.Count - 1; index >= 0; --index)
@@ -168,11 +170,13 @@ private void ReplaceResultFilter(MvcOptions options)
         break;
     }
 }
-````
+```
 
-This method replaces ```AbpResultFilter``` with ```ElsaResultFilter```. Here is the content of ```ElsaResultFilter```;
+This method replaces `AbpResultFilter` with `ElsaResultFilter`. Here is the content of `ElsaResultFilter`;
 
-````c#
+```c#
+using Elsa.Server.Api.Endpoints.Activities;
+
 public class ElsaResultFilter : IResultFilter, ITransientDependency
 {
     private readonly IAbpAspNetCoreConfiguration _configuration;
@@ -228,13 +232,15 @@ public class ElsaResultFilter : IResultFilter, ITransientDependency
                ?? defaultValue;
     }
 }
-````
+```
+
+> **Note:** `using Elsa.Server.Api.Endpoints.Activities;` is required for `List` class.
 
 ### Configure Method
 
 The additions of Configure method are shown in the code block below;
 
-````c#
+```c#
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
 {
     // existing code blocks
@@ -258,24 +264,24 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
     
     // existing code blocks
 }
-````
+```
 
 There are two additions here;
 
-1. ```app.UseHttpActivities();``` this line allows Elsa to handle HTTP request and execute if there are any workflows related to HTTP activities.
-2. ```endpoints.MapFallbackToPage("/_Host");``` this line redirects all not found requests to _Host.cshtml page which we will create in the next section. This page will contain Elsa Dashboard source code.
+1. `app.UseHttpActivities();` this line allows Elsa to handle HTTP request and execute if there are any workflows related to HTTP activities.
+2. `endpoints.MapFallbackToPage("/_Host");` this line redirects all not found requests to `_Host.cshtml` page which we will create in the next section. This page will contain Elsa Dashboard source code.
 
 ### Elsa Controllers
 
 By default Elsa controllers are not registered in ASP.NET Zero's dependency injection system. In order to do that, we must register Elsa Conrollers as shown below in the Initialize method of the MVC Wed Module;
 
-````c#
+```c#
 public override void Initialize()
 {
     // existing code blocks
 
     // Register controllers inside ELSA
-    Register(typeof(Elsa.Server.Api.Endpoints.WebhookDefinitions.List).GetAssembly());
+    Register(typeof(Elsa.Server.Api.Endpoints.WorkflowDefinitions.List).GetAssembly());
     Register(typeof(Elsa.Server.Api.Endpoints.WorkflowDefinitions.Save).GetAssembly());
 }
 
@@ -312,13 +318,13 @@ private void Register(Assembly assembly)
             .LifestyleTransient()
     );
 }
-````
+```
 
 ## Elsa Dashboard
 
-In order to add Elsa Dashboard into ASP.NET Zero, create a folder named **Pages** under the MVC project and create a razor page named ```_Host.cshtml``` with the content below;
+In order to add Elsa Dashboard into ASP.NET Zero, create a folder named `Pages` under the MVC project and create a razor page named `_Host.cshtml` with the content below;
 
-````html
+```html
 @page "/"
 @{
     var serverUrl = $"{Request.Scheme}://{Request.Host}";
@@ -340,11 +346,11 @@ In order to add Elsa Dashboard into ASP.NET Zero, create a folder named **Pages*
 <elsa-studio-root server-url="@serverUrl" monaco-lib-path="_content/Elsa.Designer.Components.Web/monaco-editor/min"></elsa-studio-root>
 </body>
 </html>
-````
+```
 
-ASP.NET Zero uses ``` WebHostBuilder``` in its Program.cs but it has some problems with embedded static files. Elsa provides styles and scripts of its dashboard as static files. In order to load Elsa's static files, change the ```Program.cs``` as shown below;
+ASP.NET Zero uses `WebHostBuilder` in its Program.cs but it has some problems with embedded static files. Elsa provides styles and scripts of its dashboard as static files. In order to load Elsa's static files, change the `Program.cs` as shown below;
 
-````c#
+```c#
 public class Program
 {
     public static void Main(string[] args)
@@ -367,13 +373,13 @@ public class Program
             .UseStartup<Startup>();
     }
 }
-````
+```
 
 ## UserManager
 
-During the integration of Elsa, we faced an error of Serialization and Deserialization of ```IdentityOptions``` in UserManager's ```InitializeOptionsAsync``` method. To overcome this problem, you should override the related method in UserManager.cs as shown below;
+During the integration of Elsa, we faced an error of Serialization and Deserialization of `IdentityOptions` in UserManager's `InitializeOptionsAsync` method. To overcome this problem, you should override the related method in `UserManager.cs` as shown below;
 
-````c#
+```c#
 public override async Task InitializeOptionsAsync(int? tenantId)
 {
     Options = new IdentityOptions
@@ -473,39 +479,39 @@ private Task<T> GetSettingValueAsync<T>(string settingName, int? tenantId) where
         ? _settingManager.GetSettingValueForApplicationAsync<T>(settingName)
         : _settingManager.GetSettingValueForTenantAsync<T>(settingName, tenantId.Value);
 }
-````
+```
 
-This approach manually creates a ```IdentityOptions``` and manually sets its fields one by one. The previous version uses AutoMapper which causes a problem.
+This approach manually creates a `IdentityOptions` and manually sets its fields one by one. The previous version uses **AutoMapper** which causes a problem.
 
 ## Navigation
 
 Finally, let's add Elsa Dashboard as a menu item to our app. In order to do that, first create a new localization in the localization xml file as shown below;
 
-````xml
+```xml
 <text name="Workflows">Workflows</text>
-````
+```
 
-After that, define a constant in **AppPageNames.cs** as shown below right under ```DynamicEntityProperties``` definition;
+After that, define a constant in `AppPageNames.cs` as shown below right under `DynamicEntityProperties` definition;
 
-````c#
+```c#
 public const string Elsa = "Elsa.Main";
-````
+```
 
-Let's also define a permission for our new page. To do that, create a const in **AppPermisisons.cs** as shown below right under ```Pages_Administration_DynamicEntityPropertyValue_Delete``` ;
+Let's also define a permission for our new page. To do that, create a const in `AppPermisisons.cs` as shown below right under `Pages_Administration_DynamicEntityPropertyValue_Delete` ;
 
-````c#
+```c#
 public const string Pages_Workflows = "Pages.Workflows";
-````
+```
 
-and define a permission in **AppAuthorizationProvider.cs** as show below right after definition of ```AppPermissions.Pages_DemoUiComponents``` ;
+and define a permission in `AppAuthorizationProvider.cs` as show below right after definition of `AppPermissions.Pages_DemoUiComponents` ;
 
-````c#
+```c#
 pages.CreateChildPermission(AppPermissions.Pages_Workflows, L("Workflows"));
-````
+```
 
-after all, add a menu item to **AppNavigationProvider.cs** as shown below;
+after all, add a menu item to `AppNavigationProvider.cs` as shown below;
 
-````c#
+```c#
 .AddItem(new MenuItemDefinition(
     AppPageNames.Common.Elsa,
     L("Workflows"),
@@ -513,10 +519,10 @@ after all, add a menu item to **AppNavigationProvider.cs** as shown below;
     icon: "flaticon-map",
     permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Workflows)
 )
-````
+```
 
-That's all. You can now run the application and navigate to ```/Workflows``` page and see Elsa Dashboard.
+That's all. You can now run the application and navigate to `/Workflows` page and see Elsa Dashboard.
 
 ## Sample Workflow
 
-You can create a sample workflow as explained in [Elsa Documentation](https://elsa-workflows.github.io/elsa-core/docs/next/quickstarts/quickstarts-aspnetcore-server-dashboard-and-api-endpoints#the-workflow). This sample workflow starts with a request to ```/hello-world``` endpoint and returns the specified HTTP response.
+You can create a sample workflow as explained in [Elsa Documentation](https://elsa-workflows.github.io/elsa-core/docs/next/quickstarts/quickstarts-aspnetcore-server-dashboard-and-api-endpoints#the-workflow). This sample workflow starts with a request to `/hello-world` endpoint and returns the specified HTTP response.
