@@ -6,6 +6,12 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 12.4.0 (2023-10-16)
+
+* Power Tools: Autocomplete option for selecting navigation properties.
+* Upgrade to Abp 8.4.
+* Enhancements and bug fixes.
+
 ## 12.3.0 (2023-08-10)
 
 * Added OpenIddict integration
