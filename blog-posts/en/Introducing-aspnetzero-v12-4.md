@@ -3,13 +3,13 @@
 
 # Introducing ASP.NET Zero v12.4
 
-We're thrilled to introduce ASP.NET Zero v12.4, the latest version of our flagship **framework** that continues to **revolutionize** web development. This release comes with ui improvements, bug fixes, and minor features. We've also added a new feature (typeahead) to our Power Tools that will **enhance** your **development process** and **improve** your **productivity**.
+We're thrilled to introduce ASP.NET Zero v12.4, the latest version of our **framework**. This release comes with ui improvements, bug fixes, and minor features. We've also added a new feature (typeahead) to our Power Tools that will **enhance** your **development process** and **improve** your **productivity**.
 
 ## ✨ Enhanced finding user feature
 
 Finding a user is now more **user-friendly** and easier than ever. We've **separated** the name, surname, and email fields to simplify the process of locating a user.
 
-![Finding User](/Images/Blog/anz-enhanced-find-user.png)
+![Finding User](./images/Blog/anz-enhanced-find-user.png)
 
 ## 🎨 UI Improvements
 
@@ -22,13 +22,13 @@ Finding a user is now more **user-friendly** and easier than ever. We've **separ
 
 ## 🔅 Power Tools : Typeahead (Autocomplete) Feature
 
-Power Tools now supports [master-detail](https://docs.aspnetzero.com/en/common/latest/Development-Guide-Rad-Tool-Master-Detail) entities, which involve a child-parent relationship.  We have options to choose relations through either a lookup table or a dropdown menu, providing you with greater flexibility.  And it is now possible with typeahead (autocomplete) option.
+Power Tools supports [master-detail](https://docs.aspnetzero.com/en/common/latest/Development-Guide-Rad-Tool-Master-Detail) entities, which involve a child-parent relationship and also navigation properties. For these, we have options to choose relations through either a lookup table or a dropdown menu, providing you with greater flexibility. And it is now possible with typeahead (autocomplete) option. 
 
-![Typeahead](/Images/Blog/anz-typeahead.png)
+![Typeahead](./images/Blog/anz-typeahead.png)
 
-## 🎆 Upgrade to ABP 8.4
+## 🎆 Upgrade to ASP.NET Boilerplate Framework 8.4
 
-ASP.NET Zero v12.4 is built on top of [ASP.NET Boilerplate](https://aspnetboilerplate.com/), which has been upgraded to version 8.4. This means that you can take advantage of the latest features and improvements of ABP Framework.
+ASP.NET Zero v12.4 is built on top of [ASP.NET Boilerplate](https://aspnetboilerplate.com/), which has been upgraded to version 8.4. This means that you can take advantage of the latest features and improvements of ASP.NET Boilerplate Framework.
 
 ## 🙏 Conclusion
 
