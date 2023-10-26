@@ -31,140 +31,39 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
 *(Design your report as you wish)*
 
-If you add the report using Visual Studio, it will create a report file with `.vsrepx` extension but we need a report with `.repx `extension. So, convert `.vsrepx` report to `.repx` report by following the document below;
+### Custom Controllers
 
-[https://docs.devexpress.com/XtraReports/14989/get-started-with-devexpress-reporting/create-a-report-in-visual-studio#convert-vsrepx-files-to-repx](https://docs.devexpress.com/XtraReports/14989/get-started-with-devexpress-reporting/create-a-report-in-visual-studio#convert-vsrepx-files-to-repx)
+DevExpress Reporting has some abstract Controller definitions which we must implement. You can create Controllers below in your *.Web.Host project.
 
-## Client Side
-
-1. Go to `package.json` and add following dependencies. (It is located in `angular` project)
-
-```json
-dependencies: [
-    "devextreme": "21.1.3",
-    "@devexpress/analytics-core": "21.1.3",
-    "devexpress-reporting": "21.1.3",
-]
-```
-
-*Note: Version of the nuget and npm packages should match*
-
-2. Create new component named `sample-report` 
-
-*sample-report.component.html*
-
-```html
-<div [@routerTransition]>
-    <div class="content d-flex flex-column flex-column-fluid">
-        <sub-header [title]="'SampleReport' | localize">
-        </sub-header>
-
-        <div [class]="containerClass">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <dx-report-viewer [reportUrl]="reportUrl" height="400px">
-                        <dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
-                    </dx-report-viewer>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-```
-
-*sample-report.component.ts*
-
-```typescript
-import {Component, Injector, OnInit, ViewEncapsulation} from '@angular/core';
-import {AppComponentBase} from "@shared/common/app-component-base";
-import {appModuleAnimation} from "@shared/animations/routerTransition";
-
-@Component({
-    selector: 'app-sample-report',
-    encapsulation: ViewEncapsulation.None,
-    templateUrl: './sample-report.component.html',
-    styleUrls: ['./sample-report.component.css',
-        '../../../../node_modules/jquery-ui/themes/base/all.css',
-        '../../../../node_modules/devextreme/dist/css/dx.common.css',
-        '../../../../node_modules/devextreme/dist/css/dx.light.css',
-        '../../../../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.common.css',
-        '../../../../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.light.css',
-        '../../../../node_modules/devexpress-reporting/dist/css/dx-webdocumentviewer.css'
-    ],
-    animations: [appModuleAnimation()]
-})
-export class SampleReportComponent extends AppComponentBase implements OnInit {
-
-    title = 'DXReportViewerSample';
-    reportUrl = 'SampleReport';
-    hostUrl = 'https://localhost:44301/';
-    invokeAction = 'DXXRDV';
-
-    constructor(
-        injector: Injector
-    ) {
-        super(injector);
+```csharp
+[ApiExplorerSettings(IgnoreApi = true)]
+public class CustomWebDocumentViewerController : WebDocumentViewerController, ITransientDependency
+{
+    public CustomWebDocumentViewerController(IWebDocumentViewerMvcControllerService controllerService) : base(controllerService)
+    {
     }
+}
 
-    ngOnInit(): void {
+[ApiExplorerSettings(IgnoreApi = true)]
+public class CustomReportDesignerController : ReportDesignerController, ITransientDependency
+{
+    public CustomReportDesignerController(IReportDesignerMvcControllerService controllerService) : base(controllerService)
+    {
+    }
+}
+
+[ApiExplorerSettings(IgnoreApi = true)]
+public class CustomQueryBuilderController : QueryBuilderController, ITransientDependency
+{
+    public CustomQueryBuilderController(IQueryBuilderMvcControllerService controllerService) : base(controllerService)
+    {
     }
 }
 ```
 
-1. Create `sample-report` module
+### Reports Factory
 
-    ```typescript
-    import {NgModule} from '@angular/core';
-    import {SampleReportRoutingModule} from './sample-report-routing.module';
-    import {SampleReportComponent} from './sample-report.component';
-    import {AppSharedModule} from "@app/shared/app-shared.module";
-    import {AdminSharedModule} from "@app/admin/shared/admin-shared.module";
-    import {DxReportViewerModule} from "@node_modules/devexpress-reporting-angular";
-    
-    
-    @NgModule({
-        declarations: [SampleReportComponent],
-        imports: [
-            AppSharedModule,
-            AdminSharedModule,
-            SampleReportRoutingModule,
-            DxReportViewerModule
-        ],
-        exports:[DxReportViewerModule]
-    })
-    export class SampleReportModule {
-    }
-    ```
-
-    ```typescript
-    import {NgModule} from '@angular/core';
-    import {RouterModule, Routes} from '@angular/router';
-    import {SampleReportComponent} from './sample-report.component';
-    
-    const routes: Routes = [{
-        path: '',
-        component: SampleReportComponent,
-        pathMatch: 'full'
-    }];
-    
-    @NgModule({
-        imports: [RouterModule.forChild(routes)],
-        exports: [RouterModule]
-    })
-    export class SampleReportRoutingModule {
-    }
-    ```
-
-2. Add sample report route to `admin-routing.module.ts`
-
-    ```typescript
-    {
-    	path: 'sample-report',
-    	loadChildren: () => import('./sample-report/sample-report.module').then(m => m.SampleReportModule)
-    }
-    ```
-
-3. Create a factory class which provides reports by name `ReportsFactory`
+Create a factory class which provides reports by name `ReportsFactory`
 
 _ReportsFactory.cs_
 
@@ -178,7 +77,9 @@ public static class ReportsFactory
 }
 ```
 
-4. Create a class named `CustomReportStorageWebExtension`  as seen below
+### Custom Report Storage Extension
+
+Create a class named `CustomReportStorageWebExtension`  as seen below
 
 _CustomReportStorageWebExtension.cs_
 
@@ -227,7 +128,7 @@ public class CustomReportStorageWebExtension : DevExpress.XtraReports.Web.Extens
         // This method is called only for valid URLs after the IsValidUrl method is called.
         try
         {
-            if (Directory.EnumerateFiles(ReportDirectory).Select(Path.GetFileNameWithoutExtension).Contains(url))
+            if (Directory.EnumerateFiles(ReportDirectory).Select(Path.GetFileName).Contains(url))
             {
                 return File.ReadAllBytes(Path.Combine(ReportDirectory, url + FileExtension));
             }
@@ -280,7 +181,7 @@ public class CustomReportStorageWebExtension : DevExpress.XtraReports.Web.Extens
 }
 ```
 
-5. Add `CustomReportStorageWebExtension` to dependency injection
+Add `CustomReportStorageWebExtension` to dependency injection
 
 ```csharp
 public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -289,25 +190,135 @@ public IServiceProvider ConfigureServices(IServiceCollection services)
     services.AddScoped<ReportStorageWebExtension, CustomReportStorageWebExtension>();//add this line
 ```
 
-**Note:** If you get a reference error about `WebDocumentViewerController`, `QueryBuilderController` or `ReportDesignerController`, you can follow the solution below:
+## Client Side
 
-* Go to you `[YOURAPPNAME]WebHostModule` .
+1. Go to `package.json` and add following dependencies. (It is located in `angular` project) We have used the version `23.1.6` which is the latest version when this document is created. You can use the latest version.
 
-* Add following code into `PreInitialize` function
+```json
+dependencies: [
+    "devextreme": "^23.1.6",
+    "@devexpress/analytics-core": "^23.1.6",
+    "devexpress-reporting-angular": "^23.1.6"
+]
+```
 
-  ```csharp
-  using DevExpress.AspNetCore.Reporting.QueryBuilder;
-  using DevExpress.AspNetCore.Reporting.ReportDesigner;
-  using DevExpress.AspNetCore.Reporting.WebDocumentViewer;
-  
-  public override void PreInitialize()
-  {
-      //...
-      IocManager.Register(typeof(WebDocumentViewerController), DependencyLifeStyle.Transient);
-      IocManager.Register(typeof(QueryBuilderController), DependencyLifeStyle.Transient);
-      IocManager.Register(typeof(ReportDesignerController), DependencyLifeStyle.Transient);
-  }
-  ```
+*Note: Version of the nuget and npm packages should match*
 
-You can visit **/App/SampleReport** URL under your website to see your report.
+2. Create a folder named `sample-report` under `src\app\admin` folder and then create a new component named `sample-report` as shown below.
+
+*sample-report.component.html*
+
+```html
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'SampleReport' | localize">
+        </sub-header>
+
+        <div [class]="containerClass">
+            <div class="card card-custom">
+                <div class="card-body">
+                    <dx-report-viewer [reportUrl]="reportUrl" height="400px">
+                        <dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
+                    </dx-report-viewer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+*sample-report.component.ts*
+
+```typescript
+import {Component, Injector, OnInit, ViewEncapsulation} from '@angular/core';
+import {AppComponentBase} from "@shared/common/app-component-base";
+import {appModuleAnimation} from "@shared/animations/routerTransition";
+
+@Component({
+    selector: 'app-sample-report',
+    encapsulation: ViewEncapsulation.None,
+    templateUrl: './sample-report.component.html',
+    styleUrls: ['./sample-report.component.css',
+        '../../../../node_modules/devextreme/dist/css/dx.common.css',
+        '../../../../node_modules/devextreme/dist/css/dx.light.css',
+        '../../../../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.common.css',
+        '../../../../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.light.css',
+        '../../../../node_modules/devexpress-reporting/dist/css/dx-webdocumentviewer.css'
+    ],
+    animations: [appModuleAnimation()]
+})
+export class SampleReportComponent extends AppComponentBase implements OnInit {
+
+    title = 'DXReportViewerSample';
+    reportUrl = 'SampleReport';
+    hostUrl = 'https://localhost:44301/';
+    invokeAction = 'DXXRDV';
+
+    constructor(
+        injector: Injector
+    ) {
+        super(injector);
+    }
+
+    ngOnInit(): void {
+    }
+}
+```
+
+3. Create `sample-report` module
+
+    ```typescript
+    import {NgModule} from '@angular/core';
+    import {SampleReportRoutingModule} from './sample-report-routing.module';
+    import {SampleReportComponent} from './sample-report.component';
+    import {AppSharedModule} from "@app/shared/app-shared.module";
+    import {AdminSharedModule} from "@app/admin/shared/admin-shared.module";
+    import {DxReportViewerModule} from "@node_modules/devexpress-reporting-angular";
+    
+    
+    @NgModule({
+        declarations: [SampleReportComponent],
+        imports: [
+            AppSharedModule,
+            AdminSharedModule,
+            SampleReportRoutingModule,
+            DxReportViewerModule
+        ],
+        exports:[DxReportViewerModule]
+    })
+    export class SampleReportModule {
+    }
+    ```
+
+4. Create `sample-report-routing.module.ts` routing module
+
+    ```typescript
+    import {NgModule} from '@angular/core';
+    import {RouterModule, Routes} from '@angular/router';
+    import {SampleReportComponent} from './sample-report.component';
+    
+    const routes: Routes = [{
+        path: '',
+        component: SampleReportComponent,
+        pathMatch: 'full'
+    }];
+    
+    @NgModule({
+        imports: [RouterModule.forChild(routes)],
+        exports: [RouterModule]
+    })
+    export class SampleReportRoutingModule {
+    }
+    ```
+
+5. Add sample report route to `admin-routing.module.ts`
+
+    ```typescript
+    {
+    	path: 'sample-report',
+    	loadChildren: () => import('./sample-report/sample-report.module').then(m => m.SampleReportModule)
+    }
+    ```
+
+You can also add `sample-report` to navigation menu or you can manually visit `http://localhost:4200/app/admin/sample-report` 
 
