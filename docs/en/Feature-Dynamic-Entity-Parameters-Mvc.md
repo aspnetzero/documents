@@ -1,8 +1,8 @@
-# Dynamic Parameter System
+# Dynamic Property System
 
-**Dynamic Parameter System** is a system that allows you to add and manage new properties on entity objects at runtime without any code changes. With this system, you can define dynamic propeties on entity objects and perform operations on these objects easily. For example, it can be used for cities, counties, gender, status codes etc.
+**Dynamic Property System** is a system that allows you to add and manage new properties on entity objects at runtime without any code changes. With this system, you can define dynamic propeties on entity objects and perform operations on these objects easily. For example, it can be used for cities, counties, gender, status codes etc.
 
-Check AspNet Boilerplate side of [Dynamic Parameter System](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Parameter-System)
+Check AspNet Boilerplate side of [Dynamic Property System](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Parameter-System)
 
 ### Defining
 
@@ -90,16 +90,16 @@ _____
     </thead>
     <tbody>
     	<tr>
-            <td>ParameterName*</td>
-            <td>Unique name of the dynamic parameter</td>
+            <td>PropertyName*</td>
+            <td>Unique name of the dynamic property</td>
         </tr>
          <tr>
             <td>Input Type*</td>
-            <td>Input type name of the dynamic parameter</td>
+            <td>Input type name of the dynamic property</td>
         </tr>  
          <tr>
             <td>Permission</td>
-            <td>Required permission to manage anything about that parameter <br><span style="font-style: italic;">(<code>DynamicParameterValue</code>, <code>EntityDynamicParameter</code>, <code>EntityDynamicParameterValue</code>)</span></td>
+            <td>Required permission to manage anything about that property <br><span style="font-style: italic;">(<code>DynamicPropertyValue</code>, <code>EntityDynamicProperty</code>, <code>EntityDynamicPropertyValue</code>)</span></td>
         </tr>   
     </tbody>
 </table>

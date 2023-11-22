@@ -79,16 +79,16 @@ _____
     </thead>
     <tbody>
     	<tr>
-            <td>ParameterName*</td>
-            <td>Unique name of the dynamic parameter</td>
+            <td>PropertyName*</td>
+            <td>Unique name of the dynamic property</td>
         </tr>
          <tr>
             <td>Input Type*</td>
-            <td>Input type name of the dynamic parameter</td>
+            <td>Input type name of the dynamic property</td>
         </tr>  
          <tr>
             <td>Permission</td>
-            <td>Required permission to manage anything about that parameter <br><span style="font-style: italic;">(<code>DynamicParameterValue</code>, <code>EntityDynamicParameter</code>, <code>EntityDynamicParameterValue</code>)</span></td>
+            <td>Required permission to manage anything about that property <br><span style="font-style: italic;">(<code>DynamicPropertyValue</code>, <code>EntityDynamicProperty</code>, <code>EntityDynamicPropertyValue</code>)</span></td>
         </tr>   
     </tbody>
 </table>
