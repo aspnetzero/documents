@@ -2,11 +2,11 @@
 
 [Elsa](https://elsa-workflows.github.io/elsa-core/) is a great open source .NET Standard workflows library. Elsa allows creation of workflows by code, by JSON definition or by its workflow designer UI. In this document, we will basically integrate Elsa with ASP.NET Zero and create a simple workflow following official [Elsa Dashboard + Server](https://elsa-workflows.github.io/elsa-core/docs/next/quickstarts/quickstarts-aspnetcore-server-dashboard-and-api-endpoints) document.
 
-Fully integrated Elsa sample project can be found on [GitHub](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ElsaDemo).
+Fully integrated Elsa sample project can be found on [GitHub](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ElsaMvcDemo).
 
 ## Create Project
 
-In order to start integrating Elsa with ASP.NET Zero, first follow ASP.NET Zero's [Getting Started](Getting-Started-Core.md) document and create a new project. 
+In order to start integrating Elsa with ASP.NET Zero, first follow ASP.NET Zero's [Getting Started](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Getting-Started-Core) document and create a new project. 
 
 ## Adding Elsa Packages
 
@@ -100,7 +100,7 @@ elsa.UseAutoMapper(() => { });
 
 Both Elsa and ASP.NET Boilerplate creates a `MapperConfiguration` and uses it to create an `IMapper`. Because of this, if we don't add this line to Elsa configuration, the app will only use Elsa's **AutoMapper** configuration. But, after making this configuration, we need to configure Elsa's AutoMapper mappings in our app manually. In order to do this, go to `*WebMvcModule` and add below lines to its `PreInitialize` method.
 
-```
+```c#
 // ELSA AutoMapper
 Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
 {
@@ -116,12 +116,13 @@ Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
     // CloningProfile
     config.CreateMap<WorkflowDefinition, WorkflowDefinition>();
     config.CreateMap<WorkflowInstance, WorkflowInstance>();
+    config.CreateMap<WorkflowDefinition, WorkflowDefinitionVersionModel>();
 });
 ```
 
 #### API Versioning
 
-```
+```c#
 services.AddElsaApiEndpoints();
 services.Configure<ApiVersioningOptions>(options =>
 {
@@ -343,10 +344,79 @@ In order to add Elsa Dashboard into ASP.NET Zero, create a folder named `Pages` 
     <script type="module" src="/_content/Elsa.Designer.Components.Web/elsa-workflows-studio/elsa-workflows-studio.esm.js"></script>
 </head>
 <body class="h-screen" style="background-size: 30px 30px; background-image: url(/_content/Elsa.Designer.Components.Web/elsa-workflows-studio/assets/images/tile.png); background-color: #FBFBFB;">
-<elsa-studio-root server-url="@serverUrl" monaco-lib-path="_content/Elsa.Designer.Components.Web/monaco-editor/min"></elsa-studio-root>
+<elsa-studio-root server-url="@serverUrl" monaco-lib-path="_content/Elsa.Designer.Components.Web/monaco-editor/min">
+    <elsa-studio-dashboard></elsa-studio-dashboard>
+</elsa-studio-root>
 </body>
 </html>
 ```
+
+This helper class, named `CurrentDirectoryHelpers`, is crucial for resolving issues related to embedded static files, specifically when using ASP.NET Zero with Elsa's dashboard styles and scripts.
+
+
+```c#
+public class CurrentDirectoryHelpers
+{
+    internal const string AspNetCoreModuleDll = "aspnetcorev2_inprocess.dll";
+
+    [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+    private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+    [System.Runtime.InteropServices.DllImport(AspNetCoreModuleDll)]
+    private static extern int http_get_application_properties(ref IISConfigurationData iiConfigData);
+
+    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    private struct IISConfigurationData
+    {
+        public IntPtr pNativeApplication;
+
+        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.BStr)]
+        public string pwzFullApplicationPath;
+
+        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.BStr)]
+        public string pwzVirtualApplicationPath;
+
+        public bool fWindowsAuthEnabled;
+
+        public bool fBasicAuthEnabled;
+
+        public bool fAnonymousAuthEnable;
+    }
+
+    public static void SetCurrentDirectory()
+    {
+        try
+        {
+            // Check if physical path was provided by ANCM
+            var sitePhysicalPath = Environment.GetEnvironmentVariable("ASPNETCORE_IIS_PHYSICAL_PATH");
+            if (string.IsNullOrEmpty(sitePhysicalPath))
+            {
+                // Skip if not running ANCM InProcess
+                if (GetModuleHandle(AspNetCoreModuleDll) == IntPtr.Zero)
+                {
+                    return;
+                }
+
+                IISConfigurationData configurationData = default(IISConfigurationData);
+                if (http_get_application_properties(ref configurationData) != 0)
+                {
+                    return;
+                }
+
+                sitePhysicalPath = configurationData.pwzFullApplicationPath;
+            }
+
+            Environment.CurrentDirectory = sitePhysicalPath;
+        }
+        catch
+        {
+            // ignore
+        }
+    }
+}
+```
+
+
 
 ASP.NET Zero uses `WebHostBuilder` in its Program.cs but it has some problems with embedded static files. Elsa provides styles and scripts of its dashboard as static files. In order to load Elsa's static files, change the `Program.cs` as shown below;
 
@@ -374,6 +444,9 @@ public class Program
     }
 }
 ```
+
+
+
 
 ## UserManager
 
