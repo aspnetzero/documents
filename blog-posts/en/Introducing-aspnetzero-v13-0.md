@@ -34,6 +34,8 @@ Speaking of upgrades, the transition to .NET 8 is a game-changer. With its impro
 ## Embracing the Evolution: Upgrading to Angular 17
 In the ever-evolving realm of web development, staying current is pivotal. Upgrading to Angular 17 elevates the user experience, streamlines development workflows, and reinforces the compatibility of Power Tools with cutting-edge technologies.
 
+![Angular 17](Images/Blog/angular-17.png)
+
 ## Metronic 8.2.0: A Design Revolution
 Design is not just about aesthetics; it's about functionality and user delight. The upgrade to Metronic 8.2.0 brings forth a design revolution, offering sleeker interfaces, enhanced customizability, and a plethora of features that elevate the visual appeal and usability of applications developed with Power Tools.
 
