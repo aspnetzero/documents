@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 13.0.0 (2023-12-11)
+
+* Power Tools. Multi-lingual entity support.
+* Upgraded to .NET 8.
+* Upgraded to Angular 17.
+* Upgraded to ABP 9.0.
+* Upgraded to Metronic 8.2.0.
+* Upgraded to GraphQL 7.x.
+
 ## 12.4.0 (2023-10-16)
 
 * Power Tools: Autocomplete option for selecting navigation properties.
