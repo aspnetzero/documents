@@ -2,8 +2,9 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   .NET 8 Upgrade
--   Multi-Lingual Entity Support in Power Tools
+-   Power Tools: Excel import feature.
+-   Power Tools: Column selection in excel export.
+-   Passwordless login.
 -   General purpose Payment System.
 -   Power Tools enhancements
 -   User Sync/Link feature
