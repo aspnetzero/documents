@@ -8,7 +8,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 ## 13.0.0 (2023-12-11)
 
-* Power Tools. Multi-lingual entity support.
+* Power Tools: Multi-lingual entity support.
 * Upgraded to .NET 8.
 * Upgraded to Angular 17.
 * Upgraded to ABP 9.0.
