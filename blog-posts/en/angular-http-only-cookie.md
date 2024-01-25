@@ -1,12 +1,12 @@
 # How to enable HttpOnly cookies in ASP.NET Zero Angular
 
-HTTP-only cookies are a type of cookie that can only be accessed and manipulated by the server through HTTP requests, not by JavaScript or client-side code. They enhance security by preventing cross-site scripting (XSS) attacks that could steal sensitive information stored in cookies. 
+Httponly cookies are a type of cookie that can only be accessed and manipulated by the server through HTTP requests, not by JavaScript or client-side code. They enhance security by preventing cross-site scripting (XSS) attacks that could steal sensitive information stored in cookies. 
 
-First of all, your Host project and your Angular project must be located in the same domain. For example, if your `*.Host` project is located in `https://localhost:44300` then your Angular project must be located in `https://localhost:44300/angular`. 
+First of all, your backend project and your Angular project must be located in the same domain. For example, if your Angular project is located in `https://localhost:44300`. Then your backend project `*.Host` must be located in `https://localhost:44300/api`.
 
 ## Step 1: Configure your `*Web.Core` project
 
-Then, you need to add the following code for adding **HttpOnly** cookies in your authentication controller.
+Then, you need to add the following code for adding **HttpOnly** cookies in your `TokenAuthController`.
 
 ```csharp
 Response.Cookies.Append("Abp.AuthToken",
@@ -23,7 +23,7 @@ Response.Cookies.Append("Abp.AuthToken",
 
 ### Add HttpOnly cookies to `Authenticate` method
 
-You can find the the `TokenAuthController` in your `*.Core` project. Find the `Authenticate` method and add the above code after the `var accessToken = CreateAccessToken( ...` line. And also you need to add refresh token cookie as well. Your code should look like this:
+Find the `Authenticate` method and add the above code after the `var accessToken = CreateAccessToken( ...` line. And also you need to add refresh token cookie as well. Your code should look like this:
 
 ```csharp
 // Other codes ...
@@ -75,13 +75,87 @@ You can find the the `TokenAuthController` in your `*.Core` project. Find the `A
 
 We need to add cookies to `ImpersonatedAuthenticate` and `ExternalAuthenticate` methods in the same way as we added above. 
 
+### Add HttpOnly cookies to `RefreshToken` method
+
+We need to add get refresh token from cookie and generate new access token with it. Then, we need to add access token cookie. After changing the `RefreshToken` method, your code should look like this:
+
+```csharp
+[HttpPost]
+public async Task<RefreshTokenResult> RefreshToken()
+{
+    // get refresh token from cookie
+    var refreshToken = Request.Cookies["Abp.AuthRefreshToken"];
+    
+    if (string.IsNullOrWhiteSpace(refreshToken))
+    {
+        throw new ArgumentNullException(nameof(refreshToken));
+    }
+
+    var (isRefreshTokenValid, principal) = await IsRefreshTokenValid(refreshToken);
+    if (!isRefreshTokenValid)
+    {
+        throw new ValidationException("Refresh token is not valid!");
+    }
+
+    try
+    {
+        var user = await _userManager.GetUserAsync(
+            UserIdentifier.Parse(principal.Claims.First(x => x.Type == AppConsts.UserIdentifier).Value)
+        );
+
+        if (user == null)
+        {
+            throw new UserFriendlyException("Unknown user or user identifier");
+        }
+
+        if (AllowOneConcurrentLoginPerUser())
+        {
+            await _userManager.UpdateSecurityStampAsync(user);
+            await _securityStampHandler.SetSecurityStampCacheItem(user.TenantId, user.Id, user.SecurityStamp);
+        }
+
+        principal = await _claimsPrincipalFactory.CreateAsync(user);
+
+        var accessToken = CreateAccessToken(
+            await CreateJwtClaims(principal.Identity as ClaimsIdentity, user)
+        );
+        
+        // Add access token cookie
+        Response.Cookies.Append("Abp.AuthToken",
+            accessToken,
+            new CookieOptions
+            {
+                Expires = Clock.Now.Add(_configuration.AccessTokenExpiration),
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None
+            }
+        );
+
+        return await Task.FromResult(new RefreshTokenResult(
+            accessToken,
+            GetEncryptedAccessToken(accessToken),
+            (int) _configuration.AccessTokenExpiration.TotalSeconds)
+        );
+    }
+    catch (UserFriendlyException)
+    {
+        throw;
+    }
+    catch (Exception e)
+    {
+        throw new ValidationException("Refresh token is not valid!", e);
+    }
+}
+```
+
 ### Delete HttpOnly cookies in `Logout` method
 
 We need to delete cookies in `Logout` method. Find the `Logout` method and add the following code:
 
 ```csharp
 [HttpGet]
-[AbpMvcAuthorize]
+[AbpAuthorize]
 public async Task LogOut()
 {
     // Other codes ...
@@ -91,19 +165,19 @@ public async Task LogOut()
 }
 ```
 
-### Create `TenantIdCookieController.cs`
+### Create `ServerCookieController.cs`
 
-We need to create a new controller for setting tenant id cookie. Create a new controller named `TenantIdCookieController` in your `*.Core` project and add the following code:
+We need to create a new controller for setting tenant id cookie. Create a new controller named `ServerCookieController` in your `*.Web.Core` project and add the following code:
 
 ```csharp
 using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AngularHttpOnlyCookiesDemo.Web.Controllers;
+namespace AngularHttpOnlyCookieDemo.Web.Controllers;
 
 [Route("api/[controller]/[action]")]
-public class TenantIdCookieController : AngularHttpOnlyCookiesDemoControllerBase
+public class ServerCookieController : AngularHttpOnlyCookieDemoControllerBase
 {
     [HttpPost]
     public void SetTenantIdCookie(int tenantId)
@@ -140,7 +214,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-namespace AngularHttpOnlyCookiesDemo.Web.Startup;
+namespace AngularHttpOnlyCookieDemo.Web.Startup;
 
 public class HttpOnlyMiddleware
 {
@@ -155,12 +229,7 @@ public class HttpOnlyMiddleware
     {
         if (context.Request.Cookies.TryGetValue("Abp.AuthToken", out var token))
         {
-            context.Request.Headers.Add("Authorization", "Bearer " + token);
-        }
-                
-        if (context.Request.Path.Value != null && context.Request.Path.Value.Contains("RefreshToken"))
-        {
-            context.Request.QueryString = QueryString.Create("refreshToken", context.Request.Cookies["Abp.AuthRefreshToken"] ?? string.Empty);
+            context.Request.Headers.Append("Authorization", "Bearer " + token);
         }
 
         await _next.Invoke(context);
@@ -169,7 +238,7 @@ public class HttpOnlyMiddleware
 
 public static class HttpOnlyMiddlewareExtension
 {
-    public static IApplicationBuilder UseHttpOnlyMiddleware(this IApplicationBuilder builder)
+    public static IApplicationBuilder UseHttpOnlyToken(this IApplicationBuilder builder)
     {
         return builder.UseMiddleware<HttpOnlyMiddleware>();
     }
@@ -181,20 +250,7 @@ public static class HttpOnlyMiddlewareExtension
 We need to add the following code to `Startup.cs` file in your `*.Web.Host` project.
 
 ```csharp
-app.Use(async (context, next) =>
-{
-    if (context.Request.Cookies.TryGetValue("Abp.AuthToken", out var token))
-    {
-        context.Request.Headers.Add("Authorization", "Bearer " + token);
-    }
-    
-    if (context.Request.Path.Value != null && context.Request.Path.Value.Contains("RefreshToken"))
-    {
-        context.Request.QueryString = QueryString.Create("refreshToken", context.Request.Cookies["Abp.AuthRefreshToken"] ?? string.Empty);
-    }
-
-    await next.Invoke();
-});
+app.UseHttpOnlyToken();
 ```
 
 ## Step 3: Configure your `Angular` project
@@ -247,14 +303,18 @@ abp.multiTenancy.setTenantIdCookie = function (tenantId) {
 
 Since cookies are http only, we can no longer access them via javascript, so we need to update this method.
 
-Open `src/app/account/auth/zero-refresh-token.service.ts` and remove this line on the `tryAuthWithRefreshToken` method.
+Open `src/app/account/auth/zero-refresh-token.service.ts` and update `tryAuthWithRefreshToken` method as below.
 
 ```ts 
-let refreshTokenObservable = new Subject<boolean>();
+tryAuthWithRefreshToken(): Observable<boolean> {
+    let refreshTokenObservable = new Subject<boolean>();
 
-let token = this._tokenService.getRefreshToken();
-if (!token || token.trim() === '') {
-    return of(false);
+    this._tokenAuthService.refreshToken().subscribe({
+        next: () => refreshTokenObservable.next(true),
+        error: () => refreshTokenObservable.next(false)
+    });
+
+    return refreshTokenObservable;
 }
 ```
 
