@@ -255,11 +255,10 @@ You need to remove cookies from your Angular application and a workaround for te
 
 We need to update `abp.js` file in your `src/assets/abp-web-resources` folder. 
 
-Find the `abp.auth.setToken` and `abp.auth.getToken` functions, then remove this function.
+Find the `abp.auth.setToken` and `abp.auth.getToken` functions, then comment this functions.
 
 ```js
-abp.auth.setToken = function (authToken, expireDate) {
-    abp.utils.setCookieValue(abp.auth.tokenCookieName, authToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
+// abp.auth.setToken = function (authToken, expireDate) { abp.utils.setCookieValue(abp.auth.tokenCookieName, authToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
 };
 ```
 
@@ -349,11 +348,10 @@ event.xhr.setRequestHeader('Authorization', 'Bearer ' + abp.auth.getToken());
 uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
 ```
 
-Find the `abp.auth.setRefreshToken` and remove the function.
+Find the `abp.auth.setRefreshToken` and comment the function.
 
 ```js
-abp.auth.setRefreshToken = function (refreshToken, expireDate) {
-    abp.utils.setCookieValue(abp.auth.refreshTokenCookieName, refreshToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
+// abp.auth.setRefreshToken = function (refreshToken, expireDate) { abp.utils.setCookieValue(abp.auth.refreshTokenCookieName, refreshToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
 };
 ```
 
@@ -400,6 +398,10 @@ We need to update `setTenantIdCookie` method in `abp.js`
 
 ```js
 abp.multiTenancy.setTenantIdCookie = function (tenantId) {
+
+    if (tenantId === undefined || tenantId === null) {
+        tenantId = 0
+    }
 
     fetch('https://localhost:44301/api/TenantIdCookie/SetTenantIdCookie?tenantId='+ tenantId , {
         method: 'POST',
