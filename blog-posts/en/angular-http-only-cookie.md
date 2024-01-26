@@ -168,7 +168,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AngularHttpOnlyCookieDemo.Web.Controllers;
 
 [Route("api/[controller]/[action]")]
-public class ServerCookieController : AngularHttpOnlyCookieDemoControllerBase
+public class TenantIdCookieController : AngularHttpOnlyCookieDemoControllerBase
 {
     [HttpPost]
     public void SetTenantIdCookie(int tenantId)
@@ -176,8 +176,6 @@ public class ServerCookieController : AngularHttpOnlyCookieDemoControllerBase
         if (tenantId == 0)
         {
             Response.Cookies.Delete("Abp.TenantId");
-            
-            return;
         }
         
         var cookieOptions = new CookieOptions
