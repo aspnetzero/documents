@@ -1,25 +1,10 @@
 # How to enable HttpOnly cookies in ASP.NET Zero Angular
 
-Httponly cookies are a type of cookie that can only be accessed and manipulated by the server through HTTP requests, not by JavaScript or client-side code. They enhance security by preventing cross-site scripting (XSS) attacks that could steal sensitive information stored in cookies. 
+HttpOnly cookies are a type of cookie that can only be accessed and manipulated by the server through HTTP requests, not by JavaScript or client-side code. They enhance security by preventing cross-site scripting (XSS) attacks that could steal sensitive information stored in cookies. 
 
 First of all, your backend project and your Angular project must be located in the same domain. For example, if your Angular project is located in `https://localhost:44300`. Then your backend project `*.Host` must be located in `https://localhost:44300/api`.
 
 ## Step 1: Configure your `*Web.Core` project
-
-Then, you need to add the following code for adding **HttpOnly** cookies in your `TokenAuthController`.
-
-```csharp
-Response.Cookies.Append("Abp.AuthToken",
-    accessToken,
-    new CookieOptions
-    {
-        Expires = Clock.Now.Add(_configuration.AccessTokenExpiration),
-        HttpOnly = true,
-        Secure = true,
-        SameSite = SameSiteMode.None
-    }
-);
-```
 
 ### Add HttpOnly cookies to `Authenticate` method
 
@@ -73,11 +58,17 @@ Find the `Authenticate` method and add the above code after the `var accessToken
 }
 ```
 
-We need to add cookies to `ImpersonatedAuthenticate` and `ExternalAuthenticate` methods in the same way as we added above. 
+We need to add `Abp.AuthToken` cookie to `ImpersonatedAuthenticate`, `DelegatedImpersonatedAuthenticate`, `LinkedAccountAuthenticate` and `ExternalAuthenticate` methods in the same way as we added above. 
 
 ### Add HttpOnly cookies to `RefreshToken` method
 
-We need to add get refresh token from cookie and generate new access token with it. Then, we need to add access token cookie. After changing the `RefreshToken` method, your code should look like this:
+We need to add get refresh token from cookie and generate new access token with it. Then, we need to add access token cookie. 
+
+* First of all, get refresh token from cookie instead of function parameter.
+
+* Then, add access token to cookie after creating access token.
+
+After updating the `RefreshToken` method, your code should look like this:
 
 ```csharp
 [HttpPost]
@@ -250,36 +241,162 @@ public static class HttpOnlyMiddlewareExtension
 We need to add the following code to `Startup.cs` file in your `*.Web.Host` project.
 
 ```csharp
+// use before Authentication middleware
 app.UseHttpOnlyToken();
+
+app.UseAuthentication();
 ```
 
 ## Step 3: Configure your `Angular` project
 
 You need to remove cookies from your Angular application and a workaround for tenant switching.
 
-### Comment set cookie methods
+### Remove cookie methods
 
 We need to update `abp.js` file in your `src/assets/abp-web-resources` folder. 
 
-Find the `abp.auth.setToken` and comment the following line:
+Find the `abp.auth.setToken` and `abp.auth.getToken` functions, then remove this function.
 
 ```js
 abp.auth.setToken = function (authToken, expireDate) {
-    // abp.utils.setCookieValue(abp.auth.tokenCookieName, authToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
+    abp.utils.setCookieValue(abp.auth.tokenCookieName, authToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
 };
 ```
 
-Find the `abp.auth.setRefreshToken` and comment the following line:
+Let's delete the places where the `abp.auth.setToken` function is used
+
+* src/AppPreBootstrap.ts
+* src/account/auth/zero-refresh-token.service.ts
+* src/account/login/login.service.ts
+
+Let's update the places where the `abp.auth.getToken` function is used
+
+```js
+private static getUserConfiguration(callback: () => void): any {
+    return XmlHttpRequestHelper.ajax(
+        'GET',
+        AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll',
+        null,
+        null,
+        (response) => {
+            let result = response.result;
+
+            _merge(abp, result);
+
+            abp.clock.provider = this.getCurrentClockProvider(result.clock.provider);
+
+            AppPreBootstrap.configureLuxon();
+
+            abp.event.trigger('abp.dynamicScriptsInitialized');
+
+            AppConsts.recaptchaSiteKey = abp.setting.get('Recaptcha.SiteKey');
+            AppConsts.subscriptionExpireNootifyDayCount = parseInt(
+                abp.setting.get('App.TenantManagement.SubscriptionExpireNotifyDayCount')
+            );
+
+            DynamicResourcesHelper.loadResources(callback);
+        }
+    );
+}
+```
+
+Update `src/app/shared/common/auth/app-auth.service.ts` file as below:
+
+```ts
+@Injectable()
+export class AppAuthService {
+    logout(reload?: boolean, returnUrl?: string): void {
+        XmlHttpRequestHelper.ajax(
+            'GET',
+            AppConsts.remoteServiceBaseUrl + '/api/TokenAuth/LogOut',
+            null,
+            null,
+            () => {
+                this.logoutInternal(reload, returnUrl);
+            },
+            (errorResult: IAjaxResponse) => {
+                if (errorResult.unAuthorizedRequest) {
+                    abp.log.error(errorResult.error);
+                    this.logoutInternal(reload, returnUrl);
+                } else {
+                    abp.message.error(errorResult.error.message);
+                }
+            }
+        );
+    }
+
+    logoutInternal(reload?: boolean, returnUrl?: string): void {
+        new LocalStorageService().removeItem(AppConsts.authorization.encrptedAuthTokenName, () => {
+            if (reload !== false) {
+                if (returnUrl) {
+                    location.href = returnUrl;
+                } else {
+                    location.href = 'index.html';
+                }
+            }
+        });
+    }
+}
+```
+
+Remove following lines from file uploaders in:
+* src/app/shared/layout/profile/change-profile-picture-modal.component.ts
+```ts	
+event.xhr.setRequestHeader('Authorization', 'Bearer ' + abp.auth.getToken());
+```
+* src/app/admin/settings/tenant-settings.component.ts
+```ts
+uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
+```
+
+Find the `abp.auth.setRefreshToken` and remove the function.
 
 ```js
 abp.auth.setRefreshToken = function (refreshToken, expireDate) {
-    // abp.utils.setCookieValue(abp.auth.refreshTokenCookieName, refreshToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
+    abp.utils.setCookieValue(abp.auth.refreshTokenCookieName, refreshToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
 };
 ```
 
-### Update `SetTenantIdCookie` Method
+Let's delete the places where the `abp.auth.setRefreshToken` function is used
 
-We need to update `SetTenantIdCookie` method in `abp.js`
+* src/account/login/login.service.ts
+
+```ts
+// remove this code
+this._tokenService.setToken(accessToken, tokenExpireDate);
+
+if (refreshToken && rememberMe) {
+    let refreshTokenExpireDate = rememberMe
+        ? new Date(new Date().getTime() + 1000 * refreshTokenExpireInSeconds)
+        : undefined;
+    this._tokenService.setRefreshToken(refreshToken, refreshTokenExpireDate);
+}
+```
+
+### Update `tryAuthWithRefreshToken` method
+
+Since cookies are http only, we can no longer access them via javascript, so we need to update this method.
+
+Open `src/app/account/auth/zero-refresh-token.service.ts` and update `tryAuthWithRefreshToken` method as below.
+
+> ! Dont forget to run `npm run nswag` command. Because we need to update `TokenAuthServiceProxy` service.
+
+```ts 
+tryAuthWithRefreshToken(): Observable<boolean> {
+    let refreshTokenObservable = new Subject<boolean>();
+
+    this._tokenAuthService.refreshToken().subscribe({
+        next: () => refreshTokenObservable.next(true),
+        error: () => refreshTokenObservable.next(false)
+    });
+
+    return refreshTokenObservable;
+}
+```
+
+### Update `setTenantIdCookie` Method
+
+We need to update `setTenantIdCookie` method in `abp.js`
 
 ```js
 abp.multiTenancy.setTenantIdCookie = function (tenantId) {
@@ -297,25 +414,6 @@ abp.multiTenancy.setTenantIdCookie = function (tenantId) {
         console.error('Error:', error);
     });
 };
-```
-
-### Update `tryAuthWithRefreshToken` method
-
-Since cookies are http only, we can no longer access them via javascript, so we need to update this method.
-
-Open `src/app/account/auth/zero-refresh-token.service.ts` and update `tryAuthWithRefreshToken` method as below.
-
-```ts 
-tryAuthWithRefreshToken(): Observable<boolean> {
-    let refreshTokenObservable = new Subject<boolean>();
-
-    this._tokenAuthService.refreshToken().subscribe({
-        next: () => refreshTokenObservable.next(true),
-        error: () => refreshTokenObservable.next(false)
-    });
-
-    return refreshTokenObservable;
-}
 ```
 
 ## Conclusion
