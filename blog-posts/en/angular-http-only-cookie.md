@@ -35,6 +35,42 @@ public class AuthenticateResultModel
 
 > ! Dont forget to run `npm run nswag` command. Then, you need to update files which are using these models.
 
+If you remove this properties, you need to update `processAuthenticateResult` method at `login.service.ts` file as below:
+
+```ts
+private processAuthenticateResult(authenticateResult: AuthenticateResultModel, redirectUrl?: string) {
+    this.authenticateResult = authenticateResult;
+
+    if (authenticateResult.shouldResetPassword) {
+        // Password reset
+
+        this._router.navigate(['account/reset-password'], {
+            queryParams: {
+                c: authenticateResult.c,
+            },
+        });
+
+        this.clear();
+    } else if (authenticateResult.requiresTwoFactorVerification) {
+        // Two factor authentication
+
+        this._router.navigate(['account/send-code']);
+    } else {
+        // Successfully logged in
+
+        if (authenticateResult.returnUrl && !redirectUrl) {
+            redirectUrl = authenticateResult.returnUrl;
+        }
+
+        this.login(
+            this.rememberMe,
+            authenticateResult.twoFactorRememberClientToken,
+            redirectUrl
+        );
+    }
+}
+```
+
 ### Add HttpOnly cookies to `Authenticate` method
 
 Find the `Authenticate` method and add the above code after the `var accessToken = CreateAccessToken( ...` line. And also you need to add refresh token cookie as well. Your code should look like this:
