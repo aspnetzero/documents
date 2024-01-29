@@ -396,24 +396,61 @@ We need to update `setTenantIdCookie` method in `abp.js`
 
 ```js
 abp.multiTenancy.setTenantIdCookie = function (tenantId) {
-
-    if (tenantId === undefined || tenantId === null) {
-        tenantId = 0
-    }
-
-    fetch('https://localhost:44301/api/TenantIdCookie/SetTenantIdCookie?tenantId='+ tenantId , {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+    return new Promise((resolve, reject) => {
+        if (tenantId === undefined || tenantId === null) {
+            tenantId = 0;
         }
-    })
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
+
+        fetch('https://localhost:44301/api/TenantIdCookie/SetTenantIdCookie?tenantId=' + tenantId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            resolve(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            reject(error);
+        });
     });
+    
 };
+```
+
+Go to `AppPreBootstrap.ts` and update `impersonatedAuthenticate` method as below:
+
+```ts
+private static impersonatedAuthenticate(impersonationToken: string, tenantId: number, callback: () => void): void {
+    abp.multiTenancy.setTenantIdCookie(tenantId).then(() => {
+
+        let requestHeaders = AppPreBootstrap.getRequetHeadersWithDefaultValues();
+
+        XmlHttpRequestHelper.ajax(
+            'POST',
+            AppConsts.remoteServiceBaseUrl +
+            '/api/TokenAuth/ImpersonatedAuthenticate?impersonationToken=' +
+            impersonationToken,
+            requestHeaders,
+            null,
+            (response) => {
+                let result = response.result;
+                AppPreBootstrap.setEncryptedTokenCookie(result.encryptedAccessToken, () => {
+                    callback();
+                    location.search = '';
+                });
+            }
+        );
+    });
+}
 ```
 
 ## Conclusion
