@@ -8,7 +8,7 @@ First of all, your backend project and your Angular project must be located in t
 
 ### Remove Token Properties from Models (OPTIONAL)
 
-We need to remove `accessToken` and `refreshToken` properties from `AuthenticateResultModel.cs`, `RefreshTokenResult.cs` , `ImpersonatedAuthenticateResultModel.cs`, `ExternalAuthenticateResultModel.cs` and `SwitchedAccountAuthenticateResultModel.cs` models. Open `Models/TokenAuth/` folder in your `*.Web.Core` project and remove these properties from the result models.
+We need to remove `accessToken` and `refreshToken` properties from `AuthenticateResultModel.cs`, `RefreshTokenResult.cs`,  `ExternalAuthenticateResultModel.cs` and  models. Open `Models/TokenAuth/` folder in your `*.Web.Core` project and remove these properties from the result models. Then remove `ImpersonatedAuthenticateResultModel.cs` and `SwitchedAccountAuthenticateResultModel.cs` models.
 
 For example, `AuthenticateResultModel.cs` should look like this:
 
@@ -33,9 +33,24 @@ public class AuthenticateResultModel
 }
 ```
 
+* Update the `TokenAuthController` according to the changes we made.
+
 > ! Dont forget to run `npm run nswag` command. Then, you need to update files which are using these models.
 
-If you remove this properties, you need to update `processAuthenticateResult` method at `login.service.ts` file as below:
+* Update login method at `login.service.ts` and remove `accessToken` and `refreshToken` parameters. Your code should look like this:
+ 
+```ts
+private login(
+    rememberMe?: boolean,
+    twoFactorRememberClientToken?: string,
+    redirectUrl?: string
+): void {
+    console.log('login reidrect');
+    this.redirectToLoginResult(redirectUrl);
+}
+```
+
+Then update `processAuthenticateResult` method at `login.service.ts` file as below:
 
 ```ts
 private processAuthenticateResult(authenticateResult: AuthenticateResultModel, redirectUrl?: string) {
@@ -193,6 +208,20 @@ public async Task<RefreshTokenResult> RefreshToken()
     {
         throw new ValidationException("Refresh token is not valid!", e);
     }
+}
+```
+
+### Add `IsRefreshTokenAvailable` Method
+
+
+We need to add a new method for checking refresh token is available. Create a new method named `IsRefreshTokenAvailable` in your `TokenAuthController.cs` file and add the following code:
+
+```csharp
+[HttpGet]
+public bool IsRefreshTokenAvailable()
+{
+    var refreshToken = Request.Cookies["Abp.AuthRefreshToken"];
+    return !string.IsNullOrWhiteSpace(refreshToken);
 }
 ```
 
@@ -437,9 +466,19 @@ Open `src/app/account/auth/zero-refresh-token.service.ts` and update `tryAuthWit
 tryAuthWithRefreshToken(): Observable<boolean> {
     let refreshTokenObservable = new Subject<boolean>();
 
-    this._tokenAuthService.refreshToken().subscribe({
-        next: () => refreshTokenObservable.next(true),
-        error: () => refreshTokenObservable.next(false)
+    this._tokenAuthService.isRefreshTokenAvailable().subscribe({
+        next: (result) => {
+
+            if (!result) {
+                refreshTokenObservable.next(false);
+                return;
+            }
+
+            this._tokenAuthService.refreshToken().subscribe({
+                next: () => refreshTokenObservable.next(true),
+                error: () => refreshTokenObservable.next(false)
+            });
+        }
     });
 
     return refreshTokenObservable;
