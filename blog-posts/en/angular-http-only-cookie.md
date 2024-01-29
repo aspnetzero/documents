@@ -6,6 +6,35 @@ First of all, your backend project and your Angular project must be located in t
 
 ## Step 1: Configure your `*Web.Core` project
 
+### Remove Token Properties from Models (OPTIONAL)
+
+We need to remove `accessToken` and `refreshToken` properties from `AuthenticateResultModel.cs`, `RefreshTokenResult.cs` , `ImpersonatedAuthenticateResultModel.cs`, `ExternalAuthenticateResultModel.cs` and `SwitchedAccountAuthenticateResultModel.cs` models. Open `Models/TokenAuth/` folder in your `*.Web.Core` project and remove these properties from the result models.
+
+For example, `AuthenticateResultModel.cs` should look like this:
+
+```csharp
+public class AuthenticateResultModel
+{
+    public bool ShouldResetPassword { get; set; }
+
+    public string PasswordResetCode { get; set; }
+
+    public long UserId { get; set; }
+
+    public bool RequiresTwoFactorVerification { get; set; }
+
+    public IList<string> TwoFactorAuthProviders { get; set; }
+
+    public string TwoFactorRememberClientToken { get; set; }
+
+    public string ReturnUrl { get; set; }
+    
+    public string c { get; set; }
+}
+```
+
+> ! Dont forget to run `npm run nswag` command. Then, you need to update files which are using these models.
+
 ### Add HttpOnly cookies to `Authenticate` method
 
 Find the `Authenticate` method and add the above code after the `var accessToken = CreateAccessToken( ...` line. And also you need to add refresh token cookie as well. Your code should look like this:
@@ -45,11 +74,6 @@ Find the `Authenticate` method and add the above code after the `var accessToken
 
     return new AuthenticateResultModel
     {
-        AccessToken = accessToken,
-        ExpireInSeconds = (int) TimeSpan.FromSeconds(15).TotalSeconds,
-        RefreshToken = refreshToken.token,
-        RefreshTokenExpireInSeconds = (int) _configuration.RefreshTokenExpiration.TotalSeconds,
-        EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
         TwoFactorRememberClientToken = twoFactorRememberClientToken,
         UserId = loginResult.User.Id,
         ReturnUrl = returnUrl
@@ -123,11 +147,7 @@ public async Task<RefreshTokenResult> RefreshToken()
             }
         );
 
-        return await Task.FromResult(new RefreshTokenResult(
-            accessToken,
-            GetEncryptedAccessToken(accessToken),
-            (int) _configuration.AccessTokenExpiration.TotalSeconds)
-        );
+        return await Task.FromResult(new RefreshTokenResult());
     }
     catch (UserFriendlyException)
     {
