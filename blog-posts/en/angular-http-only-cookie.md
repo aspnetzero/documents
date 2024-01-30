@@ -6,12 +6,23 @@ First of all, your backend project and your Angular project must be located in t
 
 ## Step 1: Configure your `*Web.Core` project
 
-### Remove Token Properties from Models (OPTIONAL)
+To implement HttpOnly cookies, we need to configure our token authentication controller. We will use the `TokenAuthController.cs` file in your `*.Web.Core` project to implement HttpOnly cookies.
 
-We need to remove `accessToken` and `refreshToken` properties from `AuthenticateResultModel.cs`, `RefreshTokenResult.cs`,  `ExternalAuthenticateResultModel.cs` and  models. Open `Models/TokenAuth/` folder in your `*.Web.Core` project and remove these properties from the result models. Then remove `ImpersonatedAuthenticateResultModel.cs` and `SwitchedAccountAuthenticateResultModel.cs` models.
+### Remove Token Properties from Models
 
-For example, `AuthenticateResultModel.cs` should look like this:
+To implement HttpOnly cookies effectively, our server application must refrain from returning access token and refresh token values directly from APIs. Consequently, we must remove these properties from our models and remove any unnecessary classes associated with them.
 
+Remove following classes from your `*.Web.Core` project:
+
+* `RefreshTokenResult.cs`
+* `ImpersonatedAuthenticateResultModel.cs`
+* `SwitchedAccountAuthenticateResultModel.cs`
+
+> Adjust the method return types to `Task` and keep the generated access tokens, which will subsequently serve as **HttpOnly** cookies.
+
+Then, remove `accessToken` and `refreshToken` properties from `AuthenticateResultModel.cs` and `ExternalAuthenticateResultModel.cs` files.
+
+*AuthenticateResultModel.cs*
 ```csharp
 public class AuthenticateResultModel
 {
@@ -33,188 +44,137 @@ public class AuthenticateResultModel
 }
 ```
 
-* Update the `TokenAuthController` according to the changes we made.
+*ExternalAuthenticateResultModel.cs*
+```csharp
+public class ExternalAuthenticateResultModel
+{
+    public bool WaitingForActivation { get; set; }
 
-> ! Dont forget to run `npm run nswag` command. Then, you need to update files which are using these models.
-
-* Update login method at `login.service.ts` and remove `accessToken` and `refreshToken` parameters. Your code should look like this:
- 
-```ts
-private login(
-    rememberMe?: boolean,
-    twoFactorRememberClientToken?: string,
-    redirectUrl?: string
-): void {
-    console.log('login reidrect');
-    this.redirectToLoginResult(redirectUrl);
+    public string ReturnUrl { get; set; }
 }
 ```
 
-Then update `processAuthenticateResult` method at `login.service.ts` file as below:
+### Configure `TokenAuthController.cs`
 
-```ts
-private processAuthenticateResult(authenticateResult: AuthenticateResultModel, redirectUrl?: string) {
-    this.authenticateResult = authenticateResult;
+* Go to the `Authenticate` method and remove missing properties from the returned objects. **(Method contains 3 return statements)**
 
-    if (authenticateResult.shouldResetPassword) {
-        // Password reset
+```csharp
+// other codes...
 
-        this._router.navigate(['account/reset-password'], {
-            queryParams: {
-                c: authenticateResult.c,
-            },
-        });
+return new AuthenticateResultModel
+{
+    ShouldResetPassword = true,
+    ReturnUrl = returnUrl,
+    c = await EncryptQueryParameters(loginResult.User.Id, loginResult.Tenant, loginResult.User.PasswordResetCode)
+};
 
-        this.clear();
-    } else if (authenticateResult.requiresTwoFactorVerification) {
-        // Two factor authentication
+// other codes...
 
-        this._router.navigate(['account/send-code']);
-    } else {
-        // Successfully logged in
+return new AuthenticateResultModel
+{
+    RequiresTwoFactorVerification = true,
+    UserId = loginResult.User.Id,
+    TwoFactorAuthProviders = await _userManager.GetValidTwoFactorProvidersAsync(loginResult.User),
+    ReturnUrl = returnUrl
+};
 
-        if (authenticateResult.returnUrl && !redirectUrl) {
-            redirectUrl = authenticateResult.returnUrl;
-        }
+// other codes...
 
-        this.login(
-            this.rememberMe,
-            authenticateResult.twoFactorRememberClientToken,
-            redirectUrl
-        );
-    }
-}
+return new AuthenticateResultModel
+{
+    TwoFactorRememberClientToken = twoFactorRememberClientToken,
+    UserId = loginResult.User.Id,
+    ReturnUrl = returnUrl
+};
+```
+
+* Go to the `RefreshToken` method, change the return type to `Task` and remove return value.
+
+* Go to the `ImpersonatedAuthenticate` method, change the return type to `Task` and remove return value.
+
+* Go to the `DelegatedImpersonatedAuthenticate` method, change the return type to `Task` and remove return value.
+
+* Go to the `LinkedAccountAuthenticate` method, change the return type to `Task` and remove return value.
+
+* Go to the `ExternalAuthenticate` method and remove missing properties from the returned objects. **(Method contains 3 return statements)**
+
+```csharp
+// other codes...
+return new ExternalAuthenticateResultModel
+{
+    ReturnUrl = returnUrl,
+};
+
+// other codes...
+
+return new ExternalAuthenticateResultModel
+{
+    WaitingForActivation = true
+};
+
+// other codes...
+
+return new ExternalAuthenticateResultModel();
 ```
 
 ### Add HttpOnly cookies to `Authenticate` method
 
-Find the `Authenticate` method and add the above code after the `var accessToken = CreateAccessToken( ...` line. And also you need to add refresh token cookie as well. Your code should look like this:
+Instead of directly providing the access token and refresh token in the response, we should include them as HttpOnly cookies in the response.
+
+Find the `Authenticate` method and add tokens to cookies after creating tokens. Your code should look like this:
 
 ```csharp
 // Other codes ...
 
-    var accessToken = CreateAccessToken(
-        await CreateJwtClaims(
-            loginResult.Identity,
-            loginResult.User,
-            refreshTokenKey: refreshToken.key
-        )
-    );
+var accessToken = CreateAccessToken(
+    await CreateJwtClaims(
+        loginResult.Identity,
+        loginResult.User,
+        refreshTokenKey: refreshToken.key
+    )
+);
 
-    Response.Cookies.Append("Abp.AuthRefreshToken",
-        refreshToken.token,
-        new CookieOptions
-        {
-            Expires = Clock.Now.Add(_configuration.RefreshTokenExpiration),
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None
-        }
-    );
-
-    Response.Cookies.Append("Abp.AuthToken",
-        accessToken,
-        new CookieOptions
-        {
-            Expires = Clock.Now.Add(_configuration.AccessTokenExpiration),
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None
-        }
-    );
-
-    return new AuthenticateResultModel
+Response.Cookies.Append("Abp.AuthRefreshToken",
+    refreshToken.token,
+    new CookieOptions
     {
-        TwoFactorRememberClientToken = twoFactorRememberClientToken,
-        UserId = loginResult.User.Id,
-        ReturnUrl = returnUrl
-    };
+        Expires = Clock.Now.Add(_configuration.RefreshTokenExpiration),
+        HttpOnly = true,
+        Secure = true,
+        SameSite = SameSiteMode.None
+    }
+);
 
-}
-```
+Response.Cookies.Append("Abp.AuthToken",
+    accessToken,
+    new CookieOptions
+    {
+        Expires = Clock.Now.Add(_configuration.AccessTokenExpiration),
+        HttpOnly = true,
+        Secure = true,
+        SameSite = SameSiteMode.None
+    }
+);
 
-We need to add `Abp.AuthToken` cookie to `ImpersonatedAuthenticate`, `DelegatedImpersonatedAuthenticate`, `LinkedAccountAuthenticate` and `ExternalAuthenticate` methods in the same way as we added above. 
-
-### Add HttpOnly cookies to `RefreshToken` method
-
-We need to add get refresh token from cookie and generate new access token with it. Then, we need to add access token cookie. 
-
-* First of all, get refresh token from cookie instead of function parameter.
-
-* Then, add access token to cookie after creating access token.
-
-After updating the `RefreshToken` method, your code should look like this:
-
-```csharp
-[HttpPost]
-public async Task<RefreshTokenResult> RefreshToken()
+return new AuthenticateResultModel
 {
-    // get refresh token from cookie
-    var refreshToken = Request.Cookies["Abp.AuthRefreshToken"];
-    
-    if (string.IsNullOrWhiteSpace(refreshToken))
-    {
-        throw new ArgumentNullException(nameof(refreshToken));
-    }
-
-    var (isRefreshTokenValid, principal) = await IsRefreshTokenValid(refreshToken);
-    if (!isRefreshTokenValid)
-    {
-        throw new ValidationException("Refresh token is not valid!");
-    }
-
-    try
-    {
-        var user = await _userManager.GetUserAsync(
-            UserIdentifier.Parse(principal.Claims.First(x => x.Type == AppConsts.UserIdentifier).Value)
-        );
-
-        if (user == null)
-        {
-            throw new UserFriendlyException("Unknown user or user identifier");
-        }
-
-        if (AllowOneConcurrentLoginPerUser())
-        {
-            await _userManager.UpdateSecurityStampAsync(user);
-            await _securityStampHandler.SetSecurityStampCacheItem(user.TenantId, user.Id, user.SecurityStamp);
-        }
-
-        principal = await _claimsPrincipalFactory.CreateAsync(user);
-
-        var accessToken = CreateAccessToken(
-            await CreateJwtClaims(principal.Identity as ClaimsIdentity, user)
-        );
-        
-        // Add access token cookie
-        Response.Cookies.Append("Abp.AuthToken",
-            accessToken,
-            new CookieOptions
-            {
-                Expires = Clock.Now.Add(_configuration.AccessTokenExpiration),
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.None
-            }
-        );
-
-        return await Task.FromResult(new RefreshTokenResult());
-    }
-    catch (UserFriendlyException)
-    {
-        throw;
-    }
-    catch (Exception e)
-    {
-        throw new ValidationException("Refresh token is not valid!", e);
-    }
-}
+    TwoFactorRememberClientToken = twoFactorRememberClientToken,
+    UserId = loginResult.User.Id,
+    ReturnUrl = returnUrl
+};
 ```
 
-### Add `IsRefreshTokenAvailable` Method
+Add tokens to cookies like what was done upper, for the following methods.
 
+* `RefreshToken`
+* `ImpersonatedAuthenticate`
+* `DelegatedImpersonatedAuthenticate`
+* `LinkedAccountAuthenticate`
+* `ExternalAuthenticate` 
 
-We need to add a new method for checking refresh token is available. Create a new method named `IsRefreshTokenAvailable` in your `TokenAuthController.cs` file and add the following code:
+### Create `IsRefreshTokenAvailable` Method
+
+We must introduce to a new method to verify the availability of a refresh token. In your `TokenAuthController.cs` file, create a new method called `IsRefreshTokenAvailable` and insert the subsequent code:
 
 ```csharp
 [HttpGet]
@@ -227,7 +187,7 @@ public bool IsRefreshTokenAvailable()
 
 ### Delete HttpOnly cookies in `Logout` method
 
-We need to delete cookies in `Logout` method. Find the `Logout` method and add the following code:
+To delete HttpOnly cookies, we need to configure the `Logout` method. In your `TokenAuthController.cs` file, find the `Logout` method and add the following code:
 
 ```csharp
 [HttpGet]
@@ -241,9 +201,9 @@ public async Task LogOut()
 }
 ```
 
-### Create `ServerCookieController.cs`
+### Create `TenantIdCookieController.cs`
 
-We need to create a new controller for setting tenant id cookie. Create a new controller named `ServerCookieController` in your `*.Web.Core` project and add the following code:
+Create a new controller for setting tenant id cookie. Create a new controller named `TenantIdCookieController` in your `*.Web.Core` project then add the following code:
 
 ```csharp
 using System;
@@ -277,11 +237,11 @@ public class TenantIdCookieController : AngularHttpOnlyCookieDemoControllerBase
 
 ## Step 2: Configure your `*.Web.Host` project
 
-We need to handle **HttpOnly** cookies in our `*.Web.Host` project.
+To read **HttpOnly** cookies in incoming requests, we will create a middleware. This middleware will read the HttpOnly cookies in incoming requests and append them to the request headers. This way, we will be able to access the HttpOnly cookies in our requests.
 
 ### Create `HttpOnlyMiddleware.cs`
 
-We need to create a new middleware for adding **HttpOnly** cookies to the request headers. Create a new class named `HttpOnlyMiddleware` in your `*.Web.Host` project and add the following code:
+Create a new middleware for adding **HttpOnly** cookies to the request headers. Create a new class named `HttpOnlyMiddleware` in your `*.Web.Host` project and add the following code:
 
 ```csharp
 using System.Threading.Tasks;
@@ -321,10 +281,10 @@ public static class HttpOnlyMiddlewareExtension
 
 ### Configure `Startup.cs`
 
-We need to add the following code to `Startup.cs` file in your `*.Web.Host` project.
+Utilize the crafted middleware in your application by adding `app.UseHttpOnlyToken()` to the `Startup.cs` file in your `*.Web.Host` project as illustrated below:
 
 ```csharp
-// use before Authentication middleware
+// Place before the Authentication middleware
 app.UseHttpOnlyToken();
 
 app.UseAuthentication();
