@@ -292,27 +292,134 @@ app.UseAuthentication();
 
 ## Step 3: Configure your `Angular` project
 
-You need to remove cookies from your Angular application and a workaround for tenant switching.
+Due to the changes made on the backend, we need to adjust and remove certain parts of the project in your Angular application.
 
-### Remove cookie methods
+Run `npm run nswag` command to update `TokenAuthServiceProxy` service.
 
-We need to update `abp.js` file in your `src/assets/abp-web-resources` folder. 
+### Update `login.service.ts`
 
-Find the `abp.auth.setToken` and `abp.auth.getToken` functions, then comment this functions.
+Update login method at `login.service.ts` and remove `accessToken` and `refreshToken` parameters. Your code should look like this:
+
+```ts
+private login(
+    rememberMe?: boolean,
+    twoFactorRememberClientToken?: string,
+    redirectUrl?: string
+): void {
+    console.log('login reidrect');
+    this.redirectToLoginResult(redirectUrl);
+}
+```
+
+Then update `processAuthenticateResult` method at `login.service.ts` file as below:
+
+```ts
+private processAuthenticateResult(authenticateResult: AuthenticateResultModel, redirectUrl?: string) {
+    this.authenticateResult = authenticateResult;
+
+    if (authenticateResult.shouldResetPassword) {
+        // Password reset
+
+        this._router.navigate(['account/reset-password'], {
+            queryParams: {
+                c: authenticateResult.c,
+            },
+        });
+
+        this.clear();
+    } else if (authenticateResult.requiresTwoFactorVerification) {
+        // Two factor authentication
+
+        this._router.navigate(['account/send-code']);
+    } else {
+        // Successfully logged in
+
+        if (authenticateResult.returnUrl && !redirectUrl) {
+            redirectUrl = authenticateResult.returnUrl;
+        }
+
+        this.login(
+            this.rememberMe,
+            authenticateResult.twoFactorRememberClientToken,
+            redirectUrl
+        );
+    }
+}
+```
+
+### Update `tryAuthWithRefreshToken` method
+
+Since cookies are http only, we can no longer access them via javascript, so we need to update this method.
+
+Open `src/app/account/auth/zero-refresh-token.service.ts` and update `tryAuthWithRefreshToken` method as below.
+
+```ts 
+tryAuthWithRefreshToken(): Observable<boolean> {
+    let refreshTokenObservable = new Subject<boolean>();
+
+    this._tokenAuthService.isRefreshTokenAvailable().subscribe({
+        next: (result) => {
+
+            if (!result) {
+                refreshTokenObservable.next(false);
+                return;
+            }
+
+            this._tokenAuthService.refreshToken().subscribe({
+                next: () => refreshTokenObservable.next(true),
+                error: () => refreshTokenObservable.next(false)
+            });
+        }
+    });
+
+    return refreshTokenObservable;
+}
+```
+
+### Comment cookie methods
+
+Open `abp.js` file in your `src/assets/abp-web-resources` folder. 
+
+Find the `abp.auth.setToken` and `abp.auth.getToken` functions, and comment out the function's body.
 
 ```js
-// abp.auth.setToken = function (authToken, expireDate) { abp.utils.setCookieValue(abp.auth.tokenCookieName, authToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
+abp.auth.getToken = function () {
+    // Commented out for HttpOnly cookies
+    // return abp.utils.getCookieValue(abp.auth.tokenCookieName);
+}
+
+abp.auth.setToken = function (authToken, expireDate) { 
+    // Commented out for HttpOnly cookies
+    // abp.utils.setCookieValue(abp.auth.tokenCookieName, authToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
 };
 ```
 
-Let's delete the places where the `abp.auth.setToken` function is used
+Delete the places where the `abp.auth.setToken` function is used
 
 * src/AppPreBootstrap.ts
 * src/account/auth/zero-refresh-token.service.ts
 * src/account/login/login.service.ts
 
-Let's update the places where the `abp.auth.getToken` function is used
+Delete the places where the `abp.auth.getToken` function is used
 
+*src/app/admin/users/users.component.ts*
+```ts
+setUsersProfilePictureUrl(users: UserListDto[]): void {
+    for (let i = 0; i < users.length; i++) {
+        let user = users[i];
+
+        let profilePictureUrl =
+            AppConsts.remoteServiceBaseUrl +
+            '/Profile/GetProfilePictureByUser?userId=' +
+            user.id;
+
+        (user as any).profilePictureUrl = profilePictureUrl;
+
+    }
+}
+```
+
+*src/AppPreBootstrap.ts*
 ```js
 private static getUserConfiguration(callback: () => void): any {
     return XmlHttpRequestHelper.ajax(
@@ -342,8 +449,7 @@ private static getUserConfiguration(callback: () => void): any {
 }
 ```
 
-Update `src/app/shared/common/auth/app-auth.service.ts` file as below:
-
+*src/app/shared/common/auth/app-auth.service.ts*
 ```ts
 @Injectable()
 export class AppAuthService {
@@ -382,26 +488,32 @@ export class AppAuthService {
 ```
 
 Remove following lines from file uploaders in:
+
+* src/app/admin/demo-ui-components/demo-ui-file-upload.component.ts
+```ts	
+event.xhr.setRequestHeader('Authorization', 'Bearer ' + abp.auth.getToken());
+```
+
 * src/app/shared/layout/profile/change-profile-picture-modal.component.ts
 ```ts	
 event.xhr.setRequestHeader('Authorization', 'Bearer ' + abp.auth.getToken());
 ```
+
 * src/app/admin/settings/tenant-settings.component.ts
 ```ts
 uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
 ```
 
-Find the `abp.auth.setRefreshToken` and comment the function.
+Find the `abp.auth.setRefreshToken` and comment the function's body.
 
 ```js
-// abp.auth.setRefreshToken = function (refreshToken, expireDate) { abp.utils.setCookieValue(abp.auth.refreshTokenCookieName, refreshToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
+abp.auth.setRefreshToken = function (refreshToken, expireDate) { // abp.utils.setCookieValue(abp.auth.refreshTokenCookieName, refreshToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
 };
 ```
 
-Let's delete the places where the `abp.auth.setRefreshToken` function is used
+Delete the places where the `abp.auth.setRefreshToken` function is used
 
-* src/account/login/login.service.ts
-
+*src/account/login/login.service.ts*
 ```ts
 // remove this code
 this._tokenService.setToken(accessToken, tokenExpireDate);
@@ -414,40 +526,9 @@ if (refreshToken && rememberMe) {
 }
 ```
 
-### Update `tryAuthWithRefreshToken` method
-
-Since cookies are http only, we can no longer access them via javascript, so we need to update this method.
-
-Open `src/app/account/auth/zero-refresh-token.service.ts` and update `tryAuthWithRefreshToken` method as below.
-
-> ! Dont forget to run `npm run nswag` command. Because we need to update `TokenAuthServiceProxy` service.
-
-```ts 
-tryAuthWithRefreshToken(): Observable<boolean> {
-    let refreshTokenObservable = new Subject<boolean>();
-
-    this._tokenAuthService.isRefreshTokenAvailable().subscribe({
-        next: (result) => {
-
-            if (!result) {
-                refreshTokenObservable.next(false);
-                return;
-            }
-
-            this._tokenAuthService.refreshToken().subscribe({
-                next: () => refreshTokenObservable.next(true),
-                error: () => refreshTokenObservable.next(false)
-            });
-        }
-    });
-
-    return refreshTokenObservable;
-}
-```
-
 ### Update `setTenantIdCookie` Method
 
-We need to update `setTenantIdCookie` method in `abp.js`
+Update `setTenantIdCookie` method in `abp.js`. Do api call to `TenantIdCookieController` instead of setting cookie directly. Your code should look like this:
 
 ```js
 abp.multiTenancy.setTenantIdCookie = function (tenantId) {
@@ -456,7 +537,7 @@ abp.multiTenancy.setTenantIdCookie = function (tenantId) {
             tenantId = 0;
         }
 
-        fetch('https://localhost:44301/api/TenantIdCookie/SetTenantIdCookie?tenantId=' + tenantId, {
+        fetch(abp.appPath + 'api/TenantIdCookie/SetTenantIdCookie?tenantId=' + tenantId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -481,8 +562,18 @@ abp.multiTenancy.setTenantIdCookie = function (tenantId) {
 };
 ```
 
-Go to `AppPreBootstrap.ts` and update `impersonatedAuthenticate` method as below:
+As we are no longer able to handle cookies on the Angular side, switching tenants involves initiating an API call to the backend server. This API call facilitates the modification of cookies. Given our use of promise code in this API call, we have accordingly modified the `setTenantIdCookie` method to return a promise. Let's add definition of `setTenantIdCookie` method in `typings.d.ts` file.
 
+*/src/typings.d.ts*
+```ts
+namespace multiTenancy{
+    function setTenantIdCookie(tenantId?: number): Promise<void>;
+}
+```
+
+Due to our utilization of **Promises**, find the usages of `setTenantIdCookie` in your project, and refactor them using the then and catch blocks as below:
+
+*src/AppPreBootstrap.ts*
 ```ts
 private static impersonatedAuthenticate(impersonationToken: string, tenantId: number, callback: () => void): void {
     abp.multiTenancy.setTenantIdCookie(tenantId).then(() => {
