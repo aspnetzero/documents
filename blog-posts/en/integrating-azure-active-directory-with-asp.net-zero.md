@@ -35,10 +35,10 @@ ASP.NET Zero provides an integrated OpenID Connect Login in addition to social l
 
 After configuring the settings in **ASP.NET Zero** and **Azure AD**, when you login as a tenant, the **OpenID Connect** button will become active.
 
-![Login Screen with OpenIdConnect](/Images/Blog/login-screen-with-openidconnect.png)
+![Login Screen with OpenIdConnect](Images/Blog/login-screen-with-openidconnect.png)
 
 After clicking the **OpenID Connect** button and successfully logging in with a **Microsoft account**, The next screen will get other necessary information from the tenant user.
 
-![External Login Callback Screen ](/Images/Blog/external-login-callback-screen.png)
+![External Login Callback Screen ](Images/Blog/external-login-callback-screen.png)
 
 
