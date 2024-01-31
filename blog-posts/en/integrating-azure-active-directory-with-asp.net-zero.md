@@ -1,12 +1,14 @@
 # Integrating Azure Active Directory with ASP.NET Zero
 
-Adding Azure Active Directory to your ASP.NET Zero project is a quick and effective way to ensure a secure authentication process. After the basic App Registration steps in the Azure portal, you will take just a few steps to implement OpenID integration in your ASP.NET Zero project.
+Adding Azure Active Directory to your ASP.NET Zero project is a quick and effective way to ensure a secure authentication process. After the basic App Registration steps in the Azure Active Directory (AD), you will take just a few steps to implement OpenID integration in your ASP.NET Zero project.
 
 ## Azure AD Configuration
 After completing the **App Registration** process in the **Azure AD**, you can obtain the **Client ID** information. Additionally, to acquire the **Client Secret** information, you need to navigate to the **'Certificates & Secrets'** section and create a new secret here.
 
 ## OpenId Connect Login
 ASP.NET Zero provides an integrated OpenID Connect Login in addition to social logins. This configuration is modifiable in the `appsettings.json` file.
+
+You can grant tenants permission to modify social login settings. To enable this feature, set the `AllowSocialLoginSettingsPerTenant` value to **true** in the `appsettings.json` file. For other social login configurations, please refer to [Features Mvc Core Social Logins](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core-Social-Logins) document.
 
 ```json
  "OpenId": {
@@ -42,3 +44,11 @@ After clicking the **OpenID Connect** button and successfully logging in with a 
 ![External Login Callback Screen ](Images/Blog/external-login-callback-screen.png)
 
 
+
+## FAQ
+
+- OpenIdConnectProtocolException: Message contains error: 'invalid_client', error_description: 'AADSTS7000215: Invalid client secret provided. Ensure the secret being sent in the request is the client secret value, not the client secret ID, 
+    -  When encountering a similar error, ensure to check the `ClientSecret` value. It should be noted that the **value** field of the **Client Secret** created in the **Certificates & Secrets** section needs to be obtained.
+
+- IOException: IDX20807: Unable to retrieve document from: 'Your_Authority'. HttpResponseMessage: 'StatusCode: 400, ReasonPhrase: 'Bad Request', Version: 1.1, Content: System.Net.Http.HttpConnectionResponseContent, Headers:  
+    - In case of such an error, you may need to check your `Authority` value. Depending on the **Manifest** information created in **Azure AD** and your project, you should correct this part accordingly.
