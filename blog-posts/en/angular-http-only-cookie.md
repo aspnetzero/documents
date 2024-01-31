@@ -603,4 +603,4 @@ private static impersonatedAuthenticate(impersonationToken: string, tenantId: nu
 
 That's it! Now, you can use **HttpOnly** cookies in your ASP.NET Zero Angular application.
 
-![Angular http only cookie](images/angular-http-only-cookie.png)
+![Angular http only cookie](/Images/Blog/angular-http-only-cookie.png)
