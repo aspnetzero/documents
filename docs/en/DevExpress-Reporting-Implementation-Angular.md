@@ -27,7 +27,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 6. Right click on the `Reports` folder then click `Add` -> `New Item`, then select `DevExpress Report` item. 
 7. Select `Blank` report in the opening wizard, and create new empty report named SampleReport.
 
-![blank-selection](/Images/Blog/devexpress-reporting-blank-selection.png)
+![blank-selection](/docs/en/images/devexpress-reporting-blank-selection.png)
 
 *(Design your report as you wish)*
 
