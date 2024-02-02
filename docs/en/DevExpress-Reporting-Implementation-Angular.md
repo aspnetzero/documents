@@ -197,6 +197,7 @@ public IServiceProvider ConfigureServices(IServiceCollection services)
 ```json
 dependencies: [
     "devextreme": "^23.1.6",
+    "devextreme-angular": "^23.1.6",
     "@devexpress/analytics-core": "^23.1.6",
     "devexpress-reporting-angular": "^23.1.6"
 ]
