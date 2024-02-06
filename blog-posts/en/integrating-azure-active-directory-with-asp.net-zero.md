@@ -37,11 +37,11 @@ Each tenant can also configure OpenID Connect settings for their own account. To
 
 After configuring the settings in **ASP.NET Zero** and **Azure AD**, when you login as a tenant, the **OpenID Connect** button will become active.
 
-![Login Screen with OpenIdConnect](Images/Blog/login-screen-with-openidconnect.png)
+![Login Screen with OpenIdConnect](./Images/Blog/login-screen-with-openidconnect.png)
 
 After clicking the **OpenID Connect** button and successfully logging in with an account with the configured **Azure AD Account**, The next screen will get other necessary information from the tenant user.
 
-![External Login Callback Screen ](Images/Blog/external-login-callback-screen.png)
+![External Login Callback Screen ](./Images/Blog/external-login-callback-screen.png)
 
 
 
