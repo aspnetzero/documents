@@ -8,7 +8,7 @@ After completing the **App Registration** process in the **Azure AD**, you can o
 ## OpenId Connect Login
 ASP.NET Zero provides an integrated OpenID Connect Login in addition to social logins. This configuration is modifiable in the `appsettings.json` file.
 
-You can grant tenants permission to modify social login settings. To enable this feature, set the `AllowSocialLoginSettingsPerTenant` value to **true** in the `appsettings.json` file. For other social login configurations, please refer to [Features Mvc Core Social Logins](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core-Social-Logins) document.
+Each tenant can also configure OpenID Connect settings for their own account. To enable this feature, set the `AllowSocialLoginSettingsPerTenant` value to **true** in the `appsettings.json` file. For other social login configurations, please refer to [Features Mvc Core Social Logins](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core-Social-Logins) document.
 
 ```json
  "OpenId": {
@@ -33,13 +33,13 @@ You can grant tenants permission to modify social login settings. To enable this
 - `ClientSecret`: It is a secure encryption key obtained from the **'Certificates & Secrets'** section in the **Azure AD**.
 - `ValidateIssuer`: If the value of this setting is **true**, it validates the **issuer** information received from the **OpenID Connect** client. However, if your application is a **multi-tenant** application and you want all users to be able to use **Azure AD**, disable issuer validation. Note that the term **multi-tenant app** in this context refers to the one you have created on your **Azure AD**; it is not related to **AspNet Zero's** multi-tenant feature.
 - `ResponseType`: Determines the **OpenID Connect** flow type used for authentication. **code** typically indicates the usage of the **Authorization Code Flow**.
-- `ClaimsMapping`: The **claim mapping** settings specified for user requests. These settings may vary based on your **Azure AD** configuration and project.
+- `ClaimsMapping`: The **claim mapping** setting allows you to map any claim retrieved from **Azure AD** to a local claim. For example, if **Azure AD** returns a claim named `email` and you want to use it as `email_address`, you can use this setting.
 
 After configuring the settings in **ASP.NET Zero** and **Azure AD**, when you login as a tenant, the **OpenID Connect** button will become active.
 
 ![Login Screen with OpenIdConnect](Images/Blog/login-screen-with-openidconnect.png)
 
-After clicking the **OpenID Connect** button and successfully logging in with a **Microsoft account**, The next screen will get other necessary information from the tenant user.
+After clicking the **OpenID Connect** button and successfully logging in with an account with the configured **Azure AD Account**, The next screen will get other necessary information from the tenant user.
 
 ![External Login Callback Screen ](Images/Blog/external-login-callback-screen.png)
 
