@@ -40,7 +40,9 @@ After creating the **Web App service**, you can find the information related to 
 ## Configuring ASP.NET Zero Project Settings
 
 
-It is necessary to replace the `ConnectionString` values in your project with the **SQL Server** information created in the **Azure portal**. The `ConnectionString` is located in the `appsettings.json` file. You can change it as follows
+It is necessary to replace the `"ConnectionString"` values in your project with the **SQL Server** information created in the **Azure portal**. The `"ConnectionString"` is located in the `appsettings.json` file. You can change it as follows. 
+
+If there is a `"ConnectionStrings"` information in `appsettings.Production.json` while in the release environment, this information is used.
 
 ```json
 "ConnectionStrings": {
