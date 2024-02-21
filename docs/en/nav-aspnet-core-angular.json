@@ -363,7 +363,11 @@
         {
           "text": "UI Testing",
           "path": "Playwright-UI-Testing-Angular.md"
-        }
+        },
+        {
+          "text": "Common Payment System",
+          "path": "Features-Angular-Common-Payment-System.md"
+        }         
       ]
     },
     {

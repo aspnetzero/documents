@@ -393,7 +393,11 @@
         {
           "text": "UI Testing",
           "path": "Playwright-UI-Testing.md"
-        }
+        },
+        {
+          "text": "Common Payment System",
+          "path": "Features-Mvc-Core-Common-Payment-System.md"
+        }        
       ]
     },
     {
