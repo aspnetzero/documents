@@ -1,6 +1,6 @@
 # How to Integrate Kendo UI Angular with ASP.NET Zero
 
-Learn how to integrate Kendo UI Angular, a comprehensive UI library, with ASP.NET Zero, a popular full stack .NET Core template based [ABP](https://aspnetboilerplate.com/). This integration enables the creation of modern, powerful web applications with enhanced productivity and performance.
+In this blog post, we will integrate Kendo UI Angular with ASP.NET Zero. We will create a product crud app and display data with Kendo UI's Angular Grid component. Let's dive in.
 
 ## Create a New ASP.NET Zero Project
 
@@ -16,7 +16,7 @@ https://docs.aspnetzero.com/en/aspnet-core-angular/latest/Getting-Started-Angula
 
 ## Install Kendo UI Angular
 
-Let's start by installing a [Calendar](https://www.telerik.com/kendo-angular-ui/components/dateinputs/calendar/) component. Run the following command to install the Kendo UI Angular DateInputs package.
+Let's start by installing a [Calendar](https://www.telerik.com/kendo-angular-ui/components/dateinputs/calendar/) component. Run the following command to install the Kendo UI Angular DateInputs package in the root directory of your Angular app.
 
 ```bash
 ng add @progress/kendo-angular-dateinputs 
@@ -94,11 +94,10 @@ Then, open the `AppAuthorizationProvider.cs` file and add the following permissi
 
 ```csharp
 var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
-
 administration.CreateChildPermission(AppPermissions.Pages_Administration_KendoUi, L("KendoUi"));
 ```
 
-Then, create a new folder named `kendo-ui-grid` in the `src/app/admin` folder and add the following files.
+Then, create a new folder named `kendo-ui-grid` in the `src/app/admin` folder in the Angular app and add the following files.
 
 *kendo-ui-grid.component.ts*
 ```typescript
