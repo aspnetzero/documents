@@ -6,15 +6,50 @@ In this tutorial, we will see how to create an Azure CI/CD pipeline for a fresh 
 
 Azure Pipelines let us to create different jobs which automates CI/CD processes. There are plenty of predefined tasks by Microsoft and by third party vendors. It helps you to continuously build, test and deploy to any platform and cloud. See https://azure.microsoft.com/en-us/services/devops/pipelines/
 
-### GitHub user? You’re covered.
 
-If you are using GitHub as your source-control system, things are way more faster. Azure Pipelines can fetch the source from your GitHub. And it’s free for 10 parallel jobs and unlimited minutes for open source projects. Check out [https://github.com/marketplace/azure-pipelines](https://github.com/marketplace/azure-pipelines/)
-
-Click the “**Install it for free”** button to continue…
-
-![GitHub Extension](images/azure-pipelines-github-extension.png)
+## Prerequisites
 
 
+Before the deployment process through your project's pipeline, Azure App Service and Azure SQL Database must be ready. If they are not ready yet, you need to create them by following the instructions below:
+
+[Create a new Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal)
+
+## Creating an Azure Web App Service
+
+To create a new Azure Web App Service, visit the  [Azure Portal](https://portal.azure.com/) and follow the instructions. 
+
+After signing in to your Azure account, you can directly create a **Web App** by clicking the **Create Resource** button.
+
+
+![Create Resources](images/azure-pipelines-create-resources.png)
+
+
+Entering **Web App** in the search bar, click the **Create** button as indicated below.
+
+![Search Web App](images/azure-pipelines-search-web-app.png)
+
+After filling in the required fields, click on the **Review + Create** button.
+
+![Create Web App](images/azure-pipelines-create-web-app.png)
+
+After creating the **Web App service**, you can find the information related to the service below.
+
+![View Web App](images/azure-pipelines-view-web-app.png)
+
+
+## Configuring ASP.NET Zero Project Settings
+
+
+It is necessary to replace the `"ConnectionString"` values in your project with the **SQL Server** information created in the **Azure portal**. The `"ConnectionString"` is located in the `appsettings.json` file. You can change it as follows. 
+
+If there is a `"ConnectionStrings"` information in `appsettings.Production.json` while in the release environment, this information is used.
+
+```json
+"ConnectionStrings": {
+    "Default": "Server=tcp:yourserver.database.windows.net,1433;Initial Catalog=yourdatabase;Persist Security Info=False;User ID=yourusername;Password=yourpassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+}
+
+```
 
 ## Start Your New Azure Pipeline
 
@@ -28,31 +63,36 @@ After you authenticate, you will see the new project screen. Enter your project 
 
 ![Create project](images/azure-pipelines-create-project.png)
 
+### Select Your Pipeline Menu 
+
+After creating the project, select Pipelines from the menu on the left side. Once you've done that, click on the New Pipeline button.
+
+![Select Pipeline](images/azure-pipelines-select-menu.png)
+
 ### Choose your source-code hosting service
 
-Choose **Use the classic editor** to create a pipeline without YAML.
+Choose **Github** to create a pipeline with YAML.
 
 ![Connect to GitHub](images/azure-pipelines-connect.png)
 
 After that it will ask authorization to Azure Pipelines. After successful authorization, you will be redirected to your repository list. Select your repository for  `MyPortalDemo`. If you have not committed your project to GitHub, you can do it now.
 
-![Select source 1](/images/azure-pipelines-select-source-1.png)
+
+Then you will be able to see the list of your repositories on GitHub. Choose your repository.
+
+![Select source 1](images/azure-pipelines-select-source.png)
 
 Grant permission to your repositories with OAuth.
 
-![Grant permission to Azure Pipelines](images/azure-pipelines-authorize.png)
-
-Then you will be able to see the list of your repositories on GitHub. Choose your repository and click **Continue**.
-
-![Select source 1](/images/azure-pipelines-select-source-2.png)
-
+![Repository Permission](images/azure-pipelines-repository-permission.png)
 
 
 ### Choose your template
 
-The next step is choosing a template... We will choose the template **ASP.NET Core**. To find it type `ASP.NET Core` to the search box and then click the **Apply** button.
+The next step is choosing a template... We will choose the **ASP.NET Core** template. After clicking on **Show more** look for the `ASP.NET Core` option and then click.
 
-![Choose a template](/images/azure-pipelines-choose-template.png)
+![Choose a template](images/azure-pipelines-choose-template.png)
+
 
 
 
@@ -60,53 +100,68 @@ The next step is choosing a template... We will choose the template **ASP.NET Co
 
 After the template is being created, you will see the below auto-generated pipeline steps.
 
-![Pipeline steps](/images/azure-pipelines-pipeline-steps.png)
+![Pipeline steps](images/azure-pipelines-review-default-yaml.png)
 
+You can edit the default ***.yaml** file as specified below.
 
+![Pipeline steps](images/azure-pipelines-first-yaml.png)
 
-As you see from the above image, **Some settings need attention**. Click that link which will redirect to source selection screen. We will again choose GitHub and pick our repository by clicking `...` button.
-
-![Configure GitHub repository](/images/azure-pipelines-configure-gitbub2.png)
-
+After specifying, you can add the indicated section under `steps:`.
 
 
 Other important setting is the **Project(s) to build and restore**. The default setting is `**/*.csproj` but this will break build process because Xamarin projects don't build with `dotnet build` command but need to be built with `msbuild`. So we need to build only the `*.Web.Mvc` project. For that, change it to `**/MyPortalDemo.Web.Mvc.csproj` as seen below.
 
-![Set Web.MVC project to build](/images/azure-pipelines-set-mvc-project.png)
+Configure the **Restore** task as specified.
 
+![Set Web.MVC project to restore](images/azure-pipelines-set-mvc-project-restore.png)
 
+Configure the **Build** task as specified and add it as well.Additionally, here the `--configuration $(BuildConfiguration)` **argument** should be specified.
+
+![Set Web.MVC project to build](images/azure-pipelines-set-mvc-project-build.png)
+
+Add the path of the **Test** project by specifying it as `**/[Tt]ests/.csproj`.
+
+![Set Web.MVC project to test](images/azure-pipelines-set-mvc-project-test.png)
+
+Add the path of the **Publish** project.
+
+![Set Web.MVC project to test](images/azure-pipelines-set-mvc-project-publish.png)
+
+Add the path of the **Publish Artifact** project
+
+![Set Web.MVC project to test](images/azure-pipelines-set-mvc-project-publish-artifact.png)
 
 ### Additional pipeline steps for the MVC project
 
 There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
+First, visit the marketplace to install the Yarn extension for your Azure DevOps organization. You can find it at https://marketplace.visualstudio.com/azuredevops.
+
+
+Click on the **Get it free** button to install the necessary extension for your organization.
+
+![Add new task](images/azure-pipelines-add-marketplace-yarn.png)
+
 1. #### **Execute Yarn Task**
 
-   For the MVC project, we have to run `yarn`  command in the `src/MyPortalDemo.Web.Mvc` folder. To do this click the `+` icon on top of the task list.
+   For the MVC project, we have to run `yarn`  command in the `src/MyPortalDemo.Web.Mvc` folder. To do this click the `Show asisstant` icon on top of the task list.
 
-   ![Add new task](/images/azure-pipelines-add-new-task.png)
+   ![Add new task](images/azure-pipelines-show-assistant.png)
 
-   
+   Write **yarn** into the search textbox and click on the **Yarn task** to install this new Yarn task.
 
-   Write `yarn` to the search textbox and click the **Get it free** button to install this new `yarn` task.
+   ![Install yarn](images/azure-pipelines-add-yarn-task.png)
 
-   ![Install yarn](/images/azure-pipelines-add-yarn-task.png)
 
-   
+   After adding it, the new Yarn task is placed at the end. Move it after the **Build** step. Then, enter `src/MyPortalDemo.Web.Mvc` in the Project Directory. This step is completed.
 
-   After you install it, go back to original portal and refresh the page. Click the `+` again. Write `yarn` to the search textbox again. Now, you will be able see **Add** button. Click **Add** button to continue.
-
-   ![Add yarn task](/images/azure-pipelines-add-yarn-task2.png)
-
-   After you add it, the new Yarn task comes to the end. Move it after **Build** step by drag & drop. Then write `src/MyPortalDemo.Web.Mvc`  to the **Project Directory**. This step is done. 
-
-   ![Yarn task](/images/azure-pipelines-add-yarn-task3.png)
+   ![Yarn task](images/azure-pipelines-add-yarn-task2.png)
 
    
 
    Save the changes by clicking **Save** button on the toolbar.
 
-   ![Save pipeline](/images/azure-pipelines-save.png)
+   ![Save pipeline](images/azure-pipelines-save.png)
 
    
 
@@ -116,21 +171,20 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
    To add NPM Run Build task, write `command line` to the search textbox. Click the **Add** button of **Command Line** item.
 
-   ![Add command line task](/images/azure-pipelines-add-npm-run-build-task.png)
+   ![Add command line task](images/azure-pipelines-add-npm-run-build-task.png)
 
    
 
-   It will append it after right after the **Yarn** task. If it comes to the end, you need to drag & drop it after **Yarn** task. See the below screenshot for the right order.
+   It will append it after right after the **Yarn** task. If it comes to the end, you need to move it after **Yarn** task.
 
-   You can write any meaningful text to the **Display name** (eg: "NPM Run Build task")
-   and for the **Script** write:
 
    ```bash
    cd src/MyPortalDemo.Web.Mvc
    npm run build
    ```
 
-   ![NPM Run Build Task](/images/azure-pipelines-add-npm-run-build-task2.png)
+
+   ![NPM Run Build Task](images/azure-pipelines-add-npm-run-build-task2.png)
 
    
 
@@ -138,65 +192,27 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
    ![Save pipeline](images/azure-pipelines-save.png)
 
-   
+3. ### **Run Migrator**
 
-   
+   To run the ***Migrator** project here, a **CMD line** is required. Let's create it as specified below.
 
-3. #### **Generate Migration Scripts Task**
+   ![Run Migrator](images/azure-pipelines-run-migrator.png)
 
-   This is the last task! This task will generate SQL scripts into a file and we will run it against our database. For this task, we need to install a third party extension. Write `Entity Framework Core Migrations Script Generator` to the search textbox and click the **Get it free** button as seen on the below screenshot.
+   ```bash
+   cd src/MyPortalDemo.Migrator
+   echo "y" | dotnet run --project MyPortalDemo.Migrator.csproj 
+   ```
 
-   ![Generate Migration Scripts 1](/images/azure-pipelines-add-ef-core-generate-migration-script.png)
+   The part indicated as `"y"` implies acceptance on all tenants in the host database.
 
-   
 
-   After you install it, go back to your original portal and refresh the page. Now click the `+` again. Write `Entity Framework Core Migrations Script` to the search textbox again. Now, you will see **Add** button. Click **Add** button to continue.
+After clicking the **Save** button on the toolbar, press the **Run** button. The pipeline will start for the first time.
 
-   ![Generate Migration Scripts 2](/images/azure-pipelines-add-ef-core-generate-migration-script2.png)
-
-   
-   
-   Move this new task after the **Publish** task by drag & drop. See the below screenshot. 
-   
-   Make the following configurations:
-
-   * **Display name**: Generate Migration Scripts
-* **Main Project Path**: `src/MyPortalDemo.EntityFrameworkCore/MyPortalDemo.EntityFrameworkCore.csproj`
-   
-   * **DbContexts**: `MyPortalDemoDbContext`
-   
-* **Startup Project Path**: `src/MyPortalDemo.Web.Mvc/MyPortalDemo.Web.Mvc.csproj`
-   * **Target Folder**: `$(build.artifactstagingdirectory)/migrations`
-   
-   ![Generate Migration Scripts 3](/images/azure-pipelines-add-ef-core-generate-migration-script3.png)
-   
-   
-   
-   Save the changes by clicking the **Save** button on the toolbar.
-   ![Save changes](/images/azure-pipelines-save.png)
+![Save and queue](images/azure-pipelines-save-queue.png)
 
 
 
-IMPORTANT NOTE: If your project is a .NET Core 3.x project, dotnet-ef tool must be installed using the Azure pipelines, so that "Generate Migration Scripts Task" can generate migration scripts using this tool. Normally, an `Entity Framework Core Migrations Script Generator` step contains a selection for installing this tool but it doesn't work. So, first thing to do here is not selecting "**Install dependencies for .NET Core 3**" option for "Generate Migration Scripts Task". 
-
-After that, add a new Command Line item just before "Generate Migration Scripts Task" and change it's content as below;
-
-````bash
-dotnet new tool-manifest
-dotnet tool install --local dotnet-ef
-````
-
-We are ready to run the job for the first time. Click **Save & queue** button on toolbar. The pipeline will start for the first time.
-
-![Save and queue](/images/azure-pipelines-save-queue.png)
-
-
-
-Alternatively you can run your job by pressing **Queue** button on the toolbar.
-
-![Queue](/images/azure-pipelines-queue2.png)
-
-![Job result](/images/azure-pipelines-job-result.png)
+![Job result](images/azure-pipelines-job-result.png)
 
 
 
@@ -204,23 +220,24 @@ So far, we have created a pipeline to get our project from GitHub, build, yarn, 
 
 **Before starting this step, we assume that you have already created a web app on Azure App Services and set up your database**.
 
-![Job result](/images/azure-pipelines-new-pipeline.png)
 
 ### Create release pipeline
 
 Select Azure App Service deployment template.
 
-![Azure App Service deployment](/images/azure-pipelines-azure-appservice.png)
+![Azure App Service deployment](images/azure-pipelines-azure-appservice.png)
 
 #### Add an artifact
 
 Click **Add an artifact** button and choose the related project as source.
 
-![Add artifact](/images/azure-pipelines-add-artifact.png)
+![Add artifact](images/azure-pipelines-add-artifact.png)
 
-Then click the default stage to edit.![Configure stage](images/azure-pipelines-configure-stage.png)
+Then click the default stage to edit.
 
-On the new release pipeline, you will see **Deploy Azure App Service** options. Select your Azure subscription and then authorize it. Set `Web App on Windows` as your app type. Then pick your app service name from the list. Finally click **Save** button.
+![Configure stage](images/azure-pipelines-configure-stage.png)
+
+On the new release pipeline, you will see **Deploy Azure App Service** options. Select your Azure subscription and then authorize it. Set `Web App on Linux` as your app type. Then pick your app service name from the list. Finally click **Save** button.
 
 ![Configure stage](images/azure-pipelines-deploy-azure-app-service.png)
 
@@ -228,35 +245,13 @@ On the new release pipeline, you will see **Deploy Azure App Service** options. 
 
 #### Choose Web.Mvc package for releasing
 
-One important setting is the **package or folder** setting. ASP.NET Zero solution comes with 3 different web projects: `*.Web.Mvc`, `*.Web.Host` and `*.Web.Public`. We will release `*.Web.Mvc`. To set that package click the `...` button on the **Package or folder** row.
+One important setting is the **package or folder** setting. We will release `*.Web.Mvc`. To set that package click the `...` button on the **Package or folder** row.
 
 ![Configure stage](images/azure-pipelines-pick-output-zip.png)
 
 Choose  `*.Web.Mvc` and then click **Save** button on the top toolbar.
 
 ![Configure stage](images/azure-pipelines-pick-web-mvc.png)
-
-
-
-#### Web deploy as your deployment method
-
-There's an additional deployment option: **Deployment method**. Check that you have configured your deployment method as **Web deploy**. If you don't set this option (*by default it's not set to Web Deploy*), you cannot use the file system to write logs. Although writing logs to file system is not recommended for Azure, it may require you while you startup your project for the first time. (If you want to read more about logging on Azure, check out  https://docs.microsoft.com/en-us/azure/security/azure-log-audit.)
-
-![Configure stage](images/azure-pipelines-web-deploy.png)
-
-
-
-#### Running the database migrations
-
-We will add another task to run the migration script against our database. For this task click the `+` button and write `Azure SQL Database Deployment` to the search textbox. And then click the **Add** button next to **Azure SQL Database Deployment** task.
-
-![Add Azure SQL Database Deployment task](images/azure-pipelines-add-sql-db-deployment.png)
-
-
-
-After adding this task. Configure this step as seen below:
-
-![Azure SQL task](images/azure-pipelines-azure-sql-task.png)
 
 
 
@@ -272,17 +267,12 @@ Now we are done! Click the **Create release** button on the top toolbar and clic
 
 ![Configure stage](images/azure-pipelines-create-release.png)
 
+After clicking on the `Create Release` button, select the stage and click on the `Create` button.
+
+![Configure stage](images/azure-pipelines-create-release2.png)
 
 
 When you see the green tick for your release, it means it's successfully completed.
 
 ![Configure stage](images/azure-pipelines-release-success.png)
-
-
-
-### Conclusion
-
-We have successfully set up an Azure Pipeline for an ASP.NET Zero MVC Core project. You can start this pipeline by clicking **Queue** button on the **Builds** menu. But you can also, enable continuous integration by clicking the relevant checkbox in the **Triggers** tab. We will not cover this feature. 
-
-To run the whole process, go to **Builds** menu and on the top-right, there is **Queue** button. Click to start your job. ![Queue](images/azure-pipelines-queue.png)
 
