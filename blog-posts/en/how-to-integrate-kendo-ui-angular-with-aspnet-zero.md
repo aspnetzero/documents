@@ -9,7 +9,7 @@ First, create a new project using the [ASP.NET Zero](https://aspnetzero.com/Down
 * Select the `ASP.NET Core & Angular` template.
 * You can choose single solution option if you want to have the backend and frontend in a single solution.
 
-![kendo-ui-angular-tutorial](images/Blog/kendo-ui-angular-tutorial.png)
+![kendo-ui-angular-tutorial](/Images/Blog/kendo-ui-angular-tutorial.png)
 
 Then, follow the instructions to create a new project and make sure it runs successfully.
 https://docs.aspnetzero.com/en/aspnet-core-angular/latest/Getting-Started-Angular
