@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 13.1.0 (2024-02-27)
+
+* Power Tools: Excel Import for generated Entities.
+* Common Payment System
+* Column selection for excel exporting
+* Replace Newtonsoft with System.Text.Json
+* Upgade to ABP 9.1
+* Enhancements and bug fixes
+
 ## 13.0.0 (2023-12-11)
 
 * Power Tools: Multi-lingual entity support.
