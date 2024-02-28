@@ -35,7 +35,7 @@ We have replaced `Newtonsoft.Json` with `System.Text.Json` in the ASP.NET Zero v
 
 For more information, see the official documentation. 
 
-https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-8-0
+[https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-8-0](https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-8-0)
 
 ## 🌅 Upgrade to ABP 9.1
 
@@ -45,8 +45,8 @@ ASP.NET Zero v13.1 is based on ABP 9.1. ABP 9.1 is a major release that includes
 
 As we do in every version, we fixed minor padding and margin errors, localization errors, and made improvements for power tools in line with your requests.
 
-https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v13.1.0-rc.1
-https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v13.1.0
+* [https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v13.1.0-rc.1](https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v13.1.0-rc.1)
+* [https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v13.1.0](https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v13.1.0)
 
 ## ✏️ Don't Miss Out! 
 
