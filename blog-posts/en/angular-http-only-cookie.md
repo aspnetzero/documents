@@ -84,7 +84,7 @@ public class ExternalAuthenticateResultModel
 
 ### Configure `TokenAuthController.cs`
 
-* Create a new methods to add access token and refresh token as HttpOnly cookies.
+* Create a new method to add access token and refresh token as HttpOnly cookies.
 
 ```csharp
 private void AddAccessTokenCookie(string accessToken)
