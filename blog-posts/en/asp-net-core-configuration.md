@@ -1,6 +1,6 @@
 # Configuration in ASP.NET Core
 
-In the dynamic world of web development, configuring applications effectively is crucial for adaptability and maintainability. ASP.NET Core provides a robust and flexible configuration system that empowers developers to manage settings across various environments. This blog post dives deep into the intricacies of ASP.NET Core configuration, equipping you with the knowledge to:
+In the dynamic world of web development, configuring applications effectively is crucial for adaptability and maintainability. ASP.NET Core provides a robust and flexible configuration system that empowers developers to manage settings across various environments. This blog post dives into ASP.NET Core configuration.
 
 ## ASP.NET Core Configuration Providers
 
@@ -23,13 +23,14 @@ ASP.NET Core's default configuration is located in the Program class, specifical
 
 ![ASP.NET Core Configuration Providers Priority](images/Blog/aspnetcore-provider-priority.png)
 
-The [official document](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#default-application-configuration-sources) says providers are used in this order: 
+The [official document](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#default-application-configuration-sources) says providers are used in this order, from highest to lowest priority: 
 
-* The `appsettings.json` file
-* Any `appsettings.{ ENVIRONMENT_NAME }.json` files
-* User secrets from the .NET User Secrets Manager
-* Environment variables
 * Command line arguments
+* Non-prefixed environment variables
+* User secrets from the .NET User Secrets Manager 
+* Any `appsettings.{ ENVIRONMENT_NAME }.json` files
+* The `appsettings.json` file
+* Fallback to the host configuration
 
 ## How to use Configuration in ASP.NET Core
 
@@ -205,28 +206,28 @@ public class OptionsPatternController : Controller
 [ASP.NET Boilerplate (ABP)](https://aspnetboilerplate.com/) is a powerful and comprehensive application framework that goes beyond the basics of ASP.NET Core, offering a variety of features to streamline application development. When it comes to configuration, ABP provides several additional capabilities:
 
 ### Setting Management:
-ABP includes a robust setting management system that allows developers to configure and manage application settings dynamically. Settings can be organized into hierarchical structures, and changes can be applied at runtime without requiring a restart.
+ABP includes a robust setting management system that allows developers to configure and manage application settings dynamically. Settings can be organized into hierarchical structures, and changes can be applied at runtime without requiring a restart. See its [documentation](https://aspnetboilerplate.com/Pages/Documents/Setting-Management) for more information. 
 
-### Multi-Tenancy Configuration:
+#### Multi-Tenancy Configuration:
 ABP is designed to support multi-tenancy out of the box. This means you can configure settings at the tenant level, ensuring that each tenant in a multi-tenant application can have its own specific configuration.
 
 ### Dynamic Scripting Configuration:
 ABP supports dynamic scripting for configuration, allowing developers to write dynamic expressions or scripts to determine configuration values. This provides a flexible way to set up complex configurations based on various conditions.
 
 ### Feature Management:
-Feature management in ABP enables developers to configure and control features of the application dynamically. This is particularly useful for enabling or disabling certain features for different tenants or user roles.
+Feature management in ABP enables developers to configure and control features of the application dynamically. This is particularly useful for enabling or disabling certain features for different tenants.
 
 ### Integrated User Interface for Configuration:
-ABP includes a built-in user interface (UI) for managing settings. This UI allows administrators to view, edit, and manage configuration settings easily, providing a user-friendly way to handle application configuration.
+ASP.NET Zero includes a built-in user interface (UI) for managing settings. This UI allows administrators to view, edit, and manage configuration settings easily, providing a user-friendly way to handle application configuration.
 
 ### Configuration Providers:
-ABP supports various configuration providers, including database-based providers. This means you can store configuration settings in a database and dynamically change them through the UI or programmatically.
+ABP supports various configuration providers, including database-based providers. This means you can store settings in a database and dynamically change them through the UI or programmatically.
 
 ### Security and Permissions:
 Configuration changes in ABP can be controlled by the built-in permission system. Administrators can be granted specific permissions to manage configurations, ensuring security and control over sensitive settings.
 
 ### Integration with Other ABP Modules:
-ABP is modular, and its configuration system integrates seamlessly with other ABP modules. For example, it can work seamlessly with ABP Identity for user and role management or ABP Audit Logging for tracking configuration changes.
+ABP is modular, and its setting system integrates seamlessly with other ABP modules. For example, each module can define its own settings and main application can use all these defined settings at runtime.
 
 ### Predefined Configurations:
 ABP provides predefined configurations for common scenarios, reducing the need for manual setup. This includes configurations for database connection strings, caching, and other essential aspects of application development.
