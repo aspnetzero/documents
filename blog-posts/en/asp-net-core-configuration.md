@@ -6,22 +6,13 @@ In the dynamic world of web development, configuring applications effectively is
 
 ASP.NET Core provides a variety of configuration providers, each with its own unique set of capabilities. The following table lists the configuration providers available in ASP.NET Core:
 
-| Configuration Provider | Description |
-| --- | --- |
-| **Azure App Configuration** | Externalizes storage and management of application settings across all environments. |
-| **Azure Key Vault** | Safeguards cryptographic keys and secrets used by cloud applications and services. |
-| **Command-Line Arguments** | Can use command-line arguments specified during the launch of the application. |
-| **Environment Variables** | Can read environment variables, allowing for environment-specific configuration. |
-| **User secrets** | Can read configuration data from an encrypted user store. |
-| **File Configuration Providers** | Can read configuration information from file formats such as JSON, XML, and INI. |
-| **In-Memory .NET Objects** | Can use in-memory .NET objects as a configuration source. |
-| **Custom Providers** | Can use custom providers, either installed or created, as a configuration source. |
+![ASP.NET Core Configuration Providers Priority](/Images/Blog/aspnet-core-configuration-providers.png)
 
 ### Precedence of Configuration Providers
 
 ASP.NET Core's default configuration is located in the Program class, specifically in the `ConfigureWebHostDefaults` method. This method examines settings in a predefined hierarchical structure, with later-defined settings taking precedence over earlier ones. 
 
-![ASP.NET Core Configuration Providers Priority](images/Blog/aspnetcore-provider-priority.png)
+![ASP.NET Core Configuration Providers Priority](/Images/Blog/aspnetcore-provider-priority.png)
 
 The [official document](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#default-application-configuration-sources) says providers are used in this order, from highest to lowest priority: 
 
@@ -149,7 +140,7 @@ Here is the view code:
 ```
 
 *The result*
-![Alt text](Images/Blog/aspnetcore-configuration-result.png)
+![Alt text](/Images/Blog/aspnetcore-configuration-result.png)
 
 ### Options Pattern
 
