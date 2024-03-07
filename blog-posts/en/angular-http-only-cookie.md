@@ -8,6 +8,34 @@ First of all, your backend project and your Angular project must be located in t
 
 To implement HttpOnly cookies, we need to configure our token authentication controller. We will use the `TokenAuthController.cs` file in your `*.Web.Core` project to implement HttpOnly cookies.
 
+### Add IsHttpOnlyCookieEnabled Property
+
+Add a new configuration to `appsettings.json` file in your `*.Web.Host` project to enable or disable HttpOnly cookies. 
+
+*appsettings.json*
+```json
+{
+  "Authentication": {
+    "IsHttpOnlyCookieEnabled": true
+  }
+}
+```
+
+`TokenAuthConfiguration` class is used to read the configuration from `appsettings.json` file. Open `TokenAuthConfiguration.cs` file in your `*.Web.Core` project and add the following property to the class.
+
+*TokenAuthConfiguration.cs*
+```csharp
+public bool IsHttpOnlyCookieEnabled { get; set; }
+```
+
+Then, open `*WebCoreModule` class in your `*.Web.Core` project and add the following code to the `ConfigureTokenAuth` method.
+
+```csharp
+// other codes...
+
+tokenAuthConfig.IsHttpOnlyCookieEnabled = bool.Parse(_appConfiguration["Authentication:IsHttpOnlyCookieEnabled"] ?? "false");
+```
+
 ### Remove Token Properties from Models
 
 To implement HttpOnly cookies effectively, our server application must refrain from returning access token and refresh token values directly from APIs. Consequently, we must remove these properties from our models and remove any unnecessary classes associated with them.
