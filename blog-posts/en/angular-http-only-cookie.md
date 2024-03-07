@@ -8,6 +8,34 @@ First of all, your backend project and your Angular project must be located in t
 
 To implement HttpOnly cookies, we need to configure our token authentication controller. We will use the `TokenAuthController.cs` file in your `*.Web.Core` project to implement HttpOnly cookies.
 
+### Add IsHttpOnlyCookieEnabled Property
+
+Add a new configuration to `appsettings.json` file in your `*.Web.Host` project to enable or disable HttpOnly cookies. 
+
+*appsettings.json*
+```json
+{
+  "Authentication": {
+    "IsHttpOnlyCookieEnabled": true
+  }
+}
+```
+
+`TokenAuthConfiguration` class is used to read the configuration from `appsettings.json` file. Open `TokenAuthConfiguration.cs` file in your `*.Web.Core` project and add the following property to the class.
+
+*TokenAuthConfiguration.cs*
+```csharp
+public bool IsHttpOnlyCookieEnabled { get; set; }
+```
+
+Then, open `*WebCoreModule` class in your `*.Web.Core` project and add the following code to the `ConfigureTokenAuth` method.
+
+```csharp
+// other codes...
+
+tokenAuthConfig.IsHttpOnlyCookieEnabled = bool.Parse(_appConfiguration["Authentication:IsHttpOnlyCookieEnabled"] ?? "false");
+```
+
 ### Remove Token Properties from Models
 
 To implement HttpOnly cookies effectively, our server application must refrain from returning access token and refresh token values directly from APIs. Consequently, we must remove these properties from our models and remove any unnecessary classes associated with them.
@@ -41,6 +69,20 @@ public class AuthenticateResultModel
     public string ReturnUrl { get; set; }
     
     public string c { get; set; }
+
+    #region Used in Development
+
+    public string RefreshToken { get; set; }
+
+    public int RefreshTokenExpireInSeconds { get; set; }
+    
+    public string AccessToken { get; set; }
+
+    public string EncryptedAccessToken { get; set; }
+    
+    public int ExpireInSeconds { get; set; }
+
+    #endregion
 }
 ```
 
@@ -51,34 +93,80 @@ public class ExternalAuthenticateResultModel
     public bool WaitingForActivation { get; set; }
 
     public string ReturnUrl { get; set; }
+
+    #region Used in Development
+
+    public string RefreshToken { get; set; }
+
+    public int RefreshTokenExpireInSeconds { get; set; }
+    
+    public string AccessToken { get; set; }
+
+    public string EncryptedAccessToken { get; set; }
+    
+    public int ExpireInSeconds { get; set; }
+
+    #endregion
 }
 ```
 
 ### Configure `TokenAuthController.cs`
 
-* Go to the `Authenticate` method and remove missing properties from the returned objects. **(Method contains 3 return statements)**
+* Create a new method to add access token and refresh token as HttpOnly cookies.
+
+```csharp
+private void AddAccessTokenCookie(string accessToken)
+{
+    Response.Cookies.Append("Abp.AuthToken",
+        accessToken,
+        new CookieOptions
+        {
+            Expires = Clock.Now.Add(_configuration.AccessTokenExpiration),
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None
+        }
+    );
+}
+
+private void AddRefreshTokenCookie(string refreshToken)
+{
+    Response.Cookies.Append("Abp.AuthRefreshToken",
+        refreshToken,
+        new CookieOptions
+        {
+            Expires = Clock.Now.Add(_configuration.RefreshTokenExpiration),
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None
+        }
+    );
+}
+```
+
+* Go to the `Authenticate` method and change return statement with following code.
 
 ```csharp
 // other codes...
 
-return new AuthenticateResultModel
+// For development
+if (!_configuration.IsHttpOnlyCookieEnabled)
 {
-    ShouldResetPassword = true,
-    ReturnUrl = returnUrl,
-    c = await EncryptQueryParameters(loginResult.User.Id, loginResult.Tenant, loginResult.User.PasswordResetCode)
-};
+    return new AuthenticateResultModel
+    {
+        AccessToken = accessToken,
+        ExpireInSeconds = (int) _configuration.AccessTokenExpiration.TotalSeconds,
+        RefreshToken = refreshToken.token,
+        RefreshTokenExpireInSeconds = (int) _configuration.RefreshTokenExpiration.TotalSeconds,
+        EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
+        TwoFactorRememberClientToken = twoFactorRememberClientToken,
+        UserId = loginResult.User.Id,
+        ReturnUrl = returnUrl
+    };
+}
 
-// other codes...
-
-return new AuthenticateResultModel
-{
-    RequiresTwoFactorVerification = true,
-    UserId = loginResult.User.Id,
-    TwoFactorAuthProviders = await _userManager.GetValidTwoFactorProvidersAsync(loginResult.User),
-    ReturnUrl = returnUrl
-};
-
-// other codes...
+AddAccessTokenCookie(accessToken);
+AddRefreshTokenCookie(refreshToken.token);
 
 return new AuthenticateResultModel
 {
@@ -88,89 +176,165 @@ return new AuthenticateResultModel
 };
 ```
 
-* Go to the `RefreshToken` method, change the return type to `Task` and remove return value.
-
-* Go to the `ImpersonatedAuthenticate` method, change the return type to `Task` and remove return value.
-
-* Go to the `DelegatedImpersonatedAuthenticate` method, change the return type to `Task` and remove return value.
-
-* Go to the `LinkedAccountAuthenticate` method, change the return type to `Task` and remove return value.
-
-* Go to the `ExternalAuthenticate` method and remove missing properties from the returned objects. **(Method contains 3 return statements)**
+* Go to the `RefreshToken` method, change the return statement with following code.
 
 ```csharp
-// other codes...
-return new ExternalAuthenticateResultModel
+if (!_configuration.IsHttpOnlyCookieEnabled)
 {
-    ReturnUrl = returnUrl,
-};
+    return await Task.FromResult(new RefreshTokenResult(
+        accessToken,
+        GetEncryptedAccessToken(accessToken),
+        (int) _configuration.AccessTokenExpiration.TotalSeconds)
+    );
+}
 
-// other codes...
+AddAccessTokenCookie(accessToken);
 
-return new ExternalAuthenticateResultModel
-{
-    WaitingForActivation = true
-};
-
-// other codes...
-
-return new ExternalAuthenticateResultModel();
+return await Task.FromResult(new RefreshTokenResult(
+    string.Empty,
+    string.Empty, 
+    (int) _configuration.AccessTokenExpiration.TotalSeconds)
+);
 ```
 
-### Add HttpOnly cookies to `Authenticate` method
+* Go to the `ImpersonatedAuthenticate`, `DelegatedImpersonatedAuthenticate`, `LinkedAccountAuthenticate` methods and update return statements like we did in `RefreshToken` method.
 
-Instead of directly providing the access token and refresh token in the response, we should include them as HttpOnly cookies in the response.
-
-Find the `Authenticate` method and add tokens to cookies after creating tokens. Your code should look like this:
+* Go to the `ExternalAuthenticate` method and update the method as following code.
 
 ```csharp
-// Other codes ...
-
-var accessToken = CreateAccessToken(
-    await CreateJwtClaims(
-        loginResult.Identity,
-        loginResult.User,
-        refreshTokenKey: refreshToken.key
-    )
-);
-
-Response.Cookies.Append("Abp.AuthRefreshToken",
-    refreshToken.token,
-    new CookieOptions
-    {
-        Expires = Clock.Now.Add(_configuration.RefreshTokenExpiration),
-        HttpOnly = true,
-        Secure = true,
-        SameSite = SameSiteMode.None
-    }
-);
-
-Response.Cookies.Append("Abp.AuthToken",
-    accessToken,
-    new CookieOptions
-    {
-        Expires = Clock.Now.Add(_configuration.AccessTokenExpiration),
-        HttpOnly = true,
-        Secure = true,
-        SameSite = SameSiteMode.None
-    }
-);
-
-return new AuthenticateResultModel
+[HttpPost]
+public async Task<ExternalAuthenticateResultModel> ExternalAuthenticate(
+    [FromBody] ExternalAuthenticateModel model)
 {
-    TwoFactorRememberClientToken = twoFactorRememberClientToken,
-    UserId = loginResult.User.Id,
-    ReturnUrl = returnUrl
-};
+    var externalUser = await GetExternalUserInfo(model);
+
+    var loginResult = await _logInManager.LoginAsync(
+        new UserLoginInfo(model.AuthProvider, externalUser.ProviderKey, model.AuthProvider),
+        GetTenancyNameOrNull()
+    );
+
+    switch (loginResult.Result)
+    {
+        case AbpLoginResultType.Success:
+        {
+            // One Concurrent Login 
+            if (AllowOneConcurrentLoginPerUser())
+            {
+                await ResetSecurityStampForLoginResult(loginResult);
+            }
+
+            var refreshToken = CreateRefreshToken(
+                await CreateJwtClaims(
+                    loginResult.Identity,
+                    loginResult.User,
+                    tokenType: TokenType.RefreshToken
+                )
+            );
+
+            var accessToken = CreateAccessToken(
+                await CreateJwtClaims(
+                    loginResult.Identity,
+                    loginResult.User,
+                    refreshTokenKey: refreshToken.key
+                )
+            );
+
+            var returnUrl = model.ReturnUrl;
+
+            if (model.SingleSignIn.HasValue && model.SingleSignIn.Value &&
+                loginResult.Result == AbpLoginResultType.Success)
+            {
+                loginResult.User.SetSignInToken();
+                returnUrl = AddSingleSignInParametersToReturnUrl(
+                    model.ReturnUrl,
+                    loginResult.User.SignInToken,
+                    loginResult.User.Id,
+                    loginResult.User.TenantId
+                );
+            }
+            
+            if (!_configuration.IsHttpOnlyCookieEnabled)
+            {
+                return new ExternalAuthenticateResultModel
+                {
+                    AccessToken = accessToken,
+                    EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
+                    ExpireInSeconds = (int) _configuration.AccessTokenExpiration.TotalSeconds,
+                    ReturnUrl = returnUrl,
+                    RefreshToken = refreshToken.token,
+                    RefreshTokenExpireInSeconds = (int) _configuration.RefreshTokenExpiration.TotalSeconds
+                };
+            }
+            
+            AddAccessTokenCookie(accessToken);
+            AddRefreshTokenCookie(refreshToken.token);
+            
+            return new ExternalAuthenticateResultModel
+            {
+                ReturnUrl = returnUrl,
+            };
+        }
+        case AbpLoginResultType.UnknownExternalLogin:
+        {
+            var newUser = await RegisterExternalUserAsync(externalUser);
+            if (!newUser.IsActive)
+            {
+                return new ExternalAuthenticateResultModel
+                {
+                    WaitingForActivation = true
+                };
+            }
+
+            //Try to login again with newly registered user!
+            loginResult = await _logInManager.LoginAsync(
+                new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider),
+                GetTenancyNameOrNull()
+            );
+
+            if (loginResult.Result != AbpLoginResultType.Success)
+            {
+                throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(
+                    loginResult.Result,
+                    externalUser.EmailAddress,
+                    GetTenancyNameOrNull()
+                );
+            }
+
+            var refreshToken = CreateRefreshToken(await CreateJwtClaims(loginResult.Identity,
+                loginResult.User, tokenType: TokenType.RefreshToken)
+            );
+
+            var accessToken = CreateAccessToken(await CreateJwtClaims(loginResult.Identity,
+                loginResult.User, refreshTokenKey: refreshToken.key));
+            
+            if (!_configuration.IsHttpOnlyCookieEnabled)
+            {
+                return new ExternalAuthenticateResultModel
+                {
+                    AccessToken = accessToken,
+                    EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
+                    ExpireInSeconds = (int) _configuration.AccessTokenExpiration.TotalSeconds,
+                    RefreshToken = refreshToken.token,
+                    RefreshTokenExpireInSeconds = (int) _configuration.RefreshTokenExpiration.TotalSeconds
+                };
+            }
+            
+            AddAccessTokenCookie(accessToken);
+            AddRefreshTokenCookie(refreshToken.token);
+            
+            return new ExternalAuthenticateResultModel();
+        }
+        default:
+        {
+            throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(
+                loginResult.Result,
+                externalUser.EmailAddress,
+                GetTenancyNameOrNull()
+            );
+        }
+    }
+}
 ```
-
-Add tokens to cookies like what was done upper, for the following methods.
-
-* `RefreshToken`
-* `ImpersonatedAuthenticate`
-* `DelegatedImpersonatedAuthenticate`
-* `LinkedAccountAuthenticate`
-* `ExternalAuthenticate` 
 
 ### Create `IsRefreshTokenAvailable` Method
 
@@ -296,17 +460,82 @@ Due to the changes made on the backend, we need to adjust and remove certain par
 
 Run `npm run nswag` command to update `TokenAuthServiceProxy` service.
 
+### Add `IsHttpOnlyCookieEnabled` property
+
+Add a new property to `abp.js` file in `src/assets/abp-web-resources` folder to check if HttpOnly cookies are enabled. 
+
+```js
+abp.auth = abp.auth || {};
+
+// Add this line
+abp.auth.isHttpOnlyCookieEnabled = false;
+```
+
+Then add type definition for `isHttpOnlyCookieEnabled` property in `typings.d.ts` file.
+```ts
+declare namespace abp {
+    // other codes...
+
+    namespace auth{
+        let isHttpOnlyCookieEnabled: boolean; 
+    }
+}
+``` 
+
 ### Update `login.service.ts`
 
 Update login method at `login.service.ts` and remove `accessToken` and `refreshToken` parameters. Your code should look like this:
 
 ```ts
 private login(
+    accessToken: string,
+    encryptedAccessToken: string,
+    expireInSeconds: number,
+    refreshToken: string,
+    refreshTokenExpireInSeconds: number,
     rememberMe?: boolean,
     twoFactorRememberClientToken?: string,
     redirectUrl?: string
 ): void {
-    console.log('login reidrect');
+
+    if(!abp.auth.isHttpOnlyCookieEnabled){
+        let tokenExpireDate = rememberMe ? new Date(new Date().getTime() + 1000 * expireInSeconds) : undefined;
+
+        this._tokenService.setToken(accessToken, tokenExpireDate);
+
+        if (refreshToken && rememberMe) {
+            let refreshTokenExpireDate = rememberMe
+                ? new Date(new Date().getTime() + 1000 * refreshTokenExpireInSeconds)
+                : undefined;
+            this._tokenService.setRefreshToken(refreshToken, refreshTokenExpireDate);
+        }
+
+        let self = this;
+        this._localStorageService.setItem(
+            AppConsts.authorization.encrptedAuthTokenName,
+            {
+                token: encryptedAccessToken,
+                expireDate: tokenExpireDate,
+            },
+            () => {
+                if (twoFactorRememberClientToken) {
+                    self._localStorageService.setItem(
+                        LoginService.twoFactorRememberClientTokenName,
+                        {
+                            token: twoFactorRememberClientToken,
+                            expireDate: new Date(new Date().getTime() + 365 * 86400000), // 1 year
+                        },
+                        () => {
+                            self.redirectToLoginResult(redirectUrl);
+                        }
+                    );
+                } else {
+                    self.redirectToLoginResult(redirectUrl);
+                }
+            }
+        );
+    }
+
     this.redirectToLoginResult(redirectUrl);
 }
 ```
@@ -339,6 +568,11 @@ private processAuthenticateResult(authenticateResult: AuthenticateResultModel, r
         }
 
         this.login(
+            authenticateResult.accessToken,
+            authenticateResult.encryptedAccessToken,
+            authenticateResult.expireInSeconds,
+            authenticateResult.refreshToken,
+            authenticateResult.refreshTokenExpireInSeconds,
             this.rememberMe,
             authenticateResult.twoFactorRememberClientToken,
             redirectUrl
@@ -351,70 +585,116 @@ private processAuthenticateResult(authenticateResult: AuthenticateResultModel, r
 
 Since cookies are http only, we can no longer access them via javascript, so we need to update this method.
 
-Open `src/app/account/auth/zero-refresh-token.service.ts` and update `tryAuthWithRefreshToken` method as below.
+Open `src/app/account/auth/zero-refresh-token.service.ts` and update as below.
 
 ```ts 
-tryAuthWithRefreshToken(): Observable<boolean> {
-    let refreshTokenObservable = new Subject<boolean>();
+import { Injectable } from '@angular/core';
+import { RefreshTokenService, TokenService } from 'abp-ng2-module';
+import { RefreshTokenResult, TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
+import { Observable, Subject, of } from 'rxjs';
+import { AppConsts } from '@shared/AppConsts';
+import { SignalRHelper } from '@shared/helpers/SignalRHelper';
+import { LocalStorageService } from '@shared/utils/local-storage.service';
 
-    this._tokenAuthService.isRefreshTokenAvailable().subscribe({
-        next: (result) => {
+@Injectable({
+    providedIn: 'root',
+})
+export class ZeroRefreshTokenService implements RefreshTokenService {
+    constructor(
+        private _tokenAuthService: TokenAuthServiceProxy,
+        private _tokenService: TokenService,
+        private _localStorageService: LocalStorageService
+    ) {}
 
-            if (!result) {
-                refreshTokenObservable.next(false);
-                return;
-            }
-
-            this._tokenAuthService.refreshToken().subscribe({
-                next: () => refreshTokenObservable.next(true),
-                error: () => refreshTokenObservable.next(false)
-            });
+    tryAuthWithRefreshToken(): Observable<boolean> {
+        if (abp.auth.isHttpOnlyCookieEnabled) {
+            return this.tryAuthWithHttpOnlyRefreshToken();
         }
-    });
 
-    return refreshTokenObservable;
+        return this.tryAuthWithLocalRefreshToken();
+    }
+
+    private tryAuthWithHttpOnlyRefreshToken(): Observable<boolean> {
+        let refreshTokenObservable = new Subject<boolean>();
+
+        this._tokenAuthService.isRefreshTokenAvailable().subscribe({
+            next: (result) => {
+
+                if (!result) {
+                    refreshTokenObservable.next(false);
+                    return;
+                }
+
+                this._tokenAuthService.refreshToken(undefined).subscribe({
+                    next: () => refreshTokenObservable.next(true),
+                    error: () => refreshTokenObservable.next(false)
+                });
+            }
+        });
+
+        return refreshTokenObservable;
+    }
+
+    private tryAuthWithLocalRefreshToken():  Observable<boolean>{
+        let refreshTokenObservable = new Subject<boolean>();
+
+        let token = this._tokenService.getRefreshToken();
+        if (!token || token.trim() === '') {
+            return of(false);
+        }
+
+        this._tokenAuthService.refreshToken(token).subscribe(
+            (tokenResult: RefreshTokenResult) => {
+                if (tokenResult && tokenResult.accessToken) {
+                    let tokenExpireDate = new Date(new Date().getTime() + 1000 * tokenResult.expireInSeconds);
+                    this._tokenService.setToken(tokenResult.accessToken, tokenExpireDate);
+
+                    this._localStorageService.setItem(AppConsts.authorization.encrptedAuthTokenName, {
+                        token: tokenResult.encryptedAccessToken,
+                        expireDate: tokenExpireDate,
+                    }, () => refreshTokenObservable.next(true));
+
+                } else {
+                    refreshTokenObservable.next(false);
+                }
+            },
+            (error: any) => {
+                refreshTokenObservable.next(false);
+            }
+        );
+        return refreshTokenObservable;
+    }
 }
 ```
 
-### Comment cookie methods
+### Update `abp.auth.setToken` usages
 
 Open `abp.js` file in your `src/assets/abp-web-resources` folder. 
 
-Find the `abp.auth.setToken` and `abp.auth.getToken` functions, and comment out the function's body.
-
-```js
-abp.auth.getToken = function () {
-    // Commented out for HttpOnly cookies
-    // return abp.utils.getCookieValue(abp.auth.tokenCookieName);
-}
-
-abp.auth.setToken = function (authToken, expireDate) { 
-    // Commented out for HttpOnly cookies
-    // abp.utils.setCookieValue(abp.auth.tokenCookieName, authToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
-};
-```
-
-Delete the places where the `abp.auth.setToken` function is used
+Update the places where the `abp.auth.setToken` function is used
 
 * src/AppPreBootstrap.ts
 * src/account/auth/zero-refresh-token.service.ts
 * src/account/login/login.service.ts
 
-Delete the places where the `abp.auth.getToken` function is used
+Update the places where the `abp.auth.getToken` function is used
 
 *src/app/admin/users/users.component.ts*
 ```ts
 setUsersProfilePictureUrl(users: UserListDto[]): void {
-    for (let i = 0; i < users.length; i++) {
-        let user = users[i];
+    for (const user of users) {
+        let profilePictureUrl: string;
 
-        let profilePictureUrl =
-            AppConsts.remoteServiceBaseUrl +
-            '/Profile/GetProfilePictureByUser?userId=' +
-            user.id;
+        if (abp.auth.isHttpOnlyCookieEnabled) {
+            profilePictureUrl = `${AppConsts.remoteServiceBaseUrl}/Profile/GetProfilePictureByUser?userId=${user.id}`;
+        } else {
+            this._localStorageService.getItem(AppConsts.authorization.encrptedAuthTokenName, (err, value) => {
+                const token = encodeURIComponent(value);
+                profilePictureUrl = `${AppConsts.remoteServiceBaseUrl}/Profile/GetProfilePictureByUser?userId=${user.id}&${AppConsts.authorization.encrptedAuthTokenName}=${token}`;
+            });
+        }
 
         (user as any).profilePictureUrl = profilePictureUrl;
-
     }
 }
 ```
@@ -422,6 +702,16 @@ setUsersProfilePictureUrl(users: UserListDto[]): void {
 *src/AppPreBootstrap.ts*
 ```js
 private static getUserConfiguration(callback: () => void): any {
+    if(!abp.auth.isHttpOnlyCookieEnabled){
+        const token = abp.auth.getToken();
+
+        let requestHeaders = AppPreBootstrap.getRequetHeadersWithDefaultValues();
+
+        if (token) {
+            requestHeaders['Authorization'] = 'Bearer ' + token;
+        }
+    }
+
     return XmlHttpRequestHelper.ajax(
         'GET',
         AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll',
@@ -454,10 +744,20 @@ private static getUserConfiguration(callback: () => void): any {
 @Injectable()
 export class AppAuthService {
     logout(reload?: boolean, returnUrl?: string): void {
+
+        let customHeaders = null;
+
+        if(!abp.auth.isHttpOnlyCookieEnabled){
+            customHeaders = {
+                [abp.multiTenancy.tenantIdCookieName]: abp.multiTenancy.getTenantIdCookie(),
+                Authorization: 'Bearer ' + abp.auth.getToken(),
+            };
+        }
+
         XmlHttpRequestHelper.ajax(
             'GET',
             AppConsts.remoteServiceBaseUrl + '/api/TokenAuth/LogOut',
-            null,
+            customHeaders,
             null,
             () => {
                 this.logoutInternal(reload, returnUrl);
@@ -487,42 +787,26 @@ export class AppAuthService {
 }
 ```
 
-Remove following lines from file uploaders in:
+Update following lines from file uploaders in:
 
 * src/app/admin/demo-ui-components/demo-ui-file-upload.component.ts
 ```ts	
-event.xhr.setRequestHeader('Authorization', 'Bearer ' + abp.auth.getToken());
+if (!abp.auth.isHttpOnlyCookieEnabled) {
+    event.xhr.setRequestHeader('Authorization', 'Bearer ' + abp.auth.getToken());
+}
 ```
 
 * src/app/shared/layout/profile/change-profile-picture-modal.component.ts
 ```ts	
-event.xhr.setRequestHeader('Authorization', 'Bearer ' + abp.auth.getToken());
+if(!abp.auth.isHttpOnlyCookieEnabled){
+    this._uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
+}
 ```
 
 * src/app/admin/settings/tenant-settings.component.ts
 ```ts
-uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
-```
-
-Find the `abp.auth.setRefreshToken` and comment the function's body.
-
-```js
-abp.auth.setRefreshToken = function (refreshToken, expireDate) { // abp.utils.setCookieValue(abp.auth.refreshTokenCookieName, refreshToken, expireDate, abp.appPath, abp.domain, { 'SameSite': abp.auth.tokenCookieSameSite });
-};
-```
-
-Delete the places where the `abp.auth.setRefreshToken` function is used
-
-*src/account/login/login.service.ts*
-```ts
-// remove this code
-this._tokenService.setToken(accessToken, tokenExpireDate);
-
-if (refreshToken && rememberMe) {
-    let refreshTokenExpireDate = rememberMe
-        ? new Date(new Date().getTime() + 1000 * refreshTokenExpireInSeconds)
-        : undefined;
-    this._tokenService.setRefreshToken(refreshToken, refreshTokenExpireDate);
+if (!abp.auth.isHttpOnlyCookieEnabled) {
+    uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
 }
 ```
 
@@ -589,6 +873,11 @@ private static impersonatedAuthenticate(impersonationToken: string, tenantId: nu
             null,
             (response) => {
                 let result = response.result;
+
+                if(!abp.auth.isHttpOnlyCookieEnabled){
+                    abp.auth.setToken(result.accessToken);
+                }
+
                 AppPreBootstrap.setEncryptedTokenCookie(result.encryptedAccessToken, () => {
                     callback();
                     location.search = '';
