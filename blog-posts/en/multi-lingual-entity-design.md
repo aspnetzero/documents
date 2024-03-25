@@ -1,8 +1,11 @@
 # Mastering Multi-lingual Database Design in ASP.NET Core with EF Core
 
-In today's globalized world, reaching out to diverse audiences is crucial. For web applications, this often translates to supporting multiple languages. But how do you seamlessly store and manage this wealth of information within your database? 
+In today's globalized world, reaching out to diverse audiences is crucial. For web applications, this often translates to supporting multiple languages. Supporting multiple languages can be examined in two topics:
 
-This post explores different approaches, their pros and cons, and dives into implementing them in ASP.NET Core using Entity Framework Core (EF Core) with code examples.
+* Localization of static texts in the application
+* Localization of data entered by users of the application
+
+We will focus on localization of data in this post. This post explores different approaches, their pros and cons, and dives into implementing them in ASP.NET Core using Entity Framework Core (EF Core) with code examples.
 
 ## Approaches to Multi-lingual Database Design
 
