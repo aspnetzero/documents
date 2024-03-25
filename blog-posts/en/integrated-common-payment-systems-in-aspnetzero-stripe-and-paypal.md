@@ -1,18 +1,6 @@
-# Integrated Common Payment Systems in Asp.Net Zero Stripe and Paypal
+# Asp.Net Zero Payment System Integration: Stripe and Paypal
 
-Asp.Net Zero is a platform that allows developers to quickly and reliably create functional web applications. One of the biggest advantages of this platform is its integrated support for popular payment systems such as Stripe and Paypal.
-
-## Integrated Payment Systems in Asp.Net Zero
-
-### Stripe
-
-Stripe is a platform for online payment transactions. It provides tools for developers to securely process payments on websites or mobile applications.
-
-### Paypal
-
-Paypal is one of the most widely used online payment processors worldwide. Users can make purchases using credit cards, bank accounts, or other payment methods through their Paypal accounts.
-
-Stripe and Paypal also offer subscription management so businesses can manage billing for their customers. Asp.Net Zero, on the other hand, comes with a pre-integrated subscription system.
+Asp.Net Zero offers tenant subscription management to manage billing for customers. In line with your request, we have developed a common payment management system. This system is integrated with Stripe and Paypal payment systems. This integration allows you to manage payments and subscriptions easily and securely. Whether you use Angular or Mvc, ready-made user interfaces and enhanced gateway are waiting for you.
 
 ## Benefits of Payment System Integration in Asp.Net Zero
 
@@ -21,6 +9,18 @@ The Stripe and Paypal integration provided by Asp.Net Zero makes it easy for dev
 Asp.Net Zero provides features that bring benefits to developers. First, developers don’t have to put as much effort into integrating payment systems like Stripe and Paypal. Asp.Net Zero includes the tools and components required for these integrations to speed up the development process and reduce costs.
 
 AspNet Zero offers integrated payment systems such as Paypal and Stripe, but also offers an infrastructure that makes it easier for users to integrate different payment systems. Users can easily integrate different payment systems whenever they want.
+
+## Integrated Payment Systems in Asp.Net Zero
+
+* **Stripe**: It is a platform for online payment transactions. It provides tools for developers to securely process payments on websites or mobile applications.
+
+* **Paypal**: It is one of the most widely used online payment processors worldwide. Users can make purchases using credit cards, bank accounts, or other payment methods through their Paypal accounts.
+
+* **Other Payment Systems**: Asp.Net Zero also offers an infrastructure that allows users to integrate different payment systems. Users can easily integrate different payment systems whenever they want.
+
+Stripe and Paypal also offer subscription management so businesses can manage billing for their customers. Asp.Net Zero, on the other hand, comes with a pre-integrated subscription system.
+
+> For more information about the integrated payment systems in Asp.Net Zero, you can check out the [official documentation](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core-Common-Payment-System).
 
 ## Don't Miss Out! 
 
