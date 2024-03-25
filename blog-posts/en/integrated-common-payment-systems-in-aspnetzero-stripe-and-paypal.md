@@ -2,6 +2,8 @@
 
 Asp.Net Zero offers tenant subscription management to manage billing for customers. In line with your request, we have developed a common payment management system. This system is integrated with Stripe and Paypal payment systems. This integration allows you to manage payments and subscriptions easily and securely. Whether you use Angular or Mvc, ready-made user interfaces and enhanced gateway are waiting for you.
 
+![alt text](/Images/common-payment-system-payment-history.png)
+
 ## Benefits of Payment System Integration in Asp.Net Zero
 
 The Stripe and Paypal integration provided by Asp.Net Zero makes it easy for developers to create functional web applications. By integrating Stripe and Paypal payment systems, users can conduct secure and fast payment transactions. Especially in business models such as subscription-based platforms, providing a reliable payment system can improve user satisfaction and help companies increase revenue.
@@ -11,6 +13,8 @@ Asp.Net Zero provides features that bring benefits to developers. First, develop
 AspNet Zero offers integrated payment systems such as Paypal and Stripe, but also offers an infrastructure that makes it easier for users to integrate different payment systems. Users can easily integrate different payment systems whenever they want.
 
 ## Integrated Payment Systems in Asp.Net Zero
+
+![alt text](/Images/common-payment-system-paypal-stripe.png)
 
 * **Stripe**: It is a platform for online payment transactions. It provides tools for developers to securely process payments on websites or mobile applications.
 
