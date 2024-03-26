@@ -10,7 +10,7 @@ Beginning from [v4.1](https://docs.aspnetzero.com/en/common/latest/Change-Logs),
 Beginning from [v4.1](https://docs.aspnetzero.com/en/common/latest/Change-Logs), we are more focused on **Angular** based solutions (rather than Angularjs 1.x). That means our new major features will be implemented for Angular framework.
 
 ## Version Differences
-- **ASP.NET Core & jQuery:** All social login options are available.
+- **ASP.NET Core & jQuery:** All social login options are available. (Facebook, Twitter, Microsoft, Google, OpenIddict)
 - **ASP.NET Core & Angular:** Twitter social login option is not available.
 
 See **development guide** documents for details of all features in different versions:
