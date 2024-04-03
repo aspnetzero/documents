@@ -1,6 +1,11 @@
 # Passwordless Login
 
-ASP.NET Zero is ready to provide passwordless login, but it is disabled by default. You can easily enable this in the `User Management` tab, on the host settings page.
+ASP.NET Zero provides passwordless login feature out of the box, but it is disabled by default. It can be enabled in the `User Management` tab, on the host settings page. 
+
+When a user requests to login using passwordless login feature, a 6-digit unique code will be sent to users email address or phone number depending on users selection on passwordless login page. 
+
+- A Passwordless login code can be used only once.
+- When a passwordless login code is verified, it can't be used anymore.
 
 ![Passwordless login settings](images/passwordless-login-settings.png)
 
@@ -10,7 +15,7 @@ If any of the passwordless login options are turned on, a section for passwordle
 
 ![Passwordless login click here](images/passwordless-login-click-here.png)
 
-If the user wants to log in using passwordless login, he/she will be directed to the verification screen for authentication after clicking on the `click here` field.
+If a user wants to log in using passwordless login, the user will be directed to the verification screen for authentication after clicking on the `click here` link.
 
 ## Verification Type
 
@@ -38,4 +43,4 @@ After filling in the necessary fields according to the chosen verification type,
 
 ![Passwordless login verify passwordless code](images/passwordless-login-verify-passwordless-code.png)
 
-After entering the verification code correctly, you will be redirected to the dashboard.
+After entering the verification code correctly, user will be authenticated and redirected to the home page of the application.
