@@ -40,6 +40,10 @@
                 {
                   "text": "Token Based Authentication",
                   "path": "Features-Angular-Token-Based-Authentication.md"
+                },
+                {
+                  "text": "Passwordless Login",
+                  "path": "Features-Passwordless-Login.md"
                 }
               ]
             },
