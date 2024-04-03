@@ -30,7 +30,11 @@
                 {
                   "text": "Forgot Password",
                   "path": "Features-Mvc-Core-Forgot-Password.md"
-                }
+                },
+                {
+                  "text": "Passwordless Login",
+                  "path": "Features-Passwordless-Login.md"
+                }                
               ]
             },
             {
