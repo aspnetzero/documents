@@ -1,41 +1,110 @@
-# Asp.Net Zero Payment System Integration: Stripe and Paypal
+# ASP.NET Zero Common Payment System Integration
 
-Asp.Net Zero offers tenant subscription management to manage billing for customers. In line with your request, we have developed a common payment management system. This system is integrated with Stripe and Paypal payment systems. This integration allows you to manage payments and subscriptions easily and securely. Whether you use Angular or Mvc, ready-made user interfaces and enhanced gateway are waiting for you.
+ASP.NET Zero offers developers various functionalities with its powerful features. In this article, we will explore step-by-step how to utilize ASP.NET Zero's provided payment system infrastructure, as well as how to use the integrated Stripe and PayPal.
 
-![alt text](/Images/common-payment-system-payment-history.png)
+Integrating a common payment system into your platform offers numerous benefits, streamlining transaction processes and enhancing user experience. With a common payment system, you can centralize payment handling, simplifying management and ensuring consistency across different payment methods.
 
-## Benefits of Payment System Integration in Asp.Net Zero
+## Using the Payment Manager
+You can manage payment transactions through the payment manager provided by ASP.NET Zero `(IPaymentManager)`. To initiate a payment, you can use the `CreatePayment` method of `IPaymentManager`. Additionally, you can utilize the `CreatePayment` method of the `PaymentAppService` to initiate the payment process.
 
-The Stripe and Paypal integration provided by Asp.Net Zero makes it easy for developers to create functional web applications. By integrating Stripe and Paypal payment systems, users can conduct secure and fast payment transactions. Especially in business models such as subscription-based platforms, providing a reliable payment system can improve user satisfaction and help companies increase revenue.
+## Creating Payment Request
+When creating a payment request, you will utilize the `SubscriptionPayment` entity. The details of the SubscriptionPayment entity are as follows:
 
-Asp.Net Zero provides features that bring benefits to developers. First, developers don’t have to put as much effort into integrating payment systems like Stripe and Paypal. Asp.Net Zero includes the tools and components required for these integrations to speed up the development process and reduce costs.
+- **TenantId:** Represents which Tenant this payment request belongs to.
+- **PaymentPeriodType:** Period type of the payment if this is a payment for a specific period. Currently, Monthly and Annual are supported.
+- **DayCount:** Integer value of PaymentPeriodType field.
+- **Gateway:** Name of payment gateway which processed this payment. This is set by ASP.NET Zero when the payment is successfull.
+- **Status:** Status of payment. This is set by ASP.NET Zero.
+- **ExternalPaymentId:** Id of the payment in the external payment gateway system like Stripe or PayPal. This is set by ASP.NET Zero.
+- **InvoiceNo:** Invoice number if an invoice generated in ASP.NET Zero for this payment.
+- **SuccessUrl:** URL to redirect user if payment is successfull.
+- **ErrorUrl:** URL to redirect user if payment is failed.
+- **IsRecurring:** Represents if this is a recurring payment or not. If it is recurring, user's credit card will be charged at the end of every payment cycle. This is only supported by Stripe at the moment.
+- **IsProrationPayment:** This is a special field. If the tenant is on a recurring payment plan and operation is upgrade, then it is a proration payment.
+- **ExtraProperties:** A dictionary to store additional information on the payment object.
+- **SubscriptionPaymentProducts:** List of products to be purchased for this payment..
 
-AspNet Zero offers integrated payment systems such as Paypal and Stripe, but also offers an infrastructure that makes it easier for users to integrate different payment systems. Users can easily integrate different payment systems whenever they want.
+## SubscriptionPaymentProduct Entity
 
-## Integrated Payment Systems in Asp.Net Zero
+`SubscriptionPaymentProduct` entity represents the details of products purchased in payment transactions. The properties of purchased products for each payment request are maintained through this entity.
 
-![alt text](/Images/common-payment-system-paypal-stripe.png)
+- **SubscriptionPaymentId:** This property represents the identifier of the corresponding payment record. It has a unique identity for each payment request and is used to distinguish payment records from each other.
+- **Description:** This property contains the description of the purchased product or service.
+- **Amount:** This property represents the price of the product, i.e., the unit price of the purchased product or service. This price is specified in the currency.
+- **Count:** This property specifies the quantity of products to be purchased. In case a user purchases multiple products, the quantity of each product is specified with this property.
+- **TotalAmount:** This property represents the total price, i.e., the total cost of the purchased products. It is calculated by multiplying the Amount property by the quantity of the product.
+- **ExtraProperties:** This property is used to store additional information about the product object in a dictionary.
 
-* **Stripe**: It is a platform for online payment transactions. It provides tools for developers to securely process payments on websites or mobile applications.
+Integration of payment methods in ASP.NET Zero is highly flexible and easily customizable. By following these steps, you can seamlessly integrate a secure and functional payment system into your ASP.NET Zero project.
 
-* **Paypal**: It is one of the most widely used online payment processors worldwide. Users can make purchases using credit cards, bank accounts, or other payment methods through their Paypal accounts.
+## Integrated Stripe and PayPal
+ASP.NET Zero provides integrated support for payment systems like Stripe and PayPal, enabling developers to easily build their applications on a reliable payment infrastructure.
 
-* **Other Payment Systems**: Asp.Net Zero also offers an infrastructure that allows users to integrate different payment systems. Users can easily integrate different payment systems whenever they want.
+## Creating Stripe and PayPal Accounts
+Firstly, you'll need to create Stripe and PayPal accounts. You can create your accounts and obtain API keys from the developer panels of Stripe and PayPal.
 
-Stripe and Paypal also offer subscription management so businesses can manage billing for their customers. Asp.Net Zero, on the other hand, comes with a pre-integrated subscription system.
+After creating the accounts, it is necessary to fill in the required fields in the `appsettings.json` file.
 
-> For more information about the integrated payment systems in Asp.Net Zero, you can check out the [official documentation](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core-Common-Payment-System).
+```json
+"Payment": {
+  "PayPal": {
+    "IsActive": "true",
+    "Environment": "sandbox",
+    "BaseUrl": "https://api.sandbox.paypal.com/v1",
+    "ClientId": "",
+    "ClientSecret": "",
+    "DemoUsername": "",
+    "DemoPassword": "",
+    "DisabledFundings": []
+  },
+  "Stripe": {
+    "IsActive": "true",
+    "BaseUrl": "https://api.stripe.com/v1",
+    "SecretKey": "",
+    "PublishableKey": "",
+    "WebhookSecret": "",
+    "PaymentMethodTypes": [
+      "card"
+    ]
+  }
+},
+```
+
+### Paypal
+
+- **IsActive:** Indicates whether the PayPal account is active or not. If set to "true", the PayPal payment system is enabled.
+- **Environment:** Specifies the environment in which the PayPal account operates. "sandbox" represents an environment used for development and testing purposes. The value "live" is used for live transactions.
+- **BaseUrl:** Specifies the base URL for requests sent to the PayPal API.
+- **ClientId and ClientSecret:** Represent the client ID and client secret used to access the PayPal API.
+- **DemoUsername and DemoPassword:** Represent the demo username and password used for accessing the PayPal API.
+- **DisabledFundings:** This field specifies the funding sources disabled in the PayPal payment flow. For example, "credit" or "card".
+
+### Stripe
+
+- **IsActive:** Specifies whether the Stripe account is active or not. If set to "true", the Stripe payment system is enabled.
+- **BaseUrl:** Specifies the base URL for requests sent to the Stripe API.
+- **SecretKey:** Represents the secret key used to access the Stripe API.
+- **PublishableKey:** Represents the publishable key used for creating Stripe payment forms.
+- **WebhookSecret:** Represents the secret key used to authenticate the Stripe webhook.
+- **PaymentMethodTypes:** This field specifies the payment methods available in the Stripe payment system. For example, the value "card" represents credit card payments.
+
+After filling in the required fields, you can easily utilize the Stripe and PayPal payment systems.
+
+![Common Payment Gateway Selection](/Images/Blog/integrated-common-payment-gateway-selection.png)
+
+After completing all the configurations, there are active payment methods available at the "Payment/GatewaySelection" address. Once a method is selected from these options, the payment process is initiated, and upon successful completion, the subscription is activated.
 
 ## Don't Miss Out! 
 
 We have published new blog posts about ASP.NET Zero. You can check them out below:
 
+* [Mastering Multi-lingual Database Design in ASP.NET Core with EF Core](https://aspnetzero.com/blog/mastering-multi-lingual-database-design-in-asp.net-core-with-ef-core)
+
+* [ASP .NET Core Configuration](https://aspnetzero.com/blog/asp.net-core-configuration)
+
 * [Introducing ASP.NET Zero v.13.1](https://aspnetzero.com/blog/introducing-asp.net-zero-v.13.1)
 
-* [For those who love Kendo UI, you can check out our blog post about how to integrate Kendo UI with ASP.NET Zero.](https://aspnetzero.com/blog/how-to-integrate-kendoui-angular-with-asp.net-zero)
-
-* [Easily integrate Azure Active Directory with ASP.NET Zero](https://aspnetzero.com/blog/integrating-azure-active-directory-with-asp.net-zero)
 
 ## Conclusion
 
-The Stripe and Paypal integration offered by AspNet Zero provides developers with advantages in creating functional and secure web applications. With these features, developers can work more quickly and efficiently, enhancing user experience and boosting business performance.
+The common payment system provided by ASP.NET Zero offers developers convenience in integrating payment methods seamlessly. With these capabilities, developers can streamline their workflow, improve user experience, and enhance business performance. 
