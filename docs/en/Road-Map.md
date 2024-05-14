@@ -2,10 +2,8 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   Power Tools: Add Custom Menu Position.
--   Power Tools: Column selection in excel export.
--   Passwordless login.
 -   PayPal recurring payments.
+-   .NET 9 upgrade.
 -   Power Tools enhancements
 -   User Sync/Link feature
 -   Tenant login page customization

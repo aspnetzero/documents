@@ -6,6 +6,16 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 13.2.0 (2024-05-14)
+
+* Passwordless login.
+* Power Tools: Custom menu position for page generation.
+* Power Tools: Column selection on excel export.
+* Power Tools: Excel import feature for navigation properties.
+* Upgradaed to ABP 9.2.2.
+* Upgraded to DataTables 2.0.
+* Upgraded Flurl to 4.x.
+
 ## 13.1.0 (2024-02-27)
 
 * Power Tools: Excel Import for generated Entities.
