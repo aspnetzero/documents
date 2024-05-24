@@ -2,10 +2,11 @@
 
 ASP.NET Zero offers developers various functionalities with its powerful features. In this article, we will explore step-by-step how to utilize ASP.NET Zero's provided payment system infrastructure, as well as how to use the integrated Stripe and PayPal.
 
-Integrating a common payment system into your platform offers numerous benefits, streamlining transaction processes and enhancing user experience. With a common payment system, you can centralize payment handling, simplifying management and ensuring consistency across different payment methods.
+ASP.NET Zero's common payment system allows developers to process payments for any service/good either one time or in a recurring way. Let's dive in.
 
 ## Using the Payment Manager
-You can manage payment transactions through the payment manager provided by ASP.NET Zero `(IPaymentManager)`. To initiate a payment, you can use the `CreatePayment` method of `IPaymentManager`. Additionally, you can utilize the `CreatePayment` method of the `PaymentAppService` to initiate the payment process.
+
+You can manage payment transactions through the payment manager provided by . To initiate a payment, you can use the `CreatePayment` method of `IPaymentManager`. Additionally, you can utilize the `CreatePayment` method of the `PaymentAppService` to initiate the payment process.
 
 ## Creating Payment Request
 When creating a payment request, you will utilize the `SubscriptionPayment` entity. The details of the SubscriptionPayment entity are as follows:
