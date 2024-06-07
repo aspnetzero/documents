@@ -4,9 +4,13 @@ In change logs under audit logs menu, we can see all change logs (entity history
 
 <img src="images/change-logs-core.png" alt="Change Logs" class="img-thumbnail" />
 
-When we click the magnifier icon, we can see all the details about a change log:
+When we click on the **View Change** field in the Actions button, we can see all the details of a change log:
 
 <img src="images/entity-history-log-detail.png" alt="Change Log Detail" class="img-thumbnail" />
+
+When we click on the **All Changes** button in the Actions section, we can see all the details of the changes made to the entity in a timeline.
+
+<img src="images/entity-history-timeline-detail.png" alt="Entity History Timeline Detail" class="img-thumbnail" />
 
 You should add entity type that you want to track to ***.Core\EntityHistory\EntityHistoryHelper.TrackedTypes**.  Make sure you uncomment following lines in ***.EntityFrameworkCore\EntityFrameworkCore\{YourProjectName}EntityFrameworkCoreModule.cs** and set **Configuration.EntityHistory.IsEnabled** to **true**.
 
