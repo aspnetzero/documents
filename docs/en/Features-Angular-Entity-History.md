@@ -10,6 +10,8 @@ When we click on the **View Change** field in the Actions button, we can see all
 
 When we click on the **All Changes** button in the Actions section, we can see all the details of the changes made to the entity in a timeline.
 
+Additionally, if you want to view all the changes made to an entity, you can redirect to `{AppPath}/{AppAreaName}/EntityChanges/{Entity_ID}/{Entity_Full_Name}` within the application. This URL directs to a page that contains all the historical changes for the specified entity.
+
 <img src="images/entity-history-timeline-detail.png" alt="Entity History Timeline Detail" class="img-thumbnail" />
 
 You should add entity type that you want to track to ***.Core\EntityHistory\EntityHistoryHelper.TrackedTypes**.  Make sure you uncomment following lines in ***.EntityFrameworkCore\EntityFrameworkCore\{YourProjectName}EntityFrameworkCoreModule.cs** and set **Configuration.EntityHistory.IsEnabled** to **true**.
