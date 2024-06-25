@@ -1,10 +1,18 @@
 # Switching Between Organization Units
 
-In ASP.NET Zero projects, the ability for users to switch between different organizational units is essential, especially for multi unit organizations.Allowing users to select and change their active unit during their sessions enhances both the user experience and operational efficiency. However, managing this transition correctly and securely can often be complex.
+In most companies, a user belongs to more than one organization. Also, in some applications, we need to filter the data shown depending on the logged-in user's organization. For such scenarios, allowing users to select one of the organizations they belong to is a good practice.
 
-## Implementing of Organization Unit Switching Between
+For creating a custom data filter, you can check [https://aspnetboilerplate.com/Pages/Documents/Articles%5CHow-To%5Cadd-custom-data-filter-ef-core](https://aspnetboilerplate.com/Pages/Documents/Articles%5CHow-To%5Cadd-custom-data-filter-ef-core).
 
-In this section, we'll delve into the implementation details of enabling users to switch between different organizational units within an ASP.NET Zero project. 
+In order to allow users to change their active organization unit, we can design a UI like the one below;
+
+![image](./images/Blog/switch-ou-sample-screebshot.jpg)
+
+By using this dropdown, a user can switch between organization units.
+
+## Implementing Organization Unit Switching
+
+In this section, we'll dive into the implementation details of enabling users to switch between different organizational units within an ASP.NET Zero project. 
 
 ### Creating Claims Principal for Organization Unit
 
@@ -25,7 +33,7 @@ public override async Task<ClaimsPrincipal> CreateAsync(User user)
 }
 ```
 
-The first code snippet overrides the **CreateAsync** method to incorporate organization unit information into the claims principal. 
+We are overwriting the **CreateAsync** method of `UserClaimsPrincipalFactory` to store user's selected organization unit in claims principal.
 
 Within this context, we add the first element of the Organization Unit as a claim during user principal creation.
 
@@ -39,11 +47,13 @@ private async Task<User> GetUserWithOrganizationUnitsAsync(long userId)
 }
 ```
 
-The second snippet demonstrates the asynchronous method GetUserWithOrganizationUnitsAsync, which retrieves a user with their associated organization units from the database.
+Private `GetUserWithOrganizationUnitsAsync` method retrieves a user with user's associated organization units from the database.
+
+Now, we can use `Organization_Unit` claim as the currently selected organization unit for logged-in user and filter any data using its value.
 
 ### Modifying the Organization Unit in Session
 
-Here, we implement functionality to modify the organizational unit within the session, following the guidelines outlined in this [document](https://aspnetboilerplate.com/Pages/Documents/Articles%5CHow-To%5Cadd-custom-session-field-aspnet-core).
+Now, we must allow logged-in user to switch selected organization unit. To do that, we first need to add a new field to `AbpSession` by following this [document](https://aspnetboilerplate.com/Pages/Documents/Articles%5CHow-To%5Cadd-custom-session-field-aspnet-core).
 
 ```csharp
 public class MyAppSession : ClaimsAbpSession, ITransientDependency
@@ -93,7 +103,7 @@ With these additions, the `MyAppSession` class now includes methods to both retr
 
 ### Usage Example: Switching Organization Units
 
-In this section, we will demonstrate how to use a method for switching a user's organization unit within a new service class. The following example shows the `OrganizationUnitManager` class, which uses `MyAppSession` to allow a user to be removed from their current organization unit and added to a new one.
+In this section, we will demonstrate how to use a method for switching a user's organization unit within a new service class. The following example shows the `OrganizationUnitManager` class, which uses `MyAppSession` to allow a user to change currently selected organization unit.
 
 ```csharp
 public class OrganizationUnitManager
@@ -125,12 +135,16 @@ public class OrganizationUnitManager
 
 #### Usage Steps
 
-1. **Retrieve the Current Organization Unit:** The oldOrganizationUnit is deserialized from the current session's OrganizationUnit claim.
-2. **Set the New Organization Unit:** The SetOrganizationUnit method of MyAppSession is called to set the new organization unit in the session.
-3. **Remove from the Old Unit:** The user is removed from the old organization unit using _userManager.RemoveFromOrganizationUnitAsync.
-4. **Add to the New Unit:** The user is added to the new organization unit using _userManager.AddToOrganizationUnitAsync.
+So, we completed the backend side to switch user's current organization unit in claims principal. So, let's see how we can use it from the client side.
 
+1. **Fill the user's organization units**: As shown in the image above in the introcution section, we need to fill the user's organization units to a dropdown. To do this, you can use `_userManager.GetOrganizationUnitsAsync(user)` and map its result to a DTO class and return it to client and fill the dropdown using returned list.
+2. **Retrieve the Current Organization Unit:** The oldOrganizationUnit is deserialized from the current session's OrganizationUnit claim. So, you can use this value to set selected value of the organization unit dropdown.
+3. **Set the New Organization Unit:** On the change event of the dropdown, call an API endpoint (This is not explained above but you can use ProfileAppService and create a new method in this application service class) and this endpoint should call;
 
-## Conclusion
+```csharp
+public async Task ChangeOrganizationUnit(UserOrganizationUnit newUserOrganizationUnit){
+    await _organizationUnitManager.SwitchOrganizationUnitAsync(newUserOrganizationUnit);
+}
+```
 
-Switching between organizational units in ASP.NET Zero projects can increase your organization's flexibility in transitions between organizations and facilitate organizational management. With a custom session, it is possible to switch between the user's current organization information and the organization. This work can also simplify organizational operational processes.
+So, that's all and our app allows users to change their active organization unit on the UI.
