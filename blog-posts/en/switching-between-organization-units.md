@@ -6,7 +6,7 @@ For creating a custom data filter, you can check [https://aspnetboilerplate.com/
 
 In order to allow users to change their active organization unit, we can design a UI like the one below;
 
-![image](./images/Blog/switch-ou-sample-screebshot.jpg)
+![image](./images/Blog/switch-ou-sample-screenshot.jpg)
 
 By using this dropdown, a user can switch between organization units.
 
