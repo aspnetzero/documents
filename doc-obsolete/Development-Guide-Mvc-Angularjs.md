@@ -2,51 +2,32 @@
 
 ## Introduction
 
-In the [Getting Started](Getting-Started.md) document, a new sample
-project is created named "**Acme.PhoneBook**". This document is a guide
-while developing your project. You should definitely read this document
-before starting your custom development. Since ASP.NET Zero is built on
-[ASP.NET Boilerplate](https://aspnetboilerplate.com/) application
-framework, this document repeatedly refers ASP.NET Boilerplate's
-[documentation](https://aspnetboilerplate.com/Pages/Documents).
+In the [Getting Started](Getting-Started-Mvc-Angularjs) document, a new sample project is created named "**Acme.PhoneBook**". This document is a guide while developing your project. You should definitely read this document
+before starting your custom development. Since ASP.NET Zero is built on [ASP.NET Boilerplate](https://aspnetboilerplate.com/) application framework, this document repeatedly refers ASP.NET Boilerplate's [documentation](https://aspnetboilerplate.com/Pages/Documents).
 
-Before reading this document, you should run the application and explore
-the user interface. This will help you to have a better understanding of
-concepts defined here.
+Before reading this document, you should run the application and explore the user interface. This will help you to have a better understanding of concepts defined here.
 
 ### Pre Requirements
 
-The following tools are needed in order to use the ASP.NET Zero
-solution:
+The following tools are needed in order to use the ASP.NET Zero solution:
 
 -   Visual Studio 2017 v15.3.5 or higher
 -   SQL Server
 
 ### Solution Structure (Layers)
 
-When you create and [download](https://aspnetzero.com/Download) your project, there will be a
-solution structure as shown below:
+When you create and [download](https://aspnetzero.com/Download) your project, there will be a solution structure as shown below:
 
 <img src="images/solution-overall-2.png" alt="ASP.NET Zero solution structure" class="img-thumbnail" width="242" height="219" />
 
 There are seven projects in the solution:
 
--   **Core** project contains domain layer classes (like
-    [entities](https://aspnetboilerplate.com/Pages/Documents/Entities)
-    and [domain
-    services](https://aspnetboilerplate.com/Pages/Documents/Domain-Services)).
--   **Application** project contains application logic (like
-    [application
-    services](https://aspnetboilerplate.com/Pages/Documents/Application-Services)
-    and
+-   **Core** project contains domain layer classes (like [entities](https://aspnetboilerplate.com/Pages/Documents/Entities) and [domain services](https://aspnetboilerplate.com/Pages/Documents/Domain-Services)).
+-   **Application** project contains application logic (like [application services](https://aspnetboilerplate.com/Pages/Documents/Application-Services) and
     [DTO](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)s).
--   **EntityFramework** project contains your DbContext,
-    [repository](https://aspnetboilerplate.com/Pages/Documents/Repositories)
-    implementations, database migrations and other EntityFramework
-    specific concepts.
+-   **EntityFramework** project contains your DbContext, [repository](https://aspnetboilerplate.com/Pages/Documents/Repositories) implementations, database migrations and other EntityFramework specific concepts.
 -   **WebApi** project contains Web API Controllers.
--   **Web** project contains the presentation layer (javascripts, styles
-    and views).
+-   **Web** project contains the presentation layer (JavaScript, styles and views).
 -   **Migrator** project is a console application that runs database
     migrations.
 -   **Tests** project contains unit and integration tests.
@@ -55,108 +36,72 @@ There are seven projects in the solution:
 
 ASP.NET Zero solution contains **four** applications:
 
--   **Front End MVC Application**: This can be used to create a public
-    web site or a landing page for your application.
--   **AngularJS Back End Single-Page** **Application**. This is the
-    application which is entered by username and password. It's built as
-    a SPA with AngularJS.
--   **MVC Back End Multi-Page Application**: This has identical
-    functionality with the AngularJS application but is built using MVC
-    and jQuery (no AngularJS).
+-   **Front End MVC Application**: This can be used to create a public web site or a landing page for your application.
+-   **AngularJS Back End Single-Page** **Application**. This is the application which is entered by username and password. It's built as a SPA with AngularJS.
+-   **MVC Back End Multi-Page Application**: This has identical functionality with the AngularJS application but is built using MVC and jQuery (no AngularJS).
 -   **Migrator**: Console application that runs database migrations.
 
-Thus, the back-end application is built in two different architectures
-(SPA and MPA). You can choose the one you are most comfortable with. If
-you just want to build a SPA, you can safely remove MPA files from your
-project, or vice versa.
+Thus, the back-end application is built in two different architectures (SPA and MPA). You can choose the one you are most comfortable with. If you just want to build a SPA, you can safely remove MPA files from your project, or vice versa.
 
 ### Multi tenancy
 
-Multi-tenancy is used to build **SaaS** (Software as a Service)
-applications easily. With this technique, we can deploy **single
-application** to serve to **multiple customers**. Each Tenant will have
-it's own **roles**, **users** and **settings**.
+Multi-tenancy is used to build **SaaS** (Software as a Service) applications easily. With this technique, we can deploy **single application** to serve to **multiple customers**. Each Tenant will have it's own **roles**, **users** and **settings**.
 
-All of the ASP.NET Zero's code-base is developed to be **multi-tenant**.
-But, it [**can be disabled**](Getting-Started#DocConfigureMultiTenancy)
-with a single line of configuration if you are developing
-**single-tenant** application. If you disable it, all multi-tenancy
-stuff will be hidden and not available. If multi-tenancy is disabled,
-there will be a single tenant named **Default**.
+All of the ASP.NET Zero's code-base is developed to be **multi-tenant**. But, it [**can be disabled**](Getting-Started-Mvc-Angularjs#DocConfigureMultiTenancy)
+with a single line of configuration if you are developing **single-tenant** application. If you disable it, all multi-tenancy stuff will be hidden and not available. If multi-tenancy is disabled, there will be a single tenant named **Default**.
 
 There are two types of perspective in multi-tenant applications:
 
--   **Host**: Manages tenants and system. This is you, the SaaS
-    provider.
+-   **Host**: Manages tenants and system. This is you, the SaaS provider.
 -   **Tenant**: Uses the application features. This is your customers.
 
-ASP.NET Zero uses ABP's (ASP.NET Boilerplate) **[data
-filters](https://aspnetboilerplate.com/Pages/Documents/Data-Filters)**.
-Therefore it automatically filters tenant data if you properly use
-filter interfaces. Read [multi-tenant
-documentation](https://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy)
-if you are building multi-tenant applications.
+ASP.NET Zero uses ABP's (ASP.NET Boilerplate) **[data filters](https://aspnetboilerplate.com/Pages/Documents/Data-Filters)**. Therefore it automatically filters tenant data if you properly use filter interfaces. Read [multi-tenant documentation (https://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy) if you are building multi-tenant applications.
 
 ### Web Site Root URL
 
-**web.config** file contains a setting, named "**WebSiteRootAddress**",
-which stores root URL of the web application:
+**Web.config** file contains a setting, named "**WebSiteRootAddress**", which stores root URL of the web application:
 
-    <add key="WebSiteRootAddress" value="http://localhost:6240/" />
+```xml
+<add key="WebSiteRootAddress" value="http://localhost:6240/" />
+```
 
-It's used to calculate some URLs in the application. So, you need to
-change this on deployment. For multi-tenant applications, this URL can
+It's used to calculate some URLs in the application. So, you need to change this on deployment. For multi-tenant applications, this URL can
 contain dynamic tenancy name. In that case, put {TENANCY\_NAME} instead
 of tenancy name like:
 
-    <add key="WebSiteRootAddress" value="http://{TENANCY_NAME}.mydomain.com/" />
+```xml
+<add key="WebSiteRootAddress" value="http://{TENANCY_NAME}.mydomain.com/" />
+```
 
-Thus, ASP.NET Zero can automatically detect current tenant from URLs. If
-you configure it as above, you should also redirect all subdomains to
-your application. To do that;
+Thus, ASP.NET Zero can automatically detect current tenant from URLs. If you configure it as above, you should also redirect all subdomains to your application. To do that;
 
-1.  You should configure DNS to redirect all subdomains to a static IP
-    address. To declare 'all subdomains', you can use a wildcard e.g.
-    **\*.mydomain.com**.
+1.  You should configure DNS to redirect all subdomains to a static IP address. To declare 'all subdomains', you can use a wildcard e.g. **\*.mydomain.com**.
 2.  You should configure IIS to bind this static IP to your application.
 
 There may be other ways of doing it but this is the simplest.
 
 ## Front End MVC Application
 
-ASP.NET Zero contains front-end pages that can be a starting point for
-your public web site or a landing page for the application. When you
-first run the project, you will see the Home Page as shown below:
+ASP.NET Zero contains front-end pages that can be a starting point for your public web site or a landing page for the application. When you first run the project, you will see the Home Page as shown below:
 
 <img src="images/frontend-homepage.jpg" alt="Frontend home page" class="img-thumbnail" width="500" height="496" />
 
-There are two pages here: **Home Page** and **About**. Content of these
-pages initially consists of placeholders for demo purposes that you
-should change. You can completely remove that content and build your
-page based on your needs. Also, you should change the **logo** with your
-Company's logo, of course.
+There are two pages here: **Home Page** and **About**. Content of these pages initially consists of placeholders for demo purposes that you should change. You can completely remove that content and build your
+page based on your needs. Also, you should change the **logo** with your Company's logo, of course.
 
-See [metronic front-end
-theme](http://keenthemes.com/multi-purpose-corporate-frontend-themefreebie-corporate-frontend-theme/)
-to review the myriad options and components available as part of the
-theme - they are an extensive resource that will enable you to more
-quickly build a richer web site.
+See [metronic front-end theme](http://keenthemes.com/multi-purpose-corporate-frontend-themefreebie-corporate-frontend-theme/) to review the myriad options and components available as part of the
+theme - they are an extensive resource that will enable you to more quickly build a richer web site.
 
-Menus are defined in **FrontEndNavigationProvider** class. When you add
-a new menu item here, it will be automatically shown in the menu. There
-is a **Login** link at the top right corner. This link takes us to the
+Menus are defined in **FrontEndNavigationProvider** class. When you add a new menu item here, it will be automatically shown in the menu. There is a **Login** link at the top right corner. This link takes us to the
 **Login page** for the **backend** application.
 
 ### Layout
 
-Layout of front-end pages is located in the **Views/Layout** folder of
-the **.Web** project:
+Layout of front-end pages is located in the **Views/Layout** folder of the **.Web** project:
 
 <img src="images/frontend-layout-views.png" alt="Layout views" class="img-thumbnail" width="168" height="234" />
 
-**\_Layout** is the main layout file that includes scripts and styles.
-Language flags and the menu is rendered in **\_Header** file.
-\_PreFooter is not used but you can add it to the \_Layout if you want.
+**\_Layout** is the main layout file that includes scripts and styles. Language flags and the menu is rendered in **\_Header** file. \_PreFooter is not used but you can add it to the \_Layout if you want.
 
 ### Tenant Sign Up
 
@@ -1278,11 +1223,11 @@ shown below:
 [AbpAuthorize(AppPermissions.Pages_Tenants_Edit)]
 public async Task<TenantEditDto> GetTenantForEdit(EntityRequestInput input)
 {
-    return (await TenantManager.GetByIdAsync(input.Id)).MapTo<TenantEditDto>();
+    return ObjectMapper.MapTo<TenantEditDto>((await TenantManager.GetByIdAsync(input.Id)));
 }
 ```
 
-**MapTo** method does mapping.
+**ObjectMapper's MapTo** method does mapping.
 
 #### Custom Object Mappings
 
@@ -1495,9 +1440,6 @@ public class UserAppService_Delete_Tests : UserAppServiceTestBase
     [Fact]
     public async Task Should_Delete_User()
     {
-			  
-											  
-		 
         //Arrange
         CreateTestUsers();
 
@@ -1510,7 +1452,6 @@ public class UserAppService_Delete_Tests : UserAppServiceTestBase
         //Assert
         user = await GetUserByUserNameOrNullAsync("artdent");
         user.IsDeleted.ShouldBe(true);
-		 
     }
 }
 ```
