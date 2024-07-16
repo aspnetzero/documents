@@ -18,4 +18,13 @@ If you have any questions about the latest version or need further assistance, p
 
 You can find documentation related to ASP.NET MVC 5.x and AngularJS at the link below.
 
-[ASP.NET MVC 5.x & AngularJS](https://github.com/aspnetzero/documents)
+[Getting-Started ASP.NET MVC 5.x & AngularJS](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Getting-Started-Mvc-Angularjs.md.md)
+
+[Development Guide ASP.NET MVC 5.x & AngularJS](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Development-Guide-Mvc-Angularjs.md.md)
+
+[Developing Step By Step ASP.NET MVC 5.x](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Developing-Step-By-Step-MPA.md)
+
+[Developing Step By Step ASP.NET MVC 5.x & AngularJS](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Developing-Step-By-Step-Mvc-Angularjs.md)
+
+
+
