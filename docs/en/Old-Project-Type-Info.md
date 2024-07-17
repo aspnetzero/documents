@@ -1,28 +1,23 @@
 # Important Notice
 
-As part of our ongoing efforts to enhance the performance and maintainability of our product, we have made the decision to remove support for ASP.NET MVC 5.x and AngularJS. This change is part of our strategy to adopt more modern and efficient frameworks.
+As part of our ongoing efforts to enhance the performance and maintainability of our product, we have made the decision to remove support for ASP.NET MVC 5.x and AngularJS.
 
 ### Why the Change?
 
-- **Performance Improvements:** Modern frameworks provide better performance and scalability.
-- **Security:** Newer frameworks come with improved security features.
-- **Maintainability:** Modern frameworks are easier to maintain and extend.
-- **Community Support:** More active community support for newer technologies.
+ASP.NET MVC 5.x still supported by Microsoft, see [details](https://dotnet.microsoft.com/en-us/platform/support/policy/aspnet) but Microsoft suggests ASP.NET Core for new app development as mentioned [here](https://learn.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/). Becasue of that, we removed MVC 5.x options from ASP.NET Zero.
 
 ### What This Means for You
 
-- **Codebase Update:** If you use custom modules or extend functionality using ASP.NET MVC 5.x or AngularJS, you will need to adapt your code base for new features
-- **Migration:** We recommend migrating to more modern frameworks such as ASP.NET Core and Angular.
+You can't create ASP.NET MVC 5.x projects from ASP.NET Zero download page but if you still need an MVC 5.x project, please contact with info@aspnetzero.com.
 
-If you have any questions about the latest version or need further assistance, please feel free to contact our support team.
 
-You can find documentation related to ASP.NET MVC 5.x and AngularJS at the link below.
+If you already have an existing MVC 5.x project, you can find documentation related to ASP.NET MVC 5.x projects below.
 
-[Getting-Started ASP.NET MVC 5.x & AngularJS](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Getting-Started-Mvc-Angularjs.md.md)
+[Getting-Started ASP.NET MVC 5.x](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Getting-Started-Mvc-Angularjs.md)
 
-[Development Guide ASP.NET MVC 5.x & AngularJS](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Development-Guide-Mvc-Angularjs.md.md)
+[Development Guide ASP.NET MVC 5.x](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Development-Guide-Mvc-Angularjs.md)
 
-[Developing Step By Step ASP.NET MVC 5.x](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Developing-Step-By-Step-MPA.md)
+[Developing Step By Step ASP.NET MVC 5.x & jQuery](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Developing-Step-By-Step-MPA.md)
 
 [Developing Step By Step ASP.NET MVC 5.x & AngularJS](https://github.com/aspnetzero/documents/tree/master/doc-obsolete/Developing-Step-By-Step-Mvc-Angularjs.md)
 
