@@ -989,7 +989,6 @@ public class BookTrackingMvcModule : AbpModule
     public override void PreInitialize()
     {
         Configuration.Navigation.Providers.Add<BookTrackingWebNavigationProvider>();
-        BookTrackingEmbedResourcesConfigurer.Configure(Configuration.EmbeddedResources);
         
         Configuration.Modules.AbpAspNetCore()
             .CreateControllersForAppServices(
@@ -997,6 +996,8 @@ public class BookTrackingMvcModule : AbpModule
                 moduleName: "app", 
                 useConventionalHttpVerbs: true
             );
+
+        BookTrackingEmbedResourcesConfigurer.Configure(Configuration.EmbeddedResources);
     }
 
     public override void Initialize()
