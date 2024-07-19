@@ -554,9 +554,9 @@ public static class BookTrackingEmbedResourcesConfigurer
     {
         configuration.Sources.Add(
             new EmbeddedResourceSet(
-                "/Views/",
+                "/Resources/",
                 Assembly.GetExecutingAssembly(),
-                "BookTracking.Mvc.Views"
+                "BookTracking.Mvc.Resources"
             )
         );
     }
@@ -618,8 +618,11 @@ namespace BookTracking.Mvc.Views
 * Update `_ViewStart.cshtml` file in the `Views` folder of the `BookTracking.Mvc` project.
 
 ```csharp
+@using Abp.Configuration
+@inject SettingManager SettingManager
 @{
-    Layout = "~/Areas/App/Views/Layout/default/_Layout.cshtml";
+    var theme = await SettingManager.GetSettingValueAsync("App.UiManagement.Theme");
+    Layout = "~/Areas/App/Views/Layout/" + theme + "/_Layout.cshtml";
 }
 ```
 
@@ -631,11 +634,12 @@ Add a new view named `Index.cshtml` in the `Books` folder.
 
 @{
     ViewData["Title"] = "Home Page";
+    ViewBag.CurrentPageName = "Books";
 }
 
 @section Scripts
 {
-    <script src="~/Views/Books/Index.js" asp-append-version="true"></script>
+    <script src="~/Resources/Books/Index.js" asp-append-version="true"></script>
 }
 
 <div class="app-toolbar py-3 py-lg-6" id="kt_app_toolbar">
@@ -804,6 +808,7 @@ First configure csproj file of the `BookTracking.Mvc` project to include the emb
 ```xml
 <ItemGroup>
     <EmbeddedResource Include="Views\**\*.*"/>
+    <EmbeddedResource Include="Resources\**\*.*"/>
 </ItemGroup>
 ```
 
@@ -859,7 +864,7 @@ Add js files to the `Views/Books` folder.
 
         var _createOrEditModal = new app.ModalManager({
             viewUrl: abp.appPath + 'Books/CreateOrEditModal',
-            scriptUrl: abp.appPath + 'Views/Books/_CreateOrEditModal.js',
+            scriptUrl: abp.appPath + 'Resources/Books/_CreateOrEditModal.js',
             modalClass: 'CreateOrEditBookModal',
         });
 
