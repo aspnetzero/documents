@@ -1,6 +1,6 @@
 # Migration Guide: Transitioning from ASP.NET Boilerplate to ASP.NET Zero
 
-A concise step-by-step guide to seamlessly migrate your MVC application from ASP.NET Boilerplate to ASP.NET Zero by leveraging the advanced features and capabilities of ASP.NET Zero.
+This is a step-by-step guide to migrate your MVC application from ASP.NET Boilerplate to ASP.NET Zero.
 
 ## Introduction
 
