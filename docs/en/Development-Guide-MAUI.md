@@ -32,17 +32,17 @@ To build, sign, and deploy .NET MAUI apps for iOS, you'll also need:
 
 After [downloading](https://aspnetzero.com/Download) your project, you will see 3 types of solutions;
 
--   **.Mobile** MAUI and related projects included.
+-   **.Maui** MAUI and related projects included.
 -   **.Web** Web and related projects included.
 -   **.All** All the projects included.
 
-For MAUI development, you can open **.Mobile.sln**.
+For MAUI development, you can open **.Maui.sln**.
 
-MAUI Architecture
+### MAUI Architecture
 
 <img src="images/maui-mobile-solution-overview.png" alt="ASP.NET Zero Mobile Solution" class="img-thumbnail" />
 
-Mobile Solution
+**Mobile Solution**
 
 There are 4 projects in the mobile solution:
 
@@ -108,7 +108,7 @@ ApiUrlConfig.DefaultHostUrl = "https://mywebapi.com/"
 **Important**
 Be aware that connecting over Wi-Fi needs both the device and the computer to be on the same Wi-Fi network! To avoid confusions to you can completely turn off your mobile data connection.
 
-<img src="images/xamarin-api-url-config.png" alt="Debug IP Address" class="img-thumbnail" />
+![Debug IP Address](images/xamarin-api-url-config.png)
 
 ### Debugging Android
 
@@ -132,10 +132,9 @@ There are a few installation steps and configuration details required to install
   DebugServerIpAddresses.Current = "XXX.XXX.XXX.XXX"
   ````
 
-After successful setup, set **Mobile.MAUI** as startup project. Choose an Android emulator from list and press start button.
+After successful setup, set ***.Maui** as startup project. Choose an Android emulator from list and press start button.
 
-<img src="images/maui-android-emulator-selection.png" alt="Android Emulator Selection" class="img-thumbnail" />  
-
+![Android Emulator Selection](images/maui-android-emulator-selection.png)
 
 ### Debugging iOS
 
@@ -146,21 +145,21 @@ You need to set DebugServerIpAddresses as your local IP. Eg: `192.168.1.120`
 ````bash
 DebugServerIpAddresses.Current = "XXX.XXX.XXX.XXX";
 ````
-## Mobile.MAUI
+## MAUI
 
 ### Folder struction
 
 MAUI project has a very basic structure. ASP.NET Zero adds or modifies these files in the default project;
 
-<img src="images/maui-project-struction.png" alt="Project Structure" class="img-thumbnail" />
+![Project Structure](images/maui-project-struction.png)
 
 Android Project Structure
 
+-   **Core**  This folder contains essential components and utilities that provide foundational functionality for the MAUI application.
 -   **Pages** This is where all pages located. You can add your pages in that folder. Pages added here will be used in Android and IOS.
 -   **Platforms** This is where all platrform specific implemetations can be made. Every code written here is only published to the relevant platform.You can locate any platform specific codes in that folders. For example, If your service has platform based implementation, you can use that folder and implement it to DI container according to their platform.
 -   **Resources** This is where application resources located.
 -   **Services** This is where mobile based services implemented.
--   **Shared** This is where all blazor based shared items located. Layouts, base components, partial components are located in this folder.
 -   **wwwroot** Since ASP.NET Zero uses Blazor version of MAUI, all web based items(index.html, css, js etc...) are located in this folder.
 
 
@@ -174,14 +173,14 @@ ASP.NET Boilerplate provides *ITransientDependency* and
 
 #### Communicating with Host Api
 
-***AbpApiClient*** class is used to communicate with host. In this
-class, *[FlurlClient](https://github.com/tmenier/Flurl)*  is used as http client. The host address *DefaultHostUrl* is stored in
-*ApiUrlConfig* class. Before publishing application you need to change
+`AbpApiClient` class is used to communicate with host. In this
+class, **[FlurlClient](https://github.com/tmenier/Flurl)**  is used as http client. The host address **DefaultHostUrl** is stored in
+`ApiUrlConfig` class. Before publishing application you need to change
 this address with your production host server address. In development
-time, it's important to change *LocalhostIp* as your computer's LAN IP
-in *DebugServerIpAdresses.cs.*
+time, it's important to change **LocalhostIp** as your computer's LAN IP
+in **DebugServerIpAdresses.cs.**
 
-***WebRequestExecuter*** class handles http web requests in a safe
+`WebRequestExecuter` class handles http web requests in a safe
 manner. When the request fails, it handles different types of
 exceptions. So if it's a timeout exception, it asks user to retry the
 same request. Or if it's a user friendly exception thrown by ABP it
@@ -190,15 +189,15 @@ callback to handle the result. In fail callback, the exception can be
 retrieved and in success callback result of the request can be
 retrieved.
 
-***SetBusyAsync*** method is in the base class of components in
-*AbpZeroTemplateComponentBase* class. Whenever a long lasting operation is required
-it should be wrapped with SetBusyAsync method in view model so that user
+**SetBusyAsync** method is in the base class of components in
+`AbpZeroTemplateComponentBase` class. Whenever a long lasting operation is required
+it should be wrapped with **SetBusyAsync** method in view model so that user
 can see a busy indicator.
 
 #### Exception Handling
 
-All exceptions are globally handled in *ExceptionHandler* class,
-when you use *WebRequestExecuter*.
+All exceptions are globally handled in `ExceptionHandler` class,
+when you use **WebRequestExecuter**.
 
 #### Pages
 
@@ -212,28 +211,28 @@ first authorized menu item.
 
 ##### Login
 
-<img src="images/maui-login.png" alt="Login screen" class="img-thumbnail" />
+![MAUI Login Screen](images/maui-login.png)
 
-When user enters credentials *AccessTokenManager* authenticates user,
+When user enters credentials `AccessTokenManager` authenticates user,
 stores access token in memory. For authentication needed Api calls, this
 token is being added to the request as bearer token. There's a timer in
-*AccessTokenManager* class that renews token before it expires. If an
+`AccessTokenManager` class that renews token before it expires. If an
 error occurs while communicating with host, client tries to reconnect using refresh token
 within an exponentiation increasing time. After successful login user
 credentials are stored in device. User information is being set in
-*ApplicationContext* so if current logon account information is needed
-it can be retrieved with injecting *IApplicationContext*.
+`ApplicationContext` so if current logon account information is needed
+it can be retrieved with injecting `IApplicationContext`.
 
 ##### Menu
 
-<img src="images/maui-menu.png" alt="Application menu" class="img-thumbnail" />
+![Application Menu](images/maui-menu.png)
 
-Menu items are stored in *MenuProvider* class. A menu item is shown if
+Menu items are stored in `MenuProvider` class. A menu item is shown if
 only user has granted required permission.
 
 ##### Tenants View
 
-<img src="images/maui-tenant-page.png" alt="Tenants page" class="img-thumbnail" />
+![Tenants Page](images/maui-tenant-page.png)
 
 In this page you can see all tenants in your application. You can create new tenant, edit tenant or delete tenant. (If you have necessary permissions, otherwise you will not be able to see related buttons or page)
 There is a search bar on the top
@@ -242,11 +241,11 @@ You can _Create_ new tenant, _Edit_ or _Delete_ existing tenants using related b
 
 Create Tenant             |  Edit Tenant |  Delete Tenant
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="images/maui-create-tenant.png" alt="Create Tenant" class="img-thumbnail" />  |  <img src="images/maui-edit-tenant.png" alt="Edit Tenant" class="img-thumbnail" /> | <img src="images/maui-delete-tenant.png" alt="Delete Tenant" class="img-thumbnail" />
+![Create Tenant](images/maui-create-tenant.png)  |  ![Edit Tenant](images/maui-edit-tenant.png) | ![Delete Tenant](images/maui-delete-tenant.png)
 
 ##### User View
 
-<img src="images/maui-user-list.png" alt="Users page" class="img-thumbnail" />
+![Users page](images/maui-user-list.png)
 
 This page lists users of the tenant or tenant owner. It is only shown if
 the user has permission to this page. Same as tenants view, there's a
@@ -256,14 +255,14 @@ You can create new user or manage existing one.
 
 Create User             |  Edit User |  Delete User
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="images/maui-create-user.png" alt="Create Tenant" class="img-thumbnail" />  |  <img src="images/maui-edit-user.png" alt="Edit Tenant" class="img-thumbnail" /> | <img src="images/maui-delete-user.png" alt="Delete Tenant" class="img-thumbnail" />
+![Create User](images/maui-create-user.png)  |  ![Edit User](images/maui-edit-user.png) | ![Delete User](images/maui-delete-user.png)
 
 ## Distribution
 
 ### Configuration
 
 -   Before publishing the application change the **DefaultHostUrl** in
-    **ApiUrlConfig** class. how to distribute MAUI application.
+    `ApiUrlConfig` class. how to distribute MAUI application.
 -   Change all application icon files with your own app icon.
 -   Change all AppLogo.png files with your own app logo.
 -   Version your application for future updates.

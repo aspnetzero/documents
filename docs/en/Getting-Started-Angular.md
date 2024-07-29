@@ -6,14 +6,15 @@ This document is aimed to create and run an ASP.NET Zero based project in just 5
 
 [Login to aspnetzero.com](https://aspnetzero.com/Account/Login) with your username and password. Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
 
-<img src="images/download-angular-3.png" alt="Download angular" class="img-thumbnail" />
+[Download Angular Project](images/download-angular-3.png)
 
-Select **ASP.NET Core & Angular** as Project Type and fill other required fields. Your project will be ready in one minute. When you open the downloaded zip file, you will see two folders:
+Select **ASP.NET Core & Angular** as Project Type and fill other required fields. Your project will be ready in one minute. When you open the downloaded zip file, you will see four folders:
 
-<img src="images/angular-solution-folders.png" alt="Client Server folders" class="img-thumbnail" />
+![Client Server Folders](images/angular-solution-folders.png)
 
 -   **angular** folder contains the Angular UI application which is configured to work with the [angular-cli](https://cli.angular.io/).
 -   **aspnet-core** folder contains the server side ASP.NET Core solution and configured to work with [Visual Studio](https://www.visualstudio.com/vs/community/).
+-   **ui-tests-playwright** folder contains end-to-end tests for the UI using Playwright, a Node.js library for browser automation. This folder is configured to work with [Visual Studio Code](https://code.visualstudio.com/).
 
 ### Merging Client and Server Solutions
 
@@ -24,18 +25,18 @@ If you have selected this option, please follow [Getting Started](Getting-Starte
 ## Pre Requirements
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
-- [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
+- [Node.js 16.x+ with NPM 8.x+](https://nodejs.org/en/download/)
 - [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
 
 ## ASP.NET Core Application
 
 When you open the server side solution (**\*.Web.sln**) using **Visual Studio 2017+**, you will see the solution structure as below:
 
-<img src="images/aspnet-core-host-solution-4.png" alt="ASP.NET Core solution structure" class="img-thumbnail" />
+![ASP.NET Core solution structure](images/aspnet-core-host-solution-4.png)
 
-> If you want to work on only Xamarin project, open **\*.Mobile.sln** solution. If you want to work on both of Xamarin and Web projects, open **\*.All.sln** solution.
+> If you want to work on only MAUI project, open **\*.Maui.sln** solution. If you want to work on both of MAUI and Web projects, open **\*.All.sln** solution.
 
-Right click the **.Web.Host** project and select "**Set as StartUp project**". Then **build** the solution. It may take a longer time during the first build since all **nuget** packages will be restored.
+Right click the **.Web.Host** project and select "**Set as Startup project**". Then **build** the solution. It may take a longer time during the first build since all **nuget** packages will be restored.
 
 ### Database
 
@@ -45,7 +46,7 @@ Open **appsettings.json** in **.Web.Host** project and change the **Default** co
 
 ```json
 "ConnectionStrings": {
-    "Default": "Server=localhost; Database=PhoneBookDemoDb; Trusted_Connection=True;"
+    "Default": "Server=localhost; Database=PhoneBookDemoDb; Trusted_Connection=True; TrustServerCertificate=True;"
 }
 ```
 
@@ -61,11 +62,11 @@ ASP.NET Zero solution includes a **.Migrator** (like Acme.PhoneBookDemo.Migrator
 
 You can also use Entity Framework Core's built-in tools for migrations. Open **Package Manager Console** in Visual Studio, set *.**EntityFrameworkCore** as the **Default Project** and run the **Update-Database** command as shown below: 
 
-<img src="images/update-database-ef-core.png" alt="dotnet ef database update" class="img-thumbnail" />
+![dotnet ef database update](images/update-database-ef-core.png)
 
 This command will create your database. Initial data will be inserted when you run the ***.Web.Host** project. You can open SQL Server Management Studio to check if database is created:
 
-<img src="images/created-database-tables-4.png" alt="ASP.NET Zero Database Tables" class="img-thumbnail" />
+![ASP.NET Zero Database Tables](images/created-database-tables-4.png)
 
 You can use EF console commands for development and Migrator.exe for production. But notice that; Migrator.exe supports running migrations in multiple databases at once, which can be useful in development/production for multi tenant applications.
 
@@ -77,17 +78,17 @@ ASP.NET Zero supports multi-tenant and single-tenant applications. Multi-tenancy
 
 Once you've done the configuration, you can run the application. Server side application only contains APIs. When you start the application you will see a login page like below:
 
-<img src="images/host-login-page.png" alt="Swagger UI" class="img-thumbnail" />
+![Swagger UI Login Page](images/host-login-page.png)
 
 If you log in to host application, then you will see a page like below:
 
-<img src="images/host-home-page.png" alt="Swagger UI" class="img-thumbnail" />
+![Swagger UI Home Page](images/host-home-page.png)
 
-You can navigate to **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground** from this page. Note that, by default only Swagger UI is enabled, you can enable Hangfire by following [Hangfire documentation](Infrastructure-Background-Jobs) and GraphQL by following [GraphQL documentation](GraphQL).
+You can navigate to **Swagger UI**, **Hangfire Dashboard** or **GraphQL Playground** from this page. Note that, by default only Swagger UI and GraphQL Playground is enabled, you can enable Hangfire by following [Hangfire documentation](Infrastructure-Background-Jobs).
 
 For example when you navigate **Swagger UI**, you will see following page:
 
-<img src="images/swagger-ui-ng2-1.png" alt="Swagger UI" class="img-thumbnail" />
+![Swagger UI](images/swagger-ui-ng2-1.png)
 
 ## Angular Application
 
@@ -125,7 +126,7 @@ npm run hmr
 
 All ready! Now, you can login to the application:
 
-<img src="images/login-screen-3.png" alt="Login page" class="img-thumbnail" />
+![Angular Login Page](images/login-screen-3.png)
 
 If multi-tenancy is enabled, you will see the current tenant and a change link. If so, click to **Change** and enter **default** as tenant name. If you leave it empty, you login as the host admin user. Then enter **admin** as username and **123qwe** as password (remember to change it to a more secure password on production!).
 
