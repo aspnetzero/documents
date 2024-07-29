@@ -1,6 +1,6 @@
 # Migration Guide: Transitioning from ASP.NET Boilerplate to ASP.NET Zero
 
-A concise step-by-step guide to seamlessly migrate your Angular application from ASP.NET Boilerplate to ASP.NET Zero by leveraging the advanced features and capabilities of ASP.NET Zero.
+This is a step-by-step guide to migrate your Angular application from ASP.NET Boilerplate to ASP.NET Zero.
 
 ## Introduction
 
@@ -8,7 +8,7 @@ The purpose of this migration guide is to provide a comprehensive, step-by-step 
 
 ## Creating and Migrating Entities
 
-Let's consider an entity called `Book` that was previously created in an ASP.NET Boilerplate application. Its features are as follows:
+Let's consider an entity called `Book` that was previously created in an ASP.NET Boilerplate application as follows:
 
 ```c#
 public class Book : Entity<long>, IHasCreationTime
