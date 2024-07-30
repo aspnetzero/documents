@@ -1,5 +1,6 @@
 # Building a Modular Monolith Application with ASP.NET Zero
-In today's software development landscape, the debate between monolithic and microservices architectures is common. However, a middle ground combines the simplicity of monolithic development with the modularity of microservices: the modular monolith. ASP.NET Zero, a powerful framework for building enterprise applications, supports this architecture elegantly. In this blog post, we'll explore how to create a modular monolith application using ASP.NET Zero, complete with an example project and step-by-step instructions.
+
+After the rise of Microservice architecture, Modular Monolith became popular nowadays. ASP.NET Zero, a powerful framework for building enterprise applications, supports this architecture elegantly. In this blog post, we'll explore how to create a modular monolith application using ASP.NET Zero, complete with an example project and step-by-step instructions.
 
 ## What is a Modular Monolith?
 A modular monolith is a single application that is logically divided into different modules. Each module is self-contained, with its own domain, but they all run within a single process. This approach combines the best of both worlds: the simplicity and performance of monoliths and the modularity and scalability of microservices.
