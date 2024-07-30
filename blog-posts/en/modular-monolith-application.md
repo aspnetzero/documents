@@ -18,15 +18,15 @@ In this article, I will focus on how to implement a modular structure. I will no
 Let's dive into the steps to create the `BookTracking` module.
 
 ### 1. Add Core Project:
-Add class library project named `BookTracking.Core` inside `BookTracking` folder. This project will contain the domain entities for the `BookTracking` module.
+Add class library project named `BookTracking.Core` inside `BookTracking` folder. This project will contain the domain entities for the `BookTracking` module. Setting the project location to `{SolutionPath}/modules/BookTracking` ensures proper organization.
 
 Add following nuget packages to the `BookTracking.Core` project:
 
 ```xml	
 <ItemGroup>
     <PackageReference Include="Abp.AspNetZeroCore" Version="5.0.0" />
-    <PackageReference Include="Abp.AutoMapper" Version="9.2.2" />
-    <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="9.2.2" />
+    <PackageReference Include="Abp.AutoMapper" Version="9.3.0" />
+    <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="9.3.0" />
 </ItemGroup>
 ```
 
@@ -172,24 +172,24 @@ using Abp.Localization.Dictionaries;
 using Abp.Localization.Dictionaries.Xml;
 using Abp.Reflection.Extensions;
 
-namespace BookTracking.Core.Localization
+namespace BookTracking.Core.Localization;
+
+public static class BookTrackingLocalizationConfigurer
 {
-    public static class BookTrackingLocalizationConfigurer
+    public static void Configure(ILocalizationConfiguration localizationConfiguration)
     {
-        public static void Configure(ILocalizationConfiguration localizationConfiguration)
-        {
-            localizationConfiguration.Sources.Add(
-                new DictionaryBasedLocalizationSource(
-                    BookTrackingConsts.LocalizationSourceName,
-                    new XmlEmbeddedFileLocalizationDictionaryProvider(
-                        typeof(BookTrackingLocalizationConfigurer).GetAssembly(), 
-                        "BookTracking.Core.Localization"
-                    )
+        localizationConfiguration.Sources.Add(
+            new DictionaryBasedLocalizationSource(
+                BookTrackingConsts.LocalizationSourceName,
+                new XmlEmbeddedFileLocalizationDictionaryProvider(
+                    typeof(BookTrackingLocalizationConfigurer).GetAssembly(), 
+                    "BookTracking.Core.Localization"
                 )
-            );
-        }
+            )
+        );
     }
 }
+
 ```
 
 * Let's configure csproj file of the `BookTracking.Core` project to include the localization files. Add the following code to the `BookTracking.Core.csproj` file:
@@ -278,7 +278,7 @@ public class Book : Entity, IMayHaveTenant
 ### 2. Add Business Logic Project:
 Inside the `BookTracking` folder, add a new class library project named `BookTracking.Application`. This project will handle the business logic for the `BookTracking` module.
 
-Add reference to the `BookTracking.Core` project in the `BookTracking.Application` project.
+Add reference to the `BookTracking.Core` project in the `BookTracking.Application` project. When adding the reference, make sure to select the `BookTracking.Core` project under the modules directory.
 
 #### DTO's
 
@@ -305,6 +305,49 @@ public class BookListDto : EntityDto
     public string ISBN { get; set; }
     
     public int TotalPages { get; set; }
+}
+```
+
+*BookEditDto.cs*
+```csharp
+using Abp.Application.Services.Dto;
+
+namespace BookTracking.Application.Books.Dto;
+
+public class BookEditDto : NullableIdDto
+{
+    public string Name { get; set; }
+    
+    public string Author { get; set; }
+    
+    public string Description { get; set; }
+    
+    public string ISBN { get; set; }
+    
+    public int TotalPages { get; set; }
+}
+```
+
+*CreateOrEditBookInput.cs*
+```csharp
+using Abp.Application.Services.Dto;
+
+namespace BookTracking.Application.Books.Dto;
+
+public class CreateOrEditBookInput
+{
+    [Required]
+    public BookEditDto Book { get; set; }
+}
+```
+
+*GetBookForEditOutput.cs*
+```csharp
+namespace BookTracking.Application.Books.Dto;
+
+public class GetBookForEditOutput
+{
+    public BookEditDto Book { get; set; }
 }
 ```
 
@@ -336,9 +379,9 @@ public interface IBookAppService : IApplicationService
 {
     Task<PagedResultDto<BookListDto>> GetBooks(GetBooksInput input);
     
-    Task<CreateOrEditBookDto> GetUserForEdit(int id);
+    Task<GetBookForEditOutput> GetBookForEdit(int id);
     
-    Task CreateOrEditBook(CreateOrEditBookDto input);
+    Task CreateOrEditBook(CreateOrEditBookInput input);
     
     Task DeleteBook(int id);
 }
@@ -348,7 +391,6 @@ public interface IBookAppService : IApplicationService
 ```csharp
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
-using Abp.Extensions;
 using Abp.Linq.Extensions;
 using BookTracking.Application.Books.Dto;
 using BookTracking.Core.Books;
@@ -356,7 +398,6 @@ using System.Linq.Dynamic.Core;
 using Abp.Application.Services;
 using Abp.UI;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace BookTracking.Application.Books;
 
@@ -378,16 +419,16 @@ public class BookAppService(IRepository<Book, int> bookRepository) : Application
         return new PagedResultDto<BookListDto>(totalCount, bookList);
     }
 
-    public async Task<CreateOrEditBookDto> GetUserForEdit(int id)
+    public async Task<GetBookForEditOutput> GetBookForEdit(int id)
     {
         var book = await bookRepository.GetAsync(id);
         
-        return ObjectMapper.Map<CreateOrEditBookDto>(book);
+        return ObjectMapper.Map<GetBookForEditOutput>(book);
     }
 
-    public async Task CreateOrEditBook(CreateOrEditBookDto input)
+    public async Task CreateOrEditBook(CreateOrEditBookInput input)
     {
-        if (input.Id.HasValue)
+        if (input.Book.Id.HasValue)
         {
             await UpdateBook(input);
         }
@@ -409,16 +450,16 @@ public class BookAppService(IRepository<Book, int> bookRepository) : Application
         await bookRepository.DeleteAsync(book);
     }
 
-    private async Task CreateBook(CreateOrEditBookDto input)
+    private async Task CreateBook(CreateOrEditBookInput input)
     {
         var book = ObjectMapper.Map<Book>(input);
         
         await bookRepository.InsertAsync(book);
     }
 
-    private async Task UpdateBook(CreateOrEditBookDto input)
+    private async Task UpdateBook(CreateOrEditBookInput input)
     {
-        var book = await bookRepository.GetAsync(input.Id!.Value);
+        var book = await bookRepository.GetAsync(input.Book.Id!.Value);
         
         ObjectMapper.Map(input, book);
         
@@ -437,16 +478,15 @@ using AutoMapper;
 using BookTracking.Application.Books.Dto;
 using BookTracking.Core.Books;
 
-namespace BookTracking.Application
+namespace BookTracking.Application;
+
+internal static class BookTrackingDtoMapper
 {
-    internal static class BookTrackingDtoMapper
+    public static void CreateMappings(IMapperConfigurationExpression configuration)
     {
-        public static void CreateMappings(IMapperConfigurationExpression configuration)
-        {
-            configuration.CreateMap<Book, BookListDto>().ReverseMap();
-            configuration.CreateMap<Book, CreateOrEditBookDto>().ReverseMap();
-            
-        }
+        configuration.CreateMap<Book, BookListDto>().ReverseMap();
+        configuration.CreateMap<Book, CreateOrEditBookInput>().ReverseMap();
+
     }
 }
 ```
@@ -461,27 +501,25 @@ using Abp.Reflection.Extensions;
 using BookTracking.Core.Authorization;
 using BookTracking.Core;
 
-namespace BookTracking.Application
+namespace BookTracking.Application;
+/// <summary>
+/// Application layer module of the application.
+/// </summary>
+[DependsOn(typeof(BookTrackingCoreModule))]
+public class BookTrackingApplicationModule : AbpModule
 {
-    /// <summary>
-    /// Application layer module of the application.
-    /// </summary>
-    [DependsOn(typeof(BookTrackingCoreModule))]
-    public class BookTrackingApplicationModule : AbpModule
+    public override void PreInitialize()
     {
-        public override void PreInitialize()
-        {
-            //Adding authorization providers
-            Configuration.Authorization.Providers.Add<BookTrackingAuthorizationProvider>();
+        //Adding authorization providers
+        Configuration.Authorization.Providers.Add<BookTrackingAuthorizationProvider>();
 
-            //Adding custom AutoMapper configuration
-            Configuration.Modules.AbpAutoMapper().Configurators.Add(BookTrackingDtoMapper.CreateMappings);
-        }
+        //Adding custom AutoMapper configuration
+        Configuration.Modules.AbpAutoMapper().Configurators.Add(BookTrackingDtoMapper.CreateMappings);
+    }
 
-        public override void Initialize()
-        {
-            IocManager.RegisterAssemblyByConvention(typeof(BookTrackingApplicationModule).GetAssembly());
-        }
+    public override void Initialize()
+    {
+        IocManager.RegisterAssemblyByConvention(typeof(BookTrackingApplicationModule).GetAssembly());
     }
 }
 ```
@@ -569,13 +607,15 @@ Create a sub folder named `Books` inside `Models` in the `BookTracking.Mvc` proj
 
 *CreateOrEditBookModalViewModel.cs*
 ```csharp
+using Abp.AutoMapper;
 using BookTracking.Application.Books.Dto;
 
 namespace BookTracking.Mvc.Models.Books;
 
-public class CreateOrEditBookModalViewModel
+[AutoMapFrom(typeof(GetBookForEditOutput))]
+public class CreateOrEditBookModalViewModel : GetBookForEditOutput
 {
-    public CreateOrEditBookDto Book { get; set; }
+    public bool IsEditMode => Book.Id.HasValue;
 }
 ```
 
@@ -592,16 +632,15 @@ using Abp.Runtime.Session;
 using BookTracking.Core;
 using Microsoft.AspNetCore.Mvc.Razor.Internal;
 
-namespace BookTracking.Mvc.Views
+namespace BookTracking.Mvc.Views;
+
+public abstract class BookTrackingRazorPage<TModel> : AbpRazorPage<TModel>
 {
-    public abstract class BookTrackingRazorPage<TModel> : AbpRazorPage<TModel>
+    [RazorInject] public IAbpSession AbpSession { get; set; }
+
+    protected BookTrackingRazorPage()
     {
-        [RazorInject] public IAbpSession AbpSession { get; set; }
-        
-        protected BookTrackingRazorPage()
-        {
-            LocalizationSourceName = BookTrackingConsts.LocalizationSourceName;
-        }
+        LocalizationSourceName = BookTrackingConsts.LocalizationSourceName;
     }
 }
 ```
@@ -760,7 +799,6 @@ Let's add a controller to the `BookTracking.Mvc` project:
 
 *BooksController.cs*
 ```csharp
-using Abp.Application.Services.Dto;
 using Abp.AspNetCore.Mvc.Controllers;
 using BookTracking.Application.Books;
 using BookTracking.Application.Books.Dto;
@@ -777,23 +815,27 @@ public class BooksController : AbpController
     {
         _bookAppService = bookAppService;
     }
-    
+
     public IActionResult Index()
     {
         return View();
     }
-    
+
     public async Task<IActionResult> CreateOrEditModal(int? id)
     {
         var viewModel = new CreateOrEditBookModalViewModel();
-        
+
         if (id.HasValue)
         {
-            viewModel.Book = await _bookAppService.GetUserForEdit(id.Value);
-        } else {
-            viewModel.Book = new CreateOrEditBookDto();
+            var book = await _bookAppService.GetBookForEdit(id.Value);
+
+            viewModel.Book = ObjectMapper.Map<BookEditDto>(book);
         }
-        
+        else
+        {
+            viewModel.Book = new BookEditDto();
+        }
+
         return PartialView("_CreateOrEditModal", viewModel);
     }
 }
@@ -975,6 +1017,8 @@ Add js files to the `Views/Books` folder.
 
 #### MVC Module
 
+Create the following class under the `BookTracking.Mvc` project.
+
 *BookTrackingWebModule.cs*
 ```csharp
 using System.Reflection;
@@ -1098,9 +1142,9 @@ public virtual DbSet<Book> Books { get; set; }
 public override void SetNavigation(INavigationProviderContext context)
 {
 
-    var menu = context.Manager.Menus[MenuName] = context.Manager.Menus.ContainsKey(MenuName)
-        ? context.Manager.Menus[MenuName]
-        : new MenuDefinition(MenuName, new FixedLocalizableString("Main Menu"));
+        var menu = context.Manager.Menus[MenuName] = context.Manager.Menus.ContainsKey(MenuName)
+            ? context.Manager.Menus[MenuName]
+            : new MenuDefinition(MenuName, new FixedLocalizableString("Main Menu"));
 
 // other codes
 }
