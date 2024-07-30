@@ -60,6 +60,25 @@ After applying this command, it is sufficient to apply the following command to 
 
 ![Update Database in Package Manager Console](images/updating-database.png)
 
+### Migrating Databases Between Applications
+
+When transitioning from an ASP.NET Boilerplate application to an ASP.NET Zero application, it is essential to consider how the database migration will be handled. Since both frameworks typically use Microsoft SQL Server (MSSQL) as the database management system, the migration process can be streamlined by leveraging existing migration tools and practices. Given that both frameworks utilize the ABP framework, many of the tables will have similar characteristics, which simplifies the migration process.
+
+Here are the key steps to ensure a smooth database migration:
+
+- Analyze Existing Database Schema: Start by analyzing the existing database schema in the ASP.NET Boilerplate application. Identify the entities, relationships, and constraints that need to be migrated.
+
+- Generate Migrations in ASP.NET Zero: Use the Entity Framework Core migration tools to generate the necessary migrations in the ASP.NET Zero application. This involves creating an initial migration that mirrors the existing database schema.
+
+- Data Migration: Ensure that data is accurately migrated from the ASP.NET Boilerplate database to the ASP.NET Zero database. 
+
+- Test the Migration: Thoroughly test the migration process in a staging environment. Verify that all entities and data have been correctly migrated and that the application functions as expected.
+
+For more detailed information and best practices on using Entity Framework Core with MSSQL, refer to the official Microsoft documentation on [SQL Server migration](https://learn.microsoft.com/en-us/sql/sql-server/migrate/?view=sql-server-ver16) and [copying databases](https://learn.microsoft.com/en-us/sql/relational-databases/databases/copy-databases-to-other-servers?view=sql-server-ver16). Additionally, [this guide](https://www.sqlshack.com/six-different-methods-to-copy-tables-between-databases-in-sql-server/) provides a comprehensive overview of different methods to copy tables between databases in SQL Server, offering practical examples and steps.
+
+> When migrating data from an ASP.NET Boilerplate database to an ASP.NET Zero database, ensure that all existing data is accurately transferred. Testing the migration process in a staging environment is crucial to ensure that the migration is successful and that the application functions as expected after the migration.
+
+
 ## Implementing Application Services
 
 This chapter covers the implementation of application services in ASP.NET Zero, focusing on creating service interfaces, DTOs (Data Transfer Objects), and their associated services class.
@@ -1057,5 +1076,3 @@ Unit tests implemented in ASP.NET Boilerplate show minor changes in ASP.NET Zero
 ## Conclusion
 
 The migration from ASP.NET Public Plate to ASP.NET Zero involves several important transitions in various aspects of application development. This process includes changes in the management of models, configuration of app services and unit tests. ASP.NET Zero offers advanced features that increase efficiency and scalability by providing a more integrated and streamlined approach to these elements.
-
-
