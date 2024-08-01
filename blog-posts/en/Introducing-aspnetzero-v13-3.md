@@ -5,7 +5,18 @@
 
 We are excited to announce the release of ASP.NET Zero v13.3. This release includes maui developments, recaptcha out of the box, and many other improvements. We have also updated the packages and fixed some bugs. Let's take a look at the new features and improvements.
 
-## 📱Refactor Maui
+## 📜 Entity Change History
+
+As you may know, ASP.NET Boilerplate includes an entity change history feature. This functionality allows you to track which user made changes to an entity, when those changes were made, and what values were involved. It’s a powerful tool for viewing the history of an entity and reverting changes as needed.
+
+We have developed a user-friendly interface for this feature, making it easy to view changes and track the history.
+
+![Entity history example](/Images/Blog/aspnetzero-v13-entity-history.png)
+
+For more information about entity history, please refer to the following link:
+[https://aspnetboilerplate.com/Pages/Documents/Entity-History](https://aspnetboilerplate.com/Pages/Documents/Entity-History)
+
+## 📱 Refactor Maui
 
 We have refactored the Maui project to enhance its stability and user-friendliness. 
 
@@ -15,11 +26,15 @@ We have refactored the Maui project to enhance its stability and user-friendline
 
 * Renamed files and folders have been updated to reflect the new structure.
 
-## 🛡️Built-in Recaptcha for Email Activation and Password Reset
+For more information about the Maui project, please refer to the following link:
+
+[https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Development-Guide-MAUI](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Development-Guide-MAUI)
+
+## 🛡️ Built-in Recaptcha for Email Activation and Password Reset
 
 We have integrated Recaptcha support for both email activation and password reset processes. This enhancement provides an additional layer of security, helping to protect your application from spam and abuse, ensuring a safer user experience.
 
-## ⚡Power Tools: Fix Bugs
+## ⚡ Power Tools: Fix Bugs
 
 We are constantly improving the Power Tools feature based on your feedback. In this version, we have fixed some bugs and made some improvements.
 
