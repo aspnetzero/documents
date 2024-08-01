@@ -2,7 +2,6 @@
 
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
--   PayPal recurring payments.
 -   .NET 9 upgrade.
 -   Power Tools enhancements
 -   User Sync/Link feature
@@ -11,6 +10,7 @@ We are constantly getting feedbacks from our customers to improve ASP.NET Zero. 
 -   Code Analysis Rules
 -   Coupon for Subscriptions
 -   Send error messages via email
+-   PayPal recurring payments.
 -   Improvements on current features
 -   More tutorials, examples & video courses
 

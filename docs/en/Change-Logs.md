@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 13.3.0 (2024-08-01)
+
+* Upgraded to ABP 9.3
+* Upgraded to Angular 18
+* Email domain restriction for user registration
+* Added Social Logins to session lock screen
+* Detailed Entity Changes UI
+* Enhancements and bug fixes
+
 ## 13.2.0 (2024-05-14)
 
 * Passwordless login.
