@@ -4,9 +4,15 @@ In change logs under audit logs menu, we can see all change logs (entity history
 
 <img src="images/change-logs-core.png" alt="Change Logs" class="img-thumbnail" />
 
-When we click the magnifier icon, we can see all the details about a change log:
+When we click on the **View Change** field in the Actions button, we can see all the details of a change log:
 
 <img src="images/entity-history-log-detail.png" alt="Change Log Detail" class="img-thumbnail" />
+
+When we click on the **All Changes** button in the Actions section, we can see all the details of the changes made to the entity in a timeline.
+
+Additionally, if you want to view all the changes made to an entity, you can redirect to `{AppPath}/{AppAreaName}/EntityChanges/{Entity_ID}/{Entity_Full_Name}` within the application. This URL directs to a page that contains all the historical changes for the specified entity.
+
+<img src="images/entity-history-timeline-detail.png" alt="Entity History Timeline Detail" class="img-thumbnail" />
 
 You should add entity type that you want to track to ***.Core\EntityHistory\EntityHistoryHelper.TrackedTypes**.  Make sure you uncomment following lines in ***.EntityFrameworkCore\EntityFrameworkCore\{YourProjectName}EntityFrameworkCoreModule.cs** and set **Configuration.EntityHistory.IsEnabled** to **true**.
 
@@ -19,17 +25,17 @@ Configuration.EntityHistory.IsEnabled = false;
 // Configuration.CustomConfigProviders.Add(new EntityHistoryConfigProvider(Configuration));
 ```
 
-The first commented line here adds entity types defined in `EntityHistoryHelper.TrackedTypes` to entity history config, so changes on those entities will be recorded. The second commented line adds a custom config provider to `CustomConfigProviders` list. ASP.NET Zero executes `GetConfig` method of each `CustomConfigProvider` and returns the result of `GetConfig` to Angular client app. 
+The first commented line here adds entity types defined in `EntityHistoryHelper.TrackedTypes` to entity history config, so changes on those entities will be recorded. The second commented line adds a custom config provider to `CustomConfigProviders` list. ASP.NET Zero executes `GetConfig` method of each `CustomConfigProvider` and returns the result of `GetConfig` to MVC client app. 
 
-So, in this particular case, `EntityHistoryConfigProvider` returns if entity history feature is enabled or not and if enabled, it returns list of entities enabled for entity history. Angular client app uses those information to show entity history related buttons on each entity page.
+So, in this particular case, `EntityHistoryConfigProvider` returns if entity history feature is enabled or not and if enabled, it returns list of entities enabled for entity history. MVC client app uses those information to show entity history related buttons on each entity page.
 
-For example, when entity history is enabled for an Entity, Angular client shows history dropdown menu item for each entity record on the related page. Here is a sample screenshot for role list:
+For example, when entity history is enabled for an Entity, MVC client shows history dropdown menu item for each entity record on the related page. Here is a sample screenshot for role list:
 
 <img src="images/change-logs-history-action-item.png" alt="Entity History Action" class="img-thumbnail" />
 
 In this way, history of an entity can be retrieved both on change logs tab in audit logs page or on the list page of the entity itself.
 
-The entity history config can be accessed on the Angular app like below:
+The entity history config can be accessed on the MVC app like below:
 
 ```javascript
 abp.custom.EntityHistory

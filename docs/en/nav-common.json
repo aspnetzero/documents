@@ -14,11 +14,11 @@
         },
         {
             "text": "ASP.NET MVC 5.x",
-            "path": "../../aspnet-mvc-jquery/latest/Getting-Started-Mvc-Angularjs"
+            "path": "Old-Project-Type-Info.md"
         },
         {
             "text": "ASP.NET MVC 5.x & AngularJS",
-            "path": "../../aspnet-mvc-angularjs/latest/Getting-Started-Mvc-Angularjs"
+            "path": "Old-Project-Type-Info.md"
         }
       ]
     },
