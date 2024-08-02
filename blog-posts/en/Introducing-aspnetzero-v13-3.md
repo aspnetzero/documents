@@ -3,20 +3,20 @@
 
 # Introducing ASP.NET Zero v13.3
 
-We are excited to announce the release of ASP.NET Zero v13.3. This release includes maui developments, recaptcha out of the box, and many other improvements. We have also updated the packages and fixed some bugs. Let's take a look at the new features and improvements.
+We are excited to announce the release of ASP.NET Zero v13.3. This release includes MAUI developments, recaptcha enhancements, and many other improvements. We have also updated the packages and fixed some bugs. Let's take a look at the new features and improvements.
 
 ## 📜 Entity Change History
 
 As you may know, ASP.NET Boilerplate includes an entity change history feature. This functionality allows you to track which user made changes to an entity, when those changes were made, and what values were involved. It’s a powerful tool for viewing the history of an entity and reverting changes as needed.
 
-We have developed a user-friendly interface for this feature, making it easy to view changes and track the history.
+We have developed a user-friendly interface for this feature, making it easy to view changes and track the history of a specific entity.
 
 ![Entity history example](/Images/Blog/aspnetzero-v13-entity-history.png)
 
 For more information about entity history, please refer to the following link:
 [https://aspnetboilerplate.com/Pages/Documents/Entity-History](https://aspnetboilerplate.com/Pages/Documents/Entity-History)
 
-## 📱 Refactor Maui
+## 📱 Refactor MAUI
 
 We have refactored the Maui project to enhance its stability and user-friendliness. 
 
@@ -51,6 +51,10 @@ We are constantly improving the Power Tools feature based on your feedback. In t
 ## 🌅 Upgrade to ABP 9.3
 
 ASP.NET Zero v13.3 is based on ABP 9.3. ABP 9.3 is a major release that includes performance improvement and bug fixes. For more information, see the [ABP 9.3 release notes](https://github.com/aspnetboilerplate/aspnetboilerplate/releases/tag/v9.3).
+
+## ✨ Upgrade to Angular 18
+
+ASP.NET Zero's Angular version is upgraded to Angular 18. Also `abp-ng2-module` NPM package is upgraded to `v11.0` which supports Angular 18.
 
 ## 🐛 Update packages and bug fixes
 
