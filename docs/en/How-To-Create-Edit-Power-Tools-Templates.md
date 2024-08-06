@@ -81,7 +81,7 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
 
 ```txt
 {
-	"path" : "{{Namespace_Here}}.Core.Shared\\{{Namespace_Relative_Full_Reverse_Slash_Here}}\\{{Entity_Name_Here}}CustomTemplate.cs",
+	"path" : "{{Namespace_Here}}.Core.Shared\\{{Namespace_Relative_Full_Reverse_Slash_Here}}\\{{Entity_Name_Here}}CustomConsts.cs",
 	"condition": "{{Is_Master_Detail_Page_Child_Here}} == false",
 }
 ```
