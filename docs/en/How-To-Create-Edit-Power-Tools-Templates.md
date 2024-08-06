@@ -26,10 +26,10 @@ Power Tools discovers templates in the `FileTemplates` directory every time it i
 
 ### Example Custom Template
 
-Let's say you want to create a new template for generating a new class in the `*.Core` project. It is an entity constant class that contains some constant values. Here is how you can create a new template for this:
+Let's say you want to create a new template for generating a new class in the `*.Core.Shared` project. It is an entity constant class that contains some constant values. Here is how you can create a new template for this:
 
 1. Create a new folder named `CustomTemplate` under `AspNetZeroRadTool/FileTemplates/Server` directory.
-> Hint: You can use a prefix like ANZ to group your templates. For example, `ANZ_CustomTemplate`. Or refoldering, for example `FileTemplates\Server\MyTemplates\ANZ_CustomTemplate` This will help you to find your templates easily. 
+	> Hint: You can use a prefix like ANZ to group your templates. For example, `ANZ_CustomTemplate`. Or refoldering, for example `FileTemplates\Server\MyTemplates\ANZ_CustomTemplate` This will help you to find your templates easily. 
 
 2. Create `MainTemplate.txt`, `PartialTemplates.txt`, and `TemplateInfo.txt` files inside the `ConstantClass` folder.
 
@@ -41,7 +41,7 @@ using System;
 
 namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
 {
-    public static class {{Entity_Name_Here}}CustomTemplate
+    public static class {{Entity_Name_Here}}CustomConsts
     {
         {{Property_Looped_Template_Here}}
     }
