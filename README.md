@@ -1,6 +1,6 @@
 # Important
 
-Isses of this repository are tracked at https://github.com/aspnetzero/aspnet-zero-core. Please create your issues on https://github.com/aspnetzero/aspnet-zero-core/issues. If you are not a current AspNet Zero customer, you can send an email to info@aspnetzero.com.
+Issues of this repository are tracked at https://github.com/aspnetzero/aspnet-zero-core. Please create your issues on https://github.com/aspnetzero/aspnet-zero-core/issues. If you are not a current AspNet Zero customer, you can send an email to info@aspnetzero.com.
 
 ## ASP.NET Zero Documentation
 
