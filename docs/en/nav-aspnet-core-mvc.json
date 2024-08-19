@@ -602,31 +602,40 @@
       ]
     },
     {
-      "text": "Change Logs",
-      "path": "Change-Logs.md"
-    },
-    {
-      "text": "Road Map",
-      "path": "Road-Map.md"
-    },
-    {
-      "text": "Version Upgrade",
-      "path": "Version-Updating.md"
-    },
-    {
-        "text": "Version Differences",
-        "path": "Version-Differences.md"
-    },
-    {
-      "text": "External Links",
-      "items": [
+      "text": "Others",
+      "items":[
         {
-          "text": "ASP.NET Boilerplate",
-          "path": "https://aspnetboilerplate.com/Pages/Documents"
+          "text": "Change Logs",
+          "path": "Change-Logs.md"
         },
         {
-          "text": "Metronic Theme",
-          "path": "https://keenthemes.com/metronic/"
+          "text": "Road Map",
+          "path": "Road-Map.md"
+        },
+        {
+          "text": "Version Upgrade",
+          "path": "Version-Updating.md"
+        },
+        {
+            "text": "Version Differences",
+            "path": "Version-Differences.md"
+        },
+        {
+          "text": "Migration from Boilerplate to ASP.NET Zero",
+          "path": "Migration-from-Boilerplate-to-AspNet-Zero-Mvc.md"
+        },
+        {
+          "text": "External Links",
+          "items": [
+            {
+              "text": "ASP.NET Boilerplate",
+              "path": "https://aspnetboilerplate.com/Pages/Documents"
+            },
+            {
+              "text": "Metronic Theme",
+              "path": "https://keenthemes.com/metronic/"
+            }
+          ]
         }
       ]
     }
