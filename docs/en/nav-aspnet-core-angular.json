@@ -567,10 +567,6 @@
       "text": "Others",
       "items":[
         {
-          "text": "Migration from Boilerplate to ASP.NET Zero",
-          "path": "Migration-from-Boilerplate-to-AspNet-Zero-Angular.md"
-        },
-        {
           "text": "Change Logs",
           "path": "Change-Logs.md"
         },
@@ -585,6 +581,10 @@
         {
           "text": "Version Differences",
           "path": "Version-Differences.md"
+        },
+        {
+          "text": "Migration from Boilerplate to ASP.NET Zero",
+          "path": "Migration-from-Boilerplate-to-AspNet-Zero-Angular.md"
         },
         {
           "text": "External Links",
