@@ -4,6 +4,8 @@
 
 Fully integrated Elsa sample project can be found on [GitHub](https://github.com/aspnetzero/aspnet-zero-samples/tree/master/ElsaDemo).
 
+> Warning: In ASP.NET Zero versions prior to v13.0.0, Angular 16 is used. Elsa v2 is compatible with Angular 16, so it works seamlessly with these versions. However, when upgrading to newer versions of ASP.NET Zero, you should consider Elsa v2's compatibility.
+
 ## Create Project
 
 In order to start integrating Elsa with ASP.NET Zero, first follow ASP.NET Zero's [Getting Started](Getting-Started-Core.md) document and create a new project. 
@@ -513,36 +515,39 @@ if (enumType == null)
 }
 ```
 
-Finally, create a file named `SwaggerDocumentFilter.cs` in the Web.Core project under swagger folder and copy the content below;
+Finally, create a file named `SwaggerConfigExtensions.cs` in the Web.Core project under swagger folder and copy the content below;
 
 ```csharp
-using System;
-using System.Linq;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace ElsaAngularDemo.Web.Swagger
+namespace Intelly.Web.Swagger
 {
-    public class SwaggerDocumentFilter : IDocumentFilter
+    public static class SwaggerConfigExtensions
     {
-        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
+        public static void AddSwaggerRouteFilter(this SwaggerGenOptions options)
         {
-            foreach (var path in swaggerDoc.Paths)
+            options.DocInclusionPredicate((docName, apiDesc) =>
             {
-                Console.WriteLine(path);
-            }
+                var routeTemplate = apiDesc.RelativePath;
 
-            swaggerDoc.Paths
-                .Where(x =>
-                    x.Key.Contains("/workflow-definitions") ||
-                    x.Key.Contains("/workflow-instances") ||
-                    x.Key.Contains("/workflow-registry") ||
-                    x.Key.Contains("/workflows/") ||
-                    x.Key.Contains("/v{apiVersion}", StringComparison.InvariantCultureIgnoreCase) ||
-                    x.Key.Contains("/v{version}", StringComparison.InvariantCultureIgnoreCase)
-                )
-                .ToList()
-                .ForEach(x => swaggerDoc.Paths.Remove(x.Key));
+                if (routeTemplate == "workflow-definitions")
+                    return false;
+                else if (routeTemplate.Contains("workflow-definitions/import-files"))
+                    return false;
+                else if (routeTemplate.Contains("workflow-instances"))
+                    return false;
+                else if (routeTemplate.Contains("workflow-registry"))
+                    return false;
+                else if (routeTemplate.Contains("workflows"))
+                    return false;
+                else if (routeTemplate.Contains("v{apiVersion}"))
+                    return false;
+                else if (routeTemplate.Contains("v{version}"))
+                    return false;
+
+                return true;
+            });
         }
     }
 }
@@ -554,8 +559,8 @@ and, use this filter to hide Elsa endpoints in swagger document, so Swahsbuckle 
 services.AddSwaggerGen(options =>
 {
 	// existing configuration
-	options.DocumentFilter<SwaggerDocumentFilter>();
-}
+	 options.AddSwaggerRouteFilter();
+});
 ```
 
 ## Configuring Angular Project
