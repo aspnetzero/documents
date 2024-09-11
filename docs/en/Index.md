@@ -2,24 +2,40 @@
 
 ## Introduction
 
-ASP.NET Zero is a starting point for new web applications with a **modern UI** and **SOLID architecture**. It implements basic/common requirements of a **line of business applications**. You get it's **source code** and develop your business application on top of it for saving your valuable time to **focus on your own business code**.
+ASP.NET Zero is a starting point for new web applications with a **modern UI** and **SOLID architecture**. It implements basic/common requirements of **line of business applications**. You get its **source code** and develop your business application on top of it for saving your valuable time to **focus on your business code**.
 
 ## Project Types
 
-ASP.NET Zero has multiple architecture options. Select the one you want to prefer:
+ASP.NET Zero has multiple architecture options. Each option has its own documentation:
 
-* [ASP.NET Core & Angular](AspNetCore-Angular.md)
-* [ASP.NET Core MVC & JQuery](AspNetCore-MVC.md)
-* [ASP.NET MVC 5.x & AngularJS 1.x](AspNet-MVC-AngularJS.md)
-* [ASP.NET MVC 5.x & JQuery](AspNet-MVC.md)
-* [Xamarin / Mobile](Xamarin.md)
-* [GraphQL](GraphQL.md)
+-   [ASP.NET Core MVC](/en/aspnet-core-mvc/latest/Getting-Started-Core)
+-   [ASP.NET Core & Angular](/en/aspnet-core-angular/latest/Getting-Started-Angular)
 
-## Miscellaneous
+## Before Getting Started
+
+### ASP.NET Boilerplate
+
+ASP.NET Zero is built on top of [ASP.NET Boilerplate](https://aspnetboilerplate.com/) web application framework. ASP.NET Boilerplate is also developed by [Volosoft](https://volosoft.com/). You can refer to [ASP.NET Boilerplate documentation](https://aspnetboilerplate.com/Pages/Documents) to learn more about its capabilities.
+
+### GitHub
+
+ASP.NET Zero customers can access ASP.NET Zero's private GitHub repository and track changes in the project or contribute to the project. Customers can manage their GitHub users on [aspnetzero.com/LicenseManagement](https://aspnetzero.com/LicenseManagement) and gain access to ASP.NET Zero's private repository.
+
+### Support
+
+ASP.NET Zero customers can get help for the technical issues on the support website [support.aspnetzero.com](https://support.aspnetzero.com) ASP.NET Zero customers can log in to support website using their aspnetzero.com credentials.
 
 ### Power Tools
 
-ASP.NET Zero Power Tools, helps you to create an entity and its corresponding layers from database to the user interface. It is a Visual Studio Extension hosted on Visual Studio Marketplace. [Go to Power Tools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)  or [see how to use it](Rapid-Application-Development.md).
+ASP.NET Zero Power Tools helps you create an entity and its corresponding layers from the database to the user interface. It is a Visual Studio Extension hosted on Visual Studio Marketplace. [Go to Power Tools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)  or [see how to use it](Rapid-Application-Development.md). You can also use ASP.NET Zero Power Tools via the command-line interface.
+
+### Metronic Theme
+
+ASP.NET Zero uses [Metronic](https://keenthemes.com/metronic/) theme and includes its source code. ASP.NET Zero customers can access Metronic's GitHub repository and its source code by filling the form on [https://keenthemes.com/metronic/?page=github](https://keenthemes.com/metronic/?page=github). To get your Metronic Purchase Code, please send an email to info@aspnetzero.com
+
+### Upgrade
+
+You can upgrade your ASP.NET Zero solution when a new version is available. Before starting development, please follow [Version Upgrade](Version-Updating.md) document to set up your branching strategy so that you can get updates of ASP.NET Zero easily.
 
 ### Change Logs
 
@@ -31,11 +47,4 @@ See the [road map](Road-Map.md) for some planned features for next releases.
 
 ### Old Documents
 
-[Click here](Old-Documents.md) for documents older than v6.2.
-
-## External Links
-
-ASP.NET Zero is developed based on the **ASP.NET Boilerplate** web application framework and the **Metronic** UI Theme. So, you can refer to their web sites to learn more about capabilities of ASP.NET Zero, other details and UI options.
-
-- [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents)
-- [Metronic](http://www.keenthemes.com/preview/metronic/)
+[Click here](Old-Documents.md) for documents older than v6.2, ASP.NET MVC 5x & jQuery and ASP.NET MVC 5x & AngularJS there.
