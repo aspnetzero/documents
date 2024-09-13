@@ -1,4 +1,4 @@
-# ASP.NET CORE & Angular Project Documentation
+# ASP.NET Core & Angular Project Documentation
 This document is for **ASP.NET Core Backend & Angular UI** project type. See [other project types](https://aspnetzero.com/Documents).
 
 ## Introduction

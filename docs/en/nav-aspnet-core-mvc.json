@@ -22,6 +22,134 @@
       ]
     },
     {
+      "text": "Effortless Development Tutorial",
+      "items": [
+        {
+          "text": "Getting Started",
+          "path": "Developing-Step-By-Step-Core-Creating-Running-Project.md"
+        },
+        {
+          "text": "Adding a New Menu Item",
+          "path": "Developing-Step-By-Step-Core-Adding-New-Menu-Item.md"
+        },
+        {
+          "text": "Creating the Page",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-Core-Creating-Page.md"
+            },
+            {
+              "text": "Creating Person Entity",
+              "path": "Developing-Step-By-Step-Core-Creating-Person-Entity.md"
+            },
+            {
+              "text": "Database Migrations for Person",
+              "path": "Developing-Step-By-Step-Core-Database-Migrations-Person.md"
+            },
+            {
+              "text": "Creating Person Application Service",
+              "path": "Developing-Step-By-Step-Core-Creating-Person-Application-Service.md"
+            },
+            {
+              "text": "Creating Unit Tests For PersonAppService",
+              "path": "Developing-Step-By-Step-Core-Creating-Unit-Tests-PersonAppService.md"
+            },
+            {
+              "text": "Testing PersonAppService from Browser Console",
+              "path": "Developing-Step-By-Step-Core-Testing-PersonAppService-From-Browser-Console.md"
+            },
+            {
+              "text": "Using GetPeople Method From MVC Controller",
+              "path": "Developing-Step-By-Step-Core-Using-GetPeople-Method-From-MVC-Controller.md"
+            }
+          ]
+        },
+        {
+          "text": "Creating a New Person",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-Core-Creating-New-Person.md"
+            },
+            {
+              "text": "Testing CreatePerson Method",
+              "path": "Developing-Step-By-Step-Core-Testing-CreatePerson-Method.md"
+            },
+            {
+              "text": "Creating Modal for New Person",
+              "path": "Developing-Step-By-Step-Core-Creating-Modal-Person.md"
+            },
+            {
+              "text": "Opening the Person Modal",
+              "path": "Developing-Step-By-Step-Core-Creating-Opening-Person-Modal.md"
+            },
+            {
+              "text": "Saving Person",
+              "path": "Developing-Step-By-Step-Core-Saving-Person.md"
+            }
+          ]
+        },
+        {
+          "text": "Authorization For Phone Book",
+          "path": "Developing-Step-By-Step-Core-Authorization-For-Phone-Book.md"
+        },
+        {
+          "text": "Deleting a Person",
+          "path": "Developing-Step-By-Step-Core-Deleting-Person.md"
+        },
+        {
+          "text": "Filtering People",
+          "path": "Developing-Step-By-Step-Core-Filtering-People.md"
+        },
+        {
+          "text": "Adding Phone Numbers",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-Core-Adding-Phone-Numbers.md"
+            },
+            {
+              "text": "Creating Phone Entity",
+              "path": "Developing-Step-By-Step-Core-Creating-Phone-Entity.md"
+            },
+            {
+              "text": "Database Migration of Phone Entity",
+              "path": "Developing-Step-By-Step-Core-Database-Migration-Phone-Entity.md"
+            },
+            {
+              "text": "Changing GetPeople Method",
+              "path": "Developing-Step-By-Step-Core-Changing-GetPeople-Method.md"
+            },
+            {
+              "text": "Adding AddPhone and DeletePhone Methods",
+              "path": "Developing-Step-By-Step-Core-Adding-AddPhone-DeletePhone-Methods.md"
+            },
+            {
+              "text": "Edit Mode For Phone Numbers",
+              "path": "Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers.md"
+            },
+            {
+              "text": "Edit Mode For People",
+              "path": "Developing-Step-By-Step-Core-Edit-Mode-For-People.md"
+            }
+          ]
+        },
+        {
+          "text": "Multi Tenancy",
+          "path": "Developing-Step-By-Step-Core-Multi-Tenancy.md"
+        },
+        {
+          "text": "Running the Application",
+          "path": "Developing-Step-By-Step-Core-Running-Application.md"
+        },
+        {
+          "text": "Conclusion",
+          "path": "Developing-Step-By-Step-Core-Conclusion.md"
+        }
+      ]
+    },
+    {
       "text": "Web",
       "items": [
         {
@@ -123,10 +251,6 @@
                 {
                   "text": "Overview",
                   "path": "Features-Angular-Customizable-Dashboard.md"
-                },
-                {
-                  "text": "Customizable Dashboard Feature",
-                  "path": "Features-Mvc-Core-Customizable-Dashboard.md"
                 },
                 {
                   "text": "Developing Customizable Dashboard",
@@ -296,134 +420,6 @@
             {
               "text": "Deleting an existing Metronic theme",
               "path": "Deleting-A-Metronic-Theme-Mvc-Core.md"
-            }
-          ]
-        },
-        {
-          "text": "Developing Step By Step",
-          "items": [
-            {
-              "text": "Getting Started",
-              "path": "Developing-Step-By-Step-Core-Creating-Running-Project.md"
-            },
-            {
-              "text": "Adding a New Menu Item",
-              "path": "Developing-Step-By-Step-Core-Adding-New-Menu-Item.md"
-            },
-            {
-              "text": "Creating the Page",
-              "items": [
-                {
-                  "text": "Overview",
-                  "path": "Developing-Step-By-Step-Core-Creating-Page.md"
-                },
-                {
-                  "text": "Creating Person Entity",
-                  "path": "Developing-Step-By-Step-Core-Creating-Person-Entity.md"
-                },
-                {
-                  "text": "Database Migrations for Person",
-                  "path": "Developing-Step-By-Step-Core-Database-Migrations-Person.md"
-                },
-                {
-                  "text": "Creating Person Application Service",
-                  "path": "Developing-Step-By-Step-Core-Creating-Person-Application-Service.md"
-                },
-                {
-                  "text": "Creating Unit Tests For PersonAppService",
-                  "path": "Developing-Step-By-Step-Core-Creating-Unit-Tests-PersonAppService.md"
-                },
-                {
-                  "text": "Testing PersonAppService from Browser Console",
-                  "path": "Developing-Step-By-Step-Core-Testing-PersonAppService-From-Browser-Console.md"
-                },
-                {
-                  "text": "Using GetPeople Method From MVC Controller",
-                  "path": "Developing-Step-By-Step-Core-Using-GetPeople-Method-From-MVC-Controller.md"
-                }
-              ]
-            },
-            {
-              "text": "Creating a New Person",
-              "items": [
-                {
-                  "text": "Overview",
-                  "path": "Developing-Step-By-Step-Core-Creating-New-Person.md"
-                },
-                {
-                  "text": "Testing CreatePerson Method",
-                  "path": "Developing-Step-By-Step-Core-Testing-CreatePerson-Method.md"
-                },
-                {
-                  "text": "Creating Modal for New Person",
-                  "path": "Developing-Step-By-Step-Core-Creating-Modal-Person.md"
-                },
-                {
-                  "text": "Opening the Person Modal",
-                  "path": "Developing-Step-By-Step-Core-Creating-Opening-Person-Modal.md"
-                },
-                {
-                  "text": "Saving Person",
-                  "path": "Developing-Step-By-Step-Core-Saving-Person.md"
-                }
-              ]
-            },
-            {
-              "text": "Authorization For Phone Book",
-              "path": "Developing-Step-By-Step-Core-Authorization-For-Phone-Book.md"
-            },
-            {
-              "text": "Deleting a Person",
-              "path": "Developing-Step-By-Step-Core-Deleting-Person.md"
-            },
-            {
-              "text": "Filtering People",
-              "path": "Developing-Step-By-Step-Core-Filtering-People.md"
-            },
-            {
-              "text": "Adding Phone Numbers",
-              "items": [
-                {
-                  "text": "Overview",
-                  "path": "Developing-Step-By-Step-Core-Adding-Phone-Numbers.md"
-                },
-                {
-                  "text": "Creating Phone Entity",
-                  "path": "Developing-Step-By-Step-Core-Creating-Phone-Entity.md"
-                },
-                {
-                  "text": "Database Migration of Phone Entity",
-                  "path": "Developing-Step-By-Step-Core-Database-Migration-Phone-Entity.md"
-                },
-                {
-                  "text": "Changing GetPeople Method",
-                  "path": "Developing-Step-By-Step-Core-Changing-GetPeople-Method.md"
-                },
-                {
-                  "text": "Adding AddPhone and DeletePhone Methods",
-                  "path": "Developing-Step-By-Step-Core-Adding-AddPhone-DeletePhone-Methods.md"
-                },
-                {
-                  "text": "Edit Mode For Phone Numbers",
-                  "path": "Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers.md"
-                },
-                {
-                  "text": "Edit Mode For People",
-                  "path": "Developing-Step-By-Step-Core-Edit-Mode-For-People.md"
-                }
-              ]
-            },
-            {
-              "text": "Multi Tenancy",
-              "path": "Developing-Step-By-Step-Core-Multi-Tenancy.md"
-            },
-            {
-              "text": "Running the Application",
-              "path": "Developing-Step-By-Step-Core-Running-Application.md"
-            },
-            {
-              "text": "Conclusion",
-              "path": "Developing-Step-By-Step-Core-Conclusion.md"
             }
           ]
         },
