@@ -151,7 +151,7 @@ DebugServerIpAddresses.Current = "XXX.XXX.XXX.XXX";
 
 MAUI project has a very basic structure. ASP.NET Zero adds or modifies these files in the default project;
 
-![Project Structure](images/maui-project-struction.png)
+<img src="/images/maui-project-struction.png" width="350" alt="Project Structure">
 
 Android Project Structure
 
@@ -211,7 +211,7 @@ first authorized menu item.
 
 ##### Login
 
-![MAUI Login Screen](images/maui-login.png)
+<img src="/images/images/maui-login.png" width="350" alt="MAUI Login Screen">
 
 When user enters credentials `AccessTokenManager` authenticates user,
 stores access token in memory. For authentication needed Api calls, this
@@ -225,14 +225,14 @@ it can be retrieved with injecting `IApplicationContext`.
 
 ##### Menu
 
-![Application Menu](images/maui-menu.png)
+<img src="/images/maui-menu.png" width="350" alt="Application Menu">
 
 Menu items are stored in `MenuProvider` class. A menu item is shown if
 only user has granted required permission.
 
 ##### Tenants View
 
-![Tenants Page](images/maui-tenant-page.png)
+<img src="/images/maui-tenant-page.png" width="350" alt="Tenants Page">
 
 In this page you can see all tenants in your application. You can create new tenant, edit tenant or delete tenant. (If you have necessary permissions, otherwise you will not be able to see related buttons or page)
 There is a search bar on the top
@@ -245,7 +245,7 @@ Create Tenant             |  Edit Tenant |  Delete Tenant
 
 ##### User View
 
-![Users page](images/maui-user-list.png)
+<img src="/images/maui-user-list.png" width="350" alt="Users Page">
 
 This page lists users of the tenant or tenant owner. It is only shown if
 the user has permission to this page. Same as tenants view, there's a

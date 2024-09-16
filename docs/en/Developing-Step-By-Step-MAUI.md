@@ -341,13 +341,13 @@ button and enter **default** into the textbox in the opened modal. If the tenant
 label. If the tenant is not active or does not exist, then you'll get an
 alert about that.
 
-<img src="images/maui-login.png" alt="Login Screen" class="img-thumbnail" />
+<img src="images/maui-login.png" alt="Login Screen" class="img-thumbnail" width="350"/>
 
 Enter your credentials and tap **Log In** button.
 When you successfully login, you can see the below screen with new
 **People** menu item.
 
-<img src="images/maui-phonebook-empty-phonebook.png" alt="People" class="img-thumbnail" />
+<img src="images/maui-phonebook-empty-phonebook.png" alt="People" class="img-thumbnail" width="350"/>
 
 Up to here we successfully added an empty People page. Let's populate
 the view with data.
@@ -590,9 +590,17 @@ _Index.razor_
 ```
 Now you can create person, list it and edit it.
 
-<img src="images/maui-create-person.png" alt="Create Person" class="img-thumbnail" />
-<img src="images/maui-list-person.png" alt="List Person" class="img-thumbnail" />
-<img src="images/maui-edit-person.png" alt="Edit Person" class="img-thumbnail" />
+*Create Person*
+
+<img src="images/maui-create-person.png" alt="Create Person" class="img-thumbnail" width="350"/>
+
+*List Person*
+
+<img src="images/maui-list-person.png" alt="List Person" class="img-thumbnail" width="350"/>
+
+*Edit Person*
+
+<img src="images/maui-edit-person.png" alt="Edit Person" class="img-thumbnail" width="350"/>
 
 #### Deleting Person
 
@@ -662,8 +670,13 @@ _Index.razor_
 }
 ```
 
-<img src="images/maui-add-delete-button-to-list.png" alt="Add Delete Button" class="img-thumbnail" />
-<img src="images/maui-delete-person-prompt.png" alt="Delete Prompt" class="img-thumbnail" />
+*Delete button*
+
+<img src="images/maui-add-delete-button-to-list.png" alt="Add Delete Button" class="img-thumbnail" width="350"/>
+
+*Delete confirmation*
+
+<img src="images/maui-delete-person-prompt.png" alt="Delete Prompt" class="img-thumbnail" width="350"/>
 
 ## Conclusion
 
