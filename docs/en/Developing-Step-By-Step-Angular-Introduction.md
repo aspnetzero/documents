@@ -1,4 +1,4 @@
-# Effortless Development with ASP.NET Zero & Angular
+# Development with ASP.NET Zero & Angular
 
 The document is a step-by-step guide to develop a sample application with ASP.NET Zero (ASP.NET Core & Angular version).
 
