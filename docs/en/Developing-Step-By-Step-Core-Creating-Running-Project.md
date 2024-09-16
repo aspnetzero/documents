@@ -1,3 +1,7 @@
+# Getting Started
+
+In this tutorial, we will create a new project using the ASP.NET Zero & JQuery. We will create a simple phone book application that allows users to manage their contacts. We will create the project, run it, and log in to the application.
+
 ## Creating & Running the Project
 
 We're creating and downloading the solution named "**Acme.PhoneBookDemo**" as described in [Getting

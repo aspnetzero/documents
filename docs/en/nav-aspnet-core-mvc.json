@@ -2,23 +2,166 @@
   "items": [
     {
       "text": "Getting Started",
-      "path": "Getting-Started-Core.md"
+      "items": [
+        {
+          "text": "Overview",
+          "path": "Getting-Started-Core.md"
+        },
+        {
+          "text": "Solution Structure",
+          "path": "Solution-Structure-Core.md"
+        },
+        {
+          "text": "ASP.NET Boilerplate",
+          "path": "https://aspnetboilerplate.com/Pages/Documents"
+        },
+        {
+          "text": "Metronic Theme",
+          "path": "https://keenthemes.com/metronic/"
+        }
+      ]
     },
     {
-      "text": "Overview",
-      "path": "Overview-Core.md"
+      "text": "Effortless Development Tutorial",
+      "items": [
+        {
+          "text": "Getting Started",
+          "path": "Developing-Step-By-Step-Core-Creating-Running-Project.md"
+        },
+        {
+          "text": "Adding a New Menu Item",
+          "path": "Developing-Step-By-Step-Core-Adding-New-Menu-Item.md"
+        },
+        {
+          "text": "Creating the Page",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-Core-Creating-Page.md"
+            },
+            {
+              "text": "Creating Person Entity",
+              "path": "Developing-Step-By-Step-Core-Creating-Person-Entity.md"
+            },
+            {
+              "text": "Database Migrations for Person",
+              "path": "Developing-Step-By-Step-Core-Database-Migrations-Person.md"
+            },
+            {
+              "text": "Creating Person Application Service",
+              "path": "Developing-Step-By-Step-Core-Creating-Person-Application-Service.md"
+            },
+            {
+              "text": "Creating Unit Tests For PersonAppService",
+              "path": "Developing-Step-By-Step-Core-Creating-Unit-Tests-PersonAppService.md"
+            },
+            {
+              "text": "Testing PersonAppService from Browser Console",
+              "path": "Developing-Step-By-Step-Core-Testing-PersonAppService-From-Browser-Console.md"
+            },
+            {
+              "text": "Using GetPeople Method From MVC Controller",
+              "path": "Developing-Step-By-Step-Core-Using-GetPeople-Method-From-MVC-Controller.md"
+            }
+          ]
+        },
+        {
+          "text": "Creating a New Person",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-Core-Creating-New-Person.md"
+            },
+            {
+              "text": "Testing CreatePerson Method",
+              "path": "Developing-Step-By-Step-Core-Testing-CreatePerson-Method.md"
+            },
+            {
+              "text": "Creating Modal for New Person",
+              "path": "Developing-Step-By-Step-Core-Creating-Modal-Person.md"
+            },
+            {
+              "text": "Opening the Person Modal",
+              "path": "Developing-Step-By-Step-Core-Creating-Opening-Person-Modal.md"
+            },
+            {
+              "text": "Saving Person",
+              "path": "Developing-Step-By-Step-Core-Saving-Person.md"
+            }
+          ]
+        },
+        {
+          "text": "Authorization For Phone Book",
+          "path": "Developing-Step-By-Step-Core-Authorization-For-Phone-Book.md"
+        },
+        {
+          "text": "Deleting a Person",
+          "path": "Developing-Step-By-Step-Core-Deleting-Person.md"
+        },
+        {
+          "text": "Filtering People",
+          "path": "Developing-Step-By-Step-Core-Filtering-People.md"
+        },
+        {
+          "text": "Adding Phone Numbers",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-Core-Adding-Phone-Numbers.md"
+            },
+            {
+              "text": "Creating Phone Entity",
+              "path": "Developing-Step-By-Step-Core-Creating-Phone-Entity.md"
+            },
+            {
+              "text": "Database Migration of Phone Entity",
+              "path": "Developing-Step-By-Step-Core-Database-Migration-Phone-Entity.md"
+            },
+            {
+              "text": "Changing GetPeople Method",
+              "path": "Developing-Step-By-Step-Core-Changing-GetPeople-Method.md"
+            },
+            {
+              "text": "Adding AddPhone and DeletePhone Methods",
+              "path": "Developing-Step-By-Step-Core-Adding-AddPhone-DeletePhone-Methods.md"
+            },
+            {
+              "text": "Edit Mode For Phone Numbers",
+              "path": "Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers.md"
+            },
+            {
+              "text": "Edit Mode For People",
+              "path": "Developing-Step-By-Step-Core-Edit-Mode-For-People.md"
+            }
+          ]
+        },
+        {
+          "text": "Multi Tenancy",
+          "path": "Developing-Step-By-Step-Core-Multi-Tenancy.md"
+        },
+        {
+          "text": "Running the Application",
+          "path": "Developing-Step-By-Step-Core-Running-Application.md"
+        },
+        {
+          "text": "Conclusion",
+          "path": "Developing-Step-By-Step-Core-Conclusion.md"
+        }
+      ]
     },
     {
       "text": "Web",
       "items": [
         {
           "text": "Features",
-          "path": "Features-Mvc-Core.md",
           "items": [
             {
               "text": "Login",
-              "path": "Features-Mvc-Core-Login.md",
               "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-Mvc-Core-Login.md"
+                },
                 {
                   "text": "Social Logins",
                   "path": "Features-Mvc-Core-Social-Logins.md"
@@ -34,13 +177,16 @@
                 {
                   "text": "Passwordless Login",
                   "path": "Features-Passwordless-Login.md"
-                }                
+                }
               ]
             },
             {
               "text": "Sign Up",
-              "path": "Features-Mvc-Core-Sign-Up.md",
               "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-Mvc-Core-Sign-Up.md"
+                },
                 {
                   "text": "Email Activation",
                   "path": "Features-Mvc-Core-Email-Activation.md"
@@ -49,11 +195,83 @@
             },
             {
               "text": "Main Menu and Layout",
-              "path": "Features-Mvc-Core-Main-Menu-Layout.md",
-			  "items": [
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-Mvc-Core-Main-Menu-Layout.md"
+                },
                 {
                   "text": "Quick Navigation",
                   "path": "Features-Quick-Navigation.md"
+                }
+              ]
+            },
+            {
+              "text": "Host Settings",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-Mvc-Core-Host-Settings.md"
+                },
+                {
+                  "text": "Google Authenticator",
+                  "path": "Google-Authenticator-Usage.md"
+                }
+              ]
+            },
+            {
+              "text": "Tenant Settings",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-Mvc-Core-Tenant-Settings.md"
+                },
+                {
+                  "text": "Active Directory",
+                  "path": "Features-Mvc-Core-Tenant-Active-Directory.md"
+                }
+              ]
+            },
+            {
+              "text": "Dynamic Property System",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Feature-Dynamic-Entity-Parameters-Mvc.md"
+                },
+                {
+                  "text": "Create Custom Input Types",
+                  "path": "Feature-Dynamic-Entity-Parameters-Custom-Input-Types-Mvc.md"
+                }
+              ]
+            },
+            {
+              "text": "Customizable Dashboard",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-Angular-Customizable-Dashboard.md"
+                },
+                {
+                  "text": "Developing Customizable Dashboard",
+                  "path": "Developing-Mvc-Core-Customizable-Dashboard.md"
+                }
+              ]
+            },
+            {
+              "text": "Subscription",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-Mvc-Core-Subscription.md"
+                },
+                {
+                  "text": "PayPal Integration",
+                  "path": "Features-Mvc-Core-Subscription-PayPal.md"
+                },
+                {
+                  "text": "Stripe Integration",
+                  "path": "Features-Mvc-Core-Subscription-Stripe.md"
                 }
               ]
             },
@@ -94,42 +312,8 @@
               "path": "Features-Mvc-Core-Entity-History.md"
             },
             {
-              "text": "Subscription",
-              "path": "Features-Mvc-Core-Subscription.md",
-              "items": [
-                {
-                  "text": "PayPal Integration",
-                  "path": "Features-Mvc-Core-Subscription-PayPal.md"
-                },
-                {
-                  "text": "Stripe Integration",
-                  "path": "Features-Mvc-Core-Subscription-Stripe.md"
-                }
-              ]
-            },
-            {
               "text": "Visual Settings",
               "path": "Features-Mvc-Core-Visual-Settings.md"
-            },
-            {
-              "text": "Host Settings",
-              "path": "Features-Mvc-Core-Host-Settings.md",
-			  "items": [
-				{
-                  "text": "Google Authenticator",
-                  "path": "Google-Authenticator-Usage.md"
-                }
-			  ]
-            },
-            {
-              "text": "Tenant Settings",
-              "path": "Features-Mvc-Core-Tenant-Settings.md",
-              "items": [
-                {
-                  "text": "Active Directory",
-                  "path": "Features-Mvc-Core-Tenant-Active-Directory.md"
-                }
-              ]
             },
             {
               "text": "Maintenance",
@@ -143,7 +327,7 @@
               "text": "Notifications",
               "path": "Features-Mvc-Core-Notifications.md"
             },
-			{
+            {
               "text": "Mass Notifications",
               "path": "Features-Mass-Notifications.md"
             },
@@ -179,51 +363,26 @@
               "text": "Swagger UI",
               "path": "Features-Mvc-Core-Swagger-UI.md"
             },
-			{
+            {
               "text": "Health Checks",
               "path": "HealthChecks.md"
             },
-			{
-              "text": "Customizable Dashboard",
-              "path": "Features-Angular-Customizable-Dashboard.md",
-			  "items": [
-				{
-				  "text": "Customizable Dashboard Feature",
-				  "path": "Features-Mvc-Core-Customizable-Dashboard.md"
-				},
-				{
-				  "text": "Developing Customizable Dashboard",
-				  "path": "Developing-Mvc-Core-Customizable-Dashboard.md"
-				}
-			  ]
-            },
-			{
+            {
               "text": "Webhooks",
               "path": "Features-Webhooks.md"
             },
-			{
+            {
               "text": "User Delegation",
               "path": "Features-Mvc-Core-User-Delegation.md"
             },
-			{
-              "text": "Dynamic Property System",
-              "path": "Feature-Dynamic-Entity-Parameters-Mvc.md",
-			  "items": [
-				{
-				  "text": "Create Custom Input Types",
-				  "path": "Feature-Dynamic-Entity-Parameters-Custom-Input-Types-Mvc.md"
-				}
-			  ]
-            },
-			{
-				"text": "Azure Key Vault Configuration",
-				"path": "Features-Mvc-Azure-Key-Vault.md"
-			}
+            {
+              "text": "Azure Key Vault Configuration",
+              "path": "Features-Mvc-Azure-Key-Vault.md"
+            }
           ]
         },
         {
           "text": "Deployment",
-          "path": "Deployment-Mvc-Core.md",
           "items": [
             {
               "text": "Publishing to Azure",
@@ -241,50 +400,54 @@
               "text": "Setting Up an Azure Pipeline",
               "path": "Setting-Up-an-Azure-Pipeline-Mvc-Core.md"
             },
-			{
+            {
               "text": "Deploying to a Clustered Environment",
               "path": "Clustered-Environment.md"
             }
           ]
         },
-		{
-			"text": "Miscellaneous",
-			"items":[
-				{
-					"text": "Customization",
-					"path": "Customization-Core-Mvc.md",
-					"items": [
-						{
-							"text": "Adding a new Metronic theme",
-							"path": "Adding-New-Metronic-Theme-Mvc-Core.md"
-						},
-						{
-							"text": "Deleting an existing Metronic theme",
-							"path": "Deleting-A-Metronic-Theme-Mvc-Core.md"
-						}
-					]
-				}
-			]
-		}
+        {
+          "text": "Customization",
+          "items": [
+            {
+              "text": "Changing Logos",
+              "path": "Changing-Logo-Mvc.md"
+            },
+            {
+              "text": "Adding a new Metronic theme",
+              "path": "Adding-New-Metronic-Theme-Mvc-Core.md"
+            },
+            {
+              "text": "Deleting an existing Metronic theme",
+              "path": "Deleting-A-Metronic-Theme-Mvc-Core.md"
+            }
+          ]
+        },
+        {
+          "text": "Extending Existing Entities",
+          "path": "Extending-Existing-Entities.md"
+        },
+        {
+          "text": "Development with Docker",
+          "path": "Development-Mvc-Core-Docker.md"
+        }
       ]
     },
     {
       "text": "Mobile",
-      "path": "Xamarin.md",
       "items": [
         {
           "text": "MAUI Development Guide",
           "path": "Development-Guide-MAUI.md"
         },
         {
-          "text": "Xamarin Development Guide",
-          "path": "Development-Guide-Xamarin.md"
+          "text": "Developing Step By Step",
+          "path": "Developing-Step-By-Step-Maui.md"
         }
       ]
     },
     {
       "text": "Infrastructure & Concepts",
-      "path": "Infrastructure-Core-Mvc.md",
       "items": [
         {
           "text": "Startup Class",
@@ -373,7 +536,7 @@
         {
           "text": "OpenIddict Integration",
           "path": "Infrastructure-Core-Mvc-OpenIddict-Integration.md"
-        },        
+        },
         {
           "text": "Identity Server 4 Integration",
           "path": "Infrastructure-Core-Mvc-Identity-Server4-Integration.md"
@@ -401,159 +564,12 @@
         {
           "text": "Common Payment System",
           "path": "Features-Mvc-Core-Common-Payment-System.md"
-        }        
-      ]
-    },
-    {
-      "text": "Tutorials",
-      "items": [
-        {
-          "text": "Web",
-          "items": [
-            {
-              "text": "Developing Step By Step",
-              "path": "Developing-Step-By-Step-Core-Introduction.md",
-              "items": [
-                {
-                  "text": "Creating & Running The Project",
-                  "path": "Developing-Step-By-Step-Core-Creating-Running-Project.md"
-                },
-                {
-                  "text": "Adding a New Menu Item",
-                  "path": "Developing-Step-By-Step-Core-Adding-New-Menu-Item.md"
-                },
-                {
-                  "text": "Creating the Page",
-                  "path": "Developing-Step-By-Step-Core-Creating-Page.md",
-                  "items": [
-                    {
-                      "text": "Creating Person Entity",
-                      "path": "Developing-Step-By-Step-Core-Creating-Person-Entity.md"
-                    },
-                    {
-                      "text": "Database Migrations for Person",
-                      "path": "Developing-Step-By-Step-Core-Database-Migrations-Person.md"
-                    },
-                    {
-                      "text": "Creating Person Application Service",
-                      "path": "Developing-Step-By-Step-Core-Creating-Person-Application-Service.md"
-                    },
-                    {
-                      "text": "Creating Unit Tests For PersonAppService",
-                      "path": "Developing-Step-By-Step-Core-Creating-Unit-Tests-PersonAppService.md"
-                    },
-                    {
-                      "text": "Testing PersonAppService from Browser Console",
-                      "path": "Developing-Step-By-Step-Core-Testing-PersonAppService-From-Browser-Console.md"
-                    },
-                    {
-                      "text": "Using GetPeople Method From MVC Controller",
-                      "path": "Developing-Step-By-Step-Core-Using-GetPeople-Method-From-MVC-Controller.md"
-                    }
-                  ]
-                },
-                {
-                  "text": "Creating a New Person",
-                  "path": "Developing-Step-By-Step-Core-Creating-New-Person.md",
-                  "items": [
-                    {
-                      "text": "Testing CreatePerson Method",
-                      "path": "Developing-Step-By-Step-Core-Testing-CreatePerson-Method.md"
-                    },
-                    {
-                      "text": "Creating Modal for New Person",
-                      "path": "Developing-Step-By-Step-Core-Creating-Modal-Person.md"
-                    },
-                    {
-                      "text": "Opening the Person Modal",
-                      "path": "Developing-Step-By-Step-Core-Creating-Opening-Person-Modal.md"
-                    },
-                    {
-                      "text": "Saving Person",
-                      "path": "Developing-Step-By-Step-Core-Saving-Person.md"
-                    }
-                  ]
-                },
-                {
-                  "text": "Authorization For Phone Book",
-                  "path": "Developing-Step-By-Step-Core-Authorization-For-Phone-Book.md"
-                },
-                {
-                  "text": "Deleting a Person",
-                  "path": "Developing-Step-By-Step-Core-Deleting-Person.md"
-                },
-                {
-                  "text": "Filtering People",
-                  "path": "Developing-Step-By-Step-Core-Filtering-People.md"
-                },
-                {
-                  "text": "Adding Phone Numbers",
-                  "path": "Developing-Step-By-Step-Core-Adding-Phone-Numbers.md",
-                  "items": [
-                    {
-                      "text": "Creating Phone Entity",
-                      "path": "Developing-Step-By-Step-Core-Creating-Phone-Entity.md"
-                    },
-                    {
-                      "text": "Database Migration of Phone Entity",
-                      "path": "Developing-Step-By-Step-Core-Database-Migration-Phone-Entity.md"
-                    },
-                    {
-                      "text": "Changing GetPeople Method",
-                      "path": "Developing-Step-By-Step-Core-Changing-GetPeople-Method.md"
-                    },
-                    {
-                      "text": "Adding AddPhone and DeletePhone Methods",
-                      "path": "Developing-Step-By-Step-Core-Adding-AddPhone-DeletePhone-Methods.md"
-                    },
-                    {
-                      "text": "Edit Mode For Phone Numbers",
-                      "path": "Developing-Step-By-Step-Core-Edit-Mode-For-Phone-Numbers.md"
-                    },
-                    {
-                      "text": "Edit Mode For People",
-                      "path": "Developing-Step-By-Step-Core-Edit-Mode-For-People.md"
-                    }
-                  ]
-                },
-                {
-                  "text": "Multi Tenancy",
-                  "path": "Developing-Step-By-Step-Core-Multi-Tenancy.md"
-                },
-                {
-                  "text": "Running the Application",
-                  "path": "Developing-Step-By-Step-Core-Running-Application.md"
-                },
-                {
-                  "text": "Conclusion",
-                  "path": "Developing-Step-By-Step-Core-Conclusion.md"
-                }
-              ]
-            },
-            {
-              "text": "Extending Existing Entities",
-              "path": "Extending-Existing-Entities.md"
-            }
-          ]
-        },
-        {
-          "text": "Mobile",
-          "items": [
-            {
-              "text": "Developing Step By Step for MAUI",
-              "path": "Developing-Step-By-Step-MAUI.md"
-            },
-            {
-              "text": "Developing Step By Step for Xamarin",
-              "path": "Developing-Step-By-Step-Xamarin.md"
-            }
-          ]
         }
       ]
     },
     {
       "text": "Power Tools",
-      "items":[
+      "items": [
         {
           "text": "Overview",
           "path": "Power-Tools-Overview.md"
@@ -568,7 +584,7 @@
         },
         {
           "text": "Development Guide",
-          "items" : [
+          "items": [
             {
               "text": "Using Visual Studio Extension",
               "path": "Power-Tools-Using-Visual-Studio-Extension.md"
@@ -602,42 +618,20 @@
       ]
     },
     {
-      "text": "Others",
-      "items":[
-        {
-          "text": "Change Logs",
-          "path": "Change-Logs.md"
-        },
-        {
-          "text": "Road Map",
-          "path": "Road-Map.md"
-        },
-        {
-          "text": "Version Upgrade",
-          "path": "Version-Updating.md"
-        },
-        {
-            "text": "Version Differences",
-            "path": "Version-Differences.md"
-        },
-        {
-          "text": "Migration from Boilerplate to ASP.NET Zero",
-          "path": "Migration-from-Boilerplate-to-AspNet-Zero-Mvc.md"
-        },
-        {
-          "text": "External Links",
-          "items": [
-            {
-              "text": "ASP.NET Boilerplate",
-              "path": "https://aspnetboilerplate.com/Pages/Documents"
-            },
-            {
-              "text": "Metronic Theme",
-              "path": "https://keenthemes.com/metronic/"
-            }
-          ]
-        }
-      ]
+      "text": "Migration from Boilerplate to ASP.NET Zero",
+      "path": "Migration-from-Boilerplate-to-AspNet-Zero-Mvc.md"
+    },
+    {
+      "text": "Change Logs",
+      "path": "Change-Logs.md"
+    },
+    {
+      "text": "Road Map",
+      "path": "Road-Map.md"
+    },
+    {
+      "text": "Version Upgrade",
+      "path": "Version-Updating.md"
     }
   ]
 }
