@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 13.4.0 (2024-09-24)
+
+* Upgraded to ABP 9.4.2
+* Power Tools: MAUI Code Generation
+* Remove Unused Libraries
+* Enhancements and bug fixes
+
 ## 13.3.0 (2024-08-01)
 
 * Upgraded to ABP 9.3
