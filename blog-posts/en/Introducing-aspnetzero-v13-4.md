@@ -1,4 +1,4 @@
-**Title:** Introducing ASP.NET Zero v.13.4
+**Title:** Introducing ASP.NET Zero v13.4
 **Description:** ASP.NET Zero v13.4: New Design For ASP.NET Zero Websites, MAUI Power Tools Code Generation, Angular Server Not Found Page, Upgrade to ABP 9.4, Update packages and bug fixes.
 
 # Introducing ASP.NET Zero v13.4
