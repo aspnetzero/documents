@@ -33,7 +33,7 @@ You can also select a default edition, so a newly registered tenant will be assi
 
 ## User Management
 
-![User Management Settings](images/host-settings-user-management-4.png)
+![User Management Settings](images/host-settings-user-management-5.png)
 
 User related settings can be configured under this tab. You can force email confirmation for login. You can enable phone number verification. Also, you can enable cookie consent so ASP.NET Zero shows a cookie consent bar for the users to accept cookie policy of your application.
 
@@ -43,7 +43,7 @@ You can enable/disable captcha on login page.
 
 You can also enable/disable session timeout control. If it is enable and the user does not provide any input to the site during the timeout period, a countdown modal will be displayed to user. If the user still does not provide an entry to the site during the modal countdown period, user will be log out.
 
-Each tenant can allow tenant users to use Gravatar profile picture or not.
+Each tenant can allow tenant users to use Gravatar profile picture or not. Additionally, you can adjust the size of the profile picture in megabytes (MB) and set the dimensions in pixels (px) for width and height.
 
 ##### Password
 
