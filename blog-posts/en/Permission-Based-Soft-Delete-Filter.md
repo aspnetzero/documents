@@ -97,55 +97,112 @@ After creating the files and their contents, navigate to the `_Layout.cshtml` fi
 ## Implementing the Filter Logic
 ASP.NET Boilerplate provides built-in support for data filters, including the soft delete filter. You can enable or disable the soft delete filter at runtime based on the user’s choice from the switch component. If you’d like to explore other filters, you can check out the [documentation here](https://aspnetboilerplate.com/Pages/Documents/Data-Filters.)
 
-### AppSettings.cs
-A static class containing constants for application-wide settings like the soft delete filter configuration.
+### Implementing Soft Delete Filter Using Cache and Singleton Pattern
+Explains how to manage the ability for users to enable or disable the soft delete filter using a cache structure and a singleton pattern. By utilizing this structure, the state of the soft delete filter can be managed individually for each user.
+
+> Note: These classes need to be created under the Core folder in your project to ensure access to the DbContext.
+
+#### SoftDeleteFilterCacheItem.cs
+This class represents the cache item used to store the soft delete filter state (enabled/disabled) for each user.
 
 ```c#
-public static class AppSettings
+public class SoftDeleteFilterCacheItem
 {
-    //
-
-    public static class UserManagement
+    public const string CacheName = "AppSoftDeleteFilterCache";
+    public bool IsSoftDeleteFilterEnabled { get; set; }
+    public SoftDeleteFilterCacheItem()
     {
-        public const string SoftDeleteFilter = "App.UserManagement.SoftDeleteFilter";
-
-        //
+        
     }
 
-    //
+    public SoftDeleteFilterCacheItem(bool isSoftDeleteFilterEnabled)
+    {
+        IsSoftDeleteFilterEnabled = isSoftDeleteFilterEnabled;            
+    }
 }
 ```
 
-### AppSettingProvider.cs
-A class that provides default values for application settings, setting the default value of the soft delete filter to "true."
+#### SoftDeleteFilterCacheExtensions.cs
+This extension method simplifies retrieving the soft delete filter cache using `ICacheManager`.
 
 ```c#
-public class AppSettingProvider : SettingProvider
+public static class SoftDeleteFilterCacheExtensions
 {
-    private IEnumerable<SettingDefinition> GetSharedSettings()
+    public static ITypedCache<string, SoftDeleteFilterCacheItem> GetSoftDeleteFilterCache(this ICacheManager cacheManager)
     {
-        return new[]
+        return cacheManager.GetCache<string, SoftDeleteFilterCacheItem>(SoftDeleteFilterCacheItem.CacheName);
+    }
+}
+```
+
+
+#### CurrentUserSoftDeleteFilterProvider.cs
+This class provides methods to retrieve and update the soft delete filter setting for the current user, utilizing a singleton pattern for thread safety.
+
+```c#
+public class CurrentUserSoftDeleteFilterProvider
+{
+    private static CurrentUserSoftDeleteFilterProvider _instance;
+    private static readonly object _lock = new object();
+    private readonly ICacheManager _cacheManager;
+    private readonly IAbpSession _session;
+
+    private CurrentUserSoftDeleteFilterProvider(ICacheManager cacheManager, IAbpSession session)
+    {
+        _cacheManager = cacheManager;
+        _session = session;
+    }
+
+    public static CurrentUserSoftDeleteFilterProvider GetInstance(ICacheManager cacheManager, IAbpSession session)
+    {
+        lock (_lock)
         {
-            new SettingDefinition(AppSettings.UserManagement.SoftDeleteFilter,
-                GetFromAppSettings(AppSettings.UserManagement.SoftDeleteFilter, "true"),
-                clientVisibilityProvider: _visibleSettingClientVisibilityProvider),
+            if (_instance == null)
+            {
+                _instance = new CurrentUserSoftDeleteFilterProvider(cacheManager, session);
+            }
         }
+        return _instance;
+    }
+
+    public async Task<bool> IsSoftDeleteFilterEnabled()
+    {
+        var userIdentifier = _session?.ToUserIdentifier()?.ToString();
+
+        if (userIdentifier != null)
+        {
+            var cacheItem = await _cacheManager.GetSoftDeleteFilterCache().GetOrDefaultAsync(userIdentifier);
+
+            return cacheItem?.IsSoftDeleteFilterEnabled ?? true;
+        }
+
+        return true;
+    }
+
+    public async Task UpdateSoftDeleteFilterEnabled(bool isSoftDeleteFilterEnabled)
+    {
+        await _cacheManager.GetSoftDeleteFilterCache().SetAsync(_session.ToUserIdentifier().ToString(), new SoftDeleteFilterCacheItem
+        {
+            IsSoftDeleteFilterEnabled = isSoftDeleteFilterEnabled
+        });
     }
 }
 ```
 
 
 ### SoftDeleteFilterDemoDbContext.cs
-By overriding the `IsSoftDeleteFilterEnabled` property in the DbContext under the `*.EntityFrameworkCore` project, you can dynamically determine the state of the soft delete filter. This property allows you to check whether the soft delete filter is enabled or not at runtime.
+This class overrides the `IsSoftDeleteFilterEnabled` property to dynamically determine the filter's state at runtime, based on the current user’s soft delete filter settings.
 
 ```c#
 public class SoftDeleteFilterDemoDbContext : AbpZeroDbContext<Tenant, Role, User, SoftDeleteFilterDemoDbContext>, IOpenIddictDbContext
 {
     //
 
-    public ISettingManager SettingManager { get; set; }
+    public ICacheManager CacheManager { get; set; }
+    public IAbpSession Session { get; set; }
 
-    public override bool IsSoftDeleteFilterEnabled => SettingManager.GetSettingValue<bool>(AppSettings.UserManagement.SoftDeleteFilter);
+    public override bool IsSoftDeleteFilterEnabled => AsyncHelper.RunSync(() => CurrentUserSoftDeleteFilterProvider
+                                                                                .GetInstance(CacheManager, Session).IsSoftDeleteFilterEnabled());
 
     //
 }
@@ -181,18 +238,19 @@ A service class that manages user soft delete filter settings, using SettingMana
 ```c#
 public class ProfileAppService : SoftDeleteFilterDemoAppServiceBase, IProfileAppService
 {
-   public async Task<SoftDeleteFilterDto> GetSoftDeleteFilterSetting()
+    public async Task<SoftDeleteFilterDto> GetSoftDeleteFilterSetting()
     {
+        var isSoftDeleteFilterEnabled = await CurrentUserSoftDeleteFilterProvider.GetInstance(_cacheManager, AbpSession).IsSoftDeleteFilterEnabled();
+
         return new SoftDeleteFilterDto
         {
-            IsSoftDeleteFilterEnabled = await SettingManager.GetSettingValueForApplicationAsync<bool>(AppSettings.UserManagement.SoftDeleteFilter)
+            IsSoftDeleteFilterEnabled = isSoftDeleteFilterEnabled
         };
     }
 
     public async Task UpdateSoftDeleteFilterSetting(SoftDeleteFilterDto input)
     {
-        await SettingManager.ChangeSettingForApplicationAsync(AppSettings.UserManagement.SoftDeleteFilter, 
-            input.IsSoftDeleteFilterEnabled.ToString().ToLowerInvariant());
+        await CurrentUserSoftDeleteFilterProvider.GetInstance(_cacheManager, AbpSession).UpdateSoftDeleteFilterEnabled(input.IsSoftDeleteFilterEnabled);
     }
 }
 ```
@@ -210,7 +268,8 @@ When the user toggles the checkbox, the new state is sent to the backend to upda
     const checkbox = document.getElementById('SoftDeleteFilterToggle');
 
     _profileService.getSoftDeleteFilterSetting().done(function (result) {
-      checkbox.checked = result.isSoftDeleteFilterEnabled;
+      // Set the checkbox to the opposite of the received value.
+      checkbox.checked = !result.isSoftDeleteFilterEnabled;
     });
 
     checkbox.addEventListener('change', function () {
@@ -219,8 +278,11 @@ When the user toggles the checkbox, the new state is sent to the backend to upda
 
     function saveFilterState(isChecked) {
       _profileService.updateSoftDeleteFilterSetting({
-        isSoftDeleteFilterEnabled: isChecked
+        // Invert the checkbox value before sending it to the server,
+        // because we store the opposite state (e.g., if checked, we disable the filter)
+        isSoftDeleteFilterEnabled: !isChecked
       }).done(function () {
+        window.location.reload();
         console.log('Checkbox state updated successfully', isChecked);
       }).fail(function (error) {
         console.error('Failed to update checkbox state:', error);
