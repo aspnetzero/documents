@@ -1,27 +1,27 @@
-# Implementing Permission-Based Soft Delete Filter in ASP.NET Zero
+# How to Enable or Disable Soft Delete Filter in the ASP.NET Zero UI
 
 ## Introduction
 Soft delete is a frequently used feature in applications that can be used to mark data as deleted without removing it from the database. In some cases, users may have to switch between views that show or hide soft deleted data. In this blog post, we looked at how to implement a permission-based soft delete filter in an ASP.NET Zero application. We also showed how to add a switch component to the user interface to activate or deactivate the soft delete filter based on user permissions.
 
 ## Soft Delete in ASP.NET Zero
-ASP.NET Zero is based on the ASP.NET Boilerplate framework, which contains a preconfigured soft delete mechanism. Soft delete allows data records to remain in the database while being marked as deleted. However, in some cases, administrators or authorized users may have to display these soft deleted data records.
+ASP.NET Zero is based on the ASP.NET Boilerplate framework, which contains a preconfigured soft delete mechanism. Soft delete allows data records to remain in the database while being marked as deleted. However, in some cases, administrators or authorized users may have to display these soft deleted records.
 
 ## Permissions and Authorization for the Soft Delete Filter
 Before allowing users to toggle the soft delete filter, we need to make sure they have the appropriate permissions. In ASP.NET Zero, permissions can be easily managed through the authorization system. You can create a new permission (such as **SoftDeleteFilterToggle**) and assign it to the required roles.
 
 
-```c#
+```csharp
 public static class AppPermissions
 {
-    //
+    // ...
     public const string SoftDeleteFilterToggle = "Pages.SoftDeleteFilterToggle";
 }
 ```
 
-```c#
+```csharp
 public class AppAuthorizationProvider : AuthorizationProvider
 {
-    //
+    // ...
 
     public override void SetPermissions(IPermissionDefinitionContext context)
     {
@@ -31,21 +31,21 @@ public class AppAuthorizationProvider : AuthorizationProvider
         administration.CreateChildPermission(AppPermissions.SoftDeleteFilterToggle, L("SoftDeleteFilterToggle"));
     }
 
-    //
+    // ...
 }
 ```
 
 Once this permission is created and added to the appropriate user roles, only authorized users will be able to toggle the soft delete filter.
 
 ## Adding the Soft Delete Toggle Component
-Similar to how organization unit switching is implemented, we can add a toggle switch component to the right-hand corner of the app. This switch will be visible only to users who have the `SoftDeleteFilterToggle` permission.
+Similar to how organization unit switching is implemented in one of the previous [blog post](https://aspnetzero.com/blog/switching-between-organization-units), we can add a toggle switch component to the right-hand corner of the app. This switch will be visible only to users who have the `SoftDeleteFilterToggle` permission.
 
 To implement this, we’ll create a new View Component called `AppSoftDeleteFilter`. The view component will be placed under `Areas/App/Views/Shared/Components/AppSoftDeleteFilter`. This folder will contain two files: `AppSoftDeleteFilterViewComponent.cs` and Default.cshtml.
 
 ### AppSoftDeleteFilterViewComponent.cs
 This class will handle the logic for checking the user’s permission and determining whether to display the toggle switch.
 
-```c#
+```csharp
 using Microsoft.AspNetCore.Mvc;
 using SoftDeleteFilterDemo.Web.Views;
 using System.Threading.Tasks;
@@ -105,7 +105,7 @@ Explains how to manage the ability for users to enable or disable the soft delet
 #### SoftDeleteFilterCacheItem.cs
 This class represents the cache item used to store the soft delete filter state (enabled/disabled) for each user.
 
-```c#
+```csharp
 public class SoftDeleteFilterCacheItem
 {
     public const string CacheName = "AppSoftDeleteFilterCache";
@@ -125,7 +125,7 @@ public class SoftDeleteFilterCacheItem
 #### SoftDeleteFilterCacheExtensions.cs
 This extension method simplifies retrieving the soft delete filter cache using `ICacheManager`.
 
-```c#
+```csharp
 public static class SoftDeleteFilterCacheExtensions
 {
     public static ITypedCache<string, SoftDeleteFilterCacheItem> GetSoftDeleteFilterCache(this ICacheManager cacheManager)
@@ -139,7 +139,7 @@ public static class SoftDeleteFilterCacheExtensions
 #### CurrentUserSoftDeleteFilterProvider.cs
 This class provides methods to retrieve and update the soft delete filter setting for the current user, utilizing a singleton pattern for thread safety.
 
-```c#
+```csharp
 public class CurrentUserSoftDeleteFilterProvider
 {
     private static CurrentUserSoftDeleteFilterProvider _instance;
@@ -193,10 +193,10 @@ public class CurrentUserSoftDeleteFilterProvider
 ### SoftDeleteFilterDemoDbContext.cs
 This class overrides the `IsSoftDeleteFilterEnabled` property to dynamically determine the filter's state at runtime, based on the current user’s soft delete filter settings.
 
-```c#
+```csharp
 public class SoftDeleteFilterDemoDbContext : AbpZeroDbContext<Tenant, Role, User, SoftDeleteFilterDemoDbContext>, IOpenIddictDbContext
 {
-    //
+    // ...
 
     public ICacheManager CacheManager { get; set; }
     public IAbpSession Session { get; set; }
@@ -204,14 +204,14 @@ public class SoftDeleteFilterDemoDbContext : AbpZeroDbContext<Tenant, Role, User
     public override bool IsSoftDeleteFilterEnabled => AsyncHelper.RunSync(() => CurrentUserSoftDeleteFilterProvider
                                                                                 .GetInstance(CacheManager, Session).IsSoftDeleteFilterEnabled());
 
-    //
+    // ...
 }
 ```
 
 ### SoftDeleteFilterDto.cs
 A data transfer object (DTO) that indicates whether the soft delete filter is enabled for the user.
 
-```c#
+```csharp
  public class SoftDeleteFilterDto
  {
      public bool IsSoftDeleteFilterEnabled { get; set; }
@@ -221,10 +221,10 @@ A data transfer object (DTO) that indicates whether the soft delete filter is en
 ### IProfileAppService.cs
 An application service interface that provides functions to get and update the soft delete filter settings.
 
-```c#
+```csharp
 public interface IProfileAppService : IApplicationService
 {
-    //
+    // ...
 
     Task<SoftDeleteFilterDto> GetSoftDeleteFilterSetting();
 
@@ -235,7 +235,7 @@ public interface IProfileAppService : IApplicationService
 ### ProfileAppService.cs
 A service class that manages user soft delete filter settings, using SettingManager to retrieve and update the settings.
 
-```c#
+```csharp
 public class ProfileAppService : SoftDeleteFilterDemoAppServiceBase, IProfileAppService
 {
     public async Task<SoftDeleteFilterDto> GetSoftDeleteFilterSetting()
