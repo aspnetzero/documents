@@ -14,7 +14,7 @@ We are ready to run the application using Visual Studio. So, just run the applic
 
 There are two pages here: **Home Page** and **About**. Contents of these pages are just placeholders and for demo purposes. You can completely remove content and build your page upon your needs. Also, you should change the **logo** with your Company's logo.
 
-See [metronic front-end theme](http://keenthemes.com/free-bootstrap-templates/multi-purpose-corporate-frontend-themefreebie-corporate-frontend-theme/) for all possibilities and components to build a richer web site.
+See [metronic front-end theme](https://preview.keenthemes.com/free-bootstrap-corporate/) for all possibilities and components to build a richer web site.
 
 Menus are defined in **FrontEndNavigationProvider** class. When you add a new menu item here, it will be automatically shown in the menu. There is a **Login** link at the top right corner. This link takes user to the **Login page** to enter to the **Angular** application. After the login, user will be redirected back to public website.
 

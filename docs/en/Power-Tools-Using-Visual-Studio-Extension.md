@@ -20,7 +20,7 @@ The Entity Information tab provides a platform to specify entity-specific detail
 
 6. **Generate Overridable Entity:** This option enables you to override created entity classes with creating partial classes. 
 
-7. **Track Entity History:** This option enables you to track the entity's history. Please refer to the [Entity History]([entity-history.md](https://aspnetboilerplate.com/Pages/Documents/Entity-History)) document for more information.
+7. **Track Entity History:** This option enables you to track the entity's history. Please refer to the [Entity History](https://aspnetboilerplate.com/Pages/Documents/Entity-History) document for more information.
 
 8. **Add Migration:** This option adds a migration for the entity to the database. If you want to add migrations manually, you can just disable this option.
 

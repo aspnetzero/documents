@@ -58,7 +58,7 @@ In constructor, we get (resolve) an **IPersonAppService** from
 **dependency injection** container. It creates the **PersonAppService**
 class with all dependencies. Then we can use it in test methods.
 
-Since we're using [xUnit](http://xunit.github.io/), we add **Fact**
+Since we're using [xUnit](https://xunit.net/), we add **Fact**
 attribute to each test method. In the test method, we called
 **GetPeople** method and checked if there are **two people** in the
 returned list as we know that there were 2 people in **initial**

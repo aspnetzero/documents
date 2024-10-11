@@ -16,6 +16,6 @@ If you are looking for the documents of v6.8 and above, you can select from the 
 * [v5.0.0](https://github.com/aspnetzero/documents/blob/v5.0.0/doc/Index.html)
 * [v4.6.0](https://github.com/aspnetzero/documents/blob/v4.6.0/doc/Index.html)
 * [v4.1.0](https://github.com/aspnetzero/documents/blob/v4.1.0/doc/Index.html)
-* [v4.0.0](https://github.com/aspnetzero/documents/blob/v4.0.0/doc/Index.html)
-* [v3.4.0](https://github.com/aspnetzero/documents/blob/v3.4.0/doc/Index.html)
+* [v4.0.0](https://github.com/aspnetzero/documents/blob/v4.0/doc/Index.html)
+* [v3.4.0](https://github.com/aspnetzero/documents/blob/v3.4/doc/Index.html)
 * [v1.10.0](https://github.com/aspnetzero/documents/blob/v1.10.0/doc/Index.html)

@@ -4,7 +4,7 @@ Download an ASP.NET CORE & Angular project with .NET Core framework as described
 
 ## Pre-Requirements
 
- -  Visual Studio for Mac: [<https://visualstudio.microsoft.com/vs/mac/>](<https://visualstudio.microsoft.com/vs/mac/>)
+ -  Visual Studio for Mac: [https://visualstudio.microsoft.com/vs/mac/](https://visualstudio.microsoft.com/vs/mac/)
 -  .Net core SDK: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
 
  -  Yarn v1.x [https://classic.yarnpkg.com/en/docs/install#mac-stable](https://classic.yarnpkg.com/en/docs/install#mac-stable)

@@ -93,7 +93,7 @@ dotnet dev-certs https --trust
 
 This will allow to trust the self-signed ASP.NET Core HTTPS development certificate in your computer.
 
-For more information, see [Connect to Local Web Services from iOS Simulators and Android Emulators]( https://docs.microsoft.com/en-us/xamarin/cross-platform/deploy-test/connect-to-local-web-services#create-a-development-certificate)
+For more information, see [Connect to Local Web Services from iOS Simulators and Android Emulators](https://docs.microsoft.com/en-us/xamarin/cross-platform/deploy-test/connect-to-local-web-services#create-a-development-certificate)
 
 We have successfully started host. Now we can configure MAUI app to connect this host.
 

@@ -6,7 +6,7 @@ This document is aimed to create and run an ASP.NET Zero based project in just 5
 
 [Login to aspnetzero.com](https://aspnetzero.com/Account/Login) with your username and password. Go to the [download](https://aspnetzero.com/Download) page. You will see a form as shown below:
 
-[Download Angular Project](images/download-angular-3.png)
+![Download Angular Project](images/download-angular-3.png)
 
 Select **ASP.NET Core & Angular** as Project Type and fill other required fields. Your project will be ready in one minute. When you open the downloaded zip file, you will see four folders:
 

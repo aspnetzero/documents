@@ -1,6 +1,6 @@
 # ASP.NET ZERO Penetration Test Report
 
-ASP.NET Zero (v8.1) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.9.0)](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project). The OWASP Zed Attack Proxy (ZAP) is one of the world's most popular security tools and is actively maintained by hundreds of international volunteers. 
+ASP.NET Zero (v8.1) has been scanned for vulnerabilities with the latest version of [OWASP ZAP (v2.9.0)](https://owasp.org/www-chapter-dorset/assets/presentations/2020-01/20200120-OWASPDorset-ZAP-DanielW.pdf). The OWASP Zed Attack Proxy (ZAP) is one of the world's most popular security tools and is actively maintained by hundreds of international volunteers. 
 
 The automated scanner has been reported several alerts.  ASP.NET Zero Team has fixed the positive alerts regarding the report. On the other hand most of the alerts can be stated as false-positive. The reasons for the false-positive alerts that are subject to these issues are clearly stated below.
 
