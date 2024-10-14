@@ -26,7 +26,7 @@ We can change user's **password**, make her **active/passive** and so on... A us
 
 User list can be downloaded as an Excel file. Also, new users can be imported from an Excel file. In order to import users from an Excel file, ASP.NET Zero requires a specific excel file format. You can download a sample import template on the user list by clicking the "click here" link under the "Excel operations" dropdown button.
 
-<img src="D:/github/documents/docs/en/images/user-list-excel-operations-import-template-link.png" alt="Sample Excel import template link" class="img-thumbnail" />
+<img src="images/user-list-excel-operations-import-template-link.png" alt="Sample Excel import template link" class="img-thumbnail" />
 
 When you import users from Excel, if there are errors while importing users to ASP.NET Zero's database, invalid users will be saved to an Excel file with the reason (validation error message or exception message) and the user who made the import operation will be notified via ASP.NET Zero's notification system. So, the user can click the notification and see the result Excel file, fix the validation errors and import the failed users again.
 

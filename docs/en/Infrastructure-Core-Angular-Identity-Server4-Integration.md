@@ -114,4 +114,4 @@ application and get permission to share their information (a.k.a. consent screen
 
 ## More
 
-See [IdentityServer4's own documentation](http://docs.identityserver.io/en/latest/) to understand and configure IdentityServer4.
+See [IdentityServer4's own documentation](https://identityserver4.readthedocs.io/en/latest/) to understand and configure IdentityServer4.

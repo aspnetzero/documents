@@ -2,7 +2,7 @@
 
 Welcome to the ASP.NET Zero Power Tools documentation! This documentation provides comprehensive information about using ASP.NET Zero Power Tools, a Visual Studio Extension that simplifies the process of creating CRUD (Create, Read, Update, Delete) pages in ASP.NET Core projects. 
 
-If you are familiar with Aspnetzero Power Tools, you can begin from this [document](remastered-getting-started.md).
+If you are familiar with ASP.NET Zero Power Tools, you can begin from this [document](/common/latest/Power-Tools-Using-Visual-Studio-Extension).
 
 <img src="images/power-tools-marketplace.png" alt="ASP.NET Zero Power Tools" class="img-fluid">
 

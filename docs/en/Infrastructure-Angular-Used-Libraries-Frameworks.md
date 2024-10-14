@@ -15,7 +15,7 @@ project. Here's the list of all libraries:
 - [Luxon ](https://moment.github.io/luxon/)
 - [Lodash-es](https://lodash.com/)
 - [Font-Awesome](http://fontawesome.io/)
-- [Famfamfam flags](http://www.famfamfam.com/lab/icons/flags/)
+- [Famfamfam flags](https://github.com/legacy-icons/famfamfam-flags/)
 - [Simple Line Icons](http://thesabbir.github.io/simple-line-icons/)
 - [SweetAlert](https://github.com/sweetalert2/sweetalert2)
 - [ngx-charts](https://github.com/swimlane/ngx-charts)

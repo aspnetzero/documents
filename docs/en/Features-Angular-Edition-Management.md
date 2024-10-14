@@ -16,7 +16,7 @@ Features tab is used to determining features available for the edition:
 
 <img src="images/edition-feature-editing-core-1.png" alt="Edit edition features" class="img-thumbnail" />
 
-After creating an edition, only name and features of the edition can be changed. If you have made a mistake while creating the edition or if you want users to stop subscribing this edition, just delete the edition and create another one. Since Edition is a [soft-delete](<https://aspnetboilerplate.com/Pages/Documents/Data-Filters#isoftdelete>) entity, it will not be deleted from database but will be marked as deleted.
+After creating an edition, only name and features of the edition can be changed. If you have made a mistake while creating the edition or if you want users to stop subscribing this edition, just delete the edition and create another one. Since Edition is a [soft-delete](https://aspnetboilerplate.com/Pages/Documents/Data-Filters#isoftdelete) entity, it will not be deleted from database but will be marked as deleted.
 
 In order to delete and edition, all tenants of that edition must be moved to another edition. You can easily do that in Editions page by clicking the "Actions" button for an Edition and then select "Move tenants to another edition" item. After that, you will see a modal page like below:
 
