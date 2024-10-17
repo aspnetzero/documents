@@ -14,7 +14,7 @@ We are ready to run the application using Visual Studio. So, just run the applic
     <img src="images/frontend-homepage.png" alt="Frontend home page" class="img-thumbnail text-center" width="700" height="398" />
 </div>
 
-There are one page here: **Home Page**. Contents of these pages are just placeholders and for demo purposes. You can completely remove content and build your page upon your needs. when you update the **logo** in the ASP.NET Zero application panel, the change will also be reflected on the Public Website.
+There is one page here: **Home Page**. Content of this page is just placeholders and for demo purposes. You can completely remove content and build your page upon your needs. when you update the **logo** in the ASP.NET Zero application panel, the change will also be reflected on the Public Website.
 
 See [metronic 8 landing page theme](https://preview.keenthemes.com/metronic8/demo1/landing.html) for all possibilities and components to build a richer web site.
 
