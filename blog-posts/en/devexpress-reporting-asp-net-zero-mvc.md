@@ -2,7 +2,7 @@
 
 ASP.NET Zero, with its modular and extensible architecture, provides a solid foundation for developing robust web applications. By combining the capabilities of **DevExpress Reporting** with ASP.NET Zero, you can effortlessly create and customize visually appealing reports that meet your business requirements.
 
-1. Download [DevExpress Reporting](https://www.devexpress.com/subscriptions/reporting/).
+1. Configure your private [DevExpress NuGet feed](https://docs.devexpress.com/GeneralInformation/116042/nuget/obtain-your-nuget-feed-credentials).
 
 2. Open your ASP.NET Zero project.
 
@@ -36,10 +36,9 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerF
 
 ```json
 dependencies: [
-"devextreme": "21.2.*",
-"@devexpress/analytics-core": "21.2.*",
-"devexpress-reporting": "21.2.*",
-"jquery-ui-dist": "^1.12.1"
+"devextreme-dist": "24.1.*",
+"@devexpress/analytics-core": "24.1.*",
+"devexpress-reporting": "24.1.*"
 ]
 ```
 
@@ -55,9 +54,8 @@ dependencies: [
     {
         "output": "view-resources/Areas/App/Views/_Bundles/sample-report-min.js",
         "input": [
-        "node_modules/jquery-ui-dist/jquery-ui.js",
         "node_modules/knockout/build/output/knockout-latest.js",
-        "node_modules/devextreme/dist/js/dx.all.js",
+        "node_modules/devextreme-dist/js/dx.all.js",
         "node_modules/@devexpress/analytics-core/dist/js/dx-analytics-core.js",
         "node_modules/devexpress-reporting/dist/js/dx-webdocumentviewer.js"
         ]
@@ -67,9 +65,8 @@ dependencies: [
         {
         "output": "/view-resources/Areas/App/Views/_Bundles/sample-report.min.css",
         "input": [
-        "node_modules/jquery-ui-dist/jquery-ui.css",
-        "node_modules/devextreme/dist/css/dx.common.css",
-        "node_modules/devextreme/dist/css/dx.light.css",
+        "node_modules/devextreme-dist/css/dx.common.css",
+        "node_modules/devextreme-dist/css/dx.light.css",
         "node_modules/@devexpress/analytics-core/dist/css/dx-analytics.common.css",
         "node_modules/@devexpress/analytics-core/dist/css/dx-analytics.light.css",
         "node_modules/devexpress-reporting/dist/css/dx-webdocumentviewer.css"
@@ -105,11 +102,19 @@ public class SampleReportController : Zerov1002CoreMvcDemoControllerBase
 }
 ```
 
-13. Create `Index.cshtml` and add following code into it.
+13. Create `Index.cshtml` and add following code into it. Note the need of patching HTTP headers due to automatic CSRF protection.
 
 ```cshtml
 @using DevExpress.AspNetCore
 @using Zerov1002CoreMvcDemo.Web.Reports;
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+
+@functions {
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
 
 @section Styles
 {
@@ -123,6 +128,24 @@ public class SampleReportController : Zerov1002CoreMvcDemoControllerBase
     <script abp-src="/view-resources/Areas/App/Views/_Bundles/sample-report.js" asp-append-version="true"></script>
 }
 
+<script type="text/javascript">
+    function SetupJwt(bearerToken, xsrf) {
+        DevExpress.Analytics.Utils.fetchSetup.fetchSettings = {
+            headers: {
+                //'Authorization': 'Bearer ' + bearerToken,'
+                'X-XSRF-TOKEN': xsrf
+            }
+        };
+    }
+
+    function WebDocumentViewer_BeforeRender(s, e) {
+        SetupJwt('bearer token can be passed here', "@GetAntiXsrfRequestToken()");
+        $(window).on('beforeunload', function (e) {
+            s.Close();
+        });
+    }
+</script>
+
 <div class="content d-flex flex-column flex-column-fluid">
     <abp-page-subheader title="@L("SampleReport")">
     </abp-page-subheader>
@@ -131,6 +154,7 @@ public class SampleReportController : Zerov1002CoreMvcDemoControllerBase
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 @(Html.DevExpress().WebDocumentViewer("DocumentViewer")
+                    .ClientSideEvents(x => x.BeforeRender("WebDocumentViewer_BeforeRender"))
                     .Height("1000px")
                     .Bind(new SampleReport())
                     )
