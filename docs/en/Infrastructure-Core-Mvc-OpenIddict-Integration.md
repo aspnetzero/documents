@@ -1,4 +1,4 @@
-# Identity Server 4 Integration
+# OpenIddict Integration
 
 [OpenIddict](https://documentation.openiddict.com/) aims at providing a versatile solution to implement OpenID Connect client, server and token validation support in any ASP.NET Core 2.1 (and higher) application.
 
