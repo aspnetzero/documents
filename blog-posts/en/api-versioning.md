@@ -1,4 +1,4 @@
-# ASP.NET Core API Versioning
+# ASP.NET Core API Versioning in ASP.NET Zero
 
 APIs are the backbone of modern applications. As your API evolves, adding new features and updating old ones becomes inevitable. This is where API versioning comes into play. But why is API versioning important, and how do we implement it in ASP.NET Core?
 
@@ -14,7 +14,7 @@ There are several reasons you might need to make changes:
 - **Modifying accepted HTTP methods:** Though rare, there might be situations where you adjust which HTTP methods (GET, POST, etc.) an action can handle.
 - **Changing HTTP status codes:** The API might return different status codes to reflect new error handling or success scenarios more accurately.
 
-## How to Implement API Versioning in ASP.NET Core
+## How to Implement API Versioning in ASP.NET Zero
 
 There is a strong library for API versioning in ASP.NET Core called `Asp.Versioning.Mvc.ApiExplorer`.
 
@@ -24,7 +24,7 @@ There is a strong library for API versioning in ASP.NET Core called `Asp.Version
 dotnet add package Asp.Versioning.Mvc.ApiExplorer
 ```
 
-### Step 2: ASP.NET Zero Configuration
+### Step 2: Configuration
 
 In ASP.NET Zero we need to add some classes to configure API versioning.
 
