@@ -2,12 +2,14 @@
 
 ## About Deployment
 
-AspNet Zero depends on [angular-cli](https://cli.angular.io/) for development & deployment. It uses angular-cli commands to build and publish its Angular client application. AspNet Zero also minifies and bundles some assets (JS and CSS files) using [gulp](https://gulpjs.com/) before publishing the Angular client application since those assets are loaded dynamically at runtime. In order to publish the Angular client application below commands must be run respectively.
+ASP.NET Zero depends on [angular-cli](https://cli.angular.io/) for development & deployment. It uses angular-cli commands to build and publish its Angular client application. ASP.NET Zero also minifies and bundles some assets (JS and CSS files) using [gulp](https://gulpjs.com/) before publishing the Angular client application since those assets are loaded dynamically at runtime. In order to publish the Angular client application below commands must be run respectively.
 
 1. run ```yarn``` command in the root directory of Angular project.
 2. run ```npm run publish``` command in the root directory of Angular project.
 
-AspNet Zero also provides a merged solution for ASP.NET Core & Angular version. In that solution, Angular client side application is included in the server side Host project. Those two applications, server side API project and Angular client side application, can be published at once and can be hosted together under the same website.
+In the Web.Host project, run ```npm create-bundles``` to bundle and minify JS and CSS files before final deployment.
+
+ASP.NET Zero also provides a merged solution for ASP.NET Core & Angular version. In that solution, Angular client side application is included in the server side Host project. Those two applications, server side API project and Angular client side application, can be published at once and can be hosted together under the same website.
 
 To publish merged Angular solution, follow the steps below;
 
