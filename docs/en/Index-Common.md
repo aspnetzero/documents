@@ -8,10 +8,10 @@ ASP.NET Zero is a starting point for new web applications with a **modern UI** a
 
 ASP.NET Zero has multiple architecture options. Each option has its own documentation:
 
--   [ASP.NET Core MVC](/aspnet-core-mvc/latest/Getting-Started-Core)
--   [ASP.NET Core & Angular](/aspnet-core-angular/latest/Getting-Started-Angular)
--   [ASP.NET MVC 5x & jQuery](/aspnet-mvc-jquery/latest/Getting-Started-Mvc-Angularjs)
--   [ASP.NET MVC 5x & AngularJS 1x](/aspnet-mvc-angularjs/latest/Getting-Started-Mvc-Angularjs)
+-   [ASP.NET Core MVC](https://docs.aspnetzero.com/aspnet-core-mvc/latest/Getting-Started-Core)
+-   [ASP.NET Core & Angular](https://docs.aspnetzero.com/aspnet-core-angular/latest/Getting-Started-Angular)
+-   [ASP.NET MVC 5x & jQuery](https://docs.aspnetzero.com/aspnet-mvc-jquery/latest/Getting-Started-Mvc-Angularjs)
+-   [ASP.NET MVC 5x & AngularJS 1x](https://docs.aspnetzero.com/aspnet-mvc-angularjs/latest/Getting-Started-Mvc-Angularjs)
 
 ## Before Getting Started
 
