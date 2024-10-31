@@ -1,8 +1,8 @@
 # Dynamic Asset Bundling and Minifying
 
-AspNet Zero uses [Angular CLI](https://cli.angular.io/) to build the Angular application and it creates style and script bundles. But for some cases, an Angular app might decide which style/script file to use at runtime and loads this style/script file dynamically. For such cases, AspNet Zero provides a bundling and minification system.
+ASP.NET Zero uses [Angular CLI](https://cli.angular.io/) to build the Angular application and it creates style and script bundles. But for some cases, an Angular app might decide which style/script file to use at runtime and loads this style/script file dynamically. For such cases, ASP.NET Zero provides a bundling and minification system.
 
-AspNet Zero uses [Gulp](https://gulpjs.com/) for bundling & minifying such dynamic script and style files. 
+ASP.NET Zero uses [Gulp](https://gulpjs.com/) for bundling & minifying such dynamic script and style files. 
 
 Bundle definitions are store in **bundles.json** file. Here is a sample screenshot of **bundles.json** file:
 
@@ -20,6 +20,8 @@ ASP.NET Zero has command for bundling style and script files "**npm run create-d
 * **npm run create-dynamic-bundles**: This command is introduced for development time usage. It automatically updates bundle(s). If you modify **bundles.json** file, you need to re-run this command. It also writes output to console about the bundling progress. Script and style bundles are not minified when using this command. 
 
 For production usage, you can run "**npm run publish**" and it will minify dynamic assets for you and then it will publish your Angular app.
+
+In the ***Web.Host project**, you can also run ```npm run create-bundles``` to handle bundling and minification of dynamic JavaScript and CSS files in production.
 
 If you need to make any change about ASP.NET Zero's bundling and minification process, you can modify **gulpfile.js** . 
 
