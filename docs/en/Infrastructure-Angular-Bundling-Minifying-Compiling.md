@@ -21,7 +21,7 @@ ASP.NET Zero has command for bundling style and script files "**npm run create-d
 
 For production usage, you can run "**npm run publish**" and it will minify dynamic assets for you and then it will publish your Angular app.
 
-In the ***Web.Host project**, you can also run ```npm create-bundles``` to handle bundling and minification of dynamic JavaScript and CSS files in production.
+In the ***Web.Host project**, you can also run ```npm run create-bundles``` to handle bundling and minification of dynamic JavaScript and CSS files in production.
 
 If you need to make any change about ASP.NET Zero's bundling and minification process, you can modify **gulpfile.js** . 
 

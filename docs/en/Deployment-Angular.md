@@ -7,7 +7,7 @@ ASP.NET Zero depends on [angular-cli](https://cli.angular.io/) for development &
 1. run ```yarn``` command in the root directory of Angular project.
 2. run ```npm run publish``` command in the root directory of Angular project.
 
-In the Web.Host project, run ```npm create-bundles``` to bundle and minify JS and CSS files before final deployment.
+In the Web.Host project, run ```npm run create-bundles``` to bundle and minify JS and CSS files before final deployment.
 
 ASP.NET Zero also provides a merged solution for ASP.NET Core & Angular version. In that solution, Angular client side application is included in the server side Host project. Those two applications, server side API project and Angular client side application, can be published at once and can be hosted together under the same website.
 
