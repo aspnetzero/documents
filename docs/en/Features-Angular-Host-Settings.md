@@ -33,7 +33,7 @@ You can also select a default edition, so a newly registered tenant will be assi
 
 ## User Management
 
-![User Management Settings](images/host-settings-user-management-5.png)
+![User Management Settings](images/host-settings-user-management-6.png)
 
 User related settings can be configured under this tab. You can force email confirmation for login. You can enable phone number verification. Also, you can enable cookie consent so ASP.NET Zero shows a cookie consent bar for the users to accept cookie policy of your application.
 
@@ -45,15 +45,9 @@ You can also enable/disable session timeout control. If it is enable and the use
 
 Each tenant can allow tenant users to use Gravatar profile picture or not. Additionally, you can adjust the size of the profile picture in megabytes (MB) and set the dimensions in pixels (px) for width and height.
 
-##### Password
-
-You can enable/disable password expiration on the settings page. If you enable it, users will have to change their password after defined days passed.
-
-You can also prevent user's new password from being same as any of last x passwords. If you enable it, you will need to define how many previous password you want to prevent. Users will not be able to use some of the previously used password as a new password.
-
 ## Security
 
-![Security Settings](images/host-settings-security-5.png)
+![Security Settings](images/host-settings-security-6.png)
 
 **Security** tab in host settings page contains password complexity settings. Host can define system wide password complexity settings in this tab. Each tenant can override this setting in tenant settings page. 
 
@@ -64,6 +58,12 @@ This tab also contains user lock-out settings and two factor login settings as w
 > * To use two factor login with **SMS verification** you have to enable **Phone number verification enabled (via SMS)** setting in **User Management** tab.
 >
 > * If user does not have a verified phone number, user will be logged in without sms verification.
+
+##### Password
+
+You can enable/disable password expiration on the settings page. If you enable it, users will have to change their password after defined days passed.
+
+You can also prevent user's new password from being same as any of last x passwords. If you enable it, you will need to define how many previous password you want to prevent. Users will not be able to use some of the previously used password as a new password.
 
 ## Email
 
