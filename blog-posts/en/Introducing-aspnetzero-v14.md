@@ -31,10 +31,14 @@ Detailed logs are now easier to read with colored console output in Power Tools.
 
 ![Power Tools Detailed Logs](/Images/Blog/power-tools-detailed-logs.gif)
 
-
 ## 🎆 Upgrade to Angular 19
 
 ASP.NET Zero v14 now supports Angular 19, the latest version of the popular front-end framework. This upgrade brings new features, performance improvements, and bug fixes to your Angular applications, ensuring they stay up-to-date and secure. We will also make some great improvements to Angular in the near future.
+
+## 🌟 .NET 9 Upgrade
+ASP.NET Zero v14 takes full advantage of .NET 9, delivering improved performance, enhanced developer productivity. This upgrade ensures that your applications are faster, more reliable, and easier to maintain.
+
+Please see for what's new in .NET 9 https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/overview
 
 ## 🌅 Upgrade to ABP 10
 
