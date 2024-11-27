@@ -19,11 +19,27 @@ Each tenant can also configure OpenID Connect settings for their own account. To
    "ValidateIssuer": "false",
    "ResponseType": "code",
    "ClaimsMapping": [
-     {
-       "claim": "unique_name",
-       "key": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
-     }
-   ]
+      {
+        "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+        "key": "id"
+      },
+      {
+        "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+        "key": "name"
+      },
+      {
+        "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname",
+        "key": "given_name"
+      },
+      {
+        "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname",
+        "key": "family_name"
+      },
+      {
+        "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+        "key": "email"
+      }
+    ]
  }
 ```
 
