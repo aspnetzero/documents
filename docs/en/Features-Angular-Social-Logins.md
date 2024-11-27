@@ -64,6 +64,7 @@ In addition to social logins, ASP.NET Zero includes OpenId Connect Login integra
   "Authority": "",
   "LoginUrl": "",
   "ValidateIssuer": "true",
+  "ResponseType": "id_token",
   "ClaimsMapping": []
 }
 ```
@@ -72,10 +73,26 @@ In some cases, OpenId Connect provider doesn't return claims we want to use. For
 
 ````json
 "ClaimsMapping": [
-	{
-	  "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
-	  "key": "http://schemas.microsoft.com/identity/claims/objectidentifier"
-	}
+  {
+    "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+    "key": "id"
+  },
+  {
+    "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+    "key": "name"
+  },
+  {
+    "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname",
+    "key": "given_name"
+  },
+  {
+    "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname",
+    "key": "family_name"
+  },
+  {
+    "claim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+    "key": "email"
+  }
 ]
 ````
 
