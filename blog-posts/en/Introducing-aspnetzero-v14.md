@@ -3,7 +3,17 @@
 
 # Introducing ASP.NET Zero v14
 
-We are excited to announce the release of ASP.NET Zero v14. This release includes MAUI power tools code generation, a new design for ASP.NET Zero websites, Angular server not found page and many other new features and improvements.
+We are excited to announce the release of ASP.NET Zero v14. This release includes .NET 9 upgrade, Angular 19 upgrade, a new design for public website template and many other new features and improvements.
+
+## 🌟 .NET 9 Upgrade
+
+ASP.NET Zero v14 takes full advantage of .NET 9, delivering improved performance, enhanced developer productivity. This upgrade ensures that your applications are faster, more reliable, and easier to maintain.
+
+Please see for what's new in .NET 9 https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/overview
+
+## 🎆 Angular 19 Upgrade
+
+ASP.NET Zero v14 now supports Angular 19, the latest version of the popular front-end framework. This upgrade brings new features, performance improvements, and bug fixes to your Angular applications, ensuring they stay up-to-date and secure. We will also make some great improvements to Angular in the near future.
 
 ## 🌙 MAUI Dark Mode
 
@@ -30,15 +40,6 @@ Give your console a fresh, vibrant look and make your coding sessions more produ
 Detailed logs are now easier to read with colored console output in Power Tools.
 
 ![Power Tools Detailed Logs](/Images/Blog/power-tools-detailed-logs.gif)
-
-## 🎆 Upgrade to Angular 19
-
-ASP.NET Zero v14 now supports Angular 19, the latest version of the popular front-end framework. This upgrade brings new features, performance improvements, and bug fixes to your Angular applications, ensuring they stay up-to-date and secure. We will also make some great improvements to Angular in the near future.
-
-## 🌟 .NET 9 Upgrade
-ASP.NET Zero v14 takes full advantage of .NET 9, delivering improved performance, enhanced developer productivity. This upgrade ensures that your applications are faster, more reliable, and easier to maintain.
-
-Please see for what's new in .NET 9 https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/overview
 
 ## 🌅 Upgrade to ABP 10
 
