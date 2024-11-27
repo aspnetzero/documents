@@ -41,6 +41,18 @@ Detailed logs are now easier to read with colored console output in Power Tools.
 
 ![Power Tools Detailed Logs](/Images/Blog/power-tools-detailed-logs.gif)
 
+## 🖼️ New design for public website template
+
+ASP.NET Zero v14 introduces a new design for the public website template, giving your website a fresh, modern look that will impress your visitors.
+
+![Public Website Template](/Images/Blog/public-website-template.png)
+
+## ⭐ Upgraded to Metronic 8.2.8
+
+ASP.NET Zero v14 now uses Metronic 8.2.8, the latest version of the popular bootstrap admin theme. 
+
+Please see https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog
+
 ## 🌅 Upgrade to ABP 10
 
 ASP.NET Zero v14 is now powered by ABP 10, bringing the latest improvements and compatibility with .NET 9. This upgrade ensures better performance, modern features, and smoother development for your projects. 
