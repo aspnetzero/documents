@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 14.0.0 (2024-12-03)
+
+* Upgraded to .NET 9
+* Upgraded to Angular 19
+* MAUI dark mode
+* Upgraded to Metronic 8.2.8
+* New design for public website template
+* Power Tools: Beauty console logs
+
 ## 13.4.0 (2024-09-24)
 
 * Upgraded to ABP 9.4.2
