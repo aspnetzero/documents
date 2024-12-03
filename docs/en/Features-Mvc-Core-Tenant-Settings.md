@@ -42,6 +42,14 @@ Each tenant can allow tenant users to use Gravatar profile picture or not.
 
 Security tab contains password complexity settings. Each tenant can define password complexity settings in this tab for their account. Each tenant can also configure user lock out settings.
 
+##### Password
+
+If MultiTenancyEnabled is set to false, the password expiration settings will apply globally to all active users across the application, rather than being configurable for each tenant.
+
+You can enable/disable password expiration on the settings page. If you enable it, users will have to change their password after defined days passed.
+
+You can also prevent user's new password from being same as any of last x passwords. If you enable it, you will need to define how many previous password you want to prevent. Users will not be able to use some of the previously used password as a new password.
+
 ## Invoice
 
 ![Invoice settings](images/tenant-settings-core-invoice.png)
