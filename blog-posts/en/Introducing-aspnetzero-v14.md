@@ -1,5 +1,5 @@
 **Title:** Introducing ASP.NET Zero v14
-**Description:** ASP.NET Zero v14: MAUI dark theme, MAUI Power Tools Colored Console, Upgrade to ABP 10, Update packages and bug fixes.
+**Description:** ASP.NET Zero v14: .NET 9 support, Angular 19 support, MAUI dark theme, MAUI Power Tools Colored Console,  Update packages and bug fixes.
 
 # Introducing ASP.NET Zero v14
 
