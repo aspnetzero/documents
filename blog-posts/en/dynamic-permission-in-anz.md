@@ -158,7 +158,7 @@ public class DynamicPermissionManagerHandler : IHandlerSelector
 
 #### Add to `PreInitialize`
 
-In the `DynamicPermissionSampleDemoCoreModule` class, add the following code to the `PreInitialize` method:
+In the `DynamicPermissionSampleDemoCoreModule` class at `*.Core` project, add the following code to the `PreInitialize` method:
 
 ```csharp
 IocManager.IocContainer.Kernel.AddHandlerSelector(new DynamicPermissionManagerHandler());
@@ -166,7 +166,7 @@ IocManager.IocContainer.Kernel.AddHandlerSelector(new DynamicPermissionManagerHa
 
 #### Add to `PostInitialize`
 
-In the `DynamicPermissionSampleDemoCoreModule` class, add the following code to the `PostInitialize` method:
+In the `DynamicPermissionSampleDemoWebCoreModule` class at `*.Web.Core`, add the following code to the `PostInitialize` method:
 
 ```csharp
 IocManager.Resolve<DynamicPermissionManager>().Initialize();
