@@ -32,11 +32,11 @@ To build, sign, and deploy .NET MAUI apps for iOS, you'll also need:
 
 After [downloading](https://aspnetzero.com/Download) your project, you will see 3 types of solutions;
 
--   **.Maui** MAUI and related projects included.
+-   **.Mobile** MAUI and related projects included.
 -   **.Web** Web and related projects included.
 -   **.All** All the projects included.
 
-For MAUI development, you can open **.Maui.sln**.
+For MAUI development, you can open **.Mobile.sln**.
 
 ### MAUI Architecture
 
