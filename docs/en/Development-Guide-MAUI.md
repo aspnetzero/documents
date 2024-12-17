@@ -36,7 +36,7 @@ After [downloading](https://aspnetzero.com/Download) your project, you will see 
 -   **.Web** Web and related projects included.
 -   **.All** All the projects included.
 
-For MAUI development, you can open **.Maui.sln**.
+For MAUI development, you can open **.Mobile.sln**.
 
 ### MAUI Architecture
 
