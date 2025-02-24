@@ -2,9 +2,7 @@
 
 ## Introduction
 
-This document provides step-by-step instructions for adding a new localization (language) in your ASP.NET Zero Angular application. 
-Localization allows users to interact with the application in their preferred language, thereby improving usability and accessibility. 
-For more details on localization in ASP.NET Boilerplate, refer to the official documentation: [ASP.NET Boilerplate Localization](https://aspnetboilerplate.com/Pages/Documents/Localization).
+This document provides step-by-step instructions for adding a new localization (language) in your ASP.NET Zero Angular application. Localization allows users to interact with the application in their preferred language, thereby improving usability and accessibility. For more details on localization in ASP.NET Boilerplate, refer to the official documentation: [ASP.NET Boilerplate Localization](https://aspnetboilerplate.com/Pages/Documents/Localization).
 
 ## Steps to Add a New Language
 
@@ -14,9 +12,7 @@ To support a new language in the backend, you need to register it in the `Defaul
 
 #### Modify DefaultLanguagesCreator.cs
 
-In this step, you need to add the new language to the list of initial languages registered in the system. 
-This ensures that the application recognizes the new language and makes it available for selection. 
-Modify the `GetInitialLanguages` method to include the new language code, display name, and flag icon.
+In this step, you need to add the new language to the list of initial languages registered in the system. This ensures that the application recognizes the new language and makes it available for selection. Modify the `GetInitialLanguages` method to include the new language code, display name, and flag icon.
 
 **DefaultLanguagesCreator.cs**
 ```c#
@@ -49,10 +45,8 @@ In the code above:
 
 #### Create the Localization XML File
 
-The localization XML file contains key-value pairs for translating text within the application. 
-Each language has its own XML file where you define translations for UI elements, messages, and labels. 
-This file ensures that the application can display content in the selected language. 
-Create a new localization file in the **Localization** folder of the `YourProjectName.Core` project.
+The localization XML file contains key-value pairs for translating text within the application. Each language has its own XML file where you define translations for UI elements, messages, and labels. 
+This file ensures that the application can display content in the selected language. Create a new localization file in the **Localization** folder of the `YourProjectName.Core` project.
 
 **YourProjectName-pl.xml**
 ```xml
@@ -72,8 +66,7 @@ To fully support the new language in the Angular UI, you need to update various 
 
 #### Configure Date Localization in ngx-bootstrap
 
-To ensure that the ngx-bootstrap date picker supports the new language, update the `ngx-bootstrap-datepicker-config.service.ts` file. 
-This configuration allows the date picker to display dates in the correct format for the selected language.
+To ensure that the ngx-bootstrap date picker supports the new language, update the `ngx-bootstrap-datepicker-config.service.ts` file. This configuration allows the date picker to display dates in the correct format for the selected language.
 
 **Import the Locale**
 
