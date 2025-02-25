@@ -19,6 +19,8 @@ We can select any language as a **base** (reference) and change **target** langu
 Both pages use **LanguageAppService** class as application service. It has methods to manage languages and localized texts. **IApplicationLanguageManager** and **IApplicationLanguageTextManager**
 interfaces are used to perform domain logic (as used by LanguageAppService).
 
+If you want to add a new language, you can review the documentation on [How to Add a New Language in an ASP.NET Zero MVC Application](Adding-New-Localization-Mvc)
+
 See [language management](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Management) and [localization](https://aspnetboilerplate.com/Pages/Documents/Localization) documents for more information.
 
 ## Next
