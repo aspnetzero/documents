@@ -114,10 +114,9 @@ After implementing the necessary changes, follow these steps to verify that the 
 
 - **Restart the Application**
     - Restart both the backend and frontend to ensure that all localization changes take effect.
--  **Select the New Language**
-    - In your app, select the newly added language from the language selection drop-down menu and
-        verify that user interface elements such as menus and labels are updated appropriately.
-- **Test Date Localizatio**
+- **Select the New Language**
+    - In your app, select the newly added language from the language selection drop-down menu and verify that user interface elements such as menus and labels are updated appropriately.
+- **Test Date Localization**
     - Open any date pickers and confirm that dates are displayed in the correct format for the selected language.
 
 > Note: The newly added language and its XML content are stored in the database when the application runs.
