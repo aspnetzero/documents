@@ -10,6 +10,6 @@ PhoneBook will be your ProjectName. You can add more XML files by copying one XM
 
 When you are adding a new localizable text, add it to the XML file of the default language then use in your application (Also, add translated values to corresponding XML files). No need to add it to database migration code since value in the XML file will be used as default.
 
-**Application languages** are defined in **DefaultLanguagesCreator** class. This is used as a **seed data** in Entity Framework Migration. So, if you want to **add a new default language**, just add it into DefaultLanguagesCreator class. Also, you should add a corresponding XML file as described above as default translation.
+**Application languages** are defined in **DefaultLanguagesCreator** class. This is used as a **seed data** in Entity Framework Migration. So, if you want to **add a new default language**, just add it into **DefaultLanguagesCreator** class. Also, you should add a corresponding XML file as described above as default translation. You can refer to the documentation on [How to Add a New Language in an ASP.NET Zero MVC Application](Adding-New-Localization-Mvc) for further guidance.
 
 See [localization](https://aspnetboilerplate.com/Pages/Documents/Localization) and [language management](https://aspnetboilerplate.com/Pages/Documents/Zero/Language-Management) documentations for more information.
