@@ -30,4 +30,4 @@ Authorization to the header as "**Bearer &lt;accessToken&gt;**". And the result 
 
 ## Next
 
-- [Sign Up](Features-Angular-Sign-Up)
+- [Passwordless Login](Features-Passwordless-Login)

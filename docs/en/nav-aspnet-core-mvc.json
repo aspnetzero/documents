@@ -177,6 +177,10 @@
                 {
                   "text": "Passwordless Login",
                   "path": "Features-Passwordless-Login.md"
+                },
+                {
+                  "text": "QR Login",
+                  "path": "Features-Mvc-Core-Qr-Login.md"
                 }
               ]
             },
