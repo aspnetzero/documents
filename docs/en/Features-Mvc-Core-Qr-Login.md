@@ -1,7 +1,7 @@
 # QR Login Integration in ASP.NET Zero with MAUI
 
 ## Introduction
-QR Login has been integrated into ASP.NET Zero, allowing users to log in to the web application by scanning a QR code from the MAUI application. This document explains how to enable and use QR Login in ASP.NET Zero with MAUI.
+ ASP.NET Zero offers a QR Login feature which allows users to log in to the web application by scanning a QR code from the MAUI application. This document explains how to enable and use QR Login in ASP.NET Zero with MAUI.
 
 ## Enabling QR Login
 Before you can use the QR Login functionality, it needs to be enabled in the ASP.NET Zero web application settings. Follow these steps to enable QR Login:
