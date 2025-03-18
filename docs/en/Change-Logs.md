@@ -6,6 +6,16 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 14.1.0 (2025-03-18)
+
+* QR Login from MAUI application
+* Migrated to standalone components in Angular
+* Migrated to new Angular application build system
+* Upgraded to ABP 10.1
+* Upgraded to OpenIddict 6.0
+* Upgraded to PrimeNg 19
+* Enhancements and bug fixes 
+
 ## 14.0.0 (2024-12-03)
 
 * Upgraded to .NET 9
