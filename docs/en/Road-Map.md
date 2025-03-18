@@ -6,7 +6,6 @@ We are constantly getting feedbacks from our customers to improve ASP.NET Zero. 
 -   Power Tools enhancements
 -   User Sync/Link feature
 -   Tenant login page customization
--   QR login from Maui application
 -   Orderable menu items
 -   Code Analysis Rules
 -   Coupon for Subscriptions
