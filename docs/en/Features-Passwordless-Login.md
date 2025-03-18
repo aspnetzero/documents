@@ -44,3 +44,7 @@ After filling in the necessary fields according to the chosen verification type,
 ![Passwordless login verify passwordless code](images/passwordless-login-verify-passwordless-code.png)
 
 After entering the verification code correctly, user will be authenticated and redirected to the home page of the application.
+
+## Next
+
+- [QR Login](Features-Mvc-Core-Qr-Login)

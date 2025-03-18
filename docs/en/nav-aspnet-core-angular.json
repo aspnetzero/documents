@@ -177,6 +177,10 @@
                 {
                   "text": "Passwordless Login",
                   "path": "Features-Passwordless-Login.md"
+                },
+                {
+                  "text": "QR Login",
+                  "path": "Features-Angular-Qr-Login.md"
                 }
               ]
             },
