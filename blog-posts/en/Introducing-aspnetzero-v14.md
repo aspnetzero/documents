@@ -63,8 +63,8 @@ For more information, see the [ABP 10 release notes](https://github.com/aspnetbo
 
 As we do in every version, we fixed minor padding and margin errors, localization errors, and made improvements for power tools in line with your requests.
 
-* [https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v14.0-rc.1](https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v14.0-rc.1)
-* [https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v14.0](https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v14.0)
+* [https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v14.0-rc.1](https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v14.0.0-rc.1)
+* [https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v14.0](https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v14.0.0)
 
 ## ✏️ Don't Miss Out! 
 
