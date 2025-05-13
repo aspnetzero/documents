@@ -36,6 +36,8 @@ Once multiple instances of your application run in parallel, you should carefull
 * You shouldn't store data in the **local file system**. It should be available to all instances of your application. Different application instance may run in different containers or servers and they may not be able to have access to the same file system. You can use a **cloud or external storage provider** as a solution.
 * If you have **background workers** or **job queue managers**, you should be careful since multiple instances may try to execute the same job or perform the same work concurrently. As a result, you may have the same work done multiple times or you may get a lot of errors while trying to access and change the same resources.
 
+> **Note**: If you're encountering antiforgery errors (e.g., "The required antiforgery cookie "__RequestVerificationToken" is not present") in a clustered environment, this may be due to the distributed nature of your application instances. Ensure that your load balancer is configured properly and that all instances share consistent data protection keys. For more details on Cross-Site Request Forgery (CSRF) protection and how the ASP.NET Boilerplate handles it, refer to the [XSRF-CSRF-Protection documentation](https://aspnetboilerplate.com/Pages/Documents/XSRF-CSRF-Protection).
+
 ## Switching to a Distributed Cache
 
 ASP.NET Core provides different kind of caching features. [In-memory cache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory) stores your objects in the memory of the local server and is only available to the application that stored the object. Non-sticky sessions in a clustered environment should use the [distributed caching](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed) except some specific scenarios (for example, you can cache a local CSS file into memory. It is read-only data and it is the same in all application instances. You can cache it in memory for performance reasons without any problem).
@@ -66,7 +68,10 @@ namespace MyCompanyName.AbpZeroTemplate.Web.Common
     public static class WebConsts
     {
         //...
+        
         public static bool HangfireDashboardEnabled = true;
+    }
+}
 ```
 
 For more information check [Hangfire integration](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Infrastructure-Background-Jobs) documentation.
