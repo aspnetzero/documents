@@ -1,12 +1,12 @@
-# Subdomain-Based Multi-Tenancy in ASP.NET Zero (MVC)
+# Subdomain Based Multi Tenancy in ASP.NET Zero (MVC)
 
 ## Introduction
 
-This document provides detailed guidance for configuring and troubleshooting subdomain based multi-tenancy in ASP.NET Zero projects utilizing an MVC frontend. It expands upon the foundational knowledge offered in the official documentation, aiming to cover advanced configurations, development environment strategies, and common issues.
+This document provides detailed guidance for configuring and troubleshooting subdomain based multi tenancy in ASP.NET Zero projects utilizing an MVC frontend. It expands upon the foundational knowledge offered in the official documentation, aiming to cover advanced configurations, development environment strategies, and common issues.
 
 This document assumes you have a basic understanding of ASP.NET Zero's multi tenancy concepts and have reviewed the main [Overview MVC](Overview-Angular.md) documentation.
 
-## 1. Configuration for Subdomain-Based Tenancy
+## 1. Configuration for Subdomain Based Tenancy
 
 This section involves SSL management, web server setup, and specific MVC application settings.
 
@@ -26,7 +26,7 @@ This section involves SSL management, web server setup, and specific MVC applica
     * For HTTP binding (port 80), you can often leave the "Host Name" field empty if it's the only site on that IP, or specify each primary domain if needed.
     * For HTTPS binding (port 443), select the appropriate wildcard SSL certificate. The host name field might be left blank or set if your IIS version supports specific SNI configurations with wildcards, but often the wildcard nature is primarily handled by the certificate itself. The key is that IIS listens for traffic on the IP and port, and the certificate validates for `*.mydomain.com`.
 * **Default Document/Application:** Ensure your IIS site is configured to correctly serve the MVC application (which handles routing to appropriate views and static assets) for all subdomain requests.
-* **URL Rewrite (If Necessary):** While ASP.NET Zero handles tenant resolution based on the host, complex infrastructures involving reverse proxies might require URL Rewrite rules. However, for standard deployments, this is generally not needed for the core multi-tenancy functionality.
+* **URL Rewrite (If Necessary):** While ASP.NET Zero handles tenant resolution based on the host, complex infrastructures involving reverse proxies might require URL Rewrite rules. However, for standard deployments, this is generally not needed for the core multi tenancy functionality.
 
 ### MVC Application Considerations
 
@@ -43,12 +43,12 @@ This section involves SSL management, web server setup, and specific MVC applica
         ```
 * **URL Generation in Views/Controllers:**
     * ASP.NET Core's URL helpers (e.g., `@Url.Action()`, `<a asp-controller="..." asp-action="...">` tag helpers, `RedirectToAction`) will typically generate URLs relative to the current request's host, which includes the tenant subdomain. This is because the routing system and URL generation are aware of the incoming request's scheme and host.
-    * This ensures that links within the application correctly point to tenant-specific URLs without manual string manipulation of the domain in most cases.
-* **Static Assets:** Static assets (CSS, JS, images) served by the MVC application (typically from `wwwroot`) will also be accessed via the tenant-specific subdomain, as the browser requests them relative to the current page's domain.
+    * This ensures that links within the application correctly point to tenant specific URLs without manual string manipulation of the domain in most cases.
+* **Static Assets:** Static assets (CSS, JS, images) served by the MVC application (typically from `wwwroot`) will also be accessed via the tenant specific subdomain, as the browser requests them relative to the current page's domain.
 
 ## 2. Development Environment Strategies for Subdomain Testing
 
-Testing subdomain-based multi-tenancy locally requires a few extra steps compared to path-based tenancy or using the tenant switch dialog.
+Testing subdomain based multi tenancy locally requires a few extra steps compared to path based tenancy or using the tenant switch dialog.
 
 ### Using the `hosts` File
 
@@ -74,7 +74,7 @@ Testing subdomain-based multi-tenancy locally requires a few extra steps compare
 * **Solutions:**
     1.  **HTTP Locally:** For simplicity, you can develop and test the subdomain logic using HTTP locally. Add HTTP versions of your tenant localhost URLs to `launchSettings.json`.
     2.  **`mkcert` Tool:** Use a tool like `mkcert` to create a locally trusted Certificate Authority (CA) and then generate wildcard certificates (e.g., `*.localhost`). You would then configure Kestrel to use these certificates. This provides a more accurate simulation of a production HTTPS environment.
-    3.  **Trust Self-Signed Certificate (IIS Express):** If using IIS Express and it generates a certificate for `tenant1.localhost`, you might still need to manually trust it in your browser or system.
+    3.  **Trust Self Signed Certificate (IIS Express):** If using IIS Express and it generates a certificate for `tenant1.localhost`, you might still need to manually trust it in your browser or system.
 
 ### Interaction with Tenant Switch Dialog
 
@@ -83,7 +83,7 @@ Testing subdomain-based multi-tenancy locally requires a few extra steps compare
 
 ## 3. Tenant Resolution Flow Clarification
 
-A clear understanding of the tenant resolution process is essential to ensure accurate tenant identification and proper request routing in a multi-tenant architecture. This step determines which tenant context should be applied based on the incoming request, typically using elements like the subdomain, header, or query string.
+A clear understanding of the tenant resolution process is essential to ensure accurate tenant identification and proper request routing in a multi tenant architecture. This step determines which tenant context should be applied based on the incoming request, typically using elements like the subdomain, header, or query string.
 
 ### Backend (ASP.NET Core)
 
@@ -91,30 +91,30 @@ A clear understanding of the tenant resolution process is essential to ensure ac
 2.  ASP.NET Zero's middleware, specifically implementations of `ITenantResolveContributor` (like `DomainTenantResolveContributor`), inspects the request's host header (e.g., `tenant1.mydomain.com`).
 3.  If the host matches the configured subdomain pattern (derived from `WebSiteRootAddress` with the `{TENANCY_NAME}` placeholder), the middleware extracts the tenancy name (`tenant1` in this example).
 4.  It then attempts to find this tenant in the database.
-5.  If found, the current tenant context is set for the duration of that request. This ensures data isolation and that tenant-specific settings, services, and views (if customized per tenant) are used.
+5.  If found, the current tenant context is set for the duration of that request. This ensures data isolation and that tenant specific settings, services, and views (if customized per tenant) are used.
 
 ### MVC Application UI & URL Generation
 
 1.  The MVC application is accessed via a URL like `https://tenant1.mydomain.com/SomePage`.
 2.  The backend resolves the tenant (`tenant1`) as described above.
-3.  When server-side code (Controllers, Views, Tag Helpers, Razor Pages) generates URLs (e.g., for links, form actions, redirects), ASP.NET Core's routing and URL generation mechanisms are aware of the current request's scheme (`https`), host (`tenant1.mydomain.com`), and path base.
-4.  Therefore, URLs generated by helpers like `@Url.Action("Index", "Home")` or `<a asp-action="Index" asp-controller="Home">Link</a>` will correctly form fully qualified or path-relative URLs that maintain the tenant's subdomain (e.g., `/Home/Index` on `tenant1.mydomain.com` or `https://tenant1.mydomain.com/Home/Index`).
+3.  When server side code (Controllers, Views, Tag Helpers, Razor Pages) generates URLs (e.g., for links, form actions, redirects), ASP.NET Core's routing and URL generation mechanisms are aware of the current request's scheme (`https`), host (`tenant1.mydomain.com`), and path base.
+4.  Therefore, URLs generated by helpers like `@Url.Action("Index", "Home")` or `<a asp-action="Index" asp-controller="Home">Link</a>` will correctly form fully qualified or path relative URLs that maintain the tenant's subdomain (e.g., `/Home/Index` on `tenant1.mydomain.com` or `https://tenant1.mydomain.com/Home/Index`).
 5.  This ensures that navigation within the tenant's site stays on the correct subdomain.
 
-## 4. Troubleshooting Common Subdomain Multi-Tenancy Issues
+## 4. Troubleshooting Common Subdomain Multi Issues
 
 Here are some common problems and how to address them:
 
 ### DNS Not Resolving
 
 * **Propagation Time:** DNS changes (especially for new wildcard records) can take time to propagate globally (minutes to hours).
-* **Record Verification:** Double-check your DNS provider's settings. Ensure the `A` record or `CNAME` record for the wildcard (e.g., `*.mydomain.com`) correctly points to your web server's public IP address.
+* **Record Verification:** Double check your DNS provider's settings. Ensure the `A` record or `CNAME` record for the wildcard (e.g., `*.mydomain.com`) correctly points to your web server's public IP address.
 * **Local `hosts` File:** For local development, ensure your `hosts` file entries are correctly spelled, saved, and that your browser or OS is not caching old DNS lookups aggressively (try clearing cache or an incognito window).
 
 ### CORS Errors (Contextualized for MVC)
 
-* While less common for a self-contained MVC application serving its own views and assets, CORS errors can arise if:
-    * Your MVC application makes client-side (JavaScript) AJAX requests to a different domain (e.g., a separate `YourProjectName.Web.Host` API for specific tasks, though less typical if MVC is the primary UI).
+* While less common for a self contained MVC application serving its own views and assets, CORS errors can arise if:
+    * Your MVC application makes client side (JavaScript) AJAX requests to a different domain (e.g., a separate `YourProjectName.Web.Host` API for specific tasks, though less typical if MVC is the primary UI).
     * You use a CDN for static assets that requires specific CORS headers.
 * If such errors occur, check the `App:CorsOrigins` setting in the `appsettings.json` of the project *receiving* the request (e.g., `Web.Host` if it's the API being called).
 * Inspect the browser's developer console (Network tab) for detailed CORS error messages.
@@ -125,7 +125,7 @@ Here are some common problems and how to address them:
     * Ensure your certificate is a true wildcard (e.g., `*.mydomain.com`) or a SAN certificate that explicitly lists all required tenant subdomains or the relevant wildcard.
 * **Untrusted Certificate:**
     * For production, ensure your certificate is issued by a reputable CA.
-    * For local development with self-signed or `mkcert`-generated certificates, ensure the root CA certificate used to sign them is trusted by your operating system and browser.
+    * For local development with self signed or `mkcert` generated certificates, ensure the root CA certificate used to sign them is trusted by your operating system and browser.
 * **Mixed Content:** Ensure all resources (CSS, JS, images, etc.) are loaded over HTTPS if your site is served via HTTPS.
 
 ### Incorrect Tenant Loaded or Redirected to Host
