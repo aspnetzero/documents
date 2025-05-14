@@ -109,8 +109,6 @@ There may be other ways of doing it but this is the simplest way.
 
 > In the development time, you don't need to use subdomains for tenants for a simpler development experience. When you do like that, a 'tenant switch' dialog is used to manually switch between tenants.
 
-> For advanced scenarios and production-level configuration of subdomain-based multi-tenancy in ASP.NET Zero Angular applications, including SSL setup, IIS configuration, local development strategies, and tenant resolution internals, please refer to the extended documentation here: [Subdomain-Based Multi-Tenancy in ASP.NET Zero (Angular)](Subdomain-Based-Multi-Tenancy-Angular.md)
-
 Check out the [multi tenant documentation](https://aspnetboilerplate.com/Pages/Documents/Multi-Tenancy) if you are building multi-tenant applications.
 
 ### Angular Solution
