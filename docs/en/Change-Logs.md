@@ -6,6 +6,15 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 14.2.0 (2025-06-11)
+
+* Upgraded to ABP 10.2
+* Upgraded to Angular 20
+* Upgraded to Stripe 48.1
+* Power Tools: Detail View generation for MAUI
+* Implemented File Validators for Excel, Word
+* Enhancements and bug fixes 
+
 ## 14.1.0 (2025-03-18)
 
 * QR Login from MAUI application
