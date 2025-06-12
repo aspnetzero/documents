@@ -1,17 +1,13 @@
 **Title:** Introducing ASP.NET Zero v14.2
-**Description:** ASP.NET Zero v14.2 is here, focusing on security enhancements like single refresh tokens, significant package upgrades including ABP 10.2 and Stripe v48.1, and numerous UI/UX improvements for a more robust and streamlined development workflow.
+**Description:** ASP.NET Zero v14.2 is here, focusing on significant package upgrades including ABP 10.2 and Stripe v48.1, and numerous UI/UX improvements for a more robust and streamlined development workflow.
 
 # Introducing ASP.NET Zero v14.2
 
-We are pleased to announce the release of ASP.NET Zero v14.2. This version includes many improvements, major package upgrades, and bug fixes to make your development process more secure, efficient, and reliable. This update brings important security improvements by enforcing the use of single refresh tokens, fully upgraded dependencies, enhanced file validation, and many UI/UX improvements.
+We are pleased to announce the release of ASP.NET Zero v14.2. This version includes many improvements, major package upgrades, and bug fixes to make your development process more secure, efficient, and reliable. This update brings important security improvements, fully upgraded dependencies, enhanced file validation, and many UI/UX improvements.
 
-This update brings many important improvements, such as enforcing the use of single refresh tokens, fully upgraded front-end to Angular v20, the latest ABP 10.2 framework, and enhancements to simplify workflows.
+This update brings many important improvements, such as a fully upgraded front-end to Angular v20, the latest ABP 10.2 framework, and enhancements to simplify workflows.
 
 Explore the main highlights of the v14.2 version.
-
-## 🔒 Enhanced Security with Single Refresh Token
-
-To make the application more secure against modern threats, we redesigned the authentication controller and now enforces a valid refresh token per user. This important update ensures that each user can only use one valid refresh token at a time. All previous tokens will automatically expire after re-login. This measure significantly reduces the risk of tokens being abused by infected devices and improves the overall security of ASP.NET Core applications. In addition, this approach makes session management more efficient and prevents stale tokens from accumulating in the cache.
 
 ## 🚀 Upgrade Angular v20
 
