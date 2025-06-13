@@ -1,11 +1,11 @@
 **Title:** Introducing ASP.NET Zero v14.2
-**Description:** ASP.NET Zero v14.2 is here, focusing on significant package upgrades including ABP 10.2 and Stripe v48.1, and numerous UI/UX improvements for a more robust and streamlined development workflow.
+**Description:** ASP.NET Zero v14.2 is here, focusing on package upgrades including ABP v10.2, Stripe v48.1, Angular v20, and numerous UI/UX improvements for a more robust and efficient development workflow.
 
 # Introducing ASP.NET Zero v14.2
 
 We are pleased to announce the release of ASP.NET Zero v14.2. This version includes many improvements, major package upgrades, and bug fixes to make your development process more secure, efficient, and reliable. This update brings important security improvements, fully upgraded dependencies, enhanced file validation, and many UI/UX improvements.
 
-This update brings many important improvements, such as a fully upgraded front-end to Angular v20, the latest ABP 10.2 framework, and enhancements to simplify workflows.
+This update brings many important improvements, such as a fully upgraded front-end to Angular v20, the latest ABP 10.2 framework.
 
 Explore the main highlights of the v14.2 version.
 
