@@ -148,15 +148,15 @@ builder.Build().Run();
 
 For the first run, .NET Aspire will ask you to login to Dashboard. You will need a token to login. You can find this token in the logs when you run the AppHost project as shown below;
 
-![.NET Aspire Dashboard Login](./images/Blog/dotnet-aspire-dashboard-login.jpg)
+![.NET Aspire Dashboard Login](/images/Blog/dotnet-aspire-dashboard-login.jpg)
 
 ### View Dashboard
 After making all these changes, if we run the `ZeroAspireSample.AppHost` project, we will see a dashboard similar to the one below;
 
 
-![.NET Aspire Dashboard First State](./images/Blog/dotnet-aspire-dashboard-first-state.jpg)
+![.NET Aspire Dashboard First State](/images/Blog/dotnet-aspire-dashboard-first-state.jpg)
 
 .NET Aspire will run the SQL Server, will migrate the database by running the Migrator project and then will run the web projects. Finally, you should see a dashboard like this;
 
-![.NET Aspire Dashboard Last State](./images/Blog/dotnet-aspire-dashboard-last-state.jpg)
+![.NET Aspire Dashboard Last State](/images/Blog/dotnet-aspire-dashboard-last-state.jpg)
 
