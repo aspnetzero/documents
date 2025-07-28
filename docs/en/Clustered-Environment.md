@@ -42,7 +42,7 @@ Once multiple instances of your application run in parallel, you should carefull
 
 ASP.NET Core provides different kind of caching features. [In-memory cache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory) stores your objects in the memory of the local server and is only available to the application that stored the object. Non-sticky sessions in a clustered environment should use the [distributed caching](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed) except some specific scenarios (for example, you can cache a local CSS file into memory. It is read-only data and it is the same in all application instances. You can cache it in memory for performance reasons without any problem).
 
-[ASPNET Boilerplate caching system](https://aspnetboilerplate.com/Pages/Documents/Caching) extends [ASP.NET Core's in-memory cache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-6.0) infrastructure. It works in-memory by default. You should configure an actual distributed cache provider when you want to deploy your application to a clustered environment. ASPNET Boilerplate provides built-in Redis implementation. It is already implemented in ASPNET Zero. You should go to the `[YOURAPPNAME]WebCoreModule` and uncomment following code.
+[ASPNET Boilerplate caching system](https://aspnetboilerplate.com/Pages/Documents/Caching) extends [ASP.NET Core's in-memory cache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-6.0) infrastructure. It works in-memory by default. You should configure an actual distributed cache provider when you want to deploy your application to a clustered environment. ASPNET Boilerplate provides built-in Redis implementation. It is already implemented in ASP.NET Zero. You should go to the `[YOURAPPNAME]WebCoreModule` and uncomment following code.
 
 _[YOURAPPNAME]WebCoreModule.cs_
 ```csharp
@@ -59,7 +59,7 @@ For more information check [caching](https://aspnetboilerplate.com/Pages/Documen
 
 ASPNET Boilerplate's [background job system](https://aspnetboilerplate.com/Pages/Documents/Background-Jobs-And-Workers) is used to queue tasks to be executed in the background. Background job queue is persistent and a queued task is guaranteed to be executed (it is re-tried if it fails).
 
-If you want to run background jobs in multiple instances ASPNET Boilerplates provides you Hangfire implementation. You can replace background job system with Hangfire. It is already implemented in ASPNET Zero. To enable Hangfire, go to the `WebConsts.cs` and set `HangfireDashboardEnabled` true.
+If you want to run background jobs in multiple instances ASPNET Boilerplates provides you Hangfire implementation. You can replace background job system with Hangfire. It is already implemented in ASP.NET Zero. To enable Hangfire, go to the `WebConsts.cs` and set `HangfireDashboardEnabled` true.
 
 _WebConsts.cs_
 ```csharp
@@ -94,4 +94,11 @@ For more information check [background jobs and workers](https://aspnetboilerpla
 
 ## Scaling SignalR
 
-ASPNET Zero has a built-in chat system and real-time notification system. They both use [signalR](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction). Before using multiple instances of your project, you should check [signalR's scaling documentation](https://docs.microsoft.com/en-us/aspnet/core/signalr/scale) and choose SignalR backplane providers or AzureSignalR. 
+ASP.NET Zero has a built-in chat system and real-time notification system. They both use [signalR](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction). Before using multiple instances of your project, you should check [signalR's scaling documentation](https://docs.microsoft.com/en-us/aspnet/core/signalr/scale) and choose SignalR backplane providers or AzureSignalR. 
+
+## Logging 
+
+ASP.NET Zero uses [log4net](https://github.com/apache/logging-log4net) for logging. If you host your application with multiple instances, each instance will write logs to its specified log file and directory by default. 
+
+For clustered environments, if you want to use a centralized logging as well, you can use a centralized logging approach. As an example, you can configure log4net to write logs to Elasticsearch (via [https://www.nuget.org/packages/Elastic.CommonSchema.Log4net](https://www.nuget.org/packages/Elastic.CommonSchema.Log4net)). Then, you can view logs from Elasticsearch UI. In this case, AspNet Zero's log display tab in Maintenance UI will be useless, you can disable it.
+
