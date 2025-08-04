@@ -11,16 +11,16 @@ defined. We will define two permission:
 
 ### Define the permission
 
-Go to **AppAuthorizationProvider** class in the server side and add a new permission as shown below (you can add just below the dashboard permission):
-
-```csharp
-pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
-```
-
 A permission should have a unique name. We define permission names as constant strings in **AppPermissions** class. It's a simple constant string:
 
 ```csharp
 public const string Pages_Tenant_PhoneBook = "Pages.Tenant.PhoneBook";
+```
+
+Go to **AppAuthorizationProvider** class in the server side and add a new permission as shown below (you can add just below the dashboard permission):
+
+```csharp
+pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
 ```
 
 Unique name of this permission is "**Pages.Tenant.PhoneBook**". While you can set any string (as long as it's unique), it's suggested to use that convention. A permission can have a localizable display name: "**PhoneBook**" here. (See "Adding a New Page" section for more about localization, since it's very similar). Lastly, we set this as a **tenant** level permission.
@@ -71,7 +71,7 @@ new AppMenuItem("PhoneBook", 'Pages.Tenant.PhoneBook', "flaticon-book", "/app/ma
 
 So, how we can enter the page now? Simple, go to **Role Management** page and edit **admin** role:
 
-<img src="images/role-permissions-with-phonebook1.png" alt="Role permissions" class="img-thumbnail" />
+<img src="images/role-permissions-with-phonebook-2.png" alt="Role permissions" class="img-thumbnail" />
 
 We see that a **new permission** named "**Phone book**" added to **permissions** tab. So, we can check it and save the role. After saving, we need to **refresh** the whole page to refresh permissions for the current user. We could also grant this permission to a specific user. Now, we can enter the Phone book page again.
 
@@ -81,17 +81,17 @@ While a permission for a page is useful and probably always needed, we may want 
 
 ### Define the Permission
 
+First permission was defined before. In the second line, we are creating a child permission of first one. Remember to create a constant in `AppPermissions` class:
+
+```csharp
+public const string Pages_Tenant_PhoneBook_CreatePerson = "Pages.Tenant.PhoneBook.CreatePerson";
+```
+
 Defining a permission is similar (in the `AppAuthorizationProvider` class):
 
 ```csharp
 var phoneBook = pages.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook, L("PhoneBook"), multiTenancySides: MultiTenancySides.Tenant);
 phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_CreatePerson, L("CreateNewPerson"), multiTenancySides: MultiTenancySides.Tenant);
-```
-
-First permission was defined before. In the second line, we are creating a child permission of first one. Remember to create a constant in `AppPermissions` class:
-
-```csharp
-public const string Pages_Tenant_PhoneBook_CreatePerson = "Pages.Tenant.PhoneBook.CreatePerson";
 ```
 
 ### Add AbpAuthorize Attribute
@@ -113,7 +113,26 @@ If we run the application and try to create a person, we get an authorization er
 Open the **phonebook.component.html** view and add the permission **Pages.Tenant.PhoneBook.CreatePerson** condition as shown below:
 
 ```html
-<button *ngIf="'Pages.Tenant.PhoneBook.CreatePerson' | permission" class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{"CreateNewPerson" | localize}}</button>
+@if('Pages.Tenant.PhoneBook.CreatePerson' | permission){
+    <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i> {{"CreateNewPerson" | localize}}</button>
+}
+```
+
+Open the **phonebook.component.ts** view and add the import **PermissionPipe** condition as shown below:
+
+```typescript
+@Component({
+    selector: 'app-phone-book',
+    templateUrl: './phonebook.component.html',
+    animations: [appModuleAnimation()],
+    imports: [
+        //...
+        PermissionPipe,
+    ],
+})
+export class PhoneBookComponent extends AppComponentBase implements OnInit {
+  //...
+}
 ```
 
 In this way, the "Create New Person" button is not rendered in server and user can not see this button.
@@ -122,7 +141,7 @@ In this way, the "Create New Person" button is not rendered in server and user c
 
 To see the button again, we can go to role or user manager and grant related permission as shown below:
 
-<img src="images/user-permissions-phonebook1.png" alt="User specific permissions" class="img-thumbnail" />
+<img src="images/user-permissions-phonebook-2.png" alt="User specific permissions" class="img-thumbnail" />
 
 As shown above, **Create new person** permission is a child permission of the **Phone book**. Remember to refresh page to get permissions updated.
 

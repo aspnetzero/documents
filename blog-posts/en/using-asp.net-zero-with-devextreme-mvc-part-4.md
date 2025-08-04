@@ -180,7 +180,7 @@ Update-Database
 
 **It's finished**! We can test the application. Run the project, **login** as the **host admin** (click Change link and clear  tenancy name) shown below:
 
-<img src="/Images/Blog/login-as-host-3.png" alt="Login as host" class="img-thumbnail" style="width:100.0%" />
+<img src="/Images/Blog/login-as-host-7.png" alt="Login as host" class="img-thumbnail" style="width:100.0%" />
 
 Default **admin** password is **123qwe**. After login, we see the **tenant list** which only contains a **default** tenant. We can create a new tenant:
 

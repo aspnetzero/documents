@@ -37,7 +37,7 @@ public class Person : FullAuditedEntity
 }
 ```
 
-We have a **PhoneType** enum as shown below: (in **.Core**
+We have a **PhoneType** enum as shown below: (in **.Core.Shared**
 project)
 
 ```csharp

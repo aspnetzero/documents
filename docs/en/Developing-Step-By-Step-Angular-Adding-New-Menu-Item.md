@@ -24,12 +24,14 @@ Open PhoneBookDemo.xml (the **default**, **English** localization dictionary) an
 
 ```xml
 <text name="PhoneBook">Phone Book</text>
+<text name="PhoneBooksHeaderInfo">Phone Book Details</text>
 ```
 
 If we don't define "PhoneBook"s value for other localization dictionaries, default value is shown in all languages. For example, we can define it also for Turkish in `PhoneBookDmo-tr.xml` file:
 
 ```xml
 <text name="PhoneBook">Telefon Rehberi</text>
+<text name="PhoneBooksHeaderInfo">Telefon Rehberi Detayları</text>
 ```
 
 Note: Any change in server side (including change localization texts) requires recycle of the server application. We suggest to use Ctrl+F5 if you don't need to debugging for a faster startup. In that case, it's

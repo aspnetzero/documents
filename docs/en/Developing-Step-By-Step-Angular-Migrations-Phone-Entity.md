@@ -17,13 +17,13 @@ public partial class Added_Phone : Migration
             name: "PbPhones",
             columns: table => new
             {
-                Id = table.Column<long>(nullable: false)
-                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                CreationTime = table.Column<DateTime>(nullable: false),
-                CreatorUserId = table.Column<long>(nullable: true),
-                Number = table.Column<string>(maxLength: 16, nullable: false),
-                PersonId = table.Column<int>(nullable: false),
-                Type = table.Column<byte>(nullable: false)
+                Id = table.Column<long>(type: "bigint", nullable: false)
+                    .Annotation("SqlServer:Identity", "1, 1"),
+                PersonId = table.Column<int>(type: "int", nullable: false),
+                Type = table.Column<byte>(type: "tinyint", nullable: false),
+                Number = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                CreatorUserId = table.Column<long>(type: "bigint", nullable: true)
             },
             constraints: table =>
             {

@@ -8,22 +8,33 @@ First of all, we create the necessary DTOs to transfer people's id, name,
 surname and e-mail. We can optionally configure auto-mapper, but this is not necessary because all properties match automatically. Then we create the functions in PersonAppService for
 editing people:  
 
-```csharp
+```csharp 
 [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
-public async Task<GetPersonForEditOutput> GetPersonForEdit(GetPersonForEditInput input)
+public async Task<GetPersonForEditOutput> GetPersonForEdit( EntityDto<int> input)
 {
     var person = await _personRepository.GetAsync(input.Id);
     return ObjectMapper.Map<GetPersonForEditOutput>(person);
 }
 
-[AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
-public async Task EditPerson(EditPersonInput input)
+ [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
+ public async Task EditPerson(EditPersonInput input)
+ {
+     var person = await _personRepository.FirstOrDefaultAsync(input.Id);
+     ObjectMapper.Map(input, person);
+ }
+
+public class GetPersonForEditOutput : EntityDto<int>
 {
-    var person = await _personRepository.GetAsync(input.Id);
-    person.Name = input.Name;
-    person.Surname = input.Surname;
-    person.EmailAddress = input.EmailAddress;
-    await _personRepository.UpdateAsync(person);
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public string EmailAddress { get; set; }
+}
+
+public class EditPersonInput : EntityDto<int>
+{
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public string EmailAddress { get; set; }
 }
 ```
 
@@ -31,6 +42,7 @@ Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
 
 ```csharp
 configuration.CreateMap<Person, GetPersonForEditOutput>();
+configuration.CreateMap<EditPersonInput, Person>().ReverseMap();
 ```
 
 ## View
@@ -38,61 +50,98 @@ configuration.CreateMap<Person, GetPersonForEditOutput>();
 Create edit-person-modal.component.html:
 
 ```html
-<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
-        <div class="modal-header">
-            <h4 class="modal-title">
-            <span>{{"EditPerson" | localize}}</span>
-          </h4>
-          <button type="button" class="close" (click)="close()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>          
+<div
+    bsModal
+    #modal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @if(active()){
+                <form #editPersonForm="ngForm" novalidate (ngSubmit)="save()">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{ 'EditPerson' | localize }}</h4>
+                        <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">{{ 'Name' | localize }}</label>
+                            <input
+                                #nameInput
+                                id="name"
+                                type="text"
+                                class="form-control"
+                                name="name"
+                                [(ngModel)]="person().name"
+                                required
+                                maxlength="32" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="surname" class="form-label">{{ 'Surname' | localize }}</label>
+                            <input
+                                id="surname"
+                                type="text"
+                                class="form-control"
+                                name="surname"
+                                [(ngModel)]="person().surname"
+                                required
+                                maxlength="32" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="emailAddress" class="form-label">{{ 'EmailAddress' | localize }}</label>
+                            <input
+                                id="emailAddress"
+                                type="email"
+                                class="form-control"
+                                name="emailAddress"
+                                [(ngModel)]="person().emailAddress"
+                                required
+                                maxlength="255"
+                                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" />
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="close()" [disabled]="saving()">
+                            {{ 'Cancel' | localize }}
+                        </button>
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            [disabled]="!editPersonForm.form.valid || saving()"
+                            [buttonBusy]="saving()"
+                            [busyText]="l('SavingWithThreeDot')">
+                            <i class="fa fa-save"></i>
+                            {{ 'Save' | localize }}
+                        </button>
+                    </div>
+                </form>
+            }
         </div>
-        <div class="modal-body">
-
-          <div class="form-group">
-            <label>{{"Name" | localize}}</label>
-            <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">            
-          </div>
-
-          <div class="form-group">
-            <label>{{"Surname" | localize}}</label>
-            <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
-          </div>
-
-          <div class="form-group">
-          <label>{{"EmailAddress" | localize}}</label>
-            <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">                        
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 ```
 
 Add those lines to **phonebook.component.html:**:
 
-```html
+```html 
         
 	// Other Code lines...	
 
-		<button (click)="editPerson(person)" title="{{'Edit' | localize}}" class="btn  btn-outline-hover-primary btn-icon">
-            <i class="fa fa-plus"></i>
-        </button>
-        <button *ngIf="'Pages.Tenant.PhoneBook.EditPerson' | permission" (click)="editPersonModal.show(person.id)" title="{{'EditPerson' | localize}}" class="btn  btn-outline-hover-success btn-icon">
-            <i class="fa fa-pencil"></i>
-        </button>
-       <button id="deletePerson" (click)="deletePerson(person)" title="{{'Delete' | localize}}" class="btn  btn-outline-hover-danger btn-icon" href="javascript:;">
-            <i class="fa fa-times"></i>
-        </button>
+<button
+    class="btn btn-sm btn-icon btn-bg-light btn-active-color-warning me-2"
+    (click)="editPerson(person.id)"
+    title="{{ 'Edit' | localize }}">
+    <i class="fa fa-edit"></i>
+</button>
                 
 	// Other Code lines...
 				
@@ -100,84 +149,104 @@ Add those lines to **phonebook.component.html:**:
 <editPersonModal #editPersonModal (modalSave)="getPeople()"></editPersonModal>
 ```
 
+Add those lines to **phonebook.component.ts:**:
+
+```typescript 
+@Component({
+    selector: 'app-phone-book',
+    templateUrl: './phonebook.component.html',
+    animations: [appModuleAnimation()],
+    imports: [
+      //..
+      EditPersonModalComponent
+    ],
+})
+export class PhoneBookComponent extends AppComponentBase implements OnInit {
+    //..
+    editPersonModal = viewChild.required<EditPersonModalComponent>('editPersonModal');
+    
+    //..
+    editPerson(personId: number): void {
+        this.editPersonModal().show(personId);
+    }
+}
+```
+
+
 ## Controller
 
 Create edit-person-modal.component.ts:
 
 ```typescript
-import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap';
-import { PersonServiceProxy, EditPersonInput } from '@shared/service-proxies/service-proxies';
+import { Component, ElementRef, inject, signal, viewChild, output } from '@angular/core';
+import { ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
+import { PersonServiceProxy, GetPersonForEditOutput, EditPersonInput } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { finalize } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { ButtonBusyDirective } from '@shared/utils/button-busy.directive';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'editPersonModal',
-  templateUrl: './edit-person-modal.component.html'
+    selector: 'editPersonModal',
+    templateUrl: './edit-person-modal.component.html',
+    standalone: true,
+    imports: [CommonModule, FormsModule, ModalModule, LocalizePipe, ButtonBusyDirective],
 })
 export class EditPersonModalComponent extends AppComponentBase {
+    private readonly _personService = inject(PersonServiceProxy);
 
-  @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+    modalSave = output<any>();
 
-  @ViewChild('modal') modal: ModalDirective;
-  @ViewChild('nameInput') nameInput: ElementRef;
+    modal = viewChild.required<ModalDirective>('modal');
+    nameInput = viewChild<ElementRef>('nameInput');
 
-  person: EditPersonInput = new EditPersonInput();
+    person = signal(new GetPersonForEditOutput());
+    active = signal(false);
+    saving = signal(false);
 
-  active: boolean = false;
-  saving: boolean = false;
+    constructor() {
+        super();
+    }
 
-  constructor(
-    injector: Injector,
-    private _personService: PersonServiceProxy
-  ) {
-    super(injector);
-  }
+    show(id: number): void {
+        this._personService.getPersonForEdit(id).subscribe((result) => {
+            this.person.set(result);
+            this.active.set(true);
+            this.modal().show();
+        });
+    }
 
-  show(personId): void {
-    this.active = true;
-    this._personService.getPersonForEdit(personId).subscribe((result)=> {
-      this.person = result;
-      this.modal.show();
-    });
+    onShown(): void {
+        this.nameInput()?.nativeElement.focus();
+    }
 
-  }
+    save(): void {
+        this.saving.set(true);
 
-  onShown(): void {
-   // this.nameInput.nativeElement.focus();
-  }
+        const input = new EditPersonInput();
+        const currentPerson = this.person();
+        input.id = currentPerson.id;
+        input.name = currentPerson.name;
+        input.surname = currentPerson.surname;
+        input.emailAddress = currentPerson.emailAddress;
 
-  save(): void {
-    this.saving = true;
-    this._personService.editPerson(this.person)
-      .subscribe(() => {
-        this.notify.info(this.l('SavedSuccessfully'));
-        this.close();
-        this.modalSave.emit(this.person);
-      });
-    this.saving = false;
-  }
+        this._personService
+            .editPerson(input)
+            .pipe(finalize(() => this.saving.set(false)))
+            .subscribe(() => {
+                this.notify.success(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(null);
+            });
+    }
 
-  close(): void {
-    this.modal.hide();
-    this.active = false;
-  }
+    close(): void {
+        this.modal().hide();
+        this.active.set(false);
+    }
 }
-```
-
-Add those lines to **phonebook.module.ts:**:
-
-```typescript
-    import { EditPersonModalComponent } from './edit-person-modal.component';
-
-	// Other Code lines...
-	
-    declarations: [
-      PhoneBookComponent,
-      CreatePersonModalComponent,
-      EditPersonModalComponent
-    ]
-
-	// Other Code lines...
 ```
 
 ## Next

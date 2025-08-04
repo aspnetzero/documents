@@ -2034,7 +2034,7 @@ Now, we can update the database again:
 **login** as the **host admin** (click Change link and clear tenancy
 name) shown below:
 
-<img src="images/login-as-host-3.png" alt="Login as host" class="img-thumbnail" style="width:100.0%" />
+<img src="images/login-as-host-7.png" alt="Login as host" class="img-thumbnail" style="width:100.0%" />
 
 After login, we see the **tenant list** which only contains a
 **default** tenant. We can create a new tenant:

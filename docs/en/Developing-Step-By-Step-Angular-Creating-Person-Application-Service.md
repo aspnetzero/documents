@@ -8,12 +8,11 @@ Application service interface and DTOs are located in **.Application.Shared** pr
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 
-namespace Acme.PhoneBookDemo.PhoneBook
+namespace Acme.PhoneBookDemo.PhoneBook;
+
+public interface IPersonAppService : IApplicationService
 {
-    public interface IPersonAppService : IApplicationService
-    {
-        ListResultDto<PersonListDto> GetPeople(GetPeopleInput input);
-    }
+    ListResultDto<PersonListDto> GetPeople(GetPeopleInput input);
 }
 ```
 
@@ -50,6 +49,14 @@ configuration.CreateMap<Person, PersonListDto>();
 After defining interface, we can implement it as shown below: (in **.Application** project)
 
 ```csharp
+using Abp.Application.Services.Dto;
+using Abp.Collections.Extensions;
+using Abp.Domain.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Acme.PhoneBookDemo.PhoneBook;
+
 public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
 {
     private readonly IRepository<Person> _personRepository;
