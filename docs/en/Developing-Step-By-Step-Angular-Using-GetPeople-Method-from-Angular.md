@@ -26,25 +26,28 @@ stop it and re-run **npm start** command.
 Change **phonebook.component.ts** as like below:
 
 ```typescript
-import { Component, Injector, OnInit } from '@angular/core';
-import { AppComponentBase } from '@shared/common/app-component-base';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { SubHeaderComponent } from '@app/shared/common/sub-header/sub-header.component';
+import { PersonListDto, PersonServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FormsModule } from '@angular/forms';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { PersonServiceProxy, PersonListDto, ListResultDtoOfPersonListDto } from '@shared/service-proxies/service-proxies';
+import { Component, inject, OnInit } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
+    selector: 'app-phone-book',
     templateUrl: './phonebook.component.html',
-    animations: [appModuleAnimation()]
+    animations: [appModuleAnimation()],
+    imports: [SubHeaderComponent, LocalizePipe, FormsModule],
 })
 export class PhoneBookComponent extends AppComponentBase implements OnInit {
+    private _personService = inject(PersonServiceProxy);
 
-    people: PersonListDto[] = [];
-    filter: string = '';
+    people = signal<PersonListDto[]>([]);
+    filter = signal('');
 
-    constructor(
-        injector: Injector,
-        private _personService: PersonServiceProxy
-    ) {
-        super(injector);
+    constructor() {
+        super();
     }
 
     ngOnInit(): void {
@@ -52,9 +55,15 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
     }
 
     getPeople(): void {
-        this._personService.getPeople(this.filter).subscribe((result) => {
-            this.people = result.items;
+        this.primengTableHelper.showLoadingIndicator();
+        this._personService.getPeople(this.filter()).subscribe((result) => {
+            this.people.set(result.items);
+            this.primengTableHelper.hideLoadingIndicator();
         });
+    }
+
+    applyFilter(): void {
+        this.getPeople();
     }
 }
 ```
@@ -71,28 +80,29 @@ Now, we can use this people member from the view,
 
 ```html
 <div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"PhoneBook" | localize}}</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                    <h3>{{"AllPeople" | localize}}</h3>
-                    <div *ngFor="let person of people">
-                        <div class="row kt-row--no-padding align-items-center">
-                            <div class="col">
-                                <h4>{{person.name + ' ' + person.surname}}</h4>
-                                <span>{{person.emailAddress}}</span>
-                            </div>
-                        </div>
-                    </div>
+    <sub-header [title]="'PhoneBook' | localize" [description]="'PhoneBooksHeaderInfo' | localize"></sub-header>
+    <div [class]="containerClass">
+        <div class="card card-custom">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive table-bordered">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>{{ 'Name' | localize }}</th>
+                                <th>{{ 'Surname' | localize }}</th>
+                                <th>{{ 'EmailAddress' | localize }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (person of people(); track person.id) {
+                                <tr>
+                                    <td>{{ person.name }}</td>
+                                    <td>{{ person.surname }}</td>
+                                    <td>{{ person.emailAddress }}</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -103,7 +113,7 @@ Now, we can use this people member from the view,
 We simply used **ngFor** directive to loop and render people data. See
 the result:
 
-<img src="images/phonebook-people-view-2.png" alt="Phonebook peoples" class="img-thumbnail" />
+<img src="images/phonebook-people-view-3.png" alt="Phonebook peoples" class="img-thumbnail" />
 
 We successfully retrieved list of people from database to the page.
 

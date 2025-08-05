@@ -5,7 +5,7 @@ uses [ngx-bootstrap](https://github.com/valor-software/ngx-bootstrap)
 library to create modals (you can use another library, but we will use
 it in this sample too). Final modal will be like below:
 
-<img src="images/phonebook-create-person-dialog1.png" alt="Create Person Dialog" class="img-thumbnail" />
+<img src="images/phonebook-create-person-dialog-2.png" alt="Create Person Dialog" class="img-thumbnail" />
 
 First of all, we should use **nswag/refresh.bat** to re-generate
 service-proxies. This will generate the code that is needed to call
@@ -17,59 +17,69 @@ We are starting from creating a new component, named
 **create-person-modal.component.ts** into client side phonebook folder:
 
 ```typescript
-import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap';
+import { Component, ElementRef, inject, signal, viewChild, output } from '@angular/core';
+import { ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
 import { PersonServiceProxy, CreatePersonInput } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { finalize } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { ButtonBusyDirective } from '@shared/utils/button-busy.directive';
 
 @Component({
     selector: 'createPersonModal',
-    templateUrl: './create-person-modal.component.html'
+    templateUrl: './create-person-modal.component.html',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ModalModule,
+        LocalizePipe,
+        ButtonBusyDirective,
+    ],
 })
 export class CreatePersonModalComponent extends AppComponentBase {
+    private readonly _personService = inject(PersonServiceProxy);
 
-    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+    modalSave = output<any>();
 
-    @ViewChild('modal' , { static: false }) modal: ModalDirective;
-    @ViewChild('nameInput' , { static: false }) nameInput: ElementRef;
+    modal = viewChild.required<ModalDirective>('modal');
+    nameInput = viewChild<ElementRef>('nameInput');
 
-    person: CreatePersonInput = new CreatePersonInput();
+    person = signal(new CreatePersonInput());
+    active = signal(false);
+    saving = signal(false);
 
-    active: boolean = false;
-    saving: boolean = false;
-
-    constructor(
-        injector: Injector,
-        private _personService: PersonServiceProxy
-    ) {
-        super(injector);
+    constructor() {
+        super();
     }
 
     show(): void {
-        this.active = true;
-        this.person = new CreatePersonInput();
-        this.modal.show();
+        this.active.set(true);
+        this.person.set(new CreatePersonInput());
+        this.modal().show();
     }
 
     onShown(): void {
-        this.nameInput.nativeElement.focus();
+        this.nameInput()?.nativeElement.focus();
     }
 
     save(): void {
-        this.saving = true;
-        this._personService.createPerson(this.person)
-            .pipe(finalize(() => this.saving = false))
+        this.saving.set(true);
+        this._personService
+            .createPerson(this.person())
+            .pipe(finalize(() => this.saving.set(false)))
             .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
-                this.modalSave.emit(this.person);
+                this.modalSave.emit(this.person());
             });
     }
 
     close(): void {
-        this.modal.hide();
-        this.active = false;
+        this.modal().hide();
+        this.active.set(false);
     }
 }
 ```
@@ -99,59 +109,142 @@ As declared in the component, we are creating the
 below:
 
 ```html
-<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+<div
+    bsModal
+    #modal="bs-modal"
+    (onShown)="onShown()"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form *ngIf="active" #personForm="ngForm" novalidate (ngSubmit)="save()">
-                <div class="modal-header">
-                    <h4 class="modal-title">
-                        <span>{{"CreateNewPerson" | localize}}</span>
-                    </h4>
-                    <button type="button" class="close" (click)="close()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>{{"Name" | localize}}</label>
-                        <input #nameInput class="form-control" type="text" name="name" [(ngModel)]="person.name" required maxlength="32">
+            @if(active()){
+                <form #personForm="ngForm" novalidate (ngSubmit)="save()">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            <span>{{ 'CreateNewPerson' | localize }}</span>
+                        </h4>
+                        <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
                     </div>
-                    <div class="form-group">
-                        <label>{{"Surname" | localize}}</label>
-                        <input class="form-control" type="email" name="surname" [(ngModel)]="person.surname" required maxlength="32">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">{{ 'Name' | localize }}</label>
+                            <input
+                                #nameInput
+                                id="name"
+                                class="form-control"
+                                type="text"
+                                name="name"
+                                [(ngModel)]="person().name"
+                                required
+                                maxlength="32" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="surname" class="form-label">{{ 'Surname' | localize }}</label>
+                            <input
+                                id="surname"
+                                class="form-control"
+                                type="text"
+                                name="surname"
+                                [(ngModel)]="person().surname"
+                                required
+                                maxlength="32" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="emailAddress" class="form-label">{{ 'EmailAddress' | localize }}</label>
+                            <input
+                                id="emailAddress"
+                                class="form-control"
+                                type="email"
+                                name="emailAddress"
+                                [(ngModel)]="person().emailAddress"
+                                required
+                                maxlength="255"
+                                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>{{"EmailAddress" | localize}}</label>
-                        <input class="form-control" type="email" name="emailAddress" [(ngModel)]="person.emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
+                    <div class="modal-footer">
+                        <button [disabled]="saving()" type="button" class="btn btn-secondary" (click)="close()">
+                            {{ 'Cancel' | localize }}
+                        </button>
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            [disabled]="!personForm.form.valid || saving()"
+                            [buttonBusy]="saving()"
+                            [busyText]="l('SavingWithThreeDot')">
+                            <i class="fa fa-save"></i>
+                            <span>{{ 'Save' | localize }}</span>
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
-                    <button type="submit" class="btn btn-primary" [disabled]="!personForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
-                </div>
-            </form>
+                </form>
+            }
         </div>
     </div>
 </div>
 ```
 
+Open PhoneBookDemo.xml (the **default**, **English** localization dictionary) and add the following line:
+
+```xml
+<text name="CreateNewPerson">Create New Person</text>
+```
+
 Most of this code is similar for all modals. The important part is how
 we binded model to the view using the ngModel directive. As like all
-components, Angular requires to relate it to a module. We should add it to
-**declarations** array of **phonebook.module.ts** as like shown below:
+components, Angular requires to relate it to a module. We should update it to
+**imports** array of **phonebook.component.ts** as like shown below:
 
 ```typescript
-import {NgModule} from '@angular/core';
-import {AppSharedModule} from '@app/shared/app-shared.module';
-import {PhoneBookRoutingModule} from './phonebook-routing.module';
-import {PhoneBookComponent} from './phonebook.component';
-import {CreatePersonModalComponent} from './create-person-modal.component';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { SubHeaderComponent } from '@app/shared/common/sub-header/sub-header.component';
+import { PersonListDto, PersonServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FormsModule } from '@angular/forms';
+import { CreatePersonModalComponent } from './create-person-modal.component';
 
-@NgModule({
-    declarations: [PhoneBookComponent, CreatePersonModalComponent],
-    imports: [AppSharedModule, PhoneBookRoutingModule]
+@Component({
+    selector: 'app-phone-book',
+    templateUrl: './phonebook.component.html',
+    animations: [appModuleAnimation()],
+    standalone: true,
+    imports: [SubHeaderComponent, LocalizePipe, FormsModule, CreatePersonModalComponent],
 })
-export class PhoneBookModule {}
+export class PhoneBookComponent extends AppComponentBase implements OnInit {
+    private readonly _personService = inject(PersonServiceProxy);
+
+    createPersonModal = viewChild.required<CreatePersonModalComponent>('createPersonModal');
+
+    people = signal<PersonListDto[]>([]);
+    filter = signal('');
+
+    constructor() {
+        super();
+    }
+
+    ngOnInit(): void {
+        this.getPeople();
+    }
+
+    getPeople(): void {
+        this.primengTableHelper.showLoadingIndicator();
+        this._personService.getPeople(this.filter()).subscribe((result) => {
+            this.people.set(result.items);
+            this.primengTableHelper.hideLoadingIndicator();
+        });
+    }
+
+    createPerson(): void {
+        this.createPersonModal().show();
+    }
+}
 ```
 
 We need to put a "Create new person" button to the 'people list page' to
@@ -160,42 +253,43 @@ following changes in **phonebook.component.html**:
 
 ```html
 <div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"PhoneBook" | localize}}</span>
-                    </h3>
-                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                    <span class="kt-subheader__desc">
-                        {{"EditTenantHeaderInfo" | localize}}
-                    </span>
-                </div>
-                <div class="kt-subheader__toolbar">
-                    <div class="kt-subheader__wrapper">
-                        <button class="btn btn-primary" (click)="createPersonModal.show()"><i class="fa fa-plus"></i>
-                            {{"CreateNewPerson" | localize}}</button>
-                    </div>
+    <sub-header [title]="'PhoneBook' | localize" [description]="'PhoneBooksHeaderInfo' | localize"></sub-header>
+    <div [class]="containerClass">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-toolbar">
+                    <button (click)="createPerson()" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> {{ 'CreateNewPerson' | localize }}
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                    <h3>{{"AllPeople" | localize}}</h3>
-                    <div class="row kt-row--no-padding align-items-center" *ngFor="let person of people">
-                        <div class="col">
-                            <h4>{{person.name + ' ' + person.surname}}</h4>
-                            <span>{{person.emailAddress}}</span>
-                        </div>                        
-                    </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive table-bordered">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>{{ 'Name' | localize }}</th>
+                                <th>{{ 'Surname' | localize }}</th>
+                                <th>{{ 'EmailAddress' | localize }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (person of people(); track person.id) {
+                                <tr>
+                                    <td>{{ person.name }}</td>
+                                    <td>{{ person.surname }}</td>
+                                    <td>{{ person.emailAddress }}</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <createPersonModal #createPersonModal (modalSave)="getPeople()"></createPersonModal>
         </div>
     </div>
 </div>
+
+<createPersonModal #createPersonModal (modalSave)="getPeople()"></createPersonModal>
 ```
 
 Made some minor changes in the view; Added a **button** to open the

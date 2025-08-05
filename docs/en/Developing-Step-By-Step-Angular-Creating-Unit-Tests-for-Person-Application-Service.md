@@ -23,9 +23,9 @@ using Acme.PhoneBookDemo.People.Dtos;
 using Shouldly;
 using Xunit;
 
-namespace Acme.PhoneBookDemo.Tests.People
-{
-    public class PersonAppService_Tests : AppTestBase
+namespace Acme.PhoneBookDemo.Tests.People;
+
+public class PersonAppService_Tests : AppTestBase
     {
         private readonly IPersonAppService _personAppService;
 
@@ -44,7 +44,6 @@ namespace Acme.PhoneBookDemo.Tests.People
             persons.Items.Count.ShouldBe(2);
         }
     }
-}
 ```
 
 We derived test class from **AppTestBase**. AppTestBase class

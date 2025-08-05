@@ -10,9 +10,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
 
-namespace Acme.PhoneBookDemo.PhoneBook
-{
-    [Table("PbPersons")]
+namespace Acme.PhoneBookDemo.PhoneBook;
+
+[Table("PbPersons")]
     public class Person : FullAuditedEntity
     {
         public const int MaxNameLength = 32;
@@ -30,7 +30,6 @@ namespace Acme.PhoneBookDemo.PhoneBook
         [MaxLength(MaxEmailAddressLength)]
         public virtual string EmailAddress { get; set; }
     }
-}
 ```
 
 Person's **primary key** type is **int** (as default). It inherits

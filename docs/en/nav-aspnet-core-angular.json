@@ -56,12 +56,12 @@
               "path": "Developing-Step-By-Step-Angular-Database-Migrations-Person-Entity.md"
             },
             {
-              "text": "Creating Unit Tests for Person Application Service",
-              "path": "Developing-Step-By-Step-Angular-Creating-Unit-Tests-for-Person-Application-Service.md"
-            },
-            {
               "text": "Creating Person Application Service",
               "path": "Developing-Step-By-Step-Angular-Creating-Person-Application-Service.md"
+            },
+            {
+              "text": "Creating Unit Tests for Person Application Service",
+              "path": "Developing-Step-By-Step-Angular-Creating-Unit-Tests-for-Person-Application-Service.md"
             },
             {
               "text": "Using GetPeople Method From Angular Component",
@@ -512,7 +512,7 @@
         {
           "text": "OpenIddict Integration",
           "path": "Infrastructure-Core-Angular-OpenIddict-Integration.md"
-        },        
+        },
         {
           "text": "Identity Server 4 Integration",
           "path": "Infrastructure-Core-Angular-Identity-Server4-Integration.md"
@@ -532,7 +532,7 @@
         {
           "text": "Common Payment System",
           "path": "Features-Angular-Common-Payment-System.md"
-        }         
+        }
       ]
     },
     {
@@ -552,7 +552,7 @@
         },
         {
           "text": "Development Guide",
-          "items" : [
+          "items": [
             {
               "text": "Using Visual Studio Extension",
               "path": "Power-Tools-Using-Visual-Studio-Extension.md"

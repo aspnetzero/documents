@@ -68,6 +68,20 @@ Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
 configuration.CreateMap<AddPhoneInput, Phone>();
 ```
 
+A permission should have a unique name. We define permission names as constant strings in **AppPermissions** class. It's a simple constant string:
+
+```csharp
+public const string Pages_Tenant_PhoneBook_DeletePhone = "Pages.Tenant.DeletePhone";
+public const string Pages_Tenant_PhoneBook_AddPhone = "Pages.Tenant.AddPhone";
+```
+
+Go to **AppAuthorizationProvider** class in the server side and add a new permission as shown below (you can add just below the dashboard permission):
+
+```csharp
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_DeletePhone, L("DeletePhone"), multiTenancySides: MultiTenancySides.Tenant);
+phoneBook.CreateChildPermission(AppPermissions.Pages_Tenant_PhoneBook_AddPhone, L("AddPhone"), multiTenancySides: MultiTenancySides.Tenant);
+```
+
 (Note: We injected **IRepository&lt;Phone, long&gt;** in the constructor
 and set to \_phoneRepository field, as similar to \_personRepository)
 
