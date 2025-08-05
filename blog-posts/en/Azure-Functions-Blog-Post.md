@@ -1,40 +1,48 @@
+
 # How to Integrate Azure Functions with ASP.NET Zero
 
-Azure Functions is a serverless computing platform that enables you to build powerful applications with minimal code and infrastructure overhead. Rather than managing servers manually, you can rely on Azure’s cloud infrastructure to automatically handle scaling, updates, and resource provisioning—helping reduce both operational complexity and costs.
+**Azure Functions** is a powerful serverless computing platform that enables developers to build scalable and event-driven applications without managing infrastructure. Instead of handling server configurations manually, Azure Functions leverages the cloud to manage scaling, updates, and performance automatically—saving time and reducing costs.
 
-ASP.NET Zero also provides a strong infrastructure. In some cases, it might be helpful to use Azure Functions in ASP.NET Zero.
+**ASP.NET Zero**, on the other hand, is a robust and modular application framework for building modern web applications. In some scenarios, it can be highly beneficial to integrate Azure Functions into an ASP.NET Zero-based application to handle background jobs, webhooks, or lightweight APIs efficiently.
 
-## Add Sample Project
+In this guide, you’ll learn how to **integrate Azure Functions with ASP.NET Zero**, step-by-step.
 
-To get started, let's add an Azure Function project to our solution. At the moment, ASP.NET Zero is based on .NET 9, so we should also select .NET 9 while creating our Azure Functions project.
+---
 
-![Add Azure Function Project](./images/Blog/add-azure-funciton-project-step-1.jpg "Add Azure Function Project")
+## Step 1: Add an Azure Functions Project to Your ASP.NET Zero Solution
 
-![Add Azure Function Project Framework](./images/Blog/add-azure-funciton-project-step-2.jpg "Add Azure Function Project Framework")
+Start by adding a new **Azure Functions** project to your existing ASP.NET Zero solution. Since ASP.NET Zero is currently based on **.NET 9**, make sure to select the .NET 9 framework during the project setup.
 
-If we run our Azure Function project, it will accept HTTP requests from a specific URL (Like ` http://localhost:7154/api/Function1`) and if we make a request to this URL, it will return a static text.
+![Creating an Azure Function Project in .NET 9](./images/Blog/add-azure-funciton-project-step-1.jpg "Creating Azure Function Project")
 
-You can open your browser and visit the URL you are seeing in the command line which appears when you run the project. It will return **Welcome to Azure Functions!** text as the response by default.
+![Choosing the .NET Framework for Azure Functions](./images/Blog/add-azure-funciton-project-step-2.jpg "Selecting .NET 9 Framework for Azure Functions")
 
-## Integrate ASP.NET Zero
+Once your function project is created, running it will expose an HTTP endpoint (e.g., `http://localhost:7154/api/Function1`) that returns a static message.
 
-To integrate ASP.NET Zero into an Azur eFunction project, we need to;
+You can test this by navigating to the displayed URL in your browser. By default, you should see the response:
 
-* Create a Module
-* Arrange Module Dependencies
-* Configure Dependency Injection
+```
+Welcome to Azure Functions!
+```
 
-### Create Azure Functions Project Module
+---
 
-ASP.NET Zero provides the infrastructure to build modules and compose them to create an application. Becasue of that, we need to create a module class in our Azure Function project. Create a Module class similar to one below;
+## Step 2: Integrate ASP.NET Zero into Your Azure Function Project
+
+To integrate ASP.NET Zero functionality into your Azure Function app, you’ll need to:
+
+- Create a new **module class**
+- Configure **module dependencies**
+- Set up **dependency injection (DI)**
+
+### ✅ Create an ASP.NET Zero Module for Azure Functions
+
+ASP.NET Zero is based on **modular architecture**, so the first step is creating a module class for your Azure Function project. Here's a sample implementation:
 
 ```csharp
 using Abp.AspNetZeroCore;
-using Abp.Domain.Repositories;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using AnzAzureFunctionSample.Authorization.Roles;
-using AnzAzureFunctionSample.Configuration;
 using AnzAzureFunctionSample.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -45,10 +53,9 @@ namespace FunctionApp
     {
         private readonly IConfigurationRoot _appConfiguration;
 
-        public MyFunctionModule(AnzAzureFunctionSampleEntityFrameworkCoreModule abpZeroTemplateEntityFrameworkCoreModule)
+        public MyFunctionModule(AnzAzureFunctionSampleEntityFrameworkCoreModule efModule)
         {
-            abpZeroTemplateEntityFrameworkCoreModule.SkipDbSeed = true;
-
+            efModule.SkipDbSeed = true;
             _appConfiguration = AppConfigurations.Get(
                 typeof(MyFunctionModule).GetAssembly().GetDirectoryPathOrNull()
             );
@@ -68,13 +75,15 @@ namespace FunctionApp
 }
 ```
 
-Let's check important parts of this module class.
+### 🔍 Key Points in the Module
 
-- **Module Depedency**: Our module for the Azure Functionj project depends on `AnzAzureFunctionSampleEntityFrameworkCoreModule` module. This means, when we run the Azure Function project, ASP.NET Zero will automatically load `AnzAzureFunctionSampleEntityFrameworkCoreModule` and its dependants as well. 
-- **Connection String**: If we want to access the database of our ASP.NET Zero application, we need to set the connection string configuration.
-- **License Code**: Since ASP.NET Zero checks the license code at startup, we also need to set the license code in our Azure Function Module's `PreInitialize` method.
+- **Module Dependency**: The module depends on `AnzAzureFunctionSampleEntityFrameworkCoreModule`. This ensures that when the function app runs, required ASP.NET Zero modules are loaded.
+- **Connection String**: This is required to connect to your ASP.NET Zero database.
+- **License Code**: ASP.NET Zero performs a license check at runtime, so this value must be set.
 
-After adding this class, we also need to create an `appsettings.json` file with the content below;
+### 📄 Add `appsettings.json`
+
+Create an `appsettings.json` file in your Azure Function project root:
 
 ```json
 {
@@ -90,14 +99,24 @@ After adding this class, we also need to create an `appsettings.json` file with 
 }
 ```
 
-### Module Dependencies
+---
 
-It is suggested to depend on only the `CoreModule` and `EntityFrameworkCoreModule` of your main application. Because, your Azure Function app should only use your domain logic and your database access layer. 
-You shouldn't depend on the `ApplicationModule` or `WebModule`. Becasue, these modules may require authentication and authorization which your Azure Function app is not aware of.
+## Step 3: Configure Module Dependencies for Azure Functions
 
-### Configure Dependency Injection
+It’s recommended to only depend on the following modules from your ASP.NET Zero application:
 
-Finally, we need to configure our Azure Function app, so it can integrate with ASP.NET Zero's dependency injection system. This way, when we inject any interface or class into our Functions, they can be resolved correctly. To do this, modify your `Program.cs` file in your Azure Function project as shown below;
+- **Core Module**
+- **EntityFrameworkCore Module**
+
+Avoid referencing `ApplicationModule` or `WebModule`, as those typically include authentication, authorization, and UI-specific logic that Azure Functions doesn't support or need.
+
+---
+
+## Step 4: Configure Dependency Injection for ASP.NET Zero in Azure Functions
+
+To use ASP.NET Zero services (like repositories or domain services) within your Azure Functions, you must connect the **Azure Function DI system** to **ASP.NET Zero's IoC container**.
+
+Update your `Program.cs` file as shown below:
 
 ```csharp
 using Abp;
@@ -129,16 +148,19 @@ var host = new HostBuilder()
 host.Run();
 ```
 
-Here, we are first initializing our `MyFunctionModule` using `AbpBootstrapper`. This initializes our module and all its dependant modules.
-Then, in `ConfigureServices` method, we are calling `WindsorRegistrationHelper.CreateServiceProvider` which combines Azure Function project's registered classes to its dependency injeciton container with ASP.NET Zero's dependency injection system.
+### 🧠 What’s Happening Here?
 
-After all, we are calling `UseServiceProviderFactory(new MyServiceProviderFactory<MyFunctionModule>())` which creates a service provider using ASP.NET Zero's dependency injection system. We are doing this becasue we first combined all registered classes (and interfaces) into ASP.NET Zero's DI system and then we are using this combined registrations in our Azure Function project's DI system.
+- `AbpBootstrapper` initializes the ASP.NET Zero module and dependencies.
+- `WindsorRegistrationHelper` combines Azure Functions’ services with ASP.NET Zero’s DI system.
+- `UseServiceProviderFactory` ensures ASP.NET Zero's IoC container is used as the default service provider for your function app.
 
-### Sample Function
+---
 
-Now, we can inject for example generic repositories into our Azure Functions and access ASP.NET Zero's database. Here is a sample Function class;
+## Step 5: Example Azure Function with ASP.NET Zero Repository
 
-```
+Now you can inject services like `IRepository<T>` from ASP.NET Zero into your Azure Functions.
+
+```csharp
 using Abp.Dependency;
 using Abp.Domain.Repositories;
 using AnzAzureFunctionSample.Authorization.Roles;
@@ -153,9 +175,7 @@ public class WelcomeFunction : ITransientDependency
     private readonly ILogger<WelcomeFunction> _logger;
     private readonly IRepository<Role> _roleRepository;
 
-    public WelcomeFunction(ILogger<WelcomeFunction> logger
-        ,IRepository<Role> roleRepository
-        )
+    public WelcomeFunction(ILogger<WelcomeFunction> logger, IRepository<Role> roleRepository)
     {
         _logger = logger;
         _roleRepository = roleRepository;
@@ -165,13 +185,44 @@ public class WelcomeFunction : ITransientDependency
     public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req)
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");
-        var sampleRole = _roleRepository.FirstOrDefault(e=> e.Id == 1);
+        var sampleRole = _roleRepository.FirstOrDefault(e => e.Id == 1);
         return new OkObjectResult("Welcome to Azure Functions! -> " + sampleRole?.Name);
     }
 }
 ```
 
-This function gets the role with `Id` equals to `1` from database and returns a welcome text with the name of the role. The output for this endpoint will be `Welcome to Azure Functions! -> admin`.
-You can send a GET request to `http://localhost:7154/api/WelcomeFunction` and test this function.
+### 🔍 How It Works
 
-**NOTE:** I have used Visual Studio while testing this scenario. Jetbrains Rider didn't work well when running Azure Functions. So, if you face any issues while running the Azure Function project locally, you can try using Visual Studio.
+This function retrieves a role with `Id = 1` from the ASP.NET Zero database and returns a message such as:
+
+```
+Welcome to Azure Functions! -> admin
+```
+
+Test this by sending a GET request to:
+
+```
+http://localhost:7154/api/WelcomeFunction
+```
+
+---
+
+## Troubleshooting Tips
+
+- This setup was tested using **Visual Studio**. JetBrains Rider may not support Azure Functions as smoothly, especially during local execution.
+- If you encounter startup or DI issues, ensure:
+  - Your `MyFunctionModule` is properly registered.
+  - `appsettings.json` contains correct values.
+  - You're referencing the correct modules (`Core` and `EntityFrameworkCore` only).
+
+---
+
+## Conclusion
+
+Integrating **ASP.NET Zero with Azure Functions** allows you to harness the power of serverless architecture while still leveraging your existing domain and data layers. This setup is ideal for building lightweight APIs, background tasks, or webhooks that operate alongside your full-featured ASP.NET Zero web application.
+
+By following the steps in this guide, you can:
+
+- Reuse your business logic in a serverless context
+- Improve performance and scalability
+- Simplify cloud-native development using familiar tools
