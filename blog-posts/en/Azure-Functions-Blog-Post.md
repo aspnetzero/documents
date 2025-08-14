@@ -148,6 +148,26 @@ var host = new HostBuilder()
 host.Run();
 ```
 
+```csharp
+using System;
+using Abp.Dependency;
+using Castle.Windsor.MsDependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
+
+public class MyServiceProviderFactory<MyFunctionModule> : IServiceProviderFactory<MyFunctionModule>
+{
+    public MyFunctionModule CreateBuilder(IServiceCollection services)
+    {
+        return IocManager.Instance.Resolve<MyFunctionModule>();
+    }
+
+    public IServiceProvider CreateServiceProvider(MyFunctionModule containerBuilder)
+    {
+        return WindsorRegistrationHelper.CreateServiceProvider(IocManager.Instance.IocContainer, new ServiceCollection());
+    }
+}
+```
+
 ### 🧠 What’s Happening Here?
 
 - `AbpBootstrapper` initializes the ASP.NET Zero module and dependencies.
