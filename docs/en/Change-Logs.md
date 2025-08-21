@@ -6,6 +6,13 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 14.3.0 (2025-08-21)
+
+* Upgraded to ABP 10.3
+* Upgrade Public Website to Bootstrap 5
+* Created Azure Functions sample
+* Enhancements and bug fixes 
+
 ## 14.2.0 (2025-06-11)
 
 * Upgraded to ABP 10.2
