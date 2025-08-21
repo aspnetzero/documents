@@ -4,24 +4,24 @@
 # Introducing ASP.NET Zero v14.3
 
 We are excited to announce the release of **ASP.NET Zero v14.3**.
-This version brings **major upgrades**, **UI improvements**, and a brand new **blog post on Azure Functions integration** to help developers build even more powerful and scalable applications. Alongside these, we’ve also delivered numerous bug fixes and enhancements to improve overall performance and developer experience.
+This version brings **Upgrades**, **UI improvements**, and a brand new **blog post on Azure Functions integration** to help developers build even more powerful and scalable applications. We’ve also delivered numerous bug fixes and enhancements to improve overall performance and developer experience.
 
 Let’s take a look at what’s new in this release!
 
 ## 🚀 Upgraded to ABP 10.3
 
-ASP.NET Zero v14.3 is now built on **ABP 10.3**, bringing the latest performance improvements, stability updates, and compatibility with .NET 9.
+ASP.NET Zero v14.3 is now built on **ABP 10.3**, bringing the latest performance improvements, stability updates.
 This upgrade ensures you can take advantage of ABP’s latest features while keeping your application modern, secure, and future proof.
 
 👉 For details, see the [ABP 10.3 release notes](https://github.com/aspnetboilerplate/aspnetboilerplate/releases/tag/v10.3).
 
 ## 🎨 Public Website Upgraded to Bootstrap 5
 
-The **Public Website** has been upgraded from Bootstrap 4 to **Bootstrap 5**, bringing a modern design system for a better user experience, improved layout, and updated package for a cleaner usability.
+The **Public Website** has been upgraded from Bootstrap 3 to **Bootstrap 5**, bringing a modern design system for a better user experience, improved layout, and updated package for a cleaner usability.
 
 ## ☁️ New Blog Post: Azure Functions Integration
 
-ASP.NET Zero v14.3 comes with a brand new **blog post** that shows how to integrate **Azure Functions** into your ASP.NET Zero solution.
+There is a new **blog post** that shows how to integrate **Azure Functions** into your ASP.NET Zero solution.
 This guide shows how to integrate Azure Functions with ASP.NET Zero to build scalable, event driven apps without managing infrastructure. By combining ASP.NET Zero’s modular architecture with Azure Functions, you can run background jobs, lightweight APIs, and webhooks efficiently while leveraging your existing business logic.
 
 👉 Learn more in our detailed guide: [Integrate Azure Functions in ASP.NET Zero](https://aspnetzero.com/blog/integrate-azure-functions)
