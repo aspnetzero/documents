@@ -1,0 +1,597 @@
+{
+  "items": [
+    {
+      "text": "Getting Started",
+      "items": [
+        {
+          "text": "Overview",
+          "path": "Getting-Started-React.md"
+        },
+        {
+          "text": "Solution Structure",
+          "path": "Solution-Structure-React.md"
+        },
+        {
+          "text": "ASP.NET Boilerplate",
+          "path": "https://aspnetboilerplate.com/Pages/Documents"
+        },
+        {
+          "text": "Metronic Theme",
+          "path": "https://keenthemes.com/metronic/"
+        }
+      ]
+    },
+    {
+      "text": "Development Tutorial",
+      "items": [
+        {
+          "text": "Introduction",
+          "path": "Developing-Step-By-Step-React-Introduction.md"
+        },
+        {
+          "text": "Creating & Running The Project",
+          "path": "Developing-Step-By-Step-React-Creating-Running-Project.md"
+        },
+        {
+          "text": "Adding a New Menu Item",
+          "path": "Developing-Step-By-Step-React-Adding-New-Menu-Item.md"
+        },
+        {
+          "text": "Creating PhoneBook Component",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-React-Creating-PhoneBook-Component.md"
+            },
+            {
+              "text": "Creating Person Entity",
+              "path": "Developing-Step-By-Step-React-Creating-Person-Entity.md"
+            },
+            {
+              "text": "Database Migrations for Person",
+              "path": "Developing-Step-By-Step-React-Database-Migrations-Person-Entity.md"
+            },
+            {
+              "text": "Creating Person Application Service",
+              "path": "Developing-Step-By-Step-React-Creating-Person-Application-Service.md"
+            },
+            {
+              "text": "Creating Unit Tests for Person Application Service",
+              "path": "Developing-Step-By-Step-React-Creating-Unit-Tests-for-Person-Application-Service.md"
+            },
+            {
+              "text": "Using GetPeople Method From React Component",
+              "path": "Developing-Step-By-Step-React-Using-GetPeople-Method-from-React.md"
+            }
+          ]
+        },
+        {
+          "text": "Creating a New Person",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-React-Creating-New-Person.md"
+            },
+            {
+              "text": "Testing CreatePerson Method",
+              "path": "Developing-Step-By-Step-React-Creating-Testing-Create-Person-Method.md"
+            },
+            {
+              "text": "Creating Modal for New Person",
+              "path": "Developing-Step-By-Step-React-Creating-Testing-Creating-Modal-New-Person.md"
+            }
+          ]
+        },
+        {
+          "text": "Authorization For Phone Book",
+          "path": "Developing-Step-By-Step-React-Authorization-PhoneBook.md"
+        },
+        {
+          "text": "Deleting a Person",
+          "path": "Developing-Step-By-Step-React-Deleting-Person.md"
+        },
+        {
+          "text": "Filtering People",
+          "path": "Developing-Step-By-Step-React-Filtering-People.md"
+        },
+        {
+          "text": "Adding Phone Numbers",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Developing-Step-By-Step-React-Adding-Phone-Numbers.md"
+            },
+            {
+              "text": "Creating Phone Entity",
+              "path": "Developing-Step-By-Step-React-Creating-Phone-Entity.md"
+            },
+            {
+              "text": "Database Migration of Phone Entity",
+              "path": "Developing-Step-By-Step-React-Migrations-Phone-Entity.md"
+            },
+            {
+              "text": "Changing GetPeople Method",
+              "path": "Developing-Step-By-Step-React-Changing-GetPeople-Method.md"
+            },
+            {
+              "text": "Adding AddPhone and DeletePhone Methods",
+              "path": "Developing-Step-By-Step-React-Adding-AddPhone-DeletePhone-Methods.md"
+            },
+            {
+              "text": "Edit Mode For Phone Numbers",
+              "path": "Developing-Step-By-Step-React-Edit-Mode-Phone-Numbers.md"
+            },
+            {
+              "text": "Edit Mode For People",
+              "path": "Developing-Step-By-Step-React-Edit-Mode-People.md"
+            }
+          ]
+        },
+        {
+          "text": "Multi Tenancy",
+          "path": "Developing-Step-By-Step-React-Multi-Tenancy.md"
+        },
+        {
+          "text": "Running the Application",
+          "path": "Developing-Step-By-Step-React-Running-Application.md"
+        },
+        {
+          "text": "Conclusion",
+          "path": "Developing-Step-By-Step-React-Conclusion.md"
+        }
+      ]
+    },
+    {
+      "text": "Web",
+      "items": [
+        {
+          "text": "Features",
+          "items": [
+            {
+              "text": "Login",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-React-Login.md"
+                },
+                {
+                  "text": "Social & External Logins",
+                  "path": "Features-React-Social-Logins.md"
+                },
+                {
+                  "text": "Two Factor Authentication",
+                  "path": "Features-React-Two-Factor-Authentication.md"
+                },
+                {
+                  "text": "Forgot Password",
+                  "path": "Features-React-Forgot-Password.md"
+                },
+                {
+                  "text": "Token Based Authentication",
+                  "path": "Features-React-Token-Based-Authentication.md"
+                },
+                {
+                  "text": "Passwordless Login",
+                  "path": "Features-Passwordless-Login.md"
+                }
+              ]
+            },
+            {
+              "text": "Sign Up",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-React-Sign-Up.md"
+                },
+                {
+                  "text": "Email Activation",
+                  "path": "Features-React-Email-Activation.md"
+                }
+              ]
+            },
+            {
+              "text": "Main Menu and Layout",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-React-Main-Menu-Layout.md"
+                },
+                {
+                  "text": "Quick Navigation",
+                  "path": "Features-Quick-Navigation.md"
+                }
+              ]
+            },
+            {
+              "text": "Host Settings",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-React-Host-Settings.md"
+                },
+                {
+                  "text": "Google Authenticator",
+                  "path": "Google-Authenticator-Usage.md"
+                }
+              ]
+            },
+            {
+              "text": "Tenant Settings",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-React-Tenant-Settings.md"
+                },
+                {
+                  "text": "Active Directory",
+                  "path": "Features-React-Active-Directory.md"
+                }
+              ]
+            },
+            {
+              "text": "Dynamic Property System",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Feature-Dynamic-Entity-Parameters-React.md"
+                },
+                {
+                  "text": "Create Custom Input Types",
+                  "path": "Feature-Dynamic-Entity-Parameters-Custom-Input-Types-React.md"
+                }
+              ]
+            },
+            {
+              "text": "Customizable Dashboard",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-React-Customizable-Dashboard.md"
+                },
+                {
+                  "text": "Developing Customizable Dashboard",
+                  "path": "Developing-React-Customizable-Dashboard.md"
+                }
+              ]
+            },
+            {
+              "text": "Subscription",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-React-Subscription.md"
+                },
+                {
+                  "text": "PayPal Integration",
+                  "path": "Features-React-Subscription-PayPal-Integration.md"
+                },
+                {
+                  "text": "Stripe Integration",
+                  "path": "Features-React-Subscription-Stripe-Integration.md"
+                }
+              ]
+            },
+            {
+              "text": "Tenant Sign Up",
+              "path": "Features-React-Tenant-Sign-Up.md"
+            },
+            {
+              "text": "Edition Management",
+              "path": "Features-React-Edition-Management.md"
+            },
+            {
+              "text": "Tenant Management",
+              "path": "Features-React-Tenant-Management.md"
+            },
+            {
+              "text": "Host Dashboard",
+              "path": "Features-React-Host-Dashboard.md"
+            },
+            {
+              "text": "Organization Units",
+              "path": "Features-React-Organization-Units.md"
+            },
+            {
+              "text": "Role Management",
+              "path": "Features-React-Role-Management.md"
+            },
+            {
+              "text": "User Management",
+              "path": "Features-React-User-Management.md"
+            },
+            {
+              "text": "Language Management",
+              "path": "Features-React-Language-Management.md"
+            },
+            {
+              "text": "Audit Logs",
+              "path": "Features-React-Audit-Logs.md"
+            },
+            {
+              "text": "Entity History",
+              "path": "Features-React-Entity-History.md"
+            },
+            {
+              "text": "Visual Settings",
+              "path": "Features-React-Visual-Settings.md"
+            },
+            {
+              "text": "Maintenance",
+              "path": "Features-React-Maintenance.md"
+            },
+            {
+              "text": "Tenant Dashboard",
+              "path": "Features-React-Tenant-Dashboard.md"
+            },
+            {
+              "text": "Notifications",
+              "path": "Features-React-Notifications.md"
+            },
+            {
+              "text": "Mass Notifications",
+              "path": "Features-Mass-Notifications.md"
+            },
+            {
+              "text": "Chat",
+              "path": "Features-React-Chat.md"
+            },
+            {
+              "text": "User Menu",
+              "path": "Features-React-User-Menu.md"
+            },
+            {
+              "text": "Setup Page",
+              "path": "Features-React-Setup-Page.md"
+            },
+            {
+              "text": "Migrator Console Application",
+              "path": "Migrator-Console-Application.md"
+            },
+            {
+              "text": "Public Website",
+              "path": "Public-Website.md"
+            },
+            {
+              "text": "GraphQL API",
+              "path": "GraphQL.md"
+            },
+            {
+              "text": "Swagger UI",
+              "path": "Features-React-Swagger-UI.md"
+            },
+            {
+              "text": "Health Checks",
+              "path": "HealthChecks.md"
+            },
+            {
+              "text": "Webhooks",
+              "path": "Features-Webhooks.md"
+            },
+            {
+              "text": "User Delegation",
+              "path": "Features-React-User-Delegation.md"
+            },
+            {
+              "text": "Azure Key Vault Configuration",
+              "path": "Features-React-Azure-Key-Vault.md"
+            }
+          ]
+        },
+        {
+          "text": "Deployment",
+          "items": [
+            {
+              "text": "Overview",
+              "path": "Deployment-React.md"
+            },
+            {
+              "text": "Publishing to Azure",
+              "path": "Deployment-React-Publish-Azure.md"
+            },
+            {
+              "text": "Publishing to IIS",
+              "path": "Deployment-React-Publish-IIS.md"
+            },
+            {
+              "text": "Publishing to Docker",
+              "path": "Deployment-React-Docker.md"
+            },
+            {
+              "text": "Publishing React Application to Azure Storage",
+              "path": "Step-by-step-publish-to-azure-React-staticsite.md"
+            },
+            {
+              "text": "Deploying to a Clustered Environment",
+              "path": "Clustered-Environment.md"
+            }
+          ]
+        },
+        {
+          "text": "Customization",
+          "items": [
+            {
+              "text": "Changing Logos",
+              "path": "Customization-React.md"
+            },
+            {
+              "text": "Adding a new Metronic theme",
+              "path": "Adding-New-Metronic-Theme-React.md"
+            },
+            {
+              "text": "Deleting an existing Metronic theme",
+              "path": "Deleting-A-Metronic-Theme-React.md"
+            }
+          ]
+        },
+        {
+          "text": "Extending Existing Entities",
+          "path": "Extending-Existing-Entities-Core-React.md"
+        },
+        {
+          "text": "Development with Docker",
+          "path": "Development-React-Docker.md"
+        }
+      ]
+    },
+    {
+      "text": "Mobile",
+      "items": [
+        {
+          "text": "MAUI Development Guide",
+          "path": "Development-Guide-MAUI.md"
+        },
+        {
+          "text": "Developing Step By Step MAUI",
+          "path": "Developing-Step-By-Step-MAUI.md"
+        }
+      ]
+    },
+    {
+      "text": "Infrastructure & Concepts",
+      "items": [
+        {
+          "text": "NPM Packages",
+          "path": "Infrastructure-React-Npm-Packages.md"
+        },
+        {
+          "text": "React CLI & WebPack",
+          "path": "Infrastructure-React-React-CLI-WebPack.md"
+        },
+        {
+          "text": "NSwag",
+          "path": "Infrastructure-React-NSwag.md"
+        },
+        {
+          "text": "Localization",
+          "path": "Infrastructure-React-Localization.md"
+        },
+        {
+          "text": "Exception Handling",
+          "path": "Infrastructure-React-Exception-Handling.md"
+        },
+        {
+          "text": "Authorization",
+          "path": "Infrastructure-React-Authorization.md"
+        },
+        {
+          "text": "Features",
+          "path": "Infrastructure-React-Features.md"
+        },
+        {
+          "text": "Setting",
+          "path": "Infrastructure-React-Setting.md"
+        },
+        {
+          "text": "SignalR Integration",
+          "path": "Infrastructure-React-SignalR-Integration.md"
+        },
+        {
+          "text": "Background Jobs & HangFire",
+          "path": "Infrastructure-Background-Jobs.md"
+        },
+        {
+          "text": "Used Libraries & Frameworks",
+          "path": "Infrastructure-React-Used-Libraries-Frameworks.md"
+        },
+        {
+          "text": "Penetration/Security Test",
+          "path": "Security-Test-React.md"
+        },
+        {
+          "text": "Dynamic Asset Bundling and Minifying",
+          "path": "Infrastructure-React-Bundling-Minifying-Compiling.md"
+        },
+        {
+          "text": "OpenIddict Integration",
+          "path": "Infrastructure-Core-React-OpenIddict-Integration.md"
+        },
+        {
+          "text": "Identity Server 4 Integration",
+          "path": "Infrastructure-Core-React-Identity-Server4-Integration.md"
+        },
+        {
+          "text": "Spinner service",
+          "path": "Infrastructure-React-Spinner.md"
+        },
+        {
+          "text": "Tenancy Resolvers",
+          "path": "Infrastructure-React-Tenancy-Resolvers.md"
+        },
+        {
+          "text": "UI Testing",
+          "path": "Playwright-UI-Testing-React.md"
+        },
+        {
+          "text": "Common Payment System",
+          "path": "Features-React-Common-Payment-System.md"
+        }
+      ]
+    },
+    {
+      "text": "Power Tools",
+      "items": [
+        {
+          "text": "Overview",
+          "path": "Power-Tools-Overview.md"
+        },
+        {
+          "text": "Getting Started",
+          "path": "Power-Tools-Getting-Started.md"
+        },
+        {
+          "text": "How it Works",
+          "path": "Power-Tools-How-It-Works.md"
+        },
+        {
+          "text": "Development Guide",
+          "items": [
+            {
+              "text": "Using Visual Studio Extension",
+              "path": "Power-Tools-Using-Visual-Studio-Extension.md"
+            },
+            {
+              "text": "Load Entity From Database",
+              "path": "Power-Tools-Load-Entity-From-Database.md"
+            },
+            {
+              "text": "Creating Entity JSON File Manually",
+              "path": "Power-Tools-Creating-Entity-Json-File-Manually.md"
+            },
+            {
+              "text": "Master Detail Tables",
+              "path": "Power-Tools-Master-Detail-Tables.md"
+            },
+            {
+              "text": "How to Create & Edit Power Tools Templates",
+              "path": "How-To-Create-Edit-Power-Tools-Templates.md"
+            },
+            {
+              "text": "Understanding Power Tools Templates",
+              "path": "Power-Tools-Understanding-Power-Tools-Templates.md"
+            },
+            {
+              "text": "Configuration",
+              "path": "Power-Tools-Configuration.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Migration from Boilerplate to ASP.NET Zero",
+      "path": "Migration-from-Boilerplate-to-AspNet-Zero-React.md"
+    },
+    {
+      "text": "Change Logs",
+      "path": "Change-Logs.md"
+    },
+    {
+      "text": "Road Map",
+      "path": "Road-Map.md"
+    },
+    {
+      "text": "Version Upgrade",
+      "path": "Version-Updating.md"
+    }
+  ]
+}
