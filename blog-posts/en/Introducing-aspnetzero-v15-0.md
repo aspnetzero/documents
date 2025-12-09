@@ -17,17 +17,7 @@ Key benefits include:
 
 ## 🚀 Upgraded to ABP 11.0
 
-We have upgraded ASP.NET Zero to run on **ABP 11.0**, bringing you the latest improvements in modularity, configuration, dependency injection, and authorization flows. Mapperly is a free and open source compile time mapper, providing a lightweight and modern alternative.
-
-ABP 11.0 includes the following improvements:
-
-* Updated modular infrastructure
-* Performance improvements across key services
-* More predictable and consistent API behaviors
-* Better multi tenancy and permission handling
-
-This upgrade positions ASP.NET Zero for long-term maintainability and cross version compatibility.
-
+We have upgraded ASP.NET Zero to run on **ABP 11.0**. Since AutoMapper moved to a commercial license model, a new package for Mapperly named `Abp.Mapperly` is added.
 
 ### 🔄 Transition to Mapperly
 
@@ -48,15 +38,7 @@ This change results in a simpler and more efficient mapping structure across the
 
 Starting with **ASP.NET Zero v15.0**, ASP.NET Boilerplate packages are now distributed as **private NuGet packages** instead of open-source package references.
 
-This change provides:
-
-* A more controlled and secure package distribution model
-* Better alignment between ASP.NET Zero and its underlying ABP infrastructure
-* Improved version consistency and dependency management
-
-This update helps ensure long-term maintainability and tighter integration across the framework.
-
-> **Note:** With ABP 11, open source development for ASP.NET Boilerplate packages will no longer continue. However, development will proceed privately, and updates will continue to be delivered through private NuGet packages.
+> **Note:** With ABP 11, open source development for ASP.NET Boilerplate packages will only contain bugfixes and we will not update open-source ABP to .NET 10. We will however continue development privately, and updates will continue to be delivered through private NuGet packages for ASP.NET Zero customers.
 
 
 ## 🔗 Improved Multi Tenancy Support for Account Link Modal
