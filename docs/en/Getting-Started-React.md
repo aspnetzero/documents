@@ -18,8 +18,8 @@ Select **ASP.NET Core & React** as Project Type and fill other required fields. 
 
 ## Pre Requirements
 
-- [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
-- [Node.js 16.x+ with NPM 8.x+](https://nodejs.org/en/download/)
+- [Visual Studio 2022 (v17.10+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
+- [Node.js 18.x+ with NPM 8.x+](https://nodejs.org/en/download/)
 - [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
 
 ## ASP.NET Core Application
