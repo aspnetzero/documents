@@ -4,7 +4,7 @@ Before reading this document, it's suggested to run the application and explore 
 
 ## IDE & Operating System
 
-It's suggested to use an IDE to develop your project. We suggest [Visual Studio 2017+](https://www.visualstudio.com), but you can use Visual Studio Code or any other IDE/Editor you like. You can also use any OS (MacOS/Linux/Windows).
+It's suggested to use an IDE to develop your project. We suggest [Visual Studio 2022+](https://www.visualstudio.com), but you can use Visual Studio Code or any other IDE/Editor you like. You can also use any OS (MacOS/Linux/Windows).
 
 ## Architecture
 
