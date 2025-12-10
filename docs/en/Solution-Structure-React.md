@@ -105,6 +105,7 @@ Entry point is `main.tsx`; it runs `AppPreBootstrap` to handle some operations b
 
 - **public**: This folder contains public assets for the applicaiton like JS, CSS and Images.
 - **src/api**: This folder contains Backend API related classes like service proxies, HTTP Client etc...
+- **src/app**: This folder contains the core application layer, including initialization (bootstrap) logic, global state management (Redux slices), internationalization setup, and the main application store configuration.
 - **src/hooks**: This folder contains common Hooks for the application like Auth, Permissions and Localization.
 - **src/lib**: This folder contains helper classes for the application.
 - **src/pages**: This folder contains pages of the application.
