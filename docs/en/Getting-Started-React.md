@@ -130,4 +130,4 @@ Finally you will have a CRUD page with insert, update, delete, list and excel ex
 
 ## Next
 
-* [Solution Overview](Overview-React.md)
+* [Solution Structure](Solution-Structure-React.md)
