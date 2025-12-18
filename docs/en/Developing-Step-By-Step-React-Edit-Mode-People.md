@@ -120,8 +120,6 @@ const EditPersonModal: React.FC<EditPersonModalProps> = ({
       setValue("surname", result.surname || "");
       setValue("emailAddress", result.emailAddress || "");
       setTimeout(() => setFocus("name"), 100);
-    } catch (error) {
-      console.error("Error loading person:", error);
     } finally {
       setLoading(false);
     }
@@ -143,8 +141,6 @@ const EditPersonModal: React.FC<EditPersonModalProps> = ({
       abp.notify.success(L("SavedSuccessfully"));
       handleClose();
       onSave();
-    } catch (error) {
-      console.error("Error editing person:", error);
     } finally {
       setSaving(false);
     }

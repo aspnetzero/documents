@@ -182,13 +182,9 @@ const deletePerson = (person: PersonListDto) => {
     okText: L("Yes"),
     cancelText: L("Cancel"),
     onOk: async () => {
-      try {
         await personService.deletePerson(person.id);
         abp.notify.success(L("SuccessfullyDeleted"));
         setPeople((prevPeople) => prevPeople.filter((p) => p.id !== person.id));
-      } catch (error) {
-        console.error("Error deleting person:", error);
-      }
     },
   });
 };
