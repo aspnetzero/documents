@@ -150,8 +150,6 @@ We successfully retrieved list of people from database to the page.
 
 We normally use a javascript based rich table/grid library to show tabular data, instead of manually rendering data like that. For example, we used [Ant Design Table library](https://ant.design/components/table/) to show users on the Users page of ASP.NET Zero. Always use such components since they make things much easier and provide a much better user experience.
 
-We did not use a table component here, because we want to show basics of React instead of going into details of a 3rd party library.
-
 ## Next
 
 - [Creating a New Person](Developing-Step-By-Step-React-Creating-New-Person)
