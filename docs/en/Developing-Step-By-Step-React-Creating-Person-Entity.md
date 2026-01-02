@@ -34,17 +34,10 @@ public class Person : FullAuditedEntity
 
 Person's **primary key** type is **int** (as default). It inherits
 **FullAuditedEntity** that contains **creation**, **modification** and
-**deletion** audit properties. It's also **soft-delete**. When we delete
-a person, it's not deleted by database but marked as deleted (see
-[entity](https://aspnetboilerplate.com/Pages/Documents/Entities) and
-[data
-filters](https://aspnetboilerplate.com/Pages/Documents/Data-Filters)
-documentations for more information). We created consts for
-**MaxLength** properties. This is a good practice since we will use same
-values later.
+**deletion** audit properties. It's also a **soft-delete** entity. When we delete a person, it's not deleted from database but marked as deleted (see [entity](https://aspnetboilerplate.com/Pages/Documents/Entities) and [data filters](https://aspnetboilerplate.com/Pages/Documents/Data-Filters)
+documentations for more information). We created consts for **MaxLength** properties. This is a good practice since we will use same values later.
 
-We add a DbSet property for Person entity to **PhoneBookDemoDbContext**
-class defined in **.EntityFrameworkCore** project.
+We add a DbSet property for Person entity to **PhoneBookDemoDbContext** class defined in **.EntityFrameworkCore** project.
 
 ```csharp
 public class PhoneBookDemoDbContext : AbpZeroDbContext<Tenant, Role, User, PhoneBookDemoDbContext>

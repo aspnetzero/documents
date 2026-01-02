@@ -20,7 +20,7 @@ public class PhoneBookDemoConsts
 }
 ```
 
-**Note:** If you log in before changing **MultiTenancyEnabled** to false, you might be get login error. To overcome this, you should remove cookies.
+**Note:** If you log in before changing **MultiTenancyEnabled** to false, you might get a login error. If you face this problem, you need to remove cookies.
 
 ## Next
 

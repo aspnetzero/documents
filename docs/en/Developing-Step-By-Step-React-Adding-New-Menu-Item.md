@@ -17,9 +17,9 @@ export const buildRawMenu = (): AppMenuItem[] => [
 ];
 ```
 
-**PhoneBook** is the menu name , permisson(will set it later), **book** is just an arbitrary icon class (from [this set](http://keenthemes.com/metronic/preview/?page=components/icons/flaticon&demo=default)) and **/phonebook** is the React route.
+**PhoneBook** is the menu name, **book** is just an arbitrary icon class (from [this set](http://keenthemes.com/metronic/preview/?page=components/icons/flaticon&demo=default)) and **/phonebook** is the React route.
 
-If you run the application, you can see a new menu item on the left menu, but it won't work (it redirects to default route) if you click to the menu item, since we haven't defined the React route yet.
+If you run the application, you will see a new menu item on the left menu, but it won't work (it redirects to default route) If you click to the menu item, since we haven't defined the React route yet.
 
 ## Localize Menu Item Display Name
 
@@ -41,8 +41,7 @@ If we don't define "PhoneBook"s value for other localization dictionaries, defau
 <text name="PhoneBooksHeaderInfo">Telefon Rehberi Detayları</text>
 ```
 
-Note: Any change in server side (including change localization texts) requires recycle of the server application. We suggest to use Ctrl+F5 if you don't need to debugging for a faster startup. In that case, it's
-enough to make a re-build to recycle the application.
+Note: Any change in server side (including change localization texts) requires recycle of the server application. We suggest to use Ctrl+F5 if you don't need to debugging for a faster startup. In that case, it's enough to make a re-build to recycle the application.
 
 ## React Route
 

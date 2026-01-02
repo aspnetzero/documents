@@ -1,17 +1,12 @@
 # Database Migrations for Person
 
-We use **EntityFramework Code-First migrations** to migrate database
-schema. Since we added **Person entity**, our DbContext model is
-changed. So, we should create a **new migration** to create the new
-table in the database.
+We use **EntityFramework Code-First migrations** to migrate database schema. Since we added **Person entity**, our DbContext model is changed. So, we should create a **new migration** to create the new table in the database.
 
-Open **Package Manager Console**, run the **Add-Migration
-"Added\_Persons\_Table"** command as shown below:
+Open **Package Manager Console**, run the **Add-Migration "Added\_Persons\_Table"** command as shown below:
 
 <img src="images/phonebook-migrations-core-3.png" alt="Entity Framework Code First Migration" class="img-thumbnail" />
 
-This command will add a **migration class** named
-"**Added\_Persons\_Table**" as shown below:
+This command will add a **migration class** named "**Added\_Persons\_Table**" as shown below:
 
 ```csharp
 public partial class Added_Persons_Table : Migration
@@ -49,11 +44,7 @@ public partial class Added_Persons_Table : Migration
 }
 ```
 
-We don't have to know so much about format and rules of this file. But,
-it's suggested to have a basic understanding of migrations. In the same
-Package Manager Console, we write **Update-Database** command in order
-to apply the new migration to database. After updating, we can see that
-**PbPersons table** is added to database.
+We don't have to know so much about format and rules of this file. But, it's suggested to have a basic understanding of migrations. In the same Package Manager Console, we write **Update-Database** command in order to apply the new migration to database. After updating, we can see that **PbPersons table** is added to database.
 
 <img src="images/phonebook-tables-spa.png" alt="Phonebook tables" class="img-thumbnail" />
 
