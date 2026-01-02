@@ -136,10 +136,7 @@ const PhoneBookPage: React.FC = () => {
 export default PhoneBookPage;
 ```
 
-We inject **PersonServiceProxy**, call its **getPeople** method and
-**subscribe** to get the result. We do this in **ngOnInit** function
-(defined in React's **OnInit** interface). Assigned returned items to
-the **people** class member.
+We use **useServiceProxy** hook to get an instance of **PersonServiceProxy**, then call its **getPeople** method using async/await. We do this inside the **useEffect** hook which runs when the component mounts. The returned items are stored in the **people** state variable using the **setPeople** function.
 
 
 <img src="images/phonebook-people-view-react.png" alt="Phonebook peoples" class="img-thumbnail" />
