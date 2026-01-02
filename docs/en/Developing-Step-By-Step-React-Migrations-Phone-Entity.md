@@ -109,4 +109,4 @@ You can check database to see **PbPhones** table and rows.
 
 ## Next
 
-- [Changing GetPeople Method](Developing-Step-By-Step-Angular-Changing-GetPeople-Method)
+- [Changing GetPeople Method](Developing-Step-By-Step-React-Changing-GetPeople-Method)

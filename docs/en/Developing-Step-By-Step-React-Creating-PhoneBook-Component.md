@@ -15,7 +15,7 @@ const PhoneBookPage: React.FC = () => {
     <>
       <PageHeader
         title={L("PhoneBook")}
-        description={L("PhoneBookHeaderInfo")}
+        description={L("PhoneBooksHeaderInfo")}
       />
       <div className={containerClass}>
         <div className="card card-custom">
