@@ -12,7 +12,7 @@ Publishing ASP.NET Zero Host project is no different to any other ASP.NET Core A
 <img src="images/iis-core-publish-select-folder-and-publish.png">
 
 - Create a folder on the server where **IIS** is located. (for example: `C:\inetpub\wwwroot\mywebsite`).
-- Copy extracted files to server. (from `*.Web.Host/bin/Release/netcoreapp2.1/publish/` to `C:\inetpub\wwwroot\mywebsite`).
+- Copy published files to server. (from `*.Web.Host/bin/Release/net8.0/publish/` to `C:\inetpub\wwwroot\mywebsite`).
 - Change `appsettings.production.json` configurations with your own settings.
 
 ### Create IIS Web Site
@@ -31,13 +31,56 @@ Check [Host ASP.NET Core on Windows with IIS](https://docs.microsoft.com/en-us/a
 
 ## React Application Publishing
 
-We are using React-cli for development & deployment. React toolchain has it's own build command that can be used to build your application:
+The React application is built using Vite and can be deployed as static files to IIS:
 
-- Run `npm run publish`. This command uses dist folder as output. 
-- Change `assets/appconfig.production.json` file with your own configuration.
-- After ng build command, dist folder contains all necessary files to create a web site under IIS. (For example: copy files from `\*.dist` to `C:\inetpub\wwwroot\angularwebsite`).
+### Build the Application
 
-**Note:** One important thing is that; React uses client side routing. If you refresh a page (F5) then IIS will handle the request and will not find the requested path and returns a HTTP 404 error. We should configure IIS to redirect all requests to the index.html page (or, to the root path). At the same time, IIS needs to install the URL Rewrite module, please refer to https://www.iis.net/downloads/microsoft/url-rewrite
+1. Configure production settings by creating or updating `.env.production` in the project root:
 
-ASP.NET Zero React UI contains a web.config file. You can copy it to the web site's root folder to overcome the problem described above.
+```env
+VITE_API_URL=https://your-host-api-url
+```
+
+2. Run `npm run build`. This command outputs the production build to the `dist` folder.
+
+3. Copy all files from the `dist` folder to your IIS website directory (for example: `C:\inetpub\wwwroot\reactwebsite`).
+
+### Configure IIS for SPA Routing
+
+**Important:** React uses client-side routing. If you refresh a page (F5), IIS will handle the request and will not find the requested path, returning an HTTP 404 error. You must configure IIS to redirect all requests to the `index.html` page.
+
+**Prerequisites:** Install the [URL Rewrite module](https://www.iis.net/downloads/microsoft/url-rewrite) for IIS.
+
+Create a `web.config` file in the website's root folder with the following content:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <rule name="React Routes" stopProcessing="true">
+          <match url=".*" />
+          <conditions logicalGrouping="MatchAll">
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="/index.html" />
+        </rule>
+      </rules>
+    </rewrite>
+    <staticContent>
+      <remove fileExtension=".json" />
+      <mimeMap fileExtension=".json" mimeType="application/json" />
+    </staticContent>
+  </system.webServer>
+</configuration>
+```
+
+### Create IIS Web Site for React
+
+1. Right click **Sites** and click **Add Website**
+2. Set the physical path to your React build folder (e.g., `C:\inetpub\wwwroot\reactwebsite`)
+3. Configure the site name and port
+4. Ensure the application pool is set to **No Managed Code** since React is a static site
 

@@ -1,25 +1,106 @@
 # Publishing to Docker Containers
 
-ASP.NET Zero solution has a **build folder** which contains a PowerShell script to **build & publish** your solution to the **output** folder. 
+ASP.NET Zero solution has a **build folder** which contains scripts to **build & publish** your solution to the **output** folder.
 
 ## Prerequisites
 
-* You need to install React/cli globally. In order to install it, run `npm install -g @React/cli`
+* Node.js (LTS version recommended)
+* Docker Desktop installed and running
+* npm packages installed (`npm install`)
 
-In order to build Docker images for your project, run ```build-with-ng.ps1```. This script will generate 3 images, one is for the **Mvc** web project, one is for the **Public** web project and the other one is for **React** project. After creating the images , you can go to ```build/outputs/Host``` or ```build/outputs/Public```  folders and run related images by running the command below;
+## Building the React Application
 
-```
-docker compose -f docker-compose.yml -f docker-compose.override.yml up
-```
+Before creating a Docker image, build the React application:
 
-In order to run React image, go to ```build/outputs/ng``` folder and run command below;
-
-```
-docker compose -f docker-compose.yml up
+```bash
+npm run build
 ```
 
-By default, **Mvc** and **Public**  images will try to connect to a database on server 192.168.1.37,1433. Change this IP address to IP address of the database you want to connect before building images. 
+This will create a production build in the `dist/` folder using Vite.
 
-All of these images will use the same ports when you run your apps in Visual Studio, so you can also change those ports for production. 
+## Creating a Docker Image
+
+### Sample Dockerfile
+
+Create a `Dockerfile` in the project root:
+
+```dockerfile
+# Build stage
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+### Sample nginx.conf
+
+Create an `nginx.conf` file for SPA routing:
+
+```nginx
+server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+
+### Building and Running
+
+Build the Docker image:
+
+```bash
+docker build -t aspnetzero-react .
+```
+
+Run the container:
+
+```bash
+docker run -d -p 4200:80 aspnetzero-react
+```
+
+## Docker Compose
+
+For running with Docker Compose, create a `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+services:
+  react-app:
+    build: .
+    ports:
+      - "4200:80"
+    environment:
+      - NODE_ENV=production
+```
+
+Run with:
+
+```bash
+docker compose up -d
+```
+
+## Configuration
+
+Before building the Docker image, ensure your API endpoint is correctly configured. Update the remote service URL in your environment configuration to point to your production API server.
+
+## Notes
+
+* The React UI is a static SPA that connects to the ASP.NET Core backend API
+* Ensure CORS is properly configured on your backend to allow requests from the React container
+* For production deployments, consider using HTTPS with proper SSL certificates 
 
 

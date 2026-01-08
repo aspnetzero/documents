@@ -6,14 +6,13 @@ ASP.NET Zero provides an infrastructure for UI tests using [Playwright](https://
 
 You should have the following installed in your system:
 
-- [Node.js](https://nodejs.org/en/) is the runtime. Please make sure you have v12+ (LTS recommended) in your system before you start.
-- [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
+- [Node.js](https://nodejs.org/en/) - Please make sure you have v18+ (LTS recommended) in your system before you start.
 
-After making sure these exist in your system, follow the steps below:
+After making sure Node.js is installed, follow the steps below:
 
 1. Open your terminal.
 2. Navigate to the `ui-tests-playwright` folder of this project.
-3. Run `yarn`.
+3. Run `npm install`.
 
 There are two parts of the project that requires your close attention.
 

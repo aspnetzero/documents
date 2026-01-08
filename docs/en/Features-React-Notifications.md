@@ -34,7 +34,7 @@ See [notification definitions](https://aspnetboilerplate.com/Pages/Documents/Not
 
 **AppNotifier** class is used to publish notifications. **NotificationAppService** class is used to manage application logic for notifications. 
 
-When a notification is sent, React app receives it via SignalR and **UserNotificationHelper.ts** (under `app\shared\layout\notifications\` folder) is used to format this notification information before showing it to user. If you want to redirect user to a new page or to an external website, you can modify **getUrl** method. 
+When a notification is sent, the React app receives it via SignalR. Notification formatting is handled in [utils.ts](../src/pages/admin/notifications/utils.ts) which contains the `formatAbpUserNotification` function. If you want to customize how notification URLs are generated, you can modify the URL building logic in this file. 
 
 See [notifications documentation](https://aspnetboilerplate.com/Pages/Documents/Notification-System) for detailed information.
 

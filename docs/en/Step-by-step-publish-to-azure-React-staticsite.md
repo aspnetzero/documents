@@ -1,12 +1,11 @@
 # Introduction
 
-In this article we will use [Azure Storage Static site](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website) feature to deploy the **AngularUI** site.
+In this article we will use [Azure Storage Static site](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website) feature to deploy the **React UI** site.
 
 ## Why use Azure Storage
 
-**AngularUI** is a static website, therefore it can be deployed in Azure storage which provides features specifically designed for static websites.
-such as Custom Domains, and SSL.
-Also; using Azure Storage is much [cheaper](https://azure.microsoft.com/en-us/pricing/details/storage/) than deploying an app Service on Azure.
+**React UI** is a static website, therefore it can be deployed in Azure storage which provides features specifically designed for static websites, such as Custom Domains and SSL.
+Also, using Azure Storage is much [cheaper](https://azure.microsoft.com/en-us/pricing/details/storage/) than deploying an App Service on Azure.
 
 ## Steps
 
@@ -38,20 +37,22 @@ For that to work, you must serve the contents of the static website from Azure C
 
 Follow [this article](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-https-custom-domain-cdn) to create Azure CDN end point that will serve the contents over HTTPS on a custom domain.
 
-Remember to update the settings in ````appsettings.json```` files below to reflect the new URL for your static site, as now they will be served from the CDN over a custom domain.
+Remember to update the settings in `.env.production` file below to reflect the new URL for your static site, as now they will be served from the CDN over a custom domain.
 
 Then add the task as described in the RELEASE pipeline below, to purge the cache on every release.
 
-#### Update appsettings.json
+#### Update Configuration
 
 Update the **HOST** appsettings.json with the following:
 
 - ClientRootAddress: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
 - CorsOrigins: add the static website primary end point
 
-Update the **AngularUI** appsettings.json with the following:
+Update the **React UI** `.env.production` with the following:
 
-- appBaseUrl: replaced with the static website primary end point ex: https://xxxxxx.z33.web.core.windows.net
+```env
+VITE_API_URL=https://your-api-host.azurewebsites.net
+```
 
 ### Publish files to Azure Storage
 
@@ -81,7 +82,7 @@ We will create a **RELEASE** pipeline here to do the following:
 - Click ````Releases````
 - Click ````New```` > ````New release pipeline````
 - Click ````Empty job````
-- Click ````Add an artifact```` and select the source of the **AngularUI** dist folder
+- Click ````Add an artifact```` and select the source of the **React UI** dist folder
 - Click on ````Stage 1```` jobs link
 - Click ````+```` to add a new Task to the Agent job
 - Add the following tasks *(in this order)*

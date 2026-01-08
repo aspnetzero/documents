@@ -1,75 +1,89 @@
-# Spinner
+# Spinner / Loading States
 
-AspNet Zero uses [ngx-spinner](https://github.com/Napster2210/ngx-spinner) for blocking the UI elements and showing loading effect.
+ASP.NET Zero React UI uses [Ant Design's Spin component](https://ant.design/components/spin) for showing loading states.
 
-#### Enable/Disable Full Screen Spinner
+## Route Loading Spinner
 
-To block entire screen, you can use spinner service.
+When lazy-loaded routes are being loaded, a centered spinner is shown. This is implemented in [AppRouter.tsx](../src/routes/AppRouter.tsx):
 
-```typescript
-export class DemoUiComponentsComponent extends AppComponentBase implements OnInit {
-    constructor(
-        injector: Injector
-    ) {
-        super(injector);
-    }
-    ngOnInit(): void {
-        //show default spinner which cover all page
-        this.spinnerService.show();
+```tsx
+import { Spin } from "antd";
 
-        setTimeout(() => {
-            this.spinnerService.hide();
-        }, 1000);
-    }
-}
+const LoadingSpinner = () => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+    }}
+  >
+    <Spin size="large" />
+  </div>
+);
+
+// Used with React.Suspense
+<Suspense fallback={<LoadingSpinner />}>
+  <Routes>
+    {/* ... */}
+  </Routes>
+</Suspense>
 ```
 
-![infrastructure-React-spinner-fullscreen](images/infrastructure-React-spinner-fullscreen.png)
+## Table Loading States
 
+Ant Design's Table component has a built-in `loading` prop:
 
+```tsx
+import { Table } from "antd";
 
-#### Enable/Disable Spinner on Html Elements
+const MyTable: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
 
-To use spinner on specific html elements you can use `busyIf` directive.  
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const result = await service.getData();
+      setData(result);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-The element which has `busyIf` directive will be blocked until input is false.
-
-```html
- <div class="kt-portlet kt-portlet--height-fluid">   
-     ...
-     <div class="kt-portlet__body">
-		<div [busyIf]="loading">
-            
-         </div>
-     </div>
-     ...
-</div>
+  return <Table dataSource={data} loading={loading} columns={columns} />;
+};
 ```
 
-```typescript
-export class MyComponent extends AppComponentBase implements OnInit {
-    constructor(
-        injector: Injector
-    ) {
-        super(injector);
-    }
-    loading = true;
-    ngOnInit(): void {
-        setTimeout(() => {
-            loading = false;
-        }, 3000);
-    }
-}
+## Element-Level Spinners
+
+For wrapping specific elements with a loading overlay:
+
+```tsx
+import { Spin } from "antd";
+
+const MyComponent: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <Spin spinning={loading}>
+      <div className="card">
+        {/* Content that will be covered by spinner */}
+      </div>
+    </Spin>
+  );
+};
 ```
 
-![infrastructure-React-spinner-on-html](images/infrastructure-React-spinner-on-html.png)
+## Customizing Spinners
 
+You can customize the Spin component appearance using Ant Design's props:
 
+```tsx
+<Spin 
+  size="large"  // "small" | "default" | "large"
+  tip="Loading..." // Optional loading text
+/>
+```
 
-#### Customize Spinner
-
-Since AspNet Zero uses [ngx-spinner](https://github.com/Napster2210/ngx-spinner), you can customize your spinner.
-
-Implementations are located in `busy-if.directive.ts` and `root.tsx`.
-
-Check  [ngx-spinner](https://github.com/Napster2210/ngx-spinner) documentation for more details.
+Check [Ant Design Spin documentation](https://ant.design/components/spin) for more customization options.

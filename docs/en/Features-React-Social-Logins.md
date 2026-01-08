@@ -96,7 +96,7 @@ In some cases, OpenId Connect provider doesn't return claims we want to use. For
 ]
 ````
 
-If you are using Azure AD for OpenID Connect and your app is multi-tenant on Azure side, then you need to disable issuer validation, so all Azure AD users can use your app. Note that, multi-tenant app here is the one you have created oSocial logins can be enabled and configured from [server-side](Features-Mvc-Core-Social-Logins). Once they are properly configured, they are  automatically shown in the user interface. 
+If you are using Azure AD for OpenID Connect and your app is multi-tenant on Azure side, then you need to disable issuer validation, so all Azure AD users can use your app. Note that, multi-tenant app here is the one you have created on Azure, not the multi-tenancy concept of ASP.NET Zero. Once social logins are properly configured in the backend appsettings.json, they are automatically shown in the login page UI. 
 
 Note that currently "ValidateIssuer" setting is not affective because the used client side library doesn't support disabling issuer validation.
 
@@ -126,11 +126,11 @@ You can implement this class for any external login manager you want and return 
 
 ## React part
 
-All the above sections are related to server side part of ASP.NET Zero. On React side social and external logins are handled in login/**login.service.ts**. Note that currently only **Facebook**, **Google**, **OpenID Connect** and **ADFS** authentications are implemented for React application. Microsoft and Twitter logins are on the road map.
+All the above sections are related to the server side part of ASP.NET Zero. On the React side, social and external logins are handled in the account pages under `src/pages/account/`. Note that currently **Facebook**, **Google**, **OpenID Connect** and **ADFS** authentications are implemented for the React application.
 
 When you click a social login or external login icon on the login page, there are two main flows. Facebook, Google and ADFS options opens a popup window and ask user to login. In that case, callback function for the selected provider will be called right away. 
 
-However, for OpenID Connect, clicking the icon will redirect you to external website and you will login on the external website. After that, you will be redirected back to ASP.NET Zero website (to **login.tsx**). Then, the callback function for OpenID Connect will be called.
+However, for OpenID Connect, clicking the icon will redirect you to the external website and you will login on the external website. After that, you will be redirected back to ASP.NET Zero website (to the login page). Then, the callback function for OpenID Connect will be called.
 
 All callback functions makes a request to server-side app to validate the information gathered from external or social login provider. If the information is validated, a local user record will be created (only for the first time) and user will be logged in to ASP.NET Zero website.
 

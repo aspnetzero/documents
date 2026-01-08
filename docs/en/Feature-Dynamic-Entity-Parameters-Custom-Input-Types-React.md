@@ -1,18 +1,27 @@
 # Create Custom Input Types
 
-In this document we will create a custom input type step by step. Our input type is multi-select combobox input type.
+Dynamic property system comes with 4 built-in input types to meet most needs:
+
+- **SINGLE_LINE_STRING** - Simple text input
+- **CHECKBOX** - Boolean checkbox
+- **COMBOBOX** - Single-select dropdown
+- **MULTISELECTCOMBOBOX** - Multi-select dropdown
+
+But you can also create your own input types as shown below.
+
+## Backend: Register the Input Type in Core
 
 1. Go to `*.Core` and create a folder named `CustomInputTypes`.
 
-2. Create a class named `MultiSelectComboboxInputType` in that folder.
+2. Create a class named `UserSelectInputType` in that folder.
 
    ```csharp
    /// <summary>
-   /// Multi Select Combobox value UI type.
+   /// User Select value UI type.
    /// </summary>
    [Serializable]
-   [InputType("MULTISELECTCOMBOBOX")]
-   public class MultiSelectComboboxInputType : InputTypeBase
+   [InputType("USERSELECT")]
+   public class UserSelectInputType : InputTypeBase
    { 
    }
    ```
@@ -20,115 +29,227 @@ In this document we will create a custom input type step by step. Our input type
 3. Go to `AppDynamicEntityParameterDefinitionProvider` and add new input type.
 
    ```csharp
-    public class AppDynamicEntityParameterDefinitionProvider : DynamicEntityParameterDefinitionProvider
+   public class AppDynamicEntityParameterDefinitionProvider : DynamicEntityParameterDefinitionProvider
    {
        public override void SetDynamicEntityParameters(IDynamicEntityParameterDefinitionContext context)
        {
-          	...
-           context.Manager.AddAllowedInputType<MultiSelectComboboxInputType>();
-   		...
+           // ... existing code
+           context.Manager.AddAllowedInputType<UserSelectInputType>();
        }
    }
    ```
 
-4. Go to `React\src\app\shared\common\input-types` folder
+## Frontend: Understanding the Input Type System
 
-5. Create new component  named `MultiSelectComboboxInputTypeComponent` as seen below.
+Custom input types in React are implemented as functional components that implement the `InputTypeComponentProps` interface. All input type components are located in:
 
-   ```bash
-   ng g component multi-select-combobox-input-type
-   ```
+```
+src/pages/admin/components/common/input-types/
+├── input-components/          # Input component implementations
+│   ├── SingleLineStringInput.tsx
+│   ├── CheckboxInput.tsx
+│   ├── ComboboxInput.tsx
+│   └── MultiSelectComboboxInput.tsx
+├── input-types.constants.ts   # Input type registry
+└── types.ts                   # TypeScript interfaces
+```
 
-   *multi-select-combobox-input-type.tsx*
+## Frontend: Creating a Custom Input Component
 
-   ```typescript
-   import { Component, OnInit, Injector } from '@React/core';
-   import { InputTypeComponentBase } from '../input-type-component-base';
-   
-   @Component({
-     templateUrl: './multi-select-combobox-input-type.tsx'
-   })
-   export class MultiSelectComboboxInputTypeComponent extends InputTypeComponentBase implements OnInit {
-     filteredValues: string[];
-   
-     constructor(
-       injector: Injector,
-     ) {
-       super(injector);
-     }
-   
-     ngOnInit() {
-       this.filteredValues = this.allValues;
-     }
-   
-     getSelectedValues(): string[] {
-       debugger;
-       if (!this.selectedValues) {
-         return [];
-       }
-       return this.selectedValues;
-     }
-   
-     filter(event) {
-       this.filteredValues = this.allValues
-         .filter(item =>
-           item.toLowerCase().includes(event.query.toLowerCase())
-         );
-     }
-   }
-   ```
+First, understand the interface your component must implement. The `InputTypeComponentProps` interface is defined in [types.ts](../src/pages/admin/components/common/input-types/types.ts):
 
-   *multi-select-combobox-input-type.tsx*
+```typescript
+export interface InputTypeComponentProps {
+  selectedValues: string[];
+  allValues: string[];
+  onChange: (values: string[]) => void;
+  onInstance?: (instance: unknown) => void;
+}
+```
 
-   ```html
-   <p-autoComplete [(ngModel)]="selectedValues" [suggestions]="filteredValues" (completeMethod)="filter($event)" [minLength]="1" [multiple]="true" inputStyleClass="form-control" styleClass="w-100">
-   </p-autoComplete>
-   ```
+- **selectedValues**: The currently selected value(s) as a string array
+- **allValues**: Available options (for dropdown-type inputs)
+- **onChange**: Callback to notify parent of value changes
+- **onInstance**: Optional callback to expose component methods to parent
 
-   You must extend  `InputTypeComponentBase`. Since you extend `InputTypeComponentBase` your component will have **selectedValues**(initial stored selected values), **allValues**(all values that your component can have, if your component needs initial values.)
+### Sample Component: User Autocomplete Input
 
-   
+Create a new file at `src/pages/admin/components/common/input-types/input-components/UserAutocompleteInput.tsx`:
 
-6. Then go to `React\src\app\shared\common\input-types\input-type-configuration.service.ts` and add your input type.
+```tsx
+import React, { useEffect, useRef, useState } from "react";
+import { AutoComplete } from "antd";
+import { NameValueDto } from "@/api/generated/api";
+import { useServiceProxy } from "@/hooks/useServiceProxy";
+import type { InputTypeComponentProps } from "../types";
 
-   ```typescript
-   export class InputTypeConfigurationService {
-     ...
-     private initialize(): void {  
-     ...
-   
-       let multiselectComboBoxInputType = new InputTypeConfigurationDefinition(
-         'MULTISELECTCOMBOBOX',
-         MultiSelectComboboxInputTypeComponent,
-         true//is that input type need values to work. For example dropdown need initial values to select.
-       );
-   
-       this.InputTypeConfigurationDefinitions.push(multiselectComboBoxInputType);
-     }
-     ...
-   }
-   
-   
-   ```
+const UserAutocompleteInput: React.FC<InputTypeComponentProps> = ({
+  selectedValues,
+  onChange,
+  onInstance,
+}) => {
+  const [value, setValue] = useState<string>(selectedValues?.[0] ?? "");
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
+  const [selectedUser, setSelectedUser] = useState<NameValueDto | null>(null);
+  const ref = useRef<{ getSelectedValues: () => string[] } | null>(null);
+  
+  const { commonLookupService } = useServiceProxy();
 
-7. Go to `React\src\app\shared\common\app-common module.ts` and add your component to entryComponents:
+  // Sync with external selectedValues
+  useEffect(() => {
+    setValue(selectedValues?.[0] ?? "");
+  }, [selectedValues]);
 
-   ```typescript
-   @NgModule({
-     	...
-       declarations: [
-         	...
-           MultipleSelectComboboxInputTypeComponent
-       ],
-       ...,    
-       entryComponents: [
-           ...
-           MultipleSelectComboboxInputTypeComponent
-       ]
-   })
-   ```
+  // Expose getSelectedValues method to parent
+  useEffect(() => {
+    ref.current = {
+      getSelectedValues: () => (selectedUser?.value ? [selectedUser.value] : []),
+    };
+    if (onInstance) onInstance(ref.current);
+  }, [selectedUser, onInstance]);
 
-All done. Your custom input type is ready to use in dynamic parameter. Create new dynamic parameter which uses that input type, add it to an entity. Then you can go to manage page and use it. 
+  // Load initial user if selectedValue is provided
+  useEffect(() => {
+    if (selectedValues?.[0] && !selectedUser) {
+      commonLookupService
+        .findUsers({
+          filterText: "",
+          maxResultCount: 1,
+          excludeCurrentUser: false,
+        })
+        .then((result) => {
+          if (result.items && result.items.length === 1) {
+            setSelectedUser(result.items[0]);
+            setValue(result.items[0].name ?? "");
+          }
+        });
+    }
+  }, [selectedValues, selectedUser, commonLookupService]);
 
-![custom-input-type-multi-select-combobox-mvc](images/custom-input-type-multi-select-combobox-React.png)
+  const handleSearch = async (searchText: string) => {
+    if (!searchText) {
+      setOptions([]);
+      return;
+    }
+
+    const result = await commonLookupService.findUsers({
+      filterText: searchText,
+      maxResultCount: 50,
+      excludeCurrentUser: false,
+    });
+
+    setOptions(
+      (result.items ?? []).map((user) => ({
+        label: user.name ?? "",
+        value: user.value ?? "",
+      }))
+    );
+  };
+
+  const handleSelect = (selectedValue: string, option: { label: string; value: string }) => {
+    const user: NameValueDto = { name: option.label, value: selectedValue };
+    setSelectedUser(user);
+    setValue(option.label);
+    onChange([selectedValue]);
+  };
+
+  return (
+    <AutoComplete
+      value={value}
+      options={options}
+      onSearch={handleSearch}
+      onSelect={handleSelect}
+      onChange={(text) => setValue(text)}
+      placeholder="Search users..."
+      style={{ width: "100%" }}
+    />
+  );
+};
+
+export default UserAutocompleteInput;
+```
+
+## Frontend: Registering the Custom Input Type
+
+After creating the input component, you need to register it in the input types configuration.
+
+### Step 1: Add the Type Name
+
+Open [types.ts](../src/pages/admin/components/common/input-types/types.ts) and add your new type to the `InputTypeName` union:
+
+```typescript
+export type InputTypeName =
+  | "SINGLE_LINE_STRING"
+  | "CHECKBOX"
+  | "COMBOBOX"
+  | "MULTISELECTCOMBOBOX"
+  | "USERSELECT"; // Add your custom type
+```
+
+### Step 2: Register in Constants
+
+Open [input-types.constants.ts](../src/pages/admin/components/common/input-types/input-types.constants.ts) and add your component:
+
+```typescript
+import type { InputTypeConfigurationDefinition } from "./types";
+import SingleLineStringInput from "./input-components/SingleLineStringInput";
+import CheckboxInput from "./input-components/CheckboxInput";
+import ComboboxInput from "./input-components/ComboboxInput";
+import MultiSelectComboboxInput from "./input-components/MultiSelectComboboxInput";
+import UserAutocompleteInput from "./input-components/UserAutocompleteInput";
+
+export const INPUT_TYPES = {
+  SINGLE_LINE_STRING: "SINGLE_LINE_STRING",
+  CHECKBOX: "CHECKBOX",
+  COMBOBOX: "COMBOBOX",
+  MULTISELECTCOMBOBOX: "MULTISELECTCOMBOBOX",
+  USERSELECT: "USERSELECT", // Add the constant
+} as const;
+
+export const InputTypeConfigurationDefinitions: InputTypeConfigurationDefinition[] = [
+  {
+    name: "SINGLE_LINE_STRING",
+    component: SingleLineStringInput,
+    hasValues: false,
+  },
+  { name: "CHECKBOX", component: CheckboxInput, hasValues: false },
+  { name: "COMBOBOX", component: ComboboxInput, hasValues: true },
+  {
+    name: "MULTISELECTCOMBOBOX",
+    component: MultiSelectComboboxInput,
+    hasValues: true,
+  },
+  {
+    name: "USERSELECT",
+    component: UserAutocompleteInput,
+    hasValues: false, // false because values come from API, not pre-defined
+  },
+];
+```
+
+The `hasValues` property indicates whether the input type requires a pre-defined list of values (like combobox options) or fetches/generates values on its own.
+
+## Using the Custom Input Type
+
+That's all! Your new custom input type is ready to use. Navigate to the Dynamic Entity Properties page and create a new entity property. You will see your `USERSELECT` input type in the dropdown and can use it for any entity.
+
+## Input Type Configuration Summary
+
+| Property | Description |
+|----------|-------------|
+| `name` | Unique identifier for the input type (must match backend `InputType` attribute and `InputTypeName` union) |
+| `component` | React component that implements `InputTypeComponentProps` |
+| `hasValues` | Whether the input requires pre-defined values (shown in admin UI) |
+
+## Best Practices
+
+1. **Always implement `getSelectedValues`** - Expose this method via `onInstance` so the parent can retrieve values programmatically.
+
+2. **Sync with `selectedValues` prop** - Use `useEffect` to update internal state when the prop changes.
+
+3. **Call `onChange` on value changes** - Notify the parent component whenever the selected value changes.
+
+4. **Return values as string array** - All input types must return their values as `string[]`, even for single-value inputs.
+
+5. **Match backend input type name** - The `name` in `InputTypeConfigurationDefinitions` must exactly match the `[InputType("NAME")]` attribute on your backend class.
 

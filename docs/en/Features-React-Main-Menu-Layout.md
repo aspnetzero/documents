@@ -1,36 +1,88 @@
 # Main Menu and Layout
 
-Menu and Layout files are located under the shared folder.
+Menu and Layout files are located under the following folders:
 
-<img src="images/ng2-layout-files-2.png" alt="React layout files" class="img-thumbnail" />
+- Menu definition: [src/lib/navigation/appNavigation.tsx](../src/lib/navigation/appNavigation.tsx)
+- Layout components: [src/pages/admin/components/layout/](../src/pages/admin/components/layout/)
 
-ASP.NET Zero has 12 theme options and some of them are using left menu and some others are using top menu. Because of that, ASP.NET Zero contains two type of menu components, **side-bar-menu component** and **top-bar-menu component**. But, both components are getting the menu definition from **app-navigation.service.ts** class. So, if you need to add new menu items, you can modify this class and add your menu items.
+ASP.NET Zero has 13 theme options and some of them use left menu while others use top menu. Both menu types get the menu definition from the `buildRawMenu` function and `useAppMenu` hook in [appNavigation.tsx](../src/lib/navigation/appNavigation.tsx). If you need to add new menu items, modify this file.
 
-You can add your new menu items here. You generally relate a menu item to an React route. React routes are defined in several modules:
+React routes are defined in:
 
-- app/admin/**admin-routing module** defines routes for admin module.
-- app/main/**main-routing module** defines routes for main module.
-- app/**app-routing module** defines general routes and the default route.
+- [src/routes/AppRouter.tsx](../src/routes/AppRouter.tsx) - defines all application routes
 
-A menu item contains below properties:
+## Menu Item Properties
 
-* **name:** Name of the menu item. This value is used to show menu item on the UI using localization. So, it must be also entered into localization file of your app, otherwise you will see a not-localize value in the UI.
-* **permissionName:** If the menu item requires a permission, you can set it using this property.
-* **icon:** Icon to show on UI for the menu item.
-* **route:** The React route to redirect when clicked to menu item. A sample value is: `/app/admin/tenants`.
-* **items:** Children items of the menu item.
-* **external:** Shows if the menu item opens an external url or not. If you set this property to true, you can use external urls for **route** parameter.
-* **parameters:** Parameters to send when opening a new route. This parameter is valid only when **external** parameter is false.
-* **requiresAuthentication:** If you want to show a menu item to authorized users but don't want to set a specific **permissionName** for that menu item, you can set this property to true.
-* **featureDependency:** A function to check feature dependency of a menu item. A sample is:
+A menu item is defined using the `AppMenuItem` interface:
 
-```javascript
-new AppMenuItem('Users', 'Pages.Administration.Users', 'flaticon-users', '/app/admin/users', undefined, undefined, undefined, () => {
-	return this._featureCheckerService.isEnabled('App.ChatFeature');
-})
+```typescript
+export interface AppMenuItem {
+  id: string;
+  title: string;
+  permissionName?: string;
+  icon?: string;
+  fontIcon?: string;
+  route?: string;
+  routeTemplates?: string[];
+  children?: AppMenuItem[];
+  external?: boolean;
+  parameters?: Record<string, unknown>;
+  requiresAuthentication?: boolean;
+  featureDependency?: () => boolean;
+}
 ```
 
+| Property | Description |
+|----------|-------------|
+| `id` | Unique identifier for the menu item |
+| `title` | Display name (use `L()` function for localization) |
+| `permissionName` | Permission required to show this menu item |
+| `icon` | Keenicons icon name to display |
+| `fontIcon` | Font icon class name (alternative to icon) |
+| `route` | React Router route path (e.g., `/app/admin/users`) |
+| `routeTemplates` | Additional route patterns for active state detection |
+| `children` | Child menu items for nested menus |
+| `external` | If true, opens an external URL in a new tab |
+| `parameters` | Additional parameters for the route |
+| `requiresAuthentication` | Show to authenticated users without specific permission |
+| `featureDependency` | Function to check feature dependency |
 
+## Adding a New Menu Item
+
+To add a new menu item, modify the `buildRawMenu` function in [appNavigation.tsx](../src/lib/navigation/appNavigation.tsx):
+
+```typescript
+export const buildRawMenu = (): AppMenuItem[] => [
+  // ... existing items
+  {
+    id: "MyNewPage",
+    title: L("MyNewPage"),
+    permissionName: "Pages.MyNewPage",
+    icon: "my-icon",
+    route: "/app/admin/my-new-page",
+  },
+  // ... more items
+];
+```
+
+Make sure to:
+1. Add the localization key `MyNewPage` to your localization files
+2. Create the corresponding route in [AppRouter.tsx](../src/routes/AppRouter.tsx)
+3. Create the page component
+
+## Feature Dependency Example
+
+You can conditionally show menu items based on features:
+
+```typescript
+{
+  id: "Chat",
+  title: L("Chat"),
+  icon: "message-text-2",
+  route: "/app/chat",
+  featureDependency: () => abp.features.isEnabled("App.ChatFeature"),
+}
+```
 
 ## Next
 

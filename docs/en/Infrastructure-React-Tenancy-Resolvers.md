@@ -22,6 +22,6 @@ Looks for `abp_tenancy_name` query string parameter and returns its value for te
 
 Looks for `abp_tenancy_name` cookie value and returns its value for tenancy name if `abp_tenancy_name` cookie value is present.
 
-You can also implement similar classes and use them in `resolveTenancyName` method of `AppPreBootstrap.ts` to determine the current tenant.
+You can also implement similar classes and use them in the bootstrap process of [AppPreBootstrap.ts](../src/app/bootstrap/AppPreBootstrap.ts) to determine the current tenant.
 
 

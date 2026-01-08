@@ -85,36 +85,33 @@ public class UserListDto : EntityDto<long>, IPassivable, IHasCreationTime
 
 Since UserListDto **auto maps** from User entity, no need to change **UserAppService.GetUsers** method. Now, we can go to UI side to add Address property to the **users table**.
 
-Now we can start ***.Host** project and then run [NSwag](Infrastructure-React-NSwag.md).
+Now we can start the ***.Host** project and then run [NSwag](Infrastructure-React-NSwag.md) to regenerate the TypeScript service proxies:
 
-Open **src\app\admin\users\users.tsx** file and add Address column right after CreationTime column:
+```bash
+npm run nswag
+```
 
-```html
-          //....
-          <th style="width: 200px" pSortableColumn="creationTime">
-               {{'CreationTime' | localize}}
-               <p-sortIcon field="creationTime"></p-sortIcon>
-          </th>
-          <th style="width: 200px" pSortableColumn="address">
-               {{'Address' | localize}}
-               <p-sortIcon field="address"></p-sortIcon>
-          </th>
-      </tr>
-</ng-template>
+Open **src/pages/admin/users/index.tsx** file and add an Address column to the table. Find the `columns` definition and add a new column:
 
-//...
-//...
-
-           <td style="width: 200px">
-                 <span class="ui-column-title"> {{'CreationTime' | localize}}</span>
-                 {{record.creationTime | luxonFormat:\'F\'}}
-           </td>
-           <td style="width: 200px">
-                  <span class="ui-column-title"> {{'address' | localize}}</span>
-                  {{record.address}}
-            </td>
-        </tr>
-</ng-template>
+```tsx
+const columns: ColumnsType<UserListDto> = [
+  // ... existing columns ...
+  {
+    title: L("CreationTime"),
+    dataIndex: "creationTime",
+    key: "creationTime",
+    sorter: true,
+    render: (value) => formatDate(value),
+  },
+  // Add the new Address column
+  {
+    title: L("Address"),
+    dataIndex: "address",
+    key: "address",
+    sorter: true,
+  },
+  // ... rest of columns ...
+];
 ```
 
 That's all. Now we can start the React application and open the **users page**:
@@ -137,16 +134,26 @@ public class UserEditDto : IPassivable
 }
 ```
 
-Since **UserAppService** use **auto mapping**, no need to manually map Address to the User entity. So, server side code is just that. We can go to UI side to add an Address field to the form:
+Since **UserAppService** uses **auto mapping**, no need to manually map Address to the User entity. So, the server-side code is just that. We can go to the UI side to add an Address field to the form.
 
-```html
-<div class="form-group">
-     <label for="Address">{{"Address" | localize}}</label>
-     <input id="Address" #addressInput="ngModel" type="text" name="Address" class="form-control" [(ngModel)]="user.address">
+Open **src/pages/admin/users/components/CreateOrEditUserModal.tsx** and add the Address input field in the form:
+
+```tsx
+<div className="form-group mb-3">
+  <label htmlFor="Address">{L("Address")}</label>
+  <input
+    id="Address"
+    type="text"
+    className="form-control"
+    value={userValues.address || ""}
+    onChange={(e) =>
+      setUserValues({ ...userValues, address: e.target.value })
+    }
+  />
 </div>
 ```
 
-This code is written to **src\app\admin\users\create-or-edit-user-modal.tsx**. After adding, new Address field is shown on the create/edit form as shown below:
+After adding, the new Address field is shown on the create/edit form as shown below:
 
 <img src="images/extend-entities-user-address-in-edit-form.png" alt="Address on user edit form" class="img-thumbnail" width="614" height="906" />
 
@@ -205,18 +212,24 @@ public class EditionListDto : EntityDto
 }
 ```
 
-**Auto mapping from MyEdition** is already added. No need to change **EditionAppService.GetEditions** method by the help of auto mapping. Now, you can go to UI side to see how AnnualPrice property is used in the **editions** table in **src\app\admin\editions\editions.tsx**:
+**Auto mapping from MyEdition** is already added. No need to change **EditionAppService.GetEditions** method thanks to auto mapping. Now, you can go to the UI side to see how the AnnualPrice property is used in the **editions** table in **src/pages/admin/editions/index.tsx**:
 
-```javascript
-<td>
-  <span class="ui-column-title">{{'Price' | localize}}</span>
-   <span *ngIf="record.monthlyPrice || record.annualPrice">
-     $ {{record.monthlyPrice}} {{"Monthly" | localize }} / $ {{record.annualPrice}} {{"Annual" | localize }}
-   </span>
-   <span *ngIf="!record.monthlyPrice && !record.annualPrice">
-     {{"Free" | localize}}
-   </span>
-</td>
+```tsx
+{
+  title: L("Price"),
+  key: "price",
+  render: (_, record) => (
+    <>
+      {record.monthlyPrice || record.annualPrice ? (
+        <span>
+          $ {record.monthlyPrice} {L("Monthly")} / $ {record.annualPrice} {L("Annual")}
+        </span>
+      ) : (
+        <span>{L("Free")}</span>
+      )}
+    </>
+  ),
+}
 ```
 
-That's all. You can check **EditionCreateDto** and **src\app\admin\editions\create-edition-modal.tsx** to see how the AnnualPrice fields is set during edition creation.
+That's all. You can check **EditionCreateDto** and **src/pages/admin/editions/components/CreateOrEditEditionModal.tsx** to see how the AnnualPrice field is set during edition creation.

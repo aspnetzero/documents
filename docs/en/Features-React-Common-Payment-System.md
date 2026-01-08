@@ -1,16 +1,15 @@
 # Common Payment System
 
-ASP.NET Zero provides a payment system to get payments easily. In order to start a payment, just use `CreatePayment` method of `IPaymentManager`. You can create a new application service or you can use existing `CreatePayment` method of `PaymentAppService`. Then, you need to redirect user to `gateway-selection` route of `account` module as shown below;
+ASP.NET Zero provides a payment system to get payments easily. In order to start a payment, just use `CreatePayment` method of `IPaymentManager`. You can create a new application service or you can use existing `CreatePayment` method of `PaymentAppService`. Then, you need to redirect the user to the `gateway-selection` route of the `account` module as shown below;
 
-```typescript
-this._router.navigate(
-                ['account/gateway-selection'],
-                {
-                    queryParams: {
-                        paymentId: paymentId
-                    },
-                }
-            );
+```tsx
+import { useNavigate } from "react-router-dom";
+
+// Inside your component
+const navigate = useNavigate();
+
+// Navigate to gateway selection
+navigate(`/account/gateway-selection?paymentId=${paymentId}`);
 ```
 
 ASP.NET Zero's common payment system will handle the rest of the payment flow. 

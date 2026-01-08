@@ -1,106 +1,229 @@
 # Adding New Metronic Theme
 
-Metronic theme currently has 12 different themes and AspNet Zero includes them all. However, you might want to add a new theme option designed by your team to those options. This document explains step by step to add a new theme option to AspNet Zero. Just note that, the added theme must be a Metronic theme or at least it must be compatible with Metronic.
+Metronic theme currently has 13 different themes and ASP.NET Zero includes them all. However, you might want to add a new theme option designed by your team to those options. This document explains step by step how to add a new theme option to ASP.NET Zero React UI. Note that the added theme must be a Metronic theme or at least be compatible with Metronic.
 
-Rest of the document will use **ThemeX** as the new theme name.
+The rest of this document will use **ThemeX** as the new theme name.
 
-##### 		*.Net Part*
+---
 
-* Go to  `*Application.Shared` project, open `AppConsts.cs`  and add new field named ThemeX. 
+## .NET Part
 
-* Go to `*.Web.Core` project.
+* Go to `*.Application.Shared` project, open `AppConsts.cs` and add a new field named `ThemeX`.
 
-  - Create new UICustomizer named `ThemeXUiCustomizer.cs` . Copy `ThemeDefaultUiCustomizer.cs` into  `ThemeXUiCustomizer.cs` and change necessary settings. (It has setting methods, If your new ThemeX also have that settings keep them otherwise delete them)
+* Go to `*.Web.Core` project:
 
-  - Open `UiThemeCustomizerFactory.cs` and add ThemeX code parts in `GetUiCustomizerInternal` function.
+  - Create a new UI Customizer named `ThemeXUiCustomizer.cs`. Copy `ThemeDefaultUiCustomizer.cs` into `ThemeXUiCustomizer.cs` and change necessary settings. (It has setting methods; if your new ThemeX also has those settings, keep them; otherwise, delete them.)
+
+  - Open `UiThemeCustomizerFactory.cs` and add the ThemeX code in the `GetUiCustomizerInternal` function:
 
     ```csharp
-    ...
     if (theme.Equals(AppConsts.ThemeX, StringComparison.InvariantCultureIgnoreCase))
     {
-          return _serviceProvider.GetService<ThemeXUiCustomizer>();
+        return _serviceProvider.GetService<ThemeXUiCustomizer>();
     }
-    ...
     ```
 
-* Go to `*.Core`  project. Open `AppSettingProvider.cs` 
+* Go to `*.Core` project. Open `AppSettingProvider.cs`:
 
-  - Add a method named `GetThemeXSettings`  which returns ThemeX settings.
+  - Add a method named `GetThemeXSettings` which returns ThemeX settings.
 
-  - Call it in `GetSettingDefinitions` function
+  - Call it in the `GetSettingDefinitions` function:
 
     ```csharp
-    ... 
     return GetHostSettings().Union(GetTenantSettings()).Union(GetSharedSettings())
-                    // theme settings
-                    .Union(GetDefaultThemeSettings())
-                    .Union(GetTheme2Settings())
-                    .Union(GetTheme3Settings())
-                    .Union(GetTheme4Settings())
-                    .Union(GetTheme5Settings())
-                    .Union(GetTheme6Settings())
-                    .Union(GetTheme7Settings())
-                    .Union(GetTheme8Settings())
-                    .Union(GetTheme9Settings())
-                    .Union(GetTheme10Settings())
-                    .Union(GetTheme11Settings())
-                    .Union(GetTheme12Settings())
-                    .Union(GetThemeXSettings());//add ThemeXSettings
-    ...
+        // theme settings
+        .Union(GetDefaultThemeSettings())
+        .Union(GetTheme2Settings())
+        // ... other themes ...
+        .Union(GetTheme13Settings())
+        .Union(GetThemeXSettings()); // add ThemeXSettings
     ```
 
+---
 
+## React Part
 
-##### *React Part*
+### 1. Add Theme Assets
 
-* Go to  **src-> app -> shared -> layout** folder
-  * Go to **themes** folder.
-    * Create a folder named `themeX` and go to **themeX** folder.
-      * Create components named  `themeX-brand` and `themeX-layout`
-      * Copy their body from default theme components (from `default-brand` and `default-layout`) and change needed changes.
-      * Create `ThemeXThemeAssetContributor` and copy its content from `DefaultThemeAssetContributor` .This class returns additional assets so make needed changes for your new themeX.
-  * Go to **theme-selection** folder. Open `theme-selection-panel.tsx` and add themeX to list.
-* Go to **src -> shared -> helpers** and open `ThemeAssetContributorFactory.ts`. Add `ThemeXThemeAssetContributor` to `getCurrent` function
+Add your theme's CSS bundle files to the `metronic/themes/` folder:
 
-```csharp
-...
-if (theme === 'themeX') {
-	return new ThemeXThemeAssetContributor().getAssetUrls();
-}
-...
+```
+metronic/themes/themeX/
+├── css/
+│   └── style.bundle.css
+└── plugins/
+    └── global/
+        └── plugins.bundle.css
 ```
 
-* Go to **src -> app -> admin** folder
+Also add a customization CSS file:
 
-  * Go to **ui-customization** folder.
+```
+public/assets/common/styles/themes/themeX/
+└── metronic-customize.css
+```
 
-    * Create `themex-theme-ui-settings` component. Copy its content from `default-theme-ui-settings` component. This is where you select UI settings, If your new ThemeX also have that settings keep them otherwise delete them and add what is needed.
+### 2. Create Theme Layout Components
 
-    * Open `ui-customization.tsx` and add your component.
+Go to `src/pages/admin/components/layout/themes/` folder:
 
-      
+1. Create a new folder named `themeX/`
+2. Create the following React components inside the folder:
+   - `ThemeXLayout.tsx` - Main layout component
+   - `ThemeXHeader.tsx` - Header component
+   - `ThemeXBrand.tsx` - Brand/logo component
 
-      ```html
-      <tab *ngFor="let themeSetting of themeSettings" [active]="themeSetting.theme == currentThemeName">
-       <!--...-->
-          <themex-theme-ui-settings *ngIf="themeSetting.theme == 'themeX'" [settings]="themeSetting"></themex-theme-ui-settings>
-      </tab>
-      ```
+Copy the contents from the default theme components (`default/DefaultLayout.tsx`, `default/DefaultHeader.tsx`, `default/DefaultBrand.tsx`) and modify as needed.
 
-  * Open `ui-customization module.ts` and add `ThemeXThemeUiSettingsComponent`to declarations.
+**Example `ThemeXLayout.tsx`:**
 
-* Go to **src -> app** . Open `app module.ts` and add `ThemeXLayoutComponent` and `ThemeXBrandComponent` to declarations.
+```tsx
+import React, { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import ThemeXHeader from "./ThemeXHeader";
+import { Footer } from "../../Footer";
+import { useTheme } from "@/hooks/useTheme";
+import { SidebarMenu } from "../../sidebar-menu/SidebarMenu";
+import ThemeXBrand from "./ThemeXBrand";
 
-* Go to **src -> app**. Open `app.tsx` and add ThemeX code part.
+const ThemeXLayout: React.FC = () => {
+  const { containerClass } = useTheme();
 
-  ```html
-  <div [ngClass]="{'subscription-bar-visible': subscriptionStatusBarVisible()}">
-      <!--...-->
-      <themex-layout *ngIf="theme=='themeX'"></themex-layout>
-  </div>
-  ```
+  useEffect(() => {
+    document.body.classList.add("app-themeX");
+    return () => {
+      document.body.classList.remove("app-themeX");
+    };
+  }, []);
 
-* If your theme uses dynamic bundles, open the `bundle.js` and add your bundles.
+  return (
+    // ... your layout JSX
+  );
+};
 
-  _ASP.NET Zero has custom CSS file for datepicker in React version ([bs-datepicker.css](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/React/src/assets/ngx-bootstrap/bs-datepicker.css)). If the default design is not compatible with your theme, you can change the related CSS file._
+export default ThemeXLayout;
+```
+
+### 3. Register the Theme Layout
+
+Open `src/pages/admin/components/layout/themes/index.tsx` and add your theme:
+
+1. Import the new layout component:
+
+   ```tsx
+   import ThemeXLayout from "./themeX/ThemeXLayout";
+   ```
+
+2. Add the case to the switch statement in `ThemedLayout`:
+
+   ```tsx
+   const ThemedLayout: React.FC = () => {
+     const activeThemeName = useSelector(
+       (s: RootState) => s.ui.activeThemeName || "default",
+     );
+
+     switch (activeThemeName) {
+       // ... existing cases ...
+       case "themeX":
+         return <ThemeXLayout />;
+       case "default":
+       default:
+         return <DefaultLayout />;
+     }
+   };
+   ```
+
+### 4. Add Theme to Selection Panel
+
+Open `src/pages/admin/components/layout/theme-selection/ThemeSelectionPanel.tsx` and add your theme to the `THEMES` array:
+
+```tsx
+const THEMES: string[] = [
+  "default",
+  "theme2",
+  "theme3",
+  // ... other themes ...
+  "theme13",
+  "themeX", // Add your new theme
+];
+```
+
+### 5. Create UI Customization Settings Form
+
+Go to `src/pages/admin/ui-customization/components/` folder:
+
+1. Create `ThemeXSettingsForm.tsx` by copying from `DefaultThemeSettingsForm.tsx`
+2. Modify the form fields based on your theme's available settings
+
+**Example `ThemeXSettingsForm.tsx`:**
+
+```tsx
+import React from "react";
+import { Form, Select, Switch } from "antd";
+import type { ThemeSettingsDto } from "@/api/generated/service-proxies";
+import L from "@/lib/L";
+
+interface Props {
+  settings: ThemeSettingsDto;
+  onSave: (values: ThemeSettingsDto) => void;
+}
+
+const ThemeXSettingsForm: React.FC<Props> = ({ settings, onSave }) => {
+  const [form] = Form.useForm();
+
+  // ... form implementation
+};
+
+export default ThemeXSettingsForm;
+```
+
+### 6. Register the Settings Form
+
+Open `src/pages/admin/ui-customization/index.tsx`:
+
+1. Import your settings form:
+
+   ```tsx
+   import ThemeXSettingsForm from "./components/ThemeXSettingsForm";
+   ```
+
+2. Add the form to the theme panel rendering logic (in the switch or conditional rendering section).
+
+### 7. Add Theme Preview Image
+
+Add a preview image for your theme:
+
+```
+public/assets/common/images/metronic-themes/themeX.png
+```
+
+This image is displayed in the UI Customization page for theme selection.
+
+### 8. Add Localization
+
+Add localization entries for your theme name in the localization files:
+
+```json
+{
+  "Theme_ThemeX": "Theme X"
+}
+```
+
+---
+
+## Summary of Files to Create/Modify
+
+| Action | File Path |
+|--------|-----------|
+| Create | `metronic/themes/themeX/css/style.bundle.css` |
+| Create | `metronic/themes/themeX/plugins/global/plugins.bundle.css` |
+| Create | `public/assets/common/styles/themes/themeX/metronic-customize.css` |
+| Create | `src/pages/admin/components/layout/themes/themeX/ThemeXLayout.tsx` |
+| Create | `src/pages/admin/components/layout/themes/themeX/ThemeXHeader.tsx` |
+| Create | `src/pages/admin/components/layout/themes/themeX/ThemeXBrand.tsx` |
+| Modify | `src/pages/admin/components/layout/themes/index.tsx` |
+| Modify | `src/pages/admin/components/layout/theme-selection/ThemeSelectionPanel.tsx` |
+| Create | `src/pages/admin/ui-customization/components/ThemeXSettingsForm.tsx` |
+| Modify | `src/pages/admin/ui-customization/index.tsx` |
+| Create | `public/assets/common/images/metronic-themes/themeX.png` |
 

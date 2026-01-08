@@ -27,16 +27,16 @@ This command will create a Docker image for the Host API application. Our applic
 docker build -t abpzerotemplate-migrator -f src\MyCompanyName.AbpZeroTemplate.Migrator\Dockerfile .
 ```
 
-We will not run a security test on the client side React application, we will only run security test on API application but our Helm chart includes the React app as well. Because of that, we need to create an image for the React app as well. To do that, first publish your React app using the command below;
+We will not run a security test on the client side React application, we will only run security test on API application but our Helm chart includes the React app as well. Because of that, we need to create an image for the React app as well. To do that, first build your React app using the command below;
 
 ````
-npm run publish-k8s
+npm run build
 ````
 
-When the publish is completed, run the following command in the ```React``` folder of your project;
+When the build is completed, run the following command in the React project folder;
 
 ````
-docker build -t abpzerotemplate-React -f Dockerfile . 
+docker build -t abpzerotemplate-react -f Dockerfile . 
 ````
 
 Now, we have all Docker images we need to run our application.

@@ -29,26 +29,20 @@ When the subscription of a Tenant is expired, **SubscriptionExpirationCheckWorke
 
 #### Minimum Update Amount
 
-Since payment systems have accepted the minimum payment amount, you may need to set the minimum payment amount according to your payment system. Settings are located in [`*.Core.Shared/AbpZeroTemplateConsts.cs`](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Core.Shared/AbpZeroTemplateConsts.cs#L24)
+Since payment systems have accepted minimum payment amounts, you may need to configure the minimum payment amount based on your payment system. This setting is located in the backend project [`*.Core.Shared/AbpZeroTemplateConsts.cs`](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Core.Shared/AbpZeroTemplateConsts.cs#L24):
 
 ```csharp
 // Note:
-// Minimum accepted payment amount. If a payment amount is less then that minimum value payment progress will continue without charging payment
-// Even though we can use multiple payment methods, users always can go and use the highest accepted payment amount.
-//For example, you use Stripe and PayPal. Let say that Stripe accepts min 5$ and PayPal accepts min 3$. If your payment amount is 4$.
-// User will prefer to use a payment method with the highest accept value which is a Stripe in this case.
+// Minimum accepted payment amount. If a payment amount is less than that minimum value, payment progress will continue without charging.
+// Even though we can use multiple payment methods, users always can choose to use the method with the highest accepted payment amount.
+// For example, if you use Stripe and PayPal: Stripe accepts min $5 and PayPal accepts min $3. If your payment amount is $4,
+// the user will prefer a payment method with the higher acceptance threshold (Stripe in this case).
 public const decimal MinimumUpgradePaymentAmount = 1M;
-```
-
- and [`React/src/shared/AppConsts.ts`](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/React/src/shared/AppConsts.ts#L31) . 
-
-```typescript
-static readonly MinimumUpgradePaymentAmount = 1;
 ```
 
 Default value is **1**. 
 
-Payment progress will be continued without charging any amount if the payment amount is less than given value.
+Payment progress will continue without charging any amount if the payment amount is less than the configured value.
 
 
 

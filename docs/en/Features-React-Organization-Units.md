@@ -13,9 +13,9 @@ We can also add new members with the upper right button of members tab.
 
 <img src="images/select-user-lookup-core-3.png" alt="Select a user dialog" class="img-thumbnail" />
 
-This is actually a **generic lookup modal** and can be used to select any type of entity (see app/shared/common/lookup/**common-lookup-modal component**).
+This is a user selection modal that allows searching and selecting users to add to the organization unit.
 
-We can also add new roles with the upper right button of roles tab. **common-lookup-modal** is used to build the role selection modal here as well.
+We can also add new roles with the upper right button of roles tab. A role selection modal is used to select roles to assign.
 
 <img src="images/add-roles-to-organization-unit.png" alt="Select a role dialog" class="img-thumbnail" />
 

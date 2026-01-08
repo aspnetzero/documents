@@ -222,174 +222,220 @@ This **BookAppService** class demonstrates how CRUD operations for books are imp
 
 ## Navigation and Page Management
 
-In ASP.NET Zero, an implementation similar to ASP.NET Boilerplate's `src\app\app-routing module.ts` implementation has been adopted for pagination routes. In ASP.NET Zero this is achieved by defining it under the `src\app\admin\admin-routing module.ts` file. Here, the files specified for admin management are created. Files vary depending on the usage scenario.
+In ASP.NET Zero React, routes are defined in [src/routes/AppRouter.tsx](../src/routes/AppRouter.tsx). This file uses React Router to define all application routes with lazy loading for better performance.
 
-**app-routing module (ASP.NET Boilerplate)**
+**Adding a New Route (ASP.NET Zero React)**
 
-```typescript
-@NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: '',
-                component: AppComponent,
-                children: [
-                    ...
+```tsx
+// In src/routes/AppRouter.tsx
 
-                    { path: 'books', component: BooksComponent, data: { permission: 'Pages.Books' }, canActivate: [AppRouteGuard] },
+// Import your component with lazy loading
+const BooksPage = React.lazy(
+  () => import("@/pages/admin/books/index")
+);
 
-                    ...
-                ]
-            }
-        ])
-    ],
-    exports: [RouterModule]
-})
+// Add the route inside the Routes component
+<Route
+  path="admin/books"
+  element={
+    <ProtectedRoute permission="Pages.Administration.Books">
+      <BooksPage />
+    </ProtectedRoute>
+  }
+/>
 ```
 
-**aadmin-routing module (ASP.NET Boilerplate)**
+### Adding Navigation Menu Items
 
-```typescript
-@NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: '',
-                children: [
+To add navigation items, modify the `buildRawMenu` function in [src/lib/navigation/appNavigation.tsx](../src/lib/navigation/appNavigation.tsx):
 
-                    ...
-                    
-                    {
-                    path: 'books',
-                    loadChildren: () => import('./users/books module').then((m) => m.BooksModule),
-                    data: { permission: 'Pages.Administration.books' },
-                    },
+**appNavigation.tsx (ASP.NET Zero React)**
 
-                    ...
-
-                ],
-            },
-        ]),
-    ],
-    exports: [RouterModule],
-})
+```tsx
+export const buildRawMenu = (): AppMenuItem[] => [
+  // ... existing items
+  {
+    id: "Books",
+    title: L("Books"),
+    permissionName: "Pages.Administration.Books",
+    icon: "book",
+    route: "/app/admin/books",
+  },
+  // ... more items
+];
 ```
 
-After defining page names, to facilitate navigation to these pages via a control panel in ASP.NET Zero, similar to ASP.NET Boilerplate's `src\app\layout\sidebar-menu.tsx` class, ASP.NET Zero employs a similar structure within the `src\app\shared\layout\nav\app-navigation-service.ts` class. You can add navigation items to specific locations within this class based on your usage scenario.
-
-**sidebar-menu component (ASP.NET Boilerplate)**
-
-```typescript
-getMenuItems(): MenuItem[] {
-    return [
-    ...
-
-    new MenuItem(this.l('Books'), '/app/Books', 'fas fa-books', 'Pages.Books'),
-
-    ...
-
-    ]
-}
-```
-
-
-**app-navigation-service (ASP.NET Zero)**
-
-```typescript
-getMenu(): AppMenu {
-    return new AppMenu('MainMenu', 'MainMenu', [
-    ...
-
-    new AppMenuItem('Books', 'Pages.Books', 'flaticon-books', '/app/main/books'),
-
-    ...
-    ])
-}
-```
+The `AppMenuItem` interface includes:
+- `id`: Unique identifier
+- `title`: Display name (use `L()` for localization)
+- `permissionName`: Required permission to show this menu item
+- `icon`: Keenicons icon name
+- `route`: React Router path
 
 
 ## Building the User Interface
 
-The pages and modals created here show similar features. Since it is the Metronic theme used in ASP.NET Zero, it is recommended that you review the link [Metronic Theme](https://preview.keenthemes.com/metronic8/demo1/index.html?mode=light) to adapt it.
+The pages and modals created here show similar features. Since ASP.NET Zero uses the Metronic theme, it is recommended that you review [Metronic Theme](https://preview.keenthemes.com/metronic8/demo1/index.html?mode=light) to adapt it.
 
-### Creating Module, Component and View
+### Creating Components
 
-In ASP.NET Boilerplate, route operations are managed in `app-routing module.ts`, while in ASP.NT Zero, they are managed in admin and main routing modules, depending on the scenario. In ASP.NET Zero, create and edit modals are managed in a single modal.
+In ASP.NET Zero React, you create pages as React functional components. Unlike ASP.NET Boilerplate which uses Angular modules, React uses a simple file-based structure with components organized in folders.
 
+**Creating a Books Page (ASP.NET Zero React)**
 
-While component declaration operations are managed in app module.ts in ASP.NET Boilerplate, components are managed in modules belonging to the entity in ASP.NET Zero.
+Create your page component at `src/pages/admin/books/index.tsx`:
 
-**app module.ts (ASP.NET Boilerplate)**
+```tsx
+import { useState, useEffect } from "react";
+import { Button, Table, Modal, message } from "antd";
+import { useServiceProxy } from "@/api/service-proxy-factory";
+import { usePermissions } from "@/hooks/usePermissions";
+import { L } from "@/lib/L";
+import CreateOrEditBookModal from "./components/CreateOrEditBookModal";
 
-```typecript
-@NgModule({
-    declarations: [
+export default function BooksPage() {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<BookDto[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBookId, setSelectedBookId] = useState<number | undefined>();
+  
+  const { bookService } = useServiceProxy();
+  const { isGranted } = usePermissions();
 
-        ...
+  const fetchBooks = async () => {
+    setLoading(true);
+    try {
+      const result = await bookService.getAll({});
+      setData(result.items || []);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        //books
-        BooksComponent,
-        CreateBookDialogComponent,
-        EditBookDialogComponent,
+  useEffect(() => {
+    fetchBooks();
+  }, []);
 
-        ...
-    ],
-})
-export class AppModule {}
-```
+  const handleDelete = async (id: number) => {
+    Modal.confirm({
+      title: L("AreYouSure"),
+      onOk: async () => {
+        await bookService.delete({ id });
+        message.success(L("SuccessfullyDeleted"));
+        fetchBooks();
+      },
+    });
+  };
 
-**book module.ts (ASP.NET Zero)**
+  return (
+    <div className="card">
+      <div className="card-header">
+        <h3>{L("Books")}</h3>
+        {isGranted("Pages.Administration.Books.Create") && (
+          <Button type="primary" onClick={() => setIsModalOpen(true)}>
+            {L("CreateNewBook")}
+          </Button>
+        )}
+      </div>
+      <div className="card-body">
+        <Table dataSource={data} loading={loading} rowKey="id">
+          {/* Define your columns */}
+        </Table>
+      </div>
 
-```typescript
-@NgModule({
-    declarations: [
-        BookssComponent,
-        CreateOrEditBookModalComponent,
-        ViewBookModalComponent,
-        
-    ],
-    imports: [AppSharedModule, BookRoutingModule , AdminSharedModule ],
-    
-})
-export class BookModule {
+      <CreateOrEditBookModal
+        bookId={selectedBookId}
+        open={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedBookId(undefined);
+        }}
+        onSaved={() => {
+          setIsModalOpen(false);
+          setSelectedBookId(undefined);
+          fetchBooks();
+        }}
+      />
+    </div>
+  );
 }
 ```
 
-The approach and features exhibited in ASP.NET Boilerplate `books.tsx` differ from ASP.NET Zero.
+### Key Differences from ASP.NET Boilerplate
 
-**Differences**
+| Feature | ASP.NET Boilerplate (Angular) | ASP.NET Zero React |
+|---------|-------------------------------|-------------------|
+| UI Library | Bootstrap, ngx-bootstrap | Ant Design |
+| Modals | BsModalService | Ant Design Modal component |
+| Tables | HTML tables | Ant Design Table with built-in pagination |
+| Notifications | abp.message, abp.notify | Ant Design message, Modal.confirm |
+| Permissions | Angular guards | `usePermissions()` hook |
+| State Management | Component state | React hooks + Redux Toolkit |
+| File Structure | Modules with routing | File-based pages in `src/pages/` |
 
-- **ASP.NET Boilerplate:** 
-    - Manages modals using BsModalService (with BsModalRef).
-    - React uses HTML table.
-    - Service connections are made more manually.
-    - These types of features are often added as a base.
-    - **abp.message.confirm** and **abp.notify.success** are used.
+### Creating Modal Components
 
-- **ASP.NET Zero:** 
+In ASP.NET Zero React, create and edit operations are typically handled in a single modal component:
 
-    - Manages modals using React's **ViewChild** mechanism.
-    - Uses Table and **Paginator** components from the primeng library.
-    - More automated and structured, additional libraries such as **primeng** are used.
-    - Excel and file upload features are more advanced and integrated (FileUpload,         ExcelColumnSelectionModalComponent).
-    - Uses more advanced notification and approval services (NotifyService).
-    - Uses advanced filtering and loading mechanisms with primeng.
+**CreateOrEditBookModal.tsx**
 
+```tsx
+import { useEffect } from "react";
+import { Modal, Form, Input, message } from "antd";
+import { useServiceProxy } from "@/api/service-proxy-factory";
+import { L } from "@/lib/L";
 
-When transitioning from ASP.NET Boilerplate (ABP) to ASP.NET Zero (ABP.Zero), especially in React components like `books.tsx`, there are several key differences and considerations:
+interface Props {
+  bookId?: number;
+  open: boolean;
+  onClose: () => void;
+  onSaved: () => void;
+}
 
-- **ASP.NET Boilerplate:**
-    - Uses a structured layout with specific React directives and Bootstrap for UI components.
-    - Does not include role checks for creating buttons
-    - The original Index view is placed directly under the **Views/Books** folder.
+export default function CreateOrEditBookModal({ bookId, open, onClose, onSaved }: Props) {
+  const [form] = Form.useForm();
+  const { bookService } = useServiceProxy();
+  const isEditMode = !!bookId;
 
-- **ASP.NET Zero:**
-    - Often utilizes more integrated and streamlined components provided by the Metronic Theme
-    - Uses permission attributes (is Granted('Pages.Administration.Books.Create')) for the user creation button.
-    - The view is moved under **Areas/App/Views/Books** to support modular and multi-tenancy architecture.
+  useEffect(() => {
+    if (open && bookId) {
+      // Fetch and populate form for editing
+      bookService.getForEdit({ id: bookId }).then((result) => {
+        form.setFieldsValue(result);
+      });
+    } else {
+      form.resetFields();
+    }
+  }, [open, bookId]);
 
+  const handleSave = async () => {
+    const values = await form.validateFields();
+    if (isEditMode) {
+      await bookService.update({ ...values, id: bookId });
+    } else {
+      await bookService.create(values);
+    }
+    message.success(L("SavedSuccessfully"));
+    onSaved();
+  };
 
-In ASP.NET Boilerplate, the creation and editing modals are managed separately, whereas in ASP.NET Zero, these are handled within a single view under a unified modal management approach.
+  return (
+    <Modal
+      title={isEditMode ? L("EditBook") : L("CreateNewBook")}
+      open={open}
+      onCancel={onClose}
+      onOk={handleSave}
+    >
+      <Form form={form} layout="vertical">
+        <Form.Item name="name" label={L("Name")} rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        {/* Add more form fields */}
+      </Form>
+    </Modal>
+  );
+}
+```
 
 ## Adding Localization
 
@@ -429,4 +475,4 @@ Unit tests implemented in ASP.NET Boilerplate show minor changes in ASP.NET Zero
 
 ## Conclusion
 
-The migration from ASP.NET Public Plate to ASP.NET Zero involves several important transitions in various aspects of application development. This process includes changes in the management of models, configuration of app services and unit tests. ASP.NET Zero offers advanced features that increase efficiency and scalability by providing a more integrated and streamlined approach to these elements.
+The migration from ASP.NET Boilerplate to ASP.NET Zero involves several important transitions in various aspects of application development. This process includes changes in the management of models, configuration of app services and unit tests. ASP.NET Zero offers advanced features that increase efficiency and scalability by providing a more integrated and streamlined approach to these elements.

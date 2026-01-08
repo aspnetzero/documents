@@ -1,81 +1,204 @@
 # Development with Docker Containers for React
 
-ASP.NET Zero `aspnet-core` folder contains various docker projects for your application to debug using docker containers. You can add these projects to your **.Web** or **.All** solutions by **Add Existing Project** to your preferred solution.
+This document explains how to set up a Docker-based development environment for the ASP.NET Zero React UI application alongside the backend API.
 
-<img src="images/development-docker-mvc/docker-projects-folder-core-mvc.png" alt="docker-projects-folder-core-mvc" style="zoom:150%;" />
+## Prerequisites
 
-To get started with using docker for development, there are some prerequisites.
+- Docker Desktop installed and running
+- Node.js (LTS version)
+- The ASP.NET Core backend (Web.Host) running or containerized
 
-### 1. Setting up the infrastructure
+## Backend Infrastructure Setup
 
-Infrastructure contains **mssql-server-linux** as a replacement for your LocalDb and **redis** server for your applications.
+The React UI requires the ASP.NET Core backend API to be running. The backend's `aspnet-core/docker` folder contains Docker projects for running the infrastructure and API.
 
-In your `aspnet-core\docker\infrastructure\` folder, you will find **run-infrastructure.ps1** file which uses **docker-compose.infrastructure.yml** file to setup your infrastructure. Running the shell script should have a similar output like below.
+### 1. Setting up the Infrastructure
+
+Infrastructure contains **mssql-server-linux** as a database server and **redis** for caching.
+
+In the backend's `aspnet-core/docker/infrastructure/` folder, run the **run-infrastructure.ps1** script which uses **docker-compose.infrastructure.yml** to set up the infrastructure.
 
 <img src="images/development-docker-mvc/docker-infrastructure-run.png" alt="docker-infrastructure-run"/>
 
-After running the script, powershell will be hanging (non interactive) for you to see if there is any error occurred while creating the containers. You can use **Ctrl + X** to exit tailing the database logging to make the powershell interactive again.
+After running the script, PowerShell will show container logs. Use **Ctrl + C** to stop tailing the logs.
 
-### 2. Setting up the self-signed certificate
+### 2. Setting up the Self-Signed Certificate
 
-Your applications need certificate to enable https. Normally Visual Studio creates this certificate for you when you run your application for the first time however sometimes it doesn't when docker is involved. To overcome the issue, we create our own self-signed certificate for development.
+The backend API needs a certificate to enable HTTPS. In the backend's `aspnet-core/docker/certificate/` folder, run **create-certificate.ps1** to create the certificate.
 
-In your `aspnet-core\docker\certificate\` folder, you will find **create-certificate.ps1** file to create the certificate. After running the shell script, you should have a similar output like below.
 <img src="images/development-docker-mvc/docker-create-dev-certificate.png" alt="docker-create-dev-certificate"/>
 
-### 3. Running the migrator
+### 3. Running the Migrator
 
-In your `aspnet-core\docker\migrator\` folder, you will find **run-migrator** file to apply migrations for your application. Running the shell script should have a similar output like below.
+In the backend's `aspnet-core/docker/migrator/` folder, run **run-migrator.ps1** to apply database migrations.
 
 <img src="images/development-docker-mvc/docker-migrate.png" alt="docker-migrate"/>
 
+### 4. Running the Host API
 
+Start the Web.Host API using Docker:
 
-## Running applications on containers
-
-In your applications **.Web** solution under **docker folder**, set as startup project you want to debug. Visual studio will instantly begin building the container. **Building containers may take some time** for the first time since it will be downloading required base images.
-
-Below you can see **docker-compose-mvc** debugging:
-
-<img src="images/development-docker-mvc/docker-mvc-running.png" alt="docker-mvc-running"  style="zoom:100%;" />
-
-There are three docker solutions you can set as startup project to run;
-
-1. **docker-compose-host:** Runs Web.Host project.
-2. **docker-compose-mvc:** Runs only Web.Mvc project.
-3. **docker-compose-public:** Runs Web.Mvc and Web.Public projects together.
-
-Each docker-compose files have override.yml files to set the other environments like certification information, docker volumes or AspnetCore environment.
-
-<img src="images/development-docker-mvc/docker-override-configuration.png" alt="docker-override-configuration"  style="zoom:100%;" />
-
-Configuration is separated between **docker development** and default **IIS development**. 
-
-If you want to change the default connection string when running on containers; you need to change the environment variable **ConnectionStrings__Default** in corresponding **docker-compose.yml** shown below:
-
-<img src="images/development-docker-mvc/docker-cs-configuration.png" alt="docker-cs-configuration"  style="zoom:100%;" />
-
-This environment variable overrides the connection string which has been set in appsettings.json. This way you can use both development environments without mixing up the configurations.
-
-In some cases, you may get **container conflict errors** when switching between docker projects; like debugging **docker-compose-mvc** first then start debugging **docker-compose-public** after stopping the first one.
-
-<img src="images/development-docker-mvc/docker-container-conflict.png" alt="docker-cs-configuration"  style="zoom:100%;" />
-
-This occurs because the mvc container is still alive even if you stop debugging. To avoid container conflicts, you need to **Clean** the solution (right click to docker project and clean option) to remove the container completely before running the **docker-compose-public** which uses common containers like mvc container.
-
-Note: You can also run your projects using following commands
-
-_mvc_
 ```shell
-docker compose -f docker-compose-mvc.yml -f docker-compose-mvc.override.yml up
-```
-
-_host_
-```shell
+cd aspnet-core/docker
 docker compose -f docker-compose-host.yml -f docker-compose-host.override.yml up
 ```
 
-_public_
-```shell
-docker compose -f docker-compose-public.yml -f docker-compose-public.override.yml up
+The API will be available at `https://localhost:44301` (or the configured port).
+
+---
+
+## Running the React UI
+
+The React UI is a client-side application that can be run in two ways during development:
+
+### Option 1: Development Server (Recommended for Development)
+
+Run the React UI using the Vite development server:
+
+```bash
+npm install
+npm run dev
 ```
+
+This starts the development server at `http://localhost:5173` with hot module replacement.
+
+Make sure the `.env` file points to the correct backend API URL:
+
+```env
+VITE_API_URL=https://localhost:44301
+```
+
+### Option 2: Docker Container
+
+You can containerize the React UI for testing production builds locally.
+
+#### Create a Dockerfile
+
+Create a `Dockerfile` in the React project root:
+
+```dockerfile
+# Build stage
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+#### Create nginx.conf
+
+Create an `nginx.conf` file for SPA routing:
+
+```nginx
+server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+
+#### Build and Run
+
+```bash
+# Build the image
+docker build -t aspnetzero-react .
+
+# Run the container
+docker run -d -p 4200:80 aspnetzero-react
+```
+
+---
+
+## Docker Compose for Full Stack Development
+
+To run both the backend API and React UI together, create a `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+services:
+  react-ui:
+    build: .
+    ports:
+      - "4200:80"
+    depends_on:
+      - host-api
+    environment:
+      - VITE_API_URL=http://host-api:21021
+
+  host-api:
+    # Reference your backend's docker-compose-host configuration
+    # or use the pre-built image
+    image: your-registry/aspnetzero-host:latest
+    ports:
+      - "44301:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__Default=your-connection-string
+```
+
+---
+
+## Configuration Notes
+
+### Environment Variables
+
+The React UI uses Vite environment variables. For Docker builds, you can:
+
+1. Set variables at build time in the Dockerfile:
+   ```dockerfile
+   ARG VITE_API_URL
+   ENV VITE_API_URL=$VITE_API_URL
+   RUN npm run build
+   ```
+
+2. Pass them during build:
+   ```bash
+   docker build --build-arg VITE_API_URL=https://api.example.com -t aspnetzero-react .
+   ```
+
+### CORS Configuration
+
+Ensure the backend's `appsettings.json` has the correct CORS origins configured to allow requests from the React container:
+
+```json
+{
+  "App": {
+    "CorsOrigins": "http://localhost:5173,http://react-ui"
+  }
+}
+```
+
+---
+
+## Troubleshooting
+
+### Container Conflict Errors
+
+If you get container conflict errors when switching between Docker configurations, clean up the containers:
+
+```bash
+docker compose down
+docker system prune -f
+```
+
+<img src="images/development-docker-mvc/docker-container-conflict.png" alt="docker-container-conflict"/>
+
+### Connection to Backend API Fails
+
+1. Ensure the backend API is running and accessible
+2. Check that `VITE_API_URL` is correctly set
+3. Verify CORS is configured to allow the React UI origin
+4. Check Docker network connectivity if both are containerized
