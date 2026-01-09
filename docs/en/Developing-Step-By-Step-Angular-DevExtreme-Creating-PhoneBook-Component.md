@@ -4,21 +4,21 @@ Create a **phonebook** folder inside **src/app/main** folder and add a
 new typescript file (**phonebook.component.ts**) in the phonebook folder
 as shown below:
 
-```javascript
-import { Component, Injector } from '@angular/core';
+```typescript
+import { Component } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { SubHeaderComponent } from '@app/shared/common/sub-header/sub-header.component';
 
 @Component({
     templateUrl: './phonebook.component.html',
-    animations: [appModuleAnimation()]
+    animations: [appModuleAnimation()],
+    imports: [SubHeaderComponent, LocalizePipe],
 })
-
 export class PhoneBookComponent extends AppComponentBase {
-    constructor(
-        injector: Injector
-    ) {
-        super(injector);
+    constructor() {
+        super();
     }
 }
 ```
@@ -32,21 +32,11 @@ As we declared in **phonebook.component.ts** we should create a
 
 ```html
 <div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div [class]="containerClass">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"PhoneBook" | localize}}</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'"
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                    <p>PHONE BOOK CONTENT COMES HERE!</p>
-                </div>
+    <sub-header [title]="'PhoneBook' | localize" [description]="'PhoneBooksHeaderInfo' | localize"></sub-header>
+    <div [class]="containerClass">
+        <div class="card card-custom">
+            <div class="card-body">
+                <p>PHONE BOOK CONTENT COMES HERE!</p>
             </div>
         </div>
     </div>
@@ -57,42 +47,7 @@ As we declared in **phonebook.component.ts** we should create a
 to easily localize texts. **\[@routerTransition\]** attribute is
 required for page transition animation.
 
-Now we should create a **phonebook.module.ts** and **phonebook-routing.module.ts**  view in the same phonebook folder:
-
-*phonebook-routing.module.ts*
-
-```typescript
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {PhoneBookComponent} from './phonebook.component';
-
-const routes: Routes = [{
-    path: '',
-    component: PhoneBookComponent,
-    pathMatch: 'full'
-}];
-
-@NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
-})
-export class PhoneBookRoutingModule {}
-```
-
-*phonebook.module.ts*
-
-```typescript
-import {NgModule} from '@angular/core';
-import {AppSharedModule} from '@app/shared/app-shared.module';
-import {PhoneBookRoutingModule} from './phonebook-routing.module';
-import {PhoneBookComponent} from './phonebook.component';
-
-@NgModule({
-    declarations: [PhoneBookComponent],
-    imports: [AppSharedModule, PhoneBookRoutingModule]
-})
-export class PhoneBookModule {}
-```
+That's it! With standalone components, we don't need to create separate module files. The component is self-contained with its own imports defined in the `@Component` decorator.
 
 Now, we can refresh the page to see the new
 added page:
