@@ -39,14 +39,14 @@ enough to make a re-build to recycle the application.
 
 Angular has a powerful URL routing system. ASP.NET Zero has defined routes in a few places (for modularity, see [main menu & layout](Features-Angular-Main-Menu-Layout.md)). We want to add phone book page to the main module. So, open **src\\app\\main\\main-routing.module.ts** in the client side and add a new route just below to the dashboard:
 
-```json
+```typescript
 {
 	path: 'phonebook',
-	loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhonebookModule)
+	loadComponent: () => import('./phonebook/phonebook.component').then((m) => m.PhoneBookComponent),
 }
 ```
 
-We get an error since we haven't defined PhoneBookModule yet. Also, we ignored permission for now (will implement later).
+We get an error since we haven't defined PhoneBookComponent yet. Also, we ignored permission for now (will implement later).
 
 ## Next
 

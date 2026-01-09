@@ -49,10 +49,10 @@ We get an error message. This exception is thrown when any method of `PersonAppS
 
 We got an exception about permission. Server did not send the data but we can still enter the page. To prevent it, open **main-routing.module.ts** and change the route definition like that:
 
-```json
+```typescript
 {
 	path: 'phonebook',
-	loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhonebookModule),
+	loadComponent: () => import('./phonebook/phonebook.component').then((m) => m.PhoneBookComponent),
 	data: { permission: 'Pages.Tenant.PhoneBook' }
 }
 ```

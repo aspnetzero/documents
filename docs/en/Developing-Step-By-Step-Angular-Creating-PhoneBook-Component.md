@@ -47,42 +47,7 @@ As we declared in **phonebook.component.ts** we should create a
 to easily localize texts. **\[@routerTransition\]** attribute is
 required for page transition animation.
 
-Now we should create a **phonebook.module.ts** and **phonebook-routing.module.ts**  view in the same phonebook folder:
-
-*phonebook-routing.module.ts*
-
-```typescript
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [
-    {
-        path: '',
-        loadComponent: () => import('./phonebook.component').then((m) => m.PhoneBookComponent),
-        pathMatch: 'full',
-    },
-];
-
-@NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
-})
-export class PhoneBookRoutingModule {}
-```
-
-*phonebook.module.ts*
-
-```typescript
-import { NgModule } from '@angular/core';
-import { AppSharedModule } from '@app/shared/app-shared.module';
-import { PhoneBookRoutingModule } from './phonebook-routing.module';
-import { PhoneBookComponent } from './phonebook.component';
-
-@NgModule({
-    imports: [AppSharedModule, PhoneBookRoutingModule, PhoneBookComponent],
-})
-export class PhoneBookModule {}
-```
+That's it! With standalone components, we don't need to create separate module files. The component is self-contained with its own imports defined in the `@Component` decorator.
 
 Now, we can refresh the page to see the new added page:
 
