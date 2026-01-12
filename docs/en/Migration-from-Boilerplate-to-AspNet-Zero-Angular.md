@@ -222,7 +222,7 @@ This **BookAppService** class demonstrates how CRUD operations for books are imp
 
 ## Navigation and Page Management
 
-In ASP.NET Zero, an implementation similar to ASP.NET Boilerplate's `src\app\app-routing.module.ts` implementation has been adopted for pagination routes. In ASP.NET Zero this is achieved by defining it under the `src\app\admin\admin-routing.module.ts` file. Here, the files specified for admin management are created. Files vary depending on the usage scenario.
+In ASP.NET Zero, routing is managed through route modules similar to ASP.NET Boilerplate, but with a key difference: ASP.NET Zero now uses **standalone components** instead of NgModules. Routes are defined in `src\app\admin\admin-routing.module.ts` for admin pages or `src\app\main\main-routing.module.ts` for main application pages.
 
 **app-routing.module (ASP.NET Boilerplate)**
 
@@ -234,11 +234,11 @@ In ASP.NET Zero, an implementation similar to ASP.NET Boilerplate's `src\app\app
                 path: '',
                 component: AppComponent,
                 children: [
-                    ...
+                    //...
 
                     { path: 'books', component: BooksComponent, data: { permission: 'Pages.Books' }, canActivate: [AppRouteGuard] },
 
-                    ...
+                    //...
                 ]
             }
         ])
@@ -247,7 +247,7 @@ In ASP.NET Zero, an implementation similar to ASP.NET Boilerplate's `src\app\app
 })
 ```
 
-**aadmin-routing.module (ASP.NET Boilerplate)**
+**admin-routing.module or main-routing.module (ASP.NET Zero - Standalone Components)**
 
 ```typescript
 @NgModule({
@@ -257,15 +257,15 @@ In ASP.NET Zero, an implementation similar to ASP.NET Boilerplate's `src\app\app
                 path: '',
                 children: [
 
-                    ...
+                    //...
                     
                     {
-                    path: 'books',
-                    loadChildren: () => import('./users/books.module').then((m) => m.BooksModule),
-                    data: { permission: 'Pages.Administration.books' },
+                        path: 'books',
+                        loadComponent: () => import('./books/books.component').then((m) => m.BooksComponent),
+                        data: { permission: 'Pages.Administration.Books' },
                     },
 
-                    ...
+                    //...
 
                 ],
             },
@@ -275,18 +275,20 @@ In ASP.NET Zero, an implementation similar to ASP.NET Boilerplate's `src\app\app
 })
 ```
 
-After defining page names, to facilitate navigation to these pages via a control panel in ASP.NET Zero, similar to ASP.NET Boilerplate's `src\app\layout\sidebar-menu.component.ts` class, ASP.NET Zero employs a similar structure within the `src\app\shared\layout\nav\app-navigation-service.ts` class. You can add navigation items to specific locations within this class based on your usage scenario.
+**Key Difference:** ASP.NET Zero uses `loadComponent` instead of `loadChildren`, directly lazy-loading the standalone component instead of loading an entire module.
+
+After defining page routes, to facilitate navigation to these pages via the menu in ASP.NET Zero, similar to ASP.NET Boilerplate's `src\app\layout\sidebar-menu.component.ts` class, ASP.NET Zero employs a similar structure within the `src\app\shared\layout\nav\app-navigation-service.ts` class. You can add navigation items to specific locations within this class based on your usage scenario.
 
 **sidebar-menu.component (ASP.NET Boilerplate)**
 
 ```typescript
 getMenuItems(): MenuItem[] {
     return [
-    ...
+    //...
 
     new MenuItem(this.l('Books'), '/app/Books', 'fas fa-books', 'Pages.Books'),
 
-    ...
+    //...
 
     ]
 }
@@ -298,11 +300,11 @@ getMenuItems(): MenuItem[] {
 ```typescript
 getMenu(): AppMenu {
     return new AppMenu('MainMenu', 'MainMenu', [
-    ...
+    //...
 
-    new AppMenuItem('Books', 'Pages.Books', 'flaticon-books', '/app/main/books'),
+    new AppMenuItem('Books', 'Pages.Administration.Books', 'flaticon-books', '/app/main/books'),
 
-    ...
+    //...
     ])
 }
 ```
@@ -312,84 +314,140 @@ getMenu(): AppMenu {
 
 The pages and modals created here show similar features. Since it is the Metronic theme used in ASP.NET Zero, it is recommended that you review the link [Metronic Theme](https://preview.keenthemes.com/metronic8/demo1/index.html?mode=light) to adapt it.
 
-### Creating Module, Component and View
+### Creating Standalone Components and Views
 
-In ASP.NET Boilerplate, route operations are managed in `app-routing.module.ts`, while in ASP.NT Zero, they are managed in admin and main routing modules, depending on the scenario. In ASP.NET Zero, create and edit modals are managed in a single modal.
+**Important:** ASP.NET Zero has migrated to **standalone components**, eliminating the need for separate NgModule files for each feature. This is a major architectural difference from ASP.NET Boilerplate.
 
-
-While component declaration operations are managed in app.module.ts in ASP.NET Boilerplate, components are managed in modules belonging to the entity in ASP.NET Zero.
+In ASP.NET Boilerplate, components are declared in `app.module.ts`. In ASP.NET Zero, components are **standalone** and declare their dependencies directly in the `@Component` decorator using the `imports` array.
 
 **app.module.ts (ASP.NET Boilerplate)**
 
-```typecript
+```typescript
 @NgModule({
     declarations: [
 
-        ...
+        //...
 
         //books
         BooksComponent,
         CreateBookDialogComponent,
         EditBookDialogComponent,
 
-        ...
+        //...
     ],
 })
 export class AppModule {}
 ```
 
-**book.module.ts (ASP.NET Zero)**
+**books.component.ts (ASP.NET Zero - Standalone Component)**
 
 ```typescript
-@NgModule({
-    declarations: [
-        BookssComponent,
-        CreateOrEditBookModalComponent,
-        ViewBookModalComponent,
-        
+@Component({
+    selector: 'books',
+    templateUrl: './books.component.html',
+    animations: [appModuleAnimation()],
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        TableModule,
+        PaginatorModule,
+        SubHeaderComponent,
+        LocalizePipe,
     ],
-    imports: [AppSharedModule, BookRoutingModule , AdminSharedModule ],
-    
 })
-export class BookModule {
+export class BooksComponent extends AppComponentBase {
+    private readonly _bookService = inject(BookServiceProxy);
+
+    // Component logic here
 }
 ```
+
+**create-or-edit-book-modal.component.ts (ASP.NET Zero - Standalone Modal)**
+
+```typescript
+@Component({
+    selector: 'createOrEditBookModal',
+    templateUrl: './create-or-edit-book-modal.component.html',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ModalModule,
+        LocalizePipe,
+        ButtonBusyDirective,
+    ],
+})
+export class CreateOrEditBookModalComponent extends AppComponentBase {
+    private readonly _bookService = inject(BookServiceProxy);
+
+    modalSave = output<any>();
+    modal = viewChild.required<ModalDirective>('modal');
+
+    // Modal logic here
+}
+```
+
+**Key Points:**
+- **No module files needed:** You don't need to create `book.module.ts` or declare components in `app.module.ts`
+- **standalone: true:** All components must have this flag in the `@Component` decorator
+- **imports array:** Declare all dependencies (modules, components, pipes, directives) directly in the component
+- **Dependency injection:** Use `inject()` function for cleaner dependency injection
+- **Modern Angular patterns:** Use `signal()`, `viewChild()`, and `output()` for reactive state management
+
+In ASP.NET Zero, create and edit modals are typically managed in a single modal component (`CreateOrEditBookModalComponent`), unlike ASP.NET Boilerplate which often has separate components for create and edit operations.
 
 The approach and features exhibited in ASP.NET Boilerplate `books.component.ts` differ from ASP.NET Zero.
 
 **Differences**
 
 - **ASP.NET Boilerplate:** 
-    - Manages modals using BsModalService (with BsModalRef).
-    - Angular uses HTML table.
-    - Service connections are made more manually.
-    - These types of features are often added as a base.
-    - **abp.message.confirm** and **abp.notify.success** are used.
+    - Uses NgModules with `declarations` array for components
+    - Manages modals using BsModalService (with BsModalRef)
+    - Angular uses HTML table
+    - Service connections are made more manually
+    - These types of features are often added as a base
+    - **abp.message.confirm** and **abp.notify.success** are used
 
 - **ASP.NET Zero:** 
-
-    - Manages modals using Angular's **ViewChild** mechanism.
-    - Uses Table and **Paginator** components from the primeng library.
-    - More automated and structured, additional libraries such as **primeng** are used.
-    - Excel and file upload features are more advanced and integrated (FileUpload,         ExcelColumnSelectionModalComponent).
-    - Uses more advanced notification and approval services (NotifyService).
-    - Uses advanced filtering and loading mechanisms with primeng.
+    - Uses **standalone components** with `standalone: true` flag
+    - Components declare their own dependencies in `imports` array
+    - Uses modern Angular patterns: `inject()`, `signal()`, `viewChild()`, `output()`
+    - Manages modals using Angular's **viewChild** mechanism
+    - Uses Table and **Paginator** components from the primeng library
+    - More automated and structured, additional libraries such as **primeng** are used
+    - Excel and file upload features are more advanced and integrated (FileUpload, ExcelColumnSelectionModalComponent)
+    - Uses more advanced notification and approval services (NotifyService)
+    - Uses advanced filtering and loading mechanisms with primeng
+    - Lazy loads components directly with `loadComponent` instead of `loadChildren`
 
 
 When transitioning from ASP.NET Boilerplate (ABP) to ASP.NET Zero (ABP.Zero), especially in Angular components like `books.component.html`, there are several key differences and considerations:
 
 - **ASP.NET Boilerplate:**
-    - Uses a structured layout with specific Angular directives and Bootstrap for UI components.
+    - Uses NgModules with component declarations
+    - Uses a structured layout with specific Angular directives and Bootstrap for UI components
     - Does not include role checks for creating buttons
-    - The original Index view is placed directly under the **Views/Books** folder.
+    - The original Index view is placed directly under the **Views/Books** folder
+    - Uses traditional `@ViewChild` decorator syntax
 
 - **ASP.NET Zero:**
+    - Uses **standalone components** architecture - no NgModule files needed
+    - Components are self-contained with their own `imports` array
     - Often utilizes more integrated and streamlined components provided by the Metronic Theme
-    - Uses permission attributes (is Granted('Pages.Administration.Books.Create')) for the user creation button.
-    - The view is moved under **Areas/App/Views/Books** to support modular and multi-tenancy architecture.
-
+    - Uses permission attributes (`isGranted('Pages.Administration.Books.Create')`) for the user creation button
+    - The view is moved under **Areas/App/Views/Books** to support modular and multi-tenancy architecture
+    - Uses modern Angular signals with `viewChild()`, `signal()`, and `output()` functions
 
 In ASP.NET Boilerplate, the creation and editing modals are managed separately, whereas in ASP.NET Zero, these are handled within a single view under a unified modal management approach.
+
+**Migration Summary for Angular Components:**
+
+1. Convert NgModule based components to standalone components
+2. Add `standalone: true` to `@Component` decorator
+3. Move all imports from NgModule to component's `imports` array
+4. Update routing to use `loadComponent` instead of `loadChildren`
+5. Consider adopting modern Angular patterns like `inject()`, `signal()`, and `viewChild()`
 
 ## Adding Localization
 
@@ -429,4 +487,14 @@ Unit tests implemented in ASP.NET Boilerplate show minor changes in ASP.NET Zero
 
 ## Conclusion
 
-The migration from ASP.NET Public Plate to ASP.NET Zero involves several important transitions in various aspects of application development. This process includes changes in the management of models, configuration of app services and unit tests. ASP.NET Zero offers advanced features that increase efficiency and scalability by providing a more integrated and streamlined approach to these elements.
+The migration from ASP.NET Boilerplate to ASP.NET Zero involves several important transitions in various aspects of application development. This process includes changes in the management of models, configuration of app services, unit tests, and most notably, the Angular architecture.
+
+**Key Migration Points:**
+
+- **Angular Architecture:** ASP.NET Zero uses standalone components instead of NgModules, eliminating the need for module files
+- **Modern Angular Patterns:** Adoption of `inject()`, `signal()`, `viewChild()`, and `output()` for better type safety and reactivity
+- **Routing:** Transition from `loadChildren` (modules) to `loadComponent` (standalone components) for lazy loading
+- **UI Components:** Enhanced UI with PrimeNG and Metronic theme integration
+- **Development Experience:** Improved with more streamlined and self-contained components
+
+ASP.NET Zero offers advanced features that increase efficiency and scalability by providing a more integrated and streamlined approach to these elements. The adoption of standalone components represents a significant architectural improvement, aligning with modern Angular best practices and reducing boilerplate code.

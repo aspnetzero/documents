@@ -26,45 +26,45 @@ stop it and re-run **npm start** command.
 Change **phonebook.component.ts** as like below:
 
 ```typescript
-import {Component, Injector} from '@angular/core';
-import {AppComponentBase} from '@shared/common/app-component-base';
-import {appModuleAnimation} from '@shared/animations/routerTransition';
-import {PersonServiceProxy} from "@shared/service-proxies/service-proxies";
-import CustomStore from "@node_modules/devextreme/data/custom_store";
+import { Component, inject } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { PersonServiceProxy } from '@shared/service-proxies/service-proxies';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { SubHeaderComponent } from '@app/shared/common/sub-header/sub-header.component';
+import { DxDataGridModule } from 'devextreme-angular';
+import CustomStore from 'devextreme/data/custom_store';
 
 @Component({
     templateUrl: './phonebook.component.html',
-    animations: [appModuleAnimation()]
+    animations: [appModuleAnimation()],
+    imports: [SubHeaderComponent, LocalizePipe, DxDataGridModule],
 })
-
 export class PhoneBookComponent extends AppComponentBase {
+    private readonly _personService = inject(PersonServiceProxy);
 
     dataSource: any;
     refreshMode: string;
 
-    constructor(
-        injector: Injector,
-        private _personService: PersonServiceProxy
-    ) {
-        super(injector);
+    constructor() {
+        super();
         this.getData();
     }
 
     getData() {
-        this.refreshMode = "full";
+        this.refreshMode = 'full';
 
         this.dataSource = new CustomStore({
-            key: "id",
+            key: 'id',
             load: (loadOptions) => {
-                return this._personService.getPeople("").toPromise();
-            }
+                return this._personService.getPeople('').toPromise();
+            },
         });
     }
 }
-
 ```
 
-We inject **PersonServiceProxy**, call its **getPeople** method and **subscribe** to get the result. We do this in **ngOnInit** function (defined in Angular's **OnInit** interface). Assigned returned items to the **people** class member.
+We inject **PersonServiceProxy** using the `inject()` function, call its **getPeople** method and use it as the data source. Assigned returned items to the **dataSource** class member.
 
 ## Rendering People In Angular View
 

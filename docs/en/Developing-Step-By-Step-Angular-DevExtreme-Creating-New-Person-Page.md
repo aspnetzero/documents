@@ -5,40 +5,42 @@ First of all, we should use **nswag/refresh.bat** to re-generate service-proxies
 Go to **phonebook.component.ts** and add insert option to `CustomStore`
 
 ```typescript
-import {Component, Injector} from '@angular/core';
-import {AppComponentBase} from '@shared/common/app-component-base';
-import {appModuleAnimation} from '@shared/animations/routerTransition';
-import {PersonServiceProxy} from "@shared/service-proxies/service-proxies";
-import CustomStore from "@node_modules/devextreme/data/custom_store";
+import { Component, inject } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { PersonServiceProxy } from '@shared/service-proxies/service-proxies';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { SubHeaderComponent } from '@app/shared/common/sub-header/sub-header.component';
+import { DxDataGridModule } from 'devextreme-angular';
+import CustomStore from 'devextreme/data/custom_store';
 
 @Component({
     templateUrl: './phonebook.component.html',
-    animations: [appModuleAnimation()]
+    animations: [appModuleAnimation()],
+    imports: [SubHeaderComponent, LocalizePipe, DxDataGridModule],
 })
-
 export class PhoneBookComponent extends AppComponentBase {
+    private readonly _personService = inject(PersonServiceProxy);
+
     dataSource: any;
     refreshMode: string;
 
-    constructor(
-        injector: Injector,
-        private _personService: PersonServiceProxy
-    ) {
-        super(injector);
+    constructor() {
+        super();
         this.init();
     }
 
     init() {
-        this.refreshMode = "full";
+        this.refreshMode = 'full';
 
         this.dataSource = new CustomStore({
-            key: "id",
+            key: 'id',
             load: (loadOptions) => {
-                return this._personService.getPeople("").toPromise();
+                return this._personService.getPeople('').toPromise();
             },
             insert: (values) => {
-                return this._personService.createPerson(values).toPromise()
-            }
+                return this._personService.createPerson(values).toPromise();
+            },
         });
     }
 }
