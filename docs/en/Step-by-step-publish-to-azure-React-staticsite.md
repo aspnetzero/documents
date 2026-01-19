@@ -51,7 +51,7 @@ Update the **HOST** appsettings.json with the following:
 Update the **React UI** `.env.production` with the following:
 
 ```env
-VITE_API_URL=https://your-api-host.azurewebsites.net
+VITE_API_BASE_URL=https://your-api-host.azurewebsites.net
 ```
 
 ### Publish files to Azure Storage

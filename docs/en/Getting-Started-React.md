@@ -24,7 +24,7 @@ Select **ASP.NET Core & React** as Project Type and fill other required fields. 
 
 ## ASP.NET Core Application
 
-When you open the server side solution (**\*.Web.sln**) using **Visual Studio 2017+**, you will see the solution structure as below:
+When you open the server side solution (**\*.Web.sln**) using **Visual Studio 2022+**, you will see the solution structure as below:
 
 ![ASP.NET Core solution structure](images/aspnet-core-host-solution-4.png)
 

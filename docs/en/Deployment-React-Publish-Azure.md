@@ -90,7 +90,7 @@ Here are the steps to publish the React application to Azure:
 The React application uses Vite environment variables for configuration. Create or update the `.env.production` file in your project root:
 
 ```env
-VITE_API_URL=https://your-host-api.azurewebsites.net
+VITE_API_BASE_URL=https://your-host-api.azurewebsites.net
 ```
 
 This URL should point to your published Host API application.
@@ -162,7 +162,7 @@ Browse to your React application URL (e.g., `https://your-react-app.azurewebsite
 | Component | Azure Resource | Configuration |
 |-----------|---------------|---------------|
 | Host API | App Service | `appsettings.production.json` |
-| React UI | Static Web App or App Service | `.env.production` with `VITE_API_URL` |
+| React UI | Static Web App or App Service | `.env.production` with `VITE_API_BASE_URL` |
 | Database | Azure SQL Database | Connection string in Host API |
 
 

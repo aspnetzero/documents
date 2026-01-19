@@ -18,7 +18,7 @@ The build output will be placed in the `dist/` folder, ready for deployment to a
 Before deploying, configure the production API endpoint by creating a `.env.production` file in the project root:
 
 ```env
-VITE_API_URL=https://your-production-api-url
+VITE_API_BASE_URL=https://your-production-api-url
 ```
 
 This URL should point to your ASP.NET Zero Host API application.

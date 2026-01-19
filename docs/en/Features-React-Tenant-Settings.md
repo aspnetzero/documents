@@ -24,7 +24,7 @@ Under the user management tab, each tenant can configure some user management se
 
 Each tenant can also enable/disable captcha on user registration, reset password, email activation and login page for their account.
 
-> Note: **Token Based Authentication** has `ReCaptchaIgnoreWhiteList` located in `WebConsts`. If you want a client app to be ignored for reCaptcha control during login, add a value to `ReCaptchaIgnoreWhiteList` and send the same value in the `User-Agent` request header for your login request from the client app. You can check the Xamarin mobile app in AspNet Zero to see how `ReCaptchaIgnoreWhiteList` works.
+> Note: **Token Based Authentication** has `ReCaptchaIgnoreWhiteList` located in `WebConsts`. If you want a client app to be ignored for reCaptcha control during login, add a value to `ReCaptchaIgnoreWhiteList` and send the same value in the `User-Agent` request header for your login request from the client app. You can check the MAUI mobile app in AspNet Zero to see how `ReCaptchaIgnoreWhiteList` works.
 
 Each tenant can also enable or disable email restriction for their own account. When enabled, it can specify the email domain allowed for email restriction.
 

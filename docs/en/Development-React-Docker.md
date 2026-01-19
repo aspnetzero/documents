@@ -66,7 +66,7 @@ This starts the development server at `http://localhost:4200` with hot module re
 Make sure the `.env` file points to the correct backend API URL:
 
 ```env
-VITE_API_URL=https://localhost:44301
+VITE_API_BASE_URL=https://localhost:44301
 ```
 
 ### Option 2: Docker Container
@@ -137,7 +137,7 @@ services:
     depends_on:
       - host-api
     environment:
-      - VITE_API_URL=http://host-api:21021
+      - VITE_API_BASE_URL=http://host-api:21021
 
   host-api:
     # Reference your backend's docker-compose-host configuration
@@ -160,14 +160,14 @@ The React UI uses Vite environment variables. For Docker builds, you can:
 
 1. Set variables at build time in the Dockerfile:
    ```dockerfile
-   ARG VITE_API_URL
-   ENV VITE_API_URL=$VITE_API_URL
+   ARG VITE_API_BASE_URL
+   ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
    RUN npm run build
    ```
 
 2. Pass them during build:
    ```bash
-   docker build --build-arg VITE_API_URL=https://api.example.com -t aspnetzero-react .
+   docker build --build-arg VITE_API_BASE_URL=https://api.example.com -t aspnetzero-react .
    ```
 
 ### CORS Configuration
@@ -177,7 +177,7 @@ Ensure the backend's `appsettings.json` has the correct CORS origins configured 
 ```json
 {
   "App": {
-    "CorsOrigins": "http://localhost:5173,http://react-ui"
+    "CorsOrigins": "http://localhost:4200,http://react-ui"
   }
 }
 ```
@@ -200,6 +200,6 @@ docker system prune -f
 ### Connection to Backend API Fails
 
 1. Ensure the backend API is running and accessible
-2. Check that `VITE_API_URL` is correctly set
+2. Check that `VITE_API_BASE_URL` is correctly set
 3. Verify CORS is configured to allow the React UI origin
 4. Check Docker network connectivity if both are containerized

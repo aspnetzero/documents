@@ -38,7 +38,7 @@ The React application is built using Vite and can be deployed as static files to
 1. Configure production settings by creating or updating `.env.production` in the project root:
 
 ```env
-VITE_API_URL=https://your-host-api-url
+VITE_API_BASE_URL=https://your-host-api-url
 ```
 
 2. Run `yarn build` or `npm run build`. This command outputs the production build to the `dist` folder.

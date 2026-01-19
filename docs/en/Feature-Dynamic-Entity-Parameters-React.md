@@ -8,7 +8,7 @@ Check AspNet Boilerplate side of [Dynamic Property System](https://aspnetboilerp
 
 * First of all you need to define input types and entities you want to use with dynamic properties as described [here](https://aspnetboilerplate.com/Pages/Documents/Dynamic-Parameter-System#dynamic-property-definition)
 
-* Then go to http://localhost:5173/app/admin/dynamic-property
+* Then go to http://localhost:4200/app/admin/dynamic-property
 
 * Add Dynamic Properties that you need
 
