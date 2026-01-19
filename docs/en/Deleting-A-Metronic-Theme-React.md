@@ -68,7 +68,7 @@ Open `src/pages/admin/ui-customization/index.tsx`:
   import Theme2SettingsForm from "./components/Theme2SettingsForm";
   ```
 
-* Remove any Theme2-related rendering logic in the component.
+* Remove any Theme2 related rendering logic in the component.
 
 ### 6. Delete Theme Assets (Optional)
 

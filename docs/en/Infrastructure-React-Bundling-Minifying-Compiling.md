@@ -1,28 +1,51 @@
-# Dynamic Asset Bundling and Minifying
+# Asset Bundling and Minifying
 
-ASP.NET Zero uses [Vite](https://vitejs.dev/) to build the React application and it creates optimized style and script bundles automatically. But for some cases, an application might decide which style/script file to use at runtime and loads this style/script file dynamically. For such cases, ASP.NET Zero provides a bundling and minification system.
+ASP.NET Zero uses [Vite](https://vitejs.dev/) to build the React application. Vite automatically handles all bundling, minification, and optimization of your JavaScript, TypeScript, CSS, and other assets.
 
-ASP.NET Zero uses [Gulp](https://gulpjs.com/) for bundling & minifying such dynamic script and style files. 
+## Development
 
-Bundle definitions are stored in **bundles.json** file. Here is a sample screenshot of **bundles.json** file:
+During development, run the following command to start the Vite development server:
 
-<img src="images/bundles-json-React.png" alt="bundles.json" class="img-thumbnail" width="372" height="211" />
+```bash
+npm run dev
+```
 
-**bundles.json** file contains two sections, scripts and styles.
+Vite provides fast Hot Module Replacement (HMR) and serves your assets without bundling them, which results in extremely fast development experience.
 
-* **scripts:** This section contains script bundle definitions. Each bundle definition contains two properties **output** and **input**. **output** property contains the file which the bundled script content will be written. **input** property contains the list of scripts which will be bundled. Script files are not minified in development time.
-* **styles:** This section contains style bundle definitions.  Each bundle definition contains two properties **output** and **input**. **output** property contains the file which the bundled style content will be written. **input** property contains the list of styles which will be bundled. Style files are always minified. You can also use **less** files in the input section of your style bundles. ASP.NET Zero converts the less file into css and adds it to bundle. 
+## Production Build
 
-All input sections in **bundles.json** support wildcard syntax. So, you can include all files under a folder (ex: *.js) or all files under a folder and its subfolders (ex: /**/*.css) or you can exclude some files (ex: !wwwroot/**/*.min.css) using wildcard syntax.
+For production, run the following command:
 
-ASP.NET Zero has command for bundling style and script files "**npm run create-dynamic-bundles**".
+```bash
+npm run build
+```
 
-* **npm run create-dynamic-bundles**: This command is introduced for development time usage. It automatically updates bundle(s). If you modify **bundles.json** file, you need to re-run this command. It also writes output to console about the bundling progress. Script and style bundles are not minified when using this command. 
+This command will:
 
-For production usage, you can run "**npm run build**" and Vite will minify and optimize all assets for you.
+* Compile TypeScript files
+* Bundle all JavaScript/TypeScript modules into optimized chunks
+* Minify JavaScript and CSS files
+* Optimize and hash assets for caching
+* Generate the production-ready output in the `dist` folder
 
-In the ***Web.Host project**, you can also run ```npm run create-bundles``` to handle bundling and minification of dynamic JavaScript and CSS files in production.
+## Preview Production Build
 
-If you need to make any change about ASP.NET Zero's bundling and minification process, you can modify **gulpfile.js**. 
+To preview the production build locally before deployment, you can use:
 
-> Note: Don't use the bundles.json unless you have a dynamic css/js file. Normally, Vite manages your css and js file bundling and optimization.
+```bash
+npm run preview
+```
+
+This will serve the production build locally so you can verify everything works correctly.
+
+## Vite Configuration
+
+If you need to customize the bundling process, you can modify the **vite.config.ts** file. Vite provides extensive configuration options for:
+
+* Custom build targets
+* Asset handling and optimization
+* Code splitting strategies
+* CSS preprocessing
+* And much more
+
+For more information, refer to the [Vite documentation](https://vitejs.dev/config/).
