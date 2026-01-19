@@ -25,7 +25,7 @@ After you create and [download](https://aspnetzero.com/Download) your project, y
 
 There are two more solutions:
 
-- **\*.Mobile.sln** contains the Xamarin projects
+- **\*.Mobile.sln** contains the MAUI projects
 - **\*.All.sln** contains both mobile and web development projects.
 
 There are 12 projects in the solution:
@@ -39,7 +39,7 @@ There are 12 projects in the solution:
 - **Web.Core** project contains common classes used by MVC and Host projects.
 - **Web.Public** project is a separated web application that can be used to create a public web site or a landing page for your application. For more information see [Public Website](Public-Website).
 - **Migrator** project is a console application that runs database migrations. For more information see [Migrator Console Application](Migrator-Console-Application)
-- **ConsoleApiClient** project is a simple console application for performing API requests to the application  authenticated via IdentityServer4.
+- **ConsoleApiClient** project is a simple console application for performing API requests to the application  authenticated via OpenIddict.
 - **Tests** project contains unit and integration tests.
 
 ### Applications
@@ -117,6 +117,6 @@ Entry point is `main.tsx`; it runs `AppPreBootstrap` to handle some operations b
   - [Features](Features-React.md)
   - [Development Tutorial](Developing-Step-By-Step-React-Introduction.md)
   - [Deployment](Deployment-React.md)
-- Mobile (Xamarin) Application
-  - [Development Guide](Development-Guide-Xamarin.md)
-  - [Development Tutorial](Developing-Step-By-Step-Xamarin)
+- Mobile (MAUI) Application
+  - [Development Guide](Development-Guide-MAUI.md)
+  - [Development Tutorial](Developing-Step-By-Step-MAUI.md)

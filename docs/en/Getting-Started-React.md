@@ -24,7 +24,7 @@ Select **ASP.NET Core & React** as Project Type and fill other required fields. 
 
 ## ASP.NET Core Application
 
-When you open the server side solution (**\*.Web.sln**) using **Visual Studio 2017+**, you will see the solution structure as below:
+When you open the server side solution (**\*.Web.sln**) using **Visual Studio 2022+**, you will see the solution structure as below:
 
 ![ASP.NET Core solution structure](images/aspnet-core-host-solution-4.png)
 
@@ -88,19 +88,23 @@ For example when you navigate **Swagger UI**, you will see following page:
 
 ### Restore Packages
 
-Navigate to the **react** folder, open a command line and run the following command to restore the packages:
+Navigate to the **react** folder, open a command line and run one of the following commands to restore the packages:
 
 ```bash
 yarn
+# or
+npm install
 ```
 
-We use [yarn v1.x](https://classic.yarnpkg.com/lang/en/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
+We recommend using [yarn v1.x](https://classic.yarnpkg.com/lang/en/) for faster and more consistent dependency resolution, but npm works as well.
 
 ### Running The Application
 
-Run the following command in the command line:
+Run one of the following commands in the command line:
 
 ```bash
+yarn dev
+# or
 npm run dev
 ```
 

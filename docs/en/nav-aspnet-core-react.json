@@ -454,8 +454,8 @@
           "path": "Infrastructure-React-Npm-Packages.md"
         },
         {
-          "text": "React CLI & WebPack",
-          "path": "Infrastructure-React-React-CLI-WebPack.md"
+          "text": "React & Vite",
+          "path": "Infrastructure-React-Vite.md"
         },
         {
           "text": "NSwag",
