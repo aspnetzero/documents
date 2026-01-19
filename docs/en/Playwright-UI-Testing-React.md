@@ -12,7 +12,7 @@ After making sure Node.js is installed, follow the steps below:
 
 1. Open your terminal.
 2. Navigate to the `ui-tests-playwright` folder of this project.
-3. Run `npm install`.
+3. Run `yarn` or `npm install`.
 
 There are two parts of the project that requires your close attention.
 

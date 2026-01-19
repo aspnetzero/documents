@@ -7,6 +7,8 @@ ASP.NET Zero uses [Vite](https://vitejs.dev/) to build the React application. Vi
 During development, run the following command to start the Vite development server:
 
 ```bash
+yarn dev
+# or
 npm run dev
 ```
 
@@ -17,6 +19,8 @@ Vite provides fast Hot Module Replacement (HMR) and serves your assets without b
 For production, run the following command:
 
 ```bash
+yarn build
+# or
 npm run build
 ```
 
@@ -33,6 +37,8 @@ This command will:
 To preview the production build locally before deployment, you can use:
 
 ```bash
+yarn preview
+# or
 npm run preview
 ```
 

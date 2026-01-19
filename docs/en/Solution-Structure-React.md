@@ -117,6 +117,6 @@ Entry point is `main.tsx`; it runs `AppPreBootstrap` to handle some operations b
   - [Features](Features-React.md)
   - [Development Tutorial](Developing-Step-By-Step-React-Introduction.md)
   - [Deployment](Deployment-React.md)
-- Mobile (Xamarin) Application
-  - [Development Guide](Development-Guide-Xamarin.md)
-  - [Development Tutorial](Developing-Step-By-Step-Xamarin)
+- Mobile (MAUI) Application
+  - [Development Guide](Development-Guide-MAUI.md)
+  - [Development Tutorial](Developing-Step-By-Step-MAUI.md)

@@ -100,8 +100,9 @@ This URL should point to your published Host API application.
 Run the following commands to build the React application:
 
 ```bash
-npm install
-npm run build
+yarn && yarn build
+# or
+npm install && npm run build
 ```
 
 This will create a production build in the `dist/` folder.

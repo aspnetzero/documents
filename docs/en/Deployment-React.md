@@ -8,8 +8,8 @@ ASP.NET Zero React UI is built using [Vite](https://vite.dev/) as the build tool
 
 To build the React application for production, run the following commands in the root directory of the React project:
 
-1. Run `npm install` to install dependencies.
-2. Run `npm run build` to create a production build.
+1. Run `yarn` or `npm install` to install dependencies.
+2. Run `yarn build` or `npm run build` to create a production build.
 
 The build output will be placed in the `dist/` folder, ready for deployment to any static file server.
 
@@ -29,7 +29,7 @@ ASP.NET Zero also provides a merged solution where the React client-side applica
 
 To publish the merged solution:
 
-1. Run `npm run build` in the React project to build the client application.
+1. Run `yarn build` or `npm run build` in the React project to build the client application.
 2. Run `dotnet publish -c Release` in the root directory of the `*.Host` project. See the [dotnet publish documentation](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish) for additional parameters.
 3. When the publish is complete, ensure the React build output is copied to the `wwwroot` folder of the published Host application.
 
@@ -47,6 +47,8 @@ Vite automatically applies the following optimizations for production builds:
 You can preview the production build locally by running:
 
 ```bash
+yarn preview
+# or
 npm run preview
 ```
 

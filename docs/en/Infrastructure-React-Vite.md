@@ -7,16 +7,20 @@ ASP.NET Zero React UI uses [Vite](https://vitejs.dev/) for development and produ
 To run the application in development mode, open a terminal and run:
 
 ```bash
+yarn dev
+# or
 npm run dev
 ```
 
-Once compiled and ready, you can open the application in your browser at <http://localhost:5173>.
+Once compiled and ready, you can open the application in your browser at <http://localhost:4200>.
 
 ## Production Build
 
 To create a production build:
 
 ```bash
+yarn build
+# or
 npm run build
 ```
 
@@ -27,6 +31,8 @@ This creates an optimized build in the `dist/` folder.
 To preview the production build locally:
 
 ```bash
+yarn preview
+# or
 npm run preview
 ```
 

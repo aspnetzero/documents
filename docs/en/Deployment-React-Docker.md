@@ -6,13 +6,15 @@ ASP.NET Zero solution has a **build folder** which contains scripts to **build &
 
 * Node.js (LTS version recommended)
 * Docker Desktop installed and running
-* npm packages installed (`npm install`)
+* Packages installed (`yarn` or `npm install`)
 
 ## Building the React Application
 
 Before creating a Docker image, build the React application:
 
 ```bash
+yarn build
+# or
 npm run build
 ```
 

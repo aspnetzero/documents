@@ -56,11 +56,12 @@ The React UI is a client-side application that can be run in two ways during dev
 Run the React UI using the Vite development server:
 
 ```bash
-npm install
-npm run dev
+yarn && yarn dev
+# or
+npm install && npm run dev
 ```
 
-This starts the development server at `http://localhost:5173` with hot module replacement.
+This starts the development server at `http://localhost:4200` with hot module replacement.
 
 Make sure the `.env` file points to the correct backend API URL:
 

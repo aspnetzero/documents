@@ -41,7 +41,7 @@ The React application is built using Vite and can be deployed as static files to
 VITE_API_URL=https://your-host-api-url
 ```
 
-2. Run `npm run build`. This command outputs the production build to the `dist` folder.
+2. Run `yarn build` or `npm run build`. This command outputs the production build to the `dist` folder.
 
 3. Copy all files from the `dist` folder to your IIS website directory (for example: `C:\inetpub\wwwroot\reactwebsite`).
 
