@@ -506,10 +506,6 @@
           "path": "Infrastructure-Core-React-OpenIddict-Integration.md"
         },
         {
-          "text": "Identity Server 4 Integration",
-          "path": "Infrastructure-Core-React-Identity-Server4-Integration.md"
-        },
-        {
           "text": "Spinner service",
           "path": "Infrastructure-React-Spinner.md"
         },

@@ -16,7 +16,7 @@ Go to your Azure Portal and create two resources:
 
 On Azure portal menu, go to App Services and click "Create App Service" button. Fill the form correctly and create the app service for the API.
 
-<img src="images/azure-publish-React-create-admin-website.png">
+<img src="images/azure-publish-angular-create-admin-website.png">
 
 ### Creating an Azure Resource for React
 
@@ -29,7 +29,7 @@ For the React application, you have two options:
 
 On Azure portal, go to SQL databases menu and create a new empty database. If you haven't created a new Server on Azure, click "create new" link under the Server selection combobox and first create a Server.
 
-<img src="/images/azure-publish-mvc-create-database.png">
+<img src="images/azure-publish-angular-create-database.png">
 
 ## Publish Host Application to Azure
 
@@ -49,7 +49,7 @@ In order to do that, your public IP address should have access to the Azure SQL 
 **The easiest way:** Open SQL Server Management Studio and enter the Azure database settings, then click connect.
 If you are already logged in to Azure, the following info screen will be shown:
 
-<img src="images/azure-publish-React-allow-ip-to-azure.png">
+<img src="images/azure-publish-angular-allow-ip-to-azure.png">
 
 Now your client IP address has access to Azure. This operation can also be done via the [Azure Portal](https://portal.azure.com). Check [here](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure) to learn how to configure the firewall for client access via Azure Portal.
 
@@ -57,11 +57,11 @@ Now your client IP address has access to Azure. This operation can also be done 
 
 Open **appsettings.json** in **.Web.Host** project and change connection settings according to the Azure Database:
 
-<img src="images/azure-publish-React-connection-string.png">
+<img src="images/azure-publish-angular-connection-string.png">
 
 Open Package Manager Console in Visual Studio, set **.EntityFrameworkCore** as the Default Project and run the `update-database` command as shown below:
 
-<img src="images/azure-publish-React-update-database.png">
+<img src="images/azure-publish-angular-update-database.png">
 
 As an alternative, you can use the Migrator project in your solution instead of running Update-Database command. It is suggested to use the Migrator project for migration operations.
 
@@ -69,7 +69,7 @@ As an alternative, you can use the Migrator project in your solution instead of 
 
 Since your application will run in Production environment, Azure will use **appsettings.production.json** that is placed in **Web.Host**, so this file should be configured like following:
 
-<img src="images/azure-publish-React-appsttings-production.png">
+<img src="images/azure-publish-angular-appsttings-production.png">
 
 - `ServerRootAddress`: The URL of your Host application on Azure
 - `ClientRootAddress`: Your React UI's URL on Azure
@@ -79,7 +79,7 @@ Since your application will run in Production environment, Azure will use **apps
 
 Right click the **Web.Host** project and select "**Publish**". Select "**Azure**" and follow the wizard to publish to your App Service.
 
-<img src="images/azure-publish-React-swagger-ui.png">
+<img src="images/azure-publish-angular-swagger-ui.png">
 
 ## Publish React to Azure
 
@@ -149,13 +149,13 @@ Azure will automatically build and deploy your app on each push.
 
 2. Upload all files from the `dist/` folder to the `wwwroot` folder on Azure via FTP or Azure Portal.
 
-<img src="images/azure-publish-React-filezilla.png">
+<img src="images/azure-publish-angular-filezilla.png">
 
 ### 4. Verify Deployment
 
 Browse to your React application URL (e.g., `https://your-react-app.azurewebsites.net`) and verify it works correctly.
 
-<img src="images/azure-publish-React-React-ui.png">
+<img src="images/dashboardV1-react.jpg">
 
 ## Summary
 
