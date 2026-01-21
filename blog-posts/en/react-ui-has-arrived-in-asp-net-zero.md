@@ -19,7 +19,6 @@ Instead of assembling and maintaining a complex React enterprise stack from scra
 
 <img src="/Images/Blog/react-tenant-dashboard.png" alt="React Dashboard" class="img-thumbnail" />
 
-
 ## Why React for ASP.NET Zero?
 
 React has become the frontend of choice for many development teams. Beyond its popularity, React offers tangible advantages for enterprise applications:
