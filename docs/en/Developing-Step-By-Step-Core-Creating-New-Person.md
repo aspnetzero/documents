@@ -31,10 +31,18 @@ public class CreatePersonInput
 }
 ```
 
-And create mapping in CustomDtoMapper.cs:
+Create a mapper for CreatePersonInput to Person. Create a new file `CreatePersonInputToPersonMapper.cs`:
 
 ```csharp
-configuration.CreateMap<CreatePersonInput, Person>();
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class CreatePersonInputToPersonMapper
+{
+    public partial Person Map(CreatePersonInput input);
+}
 ```
 
 All properties are decorated with **data annotation attributes**
@@ -54,7 +62,7 @@ public async Task CreatePerson(CreatePersonInput input)
 ```
 
 A Person entity is created by mapping given input, then inserted to
-database. We used **async/await** pattern here. All methods in ASP.NET
+database. The `ObjectMapper` uses the Mapperly-generated mapper internally. We used **async/await** pattern here. All methods in ASP.NET
 Zero startup project is **async**. It's advised to use async/await
 wherever possible.
 

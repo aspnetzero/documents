@@ -15,7 +15,7 @@ Some unit tests (tenant creation, edition creation etc.) are only valid in multi
 
 These unit tests will be a guide to understand the code. Also, they can be a model while writing your own unit tests for your application's functionalities.
 
-All unit test classes (actually they are integration tests since they work integrated to ABP, EntityFramework, AutoMapper and other libraries used up to application layer) are derived from **AppTestBase**. It initializes ABP system, mocks database using Effort, creates initial test data and logins to the application for each tests. It also provides some useful common methods for all tests.
+All unit test classes (actually they are integration tests since they work integrated to ABP, EntityFramework, Mapperly and other libraries used up to application layer) are derived from **AppTestBase**. It initializes ABP system, mocks database using Effort, creates initial test data and logins to the application for each tests. It also provides some useful common methods for all tests.
 
 Here, a sample unit test in the application:
 

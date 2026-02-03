@@ -38,17 +38,29 @@ public class PersonListDto : FullAuditedEntityDto
 }
 ```
 
-**CustomDtoMapper.cs** is used to create mapping from **Person** to
-**PersonListDto**. **FullAuditedEntityDto** is inherited to
+We need to create a mapper to convert **Person** to **PersonListDto**. **FullAuditedEntityDto** is inherited to
 implement audit properties automatically. See [application
 service](https://aspnetboilerplate.com/Pages/Documents/Application-Services)
 and
 [DTO](https://aspnetboilerplate.com/Pages/Documents/Data-Transfer-Objects)
-documentations for more information. We are adding the following mappings.
+documentations for more information.
+
+Create a new file `PersonToPersonListDtoMapper.cs` in the **.Application** project:
 
 ```csharp
-configuration.CreateMap<Person, PersonListDto>();
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class PersonToPersonListDtoMapper
+{
+    public partial PersonListDto Map(Person person);
+    public partial List<PersonListDto> Map(List<Person> persons);
+}
 ```
+
+ASP.NET Zero automatically discovers and registers this mapper class.
 
 After defining interface, we can implement it as shown below:
 
@@ -82,15 +94,14 @@ public class PersonAppService : PhoneBookDemoAppServiceBase, IPersonAppService
 ```
 
 We're injecting **person repository** (it's automatically created by
-ABP) and using it to filter and get people from database.
+ABP).
 
 **WhereIf** is an extension method here (defined in Abp.Linq.Extensions
 namespace). It performs Where condition, only if filter is not null or
 empty. **IsNullOrEmpty** is also an extension method (defined in
 Abp.Extensions namespace). ABP has many similar shortcut extension
-methods. **ObjectMapper.Map** method automatically converts list of
-Person entities to list of PersonListDto objects with using
-configurations in **CustomDtoMapper.cs** in **.Application** project.
+methods. **ObjectMapper.Map** automatically converts list of
+Person entities to list of PersonListDto objects using the Mapperly-generated mapping code internally.
 
 ## Connection & Transaction Management
 

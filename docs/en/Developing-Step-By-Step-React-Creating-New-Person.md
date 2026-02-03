@@ -31,14 +31,21 @@ public class CreatePersonInput
 }
 ```
 
-Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
+Then we create a mapper for CreatePersonInput to Person. Create a new file `CreatePersonInputToPersonMapper.cs`:
 
 ```csharp
-configuration.CreateMap<CreatePersonInput, Person>();
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class CreatePersonInputToPersonMapper
+{
+    public partial Person Map(CreatePersonInput input);
+}
 ```
 
-**CreatePersonInput** is mapped to **Person** entity (comment out
-related line in CustomDtoMapper.cs and we will use mapping below).
+**CreatePersonInput** is mapped to **Person** entity using Mapperly.
 All properties are decorated with **data annotation attributes**
 to provide automatic
 **[validation](https://aspnetboilerplate.com/Pages/Documents/Validating-Data-Transfer-Objects)**.
