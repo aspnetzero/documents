@@ -626,6 +626,10 @@
       "path": "Migration-from-Boilerplate-to-AspNet-Zero-Mvc.md"
     },
     {
+      "text": "Migration from AutoMapper to Mapperly",
+      "path": "Migrating-From-AutoMapper-To-Mapperly.md"
+    },    
+    {
       "text": "Change Logs",
       "path": "Change-Logs.md"
     },
