@@ -6,6 +6,10 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 15.1.0 (2026-01-20)
+
+* Introduced React UI
+
 ## 15.0.0 (2025-12-05)
 
 * Upgraded to .NET 10
