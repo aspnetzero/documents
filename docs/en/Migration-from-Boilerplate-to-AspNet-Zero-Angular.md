@@ -107,6 +107,41 @@ You can also use the same dto structure that you created in ASP.NET Boilerplate 
 
 Like ASP.NET Boilerplate, you can create interfaces in ASP.NET Zero in a similar way.
 
+## Object Mapping
+
+ASP.NET Zero uses [Mapperly](https://mapperly.riok.app/) for object-to-object mappings, which generates mapping code at compile-time. Unlike AutoMapper used in ASP.NET Boilerplate, Mapperly provides better performance and compile-time safety.
+
+### Creating Mapperly Mappers
+
+For each entity, create a mapper class in the `*.Application` project under a `Mappers` folder:
+
+```csharp
+using Riok.Mapperly.Abstractions;
+using YourNamespace.Books;
+using YourNamespace.Books.Dto;
+
+namespace YourNamespace.Application.Mappers
+{
+    [Mapper]
+    public partial class BookMapper
+    {
+        // Entity to DTO mappings
+        public partial BookListDto Map(Book source);
+        public partial BookEditDto MapToEditDto(Book source);
+        
+        // DTO to Entity mappings
+        public partial Book Map(BookEditDto source);
+        
+        // List mappings
+        public partial List<BookListDto> MapList(List<Book> source);
+    }
+}
+```
+
+Mapperly will automatically generate the implementation of these methods at compile-time. The `ObjectMapper.Map<T>()` API in your application services will continue to work seamlessly, as ASP.NET Zero automatically discovers and uses your Mapperly mapper classes.
+
+For more details on migrating from AutoMapper to Mapperly, see [Migrating from AutoMapper to Mapperly](Migrating-From-AutoMapper-To-Mapperly.md).
+
 ## Managing Permissions
 
 In ASP.NET Zero applications, it is important to manage permissions, as in ASP.NET Boilerplate, to control access to various features and functions within the application. Permissions are typically defined as constants in a central static class called AppPermissions.
