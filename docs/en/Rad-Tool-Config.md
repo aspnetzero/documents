@@ -20,7 +20,6 @@ Config.json file is located in `*YourAppFolder/aspnet-core/AspNetZeroRadTool`
   "FormatGeneratedFiles": true,
   "FileLocations": {
     "DbContext": "{{Namespace_Here}}.EntityFrameworkCore\\EntityFrameworkCore\\{{Project_Name_Here}}DbContext.cs",
-    "CustomDtoMapper": "{{Namespace_Here}}.Application\\CustomDtoMapper.cs",
     "AppAuthorizationProvider": "{{Namespace_Here}}.Core\\Authorization\\AppAuthorizationProvider.cs",
     "EntityHistoryHelper": "{{Namespace_Here}}.Core\\EntityHistory\\EntityHistoryHelper.cs",
     "AppPermissions": "{{Namespace_Here}}.Core\\Authorization\\AppPermissions.cs",

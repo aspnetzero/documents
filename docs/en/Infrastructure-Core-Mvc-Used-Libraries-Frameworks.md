@@ -13,7 +13,7 @@ Here's the list of all libraries.
   - [EntityFramework
     Core](https://docs.microsoft.com/en-us/ef/core/index)
   - [Castle Windsor](http://www.castleproject.org/projects/windsor/)
-  - [AutoMapper](http://automapper.org/)
+  - [Mapperly](https://mapperly.riok.app/)
   - [IdentityServer4](http://identityserver.io/)
   - [HangFire](http://hangfire.io/)
   - [Log4Net](https://logging.apache.org/log4net/)

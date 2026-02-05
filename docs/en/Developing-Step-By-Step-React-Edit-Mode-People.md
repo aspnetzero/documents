@@ -5,7 +5,7 @@ Now we want to edit name, surname and e-mail of people:
 <img src="images/edit-person-core-react.png" alt="Edit Person" class="img-thumbnail" />  
 
 First of all, we create the necessary DTOs to transfer people's id, name,
-surname and e-mail. We can optionally configure auto-mapper, but this is not necessary because all properties match automatically. Then we create the functions in PersonAppService for
+surname and e-mail. Then we create the functions in PersonAppService for
 editing people:  
 
 ```csharp
@@ -13,21 +13,7 @@ Task<GetPersonForEditOutput> GetPersonForEdit(EntityDto<int> input);
 Task EditPerson(EditPersonInput input);
 ```
 
-```csharp 
-[AbpAuthorize(AppPermissions.Pages_Administration_PhoneBook_EditPerson)]
-public async Task<GetPersonForEditOutput> GetPersonForEdit( EntityDto<int> input)
-{
-    var person = await _personRepository.GetAsync(input.Id);
-    return ObjectMapper.Map<GetPersonForEditOutput>(person);
-}
-
-[AbpAuthorize(AppPermissions.Pages_Administration_PhoneBook_EditPerson)]
-public async Task EditPerson(EditPersonInput input)
-{
-    var person = await _personRepository.FirstOrDefaultAsync(input.Id);
-    ObjectMapper.Map(input, person);
-}
-
+```csharp
 public class GetPersonForEditOutput : EntityDto<int>
 {
     public string Name { get; set; }
@@ -45,11 +31,48 @@ public class EditPersonInput : EntityDto<int>
 
 The previous documents showed how to add `Pages_Administration_PhoneBook_EditPerson`. You can add it in the same way.
 
-Then we add configuration for AutoMapper into `CustomDtoMapper.cs` like below:
+Then we create mappers for the edit operations. Create `PersonToGetPersonForEditOutputMapper.cs`:
 
 ```csharp
-configuration.CreateMap<Person, GetPersonForEditOutput>();
-configuration.CreateMap<EditPersonInput, Person>().ReverseMap();
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class PersonToGetPersonForEditOutputMapper
+{
+    public partial GetPersonForEditOutput Map(Person person);
+}
+```
+
+Create `EditPersonInputToPersonMapper.cs` for updating existing persons:
+
+```csharp
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class EditPersonInputToPersonMapper
+{
+    public partial void Map(EditPersonInput input, Person person);
+}
+```
+
+Then use ObjectMapper in the PersonAppService methods:
+
+```csharp
+public async Task<GetPersonForEditOutput> GetPersonForEdit(EntityDto<int> input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    return ObjectMapper.Map<GetPersonForEditOutput>(person);
+}
+
+public async Task EditPerson(EditPersonInput input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    ObjectMapper.Map(input, person);
+}
 ```
 
 ## Edit Modal Implementation

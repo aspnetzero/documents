@@ -27,6 +27,20 @@ public class AddPhoneInput
 }
 ```
 
+First, create a mapper for the phone operations. Create `AddPhoneInputToPhoneMapper.cs`:
+
+```csharp
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class AddPhoneInputToPhoneMapper
+{
+    public partial Phone Map(AddPhoneInput input);
+}
+```
+
 Now, we can implement these methods:
 
 ```csharp
@@ -47,12 +61,6 @@ public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 
     return ObjectMapper.Map<PhoneInPersonListDto>(phone);
 }
-```
-
-And create mapping in CustomDtoMapper.cs:
-
-```csharp
-configuration.CreateMap<AddPhoneInput, Phone>();
 ```
 
 (Note: We injected **IRepository&lt;Phone, long&gt;** in the constructor

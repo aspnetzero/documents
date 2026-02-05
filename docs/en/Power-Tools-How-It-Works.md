@@ -35,8 +35,9 @@ Here is the full list of the files that are created or modified by the tool, if 
 * AppAuthorizationProvider.cs
 * AppPermissions.cs
 * ProjectNameDbContext.cs
-* CustomDtoMapper.cs
 * ProjectName.xml (English localization file)
+
+**Note:** Power Tools automatically generates Mapperly mapper classes for entity to DTO mappings. Unlike the previous AutoMapper approach that used a centralized `CustomDtoMapper.cs` file, Mapperly uses individual mapper classes that are created per entity.
 
 (Optionally, adds a database migration and updates the database.)
 

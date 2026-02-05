@@ -17,7 +17,7 @@ public class PhoneBookController : PhoneBookDemoControllerBase
     public ActionResult Index(GetPeopleInput input)
     {
         var output = _personAppService.GetPeople(input);
-        var model = ObjectMapper.MapTo<IndexViewModel>(output);
+        var model = ObjectMapper.Map<IndexViewModel>(output);
 
         return View(model);
     }
@@ -30,15 +30,29 @@ created a ViewModel object and passes to the view. Let's see the
 **IndexViewModel** class:
 
 ```csharp
-[AutoMapFrom(typeof(ListResultDto<PersonListDto>))]
 public class IndexViewModel : ListResultDto<PersonListDto>
 {
 
 }
 ```
 
+Create a mapper for the view model. Create `ListResultDtoToIndexViewModelMapper.cs` in the Web project:
+
+```csharp
+using Riok.Mapperly.Abstractions;
+using Abp.Application.Services.Dto;
+
+namespace Acme.PhoneBookDemo.Web.Areas.App.Models.PhoneBook;
+
+[Mapper]
+public partial class ListResultDtoToIndexViewModelMapper
+{
+    public partial IndexViewModel Map(ListResultDto<PersonListDto> output);
+}
+```
+
 Here, we're extending the output of the PersonAppService.GetPeople method.
-We get the output from the constructor and map it to this object.
+ASP.NET Zero automatically discovers this mapper class, and `ObjectMapper.Map` uses it internally.
 
 ## Application Services and ViewModels
 

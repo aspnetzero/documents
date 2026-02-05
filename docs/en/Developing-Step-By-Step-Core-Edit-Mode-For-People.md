@@ -8,27 +8,37 @@ First of all, we create the necessary DTOs to transfer people's id, name,
 surname and e-mail. Then create the functions in PersonAppService for
 editing people:  
 
-```csharp
-        public async Task<GetPersonForEditOutput> GetPersonForEdit(IEntityDto input)
-        {
-            var person = await _personRepository.GetAsync(input.Id);
-            return ObjectMapper.Map<GetPersonForEditOutput>(person);
-        }
+First, create a mapper for the edit operations. Create `PersonToGetPersonForEditOutputMapper.cs`:
 
-        public async Task EditPerson(EditPersonInput input)
-        {
-            var person = await _personRepository.GetAsync(input.Id);
-            person.Name = input.Name;
-            person.Surname = input.Surname;
-            person.EmailAddress = input.EmailAddress;
-            await _personRepository.UpdateAsync(person);
-        }
+```csharp
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class PersonToGetPersonForEditOutputMapper
+{
+    public partial GetPersonForEditOutput Map(Person person);
+}
 ```
 
-And create mapping in CustomDtoMapper.cs:
+Then implement the methods using ObjectMapper:
 
 ```csharp
-configuration.CreateMap<Person, GetPersonForEditOutput>();
+public async Task<GetPersonForEditOutput> GetPersonForEdit(IEntityDto input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    return ObjectMapper.Map<GetPersonForEditOutput>(person);
+}
+
+public async Task EditPerson(EditPersonInput input)
+{
+    var person = await _personRepository.GetAsync(input.Id);
+    person.Name = input.Name;
+    person.Surname = input.Surname;
+    person.EmailAddress = input.EmailAddress;
+    await _personRepository.UpdateAsync(person);
+}
 ```
 
 ## View
@@ -67,16 +77,28 @@ configuration.CreateMap<Person, GetPersonForEditOutput>();
 ## View Model
 
 ```csharp
-using Abp.AutoMapper;
 using Acme.PhoneBookDemo.PhoneBook;
 
 namespace Acme.PhoneBook.Web.Areas.App.Models.PhoneBook
 {
-    [AutoMapFrom(typeof(GetPersonForEditOutput))]
     public class EditPersonModalViewModel : GetPersonForEditOutput
     {
 
     }
+}
+```
+
+Create a mapper for the view model. Create `GetPersonForEditOutputToEditPersonModalViewModelMapper.cs`:
+
+```csharp
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBook.Web.Areas.App.Models.PhoneBook;
+
+[Mapper]
+public partial class GetPersonForEditOutputToEditPersonModalViewModelMapper
+{
+    public partial EditPersonModalViewModel Map(GetPersonForEditOutput output);
 }
 ```
 
@@ -135,16 +157,16 @@ Add Those lines to **index.js**:
     });
 ```
 
-Add Those lines to **PhoneBookController.cs**:
+Add this method to **PhoneBookController.cs**:
 
 ```csharp
-        public async Task<PartialViewResult> EditPersonModal(int id)
-        {
-            var output = await _personAppService.GetPersonForEdit(new EntityDto { Id = id });
-            var viewModel = ObjectMapper.MapTo<EditPersonModalViewModel>(output);
+public async Task<PartialViewResult> EditPersonModal(int id)
+{
+    var output = await _personAppService.GetPersonForEdit(new EntityDto { Id = id });
+    var viewModel = ObjectMapper.Map<EditPersonModalViewModel>(output);
 
-            return PartialView("_EditPersonModal", viewModel);
-        }
+    return PartialView("_EditPersonModal", viewModel);
+}
 ```
 
 ## Next
