@@ -8,7 +8,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 ## 15.1.0 (2026-01-20)
 
-* Introduced React UI
+* [Introduced React UI](https://aspnetzero.com/react)
 
 ## 15.0.0 (2025-12-05)
 
