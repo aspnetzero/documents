@@ -312,6 +312,10 @@
               "path": "Features-React-Entity-History.md"
             },
             {
+              "text": "Active Sessions",
+              "path": "Features-Active-Sessions.md"
+            },
+            {
               "text": "Visual Settings",
               "path": "Features-React-Visual-Settings.md"
             },
