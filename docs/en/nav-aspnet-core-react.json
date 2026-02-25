@@ -172,7 +172,7 @@
                 },
                 {
                   "text": "Passwordless Login",
-                  "path": "Features-Passwordless-Login.md"
+                  "path": "Features-React-Passwordless-Login.md"
                 }
               ]
             },
@@ -313,7 +313,7 @@
             },
             {
               "text": "Active Sessions",
-              "path": "Features-Active-Sessions.md"
+              "path": "Features-React-Active-Sessions.md"
             },
             {
               "text": "Visual Settings",

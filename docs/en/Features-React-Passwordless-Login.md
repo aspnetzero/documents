@@ -47,4 +47,4 @@ After entering the verification code correctly, user will be authenticated and r
 
 ## Next
 
-- [QR Login](Features-Mvc-Core-Qr-Login)
+- [QR Login](Features-React-Qr-Login)

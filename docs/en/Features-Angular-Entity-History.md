@@ -52,4 +52,4 @@ Here is a sample screenshot which show the value of **abp.custom.EntityHistory**
 
 ## Next
 
-- [Active Sessions](Features-Active-Sessions)
+- [Active Sessions](Features-Angular-Active-Sessions)
