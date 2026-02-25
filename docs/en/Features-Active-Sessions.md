@@ -1,6 +1,6 @@
 # Active Sessions
 
-Active Sessions is a security feature that allows administrators to monitor and manage user login sessions across the application. With this feature, you can see where and when users are logged in, detect suspicious activity, and terminate sessions when needed. Session management works for both host and tenant users.
+Active Sessions is a security feature that allows each user (including administrators) to monitor and manage their own active login sessions. With this feature, you can see where and when you are logged in, detect suspicious activity on your account, and terminate sessions when needed. Session management works for both host and tenant users.
 
 > Note: Session management is **disabled by default**. It must be enabled from the settings page before it can be used.
 
