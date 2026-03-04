@@ -6,5 +6,5 @@ If a user forgets their password, it can be retrieved by clicking the **Forgot P
 
 ## Next
 
-- [Passwordless Login](Features-Passwordless-Login)
+- [Passwordless Login](Features-Mvc-Core-Passwordless-Login)
 

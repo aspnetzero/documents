@@ -30,4 +30,4 @@ Authorization to the header as "**Bearer &lt;accessToken&gt;**". And the result 
 
 ## Next
 
-- [Passwordless Login](Features-Passwordless-Login)
+- [Passwordless Login](Features-React-Passwordless-Login)

@@ -176,7 +176,7 @@
                 },
                 {
                   "text": "Passwordless Login",
-                  "path": "Features-Passwordless-Login.md"
+                  "path": "Features-Angular-Passwordless-Login.md"
                 },
                 {
                   "text": "QR Login",
@@ -318,6 +318,10 @@
             {
               "text": "Entity History",
               "path": "Features-Angular-Entity-History.md"
+            },
+            {
+              "text": "Active Sessions",
+              "path": "Features-Angular-Active-Sessions.md"
             },
             {
               "text": "Visual Settings",
