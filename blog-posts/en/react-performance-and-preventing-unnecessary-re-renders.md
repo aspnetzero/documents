@@ -11,7 +11,7 @@ Re-rendering in React is not a flaw; it is the framework's fundamental operating
 
 In this article, we will explore React's re-render mechanism, uncover the root causes of unnecessary re-renders, and detail the architectural principles essential for sustaining high performance in large-scale applications.
 
-# What Does "Re-rendering" Actually Mean in React?
+## What Does "Re-rendering" Actually Mean in React?
 
 When a component renders in React, the DOM is not directly rebuilt from scratch. Instead, the following sequence of events occurs:
 
@@ -29,7 +29,7 @@ While React is highly efficient at minimizing actual DOM manipulations, the re-e
 
 Therefore, the primary goal of React performance optimization is not to manage the DOM, but to reduce unnecessary component executions.
 
-# Why Do React Components Re-render?
+## Why Do React Components Re-render?
 
 React operates on a declarative model. It inherently assumes that the UI is always a direct reflection of the state. Because of this, when a parent component renders, React’s default behavior is to re-execute all of its child components.
 
@@ -58,7 +58,7 @@ In this scenario, `HeavyComponent` doesn't use the `count` state at all. However
 
 ![Parent State Change Child Render](/Images/Blog/parent-state-change-child-render.gif)
 
-# The Most Critical Performance Principle: State Locality
+## The Most Critical Performance Principle: State Locality
 
 When faced with re-render problems like the one above, a developer's first reflex is usually to sprinkle `useMemo` or `React.memo` everywhere. However, there is a much simpler and far more effective solution: **State Locality** (also known as State Colocation).
 
@@ -96,7 +96,7 @@ Now, when the button is clicked, the only thing that changes is the internal wor
 
 This architectural principle teaches us a golden rule: The best way to prevent unnecessary re-renders is not memoization, but rather physically blocking the spread of the re-render wave by breaking components down into logical, isolated pieces.
 
-# What Does React.memo Actually Do? (A Shield Against Unnecessary Renders)
+## What Does React.memo Actually Do? (A Shield Against Unnecessary Renders)
 
 At its core, `React.memo` is a filter that prevents your component from rendering unnecessarily. It adds a simple validation step to the normal React flow.
 
@@ -127,7 +127,7 @@ Wrapping every single component in `React.memo` is an anti-pattern. The checking
 * **Large lists:** Lists containing thousands of rows of data.
 * **Heavy UI elements:** Charts, interactive maps, complex data tables, and dashboard components.
 
-## A Small Detail (And a Big Danger): Shallow Comparison
+### A Small Detail (And a Big Danger): Shallow Comparison
 
 There is a critical point here that requires careful attention: `React.memo` does not perform a deep analysis. It uses a method called **shallow comparison**.
 
@@ -135,7 +135,7 @@ This means `React.memo` only checks for referential equality. If you pass an obj
 
 This is exactly why **Referential Stability** is of paramount importance for `React.memo` to function as intended.
 
-# The Most Common Performance Issue: Referential Instability
+## The Most Common Performance Issue: Referential Instability
 
 In JavaScript, primitive types like `string` or `number` are compared by their values, whereas objects, arrays, and functions are reference types. This means they are compared by their memory addresses (locations).
 
@@ -148,7 +148,7 @@ This implies that two completely identical objects are not equal to each other i
 
 This is exactly the limitation of the shallow comparison mechanism used by `React.memo`. React looks at the memory references of objects or functions, not their actual contents.
 
-## A Problematic Approach
+### A Problematic Approach
 
 In the example below, a new object is directly defined for the `config` prop every time the parent component renders. Even though its content is always `{ theme: "dark" }`, its reference constantly changes because a brand new object is created in memory each time.
 
@@ -160,7 +160,7 @@ In the example below, a new object is directly defined for the `config` prop eve
 
 Even if you wrapped the `Child` component with `React.memo`, React would see that the incoming memory address for the prop has changed. Assuming the props have been updated, it will unnecessarily re-execute the component.
 
-## Stabilizing References
+### Stabilizing References
 
 To solve this, we need to keep the reference of the object or function stable throughout the component's lifecycle. For objects and arrays, we can use the `useMemo` hook:
 
@@ -188,7 +188,7 @@ const handleClick = useCallback(() => {
 
 In summary, `useMemo` and `useCallback` are the most common tools used to stabilize references inside React components, ensuring `React.memo` works correctly and efficiently. However, it should be noted that these hooks provide a genuine performance boost primarily when used to stabilize values passed as props to child components wrapped in `React.memo`.
 
-# The Real Performance Bottleneck: Component Execution Cost
+## The Real Performance Bottleneck: Component Execution Cost
 
 In React applications, the source of performance issues is rarely DOM updates, contrary to popular belief. Modern browsers and React's internal optimization algorithms handle DOM manipulations quite efficiently.
 
@@ -205,7 +205,7 @@ Real performance costs typically stem from the following:
 
 Imagine displaying a table or list with 1,000 rows. If an unrelated state change in a parent component triggers a re-render of this list, the browser spends significant CPU power processing those 1,000 elements even if React ultimately decides that nothing in the actual DOM needs to change.
 
-## The Solution: Virtualization
+### The Solution: Virtualization
 
 When rendering massive data lists, `React.memo` alone isn't enough. In these cases, the essential architectural approach is **Virtualization**.
 
@@ -213,7 +213,7 @@ Libraries like `react-window` or `react-virtuoso` avoid adding thousands of node
 
 As the user scrolls, new DOM elements aren't necessarily created; instead, existing DOM nodes are recycled and updated with new data. This approach shifts the rendering cost from $O(n)$ (relative to the total data size) down to roughly $O(\text{visible})$ dramatically reducing both DOM size and component execution overhead.
 
-# The Hidden Performance Risk of Context API
+## The Hidden Performance Risk of Context API
 
 The Context API is a fantastic, standard solution in React for avoiding "prop drilling" the tedious process of passing data deep through the component tree. However, when used for complex state management, it carries an often-overlooked architectural risk.
 
@@ -236,7 +236,7 @@ Therefore, the fundamental principle to follow when using Context API is: Contex
 
 ![Context vs Zustand Renders](/Images/Blog/context-vs-zustand-renders.gif)
 
-## Alternative Approaches to Safeguard Performance
+### Alternative Approaches to Safeguard Performance
 
 If your application has data that updates frequently and is shared across many components, you can use the following methods to bypass the limitations of the Context API:
 
@@ -246,7 +246,7 @@ If your application has data that updates frequently and is shared across many c
 
 These architectural choices prevent your application from being rebuilt unnecessarily, allowing React to focus exactly where it was designed to: on the parts that actually change.
 
-# When Should You Use useMemo and useCallback?
+## When Should You Use useMemo and useCallback?
 
 In the React ecosystem, `useMemo` and `useCallback` are usually the first tools that come to mind when it comes to boosting performance. However, this popularity often leads to these hooks being used far more than necessary and in the wrong places a pitfall known as **over-optimization**.
 
@@ -254,7 +254,7 @@ It is essential to keep this architectural rule in mind: **Memoization is not fr
 
 For React to execute these hooks, it must compare each element in the dependency array during every render cycle and store the generated result or reference in memory. When used indiscriminately everywhere, their own execution and memory overhead can actually start to slow down your application instead of providing a performance gain.
 
-### Incorrect (Unnecessary) Usage
+#### Incorrect (Unnecessary) Usage
 
 One of the most common mistakes made out of performance anxiety is using `useMemo` for simple primitive operations:
 
@@ -268,7 +268,7 @@ JavaScript engines solve these types of basic mathematical, string, or boolean o
 
 ![React UseMemo Performance ](/Images/Blog/react-usememo-performance.gif)
 
-### Correct Usage Scenarios
+#### Correct Usage Scenarios
 
 To truly improve performance, you should only use these hooks in these three specific scenarios:
 
@@ -278,7 +278,7 @@ To truly improve performance, you should only use these hooks in these three spe
 
 In short, do not attempt to optimize prematurely unless there is a measured performance bottleneck. React is already fast enough in most cases. Memoization used in the wrong places adds an invisible weight to your application rather than speeding it up.
 
-# Real Architectural Principles in Large Scale React Applications
+## Real Architectural Principles in Large Scale React Applications
 
 Lasting and sustainable performance gains in React applications aren't achieved by sprinkling `useMemo` or `useCallback` into every corner of the code. True optimization stems from building a solid component architecture. Hooks should not be treated as bandages to cover the flaws of a poorly designed architecture; they are fine-tuning tools for a well-engineered system.
 
@@ -290,7 +290,7 @@ To safeguard performance in large-scale projects, the following architectural pr
 * **Ensuring Referential Stability:** Keep the memory references of objects, arrays, or functions passed as props to expensive child components stable. This prevents `React.memo` from failing its shallow comparison check.
 * **Implementing Virtualization:** No matter how optimized your code is, adding thousands of nodes to the DOM will strain the browser. Use tools like `react-window` for long lists or data tables to render only the parts currently visible to the user.
 
-### The Most Critical Question
+#### The Most Critical Question
 
 When making architectural decisions or troubleshooting a performance issue, the first and most critical question should always be:
 
@@ -298,7 +298,7 @@ When making architectural decisions or troubleshooting a performance issue, the 
 
 The answer to this question should be found through measurement tools, not assumptions. Any optimization hook added to the code without identifying the root cause will likely be ineffective and serve only to decrease code readability.
 
-# React DevTools Profiler: Real-World Performance Analysis
+## React DevTools Profiler: Real-World Performance Analysis
 
 Relying on intuition or assumptions when solving performance issues often leads to memoizing the wrong components and creating unnecessary code clutter. In the React ecosystem, a true optimization process begins with using the official extension: the **React DevTools Profiler**.
 
@@ -312,7 +312,7 @@ When you take a recording with the Profiler during an interaction (such as click
 
 Every `useMemo`, `useCallback`, or `React.memo` added to the code without measurement is merely a blind guess. Identifying the root cause of a problem with Profiler data and building a solution based on that evidence is what constitutes true engineering.
 
-# React Performance Is an Architectural Concern, Not Just a Hook Matter
+## React Performance Is an Architectural Concern, Not Just a Hook Matter
 
 The foundation of sustainable performance in React applications is not about littering your code with memoization hooks; it is about building a well-structured component architecture from the start. A well-designed component tree, where responsibilities are clearly distributed and data flow is predictable, often eliminates the need for extra optimization tools like `useMemo` or `React.memo`.
 
