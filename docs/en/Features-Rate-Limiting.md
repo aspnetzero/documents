@@ -1,6 +1,6 @@
 # Rate Limiting
 
-ASP.NET Zero includes a built-in **dynamic rate limiting** system that allows you to protect your API endpoints from abuse by controlling the number of requests clients can make within a given time window. Rate limiting policies are fully manageable through the administration UI and are applied dynamically at runtime — no application restart is required when policies change.
+ASP.NET Zero includes a built-in **dynamic rate limiting** system that allows you to protect your API endpoints from abuse by controlling the number of requests clients can make within a given time window. Rate limiting policies are fully manageable through the administration UI and are applied dynamically at runtime, no application restart is required when policies change.
 
 ## Enabling Rate Limiting
 
@@ -154,3 +154,7 @@ app.UseRateLimiter();
 ```
 
 The global enable/disable setting is stored in the application settings (`App.RateLimiting.IsEnabled`) and can be toggled from the UI without redeploying.
+
+## Next
+
+- [User Delegation](Features-Mvc-Core-User-Delegation)
