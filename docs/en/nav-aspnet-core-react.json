@@ -372,6 +372,10 @@
               "path": "Features-Webhooks.md"
             },
             {
+              "text": "Rate Limiting",
+              "path": "Features-Rate-Limiting.md"
+            },
+            {
               "text": "User Delegation",
               "path": "Features-React-User-Delegation.md"
             },
