@@ -92,32 +92,36 @@ This will allow Elsa to use ASP.NET Zero application for handling HTTP activitie
 
 There are some special configuration points here which doesn't exist in default Elsa document. Let's take a look at those sections one by one;
 
-#### AutoMapper
+#### Object Mapping
+
+ASP.NET Zero uses [Mapperly](https://mapperly.riok.app/) for object-to-object mappings, which generates mapping code at compile-time. Elsa, on the other hand, uses AutoMapper internally for its own mappings.
+
+To allow both to coexist, we configure Elsa to manage its own AutoMapper instance:
 
 ````c#
 elsa.UseAutoMapper(() => { });
 ````
 
-Both Elsa and ASP.NET Boilerplate creates a `MapperConfiguration` and uses it to create an `IMapper`. Because of this, if we don't add this line to Elsa configuration, the app will only use Elsa's **AutoMapper** configuration. But, after making this configuration, we need to configure Elsa's AutoMapper mappings in our app manually. In order to do this, go to `*WebMvcModule` and add below lines to its `PreInitialize` method.
+This configuration tells Elsa to use an empty AutoMapper configuration, allowing it to set up its internal mappings without conflicting with ASP.NET Zero's Mapperly-based mappers.
 
-```
-// ELSA AutoMapper
-Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
+If you need to create custom mappings for Elsa types in your application, create a dedicated Mapperly mapper:
+
+```csharp
+using Riok.Mapperly.Abstractions;
+using Elsa.Models;
+using Elsa.Services.Models;
+
+[Mapper]
+public partial class ElsaWorkflowMapper
 {
-    // AutoMapperProfile
-    config.CreateMap<IWorkflowBlueprint, WorkflowBlueprintModel>();
-    config.CreateMap<IWorkflowBlueprint, WorkflowBlueprintSummaryModel>();
-    config.CreateMap<IActivityBlueprint, ActivityBlueprintModel>().ConvertUsing<ActivityBlueprintConverter>();
-    config.CreateMap<ICompositeActivityBlueprint, CompositeActivityBlueprintModel>();
-    config.CreateMap<IConnection, ConnectionModel>().ConvertUsing<ConnectionConverter>();
-    config.CreateMap<WorkflowInstance, WorkflowInstanceSummaryModel>();
-    config.CreateMap<WorkflowDefinition, WorkflowDefinitionSummaryModel>();
-    
-    // CloningProfile
-    config.CreateMap<WorkflowDefinition, WorkflowDefinition>();
-    config.CreateMap<WorkflowInstance, WorkflowInstance>();
-});
+    public partial WorkflowBlueprintModel Map(IWorkflowBlueprint source);
+    public partial WorkflowBlueprintSummaryModel MapToSummary(IWorkflowBlueprint source);
+    public partial WorkflowInstanceSummaryModel Map(WorkflowInstance source);
+    public partial WorkflowDefinitionSummaryModel Map(WorkflowDefinition source);
+}
 ```
+
+> **Note:** Elsa's internal operations use its own AutoMapper configuration. The mapper above is only needed if you want to map Elsa types in your own application code.
 
 #### API Versioning
 

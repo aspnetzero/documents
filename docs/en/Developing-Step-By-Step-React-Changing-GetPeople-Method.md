@@ -25,14 +25,22 @@ public class PhoneInPersonListDto : CreationAuditedEntityDto<long>
 }
 ```
 
-Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
+Then we create a mapper for Phone to PhoneInPersonListDto. Create a new file `PhoneToPhoneInPersonListDtoMapper.cs`:
 
 ```csharp
-configuration.CreateMap<Phone, PhoneInPersonListDto>();
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class PhoneToPhoneInPersonListDtoMapper
+{
+    public partial PhoneInPersonListDto Map(Phone phone);
+    public partial Collection<PhoneInPersonListDto> Map(ICollection<Phone> phones);
+}
 ```
 
-So, added also a DTO to transfer phone numbers and mapped from Phone
-entity. Now, we can change GetPeople method to get Phones from database:
+Now, we can change GetPeople method to get Phones from database:
 
 ```csharp
 public ListResultDto<PersonListDto> GetPeople(GetPeopleInput input)

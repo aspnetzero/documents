@@ -52,7 +52,7 @@ Lastly, changed PhoneBookController's **Index** action to pass the
 public ActionResult Index(GetPeopleInput input)
 {
     var output = _personAppService.GetPeople(input);
-    var model = ObjectMapper.MapTo<IndexViewModel>(output);
+    var model = ObjectMapper.Map<IndexViewModel>(output);
     model.Filter = input.Filter;
 
     return View(model);

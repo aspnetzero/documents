@@ -37,9 +37,32 @@ public class PhoneConsts
 }
 ```
 
+First, create a mapper for the phone operations. Create `AddPhoneInputToPhoneMapper.cs`:
+
+```csharp
+using Riok.Mapperly.Abstractions;
+
+namespace Acme.PhoneBookDemo.PhoneBook.Mapper;
+
+[Mapper]
+public partial class AddPhoneInputToPhoneMapper
+{
+    public partial Phone Map(AddPhoneInput input);
+}
+```
+
 Now, we can implement these methods:
 
 ```csharp
+private readonly IRepository<Person> _personRepository;
+private readonly IRepository<Phone, long> _phoneRepository;
+
+public PersonAppService(IRepository<Person> personRepository, IRepository<Phone, long> phoneRepository)
+{
+    _personRepository = personRepository;
+    _phoneRepository = phoneRepository;
+}
+
 [AbpAuthorize(AppPermissions.Pages_Tenant_PhoneBook_EditPerson)]
 public async Task DeletePhone(EntityDto<long> input)
 {
@@ -60,12 +83,6 @@ public async Task<PhoneInPersonListDto> AddPhone(AddPhoneInput input)
 
     return ObjectMapper.Map<PhoneInPersonListDto>(phone);
 }
-```
-
-Then we add configuration for AutoMapper into CustomDtoMapper.cs like below:
-
-```csharp
-configuration.CreateMap<AddPhoneInput, Phone>();
 ```
 
 A permission should have a unique name. We define permission names as constant strings in **AppPermissions** class. It's a simple constant string:

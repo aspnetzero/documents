@@ -176,7 +176,7 @@
                 },
                 {
                   "text": "Passwordless Login",
-                  "path": "Features-Passwordless-Login.md"
+                  "path": "Features-Angular-Passwordless-Login.md"
                 },
                 {
                   "text": "QR Login",
@@ -320,6 +320,10 @@
               "path": "Features-Angular-Entity-History.md"
             },
             {
+              "text": "Active Sessions",
+              "path": "Features-Angular-Active-Sessions.md"
+            },
+            {
               "text": "Visual Settings",
               "path": "Features-Angular-Visual-Settings.md"
             },
@@ -374,6 +378,10 @@
             {
               "text": "Webhooks",
               "path": "Features-Webhooks.md"
+            },
+            {
+              "text": "Rate Limiting",
+              "path": "Features-Rate-Limiting.md"
             },
             {
               "text": "User Delegation",
@@ -589,6 +597,10 @@
       "text": "Migration from Boilerplate to ASP.NET Zero",
       "path": "Migration-from-Boilerplate-to-AspNet-Zero-Angular.md"
     },
+    {
+      "text": "Migration from AutoMapper to Mapperly",
+      "path": "Migrating-From-AutoMapper-To-Mapperly.md"
+    },    
     {
       "text": "Change Logs",
       "path": "Change-Logs.md"
