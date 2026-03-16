@@ -55,7 +55,7 @@ We have introduced **AI Development Rules & Guidelines** directly into the proje
 
 ## 🩺 Health Checks UI is Back!
 
-In v15.0, we temporarily removed the Health Checks UI dependency due to stability issues with outdated third-party packages. We are happy to announce that **Health Checks UI has been completely re implemented and restored** in v15.2, providing you with a clean, visual dashboard to monitor the health and status of your application's databases, APIs, and microservices.
+In v15.0, we temporarily removed the Health Checks UI dependency due to stability issues with outdated third-party packages. We are happy to announce that **Health Checks UI has been completely reimplemented and restored** in v15.2, providing you with a clean, visual dashboard to monitor the health and status of your application's databases, APIs, and microservices.
 
 ![Health Checks Page](/Images/Blog/health-checks-page.png)
 
