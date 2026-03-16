@@ -6,6 +6,19 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 15.2.0 (2026-03-16)
+
+* Added AI Skills, Rules and Workflows
+* Implemented Health Check UI
+* Migrated from AutoMapper to Mapperly
+* Upgraded to Angular 21
+* Upgraded to ABP 11.1
+* Added active user sessions feature
+* QR Login support for React UI
+* Dynamic property management for React UI
+* Customizable dashboard drag & drop for React UI
+* Added social login option for React UI
+
 ## 15.1.0 (2026-01-20)
 
 * [Introduced React UI](https://aspnetzero.com/react)
