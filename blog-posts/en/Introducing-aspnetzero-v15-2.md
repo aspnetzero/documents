@@ -49,7 +49,7 @@ You can find detailed instructions on how to use the Active Session feature in [
 
 ## 🤖 AI Development Skills & Guidelines
 
-As AI assisted coding becomes the standard, we want ASP.NET Zero developers to get the best possible results from their AI tools.
+As AI-assisted coding becomes the standard, we want ASP.NET Zero developers to get the best possible results from their AI tools.
 
 We have introduced **AI Development Rules & Guidelines** directly into the project. Specifically, we added AI skills and context files tailored for **Claude** and **Cursor**. These guidelines help your AI assistants understand ASP.NET Zero's architecture, naming conventions, and best practices, making AI driven development smoother and more accurate.
 
