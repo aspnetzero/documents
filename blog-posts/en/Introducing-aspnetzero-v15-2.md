@@ -76,9 +76,8 @@ This release is packed with quality of life improvements, UI refinements, and bu
 
 ## 🔗 Additional Resources
 
-Full changelog and commit history for v15.2 is available here:
+Full changelog and commit history for v15.2 are available here:
 
-📢 Full changelog for v15.2 is available here:
 [https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v15.2.0](https://github.com/aspnetzero/aspnet-zero-core/releases/tag/v15.2.0)
 
 📢 v15.2 RC-1 Release Notes:
