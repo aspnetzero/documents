@@ -28,7 +28,7 @@ In v15.2, we have added several major features to the React UI:
 - **Social Login:** Seamlessly integrate third-party authentication providers into your React app.
 - **QR Code Login:** Added QR code login support powered by SignalR integration for a faster authentication flow.
 - **Dynamic Entity Property Management:** This powerful management feature is now fully supported in the React frontend.
-- **Customizable Dashboards:** Introduced a new drag and drop functionality, allowing users to easily customize their dashboard layouts.
+- **Customizable Dashboards:** Introduced a new drag-and-drop functionality, allowing users to easily customize their dashboard layouts.
 - **Excel Export Selection:** Added a new modal allowing users to select specific Excel columns before exporting data.
 
 You can find more information about [React UI here](https://aspnetzero.com/react).
