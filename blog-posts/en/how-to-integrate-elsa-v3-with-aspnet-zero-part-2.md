@@ -272,6 +272,7 @@ Let's walk through the key parts of this component:
                     (load)="onFrameLoad()"
                     (error)="onFrameError()"
                     frameborder="0"
+                    referrerpolicy="no-referrer"
                     allowfullscreen></iframe>
             }
         </div>
