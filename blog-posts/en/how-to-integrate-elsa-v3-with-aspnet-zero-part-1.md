@@ -685,8 +685,12 @@ public class TokenCircuitHandler : CircuitHandler
 
         if (httpContext != null)
         {
-            // Try query string first (from iframe URL)
-            var token = httpContext.Request.Query["access_token"].FirstOrDefault();
+            // Try query string first (from iframe URL `token`, then SignalR `access_token`)
+            var token = httpContext.Request.Query["token"].FirstOrDefault();
+            if (string.IsNullOrEmpty(token))
+            {
+                token = httpContext.Request.Query["access_token"].FirstOrDefault();
+            }
 
             // Fall back to Authorization header
             if (string.IsNullOrEmpty(token))
