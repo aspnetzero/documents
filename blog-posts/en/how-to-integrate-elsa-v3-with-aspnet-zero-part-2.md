@@ -3,7 +3,7 @@
 
 # How to Integrate Elsa v3 with ASP.NET Zero - Part 2: Angular Frontend Integration
 
-In [Part 1]((https://aspnetzero.com/how-to-integrate-elsa-v3-with-aspnet-zero-part-1), we built the complete backend infrastructure: a standalone ElsaServer project with the Elsa v3 workflow engine, JWT authentication, multi-tenancy support, Blazor Server Elsa Studio, API authorization middleware, and auto-start hosted services. By the end of Part 1, we had a working ElsaServer that launches automatically with the ASP.NET Zero Web.Host and exposes both the Elsa API and the Blazor-based workflow designer.
+In [Part 1](https://aspnetzero.com/how-to-integrate-elsa-v3-with-aspnet-zero-part-1), we built the complete backend infrastructure: a standalone ElsaServer project with the Elsa v3 workflow engine, JWT authentication, multi-tenancy support, Blazor Server Elsa Studio, API authorization middleware, and auto-start hosted services. By the end of Part 1, we had a working ElsaServer that launches automatically with the ASP.NET Zero Web.Host and exposes both the Elsa API and the Blazor-based workflow designer.
 
 In this second part, we'll complete the integration by embedding the Elsa Studio workflow designer directly into the ASP.NET Zero **Angular** application. Users will be able to access the designer from the sidebar menu without ever leaving the Angular app, the Blazor Studio loads inside an iframe with automatic JWT token passing.
 
