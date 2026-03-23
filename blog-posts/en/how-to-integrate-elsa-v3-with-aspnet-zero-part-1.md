@@ -7,7 +7,7 @@
 
 [Elsa Workflows](https://v3.elsaworkflows.io/) is a powerful open-source workflow engine for .NET that enables you to build and execute workflows within your applications. With Elsa v3 integrated into ASP.NET Zero, the workflow engine has been adapted with custom enhancements to align with the ASP.NET Zero architecture, providing performance and experience alongside a modern Blazor-powered visual workflow designer.
 
-[ASP.NET Zero](https://aspnetzero.com/) is a enterprise-grade application framework built on ASP.NET Core and Angular (React or MVC). It provides a solid foundation with features like multi-tenancy, authorization, audit logging, and much more out of the box.
+[ASP.NET Zero](https://aspnetzero.com/) is an enterprise-grade application framework built on ASP.NET Core and Angular (React or MVC). It provides a solid foundation with features like multi-tenancy, authorization, audit logging, and much more out of the box.
 
 In this two part series, we will walk you through integrating Elsa v3 into an ASP.NET Zero project. **Part 1** focuses on the backend setup, creating the Elsa Server project, configuring the workflow engine, sharing authentication, supporting multi-tenancy, and auto-launching the server. **Part 2** will cover the Angular frontend integration, where we embed the Elsa Studio designer into the ASP.NET Zero Angular UI.
 
