@@ -1596,7 +1596,7 @@ In **Part 2** of this series, we'll complete the integration by embedding the El
 
 - **Creating the Angular component**: An iframe-based component that loads the Blazor Server Elsa Studio, automatically passing the current user's JWT token via URL parameter.
 - **Setting up routing**: Adding the Elsa Workflows page to the Angular router with proper permission guards.
-- **Adding navigation**: Integrating the "Elsa Workflows" menu item into the ASP.NET Zero sidebar under the Administration section.
+- **Adding navigation**: Integrating the "Elsa Workflows" menu item into the ASP.NET Zero sidebar as a top-level entry consistent with the `/app/elsa/...` route.
 - **Configuration**: Adding the ElsaServer URL to the Angular app's configuration so it can dynamically construct the iframe URL.
 
 [How to Integrate Elsa v3 with ASP.NET Zero - Part 2: Angular Frontend Integration](https://aspnetzero.com/how-to-integrate-elsa-v3-with-aspnet-zero-part-2)
