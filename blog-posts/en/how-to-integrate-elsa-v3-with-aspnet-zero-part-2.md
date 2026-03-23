@@ -607,6 +607,8 @@ The Angular app will start on `http://localhost:4200`.
 5. After a few seconds, the full workflow designer should appear
 6. Try creating a new workflow to verify the Elsa API is accessible
 
+![Elsa v3 Workflows Page](/Images/Blog/elsa-v3-workflows-page.png)
+
 ### Troubleshooting
 
 | Problem | Cause | Solution |
