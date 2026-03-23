@@ -188,7 +188,10 @@ export class ElsaWorkflowsComponent implements OnInit, OnDestroy, AfterViewInit 
         if (accessToken) {
             const elsaServerUrl = this.getElsaServerUrl();
             const urlWithToken = `${elsaServerUrl}?token=${encodeURIComponent(accessToken)}`;
-            window.open(urlWithToken, '_blank');
+            const newWindow = window.open(urlWithToken, '_blank', 'noopener,noreferrer');
+            if (newWindow) {
+                newWindow.opener = null;
+            }
         }
     }
 }
