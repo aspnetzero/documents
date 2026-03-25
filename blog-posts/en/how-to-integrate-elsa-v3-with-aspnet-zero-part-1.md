@@ -82,6 +82,7 @@ Replace the contents of `YourProjectName.ElsaServer.csproj` with the following. 
     <RootNamespace>YourProjectName.ElsaServer</RootNamespace>
     <AssemblyName>YourProjectName.ElsaServer</AssemblyName>
     <OutputType>Exe</OutputType>
+    <RequiresAspNetWebAssets>true</RequiresAspNetWebAssets>
   </PropertyGroup>
 
   <ItemGroup>
@@ -117,6 +118,8 @@ Replace the contents of `YourProjectName.ElsaServer.csproj` with the following. 
   </ItemGroup>
 </Project>
 ```
+
+> **Note:** It is important to add the `<RequiresAspNetWebAssets>true</RequiresAspNetWebAssets>` property in the PropertyGroup. Since the Elsa Studio packages include Blazor based static web assets (CSS, JavaScript, Monaco editor files, etc.), this property ensures that the ASP.NET Core shared framework's static web assets are properly resolved and served at runtime. Without it, you may encounter missing static file errors when loading the Elsa Studio UI.
 
 Here is what each package group provides:
 
