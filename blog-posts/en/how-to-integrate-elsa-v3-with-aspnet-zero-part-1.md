@@ -7,7 +7,7 @@
 
 [Elsa Workflows](https://v3.elsaworkflows.io/) is a powerful open-source workflow engine for .NET that enables you to build and execute workflows within your applications. With Elsa v3 integrated into ASP.NET Zero, the workflow engine has been adapted with custom enhancements to align with the ASP.NET Zero architecture, providing performance and experience alongside a modern Blazor-powered visual workflow designer.
 
-[ASP.NET Zero](https://aspnetzero.com/) is a enterprise-grade application framework built on ASP.NET Core and Angular (React or MVC). It provides a solid foundation with features like multi-tenancy, authorization, audit logging, and much more out of the box.
+[ASP.NET Zero](https://aspnetzero.com/) is an enterprise-grade application framework built on ASP.NET Core and Angular (React or MVC). It provides a solid foundation with features like multi-tenancy, authorization, audit logging, and much more out of the box.
 
 In this two part series, we will walk you through integrating Elsa v3 into an ASP.NET Zero project. **Part 1** focuses on the backend setup, creating the Elsa Server project, configuring the workflow engine, sharing authentication, supporting multi-tenancy, and auto-launching the server. **Part 2** will cover the Angular frontend integration, where we embed the Elsa Studio designer into the ASP.NET Zero Angular UI.
 
@@ -688,8 +688,12 @@ public class TokenCircuitHandler : CircuitHandler
 
         if (httpContext != null)
         {
-            // Try query string first (from iframe URL)
-            var token = httpContext.Request.Query["access_token"].FirstOrDefault();
+            // Try query string first (from iframe URL `token`, then SignalR `access_token`)
+            var token = httpContext.Request.Query["token"].FirstOrDefault();
+            if (string.IsNullOrEmpty(token))
+            {
+                token = httpContext.Request.Query["access_token"].FirstOrDefault();
+            }
 
             // Fall back to Authorization header
             if (string.IsNullOrEmpty(token))
@@ -1599,7 +1603,7 @@ In **Part 2** of this series, we'll complete the integration by embedding the El
 
 - **Creating the Angular component**: An iframe-based component that loads the Blazor Server Elsa Studio, automatically passing the current user's JWT token via URL parameter.
 - **Setting up routing**: Adding the Elsa Workflows page to the Angular router with proper permission guards.
-- **Adding navigation**: Integrating the "Elsa Workflows" menu item into the ASP.NET Zero sidebar under the Administration section.
+- **Adding navigation**: Integrating the "Elsa Workflows" menu item into the ASP.NET Zero sidebar as a top-level entry consistent with the `/app/elsa/...` route.
 - **Configuration**: Adding the ElsaServer URL to the Angular app's configuration so it can dynamically construct the iframe URL.
 
 [How to Integrate Elsa v3 with ASP.NET Zero - Part 2: Angular Frontend Integration](https://aspnetzero.com/how-to-integrate-elsa-v3-with-aspnet-zero-part-2)
