@@ -71,11 +71,17 @@ Create a `web.config` file in the website's root folder with the following conte
     </rewrite>
     <staticContent>
       <remove fileExtension=".json" />
+      <remove fileExtension=".woff" />
+      <remove fileExtension=".woff2" />
       <mimeMap fileExtension=".json" mimeType="application/json" />
+      <mimeMap fileExtension=".woff" mimeType="application/font-woff" />
+      <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />
     </staticContent>
   </system.webServer>
 </configuration>
 ```
+
+If the React app is hosted on Windows/IIS, these font MIME type mappings are required so `.woff` and `.woff2` files can be served correctly. Without them, icons and custom fonts may not appear in the UI.
 
 ### Create IIS Web Site for React
 
