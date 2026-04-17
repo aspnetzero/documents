@@ -163,6 +163,10 @@
                   "path": "Features-Angular-Social-Logins.md"
                 },
                 {
+                  "text": "Social Account Linking",
+                  "path": "Features-Angular-Social-Account-Linking.md"
+                },
+                {
                   "text": "Two Factor Authentication",
                   "path": "Features-Angular-Two-Factor-Authentication.md"
                 },
