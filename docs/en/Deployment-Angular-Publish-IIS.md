@@ -40,3 +40,14 @@ We are using angular-cli for development & deployment. Angular CLI has it's own 
 **Note:** One important thing is that; Angular uses client side routing. If you refresh a page (F5) then IIS will handle the request and will not find the requested path and returns a HTTP 404 error. We should configure IIS to redirect all requests to the index.html page (or, to the root path). At the same time, IIS needs to install the URL Rewrite module, please refer to https://www.iis.net/downloads/microsoft/url-rewrite
 
 ASP.NET Zero Angular UI contains a web.config file. You can copy it to the web site's root folder to overcome the problem described above.
+
+If the Angular app is hosted on Windows/IIS, make sure the `staticContent` section includes MIME type mappings for `.woff` and `.woff2`. Otherwise, icons and custom fonts may not load correctly.
+
+```xml
+<staticContent>
+  <remove fileExtension=".woff" />
+  <remove fileExtension=".woff2" />
+  <mimeMap fileExtension=".woff" mimeType="application/font-woff" />
+  <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />
+</staticContent>
+```
