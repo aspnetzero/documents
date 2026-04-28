@@ -159,6 +159,10 @@
                   "path": "Features-React-Social-Logins.md"
                 },
                 {
+                  "text": "Social Account Linking",
+                  "path": "Features-React-Social-Account-Linking.md"
+                },
+                {
                   "text": "Two Factor Authentication",
                   "path": "Features-React-Two-Factor-Authentication.md"
                 },
