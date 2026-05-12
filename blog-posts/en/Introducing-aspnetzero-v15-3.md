@@ -85,4 +85,4 @@ ASP.NET Zero v15.3 is all about robustness and control. Whether you are leveragi
 We hope these new features and upgrades significantly improve your development experience.
 
 For questions, suggestions, or support, feel free to reach us at:
-📩 **[info@aspnetzero.com]()**
+📩 **[info@aspnetzero.com](mailto:info@aspnetzero.com)**
