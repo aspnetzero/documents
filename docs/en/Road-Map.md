@@ -3,8 +3,10 @@
 We are constantly getting feedbacks from our customers to improve ASP.NET Zero. Here, **some** of the features will be implemented in the next versions:
 
 
--   Power Tools enhancements
--   User Sync/Link feature
+-   AI Code generation via ABP Studio
+-   Power Tools: dotnet global tool
+-   Power Tools: Bulk operations
+-   Power Tools: New page templates
 -   Tenant login page customization
 -   Orderable menu items
 -   Code Analysis Rules
