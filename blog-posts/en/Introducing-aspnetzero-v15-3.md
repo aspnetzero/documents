@@ -3,9 +3,7 @@
 
 # Introducing ASP.NET Zero v15.3
 
-We are thrilled to announce the release of **ASP.NET Zero v15.3**. Building on the massive frontend updates of our previous releases, this version focuses on core framework upgrades, security features, workflow automation, and ensuring the absolute stability of our modern UIs.
-
-Here is a detailed look at the highlights and what is new in v15.3.
+We are excited to announce the release of ASP.NET Zero v15.3. This release includes rate limiting, external login linking, an Elsa 3.0 integration sample, and UI tests for the React frontend. We have also upgraded to ABP 11.2, enabled full TypeScript strict mode, and fixed several security and session related issues. Let's take a look at the new features and improvements.
 
 ## 🚀 Upgraded to ABP 11.2
 
