@@ -1,3 +1,3 @@
 # NPM Packages
 
-ASP.NET Zero solution supports both [Yarn v1.x](https://classic.yarnpkg.com/lang/en/) and [NPM](https://www.npmjs.com/) to obtain front end library dependencies (like Angular and Bootstrap). We suggest to use yarn because NPM has some problems, yarn solves those problems and it is compatible with NPM as well. You can easily add, update or remove packages on yarn's command line interface.
+ASP.NET Zero solution uses [pnpm](https://pnpm.io/) (preferred) to obtain front end library dependencies (like Angular and Bootstrap). [NPM](https://www.npmjs.com/) is also supported. We suggest using pnpm because it is fast, disk-efficient, and deterministic. The pinned pnpm version is declared in `package.json` under the `packageManager` field, so [Corepack](https://nodejs.org/api/corepack.html) will activate the correct version automatically. You can easily add, update or remove packages on pnpm's command line interface.

@@ -18,7 +18,7 @@ Select **ASP.NET Core & Angular** as Project Type and fill other required fields
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
 - [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
-- [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
+- [pnpm](https://pnpm.io/installation)
 
 ## ASP.NET Core Application
 
@@ -89,16 +89,16 @@ For example when you navigate **Swagger UI**, you will see following page:
 Navigate to the root folder of ***.Web.Host** project, open a command line and run the following command to restore the packages:
 
 ```bash
-yarn
+pnpm install
 ```
 
 Then, run the following command to create dynamic bundles *(This is only required for the first time when you download the project or when you update dynamic bundles)*:
 
 ```bash
-npm run create-dynamic-bundles
+pnpm run create-dynamic-bundles
 ```
 
-We use [yarn v1.x](https://classic.yarnpkg.com/lang/en/) because NPM has some problems; It is slow and can not consistently resolve dependencies. Yarn solves those problems and it is compatible to NPM as well.
+We use [pnpm](https://pnpm.io/) for fast, disk-efficient and deterministic dependency resolution. The pinned version is declared in `package.json` under the `packageManager` field, so [Corepack](https://nodejs.org/api/corepack.html) will activate the correct pnpm version automatically.
 
 ### Running The Application
 

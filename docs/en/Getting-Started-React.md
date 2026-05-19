@@ -20,7 +20,7 @@ Select **ASP.NET Core & React** as Project Type and fill other required fields. 
 
 - [Visual Studio 2022 (v17.10+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
 - [Node.js 18.x+ with NPM 8.x+](https://nodejs.org/en/download/)
-- [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
+- [pnpm](https://pnpm.io/installation)
 
 ## ASP.NET Core Application
 
@@ -88,24 +88,20 @@ For example when you navigate **Swagger UI**, you will see following page:
 
 ### Restore Packages
 
-Navigate to the **react** folder, open a command line and run one of the following commands to restore the packages:
+Navigate to the **react** folder, open a command line and run the following command to restore the packages:
 
 ```bash
-yarn
-# or
-npm install
+pnpm install
 ```
 
-We recommend using [yarn v1.x](https://classic.yarnpkg.com/lang/en/) for faster and more consistent dependency resolution, but npm works as well.
+We use [pnpm](https://pnpm.io/) for faster and more deterministic dependency resolution. The pinned version is declared in `package.json` under the `packageManager` field, so [Corepack](https://nodejs.org/api/corepack.html) will activate the correct pnpm version automatically. NPM also works if you prefer it (`npm install`).
 
 ### Running The Application
 
-Run one of the following commands in the command line:
+Run the following command in the command line:
 
 ```bash
-yarn dev
-# or
-npm run dev
+pnpm dev
 ```
 
 Once the application compiled, you can browse <http://localhost:4200> in your browser.

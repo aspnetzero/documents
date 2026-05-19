@@ -2,11 +2,11 @@
 
 ASP.NET Zero contains a separated application that can be a starting point for your public web site or a landing page for your application. 
 
-Before running the project, we need to install NPM packages using **yarn**. In order to do that, open a command prompt, navigate to root directory of ***.Web.Public** project and run "**yarn**" command. Yarn must be installed globally in order to do that. If you haven't installed it yet, please go to [https://classic.yarnpkg.com/lang/en/](https://classic.yarnpkg.com/lang/en/) and install it.
+Before running the project, we need to install NPM packages using **pnpm**. In order to do that, open a command prompt, navigate to root directory of ***.Web.Public** project and run "**pnpm install**" command. The pinned pnpm version is declared in `package.json` under the `packageManager` field, so [Corepack](https://nodejs.org/api/corepack.html) will activate the correct version automatically (run `corepack enable` once). If you prefer to install pnpm globally instead, see [https://pnpm.io/installation](https://pnpm.io/installation).
 
-After installing the packages, run "**npm run create-bundles**" command to generate bundles for JavaScript, CSS and LESS files. ASP.NET Zero automatically watches JavaScript and Style files and updates the bundles. 
+After installing the packages, run "**pnpm run create-bundles**" command to generate bundles for JavaScript, CSS and LESS files. ASP.NET Zero automatically watches JavaScript and Style files and updates the bundles. 
 
-Note that, in development time script files are not minified. When you are publishing your application you need to run "**npm run build**" command to generate bundles for production environment and then publish the application using Visual Studio (or your favorite tool).
+Note that, in development time script files are not minified. When you are publishing your application you need to run "**pnpm run build**" command to generate bundles for production environment and then publish the application using Visual Studio (or your favorite tool).
 
 We are ready to run the application using Visual Studio. So, just run the application using Visual Studio and it will display the main page of the Public website project.
 
