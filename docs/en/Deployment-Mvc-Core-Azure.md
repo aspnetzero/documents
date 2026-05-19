@@ -30,15 +30,15 @@ On Azure portal, go to SQL databases menu and create a new empty database. If yo
 
 Here are the quick steps to publish the **Web.Mvc Application** to the Azure.
 
-- Run the ```yarn``` command in the root directory of MVC project.  
-- Run the `npm run build` to bundle and minify the js/css files
+- Run the ```pnpm install``` command in the root directory of MVC project.  
+- Run the `pnpm run build` to bundle and minify the js/css files
 - Run the migrations on the Azure
 - Configure the **.Web.Mvc/appsettings.production.json**
 - Publish the application to Azure
 
 ### Run the `npm run build`
 
-First run the ```yarn``` command in the root directory of MVC project to install client side dependencies. Then, run the `npm run build` to bundle and minify the script and style files.
+First run the ```pnpm install``` command in the root directory of MVC project to install client side dependencies. Then, run the `pnpm run build` to bundle and minify the script and style files.
 
 ### Run Migrations on The Azure
 
@@ -98,7 +98,7 @@ Since we migrated the database when deploying Admin application, we will not do 
 
 ### NPM Packages
 
-First run the ```yarn``` command in the root directory of MVC project to install client side dependencies. Then, run the `npm run build` to bundle and minify the script and style files.
+First run the ```pnpm install``` command in the root directory of MVC project to install client side dependencies. Then, run the `pnpm run build` to bundle and minify the script and style files.
 
 ### Configure the appsettings.production.json
 

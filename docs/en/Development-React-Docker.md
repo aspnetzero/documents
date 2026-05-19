@@ -56,7 +56,7 @@ The React UI is a client-side application that can be run in two ways during dev
 Run the React UI using the Vite development server:
 
 ```bash
-yarn && yarn dev
+pnpm install && pnpm dev
 # or
 npm install && npm run dev
 ```

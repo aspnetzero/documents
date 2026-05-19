@@ -135,27 +135,22 @@ Add the path of the **Publish Artifact** project
 
 There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
-First, visit the marketplace to install the Yarn extension for your Azure DevOps organization. You can find it at https://marketplace.visualstudio.com/azuredevops.
+> **Note:** The ASP.NET Zero MVC project now uses [pnpm](https://pnpm.io/) (pinned via the `packageManager` field in `package.json`) instead of Yarn. The simplest approach on Azure Pipelines is a **Command Line** task that enables Corepack and runs `pnpm install`, since Corepack ships with Node.js 16.10+ and activates the pinned pnpm version automatically. (The screenshots below were captured for the old Yarn task — the steps remain conceptually the same; substitute the commands shown here.)
 
+1. #### **Execute pnpm install Task**
 
-Click on the **Get it free** button to install the necessary extension for your organization.
-
-![Add new task](images/azure-pipelines-add-marketplace-yarn.png)
-
-1. #### **Execute Yarn Task**
-
-   For the MVC project, we have to run `yarn`  command in the `src/MyPortalDemo.Web.Mvc` folder. To do this click the `Show asisstant` icon on top of the task list.
+   For the MVC project, we have to run `pnpm install` in the `src/MyPortalDemo.Web.Mvc` folder. To do this click the `Show assistant` icon on top of the task list.
 
    ![Add new task](images/azure-pipelines-show-assistant.png)
 
-   Write **yarn** into the search textbox and click on the **Yarn task** to install this new Yarn task.
+   Add a **Command Line** task (search for "command line" in the assistant) and place it right after the **Build** step. Use the following script and set the **Working Directory** to `src/MyPortalDemo.Web.Mvc`:
 
-   ![Install yarn](images/azure-pipelines-add-yarn-task.png)
+   ```bash
+   corepack enable
+   pnpm install --frozen-lockfile
+   ```
 
-
-   After adding it, the new Yarn task is placed at the end. Move it after the **Build** step. Then, enter `src/MyPortalDemo.Web.Mvc` in the Project Directory. This step is completed.
-
-   ![Yarn task](images/azure-pipelines-add-yarn-task2.png)
+   This installs the pnpm version pinned in `package.json` and restores client-side dependencies. This step is completed.
 
    
 
@@ -167,20 +162,20 @@ Click on the **Get it free** button to install the necessary extension for your 
 
    
 
-2. #### **NPM Run Build Task**
+2. #### **pnpm run build Task**
 
-   To add NPM Run Build task, write `command line` to the search textbox. Click the **Add** button of **Command Line** item.
+   To add the production build task, write `command line` to the search textbox. Click the **Add** button of **Command Line** item.
 
    ![Add command line task](images/azure-pipelines-add-npm-run-build-task.png)
 
    
 
-   It will append it after right after the **Yarn** task. If it comes to the end, you need to move it after **Yarn** task.
+   It will append it right after the **pnpm install** task. If it comes to the end, you need to move it after the **pnpm install** task.
 
 
    ```bash
    cd src/MyPortalDemo.Web.Mvc
-   npm run build
+   pnpm run build
    ```
 
 
@@ -216,7 +211,7 @@ After clicking the **Save** button on the toolbar, press the **Run** button. The
 
 
 
-So far, we have created a pipeline to get our project from GitHub, build, yarn, NPM run build, test and publish.  The next step is copying the publish output to Azure App Service. 
+So far, we have created a pipeline to get our project from GitHub, build, pnpm install, pnpm run build, test and publish.  The next step is copying the publish output to Azure App Service. 
 
 **Before starting this step, we assume that you have already created a web app on Azure App Services and set up your database**.
 

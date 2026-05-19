@@ -14,17 +14,17 @@ Select **ASP.NET Core & jQuery** as Project Type and fill other required fields.
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com)
 - [Node.js 16.x+ with NPM 8.x+](https://nodejs.org/en/download/)
-- [Yarn v1.x](https://classic.yarnpkg.com/lang/en/)
+- [pnpm](https://pnpm.io/installation)
 
 ## Configure The Project
 
-Before opening the solution, open a command prompt, navigate to root directory of **\*.Web.Mvc** project and run "**yarn**" command to install client side dependencies.
+Before opening the solution, open a command prompt, navigate to root directory of **\*.Web.Mvc** project and run "**pnpm install**" command to install client side dependencies.
 
 ```bash
-yarn 
+pnpm install
 ```
 
-**Important Notice:** Installing client side npm dependencies using **yarn** before opening the solution will decrease project opening & building time dramatically.
+**Important Notice:** Installing client side npm dependencies using **pnpm** before opening the solution will decrease project opening & building time dramatically.
 
 Open the **\*.Web.sln** solution in **Visual Studio**. If you want to work on only MAUI project, open **\*.Maui.sln** solution. If you want to work on both MAUI and Web projects, open **\*.All.sln** solution.
 
