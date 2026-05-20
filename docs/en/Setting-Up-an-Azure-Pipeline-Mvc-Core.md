@@ -135,7 +135,7 @@ Add the path of the **Publish Artifact** project
 
 There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
-> **Note:** The ASP.NET Zero MVC project now uses [pnpm](https://pnpm.io/) (pinned via the `packageManager` field in `package.json`) instead of Yarn. The simplest approach on Azure Pipelines is a **Command Line** task that enables Corepack and runs `pnpm install`, since Corepack ships with Node.js 16.10+ and activates the pinned pnpm version automatically. (The screenshots below were captured for the old Yarn task — the steps remain conceptually the same; substitute the commands shown here.)
+> **Note:** The ASP.NET Zero MVC project now uses [pnpm](https://pnpm.io/) (pinned via the `packageManager` field in `package.json`) instead of Yarn. The simplest approach on Azure Pipelines is a **Command Line** task that enables Corepack and runs `pnpm install`, since Corepack ships with Node.js 16.10+ and activates the pinned pnpm version automatically.
 
 1. #### **Execute pnpm install Task**
 
@@ -143,12 +143,18 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
    ![Add new task](images/azure-pipelines-show-assistant.png)
 
-   Add a **Command Line** task (search for "command line" in the assistant) and place it right after the **Build** step. Use the following script and set the **Working Directory** to `src/MyPortalDemo.Web.Mvc`:
+   In the Tasks panel, search for **Command Line** and select the **Command line** task. Place it right after the **Build** step.
+
+   ![Add Command Line task for pnpm](images/azure-pipelines-add-pnpm-task.png)
+
+   Use the following script and set the **Working Directory** (under **Advanced**) to `src/MyPortalDemo.Web.Mvc`:
 
    ```bash
    corepack enable
    pnpm install --frozen-lockfile
    ```
+
+   ![Configure pnpm install task](images/azure-pipelines-add-pnpm-task-2.png)
 
    This installs the pnpm version pinned in `package.json` and restores client-side dependencies. This step is completed.
 
@@ -172,14 +178,14 @@ There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
    It will append it right after the **pnpm install** task. If it comes to the end, you need to move it after the **pnpm install** task.
 
+   Use the following script and set the **Working Directory** (under **Advanced**) to `src/MyPortalDemo.Web.Mvc`:
 
    ```bash
-   cd src/MyPortalDemo.Web.Mvc
    pnpm run build
    ```
 
 
-   ![NPM Run Build Task](images/azure-pipelines-add-npm-run-build-task2.png)
+   ![pnpm run build Task](images/azure-pipelines-add-pnpm-task-3.png)
 
    
 
