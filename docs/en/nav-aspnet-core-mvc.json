@@ -332,6 +332,10 @@
               "path": "Features-Mvc-Core-Maintenance.md"
             },
             {
+              "text": "Email Templates",
+              "path": "Features-Mvc-Core-Email-Templates.md"
+            },
+            {
               "text": "Tenant Dashboard",
               "path": "Features-Mvc-Core-Tenant-Dashboard.md"
             },

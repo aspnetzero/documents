@@ -22,4 +22,4 @@ When a **new version** of the application is available you can **send a new vers
 
 ## Next
 
-- [Tenant Dashboard](Features-Mvc-Core-Tenant-Dashboard)
+- [Email Templates](Features-Mvc-Core-Email-Templates.md)

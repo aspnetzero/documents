@@ -16,4 +16,4 @@ When a **new version** of the application is available you can **send a new vers
 
 ## Next
 
-- [Tenant Dashboard](Features-React-Tenant-Dashboard)
+- [Email Templates](Features-React-Email-Templates.md)

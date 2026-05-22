@@ -328,6 +328,10 @@
               "path": "Features-React-Maintenance.md"
             },
             {
+              "text": "Email Templates",
+              "path": "Features-React-Email-Templates.md"
+            },
+            {
               "text": "Tenant Dashboard",
               "path": "Features-React-Tenant-Dashboard.md"
             },

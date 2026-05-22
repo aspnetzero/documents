@@ -336,6 +336,10 @@
               "path": "Features-Angular-Maintenance.md"
             },
             {
+              "text": "Email Templates",
+              "path": "Features-Angular-Email-Templates.md"
+            },
+            {
               "text": "Tenant Dashboard",
               "path": "Features-Angular-Tenant-Dashboard.md"
             },
