@@ -141,11 +141,18 @@ Azure will automatically build and deploy your app on each push.
       </rules>
     </rewrite>
     <staticContent>
+      <remove fileExtension=".json" />
+      <remove fileExtension=".woff" />
+      <remove fileExtension=".woff2" />
       <mimeMap fileExtension=".json" mimeType="application/json" />
+      <mimeMap fileExtension=".woff" mimeType="application/font-woff" />
+      <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />
     </staticContent>
   </system.webServer>
 </configuration>
 ```
+
+If you host the React app on Windows/IIS, make sure the `.woff` and `.woff2` MIME types are present in `staticContent`. Otherwise, font files may fail to load and icons or custom fonts may not render correctly.
 
 2. Upload all files from the `dist/` folder to the `wwwroot` folder on Azure via FTP or Azure Portal.
 

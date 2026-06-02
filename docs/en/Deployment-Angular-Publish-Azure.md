@@ -100,6 +100,17 @@ Run the `pnpm install` command to restore packages and run the `pnpm run publish
 
 Copy the web.config file that is placed in **angular** folder to **angular/dist** folder.
 
+If the Angular app is hosted on Windows/IIS, make sure the `staticContent` section includes MIME type mappings for `.woff` and `.woff2`. Otherwise, icons and custom fonts may not load correctly.
+
+```xml
+<staticContent>
+  <remove fileExtension=".woff" />
+  <remove fileExtension=".woff2" />
+  <mimeMap fileExtension=".woff" mimeType="application/font-woff" />
+  <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />
+</staticContent>
+```
+
 ### Copy the appconfig.json
 
 Configure the **angular/dist/assets/appconfig.production.json** like following:
