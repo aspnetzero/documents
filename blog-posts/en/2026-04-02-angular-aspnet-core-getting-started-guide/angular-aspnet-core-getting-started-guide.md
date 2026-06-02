@@ -280,9 +280,9 @@ dotnet run
 
 ```bash
 cd angular
-yarn 
-yarn create-dynamic-bundles
-yarn start
+pnpm 
+pnpm create-dynamic-bundles
+pnpm start
 ```
 
 Navigate to `http://localhost:4200` and log in with the default admin credentials. You will see a fully working enterprise application.
