@@ -86,15 +86,15 @@ Select "**your-host-app-service-name**" and click "**OK**", then click "**Publis
 
 Here are the quick steps to publish the **AngularUI** to the Azure
 
-- Run the `yarn` command to restore packages
-- Run the `npm run publish` command to publish Angular app.
+- Run the `pnpm install` command to restore packages
+- Run the `pnpm run publish` command to publish Angular app.
 - Copy the web.config file that is placed in **angular** folder to **dist** folder
 - Configure the **angular/dist/assets/appconfig.json** with your production URLs.
 - Upload all files under "angular/dist" folder to your website on Azure created for the Angular UI.
 
 ### Prepare The Publish Folder
 
-Run the `yarn` command to restore packages and run the `npm run publish` to publish the Angular app.
+Run the `pnpm install` command to restore packages and run the `pnpm run publish` to publish the Angular app.
 
 ### Copy the web.config
 
