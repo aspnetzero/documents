@@ -54,14 +54,20 @@ In addition to social logins, ASP.NET Zero includes OpenId Connect Login integra
 ```json
 "OpenId": {
   "IsEnabled": "false",
-  "Authority": "",
   "ClientId": "",
   "ClientSecret": "",
+  "Authority": "",
+  "LoginUrl": "",
   "ValidateIssuer": "true",
-  "ResponseType": "id_token",
+  "ResponseType": "code",
   "ClaimsMapping": []
 }
 ```
+
+`ResponseType` defines which OpenID Connect flow ASP.NET Zero will use. You can configure it in `appsettings.json` or from the host/tenant settings page when social login settings per tenant are enabled.
+
+- Use `code` (recommended/default) for Authorization Code Flow. The provider must allow authorization code flow, the MVC application's OpenID Connect callback URL must be added to the provider's redirect URIs, and the token endpoint must return an `id_token`. Set `ClientSecret` if your provider requires it.
+- Use `id_token` only if your provider supports implicit ID token flow. In this mode, the provider returns the `id_token` directly to the MVC application, so the provider must be configured to issue ID tokens with the user claims required by ASP.NET Zero.
 
 In some cases, OpenId Connect provider doesn't return claims we want to use. For example, Azure AD doesn't return "nameidentifier" claim but ASP.NET Core Identity uses it to find id of the user. So, in such cases, we can use **ClaimsMapping** to map claims of provider to custom claims. AspNet Zero will find the claim with **key** and will map it to internal claim with **claim** value in the mapping. For the following configuration, external **objectidentifier** will be mapped to internal **nameidentifier** claim.
 
