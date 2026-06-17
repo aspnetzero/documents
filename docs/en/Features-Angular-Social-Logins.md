@@ -23,9 +23,11 @@ ASP.NET Zero supports social media logins and external logins as well. To enable
     "OpenId": {
         "IsEnabled": "false",
         "ClientId": "",
+        "ClientSecret": "",
         "Authority": "",
         "LoginUrl": "",
         "ValidateIssuer": "true",
+        "ResponseType": "code",
         "ClaimsMapping": []
     },
     "WsFederation": {
@@ -44,7 +46,7 @@ ASP.NET Zero supports social media logins and external logins as well. To enable
 }
 ```
 
-ASP.NET Zero enables and configures social and external login providers in the PostInitialize method of **{YourProjectName}WebHostModule.cs** class. Some parts of social and externa login code is close sourced for licensing purposes in [Abp.AspNetZeroCore](https://www.nuget.org/packages/Abp.AspNetZeroCore) and [Abp.AspNetZeroCore.Web](https://www.nuget.org/packages/Abp.AspNetZeroCore.Web) nuget packages.
+ASP.NET Zero enables and configures social and external login providers in the PostInitialize method of **{YourProjectName}WebHostModule.cs** class. Some parts of social and external login code are closed source for licensing purposes in [Abp.AspNetZeroCore](https://www.nuget.org/packages/Abp.AspNetZeroCore) and [Abp.AspNetZeroCore.Web](https://www.nuget.org/packages/Abp.AspNetZeroCore.Web) nuget packages.
 
 You can find many documents on the web to learn how to obtain authentication keys for social platforms. So, we will not go to details of creating apps on social media platforms. Once you get your keys, you can write
 them into `appsettings.json`. When you enable it, social media logos are automatically shown on the login page as shown below:
@@ -61,13 +63,21 @@ In addition to social logins, ASP.NET Zero includes OpenId Connect Login integra
 "OpenId": {
   "IsEnabled": "false",
   "ClientId": "",
+  "ClientSecret": "",
   "Authority": "",
   "LoginUrl": "",
   "ValidateIssuer": "true",
-  "ResponseType": "id_token",
+  "ResponseType": "code",
   "ClaimsMapping": []
 }
 ```
+
+`ResponseType` defines which OpenID Connect flow ASP.NET Zero will use. You can configure it in `appsettings.json` or from the host/tenant settings page when social login settings per tenant are enabled.
+
+- Use `code` (recommended/default) for Authorization Code Flow with PKCE. The provider must allow authorization code flow, the Angular login callback URL (for example, `[AngularAppUrl]/account/login`) must be added to the provider's redirect URIs, and the token endpoint must return an `id_token`. Set `ClientSecret` if your provider requires it.
+- Use `id_token` only if your provider supports implicit ID token flow. In this mode, the provider returns the `id_token` directly to the browser, so the provider must be configured to issue ID tokens with the user claims required by ASP.NET Zero.
+
+If your provider does not expose an authorization endpoint from the discovery document, set `LoginUrl` manually.
 
 In some cases, OpenId Connect provider doesn't return claims we want to use. For example, Azure AD doesn't return "nameidentifier" claim but ASP.NET Core Identity uses it to find id of the user. So, in such cases, we can use **ClaimsMapping** to map claims of provider to custom claims. AspNet Zero will find the claim with **key** and will map it to internal claim with **claim** value in the mapping. For the following configuration, external **objectidentifier** will be mapped to internal **nameidentifier** claim.
 
@@ -96,9 +106,7 @@ In some cases, OpenId Connect provider doesn't return claims we want to use. For
 ]
 ````
 
-If you are using Azure AD for OpenID Connect and your app is multi-tenant on Azure side, then you need to disable issuer validation, so all Azure AD users can use your app. Note that, multi-tenant app here is the one you have created oSocial logins can be enabled and configured from [server-side](Features-Mvc-Core-Social-Logins). Once they are properly configured, they are  automatically shown in the user interface. 
-
-Note that currently "ValidateIssuer" setting is not affective because the used client side library doesn't support disabling issuer validation.
+If you are using Azure AD for OpenID Connect and your app is multi-tenant on Azure side, then you need to disable issuer validation, so all Azure AD users can use your app. Note that, multi-tenant app here is the one you have created on Azure, not the multi-tenancy concept of ASP.NET Zero.
 
 ## WsFederation (ADFS)
 
@@ -128,11 +136,11 @@ You can implement this class for any external login manager you want and return 
 
 All the above sections are related to server side part of ASP.NET Zero. On Angular side social and external logins are handled in login/**login.service.ts**. Note that currently only **Facebook**, **Google**, **OpenID Connect** and **ADFS** authentications are implemented for Angular application. Microsoft and Twitter logins are on the road map.
 
-When you click a social login or external login icon on the login page, there are two main flows. Facebook, Google and ADFS options opens a popup window and ask user to login. In that case, callback function for the selected provider will be called right away. 
+When you click a social login or external login icon on the login page, Facebook, Google and ADFS options open a popup window and ask the user to login. In that case, the callback function for the selected provider will be called right away.
 
-However, for OpenID Connect, clicking the icon will redirect you to external website and you will login on the external website. After that, you will be redirected back to ASP.NET Zero website (to **login.component.ts**). Then, the callback function for OpenID Connect will be called.
+For OpenID Connect, clicking the icon redirects the browser to the external provider. After login, the user is redirected back to the Angular login page. If `ResponseType` is `code`, ASP.NET Zero exchanges the returned authorization code on the server. If `ResponseType` is `id_token`, the returned ID token is sent to the server for validation.
 
-All callback functions makes a request to server-side app to validate the information gathered from external or social login provider. If the information is validated, a local user record will be created (only for the first time) and user will be logged in to ASP.NET Zero website.
+All callback functions make a request to server-side app to validate the information gathered from external or social login provider. If the information is validated, a local user record will be created (only for the first time) and user will be logged in to ASP.NET Zero website.
 
 ## Next
 
