@@ -167,6 +167,10 @@
                   "path": "Features-Mvc-Core-Social-Logins.md"
                 },
                 {
+                  "text": "Social Account Linking",
+                  "path": "Features-Mvc-Core-Social-Account-Linking.md"
+                },
+                {
                   "text": "Two Factor Authentication",
                   "path": "Features-Mvc-Core-Two-Factor-Authentication.md"
                 },
