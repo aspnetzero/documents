@@ -1,24 +1,25 @@
 # Load Entity From Database
 
-The ASP.NET Zero Power Tools streamline the process of loading entities from a database, enhancing efficiency and reducing manual effort. Power Tools automate entity loading from databases, generating JSON files and a wide range of code components. These tools accelerate development, ensuring a consistent and high-quality codebase across application services, UI elements, DTOs, tests, and UI tests.
+ASP.NET Zero Power Tools can import an entity definition from an existing database table. The import creates an entity JSON definition, opens it in the entity wizard, and lets you review or edit it before saving and generating code.
 
-![Loading Entity From Database](images/power-tools-menu-load-entity.png)
+![ASP.NET Zero Power Toos Loading Entity From Database Button](images/power-tools-load-entity-from-database-button.png)
 
-## How to Load Entity From Database
+## How to Load an Entity From Database
 
-It is easy to load an entity from a database using the ASP.NET Zero Power Tools. Simply follow the steps below:
+1. Open Power Tools with `aspnetzero-powertools`.
+2. Select your ASP.NET Zero project if it is not already selected.
+3. Open the **Entities** page.
+4. Click **Import from DB**.
+5. Select the database provider.
+6. Review or enter the connection string.
+7. Click **Test Connection** if you want to verify the connection.
+8. Click **Load Tables** and select the table you want to import.
+9. Click **Import & Edit**.
+10. Review the generated entity definition in the entity wizard, then save or generate it.
 
-![Loading Entity From Database](images/power-tools-load-entity.png)
+![ASP.NET Zero Power Toos Loading Entity From Database Page](images/power-tools-load-entity-from-database-page.png)
 
-1. Open the Power Tools window by navigating to `Tools > ASP.NET Zero` in Visual Studio.
-
-2. Select the `Load Entity From Database` option from the Power Tools menu.
-
-3. Select the database connection to use for loading the entity.
-
-4. Select the entity to load from the database.
-
-5. That's it! The Power Tools will generate the entity's JSON file and a wide range of code components.
+Power Tools tries to load the default connection string from the selected ASP.NET Zero project. If it cannot find it, enter the connection string manually.
 
 ## Supported Databases
 
@@ -27,25 +28,35 @@ It is easy to load an entity from a database using the ASP.NET Zero Power Tools.
 * MySQL
 * Oracle
 
+## What Gets Imported
+
+Power Tools reads the selected table and creates an entity JSON definition with sensible defaults:
+
+* Entity name and plural name derived from the table name.
+* Table name from the selected database table.
+* Properties derived from table columns.
+* Default UI, migration, Excel export/import, and host/tenant permission options.
+
+The imported entity is not generated immediately. You can adjust namespace, names, validations, UI settings, navigation properties, and other options before generation.
+
 ## Advantages of Loading Entity From Database
 
-Unleash remarkable efficiency and advanced capabilities in your development projects with the powerful ASP.NET Zero Power Tools.
-
 ### Effortless Entity Loading
-The ASP.NET Zero Power Tools handle the intricate task of loading entities from the database seamlessly. The tools abstract away the complexities, ensuring that you can focus on higher-level application logic instead of database interaction intricacies.
+
+Power Tools handles the repetitive work of reading database metadata and creating the initial entity definition.
 
 ### Automated Code Generation
-Through the use of the Power Tools, a diverse set of code components is generated automatically. This includes the implementation of application services that manage entity operations, user interface elements for efficient data presentation, DTOs that facilitate data exchange between layers, and robust unit tests to validate functionality.
+
+After importing and reviewing the entity, Power Tools can generate application services, DTOs, UI files, localization entries, permissions, tests, and other related code.
 
 ### Enhanced Consistency
-By using a standardized process for entity loading, the Power Tools promote consistency across your application's codebase. This consistency leads to improved maintainability, reduced chances of errors, and a more cohesive overall structure.
+
+Using a standardized import and generation process keeps generated entities consistent across your application.
 
 ### Time Savings
-The automation provided by the Power Tools accelerates development. Developers can allocate their time to crafting business logic and refining user experiences instead of manually creating repetitive code components.
 
-### Comprehensive Test Coverage
-The generated unit tests and UI tests ensure that the loaded entities behave as intended across different scenarios. This results in a higher level of code reliability and confidence in the application's functionality.
+Database import is useful when you already have tables and want to quickly build ASP.NET Zero pages for them.
 
 ### Flexibility and Customization
-While the Power Tools automate many aspects, they also provide flexibility. Developers can customize the generated code to align with specific project requirements, accommodating unique business needs and architectural choices.
 
+You can edit the imported entity definition before generation and customize generated templates when needed.

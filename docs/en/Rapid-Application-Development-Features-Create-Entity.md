@@ -1,14 +1,14 @@
 ## How To Use It?
 
-After the installation, you need to restart the Visual Studio. You can then find the extension inside the Visual Studio's **Tools** menu (Tools -> Asp.Net Zero). 
+After installing Power Tools, run `aspnetzero-powertools` from your ASP.NET Zero project folder. The Power Tools web UI opens in your browser.
 
-For example, clicking the "Tools -> Asp.Net Zero -> Create Entity" opens the window shown below. After carefully filling out the fields, press the **Generate** button to start the code generation process. 
+Open the **Entities** page, click **New Entity**, fill out the wizard fields, and press **Generate** to start the code generation process.
 
-![Extension UI](images/RadToolUI3New_3.png)
+![Power Tools web UI](images/RadToolUI3New_3.png)
 
-A console will appear and give you information about the process during the code generation. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
+A generation log page streams information about the process during code generation. If there is no warning or failure, run your project to see the results. If you don't see the new page on UI, grant yourself the required **permissions** in the application.
 
-> If you are working on ASP.NET Core & Angular template, after generating the entity via Power Tools, run your ***.Web.Host** project and then run "**./angular/nswag/refresh.bat**" to update **service-proxies.ts**. Otherwise, you will see errors when building your Angular application.
+> If you are working on an Angular or React project, use the default generation workflow or your own workflow commands to refresh service proxies after generation.
 
 > Be sure that you have saved your work before running this tool since it will add new files and modify some of the existing files. We strongly recommend using a source control system (like Git).  Otherwise, backup your project.
 

@@ -1,97 +1,110 @@
-# Creating Entity Json File Manually
+# Entity JSON Reference
 
-In this document, we will explain how to use **ASP.NET Zero Power Tools** without the Visual Studio extension.
+Power Tools stores each entity definition as a JSON file in the project's `AspNetZeroRadTool` working folder. The web UI creates and edits these files for you, but you can also edit them manually for advanced scenarios or headless generation.
 
-Purpose of the **ASP.NET Zero Power Tools VS Extension** is to create an input file. So, in order to use it without extension, input file needs to be created manually. 
+## When to Edit JSON Manually
+
+Manual JSON editing is useful when you want to:
+
+* Generate entities from automation scripts.
+* Review or version entity definitions directly.
+* Create an entity definition without opening the web UI.
+* Adjust an option that is easier to edit as JSON.
+
+After creating or editing the JSON file, you can generate it from the web UI or by running headless mode from the `AspNetZeroRadTool` folder:
+
+```bash
+aspnetzero-powertools YourEntity.json --no-wait --format
+```
 
 ## Creating Input File
 
-For creating JSON file manually, you need to learn fields of the JSON file (configuration for entity).
+Create a JSON file in the `AspNetZeroRadTool` working folder. The file name is usually based on namespace and entity name, for example `Products.Product.json`.
 
-Properties are written as an array in JSON file. Add an object to that array for every property of your entity. There will be some unnecessary fields depending on property type. For example, you don't have to set regular expression for a numeric property or don't have to set range for a string.
+JSON fields are case sensitive.
 
-You have to fill the fields of the JSON file for your entity. However, some of the fields must match our constants. 
-
-A property should be one of those types:
-
-* bool
-* byte
-* short
-* DateTime
-* decimal
-* double
-* Guid
-* int
-* long
-* string
-
-or one of the ENUMs you declared in **EnumDefinitions**.
-
-You can find specification of the JSON file fields in the table below;
-
-## Fields Table
+## Entity Fields
 
 | Name | Description |
 | --- | --- |
-| IsRegenerate | Set `true` if you have generated this entity before. |
-| MenuPosition | `main` or `admin` |
-| RelativeNamespace | Namespace of your entity (not including project's namespace) |
-| EntityName | Entity Name |
-| EntityNamePlural | Entity Name Plural |
-| TableName | Database Table Name (might be same with plural name) |
-| PrimaryKeyType | Type of primay key. <br />Can be `int`, `long`, `string`, `Guid` |
-| BaseClass | Base class of your entity. <br />Can be `Entity`, `AuditedEntity`, `CreationAuditedEntity`, `FullAuditedEntity` |
+| IsRegenerate | Set `true` if this entity was generated before. |
+| MenuPosition | Menu path for the generated page. Examples: `main`, `admin`, or a custom menu position. |
+| RelativeNamespace | Namespace of your entity, not including the project's root namespace. |
+| EntityName | Singular entity name. |
+| EntityNamePlural | Plural entity name. |
+| TableName | Database table name. |
+| PrimaryKeyType | Primary key type. Can be `int`, `long`, `string`, or `Guid`. |
+| BaseClass | Entity base class. Can be `Entity`, `AuditedEntity`, `CreationAuditedEntity`, or `FullAuditedEntity`. |
 | EntityHistory | Set `true` to track history of this entity. |
-| AutoMigration | `true` add-migration automatically, false do not add migration (you need to add migration manually) |
-| UpdateDatabase | `true` update-database automatically, false do not update-database (you need to update-database manually) |
-| CreateUserInterface | `true` creates/modifies ui layer files |
-| CreateViewOnly | `true` creates a view-only modal in actions button in table of your entity in ui |
-| CreateExcelExport | `true` adds excel report button in ui |
-| IsNonModalCRUDPage | `true` creates non-modal pages. |
-| PagePermission | Multitenancy<br />`"PagePermission":{"Host": [ISHOSTALLOWED],"Tenant":[ISTENANTALLOWED]}` |
-| Properties | Properties of your entity. See **Properties Table** for more. |
-| NavigationProperties | Navigation properties of your entity. See **NavigationProperties Table** for more. |
-| EnumDefinitions | Enum definitions you use on your entity. See **EnumDefinitions Table** for more. |
+| AutoMigration | Set `true` to add an EF Core migration automatically. |
+| UpdateDatabase | Set `true` to update the database automatically after adding a migration. |
+| CreateUserInterface | Set `true` to generate or modify UI files. |
+| CreateViewOnly | Set `true` to generate a detail/view page. |
+| CreateExcelExport | Set `true` to generate Excel export support. |
+| CreateExcelImport | Set `true` to generate Excel import support. |
+| IsNonModalCRUDPage | Set `true` when create/edit pages are full-page instead of modal-based. |
+| IsMasterDetailPage | Set `true` for master-detail pages. |
+| GenerateOverridableEntity | Set `true` to create extension classes that are not overwritten during re-generation. |
+| GenerateUnitTest | Set `true` to generate unit tests for the application service. |
+| GenerateUiTest | Set `true` to generate Playwright UI tests. |
+| GenerateMobile | Set `true` to generate .NET MAUI files. |
+| TemplateVariants | UI template selections used by the web UI. |
+| PagePermission | Host/tenant availability. Example: `"PagePermission": { "Host": true, "Tenant": true }`. |
+| Properties | Entity properties. See **Properties Table**. |
+| NavigationProperties | Foreign key navigation properties. See **Navigation Properties Table**. |
+| NavigationPropertyOneToManyTables | Child entities for master-detail pages. |
+| EnumDefinitions | Enum definitions used by the entity. See **Enum Definitions Table**. |
 
-## Properties Table(Array):
-
-| Name | Description |
-| --- | --- |
-| Name | Property Name |
-| Type | Type of property. <br />Can be string, bool, byte, short, DateTime, decimal, double, Guid, int, long, enum |
-| MaxLength | If type is string max length of string |
-| MinLength | If type is string min length of string |
-| Range | If type can have range value range of property<br />"Range": {"IsRangeSet": [ISRANGESET],"MinimumValue": [MINVAL],"MaximumValue": [MAXVAL]} |
-| Required | Is property required |
-| Nullable | Is property nullable |
-| Regex | specifies the regex that this property should match |
-| UserInterface | Will this property be listed, have a filter and editable in ui?<br />"UserInterface": {"List": true,"AdvancedFilter": true,"CreateOrUpdate": true} |
-
-## NavigationProperties Table(Array):
+## Properties Table
 
 | Name | Description |
 | --- | --- |
-| Namespace | Namespace of entity |
-| ForeignEntityName | Foreign Entity Name |
-| ForeignEntityNamePlural | Foreign Entity Name Plural |
-| IdType | Type of Foreign Key. See Entity -> PrimaryKeyType |
-| IsNullable | Is nullable |
-| PropertyName | Property name (Property name for that entity which will store Foreign Key) |
-| DisplayPropertyName | Property name of foreign entity. It will be displayed by that property on pages. |
-| DuplicationNumber | If you have two navigation property that navigates to same foreign entity, number them starting from 1. If not, just skip this. |
-| RelationType | single is the only option. |
+| Name | Property name. |
+| Type | Property type. Can be `string`, `bool`, `byte`, `short`, `DateTime`, `decimal`, `double`, `Guid`, `int`, `long`, or an enum name. |
+| MaxLength | Maximum string length. |
+| MinLength | Minimum string length. |
+| Range | Numeric range configuration. |
+| Required | Whether the property is required. |
+| Nullable | Whether the property is nullable. |
+| Regex | Regular expression validation pattern. |
+| UserInterface | UI options for list, advanced filter, and create/update forms. |
 
-## EnumDefinitions Table:
+## Navigation Properties Table
 
 | Name | Description |
 | --- | --- |
-| Name | Name |
-| Namespace | Namespace |
-| EnumProperties | Properties <br />"EnumProperties":[{"Name":"[PROPERYNAME]","Value":[PROPERYVALUE]}] |
+| Namespace | Namespace of the foreign entity. |
+| ForeignEntityName | Foreign entity name. |
+| ForeignEntityNamePlural | Foreign entity plural name. |
+| IdType | Foreign key type. |
+| IsNullable | Whether the foreign key is nullable. |
+| PropertyName | Property name that stores the foreign key. |
+| DisplayPropertyName | Foreign entity property displayed in lookup UI. |
+| DuplicationNumber | Suffix number used when multiple navigation properties point to the same entity. |
+| RelationType | Currently `single`. |
+| ViewType | Lookup UI type, such as `LookupTable`, `Dropdown`, or typeahead-supported options depending on project version. |
+
+## One-to-Many Navigation Table
+
+| Name | Description |
+| --- | --- |
+| EntityJson | Child entity JSON file name. |
+| ForeignPropertyName | Property name on the child entity that stores the foreign key. |
+| IsNullable | Whether the child foreign key is nullable. |
+| DisplayPropertyName | Master entity property displayed on child pages. |
+| ViewType | `LookupTable` or `Dropdown`. |
+
+## Enum Definitions Table
+
+| Name | Description |
+| --- | --- |
+| Name | Enum name. |
+| Namespace | Enum namespace. |
+| EnumProperties | Enum members. Example: `"EnumProperties": [{ "Name": "Liquid", "Value": 1 }]`. |
 
 ## Example JSON Input
 
-```json	
+```json
 {
   "IsRegenerate": false,
   "MenuPosition": "main",
@@ -107,7 +120,18 @@ You can find specification of the JSON file fields in the table below;
   "CreateUserInterface": true,
   "CreateViewOnly": true,
   "CreateExcelExport": true,
+  "CreateExcelImport": false,
   "IsNonModalCRUDPage": false,
+  "IsMasterDetailPage": false,
+  "GenerateOverridableEntity": true,
+  "GenerateUnitTest": true,
+  "GenerateUiTest": false,
+  "GenerateMobile": false,
+  "TemplateVariants": {
+    "PageTemplate": "",
+    "CreateEditTemplate": "",
+    "DetailTemplate": ""
+  },
   "PagePermission": {
     "Host": true,
     "Tenant": true
@@ -154,20 +178,23 @@ You can find specification of the JSON file fields in the table below;
   ],
   "NavigationProperties": [
     {
-      "Namespace": "Volosoft.RadToolExplainer.Authorization.Users",
+      "Namespace": "MyCompanyName.AbpZeroTemplate.Authorization.Users",
       "ForeignEntityName": "User",
+      "ForeignEntityNamePlural": "Users",
       "IdType": "long",
       "IsNullable": true,
       "PropertyName": "UserId",
       "DisplayPropertyName": "Name",
       "DuplicationNumber": 0,
-      "RelationType": "single"
+      "RelationType": "single",
+      "ViewType": "LookupTable"
     }
   ],
+  "NavigationPropertyOneToManyTables": [],
   "EnumDefinitions": [
     {
       "Name": "ProductType",
-      "Namespace": "Volosoft.RadToolExplainer",
+      "Namespace": "MyCompanyName.AbpZeroTemplate.Products",
       "EnumProperties": [
         {
           "Name": "Liquid",
@@ -183,4 +210,4 @@ You can find specification of the JSON file fields in the table below;
 }
 ```
 
-> Note: Please Keep in mind that JSON file is completely **case sensitive**.
+> JSON file names and JSON field names are case sensitive.

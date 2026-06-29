@@ -1,8 +1,14 @@
 # Power Tools Configuration
 
-The Power Tools usually does not need a manual config.  But sometimes (for example when you change the file locations) you may need to change some config so that Power Tools can work as expected.
+Power Tools usually does not need manual configuration. You can manage most settings from the **Setup** and **Project Settings** pages in the Power Tools web UI.
 
-Config.json file is located in `*YourAppFolder/aspnet-core/AspNetZeroRadTool`
+The `config.json` file is located in the project's Power Tools working folder:
+
+```text
+aspnet-core/AspNetZeroRadTool/config.json
+```
+
+See [ASP.NET Zero Power Tools Configuration](Power-Tools-Configuration.md) for the current configuration guide.
 
 *Config.json:*
 
@@ -40,7 +46,7 @@ Config.json file is located in `*YourAppFolder/aspnet-core/AspNetZeroRadTool`
 }
 ```
 
-It contains file paths. If you change any of these files path in your project. you need to change its path in config.json.
+It contains file paths. If you change any of these file paths in your project, update the related path in `config.json` or use the **Project Settings** page.
 
 
 

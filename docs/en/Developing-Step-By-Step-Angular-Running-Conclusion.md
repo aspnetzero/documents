@@ -14,7 +14,7 @@ but does not restrict you. You can make your own style development.
 
 Using new **ASP.NET Zero Power Tools**, you can speed up your development.
 
-See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool) to learn how to use it.
+See [Power Tools Getting Started](Power-Tools-Getting-Started.md) to learn how to use it.
 
 
 

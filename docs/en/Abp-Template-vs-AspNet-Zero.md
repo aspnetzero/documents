@@ -215,7 +215,7 @@
 <td colspan="3"><strong>Rapid Application Development</strong></td>
 </tr>
 <tr>
-<td>Code generation extension</td>
+<td>Power Tools code generation</td>
 <td><i class="fa fa-minus text-secondary"></i></td>
 <td><i class="fa fa-check text-success"></i></td></tr>
 <tr>

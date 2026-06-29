@@ -76,9 +76,18 @@ Or Update-Database:
 
 ### ASP.NET Zero Power Tools
 
-For ASP.NET Zero Power Tools on Mac, there is no Visual Studio extension, so you need to create the JSON input file it manually, then run:
+ASP.NET Zero Power Tools is installed as a .NET global tool and opens a web-based UI on macOS as well.
 
-	> dotnet AspNetZeroRadTool.dll YourEntity.Json
+Run the install command from the `aspnet-core` folder so the project-provided `NuGet.Config` is used:
 
-For more information please check 
-(from [Development-Guide-Rad-Tool-Mac-Linux](Development-Guide-Rad-Tool-Mac-Linux))
+```bash
+dotnet tool install -g AspNetZero.PowerTools
+```
+
+Then launch Power Tools:
+
+```bash
+aspnetzero-powertools
+```
+
+For more information, see [Power Tools Getting Started](Power-Tools-Getting-Started.md).
