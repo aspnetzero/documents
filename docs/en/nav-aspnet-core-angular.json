@@ -566,15 +566,15 @@
           "text": "Development Guide",
           "items": [
             {
-              "text": "Using Visual Studio Extension",
-              "path": "Power-Tools-Using-Visual-Studio-Extension.md"
+              "text": "Using Web UI",
+              "path": "Power-Tools-Using-Web-UI.md"
             },
             {
               "text": "Load Entity From Database",
               "path": "Power-Tools-Load-Entity-From-Database.md"
             },
             {
-              "text": "Creating Entity JSON File Manually",
+              "text": "Entity JSON Reference",
               "path": "Power-Tools-Creating-Entity-Json-File-Manually.md"
             },
             {

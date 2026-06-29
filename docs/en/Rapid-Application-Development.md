@@ -1,32 +1,35 @@
 # Power Tools
 
-[ASP.NET Zero Power Tools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) is a Visual Studio Extension that can automatically create an entity and its layers from the database to the user interface. So, you can create a fully working, production ready CRUD page in seconds.
+ASP.NET Zero Power Tools is a .NET global tool that opens a web-based UI for generating application code from entity definitions. It can create entity classes, permissions, application services, DTOs, client-side pages, menu items, database migrations, tests, and related files.
 
-[![Power Tools Marketplace](images/power-tools-marketplace.png)](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
+Notice that Power Tools is available for ASP.NET Core based ASP.NET Zero templates. It is not available for ASP.NET MVC 5.x templates.
 
+## Prerequisites
 
-Notice that the Power Tools is only available for **ASP.NET Core** templates, not available for ASP.NET MVC 5.x templates.
+* [.NET 10 SDK](https://dotnet.microsoft.com/download) or later.
+* EF Core CLI if you want Power Tools to add migrations or update the database.
+* Node.js if your generation workflow runs frontend commands.
 
-## Pre Requirements
+## Install and Run
 
-* [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com/) (Only for Windows)
-* [.NET Core 2.2 Runtime](https://dotnet.microsoft.com/download/dotnet-core/2.2).
-* [EF Core Tools](https://docs.microsoft.com/en-us/ef/core/cli/dotnet)
+ASP.NET Zero projects include the ASP.NET Zero NuGet source in `aspnet-core/NuGet.Config`. Run the install command from the `aspnet-core` folder:
 
-## Download And Install
+```bash
+dotnet tool install -g AspNetZero.PowerTools
+```
 
-If your project version is 5.0.0+, all you have to do is just install the **ASP.NET Zero Power Tools** extension on Visual Studio from [marketplace](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools) or from Visual Studio's Extension and Updates menu. 
+Then launch Power Tools:
 
-> If you are a non-Windows user, you can use binaries of ASP.NET Zero Power Tools included in your ASP.NET Zero solution. See [Development Guide for Mac/Linux](Development-Guide-Rad-Tool-Mac-Linux)
+```bash
+aspnetzero-powertools
+```
 
-![Extension installation](/images/rad-extension-install.png)
+Power Tools opens a browser-based UI where you can select your project, create or import entities, edit templates, configure generation workflow, and generate code.
+
+For detailed usage, see [Power Tools Getting Started](Power-Tools-Getting-Started.md).
 
 ## Demonstration
 
-You can see ASP.NET Zero Power Tools in action by watching the quick introduction video [YouTube video](https://youtu.be/OsSdNkwmC7I?t=1001). This video demonstrates some of ASP.NET Zero Power Tools features starting from its installation on Visual Studio. 
+You can create a CRUD page by defining an entity in the Power Tools web UI and clicking **Generate**. Power Tools streams the generation output in the browser and modifies the selected ASP.NET Zero project.
 
-[![Power Tools demonstration](images/RadToolVideo.jpg)](https://youtu.be/OsSdNkwmC7I?t=1001)
-
-For the detalied usage of ASP.NET Zero Power Tools, you can watch the detailed introduction video.
-
-[![Power Tools demonstration](images/RadToolVideo-1.png)](https://www.youtube.com/watch?v=bFe28oxPVHU)
+<img src="images/power-tools-entity-generator.png" alt="ASP.NET Zero Power Tools" class="img-fluid" />

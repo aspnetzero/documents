@@ -1,38 +1,91 @@
-# ASP.NET ZERO Power Tools Configuration
+# ASP.NET Zero Power Tools Configuration
 
-The `config.json` file provided in your ASP.NET Zero project contains essential file paths and configuration settings used by the Power Tools. While the Power Tools **typically do not require manual configuration**, there are instances where you **might need** to modify the configuration to adapt to changes in file locations or project structure. In such cases, updating the `config.json` becomes necessary to ensure the Power Tools function correctly.
+Power Tools stores project-specific settings in the `AspNetZeroRadTool/config.json` file of your ASP.NET Zero solution. You normally manage this file from the **Setup** and **Project Settings** pages in the Power Tools web UI.
 
-Here are some key points to consider when modifying the `config.json` file:
+Manual edits are only needed when you customize project structure, move generated target files, or want to define advanced generation workflow commands directly in JSON.
 
-1. **Company Name and Project Name:** You may need to update the **CompanyName** and **ProjectName** fields with appropriate values to match your project's details.
+## Where config.json is stored
 
-2. **Project Type and Version:** Set the **ProjectType** to **Angular** or **Mvc** and specify the appropriate **ProjectVersion**.
+The file is located under the Power Tools working folder:
 
-3. **Application Area Name:** Ensure the **ApplicationAreaName** matches the relevant area name in your project (used only for MVC projects).
+```text
+aspnet-core/AspNetZeroRadTool/config.json
+```
 
-4. **License Code:** Replace **[YOURLICENSECODE]** with the valid license code for your project.
+If your solution uses a different root folder, use the `AspNetZeroRadTool` folder next to the selected `.sln` or `.slnx` file.
 
-5. **File Locations:** This section contains various file paths used by the Power Tools for different functionalities. If you change any of these file locations in your project, you need to update the corresponding paths in the `config.json` file accordingly. For example, if you move the DbContext file to a different location, update the **DbContext** path to reflect the new location.
+## Main Settings
 
-6. **Base Paths:** The `config.json` file uses base paths (e.g., `AngularSrcPath`, `AngularMergedSrcPath`, `CoreSrcPath`) to build the final file paths. Make sure to set these base paths correctly according to your project's structure.
+Here are some key points to consider when modifying `config.json`:
 
-7. **Angular Project Type:** Depending on whether your Angular project is separate from server side Host project or merged with server side Host project, use the appropriate base path (`AngularSrcPath` for split projects or `AngularMergedSrcPath` for merged projects) for the Angular-related file paths.
+1. **Company Name and Project Name:** Used to build namespaces and generated file paths.
+2. **Project Type:** Supported values include `Angular`, `AngularMerged`, `Mvc`, and `React`.
+3. **Project Version:** Used to enable or hide generation options that depend on ASP.NET Zero version.
+4. **Application Area Name:** Used by MVC projects. The default value is usually `App`.
+5. **License Code:** A valid ASP.NET Zero license code is required for code generation.
+6. **Base Paths:** Paths such as `CoreSrcPath`, `AngularSrcPath`, and `AngularMergedSrcPath` are used to resolve target file locations.
+7. **File Locations:** These paths tell Power Tools where to modify existing files such as `DbContext`, permissions, localization, navigation, routing, and module files.
+8. **Generation Workflow:** Optional workflow steps that run after or around code generation, such as refreshing service proxies or creating bundles.
 
-Always **double-check** the **changes** you make in the config.json file to avoid any errors or inconsistencies. It's crucial to keep the configuration updated to ensure the Power Tools can accurately locate the required files and function as expected with your project's structure.
+Paths are relative to the `AspNetZeroRadTool` working folder unless otherwise stated.
 
-*Example config.json*
+## Generation Workflow
+
+The `GenerationWorkflow` array contains steps executed by the web UI generation pipeline.
+
+Every workflow should include a generate step:
+
+```json
+{ "Type": "generate", "Label": "Code Generation" }
+```
+
+Command steps can run shell commands relative to the ASP.NET Zero project root:
+
 ```json
 {
-  "CompanyName": "",
-  "ProjectName": "[YOURPROJECTNAME]",
+  "Type": "command",
+  "Label": "Refresh Angular Proxies",
+  "Command": "refresh.bat",
+  "WorkingDirectory": "..\\angular\\nswag"
+}
+```
+
+For long-running commands such as `dotnet run`, set `SuccessPattern` and `Timeout` so Power Tools knows when the command is ready and can continue to the next workflow step.
+
+## Example config.json
+
+```json
+{
+  "CompanyName": "MyCompanyName",
+  "ProjectName": "AbpZeroTemplate",
   "ProjectType": "Angular",
-  "ProjectVersion": "v8.0.0",
+  "ProjectVersion": "v15.3.0",
   "ApplicationAreaName": "App",
   "LicenseCode": "[YOURLICENSECODE]",
   "AngularSrcPath": "\\..\\..\\angular\\src\\",
   "AngularMergedSrcPath": "\\..\\src\\{{Namespace_Here}}.Web.Host\\src\\",
   "CoreSrcPath": "\\..\\src\\",
   "FormatGeneratedFiles": true,
+  "GenerationWorkflow": [
+    {
+      "Type": "generate",
+      "Label": "Code Generation"
+    },
+    {
+      "Type": "command",
+      "Label": "Run Host",
+      "Command": "dotnet run",
+      "WorkingDirectory": ".\\src\\MyCompanyName.AbpZeroTemplate.Web.Host",
+      "SuccessPattern": "Application started",
+      "Timeout": 180
+    },
+    {
+      "Type": "command",
+      "Label": "Refresh Angular Proxies",
+      "Command": "refresh.bat",
+      "WorkingDirectory": "..\\angular\\nswag"
+    }
+  ],
   "FileLocations": {
     "DbContext": "{{Namespace_Here}}.EntityFrameworkCore\\EntityFrameworkCore\\{{Project_Name_Here}}DbContext.cs",
     "AppAuthorizationProvider": "{{Namespace_Here}}.Core\\Authorization\\AppAuthorizationProvider.cs",
@@ -54,3 +107,5 @@ Always **double-check** the **changes** you make in the config.json file to avoi
   }
 }
 ```
+
+Always validate JSON syntax after manual edits. Invalid JSON prevents Power Tools from loading project settings.

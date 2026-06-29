@@ -122,11 +122,9 @@ When you login to the application as a Tenant admin, you will see the sample das
 
 ## ASP.NET Zero Power Tools
 
-ASP.NET Zero Power Tools lets you to create a new page from the database to the UI layer by just typing your entity properties. It creates the entity, related permissions, application services, DTOs, client-side code, a menu element and so on... It also creates & applies database migrations.
+ASP.NET Zero Power Tools lets you create a new page from the database to the UI layer by defining your entity properties. It creates the entity, related permissions, application services, DTOs, client-side code, menu items, database migrations, tests, and more.
 
-Finally you will have a CRUD page with insert, update, delete, list and excel export functions. To minimize the effort of creating a new page, install the Power Tools from the following link:
-
-[https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)
+Power Tools is installed as a .NET global tool and opens a web-based UI. See [Power Tools Getting Started](Power-Tools-Getting-Started.md) to install and run it.
 
 ## Next
 

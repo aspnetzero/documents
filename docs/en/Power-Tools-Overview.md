@@ -1,45 +1,49 @@
-## Rapid Application Development in .Net Core with ASP.NET Zero
+# ASP.NET Zero Power Tools Overview
 
-Welcome to the ASP.NET Zero Power Tools documentation! This documentation provides comprehensive information about using ASP.NET Zero Power Tools, a Visual Studio Extension that simplifies the process of creating CRUD (Create, Read, Update, Delete) pages in ASP.NET Core projects. 
+Welcome to the ASP.NET Zero Power Tools documentation. Power Tools is a .NET global tool that opens a web-based user interface for generating CRUD pages and related server-side/client-side code in ASP.NET Zero projects.
 
-If you are familiar with ASP.NET Zero Power Tools, you can begin from this [document](/common/latest/Power-Tools-Using-Visual-Studio-Extension).
-
-<img src="images/power-tools-marketplace.png" alt="ASP.NET Zero Power Tools" class="img-fluid">
-
-## What is ASP.NET Zero Power Tools?
-
-ASP.NET Zero Power Tools is a robust extension that adheres to the SOLID principles, designed to automate the generation of essential application layers, spanning from the database to the user interface, based on a defined entity. By embracing SOLID principles, this tool ensures a clean, maintainable, and scalable architecture for your ASP.NET Core projects.
-
-This powerful extension significantly reduces the development effort required to create CRUD pages, empowering developers to swiftly generate fully functional, production-ready CRUD pages with just a few clicks. By leveraging ASP.NET Zero Power Tools, developers can focus more on building core features and business logic, rather than dealing with repetitive and time-consuming CRUD implementation.
+If you are already familiar with Power Tools, start with [Getting Started](Power-Tools-Getting-Started.md) or [Using Power Tools Web UI](Power-Tools-Using-Web-UI.md).
 
 <img src="images/power-tools-entity-generator.png" alt="ASP.NET Zero Power Tools" class="img-fluid">
 
-## How to Use ASP.NET Zero Power Tools?
+## What is ASP.NET Zero Power Tools?
 
-The Power Tools can be used in two ways:
+ASP.NET Zero Power Tools reduces the effort required to create CRUD pages. You define an entity, then Power Tools generates the related application layers from the database to the user interface.
 
-1. Visual Studio Extension: Windows users can conveniently use the Visual Studio Extension to streamline the CRUD page generation process.
-2. Command Line (DLL): For Mac and Linux users, the extension's DLL files can be used directly with a command line, offering flexibility and efficiency.
+Depending on the selected project type and entity options, Power Tools can generate entities, DTOs, application services, permissions, localization entries, migrations, Angular/MVC/React UI files, MAUI files, unit tests, UI tests, Excel import/export code, and master-detail pages.
+
+Power Tools keeps its project-specific state in the `AspNetZeroRadTool` working folder of your ASP.NET Zero solution. This folder contains files such as `config.json`, entity JSON definitions, and customizable generation templates.
+
+## How to Use ASP.NET Zero Power Tools
+
+Power Tools can be used in two modes:
+
+1. **Web UI mode:** Install the .NET global tool, run `aspnetzero-powertools`, select your ASP.NET Zero solution, and use the browser-based UI.
+2. **Headless mode:** Run `aspnetzero-powertools <entity.json>` from the Power Tools working folder to generate code directly from an entity JSON file.
+
+The web UI is the recommended approach for most scenarios. It provides project selection, setup, entity management, database import, template editing, batch generation, relationship visualization, project settings, generation workflows, and logs.
 
 ## Development Guide
 
-The development guide provides detailed instructions on how to use the ASP.NET Zero Power Tools effectively. It covers:
+The development guide covers:
 
-* Installation and usage of the Visual Studio Extension on Windows.
-* Utilizing DLL files on Mac and Linux for code generation.
-* Editing and creating new templates for code generation.
-* Changing destination paths of newly generated files.
-* Detailed information about the files that are created or modified by the tool.
-* Troubleshooting common issues.
+* Installing and launching the .NET global tool.
+* Selecting or switching ASP.NET Zero projects.
+* Creating, editing, and generating entities from the web UI.
+* Importing entities from existing databases.
+* Creating master-detail pages.
+* Editing and creating code generation templates.
+* Understanding and manually editing entity JSON files for advanced/headless usage.
+* Configuring file locations, license information, and generation workflows.
+* Understanding generated files and troubleshooting common issues.
 
 ## Conclusion
 
-ASP.NET Zero Power Tools is an essential tool for developers working with ASP.NET Core projects. It streamlines the process of creating CRUD pages and allows developers to focus on building the core features of their applications.
+ASP.NET Zero Power Tools helps developers build CRUD-heavy business applications faster while preserving ASP.NET Zero's layered architecture and conventions.
 
-Whether you're using Visual Studio on Windows or working on Mac and Linux, the Power Tools are a valuable addition to your development toolkit, enabling you to create robust CRUD pages with ease.
-
-Get started with the ASP.NET Zero Power Tools now and experience the productivity and convenience it offers in your ASP.NET Core projects!
+Use the web UI for day-to-day generation, and use headless mode when you need automation or direct JSON-based generation.
 
 ## Next Steps
 
 * [Getting Started](Power-Tools-Getting-Started.md)
+* [Using Power Tools Web UI](Power-Tools-Using-Web-UI.md)

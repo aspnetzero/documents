@@ -1,10 +1,20 @@
 # How to Create & Edit Power Tools Templates
 
-Power Tools uses text templates for code generation, and these templates are located inside `/AspNetZeroRadTool/FileTemplates` directory in your project's root directory.
+Power Tools uses text templates for code generation. Templates are stored in the project's `AspNetZeroRadTool/FileTemplates` directory.
 
-**MainTemplate.txt:** Power Tools uses this template for main code generation.
-**PartialTemplates.txt:** Power Tools renders some placeholders in `MainTemplate.txt` conditionally. These conditional templates are stored in `PartialTemplates.txt`.
-**TemplateInfo.txt:** Stores information about the template like path and condition.
+Default templates are bundled with the global tool and synchronized into the project when Power Tools opens a project or starts generation. User customizations are stored as `.custom.txt` files and are preserved when default templates are refreshed.
+
+For day-to-day customization, use the **Templates** page in the Power Tools web UI. You can select an existing template, customize it in the browser, compare it with the default template, and insert placeholders without manually creating `.custom.txt` files.
+
+## Template Files
+
+Each template folder can contain these files:
+
+**MainTemplate.txt:** Main code generation template.
+
+**PartialTemplates.txt:** Conditional and looped template fragments used by `MainTemplate.txt`.
+
+**TemplateInfo.txt:** Output path and generation condition for the template.
 
 *Folder structure*
 
@@ -12,76 +22,39 @@ Power Tools uses text templates for code generation, and these templates are loc
 
 ## Edit Pre-defined Templates
 
-If you want to edit any file, copy it in the same directory and change it's an extension to `.custom.txt` from `.txt`. For example, you can create `MainTemplate.custom.txt` to override `MainTemplate.txt` in the same directory. Please don't make any changes to the original templates.
+Do not edit the default `.txt` files directly. They can be refreshed by newer Power Tools versions.
 
-![Edit Template](images/power-tools-edit-template.png)
+Open the Power Tools web UI and go to the **Templates** page. The template tree shows server templates, the client templates for the current project type, test templates, and MAUI templates when they are available.
+
+Select the template you want to change, then choose one of the editor tabs: **MainTemplate**, **PartialTemplates**, or **TemplateInfo**. Default templates are read-only. Click **Customize this template** to make the selected tab editable.
+
+After editing, click **Save**. Power Tools writes your change to the matching `.custom.txt` file, such as `MainTemplate.custom.txt`, `PartialTemplates.custom.txt`, or `TemplateInfo.custom.txt`, and keeps the original `.txt` file unchanged.
+
+Use **Diff** to compare your customization with the default template. For **MainTemplate**, you can also use **Code**, **Split**, and **Preview** modes. Preview uses sample placeholder values for visual review; it is not a replacement for running generation.
+
+Use the placeholders panel on the right side to search placeholders and insert them into the editor.
+
+![Templates page](images/power-tools-template-page.png)
+
+## Revert a Custom Template
+
+To revert a customized template file, select its tab in the template editor and click **Revert**. Power Tools deletes the related `.custom.txt` file and starts using the default `.txt` file again.
+
+You can also revert manually by deleting the related `.custom.txt` file from the template folder.
 
 ## Create New Templates
 
-Choose a folder under the `FileTemplates` directory based on where the file you're creating in your project will reside (e.g., `Server`, `Client` -> `Mvc` or `Angular`, `Test`). Then, create a folder named after the file you’re creating. Inside this folder, create the following three files: `MainTemplate.txt`, `PartialTemplates.txt`, and `TemplateInfo.txt`.
+Choose a folder under `FileTemplates` based on where the generated file belongs:
 
-You can use the existing templates as a reference. For guidance on how templates function and how to use placeholders, please refer to the documentation provided at [Understanding Power Tools Templates](power-tools-understanding-power-tools-templates.md).
+* `Server`
+* `Client/Angular`
+* `Client/Mvc`
+* `Client/React`
+* `Test`
+* `Maui`
 
-Power Tools discovers templates in the `FileTemplates` directory every time it is run. So, restarting Power Tools will find your newly created templates.
+Then create a new template folder and add `MainTemplate.txt`, `PartialTemplates.txt`, and `TemplateInfo.txt`. New template folders are created in the file system, not from the Templates page.
 
-### Example Custom Template
+You can use existing templates as a reference. For guidance on placeholders and template behavior, see [Understanding Power Tools Templates](Power-Tools-Understanding-Power-Tools-Templates.md).
 
-Let's say you want to create a new template for generating a new class in the `*.Core.Shared` project. It is an entity constant class that contains some constant values. Here is how you can create a new template for this:
-
-1. Create a new folder named `CustomTemplate` under `AspNetZeroRadTool/FileTemplates/Server` directory.
-	> Hint: You can use a prefix like ANZ to group your templates. For example, `ANZ_CustomTemplate`. Or refoldering, for example `FileTemplates\Server\MyTemplates\ANZ_CustomTemplate` This will help you to find your templates easily. 
-
-2. Create `MainTemplate.txt`, `PartialTemplates.txt`, and `TemplateInfo.txt` files inside the `ConstantClass` folder.
-
-**MainTemplate.txt**
-
-```txt
-{{Enum_Using_Looped_Template_Here}}
-using System;
-
-namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
-{
-    public static class {{Entity_Name_Here}}CustomConsts
-    {
-        {{Property_Looped_Template_Here}}
-    }
-}
-```
-
-**PartialTemplates.txt**
-
-```txt
-{
-"propertyTemplates":[
-		{
-			"placeholder" : "{{Property_Looped_Template_Here}}",
-			"condition" : "",
-			"templates" : [
-					{
-					"type" : "default",
-					"content" : "public static readonly string {{Property_Name_Here}} = \"{{Property_Name_Here}}\";
-					"
-					},
-				]
-		}
-	],
-"navigationPropertyTemplates":[
-	],
-"enumTemplates":[
-		{
-			"placeholder" : "{{Enum_Using_Looped_Template_Here}}",
-			"preventDuplicate":true,
-			"content" : "using {{Enum_Namespace_Here}};"
-		}
-	],
-}
-```
-
-**TemplateInfo.txt**
-
-```txt
-{
-	"path" : "{{Namespace_Here}}.Core.Shared\\{{Namespace_Relative_Full_Reverse_Slash_Here}}\\{{Entity_Name_Here}}CustomConsts.cs",
-	"condition": "{{Is_Master_Detail_Page_Child_Here}} == false",
-}
-```
+Power Tools discovers templates in the `FileTemplates` directory each time generation runs. If the web UI is open while you add new template folders manually, refresh the page if you do not see them immediately.
