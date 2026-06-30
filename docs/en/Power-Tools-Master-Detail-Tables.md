@@ -92,7 +92,7 @@ For advanced or headless usage, you can edit the entity JSON file manually.
       },
       "Required": false,
       "Nullable": false,
-      "Regex": "",+
+      "Regex": "",
       "UserInterface": {
         "AdvancedFilter": true,
         "List": true,
