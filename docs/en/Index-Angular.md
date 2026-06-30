@@ -30,7 +30,7 @@ ASP.NET Zero customers can get help for the technical issues on the support webs
 
 ### Power Tools
 
-ASP.NET Zero Power Tools helps you create an entity and its corresponding layers from the database to the user interface. It is a Visual Studio Extension hosted on Visual Studio Marketplace. [Go to Power Tools](https://marketplace.visualstudio.com/items?itemName=Volosoft.AspNetZeroPowerTools)  or [see how to use it](Rapid-Application-Development.md). You can also use ASP.NET Zero Power Tools via the command-line interface.
+ASP.NET Zero Power Tools helps you create an entity and its corresponding layers from the database to the user interface. It is installed as a .NET global tool and opens a web-based UI for code generation. [See how to use Power Tools](Power-Tools-Getting-Started.md). You can also use Power Tools in headless command-line mode.
 
 ### Metronic Theme
 

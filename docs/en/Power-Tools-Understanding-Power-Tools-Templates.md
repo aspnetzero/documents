@@ -1,13 +1,17 @@
 # Understanding Power Tools Templates
 
-Power Tools uses templates to generate the code for the various features. This allows you to customize the code that is generated to fit your needs. Before starting this section, please read the [How to Create & Edit Power Tools Templates](how-to-create-edit-power-tools-templates.md) section.
+Power Tools uses templates to generate the code for the various features. This allows you to customize the code that is generated to fit your needs. Before starting this section, please read the [How to Create & Edit Power Tools Templates](How-To-Create-Edit-Power-Tools-Templates.md) section.
 
 Basically we are using partial templates to generate code in main template. Let's take a quick look:
 
 *MainTemplate.txt*
 
 ```csharp
-{{Enum_Using_Looped_Template_Here}}{{NP_Using_Looped_Template_Here}}using System;
+{{Enum_Using_Looped_Template_Here}}
+
+{{NP_Using_Looped_Template_Here}}
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
@@ -16,10 +20,17 @@ using Abp.Domain.Entities;{{Using_Auditing_Here}}
 namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
 {
 	[Table("{{Table_Name_Here}}")]{{Auditing_Attr_Here}}
-    public{{Overridable_Entity_Abstract_Here}} class {{Entity_Name_Here}}{{Overridable_Entity_Base_Here}} : {{Base_Class_Here}}{{Primary_Key_Inside_Tag_Here}} {{May_Or_Must_Tenant_Here}}
-    {{{Tenant_Id_Here}}
-{{Property_Looped_Template_Here}}
-{{Navigation_Property_Looped_Template_Here}}
+    public{{Overridable_Entity_Abstract_Here}} class {{Entity_Name_Here}}{{Overridable_Entity_Base_Here}} : {{Base_Class_Here}}         
+    {
+        {{Primary_Key_Inside_Tag_Here}} 
+        
+        {{May_Or_Must_Tenant_Here}}
+        
+        {{{Tenant_Id_Here}}
+        
+        {{Property_Looped_Template_Here}}
+    
+        {{Navigation_Property_Looped_Template_Here}}
     }
 }
 ```
@@ -35,16 +46,28 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
 			"templates" : [
 					{
 					"type" : "default",
-					"content" : "{{Required}}{{Regex}}{{MixMaxLength}}{{Range}}
-		public virtual {{Property_Type_Here}}{{Property_Nullable_Question_Mark_Here}} {{Property_Name_Here}} { get; set; }
-		"
+					"content" : 
+                        "
+                            {{Required}}
+                            {{Regex}}
+                            {{MixMaxLength}}
+                            {{Range}}
+		                    
+                            public virtual {{Property_Type_Here}}{{Property_Nullable_Question_Mark_Here}} {{Property_Name_Here}} { get; set; }
+		                "
 					},
 					{
 					"type" : "file",
-					"content" : "//File
-					{{Required}}{{Regex}}{{MixMaxLength}}{{Range}}
-		public virtual Guid? {{Property_Name_Here}} { get; set; } //File, (BinaryObjectId)
-		"
+					"content" : 
+                        "
+                            //File
+					        {{Required}}
+                            {{Regex}}
+                            {{MixMaxLength}}
+                            {{Range}}
+
+		                    public virtual Guid? {{Property_Name_Here}} { get; set; } //File, (BinaryObjectId)
+                		"
 					},
 				]
 		}
@@ -73,16 +96,28 @@ The property templates are used to generate the properties of the entity. It wil
     "templates" : [
             {
             "type" : "default",
-            "content" : "{{Required}}{{Regex}}{{MixMaxLength}}{{Range}}
-public virtual {{Property_Type_Here}}{{Property_Nullable_Question_Mark_Here}} {{Property_Name_Here}} { get; set; }
-"
+            "content" : 
+                "
+                    {{Required}}
+                    {{Regex}}
+                    {{MixMaxLength}}
+                    {{Range}}
+
+                    public virtual {{Property_Type_Here}}{{Property_Nullable_Question_Mark_Here}} {{Property_Name_Here}} { get; set; }
+                "
             },
             {
             "type" : "file",
-            "content" : "//File
-            {{Required}}{{Regex}}{{MixMaxLength}}{{Range}}
-public virtual Guid? {{Property_Name_Here}} { get; set; } //File, (BinaryObjectId)
-"
+            "content" : 
+                "
+                    //File
+                    {{Required}}
+                    {{Regex}}
+                    {{MixMaxLength}}
+                    {{Range}}
+
+                    public virtual Guid? {{Property_Name_Here}} { get; set; } //File, (BinaryObjectId)
+                "
             },
         ]
 }
@@ -165,7 +200,7 @@ Placeholders are used to replace the content of the template. As you are familia
 | {{Entity_Name_Here}} | Entity name |
 | {{Table_Name_Here}} | Table name of the entity |
 | {{Entity_History_Here}} | Is entity history enabled |
-| {{Menu_Position_Here}} | `Admin` or `menu` |
+| {{Menu_Position_Here}} | `Admin`, `Root` or `Custom Menu Name`  |
 | {{Namespace_Relative_Here}} | Entity namespace relative to the project |
 | {{Namespace_Relative_Full_Here}} | Entity namespace relative to the project with full path |
 | {{Namespace_Relative_Full_Reverse_Slash_Here}} | Entity namespace relative to the project with full path and reverse slash |
@@ -216,4 +251,4 @@ Placeholders are used to replace the content of the template. As you are familia
 | {{Generate_Overridable_Entity_Here}} | Generate overridable entity enabled |
 | {{Navigation_Property_One_To_Many_Td_Col_Span_Here}} | Navigation property one to many td col span |
 | {{Has_File_Prop}} | Has file property |
-| {{Project_Type_Here}} | `Angular` or `Mvc` |
+| {{Project_Type_Here}} | `Angular`, `Mvc` and `React` |
