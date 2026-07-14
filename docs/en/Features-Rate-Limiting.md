@@ -128,6 +128,8 @@ Endpoint patterns support wildcard matching with `*`. For example:
 
 Rate limiting policies are cached in memory for optimal performance. The cache is automatically invalidated whenever a policy is created, updated, deleted, or toggled, and when the global rate limiting setting is changed. This means policy changes take effect immediately without requiring an application restart.
 
+If the policies cannot be read because the database is temporarily unreachable, rate limiting is skipped for that request and a warning is written to the log, instead of failing the request. Requests keep being served, and rate limiting starts working again by itself as soon as the database is available.
+
 ## Permissions
 
 Rate limiting management is controlled by the following permissions under **Administration > Rate Limiting**:
