@@ -6,6 +6,14 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 15.4.0 (2026-07-28)
+
+* Introduced Global .NET Tool for code generation
+* Upgraded to ABP 11.3
+* Upgraded NPM and NuGet packages
+* Migrated to PNPM 
+* Enhancements and bug fixes 
+
 ## 15.3.0 (2026-05-12)
 
 * Added Rate limiting feature
