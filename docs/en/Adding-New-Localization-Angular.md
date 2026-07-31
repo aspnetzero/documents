@@ -64,50 +64,42 @@ This file ensures that the application can display content in the selected langu
 
 To fully support the new language in the Angular UI, you need to update various localization settings, including date picker localization.
 
-#### Configure Date Localization in ngx-bootstrap
+#### Configure Locale for ng-zorro Components
 
-To ensure that the ngx-bootstrap date picker supports the new language, update the `ngx-bootstrap-datepicker-config.service.ts` file. This configuration allows the date picker to display dates in the correct format for the selected language.
+ASP.NET Zero's Angular UI uses [ng-zorro](https://ng.ant.design/) components (date pickers, tables, pagination etc.), which carry their own localized texts. Two places must know about the new language:
 
-**Import the Locale**
+**Register the Locale**
 
-Add the new language locale to the imports from `ngx-bootstrap/chronos`:
+Add the new language to `src/shared/utils/ng-zorro-locales.ts`. ng-zorro ships every locale from the `ng-zorro-antd/i18n` entry point; only the locales listed in this file are included in the application bundle:
 
-```javascript
+```typescript
 import {
-    enGbLocale,
-    plLocale, // Add import for the new language here
-    //Other locales
-} from 'ngx-bootstrap/chronos';
+    en_US,
+    pl_PL, // Add import for the new language here
+    // Other locales
+} from 'ng-zorro-antd/i18n';
+
+export const NG_ZORRO_LOCALES: Record<string, NzI18nInterface> = {
+    en_US,
+    pl_PL, // Add the new language here
+    // Other locales
+};
 ```
 
-**Update the `registerNgxBootstrapDatePickerLocales` Method**
+**Map the Language to the ng-zorro Locale**
 
-Modify the method to include the new language inside the locales object:
+Add a mapping to the `localeMappings.ngZorro` array in `src/assets/appconfig.json` (and in the `appconfig.production.json` / `appconfig.k8s.json` variants), so the ABP language name resolves to the ng-zorro locale key:
 
-```javascript
-static registerNgxBootstrapDatePickerLocales(): Promise<boolean> {
-    if (abp.localization.currentLanguage.name === 'en') {
-        return Promise.resolve(true);
+```json
+"ngZorro": [
+    {
+        "from": "pl",
+        "to": "pl_PL"
     }
-
-    const locales: { [key: string]: any } = {
-        'en': enGbLocale,
-        'pl': plLocale, // Add new language here
-        //Other languages
-    };
-
-    let localeKey = abp.localization.currentLanguage.name.toLowerCase();
-
-    if (locales[localeKey]) {
-        defineLocale(localeKey, locales[localeKey]);
-        return Promise.resolve(true);
-    }
-
-    return Promise.reject(`Locale ${localeKey} not found`);
-}
+]
 ```
 
-This method ensures that the correct locale is loaded based on the currently selected language in the application. If the language is not found in the locales object, an error is returned.
+At startup, the application resolves the current ABP language through this mapping and registers the matching locale via `NzI18nService`, so ng-zorro components - including date pickers - display their texts and date formats in the selected language. If no mapping or locale is found, English is used as the fallback.
 
 ### 3. Verify and Test the Localization Changes
 After implementing the necessary changes, follow these steps to verify that the new language is properly integrated into the application:

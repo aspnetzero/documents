@@ -449,11 +449,11 @@ The approach and features exhibited in ASP.NET Boilerplate `books.component.ts` 
     - Components declare their own dependencies in `imports` array
     - Uses modern Angular patterns: `inject()`, `signal()`, `viewChild()`, `output()`
     - Manages modals using Angular's **viewChild** mechanism
-    - Uses Table and **Paginator** components from the primeng library
-    - More automated and structured, additional libraries such as **primeng** are used
+    - Uses the **Table** component (with built-in pagination) from the ng-zorro (Ant Design) library
+    - More automated and structured, additional libraries such as **ng-zorro-antd** are used
     - Excel and file upload features are more advanced and integrated (FileUpload, ExcelColumnSelectionModalComponent)
     - Uses more advanced notification and approval services (NotifyService)
-    - Uses advanced filtering and loading mechanisms with primeng
+    - Uses advanced filtering and loading mechanisms with ng-zorro
     - Lazy loads components directly with `loadComponent` instead of `loadChildren`
 
 
@@ -529,7 +529,7 @@ The migration from ASP.NET Boilerplate to ASP.NET Zero involves several importan
 - **Angular Architecture:** ASP.NET Zero uses standalone components instead of NgModules, eliminating the need for module files
 - **Modern Angular Patterns:** Adoption of `inject()`, `signal()`, `viewChild()`, and `output()` for better type safety and reactivity
 - **Routing:** Transition from `loadChildren` (modules) to `loadComponent` (standalone components) for lazy loading
-- **UI Components:** Enhanced UI with PrimeNG and Metronic theme integration
+- **UI Components:** Enhanced UI with ng-zorro (Ant Design) and Metronic theme integration
 - **Development Experience:** Improved with more streamlined and self-contained components
 
 ASP.NET Zero offers advanced features that increase efficiency and scalability by providing a more integrated and streamlined approach to these elements. The adoption of standalone components represents a significant architectural improvement, aligning with modern Angular best practices and reducing boilerplate code.
