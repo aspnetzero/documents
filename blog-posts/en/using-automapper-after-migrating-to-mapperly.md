@@ -13,12 +13,13 @@ This post is a complete runbook for **reverting an upgraded ASP.NET Zero solutio
 
 ## What You Are Undoing
 
-The migration commit in the ASP.NET Zero template touched 44 files. A full revert has to reverse five distinct things:
+The migration commit in the ASP.NET Zero template reaches into every layer of the solution. A full revert has to reverse five distinct things:
 
 1. **The ABP module**, `AbpAutoMapperModule` → `AbpMapperlyModule` in `AbpZeroTemplateCoreModule` and `AbpZeroTemplateMauiModule`.
 2. **`CustomDtoMapper.cs`**, deleted from both the `.Application` project and the `.GraphQL` project, along with the `Configurators.Add(...)` registrations in the corresponding modules.
-3. **`[AutoMap*]` attributes**, removed from files: cache items, GraphQL DTOs, MAUI persistence models, and MVC view models.
+3. **`[AutoMap*]` attributes**, removed from 28 files across five projects: cache items, GraphQL DTOs, MAUI persistence models, and MVC view models.
 4. **Generated mapper classes**, added across six projects.
+5. **Package references and build settings**, `Abp.AutoMapper` → `Abp.Mapperly` in four `.csproj` files, plus the `RMG020;RMG012;RMG066` `NoWarn` suppressions added to `aspnet-core/common.props`.
 
 Here is the mapper inventory you will be converting or deleting:
 
@@ -32,7 +33,7 @@ Here is the mapper inventory you will be converting or deleting:
 | `.Web.Core` | 1 | 1 |
 | **Total** | **37** | **114** |
 
-For a solution that has not diverged much from the template, this is roughly a day of focused work plus a testing pass. Nothing changes on the frontend Angular, React and MVC client code is untouched.
+For a solution that has not diverged much from the template, this is roughly a day of focused work plus a testing pass. Nothing changes on the frontend: Angular, React and MVC client code is untouched.
 
 **Before you start, create a branch and make sure your pre-upgrade commit is reachable.** Most of the work below is recovering files from your own git history rather than writing them.
 
@@ -47,7 +48,7 @@ AutoMapper moved under Lucky Penny Software and [went commercial](https://github
 | **14.0.0** and earlier | MIT | Last permissively licensed release. `net8.0` target only, which a `net10.0` project consumes fine. |
 | **15.0+** (currently 16.x) | Dual: [RPL-1.5](https://github.com/LuckyPennySoftware/AutoMapper/blob/main/LICENSE.md) or commercial | Free tier for organizations under **$5M USD gross annual revenue**, non-profits under $5M budget, and educational/non-production use. A license key is expected for auditing. Targets `net8.0`, `net9.0`, `net10.0`, `net471`, `netstandard2.0`. |
 
-`AutoMapper.Collection` which `Abp.AutoMapper` needs at runtime, pins you to one line or the other:
+`AutoMapper.Collection`, which `Abp.AutoMapper` needs at runtime, pins you to one line or the other:
 
 | AutoMapper.Collection | Requires AutoMapper |
 |---|---|
@@ -57,10 +58,10 @@ AutoMapper moved under Lucky Penny Software and [went commercial](https://github
 
 So there are two viable combinations:
 
-- **Free path AutoMapper 14.0.0 + AutoMapper.Collection 11.0.0.** This is exactly what `Abp.AutoMapper.csproj` already references, so the package builds unmodified. Choose this unless you have a specific reason not to.
-- **Licensed path AutoMapper 15.x/16.x + AutoMapper.Collection 12.0.0/13.0.0.** Requires patching `AbpAutoMapperModule` (covered in Prerequisite 2, step 4) because AutoMapper 15 removed the constructor ABP uses.
+- **Free path:** AutoMapper 14.0.0 + AutoMapper.Collection 11.0.0. This is exactly what `Abp.AutoMapper.csproj` already references, so the package builds unmodified. Choose this unless you have a specific reason not to.
+- **Licensed path:** AutoMapper 15.x/16.x + AutoMapper.Collection 12.0.0/13.0.0. Requires patching `AbpAutoMapperModule` (covered in Prerequisite 2, step 4) because AutoMapper 15 removed the constructor ABP uses.
 
-> `AutoMapper.Collection` is not optional if you use `[AutoMapKey]`. `AutoMapperConfigurationExtensions.CreateAutoAttributeMaps` loads the assembly **by name** at runtime to wire up `EqualityComparison` dropping the package turns that into a runtime failure, not a compile error.
+> `AutoMapper.Collection` is not optional if you use `[AutoMapKey]`. `AutoMapperConfigurationExtensions.CreateAutoAttributeMaps` loads the assembly **by name** at runtime to wire up `EqualityComparison`, so dropping the package turns that into a runtime failure, not a compile error.
 
 ## Prerequisite 2: Get the `Abp.AutoMapper` Package
 
@@ -72,11 +73,11 @@ So there are two viable combinations:
 public class AbpAutoMapperModule : AbpModule
 ```
 
-Deprecated means no new features and no guarantee it survives a future major not removed. It still targets `net10.0` and still works.
+Deprecated means no new features and no guarantee it survives a future major; it does not mean removed. It still targets `net10.0` and still works.
 
 ### Step 1: Check your ASP.NET Zero feed first
 
-ABP 11.x packages ship through the ASP.NET Zero NuGet feed configured in `aspnet-core/NuGet.Config`, not nuget.org (the public `Abp.*` packages stop at the 10.4.0 line). Check whether the version you need is already published:
+ABP 11.x packages ship through the ASP.NET Zero NuGet feed configured in `aspnet-core/NuGet.Config`, not nuget.org (the public `Abp.*` packages stop at the 10.5.0 line). Check whether the version you need is already published:
 
 ```powershell
 dotnet package search Abp.AutoMapper `
@@ -84,7 +85,7 @@ dotnet package search Abp.AutoMapper `
     --exact-match
 ```
 
-If a matching 11.x version comes back and you are on the free AutoMapper path, you are done with this prerequisite skip to [Step 1: Swap the Package References](#step-1-swap-the-package-references).
+If a matching 11.x version comes back and you are on the free AutoMapper path, you are done with this prerequisite; skip to [Step 1: Swap the Package References](#step-1-swap-the-package-references).
 
 Otherwise, build it yourself.
 
@@ -107,7 +108,7 @@ Confirm `common.props` at the repository root carries the version you expect:
 </PropertyGroup>
 ```
 
-Pack just that one project there is no need to build the whole solution:
+Pack just that one project; there is no need to build the whole solution:
 
 ```powershell
 cd src/Abp.AutoMapper
@@ -172,7 +173,19 @@ private void CreateMappings()
     };
 
     var config = new MapperConfiguration(configurer);   // <-- removed in AutoMapper 15
-    ...
+
+    IocManager.IocContainer.Register(
+        Component.For<IConfigurationProvider>().Instance(config).LifestyleSingleton()
+    );
+
+    var mapper = config.CreateMapper();
+    IocManager.IocContainer.Register(
+        Component.For<IMapper>().Instance(mapper).LifestyleSingleton()
+    );
+
+#pragma warning disable CS0618
+    AbpEmulateAutoMapper.Mapper = mapper;
+#pragma warning restore CS0618
 }
 ```
 
@@ -204,8 +217,14 @@ private void CreateMappings()
     IocManager.IocContainer.Register(
         Component.For<IMapper>().Instance(mapper).LifestyleSingleton()
     );
+
+#pragma warning disable CS0618
+    AbpEmulateAutoMapper.Mapper = mapper;   // keep this line
+#pragma warning restore CS0618
 }
 ```
+
+> **Do not drop the `AbpEmulateAutoMapper.Mapper` assignment.** That static field is what backs the legacy `.MapTo<T>()` extension methods in `AutoMapExtensions`, which older ASP.NET Zero solutions use heavily. Removing it compiles cleanly and then throws `NullReferenceException` the first time any `.MapTo<T>()` call runs.
 
 `ILoggerFactory` and `NullLoggerFactory` come from `Microsoft.Extensions.Logging` and `Microsoft.Extensions.Logging.Abstractions`. In an ASP.NET Core host, `services.AddAbp()` bridges the service collection into Windsor so `ILoggerFactory` resolves; the fallback keeps unit-test hosts and the MAUI project working.
 
@@ -227,7 +246,7 @@ Configuration.Modules.AbpAutoMapper().LicenseKey =
     IocManager.Resolve<IConfiguration>()["AutoMapper:LicenseKey"];
 ```
 
-Keeping the key out of the package matters a license key baked into a NuGet artifact you rebuild every ABP release is a key you will eventually leak. Pack and publish as in steps 2 and 3, and consider a distinct package ID such as `YourCompany.Abp.AutoMapper` now that you have diverged from upstream; it makes the provenance obvious to whoever reads the `.csproj` next.
+Keeping the key out of the package matters: a license key baked into a NuGet artifact you rebuild every ABP release is a key you will eventually leak. Pack and publish as in steps 2 and 3, and consider a distinct package ID such as `YourCompany.Abp.AutoMapper` now that you have diverged from upstream; it makes the provenance obvious to whoever reads the `.csproj` next.
 
 With the package in place, the revert itself is eight steps.
 
@@ -243,7 +262,7 @@ Four project files reference `Abp.Mapperly`: `.Core`, `.Web.Core`, `.Web.Mvc` an
 <PackageReference Include="Abp.AutoMapper" Version="11.3.0" />
 ```
 
-There is no separate `Riok.Mapperly` reference to clean up the source generator arrives transitively through `Abp.Mapperly` and leaves with it.
+There is no separate `Riok.Mapperly` reference to clean up: the source generator arrives transitively through `Abp.Mapperly` and leaves with it.
 
 ## Step 2: Swap the Module Dependencies
 
@@ -278,7 +297,7 @@ public class AbpZeroTemplateMauiModule : AbpModule
 
 ## Step 3: Restore `CustomDtoMapper.cs` in the Application Project
 
-You do not write this from scratch it is in your own git history. Find the commit before you merged the v15.2 upgrade:
+You do not write this from scratch; it is in your own git history. Find the commit before you merged the v15.2 upgrade:
 
 ```powershell
 git log --oneline --all -- "**/CustomDtoMapper.cs"
@@ -287,9 +306,11 @@ git log --oneline --all -- "**/CustomDtoMapper.cs"
 Then restore the file:
 
 ```powershell
-git show <commit>:aspnet-core/src/MyCompanyName.AbpZeroTemplate.Application/CustomDtoMapper.cs `
-    > aspnet-core/src/MyCompanyName.AbpZeroTemplate.Application/CustomDtoMapper.cs
+git checkout <commit> -- `
+    aspnet-core/src/MyCompanyName.AbpZeroTemplate.Application/CustomDtoMapper.cs
 ```
+
+> Use `git checkout`, not `git show ... > file`. In Windows PowerShell 5.1, `>` writes UTF-16LE, and the C# compiler will not read the result as a source file.
 
 The recovered file is the template's mapping configuration plus everything your team added under the `/* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */` marker. It looks like this:
 
@@ -399,7 +420,7 @@ public abstract class AbpZeroTemplateQueryBase<TField, TResult> : ITransientDepe
 }
 ```
 
-> The pre-v15.2 template injected AutoMapper's `IMapper` here directly. Going through `IObjectMapper` is equivalent `AutoMapperObjectMapper.ProjectTo` simply delegates to `Mapper.ProjectTo<TDestination>(source)` and keeps the GraphQL layer independent of which mapper is configured.
+> The pre-v15.2 template injected AutoMapper's `IMapper` here directly. Going through `IObjectMapper` is equivalent: `AutoMapperObjectMapper.ProjectTo` simply delegates to `Mapper.ProjectTo<TDestination>(source)` and keeps the GraphQL layer independent of which mapper is configured.
 
 **4d. The queries.** `OrganizationUnitQuery` and `RoleQuery` were rewritten during the migration to materialize before mapping, because Mapperly could not project them. Put the projections back:
 
@@ -423,11 +444,11 @@ In `UserQuery.cs`, the `GetRolesOfUsers` helper also gained a `.ToList()` that w
   return ObjectMapper.Map<List<UserDto.RoleDto>>(roles);
 ```
 
-This one is best practice leaving the `.ToList()` in place works fine under AutoMapper too.
+This one is best practice, not a requirement; leaving the `.ToList()` in place works fine under AutoMapper too.
 
 ## Step 5: Restore the `[AutoMap*]` Attributes
 
-Twenty-four files lost their attributes. Recover each from your pre-upgrade branch the fastest route is a targeted checkout:
+Twenty-eight files lost their attributes. Recover each from your pre-upgrade branch; the fastest route is a targeted checkout:
 
 ```powershell
 git checkout <pre-upgrade-commit> -- `
@@ -475,7 +496,6 @@ Here is the full list, so nothing is missed.
 
 | File | Attribute |
 |---|---|
-| `Areas/AppAreaName/Models/Editions/CreateOrEditRoleModalViewModel.cs` | `[AutoMapFrom(typeof(GetEditionEditOutput))]` |
 | `Areas/AppAreaName/Models/Editions/EditEditionModalViewModel.cs` | `[AutoMapFrom(typeof(GetEditionEditOutput))]` |
 | `Areas/AppAreaName/Models/EntityChanges/EntityChangeListViewModel.cs` | `[AutoMapFrom(typeof(EntityAndPropertyChangeListDto))]` |
 | `Areas/AppAreaName/Models/Languages/CreateOrEditLanguageModalViewModel.cs` | `[AutoMapFrom(typeof(GetLanguageForEditOutput))]` |
@@ -492,7 +512,7 @@ Here is the full list, so nothing is missed.
 
 Each file also needs its `using Abp.AutoMapper;` back, and the MAUI and GraphQL files need the DTO namespace imports that were removed alongside the attributes.
 
-If you would rather not spread attributes across projects again, every one of these can instead be expressed as a `CreateMap` line in `CustomDtoMapper`. Functionally identical pick one approach and apply it consistently.
+If you would rather not spread attributes across projects again, every one of these can instead be expressed as a `CreateMap` line in `CustomDtoMapper`. Functionally identical: pick one approach and apply it consistently.
 
 ## Step 6: Reconcile Against the Newer Template
 
@@ -511,7 +531,7 @@ Walk the `Mappers/` folders in the upgraded template and add a `CreateMap` for e
 | `AfterMap` / `BeforeMap` override | `.AfterMap((src, dest) => ...)` / `.BeforeMap(...)` |
 | `IAbpMapperlyMultiLingualMapper<...>` | `configuration.CreateMultiLingualMap<TEntity, TTranslation, TDto>(context)` |
 
-A worked example this Mapperly class:
+A worked example: this Mapperly class
 
 ```csharp
 [Mapper]
@@ -532,7 +552,7 @@ configuration.CreateMap<User, UserEditDto>()
     .ForMember(dto => dto.Password, options => options.Ignore());
 ```
 
-Note the asymmetry in effort. The pre-v15.2 template expressed the same coverage in **67 `CreateMap` calls plus 24 attribute-decorated classes** against 114 Mapperly classes today. `ReverseMap()` and `Include<>()` collapse pairs and inheritance chains that Mapperly has to spell out one at a time, so the AutoMapper form is materially more compact. Going back is less work than going forward was.
+Note the asymmetry in effort. The pre-v15.2 template expressed the same coverage in **67 `CreateMap` calls plus `[AutoMap*]` attributes on 28 files** against 114 Mapperly classes today. `ReverseMap()` and `Include<>()` collapse pairs and inheritance chains that Mapperly has to spell out one at a time, so the AutoMapper form is materially more compact. Going back is less work than going forward was.
 
 **Multi-lingual entities need attention.** If you use `IMultiLingualEntity`, the Mapperly side expresses translation selection through `IAbpMapperlyMultiLingualMapper<...>`; the AutoMapper side uses `CreateMultiLingualMap`, which hooks `BeforeMap` to pick the translation for the current UI culture with fallback:
 
@@ -569,7 +589,7 @@ Then drop the Mapperly analyzer suppressions from `aspnet-core/common.props`:
 </Project>
 ```
 
-Those were Mapperly diagnostics *source member is not mapped to any target member* (RMG020), *source member was not found for target member* (RMG012), and *no members are mapped in an object mapping* (RMG066). With the generator gone they are dead configuration, and leaving them behind hides the fact that the suppressions were ever needed.
+Those were Mapperly diagnostics: *source member is not mapped to any target member* (RMG020), *source member was not found for target member* (RMG012), and *no members are mapped in an object mapping* (RMG066). With the generator gone they are dead configuration, and leaving them behind hides the fact that the suppressions were ever needed.
 
 ## Step 8: Build, Validate, Test
 
@@ -577,7 +597,7 @@ Those were Mapperly diagnostics *source member is not mapped to any target membe
 dotnet build aspnet-core/MyCompanyName.AbpZeroTemplate.Web.sln
 ```
 
-A clean build is necessary but **not** sufficient. This is the central trade-off you are accepting: Mapperly turns a missing mapping into a compile error, AutoMapper turns it into a runtime `AutoMapperMappingException` on whichever request happens to need it.
+A clean build is necessary but **not** sufficient. This is the central trade-off you are accepting: Mapperly turns a missing mapping into a compile error; AutoMapper turns it into a runtime `AutoMapperMappingException` on whichever request happens to need it.
 
 Restore the safety net with a configuration validation test:
 
@@ -592,7 +612,7 @@ public class AutoMapper_Tests : AppTestBase
 }
 ```
 
-`AbpAutoMapperModule` registers `IConfigurationProvider` as a singleton for exactly this. Qualify the type name `AutoMapper.IConfigurationProvider` collides with `Microsoft.Extensions.Configuration.IConfigurationProvider`, and both namespaces are usually in scope in an ASP.NET Zero test project.
+`AbpAutoMapperModule` registers `IConfigurationProvider` as a singleton for exactly this. Qualify the type name: `AutoMapper.IConfigurationProvider` collides with `Microsoft.Extensions.Configuration.IConfigurationProvider`, and both namespaces are usually in scope in an ASP.NET Zero test project.
 
 `AssertConfigurationIsValid()` catches unmapped destination members across every configured pair, which is precisely the class of bug a partial revert introduces. Make it part of CI, not a one-off local run.
 
@@ -603,7 +623,7 @@ dotnet test aspnet-core/test/MyCompanyName.AbpZeroTemplate.Tests
 dotnet test aspnet-core/test/MyCompanyName.AbpZeroTemplate.GraphQL.Tests
 ```
 
-Manual verification checklist these exercise the mappings most likely to have been missed:
+Then walk this manual verification checklist; these areas exercise the mappings most likely to have been missed:
 
 - **Users**: list, create, edit, permissions modal, Excel export, user import
 - **Roles**: list, create/edit modal with permissions
@@ -613,7 +633,7 @@ Manual verification checklist these exercise the mappings most likely to have be
 - **Organization units**: tree, member and role assignment
 - **Dynamic properties**: definitions and per-entity values
 - **Webhooks**: subscriptions and send-attempt list
-- **Chat and friendships** (`FriendCacheItem` the cache path only exercises after a cache miss)
+- **Chat and friendships** (`FriendCacheItem`: the cache path only exercises after a cache miss)
 - **My Settings / profile page**
 - **GraphQL queries** for users, roles and organization units, if you use them
 - **MAUI login and tenant switch**, if you build the mobile app
@@ -622,7 +642,7 @@ Manual verification checklist these exercise the mappings most likely to have be
 
 Two things are now permanently on your plate.
 
-**Every ASP.NET Zero upgrade needs the revert re-applied.** When the template adds a DTO, it adds a Mapperly mapper for it. Your merge will bring that mapper in and your build will keep passing, but the mapping will not be registered `AbpAutoMapperModule` is what is running. Add a step to your upgrade checklist: after every merge, diff the incoming `Mappers/` folders, translate anything new into `CustomDtoMapper`, then delete the folders again. The `AssertConfigurationIsValid()` test will catch most misses, and it is far cheaper than finding them in production.
+**Every ASP.NET Zero upgrade needs the revert re-applied.** When the template adds a DTO, it adds a Mapperly mapper for it. Your merge will bring that mapper in and your build will keep passing, but the mapping will not be registered: `AbpAutoMapperModule` is what is running. Add a step to your upgrade checklist: after every merge, diff the incoming `Mappers/` folders, translate anything new into `CustomDtoMapper`, then delete the folders again. The `AssertConfigurationIsValid()` test will catch most misses, and it is far cheaper than finding them in production.
 
 **Power Tools generates Mapperly mappers.** ASP.NET Zero Power Tools emits `[Mapper]` classes for new entities. You have two options: convert each generated mapper into `CreateMap` calls after generation, or customize the Power Tools templates so they emit AutoMapper configuration directly. For teams generating entities regularly, customizing the templates pays for itself quickly.
 
@@ -633,10 +653,13 @@ Also worth knowing: **Native AOT and aggressive trimming are off the table** whi
 There is a lighter option worth considering before you commit to all of the above: leave `IObjectMapper` bound to Mapperly so the template code works exactly as shipped, and register AutoMapper's `IMapper` separately for your own application code.
 
 ```csharp
-// AbpZeroTemplateCoreModule.PostInitialize - do NOT add AbpAutoMapperModule to DependsOn
+// AbpZeroTemplateApplicationModule.PostInitialize - do NOT add AbpAutoMapperModule to DependsOn
 private void RegisterAutoMapper()
 {
-    var config = new MapperConfiguration(cfg => CustomDtoMapper.CreateMappings(cfg));
+    var expression = new MapperConfigurationExpression();
+    CustomDtoMapper.CreateMappings(expression);
+
+    var config = new MapperConfiguration(expression);
 
     IocManager.IocContainer.Register(
         Component.For<AutoMapper.IConfigurationProvider>().Instance(config).LifestyleSingleton(),
@@ -645,28 +668,32 @@ private void RegisterAutoMapper()
 }
 ```
 
+This has to live in the `.Application` module, not `AbpZeroTemplateCoreModule`: `CustomDtoMapper` is `internal static` in the `.Application` project, and `.Core` sits below `.Application` in the dependency graph. Note also that the single-argument `new MapperConfiguration(cfg => ...)` overload used elsewhere in older samples is gone in AutoMapper 15+, which is why the expression is built explicitly here.
+
+Because `AbpAutoMapperModule` is not in the graph, nothing scans for `[AutoMap*]` attributes in this setup. Any mapping you want on the AutoMapper side has to be a `CreateMap` call in `CustomDtoMapper`.
+
 Inject `IMapper` where your own code needs AutoMapper, and keep using `ObjectMapper` everywhere the template does. You skip steps 2 through 7 entirely, your upgrade merges stay clean, and you keep the option of converting feature by feature later. The cost is a rule your team has to internalize: **`ObjectMapper` is Mapperly, `IMapper` is AutoMapper.**
 
-Choose the full revert when you want one mapping technology in the solution and your code genuinely depends on AutoMapper semantics `ITypeConverter`, `IValueResolver`, inheritance maps via `Include`, or `ProjectTo` across many type pairs. Choose the hybrid when your goal is simply to avoid rewriting your own mappings during an upgrade.
+Choose the full revert when you want one mapping technology in the solution and your code genuinely depends on AutoMapper semantics: `ITypeConverter`, `IValueResolver`, inheritance maps via `Include`, or `ProjectTo` across many type pairs. Choose the hybrid when your goal is simply to avoid rewriting your own mappings during an upgrade.
 
 ## Conclusion
 
-Mapperly is the default from ASP.NET Zero v15.2 onward, and for new projects it is the right default. But the switch is not a one-way door: `Abp.AutoMapper` is still in the ABP source tree, still packable, and still functional deprecated, not deleted.
+Mapperly is the default from ASP.NET Zero v15.2 onward, and for new projects it is the right default. But the switch is not a one-way door: `Abp.AutoMapper` is still in the ABP source tree, still packable, and still functional. Deprecated, not deleted.
 
 The revert comes down to this:
 
 - Decide your AutoMapper version first. The free MIT line ends at 14.0.0 and works with `Abp.AutoMapper` unmodified; 15/16 are RPL-1.5/commercial and need the module patched for the new `MapperConfiguration` constructor and license key.
 - Get `Abp.AutoMapper` from your ASP.NET Zero feed, or build it from source and publish to a local or internal feed.
-- Swap four package references and two module dependencies, restore `CustomDtoMapper.cs` in two projects, restore attributes in 24 files, restore the GraphQL projection helpers, reconcile against the newer template, and delete 37 mapper files.
+- Swap four package references and two module dependencies, restore `CustomDtoMapper.cs` in two projects, restore attributes in 28 files, restore the GraphQL projection helpers, reconcile against the newer template, and delete 37 mapper files.
 - Add `AssertConfigurationIsValid()` to CI. It is the thing that replaces the compile-time safety you are giving up.
 
-If you hit a mapping scenario this guide does not cover, open a ticket on [support.aspnetzero.com](https://support.aspnetzero.com/) we are happy to work through it with you.
+If you hit a mapping scenario this guide does not cover, open a ticket on [support.aspnetzero.com](https://support.aspnetzero.com/); we are happy to work through it with you.
 
 ## Further Reading
 
-- [Migrating from AutoMapper to Mapperly](https://docs.aspnetzero.com/aspnet-core-mvc/latest/Migrating-From-AutoMapper-To-Mapperly) the forward migration guide, useful in reverse
-- [DTO Mappings](https://docs.aspnetzero.com/aspnet-core-mvc/latest/Infrastructure-Core-Mvc-Dto-Mappings) how mapping works in the current template
-- [ABP Object to Object Mapping](https://aspnetboilerplate.com/Pages/Documents/Object-To-Object-Mapping) the `Abp.AutoMapper` integration, including `[AutoMap*]` attributes and custom configurators
-- [AutoMapper 15.0 Upgrade Guide](https://docs.automapper.io/en/stable/15.0-Upgrade-Guide.html) the breaking changes referenced above
-- [Lucky Penny Software Licensing FAQ](https://luckypennysoftware.com/faq) AutoMapper's commercial terms
+- [Migrating from AutoMapper to Mapperly](https://docs.aspnetzero.com/aspnet-core-mvc/latest/Migrating-From-AutoMapper-To-Mapperly): the forward migration guide, useful in reverse
+- [DTO Mappings](https://docs.aspnetzero.com/aspnet-core-mvc/latest/Infrastructure-Core-Mvc-Dto-Mappings): how mapping works in the current template
+- [ABP Object to Object Mapping](https://aspnetboilerplate.com/Pages/Documents/Object-To-Object-Mapping): the `Abp.AutoMapper` integration, including `[AutoMap*]` attributes and custom configurators
+- [AutoMapper 15.0 Upgrade Guide](https://docs.automapper.io/en/stable/15.0-Upgrade-Guide.html): the breaking changes referenced above
+- [Lucky Penny Software Licensing FAQ](https://luckypennysoftware.com/faq): AutoMapper's commercial terms
 - [Mapperly Documentation](https://mapperly.riok.app/docs/intro/)
