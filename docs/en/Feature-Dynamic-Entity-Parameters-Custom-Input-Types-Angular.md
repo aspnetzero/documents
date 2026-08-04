@@ -43,10 +43,13 @@ In this document we will create a custom input type step by step. Our input type
 
    ```typescript
    import { Component, OnInit, Injector } from '@angular/core';
+   import { FormsModule } from '@angular/forms';
+   import { NzSelectModule } from 'ng-zorro-antd/select';
    import { InputTypeComponentBase } from '../input-type-component-base';
    
    @Component({
-     templateUrl: './multi-select-combobox-input-type.component.html'
+     templateUrl: './multi-select-combobox-input-type.component.html',
+     imports: [NzSelectModule, FormsModule]
    })
    export class MultiSelectComboboxInputTypeComponent extends InputTypeComponentBase implements OnInit {
      filteredValues: string[];
@@ -81,8 +84,17 @@ In this document we will create a custom input type step by step. Our input type
    *multi-select-combobox-input-type.component.html*
 
    ```html
-   <p-autoComplete [(ngModel)]="selectedValues" [suggestions]="filteredValues" (completeMethod)="filter($event)" [minLength]="1" [multiple]="true" inputStyleClass="form-control" styleClass="w-100">
-   </p-autoComplete>
+   <nz-select
+       class="width-percent-100"
+       nzMode="multiple"
+       nzShowSearch
+       nzServerSearch
+       [(ngModel)]="selectedValues"
+       (nzOnSearch)="filter({ query: $event })">
+       @for (item of filteredValues; track item) {
+           <nz-option [nzValue]="item" [nzLabel]="$any(item)" />
+       }
+   </nz-select>
    ```
 
    You must extend  `InputTypeComponentBase`. Since you extend `InputTypeComponentBase` your component will have **selectedValues**(initial stored selected values), **allValues**(all values that your component can have, if your component needs initial values.)

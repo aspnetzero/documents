@@ -10,7 +10,7 @@ project. Here's the list of all libraries:
 - [Metronic Theme](http://keenthemes.com/metronic/)
 - [Twitter Bootstrap](http://getbootstrap.com/)
 - [Ngx Bootstrap](https://github.com/valor-software/ngx-bootstrap)
-- [primeng](https://github.com/primefaces/primeng)
+- [ng-zorro-antd](https://ng.ant.design/)
 - [LocalForage](https://github.com/localForage/localForage)
 - [Luxon ](https://moment.github.io/luxon/)
 - [Lodash-es](https://lodash.com/)

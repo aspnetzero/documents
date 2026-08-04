@@ -102,4 +102,4 @@ if (theme === 'themeX') {
 
 * If your theme uses dynamic bundles, open the `bundle.js` and add your bundles.
 
-  _ASP.NET Zero has custom CSS file for datepicker in Angular version ([bs-datepicker.css](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/angular/src/assets/ngx-bootstrap/bs-datepicker.css)). If the default design is not compatible with your theme, you can change the related CSS file._
+  _ng-zorro components (date picker, table, pagination etc.) are styled by `ng-zorro-antd.min.css`, which is registered in the `styles` section of `angular.json`. ASP.NET Zero adapts these components to the Metronic theme in [metronic-customize.css](https://github.com/aspnetzero/aspnet-zero-core/blob/dev/angular/src/assets/common/styles/metronic-customize.css). If the default design is not compatible with your theme, you can override the related `.ant-*` styles in that file._

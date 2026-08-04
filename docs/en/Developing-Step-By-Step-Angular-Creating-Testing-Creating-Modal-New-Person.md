@@ -234,10 +234,10 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
     }
 
     getPeople(): void {
-        this.primengTableHelper.showLoadingIndicator();
+        this.nzTableHelper.showLoadingIndicator();
         this._personService.getPeople(this.filter()).subscribe((result) => {
             this.people.set(result.items);
-            this.primengTableHelper.hideLoadingIndicator();
+            this.nzTableHelper.hideLoadingIndicator();
         });
     }
 

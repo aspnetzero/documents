@@ -208,9 +208,11 @@ Here is final version of **create-tenant.component.html**:
                         <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group"
                             [ngClass]="{'has-error': !subscriptionEndDateIsValid()}">
                             <label for="SubscriptionEndDate">{{"SubscriptionEndDate" | localize}}</label>
-                            <input id="SubscriptionEndDate" type="text" #SubscriptionEndDateUtc
-                                name="SubscriptionEndDateUtc" class="form-control" bsDatepicker
-                                [(ngModel)]="tenant.subscriptionEndDateUtc" autocomplete="off">
+                            <nz-date-picker nzId="SubscriptionEndDate" name="SubscriptionEndDateUtc"
+                                datePickerLuxonModifier
+                                [date]="tenant.subscriptionEndDateUtc ?? null"
+                                (dateChange)="tenant.subscriptionEndDateUtc = $event ?? undefined"
+                                [isUtc]="true" class="w-100" />
                         </div>
 
                         <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
@@ -645,11 +647,11 @@ Here is final version of **edit-tenant.component.html**:
                         <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group"
                             [ngClass]="{'has-error': !subscriptionEndDateUtcIsValid }">
                             <label for="SubscriptionEndDateUtc">{{"SubscriptionEndDateUtc" | localize}}</label>
-                            <input id="SubscriptionEndDateUtc" type="datetime" #SubscriptionEndDateUtc
-                                name="SubscriptionEndDateUtc" class="form-control"
-                                [ngClass]="{'edited':tenant.subscriptionEndDateUtc}"
-                                (bsValueChange)="subscriptionEndDateChange($event)" bsDatepicker
-                                [(ngModel)]="tenant.subscriptionEndDateUtc" [required]="!isUnlimited">
+                            <nz-date-picker nzId="SubscriptionEndDateUtc" name="SubscriptionEndDateUtc"
+                                datePickerLuxonModifier
+                                [date]="$any(tenant.subscriptionEndDateUtc)"
+                                (dateChange)="subscriptionEndDateChange($event)"
+                                [isUtc]="true" class="w-100" />
                         </div>
                         <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
                             <label class="kt-checkbox">
