@@ -659,7 +659,11 @@ private void RegisterAutoMapper()
     var expression = new MapperConfigurationExpression();
     CustomDtoMapper.CreateMappings(expression);
 
-    var config = new MapperConfiguration(expression);
+    var config = new MapperConfiguration(expression);   // AutoMapper 14
+
+    // On AutoMapper 15/16, use this instead:
+    // expression.LicenseKey = "<your-license-key>";
+    // var config = new MapperConfiguration(expression, NullLoggerFactory.Instance);
 
     IocManager.IocContainer.Register(
         Component.For<AutoMapper.IConfigurationProvider>().Instance(config).LifestyleSingleton(),
@@ -668,7 +672,9 @@ private void RegisterAutoMapper()
 }
 ```
 
-This has to live in the `.Application` module, not `AbpZeroTemplateCoreModule`: `CustomDtoMapper` is `internal static` in the `.Application` project, and `.Core` sits below `.Application` in the dependency graph. Note also that the single-argument `new MapperConfiguration(cfg => ...)` overload used elsewhere in older samples is gone in AutoMapper 15+, which is why the expression is built explicitly here.
+This has to live in the `.Application` module, not `AbpZeroTemplateCoreModule`: `CustomDtoMapper` is `internal static` in the `.Application` project, and `.Core` sits below `.Application` in the dependency graph.
+
+The snippet above targets AutoMapper 14. On 15/16, *every* single-argument `MapperConfiguration` constructor is gone, the `MapperConfigurationExpression` overload as well as the `Action<IMapperConfigurationExpression>` one, so a one-argument call fails with `CS1729`. Pass an `ILoggerFactory` and set the license key on the expression, exactly as in Step 4.
 
 Because `AbpAutoMapperModule` is not in the graph, nothing scans for `[AutoMap*]` attributes in this setup. Any mapping you want on the AutoMapper side has to be a `CreateMap` call in `CustomDtoMapper`.
 
