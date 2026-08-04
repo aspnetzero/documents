@@ -283,7 +283,7 @@ For authorization:
 **UI Conventions**
 ```markdown
 For Angular UI components:
-- Use PrimeNG components for tables and forms
+- Use ng-zorro (Ant Design) components for tables and forms
 - Implement CreateOrEditModal pattern for CRUD operations
 - Follow existing component structure in app/main/
 - Use AppComponentBase for common functionality

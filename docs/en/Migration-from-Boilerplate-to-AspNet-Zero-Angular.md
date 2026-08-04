@@ -385,8 +385,7 @@ export class AppModule {}
     imports: [
         CommonModule,
         FormsModule,
-        TableModule,
-        PaginatorModule,
+        NzTableModule,
         SubHeaderComponent,
         LocalizePipe,
     ],
