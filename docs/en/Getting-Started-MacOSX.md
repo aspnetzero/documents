@@ -7,8 +7,8 @@ Download an ASP.NET CORE & Angular project with .NET Core framework as described
  -  Visual Studio for Mac: [https://visualstudio.microsoft.com/vs/mac/](https://visualstudio.microsoft.com/vs/mac/)
 -  .Net core SDK: [https://www.microsoft.com/net/download/macos](https://www.microsoft.com/net/download/macos)
 
- -  pnpm [https://pnpm.io/installation#using-a-standalone-script](https://pnpm.io/installation#using-a-standalone-script)
- -  NVM with node version 8.11.1+: [https://github.com/creationix/nvm](https://github.com/creationix/nvm)
+ -  pnpm 10 or newer (the project is pinned to `pnpm@11.15.1`): [https://pnpm.io/installation#using-a-standalone-script](https://pnpm.io/installation#using-a-standalone-script)
+ -  NVM with Node.js 22.22.3+, 24.15.0+ or 26+: [https://github.com/creationix/nvm](https://github.com/creationix/nvm)
  -  Angular-cli ([https://cli.angular.io/](https://cli.angular.io/))
 
 ## Restoring Packages

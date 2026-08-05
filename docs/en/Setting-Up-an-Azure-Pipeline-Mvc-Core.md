@@ -135,7 +135,7 @@ Add the path of the **Publish Artifact** project
 
 There are 3 additional steps we must add for ASP.NET Zero Core MVC project.
 
-> **Note:** The ASP.NET Zero MVC project now uses [pnpm](https://pnpm.io/) (pinned via the `packageManager` field in `package.json`) instead of Yarn. The simplest approach on Azure Pipelines is a **Command Line** task that enables Corepack and runs `pnpm install`, since Corepack ships with Node.js 16.10+ and activates the pinned pnpm version automatically.
+> **Note:** The ASP.NET Zero MVC project now uses [pnpm](https://pnpm.io/) (pinned to `pnpm@11.15.1` via the `packageManager` field in `package.json`) instead of Yarn. The simplest approach on Azure Pipelines is a **Command Line** task that enables Corepack and runs `pnpm install`, since Corepack ships with Node.js 16.10+ and activates the pinned pnpm version automatically. Do not pin the agent to an older pnpm version: pnpm 9 and older cannot read the settings in `pnpm-workspace.yaml` and fail with `ERROR packages field missing or empty`.
 
 1. #### **Execute pnpm install Task**
 
