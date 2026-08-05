@@ -13,8 +13,8 @@ Select **ASP.NET Core & jQuery** as Project Type and fill other required fields.
 ## Pre Requirements
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com)
-- [Node.js 16.x+ with NPM 8.x+](https://nodejs.org/en/download/)
-- [pnpm](https://pnpm.io/installation)
+- [Node.js 22.22.3+, 24.15.0+ or 26+](https://nodejs.org/en/download/)
+- [pnpm 10 or newer](https://pnpm.io/installation) (the project is pinned to `pnpm@11.15.1`)
 
 ## Configure The Project
 
@@ -25,6 +25,8 @@ pnpm install
 ```
 
 **Important Notice:** Installing client side npm dependencies using **pnpm** before opening the solution will decrease project opening & building time dramatically.
+
+**pnpm 10 or newer is required.** pnpm settings live in `pnpm-workspace.yaml`, because pnpm 11 only reads authentication and registry settings from `.npmrc`. pnpm 9 and older read that file as a workspace definition and fail with `ERROR packages field missing or empty`. If you get that error, run `npm i -g pnpm@11.15.1`.
 
 Open the **\*.Web.sln** solution in **Visual Studio**. If you want to work on only MAUI project, open **\*.Maui.sln** solution. If you want to work on both MAUI and Web projects, open **\*.All.sln** solution.
 
