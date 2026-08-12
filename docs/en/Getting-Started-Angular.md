@@ -25,8 +25,8 @@ If you have selected this option, please follow [Getting Started](Getting-Starte
 ## Pre Requirements
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
-- [Node.js 16.x+ with NPM 8.x+](https://nodejs.org/en/download/)
-- [pnpm](https://pnpm.io/installation)
+- [Node.js 22.22.3+, 24.15.0+ or 26+](https://nodejs.org/en/download/)
+- [pnpm 10 or newer](https://pnpm.io/installation) (the project is pinned to `pnpm@11.15.1`)
 
 ## ASP.NET Core Application
 
@@ -106,20 +106,51 @@ Then, run the following command to create dynamic bundles *(This is only require
 pnpm run create-dynamic-bundles
 ```
 
-We use [pnpm](https://pnpm.io/) for fast, disk-efficient and deterministic dependency resolution. The pinned version is declared in `package.json` under the `packageManager` field, so [Corepack](https://nodejs.org/api/corepack.html) will activate the correct pnpm version automatically.
+We use [pnpm](https://pnpm.io/) for fast, disk-efficient and deterministic dependency resolution. The pinned version is declared in `package.json` under the `packageManager` field, so pnpm 10+ (or [Corepack](https://nodejs.org/api/corepack.html), if you run `corepack enable`) activates the correct pnpm version automatically.
+
+**pnpm 10 or newer is required.** pnpm settings live in `angular/pnpm-workspace.yaml`, because pnpm 11 only reads authentication and registry settings from `.npmrc`. pnpm 9 and older read that file as a workspace definition and fail with `ERROR packages field missing or empty`. If you get that error, update pnpm:
+
+```bash
+npm i -g pnpm@11.15.1
+```
 
 ### Running The Application
 
 Run the following command in the command line:
 
 ```bash
-npm start
+pnpm start
 ```
 
-Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
+Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of `pnpm start`) to enable HMR on development time:
 
 ```bash
-npm run hmr
+pnpm run hmr
+```
+
+### Troubleshooting
+
+#### `Could not resolve "quill-delta"` / `Could not resolve "parchment"`
+
+Projects generated with v15.4.0 keep the pnpm hoisting setting in `angular/.npmrc` (`shamefully-hoist=true`), but pnpm 11 only reads authentication and registry settings from `.npmrc`. The setting is silently ignored, and the build can no longer resolve Quill's own dependencies.
+
+To fix it, create an `angular/pnpm-workspace.yaml` file with the following content:
+
+```yaml
+shamefullyHoist: true
+fetchTimeout: 600000
+```
+
+Then delete the `node_modules` folder and run `pnpm install` again.
+
+#### `[ERR_PNPM_IGNORED_BUILDS]` on install
+
+pnpm 10+ does not run the build scripts of dependencies unless they are approved, and an unapproved package makes `pnpm install` (and therefore `pnpm start`) fail. Run `pnpm approve-builds` and allow the listed packages, or add them to the `allowBuilds` map in `pnpm-workspace.yaml`:
+
+```yaml
+allowBuilds:
+  esbuild: true
+  lmdb: true
 ```
 
 ### Login

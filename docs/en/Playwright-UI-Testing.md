@@ -6,8 +6,8 @@ ASP.NET Zero provides an infrastructure for UI tests using [Playwright](https://
 
 You should have the following installed in your system:
 
-- [Node.js](https://nodejs.org/en/) is the runtime. Please make sure you have v12+ (LTS recommended) in your system before you start.
-- [pnpm](https://pnpm.io/installation)
+- [Node.js](https://nodejs.org/en/) is the runtime. Please make sure you have v22.22.3+ (LTS recommended) in your system before you start.
+- [pnpm 10 or newer](https://pnpm.io/installation) (the project is pinned to `pnpm@11.15.1`)
 
 After making sure these exist in your system, follow the steps below:
 

@@ -4,7 +4,7 @@ ASP.NET Zero solution has a **build folder** which contains a PowerShell script 
 
 ## Prerequisites
 
-* You need to install angular/cli globally. In order to install it, run `npm install -g @angular/cli`
+* [Node.js 22.22.3+, 24.15.0+ or 26+](https://nodejs.org/en/download/) and [pnpm 10 or newer](https://pnpm.io/installation) (the project is pinned to `pnpm@11.15.1`). Angular CLI does not need to be installed globally; it is used from the project's own dependencies.
 
 In order to build Docker images for your project, run ```build-with-ng.ps1```. This script will generate 3 images, one is for the **Mvc** web project, one is for the **Public** web project and the other one is for **Angular** project. After creating the images , you can go to ```build/outputs/Host``` or ```build/outputs/Public```  folders and run related images by running the command below;
 

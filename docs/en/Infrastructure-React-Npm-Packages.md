@@ -1,6 +1,8 @@
 # Package Management
 
-ASP.NET Zero React UI uses [pnpm](https://pnpm.io/) (preferred) or [NPM](https://www.npmjs.com/) to manage front-end library dependencies (like React and Ant Design). The pinned pnpm version is declared in `package.json` under the `packageManager` field, so [Corepack](https://nodejs.org/api/corepack.html) will activate the correct version automatically. You can easily add, update, or remove packages using the command line interface.
+ASP.NET Zero React UI uses [pnpm](https://pnpm.io/) (preferred) or [NPM](https://www.npmjs.com/) to manage front-end library dependencies (like React and Ant Design). The pinned pnpm version is declared in `package.json` under the `packageManager` field, so pnpm 10+ (or [Corepack](https://nodejs.org/api/corepack.html), if you run `corepack enable`) activates the correct version automatically. You can easily add, update, or remove packages using the command line interface.
+
+**pnpm 10 or newer is required.** pnpm-specific settings (such as `shamefullyHoist`) are kept in the `pnpm-workspace.yaml` file next to `package.json`, because pnpm 11 only reads authentication and registry settings from `.npmrc`. If you need to change a pnpm setting, edit `pnpm-workspace.yaml`; see [pnpm settings](https://pnpm.io/settings) for the available options.
 
 ## Common Commands
 

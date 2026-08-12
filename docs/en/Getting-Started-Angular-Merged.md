@@ -17,8 +17,8 @@ Select **ASP.NET Core & Angular** as Project Type and fill other required fields
 ## Pre Requirements
 
 - [Visual Studio 2017 (v15.9.0+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
-- [Node.js 6.9+ with NPM 3.10+](https://nodejs.org/en/download/)
-- [pnpm](https://pnpm.io/installation)
+- [Node.js 22.22.3+, 24.15.0+ or 26+](https://nodejs.org/en/download/)
+- [pnpm 10 or newer](https://pnpm.io/installation) (the project is pinned to `pnpm@11.15.1`)
 
 ## ASP.NET Core Application
 
@@ -98,17 +98,19 @@ Then, run the following command to create dynamic bundles *(This is only require
 pnpm run create-dynamic-bundles
 ```
 
-We use [pnpm](https://pnpm.io/) for fast, disk-efficient and deterministic dependency resolution. The pinned version is declared in `package.json` under the `packageManager` field, so [Corepack](https://nodejs.org/api/corepack.html) will activate the correct pnpm version automatically.
+We use [pnpm](https://pnpm.io/) for fast, disk-efficient and deterministic dependency resolution. The pinned version is declared in `package.json` under the `packageManager` field, so pnpm 10+ (or [Corepack](https://nodejs.org/api/corepack.html), if you run `corepack enable`) activates the correct pnpm version automatically.
+
+**pnpm 10 or newer is required.** pnpm settings live in `pnpm-workspace.yaml`, because pnpm 11 only reads authentication and registry settings from `.npmrc`. pnpm 9 and older read that file as a workspace definition and fail with `ERROR packages field missing or empty`. If you get that error, run `npm i -g pnpm@11.15.1`.
 
 ### Running The Application
 
 Open the command line and run the following command:
 ```bash
-npm start
+pnpm start
 ```
-Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of NPM start) to enable HMR on development time:
+Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of `pnpm start`) to enable HMR on development time:
 ```bash
-npm run hmr
+pnpm run hmr
 ```
 In development time, since we use **angular-cli** and it is a separate process, we need to run *.Web.Host project and Angular UI separately. However, merged Angular solution can be published to a single website or two separate websites.
 
