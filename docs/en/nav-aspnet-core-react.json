@@ -380,6 +380,10 @@
               "path": "Features-Rate-Limiting.md"
             },
             {
+              "text": "API Keys",
+              "path": "Features-React-Api-Keys.md"
+            },
+            {
               "text": "User Delegation",
               "path": "Features-React-User-Delegation.md"
             },
