@@ -159,4 +159,4 @@ The global enable/disable setting is stored in the application settings (`App.Ra
 
 ## Next
 
-- [User Delegation](Features-Mvc-Core-User-Delegation)
+- [API Keys](Features-Api-Keys)

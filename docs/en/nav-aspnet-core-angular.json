@@ -388,6 +388,10 @@
               "path": "Features-Rate-Limiting.md"
             },
             {
+              "text": "API Keys",
+              "path": "Features-Api-Keys.md"
+            },
+            {
               "text": "User Delegation",
               "path": "Features-Angular-User-Delegation.md"
             },
