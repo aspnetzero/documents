@@ -36,15 +36,9 @@ All three settings are defined with `SettingScopes.Application | SettingScopes.T
 
 ## My API Keys
 
-Every authenticated user can manage their own keys, no permission is required. The page is reachable from the **user menu > My API Keys**:
+Every authenticated user can manage their own keys; no permission is required. The page is reachable from the **user menu > My API Keys**, at `/App/MyApiKeys`.
 
-| Project | Route |
-|---------|-------|
-| ASP.NET Core MVC | `/App/MyApiKeys` |
-| Angular | `/app/admin/my-api-keys` |
-| React | `/app/admin/my-api-keys` |
-
-> In the MVC solution the controllers live in the `AppAreaName` area, which is renamed to your own area name (`App` by default) when the project is generated.
+> The controllers live in the `AppAreaName` area, which is renamed to your own area name (`App` by default) when the project is generated.
 
 <img src="images/features-api-keys-my-api-keys.png" alt="My API Keys" class="img-thumbnail" />
 
@@ -88,9 +82,10 @@ Only a SHA-256 hash of the key is stored in the database, so **the plain key can
 
 Rotation is the recommended response to a leaked or soon-to-expire key, because the integration only needs the new secret value; nothing else about its configuration changes.
 
-Two things are worth knowing:
+A few things are worth knowing:
 
-- The UI rotates a key with its **current** expiration date, so a key that has **already expired** cannot be rotated from the page the new expiration date has to be in the future. Revoke it and create a new one instead, or call `RotateApiKey` directly with a new `ExpirationDate`.
+- The UI rotates a key with its **current** expiration date, so a key that has **already expired** cannot be rotated from the page: the new expiration date has to be in the future. Revoke it and create a new one instead, or call `RotateApiKey` directly with a new `ExpirationDate`.
+- A key that **never expires** cannot be rotated from the page either, once *Maximum API key lifetime (days)* has been raised above `0`. Such a key was created while the limit was `0`, so it carries no expiration date, and rotation now fails with a validation error saying that an expiration date is required. Call `RotateApiKey` with an `ExpirationDate` that fits the new limit, or revoke the key and create a new one.
 - A key can only be rotated by the user it belongs to. Administrators can revoke another user's key, but they can never mint a new key in someone else's name.
 
 ### Revoking an API Key
@@ -101,13 +96,7 @@ Two things are worth knowing:
 
 ## API Keys Administration Page
 
-Users with the *API Keys* permission can see every API key in the tenant (or, on the host side, every host key) from **Administration > API Keys**.
-
-| Project | Route |
-|---------|-------|
-| ASP.NET Core MVC | `/App/ApiKeys` |
-| Angular | `/app/admin/api-keys` |
-| React | `/app/admin/api-keys` |
+Users with the *API Keys* permission can see every API key in the tenant (or, on the host side, every host key) from **Administration > API Keys**, at `/App/ApiKeys`.
 
 
 <img src="images/features-api-keys-list.png" alt="API Keys Administration" class="img-thumbnail" />
@@ -181,7 +170,7 @@ The three segments are joined with `_`. A key can be at most 128 characters long
 | `KeyHash` | The lowercase hexadecimal SHA-256 hash of the full key (64 characters), with a unique index on it. This is what lookups run against. |
 | `DisplayKey` | The visible part plus the first 6 characters of the secret and an ellipsis, for example `azk_t3_9fK2Lp...`. This is what the UI shows. |
 
-The plain key value is never written to the database, to a log or to an audit record the validation method is marked with `[DisableAuditing]`.
+The plain key value is never written to the database, to a log or to an audit record; the validation method is marked with `[DisableAuditing]`.
 
 ## Permission Scope
 
@@ -233,7 +222,7 @@ The client address is read from `HttpContext.Connection.RemoteIpAddress`. Behind
 
 ## Caching
 
-Validated keys are cached in the `AppUserApiKeys` cache, keyed by the key hash, for **5 minutes**. The cache entry holds everything needed to authenticate a request owner, tenant, expiration, IP allow list and permission scope so a repeated call does not hit the database for the key itself.
+Validated keys are cached in the `AppUserApiKeys` cache, keyed by the key hash, for **5 minutes**. The cache entry holds everything needed to authenticate a request: owner, tenant, expiration, IP allow list and permission scope. A repeated call therefore does not hit the database for the key itself.
 
 Revoking or rotating a key removes its entry from the cache immediately.
 
@@ -248,7 +237,7 @@ API key administration is controlled by the following permissions under **Admini
 | API Keys | `Pages.Administration.ApiKeys` | Access to the **Administration > API Keys** page, which lists the keys of all users. |
 | Revoking API keys | `Pages.Administration.ApiKeys.Revoke` | Revoke a key that belongs to another user. Shown as a child permission of *API Keys*. |
 
-Managing one's own keys (**My API Keys**: create, rotate, revoke, list) requires **no permission** only an authenticated session.
+Managing one's own keys (**My API Keys**: create, rotate, revoke, list) requires **no permission**; an authenticated session is enough.
 
 ## Application Service
 
