@@ -6,17 +6,28 @@ This page covers how Custom Code works in the **MAUI Blazor Hybrid** mobile app.
 
 ## Enabling Custom Code
 
-Open Power Tools, select your entity, and turn on both the **Mobile** and **Generate Overridable Entity** switches in the Entity Information section.
+MAUI Custom Code has two layers, each with its own requirements:
 
-When both switches are on, Power Tools generates additional customization files that you own. These files are created once and never overwritten, even when you regenerate the entity.
+| Layer | What it gives you | What to enable |
+|---|---|---|
+| **Preserved region slots** (`az:begin` / `az:end`) | Named markers inside `.razor` pages where you can place custom markup that survives regeneration. | **Mobile** switch only |
+| **Partial class files** (`.custom.cs`) | A second `partial` of the same component class where you can add fields, methods, or overrides. | **Mobile** + **Generate Overridable Entity** switches, on a **v15.5+** project |
 
 ### Requirements
 
-**Project version.** The MAUI customization files require a **v15.5+** project. MAUI code generation itself is supported from v13.3, so on a v13.3-v15.4 project the **Mobile** switch still produces pages, but the `.custom.cs` files and the `az:begin` slots are not part of them.
+**Region slots** are available on any project that supports MAUI code generation (**v13.3+**). Turn on the **Mobile** switch and the generated `.razor` pages will include `az:begin` / `az:end` markers.
 
-**Both switches.** **Mobile** alone generates the pages without customization files. **Generate Overridable Entity** alone customizes the server side and the web client but leaves the MAUI app untouched. You need both.
+**Partial class files** require all three conditions:
 
-**Detail page.** `ViewProduct.custom.cs` is generated only when the entity's MAUI view page is enabled - the **Create View** option that appears under **Mobile** in the Visual Studio extension.
+1. The **Mobile** switch is on.
+2. The **Generate Overridable Entity** switch is on.
+3. The project version is **v15.5** or later.
+
+On a v13.3–v15.4 project the **Mobile** switch still produces pages with region slots, but the `.custom.cs` companion files are not generated.
+
+**Generate Overridable Entity** alone (without **Mobile**) customizes the server side and the web client but leaves the MAUI app untouched.
+
+**Detail page.** `ViewProduct.custom.cs` is generated only when the entity's MAUI view page is enabled — the **Create View** option that appears under **Mobile** in the Visual Studio extension.
 
 ## How It Works
 
@@ -24,14 +35,14 @@ MAUI uses a third approach, different from Angular's base/subclass split and Rea
 
 | Mechanism | How It Works | Applies To |
 |---|---|---|
-| **Partial class files** (SkipIfExists) | A second `partial` of the same component class. Generated once, never overwritten. No base class and no wiring. | MAUI Razor component code (`.custom.cs`) |
-| **Preserved region slots** (`az:begin` / `az:end`) | Named regions inside regenerated `.razor` markup. Power Tools preserves any markup you place between the markers. | MAUI Razor pages (`.razor`) |
+| **Partial class files** (SkipIfExists) | A second `partial` of the same component class. Generated once, never overwritten. No separate base class to register and no wiring. Requires **Generate Overridable Entity** + **v15.5+**. | MAUI Razor component code (`.custom.cs`) |
+| **Preserved region slots** (`az:begin` / `az:end`) | Named regions inside regenerated `.razor` markup. Power Tools preserves any markup you place between the markers. Available with **Mobile** switch only (v13.3+). | MAUI Razor pages (`.razor`) |
 
 Because your code is a partial of the *same* class rather than a subclass, there is no separate type to register and no route to update - the component is still `ProductIndex`. The generated `.razor.cs` beside it keeps being rewritten on every run, so new entity properties keep flowing in.
 
 ## Partial Class Files
 
-For a `Product` entity, Power Tools generates these files under `<YourProject>.Maui\Pages\<Namespace>\`:
+For a `Product` entity with namespace `Inventory`, Power Tools generates these files under `<YourProject>.Maui\Pages\Inventory\`:
 
 | Your file (never overwritten) | Regenerated file | Purpose |
 |---|---|---|
@@ -49,7 +60,7 @@ public partial class ProductIndex
 }
 ```
 
-Add fields, methods, or overrides of virtual members from the component base class here. Because it is the same class, you can reach any `protected` member the generated `.razor.cs` declares without any extra plumbing.
+Add fields, methods, or lifecycle overrides (such as `OnInitializedAsync` from Blazor's `ComponentBase`) here. Because it is the same class, you can reach any `protected` member the generated `.razor.cs` declares without any extra plumbing.
 
 ### Example - Running Custom Logic After the Page Loads
 
@@ -90,9 +101,11 @@ MAUI `.razor` pages contain named `az:begin` / `az:end` markers. You can place c
 
 ```html
 <!-- az:begin(list-fields) -->
-<div class="item-row">
-    <span class="label">Margin</span>
-    <span class="value">@(product.Margin?.ToString("P0") ?? "-")</span>
+<div class="row">
+    <div class="text-muted col-6">Margin</div>
+    <div class="fw-semibold col-6">
+        @(model.Product.Margin?.ToString("P0") ?? "-")
+    </div>
 </div>
 <!-- az:end(list-fields) -->
 ```
@@ -101,9 +114,9 @@ MAUI `.razor` pages contain named `az:begin` / `az:end` markers. You can place c
 
 ```html
 <!-- az:begin(form-fields) -->
-<div class="form-group">
-    <label>Internal Notes</label>
-    <InputTextArea @bind-Value="Model.InternalNotes" class="form-control" rows="3" />
+<div class="d-flex flex-column mb-4">
+    <label class="form-label fw-semibold">@L("InternalNotes")</label>
+    <InputTextArea @bind-Value="CreateOrEditProductModel.InternalNotes" class="form-control form-control-solid" rows="3" />
 </div>
 <!-- az:end(form-fields) -->
 ```
@@ -133,7 +146,7 @@ Power Tools includes safety mechanisms to prevent code loss:
 - **Abort on malformed markers:** If region markers are broken (unclosed, nested, duplicated, mismatched), the entire file is left untouched. No partial merge ever occurs.
 - **Orphan rescue:** If a region name existed in the old file but not in the newly generated output (for example, if a template update removes a slot), the content is saved to a sidecar file (`<filename>.orphaned.txt`) and a warning is shown. Content is never silently dropped.
 - **Ownership guard:** Toggling the **Generate Overridable Entity** switch on an entity that already has
-  generated files is handled in both directions:
+  generated `.custom.cs` files is handled in both directions:
   - Turning it **off** points a fully generated template back at the file that holds your code. Power Tools
     detects your code and refuses to overwrite it.
   - Turning it **on** makes a path that used to be fully generated developer-owned. The file already sitting
