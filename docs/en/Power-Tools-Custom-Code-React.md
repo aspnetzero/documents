@@ -2,7 +2,7 @@
 
 ASP.NET Zero Power Tools generates code that can be fully regenerated whenever you change an entity. The **Custom Code** feature lets you add your own code to the generated pages and classes so that your additions survive regeneration.
 
-This page covers how Custom Code works in **React** projects. For other UI frameworks.
+This page covers how Custom Code works in **React** projects. For other UI frameworks, see [Custom Code - Angular](Power-Tools-Custom-Code-Angular.md) and [Custom Code - MVC](Power-Tools-Custom-Code-Mvc.md). For the MAUI mobile app, see [Custom Code - MAUI](Power-Tools-Custom-Code-Maui.md).
 
 ## Enabling Custom Code
 
@@ -13,6 +13,18 @@ Open Power Tools, select your entity, and turn on the **Generate Overridable Ent
 When this switch is on, Power Tools generates additional customization files that you own. These files are created once and never overwritten, even when you regenerate the entity.
 
 > The switch affects both the server side and the client side.
+
+### Requirements
+
+**Project version.** Every React customization file requires a **v15.5+** project. React code generation
+itself is supported from v15.0, so on a v15.0-v15.4 project the switch generates the server-side extension
+files and nothing on the client. If you turn the switch on and no `customizations.tsx` appears, check the
+project version first.
+
+### Limitations
+
+**Master-detail child entities.** The switch has no effect on a child entity in a master-detail pair -
+neither the server-side extension files nor any of the React customization files are generated for it.
 
 ## How It Works
 
@@ -28,19 +40,30 @@ React uses a different approach than Angular and MVC. Instead of inline region m
 
 When **Generate Overridable Entity** is enabled, the following server-side extension files are generated. These are shared across all UI frameworks.
 
-| File | Base Class | Purpose |
+Power Tools splits each generated class in two: the generated half keeps the original file name and gains a
+`Base` suffix on the **class** name, and your half is a new `.Extended.cs` file holding a subclass at the
+original class name. Existing references keep resolving to your class, so nothing else in the solution has to
+change.
+
+For a `Product` entity, the generated files are:
+
+| Your file (never overwritten) | Regenerated file | Purpose |
 |---|---|---|
-| `AppService.Extended.cs` | `AppServiceBase` | Override application service methods |
-| `AppServiceInterface.Extended.cs` | - | Extend the service interface |
-| `Entity.Extended.cs` | `EntityBase` | Add custom properties or methods to the entity |
-| `CreateOrEditDto.Extended.cs` | `CreateOrEditDtoBase` | Extend the input DTO |
-| `EntityDto.Extended.cs` | `EntityDtoBase` | Extend the list DTO |
-| `GetAllInput.Extended.cs` | `GetAllInputBase` | Add custom filter parameters |
-| `GetAllForExcelInput.Extended.cs` | `GetAllForExcelInputBase` | Add custom Excel export filter parameters |
-| `GetAllOutput.Extended.cs` | `GetAllOutputBase` | Extend the output DTO |
-| `GetForEditOutput.Extended.cs` | `GetForEditOutputBase` | Extend the edit output DTO |
-| `LookupDto.Extended.cs` | `LookupDtoBase` | Extend the lookup DTO |
-| `HostController.Extended.cs` | `HostControllerBase` | Extend the API controller |
+| `ProductsAppService.Extended.cs` | `ProductsAppService.cs` | Override application service methods |
+| `IProductsAppService.Extended.cs` | `IProductsAppService.cs` | Extend the service interface |
+| `Product.cs` | `ProductBase.cs` | Add custom properties or methods to the entity |
+| `CreateOrEditProductDto.Extended.cs` | `CreateOrEditProductDto.cs` | Extend the input DTO |
+| `ProductDto.Extended.cs` | `ProductDto.cs` | Extend the list DTO |
+| `GetAllProductsInput.Extended.cs` | `GetAllProductsInput.cs` | Add custom filter parameters |
+| `GetAllProductsForExcelInput.Extended.cs` | `GetAllProductsForExcelInput.cs` | Add custom Excel export filter parameters |
+| `GetProductForViewDto.Extended.cs` | `GetProductForViewDto.cs` | Extend the view/list output DTO |
+| `GetProductForEditOutput.Extended.cs` | `GetProductForEditOutput.cs` | Extend the edit output DTO |
+| `ProductXLookupTableDto.Extended.cs` | `ProductXLookupTableDto.cs` | Extend the lookup DTO for navigation property `X` |
+| `ProductsController.Extended.cs` | `ProductsController.cs` | Extend the `Web.Host` API controller |
+
+> **The entity is the one exception to the naming pattern.** Because EF Core maps the class by name, the
+> *file* is renamed rather than the class: `ProductBase.cs` is regenerated, and **`Product.cs` is yours** and
+> is never overwritten. Do not expect a `Product.Extended.cs`, and do not treat `Product.cs` as generated.
 
 Each `.Extended.cs` file contains:
 
@@ -235,7 +258,7 @@ export const extraDetailItems = (ctx: ViewProductContext): ReactNode => null;
 export const extraDetailItems = (ctx: ViewProductContext): ReactNode => (
   <>
     <Descriptions.Item label="Calculated Margin">
-      {ctx.entity?.margin ? `${ctx.entity.margin}%` : "-"}
+      {ctx.record.product?.margin ? `${ctx.record.product.margin}%` : "-"}
     </Descriptions.Item>
   </>
 );
@@ -247,26 +270,52 @@ Each hook receives a typed context object. The context provides access to useful
 
 ### Page Context
 
+`ProductsPageContext`, passed to every hook in `customizations.tsx`:
+
 | Property | Type | Description |
 |---|---|---|
-| `refresh` | `() => void` | Reloads the table data |
-| `isGranted` | `(permission: string) => boolean` | Checks a permission |
-| `navigate` | React Router `navigate` | Navigates to a route |
+| `refresh` | `() => void` | Reloads the table data. Call it after anything that changes data |
+| `isGranted` | `(permission: string) => boolean` | Checks a permission, same check the generated page uses |
+| `navigate` | React Router `NavigateFunction` | Navigates to a route |
+| `service` | `ProductsServiceProxy` | The entity's service proxy, ready to call |
 
 ### Form Context
+
+`CreateOrEditProductFormContext`, passed to every hook in `CreateOrEdit*Modal.custom.tsx`:
 
 | Property | Type | Description |
 |---|---|---|
 | `form` | Ant Design `FormInstance` | The form instance for reading/setting field values |
-| `isEditMode` | `boolean` | Whether the form is editing an existing record |
-| `entityId` | Primary key type or `undefined` | The entity's primary key (in edit mode) |
-| `service` | Service proxy instance | The service proxy for making API calls |
+| `isEditMode` | `boolean` | `false` while creating, `true` while editing an existing record |
+| `productId` | Primary key type or `undefined` | The record's primary key, `undefined` while creating |
+| `service` | `ProductsServiceProxy` | The entity's service proxy, ready to call |
+
+> The primary key property is named after the entity - `productId` for a `Product`, `orderId` for an
+> `Order` - not `entityId`.
+
+### Detail Context
+
+`ViewProductContext`, passed to `extraDetailItems`:
+
+| Property | Type | Description |
+|---|---|---|
+| `record` | `GetProductForViewDto` | The record being displayed. Not optional - the hook is called at a point where the record is already loaded |
+
+> `GetProductForViewDto` wraps the entity, so the entity's own properties are one level down:
+> `ctx.record.product.name`, not `ctx.record.name`.
 
 ## Safety Features
 
 - **SkipIfExists:** Customization files (`customizations.tsx`, `*.custom.tsx`) are generated once and never overwritten, even on regeneration.
 - **Type safety:** `customizations.types.ts` is regenerated to keep types in sync. If the entity changes shape, stale code in your customization files produces a compile error rather than breaking silently.
-- **Ownership guard:** When you toggle the **Generate Overridable Entity** switch on an already-generated entity, Power Tools detects whether existing files contain developer code and refuses to overwrite them.
+- **Ownership guard:** Toggling the **Generate Overridable Entity** switch on an entity that already has
+  generated files is handled in both directions:
+  - Turning it **off** points a fully generated template back at the file that holds your code. Power Tools
+    detects your code and refuses to overwrite it.
+  - Turning it **on** makes a path that used to be fully generated developer-owned. The file already sitting
+    there is old generated code, so Power Tools **deletes it** and lets the template write the new split -
+    saving a copy as `<filename>.bak` beside it first. If you had hand-edited that file, your changes are in
+    the `.bak`, not in the regenerated one.
 
 ## Next
 
