@@ -574,6 +574,14 @@
               "path": "Power-Tools-Master-Detail-Tables.md"
             },
             {
+              "text": "Custom Code",
+              "path": "Power-Tools-Custom-Code-React.md"
+            },
+            {
+              "text": "Custom Code - MAUI",
+              "path": "Power-Tools-Custom-Code-Maui.md"
+            },
+            {
               "text": "How to Create & Edit Power Tools Templates",
               "path": "How-To-Create-Edit-Power-Tools-Templates.md"
             },
