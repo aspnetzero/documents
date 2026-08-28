@@ -94,5 +94,5 @@ Similar to **WebSiteRootAddress**, **ServerRootAddress** setting is also exists 
   - [Development Tutorial](Developing-Step-By-Step-Core-Introduction.md)
   - [Deployment](Deployment-Mvc-Core.md)
 - Mobile (Maui) Application
-  - [Development Guide](Development-Guide-Maui.md)
-  - [Development Tutorial](Developing-Step-By-Step-Maui)
+  - [Development Guide](Development-Guide-MAUI.md)
+  - [Development Tutorial](Developing-Step-By-Step-MAUI)
