@@ -1,0 +1,43 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .http { font-family: "Cascadia Mono", Consolas, monospace; font-size: 14px; line-height: 2.0; white-space: pre; }
+  .k { color: #7c3aed; font-weight: 600; }
+  .v { color: #0f172a; }
+  .g { color: #94a3b8; }
+  .status-bad { color: #dc2626; font-weight: 700; }
+  .flag { background: #fee2e2; border-radius: 5px; padding: 2px 6px; }
+  .verbs { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">405 Method Not Allowed — the WebDAV signature</div>
+  <div class="sub">A <span class="mono">DELETE</span> request never reaches your controller. IIS answers it first.</div>
+
+  <div class="cols">
+    <div class="panel">
+      <div class="label">Request</div>
+      <div class="http"><span class="k">DELETE</span> <span class="v">/api/users/42</span> <span class="g">HTTP/1.1</span>
+<span class="k">Host:</span> <span class="v">api.example.com</span>
+<span class="k">Authorization:</span> <span class="g">Bearer eyJhbGciOi…</span>
+<span class="k">Origin:</span> <span class="v">https://app.example.com</span></div>
+    </div>
+
+    <div class="panel bad">
+      <div class="label bad">Response</div>
+      <div class="http"><span class="g">HTTP/1.1</span> <span class="status-bad">405 Method Not Allowed</span>
+<span class="k">Allow:</span> <span class="flag">GET, HEAD, OPTIONS, TRACE</span>
+<span class="k">Server:</span> <span class="v">Microsoft-IIS/10.0</span>
+<span class="g">(no Access-Control-Allow-Origin)</span></div>
+    </div>
+  </div>
+
+  <div class="note">
+    Read the <b>Allow</b> header. <span class="mono">PUT</span> and <span class="mono">DELETE</span> are missing because the
+    <b>WebDAV module</b> claimed those verbs before your application saw the request. And because the response carries no
+    <span class="mono">Access-Control-Allow-Origin</span> header, the browser reports it in the console as a <b>CORS error</b> —
+    which sends most developers off to fix the wrong thing.
+  </div>
+</div>
+</body></html>

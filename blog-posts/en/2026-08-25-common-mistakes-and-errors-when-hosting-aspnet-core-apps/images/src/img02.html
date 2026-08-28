@@ -1,0 +1,35 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap">
+  <div class="title">Verifying the runtime on the server</div>
+  <div class="sub">Run <span class="mono">dotnet --list-runtimes</span> on the server after installing the Hosting Bundle.</div>
+
+  <div class="term">
+    <div class="term-bar">
+      <span class="dot" style="background:#ff5f57"></span>
+      <span class="dot" style="background:#febc2e"></span>
+      <span class="dot" style="background:#28c840"></span>
+      <span class="term-name">Administrator: Command Prompt — WEBSRV01</span>
+    </div>
+    <div class="term-body">
+<span class="row"><span class="prompt">C:\&gt; </span><span class="cmd">dotnet --list-runtimes</span></span>
+<span class="row">&nbsp;</span>
+<span class="row hl">Microsoft.AspNetCore.App 8.0.28  <span class="path">[C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]</span></span>
+<span class="row hl">Microsoft.AspNetCore.App 9.0.14  <span class="path">[C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]</span></span>
+<span class="row hl">Microsoft.AspNetCore.App 10.0.9  <span class="path">[C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]</span></span>
+<span class="row">Microsoft.NETCore.App 8.0.28     <span class="path">[C:\Program Files\dotnet\shared\Microsoft.NETCore.App]</span></span>
+<span class="row">Microsoft.NETCore.App 9.0.14     <span class="path">[C:\Program Files\dotnet\shared\Microsoft.NETCore.App]</span></span>
+<span class="row">Microsoft.NETCore.App 10.0.9     <span class="path">[C:\Program Files\dotnet\shared\Microsoft.NETCore.App]</span></span>
+<span class="row">Microsoft.WindowsDesktop.App 10.0.9 <span class="path">[C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]</span></span>
+    </div>
+  </div>
+
+  <div class="note">
+    The highlighted <b>Microsoft.AspNetCore.App</b> entries are the ones that matter. If you only see
+    <span class="mono">Microsoft.NETCore.App</span>, the standalone .NET Runtime is installed but the
+    <b>ASP.NET Core Hosting Bundle</b> is not — and IIS will fail with <span class="mono">500.19</span> or
+    <span class="mono">500.31</span>. The listed version must also be equal to or newer than your target framework.
+  </div>
+</div>
+</body></html>

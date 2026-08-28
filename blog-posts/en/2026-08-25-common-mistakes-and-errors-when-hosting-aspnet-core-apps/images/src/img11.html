@@ -1,0 +1,83 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .track { display: flex; align-items: stretch; gap: 0; margin-top: 4px; }
+  .gate { flex: 1; border-radius: 12px; padding: 18px 16px; text-align: center; border: 1.5px solid var(--line); background: #fff; }
+  .gate .gn { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+  .gate .gt { font-size: 14.5px; font-weight: 680; margin-top: 8px; }
+  .gate .gc { font-family: "Cascadia Mono", Consolas, monospace; font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .gate .gl { margin-top: 12px; font-size: 20px; font-weight: 700; }
+  .gate.block { background: var(--red-soft); border-color: var(--red-line); }
+  .gate.block .gl { color: var(--red); }
+  .gate.pass .gl { color: var(--ink); }
+  .gate.dim { opacity: .45; }
+  .conn { flex: 0 0 62px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #cbd5e1; }
+  .conn.stop { color: var(--red); font-weight: 700; }
+  .payload {
+    flex: 0 0 150px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: var(--accent-soft); border: 1.5px solid #ddd6fe; border-radius: 12px; padding: 16px 12px;
+  }
+  .payload .pt { font-size: 13px; color: #5b21b6; font-weight: 650; }
+  .payload .pv { font-size: 22px; font-weight: 700; color: #5b21b6; margin-top: 4px; }
+  .verdicts { display: flex; gap: 22px; margin-top: 26px; }
+  .verdicts > div { flex: 1; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">Three limits stand between the upload and your controller</div>
+  <div class="sub">Raising one of them changes nothing. A 50 MB file is rejected by the first gate it meets.</div>
+
+  <div class="track">
+    <div class="payload">
+      <div class="pt">Upload</div>
+      <div class="pv">50 MB</div>
+    </div>
+    <div class="conn">→</div>
+    <div class="gate block">
+      <div class="gn">Gate 1 · IIS</div>
+      <div class="gt">Request filtering</div>
+      <div class="gc">maxAllowedContentLength</div>
+      <div class="gl">30 MB</div>
+    </div>
+    <div class="conn stop">✕</div>
+    <div class="gate pass dim">
+      <div class="gn">Gate 2 · Kestrel</div>
+      <div class="gt">MaxRequestBodySize</div>
+      <div class="gc">ConfigureKestrel / IISServerOptions</div>
+      <div class="gl">30 MB</div>
+    </div>
+    <div class="conn dim">→</div>
+    <div class="gate pass dim">
+      <div class="gn">Gate 3 · Forms</div>
+      <div class="gt">MultipartBodyLengthLimit</div>
+      <div class="gc">FormOptions</div>
+      <div class="gl">128 MB</div>
+    </div>
+    <div class="conn dim">→</div>
+    <div class="gate dim" style="background:var(--panel)">
+      <div class="gn">Your code</div>
+      <div class="gt">Upload action</div>
+      <div class="gc">IFormFile file</div>
+      <div class="gl" style="font-size:15px;color:var(--muted)">never runs</div>
+    </div>
+  </div>
+
+  <div class="verdicts">
+    <div class="panel bad">
+      <div class="label bad">What the client sees</div>
+      <div class="mono" style="font-size:13.5px;line-height:1.8">HTTP/1.1 <b>413</b> Request Entity Too Large<br><span style="color:var(--muted)">Server: Microsoft-IIS/10.0</span></div>
+    </div>
+    <div class="panel good">
+      <div class="label good">What to change</div>
+      <div class="mono" style="font-size:13.5px;line-height:1.8">All three, to the same value.<br><span style="color:var(--muted)">web.config + Program.cs</span></div>
+    </div>
+  </div>
+
+  <div class="note">
+    Behind IIS the request dies at gate 1, before a single line of your code executes — which is why setting
+    <span class="mono">MaxRequestBodySize</span> alone appears to do nothing. Set
+    <b>IISServerOptions</b> for in-process hosting and <b>ConfigureKestrel</b> for out-of-process; setting both is harmless.
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .flow { display: flex; align-items: stretch; gap: 0; margin-bottom: 8px; }
+  .node {
+    flex: 1; display: flex; flex-direction: column; justify-content: center; border: 1.5px solid var(--line); border-radius: 12px; background: #fff;
+    padding: 18px 20px; text-align: center;
+  }
+  .node .nt { font-size: 16.5px; font-weight: 680; }
+  .node .ns { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  .hop { flex: 0 0 252px; padding: 0 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .hop .proto { font-family: "Cascadia Mono", Consolas, monospace; font-size: 13px; font-weight: 700; }
+  .hop .line { width: 100%; height: 2px; background: var(--line); position: relative; }
+  .hop .line::after {
+    content: "▶"; position: absolute; right: -2px; top: -9px; color: #cbd5e1; font-size: 13px;
+  }
+  .tls { color: var(--green); }
+  .plain { color: var(--amber); }
+  .headers {
+    margin-top: 6px; font-family: "Cascadia Mono", Consolas, monospace; font-size: 11px;
+    line-height: 1.7; color: var(--muted); text-align: left; background: var(--panel);
+    border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; width: 100%;
+  }
+  .headers b { color: #7c3aed; font-weight: 600; }
+  .outcomes { display: flex; gap: 22px; margin-top: 30px; }
+  .outcomes > div { flex: 1; }
+  .code { font-family: "Cascadia Mono", Consolas, monospace; font-size: 13.5px; line-height: 1.95; }
+  .code .bad { color: var(--red); font-weight: 600; }
+  .code .good { color: var(--green); font-weight: 600; }
+  .code .g { color: var(--faint); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">What your app sees behind a reverse proxy</div>
+  <div class="sub">The proxy terminates TLS, so Kestrel is spoken to over plain HTTP. The original scheme survives only in a header.</div>
+
+  <div class="flow">
+    <div class="node">
+      <div class="nt">Browser</div>
+      <div class="ns">https://app.example.com</div>
+    </div>
+    <div class="hop">
+      <div class="proto tls">HTTPS</div>
+      <div class="line"></div>
+      <div class="ns" style="font-size:11.5px;color:var(--muted)">TLS terminated here</div>
+    </div>
+    <div class="node">
+      <div class="nt">Reverse proxy</div>
+      <div class="ns">nginx · ARR · load balancer</div>
+    </div>
+    <div class="hop">
+      <div class="proto plain">HTTP</div>
+      <div class="line"></div>
+      <div class="headers">
+        <b>X-Forwarded-Proto:</b> https<br>
+        <b>X-Forwarded-For:</b> 203.0.113.9<br>
+        <b>X-Forwarded-Host:</b> app.example.com
+      </div>
+    </div>
+    <div class="node accent" style="border-color:#ddd6fe;background:var(--accent-soft)">
+      <div class="nt">Kestrel</div>
+      <div class="ns">your ASP.NET Core app</div>
+    </div>
+  </div>
+
+  <div class="outcomes">
+    <div class="panel bad">
+      <div class="label bad">Without UseForwardedHeaders</div>
+      <div class="code">
+        Request.Scheme          <span class="bad">"http"</span><br>
+        Request.Host            <span class="bad">"localhost:5000"</span><br>
+        RemoteIpAddress         <span class="bad">10.0.0.4</span> <span class="g">(the proxy)</span><br>
+        redirect_uri            <span class="bad">http://…/signin-oidc</span>
+      </div>
+    </div>
+    <div class="panel good">
+      <div class="label good">With UseForwardedHeaders</div>
+      <div class="code">
+        Request.Scheme          <span class="good">"https"</span><br>
+        Request.Host            <span class="good">"app.example.com"</span><br>
+        RemoteIpAddress         <span class="good">203.0.113.9</span> <span class="g">(the client)</span><br>
+        redirect_uri            <span class="good">https://…/signin-oidc</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="mono">app.UseForwardedHeaders()</span> must run <b>before</b> authentication, HTTPS redirection and HSTS —
+    otherwise those middlewares have already made their decision on the wrong scheme. Set
+    <span class="mono">KnownProxies</span> so only proxies you own are trusted.
+  </div>
+</div>
+</body></html>

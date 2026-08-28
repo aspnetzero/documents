@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .side { border-radius: 14px; padding: 22px 24px 24px; }
+  .side.bad { background: #fffbfb; border: 1px solid #fecdd3; }
+  .side.good { background: #fbfffc; border: 1px solid #bbf7d0; }
+  .sideTitle { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .sideTitle.bad { color: var(--red); }
+  .sideTitle.good { color: var(--green); }
+  .sideSub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .lb {
+    background: #fff; border: 1.5px solid var(--line); border-radius: 9px;
+    padding: 10px; text-align: center; font-size: 14px; font-weight: 650; margin-bottom: 4px;
+  }
+  .fan { display: flex; justify-content: center; color: #cbd5e1; font-size: 16px; letter-spacing: 60px; padding-left: 60px; margin-bottom: 4px; }
+  .inst { display: flex; gap: 14px; }
+  .inst > div { flex: 1; background: #fff; border: 1.5px solid var(--line); border-radius: 10px; padding: 13px 14px; text-align: center; }
+  .inst .it { font-size: 14px; font-weight: 650; }
+  .ring { font-family: "Cascadia Mono", Consolas, monospace; font-size: 11.5px; margin-top: 7px; padding: 5px 7px; border-radius: 6px; }
+  .ring.a { background: #ede9fe; color: #5b21b6; }
+  .ring.b { background: #ffedd5; color: #9a3412; }
+  .ring.shared { background: #dcfce7; color: #15803d; }
+  .down { text-align: center; color: #cbd5e1; font-size: 18px; margin: 8px 0 4px; }
+  .store {
+    background: #fff; border: 1.5px solid var(--green-line); border-radius: 10px;
+    padding: 12px; text-align: center;
+  }
+  .store .st { font-size: 14px; font-weight: 650; color: #15803d; }
+  .store .ss { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .verdict {
+    margin-top: 18px; font-family: "Cascadia Mono", Consolas, monospace; font-size: 12.5px;
+    padding: 10px 12px; border-radius: 8px; line-height: 1.7;
+  }
+  .verdict.bad { background: #fee2e2; color: #991b1b; }
+  .verdict.good { background: #dcfce7; color: #15803d; }
+  .spacerbox { height: 100px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">Why users get logged out at random</div>
+  <div class="sub">Authentication cookies and antiforgery tokens are encrypted with the Data Protection key ring.</div>
+
+  <div class="cols">
+    <div class="side bad">
+      <div class="sideTitle bad">Each instance mints its own keys</div>
+      <div class="sideSub">The default when nothing is configured</div>
+
+      <div class="lb">Load balancer</div>
+      <div class="fan">↙↘</div>
+      <div class="inst">
+        <div>
+          <div class="it">Instance A</div>
+          <div class="ring a">key ring A</div>
+        </div>
+        <div>
+          <div class="it">Instance B</div>
+          <div class="ring b">key ring B</div>
+        </div>
+      </div>
+      <div class="spacerbox"></div>
+      <div class="verdict bad">Cookie issued by A → request lands on B<br>CryptographicException: key not found in key ring</div>
+    </div>
+
+    <div class="side good">
+      <div class="sideTitle good">One persisted ring, shared by all</div>
+      <div class="sideSub">PersistKeysTo… + SetApplicationName</div>
+
+      <div class="lb">Load balancer</div>
+      <div class="fan">↙↘</div>
+      <div class="inst">
+        <div>
+          <div class="it">Instance A</div>
+          <div class="ring shared">shared ring</div>
+        </div>
+        <div>
+          <div class="it">Instance B</div>
+          <div class="ring shared">shared ring</div>
+        </div>
+      </div>
+      <div class="down">↓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
+      <div class="store">
+        <div class="st">Redis · file share · blob storage</div>
+        <div class="ss">SetApplicationName("MyApp")</div>
+      </div>
+      <div class="verdict good">Cookie issued by A → request lands on B<br>Decrypted successfully. User stays signed in.</div>
+    </div>
+  </div>
+
+  <div class="note">
+    The same failure happens on a <b>single</b> server: an application pool recycle or a fresh publish can throw the ring away,
+    and every browser still holding a cookie is signed out. <span class="mono">SetApplicationName</span> must be identical
+    everywhere, or two instances will not share keys even when the store is shared.
+  </div>
+</div>
+</body></html>

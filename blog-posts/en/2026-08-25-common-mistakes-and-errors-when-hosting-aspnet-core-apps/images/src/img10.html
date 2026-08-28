@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .console { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 28px rgba(15,23,42,.10); }
+  .ctabs { display: flex; align-items: center; gap: 20px; background: #f1f5f9; border-bottom: 1px solid var(--line); padding: 0 18px; height: 42px; font-size: 13px; color: var(--muted); }
+  .ctabs .on { color: var(--ink); font-weight: 650; border-bottom: 2px solid var(--accent); height: 42px; display: flex; align-items: center; }
+  .cbody { background: #fff; padding: 0; }
+  .cerr {
+    background: #fff5f5; border-bottom: 1px solid #fecaca; padding: 14px 18px;
+    font-family: "Cascadia Mono", Consolas, monospace; font-size: 13.5px; line-height: 1.75; color: #991b1b;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .cerr .ico { color: #dc2626; font-size: 15px; line-height: 1.5; }
+  .cerr .src { color: #b45309; }
+  .cwarn { padding: 12px 18px; font-family: "Cascadia Mono", Consolas, monospace; font-size: 13.5px; color: #92400e; background: #fffbeb; border-bottom: 1px solid #fde68a; }
+  .cinfo { padding: 12px 18px; font-family: "Cascadia Mono", Consolas, monospace; font-size: 13.5px; color: var(--muted); }
+  .origins { display: flex; gap: 22px; margin-top: 28px; }
+  .origins > div { flex: 1; }
+  .ob { font-family: "Cascadia Mono", Consolas, monospace; font-size: 15px; font-weight: 650; }
+  .osub { font-size: 12.5px; color: var(--muted); margin-top: 5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">CORS after splitting the frontend and the API</div>
+  <div class="sub">Two sites, two origins. The browser now enforces a rule your local dev-server proxy hid from you.</div>
+
+  <div class="console">
+    <div class="ctabs">
+      <span>Elements</span><span class="on">Console</span><span>Sources</span><span>Network</span><span>Performance</span>
+    </div>
+    <div class="cbody">
+      <div class="cerr">
+        <span class="ico">✕</span>
+        <span>Access to XMLHttpRequest at <b>'https://api.example.com/api/users'</b><br>
+        from origin <b>'https://app.example.com'</b> has been blocked by CORS policy:<br>
+        No 'Access-Control-Allow-Origin' header is present on the requested resource.
+        <span class="src">&nbsp;&nbsp;main-4f2a1c.js:1</span></span>
+      </div>
+      <div class="cwarn">⚠ GET https://api.example.com/api/users net::ERR_FAILED 200</div>
+      <div class="cinfo">&gt; </div>
+    </div>
+  </div>
+
+  <div class="origins">
+    <div class="panel">
+      <div class="label">Frontend origin</div>
+      <div class="ob">https://app.example.com</div>
+      <div class="osub">must be listed in <span class="mono">WithOrigins(...)</span> — exactly, with no trailing slash</div>
+    </div>
+    <div class="panel">
+      <div class="label">API origin</div>
+      <div class="ob">https://api.example.com</div>
+      <div class="osub">must be the SPA's configured API base URL, not <span class="mono">localhost</span></div>
+    </div>
+  </div>
+
+  <div class="note">
+    Scheme, host and port all form part of the origin — <span class="mono">http://</span> and <span class="mono">https://</span> are different origins.
+    And if only <span class="mono">DELETE</span> or <span class="mono">PUT</span> produce this message while <span class="mono">GET</span> works,
+    it is <b>not</b> a CORS problem. It is WebDAV.
+  </div>
+</div>
+</body></html>

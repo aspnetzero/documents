@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .lane { display: flex; align-items: center; gap: 0; margin-bottom: 8px; }
+  .lane .box { flex: 0 0 auto; min-width: 172px; }
+  .verb {
+    font-family: "Cascadia Mono", Consolas, monospace;
+    font-size: 14px; font-weight: 700;
+    padding: 12px 16px; border-radius: 9px; min-width: 150px; text-align: center;
+  }
+  .verb.in { background: #eef2ff; border: 1.5px solid #c7d2fe; color: #3730a3; }
+  .out { font-family: "Cascadia Mono", Consolas, monospace; font-size: 14px; font-weight: 700;
+         padding: 12px 16px; border-radius: 9px; min-width: 158px; text-align: center; }
+  .out.bad { background: #fee2e2; border: 1.5px solid #fecaca; color: #991b1b; }
+  .out.good { background: #dcfce7; border: 1.5px solid #bbf7d0; color: #15803d; }
+  .laneWrap { border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px 18px; margin-bottom: 20px; background: #fff; }
+  .laneWrap.bad { background: #fffbfb; border-color: #fecdd3; }
+  .laneWrap.good { background: #fbfffc; border-color: #bbf7d0; }
+  .laneTitle { font-size: 13.5px; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.01em; }
+  .laneTitle.bad { color: var(--red); }
+  .laneTitle.good { color: var(--green); }
+  .skip { opacity: 0.38; }
+  .xmark { color: #dc2626; font-size: 20px; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">Where WebDAV intercepts the request</div>
+  <div class="sub">The module sits in the IIS pipeline ahead of the ASP.NET Core Module, and it owns <span class="mono">PUT</span> and <span class="mono">DELETE</span>.</div>
+
+  <div class="laneWrap bad">
+    <div class="laneTitle bad">Default IIS install — WebDAV registered</div>
+    <div class="lane">
+      <div class="verb in">DELETE /api/users/42</div>
+      <div class="arrow">→</div>
+      <div class="box red"><div class="bt">WebDAVModule</div><div class="bs">claims PUT / DELETE</div></div>
+      <div class="arrow xmark">✕</div>
+      <div class="box skip"><div class="bt">AspNetCoreModuleV2</div><div class="bs">never reached</div></div>
+      <div class="arrow skip">→</div>
+      <div class="box skip"><div class="bt">Your application</div><div class="bs">never reached</div></div>
+      <div class="arrow">→</div>
+      <div class="out bad">405</div>
+    </div>
+  </div>
+
+  <div class="laneWrap good">
+    <div class="laneTitle good">After removing the module in web.config</div>
+    <div class="lane">
+      <div class="verb in">DELETE /api/users/42</div>
+      <div class="arrow">→</div>
+      <div class="box" style="opacity:.45"><div class="bt">WebDAVModule</div><div class="bs">removed</div></div>
+      <div class="arrow">→</div>
+      <div class="box accent"><div class="bt">AspNetCoreModuleV2</div><div class="bs">hands off to Kestrel</div></div>
+      <div class="arrow">→</div>
+      <div class="box green"><div class="bt">Your application</div><div class="bs">UsersController.Delete</div></div>
+      <div class="arrow">→</div>
+      <div class="out good">204</div>
+    </div>
+  </div>
+
+  <div class="note">
+    IIS Express ships WebDAV <b>commented out</b>, which is why this never reproduces on your development machine.
+    Remove <span class="mono">WebDAVModule</span> and the <span class="mono">WebDAV</span> handler in <span class="mono">web.config</span>,
+    or uninstall the Windows feature entirely.
+  </div>
+</div>
+</body></html>
