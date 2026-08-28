@@ -1,18 +1,50 @@
 # Project Types Differences
 
 ## Overall
-While base functionalities are identical for all versions of ASP.NET Zero, there are still some differences between different versions. In this document, we will highlight these differences.
 
-### ASP.NET Core vs. ASP.NET MVC 5.x
-Beginning from [v4.1](https://docs.aspnetzero.com/en/common/latest/Change-Logs), we are more focused on **ASP.NET Core** based solutions (rather than ASP.NET MVC 5.x). That means our new major features will be implemented for ASP.NET Core version.
+ASP.NET Zero is offered in three project types, all of them built on the same ASP.NET Core backend:
 
-### Angular vs. Angularjs 1.x
-Beginning from [v4.1](https://docs.aspnetzero.com/en/common/latest/Change-Logs), we are more focused on **Angular** based solutions (rather than Angularjs 1.x). That means our new major features will be implemented for Angular framework.
+- **ASP.NET Core & jQuery** - a server rendered ASP.NET Core MVC application.
+- **ASP.NET Core & Angular** - an Angular single page application talking to the `Web.Host` API.
+- **ASP.NET Core & React** - a React single page application talking to the `Web.Host` API. Introduced in [v15.1](Change-Logs).
+
+Because the backend is shared, everything that lives on the server side (application services, multi-tenancy, permissions, background jobs, webhooks, GraphQL, health check endpoints, the MAUI mobile app, the public web site, Power Tools code generation) behaves identically in all three. The differences below are all on the UI side.
+
+### Legacy project types
+
+**ASP.NET MVC 5.x** and **AngularJS 1.x** based project types are no longer developed. Beginning from [v4.1](Change-Logs), new features are implemented only for the ASP.NET Core based project types. See [Old Project Type Info](Old-Project-Type-Info) for details.
 
 ## Version Differences
-- **ASP.NET Core & jQuery:** All social login options are available. (Facebook, Twitter, Microsoft, Google, OpenIddict)
-- **ASP.NET Core & Angular:** Twitter social login option is not available.
 
-See **development guide** documents for details of all features in different versions:
+### External login providers
+
+| Provider | ASP.NET Core & jQuery | ASP.NET Core & Angular | ASP.NET Core & React |
+|----------|:---------------------:|:----------------------:|:--------------------:|
+| Facebook | Yes | Yes | Yes |
+| Google | Yes | Yes | Yes |
+| Microsoft | Yes | Yes | Yes |
+| Twitter | Yes | Yes | Yes |
+| OpenID Connect | Yes | Yes | Yes |
+| WS-Federation | Yes | Yes | Yes |
+| Apple | No | Yes | No |
+
+Apple sign-in is registered by the `Web.Host` application, so it is available to the Angular UI and to the MAUI application, but the `Web.Mvc` application does not register it and the React UI does not implement a button for it.
+
+### Health Check UI page
+
+The health check **endpoints** (`/health` and `/healthchecks-ui`) are available in every project type. The in-application **Health Check** administration page exists in the ASP.NET Core & jQuery and ASP.NET Core & Angular UIs; it is not implemented in the React UI yet. See [Health Checks](HealthChecks).
+
+### UI libraries
+
+| | ASP.NET Core & jQuery | ASP.NET Core & Angular | ASP.NET Core & React |
+|-|-----------------------|------------------------|----------------------|
+| Rendering | Razor views, server rendered | Angular SPA | React SPA |
+| Build | Gulp bundling | Angular CLI | Vite |
+| Component library | jQuery plugins + Metronic | ngx-bootstrap, ng-zorro-antd | Ant Design, React Bootstrap |
+| Static hosting | Not applicable | Supported (Azure Storage, IIS, Docker) | Supported (Azure Storage, IIS, Docker) |
+
+See the **development guide** documents for the details of all features in the different project types:
+
 - [ASP.NET Core & jQuery](https://docs.aspnetzero.com/en/aspnet-core-mvc/latest/Features-Mvc-Core)
 - [ASP.NET Core & Angular](https://docs.aspnetzero.com/en/aspnet-core-angular/latest/Features-Angular)
+- [ASP.NET Core & React](https://docs.aspnetzero.com/en/aspnet-core-react/latest/Features-React)

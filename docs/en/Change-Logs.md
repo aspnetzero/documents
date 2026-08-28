@@ -6,6 +6,16 @@ jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 15.4.0
+
+* Added email template management (Administration > Email Templates)
+* Added OpenID Connect authorization code flow for external login and account linking
+* Role name can now be changed after a role is created
+* Migrated all projects from yarn to pnpm
+* Added configurable forwarded headers support
+* Upgraded to ABP 11.3
+* Enhancements and bug fixes
+
 ## 15.3.0 (2026-05-12)
 
 * Added Rate limiting feature
