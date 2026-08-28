@@ -4,7 +4,7 @@ Before reading this document, it's suggested to run the application and explore 
 
 ## IDE & Operating System
 
-It's suggested to use an IDE to develop your project. We suggest [Visual Studio 2017+](https://www.visualstudio.com), but you can use Visual Studio Code or any other IDE/Editor you like. You can also use any OS (MacOS/Linux/Windows).
+It's suggested to use an IDE to develop your project. We suggest [Visual Studio 2026+](https://www.visualstudio.com), but you can use Visual Studio Code or any other IDE/Editor you like. You can also use any OS (MacOS/Linux/Windows).
 
 ## Architecture
 
@@ -39,7 +39,7 @@ There are 12 projects in the solution:
 - **Web.Core** project contains common classes used by MVC and Host projects.
 - **Web.Public** project is a separated web application that can be used to create a public web site or a landing page for your application. For more information see [Public Website](Public-Website).
 - **Migrator** project is a console application that runs database migrations. For more information see [Migrator Console Application](Migrator-Console-Application)
-- **ConsoleApiClient** project is a simple console application for performing API requests to the application  authenticated via IdentityServer4.
+- **ConsoleApiClient** project is a simple console application for performing API requests to the application  authenticated via [OpenIddict](Infrastructure-Core-Angular-OpenIddict-Integration).
 - **Tests** project contains unit and integration tests.
 
 ### Applications

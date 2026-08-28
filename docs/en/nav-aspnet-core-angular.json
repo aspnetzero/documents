@@ -530,10 +530,6 @@
           "path": "Infrastructure-Core-Angular-OpenIddict-Integration.md"
         },
         {
-          "text": "Identity Server 4 Integration",
-          "path": "Infrastructure-Core-Angular-Identity-Server4-Integration.md"
-        },
-        {
           "text": "Spinner service",
           "path": "Infrastructure-Angular-Spinner.md"
         },
@@ -616,7 +612,7 @@
     {
       "text": "Migration from AutoMapper to Mapperly",
       "path": "Migrating-From-AutoMapper-To-Mapperly.md"
-    },    
+    },
     {
       "text": "Change Logs",
       "path": "Change-Logs.md"
