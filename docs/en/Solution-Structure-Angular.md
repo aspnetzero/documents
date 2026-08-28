@@ -25,7 +25,7 @@ After you create and [download](https://aspnetzero.com/Download) your project, y
 
 There are two more solutions:
 
-- **\*.Mobile.sln** contains the Xamarin projects
+- **\*.Mobile.sln** contains the MAUI projects
 - **\*.All.sln** contains both mobile and web development projects.
 
 There are 12 projects in the solution:
@@ -166,6 +166,6 @@ If you inherit your components from **AppComponentBase** class, you can get many
   - [Features](Features-Angular.md)
   - [Development Tutorial](Developing-Step-By-Step-Angular-Introduction.md)
   - [Deployment](Deployment-Angular.md)
-- Mobile (Xamarin) Application
-  - [Development Guide](Development-Guide-Xamarin.md)
-  - [Development Tutorial](Developing-Step-By-Step-Xamarin)
+- Mobile (MAUI) Application
+  - [Development Guide](Development-Guide-MAUI.md)
+  - [Development Tutorial](Developing-Step-By-Step-MAUI)

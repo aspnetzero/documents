@@ -10,7 +10,7 @@ After you create and [download](https://aspnetzero.com/Download) your project, y
 
 There are two more solutions:
 
-* **\*.Mobile.sln** contains the Xamarin projects
+* **\*.Mobile.sln** contains the MAUI projects
 * **\*.All.sln** contains both mobile and web development projects.
 
 There are 12 projects in the solution:

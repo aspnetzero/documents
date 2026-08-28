@@ -32,7 +32,7 @@ SQL Server database on Azure is used in this example. You can set your SQL Serve
 
 > Note: You have to get your IPv4 address (e.g. [https://www.whatismyip.com/](https://www.whatismyip.com/)) and in Azure Portal  click on your database, then the "**Set server firewall**" button, then create a rule for your IP address (or range of addresses) and Save.  Otherwise when you start-up you will see a Connection Refused error in the browser console.
 
-Open the application in Visual Studio for Mac.  If you are not going to work on Xamarin app, open the Web solution only, under base_folder/aspnet-core.
+Open the application in Visual Studio for Mac.  If you are not going to work on the MAUI app, open the Web solution only, under base_folder/aspnet-core.
 
 Set Web.Host project as Startup Project (right click on Web.Host project in Solution Explorer and you will see the option)
 

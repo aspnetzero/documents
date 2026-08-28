@@ -27,7 +27,7 @@ When you open the server side solution (**\*.Web.sln**) using **Visual Studio 20
 
 <img src="images/aspnet-core-host-solution-4.png" alt="ASP.NET Core solution structure" class="img-thumbnail" />
 
-> If you want to work on only Xamarin project, open **\*.Mobile.sln** solution. If you want to work on both of Xamarin and Web projects, open **\*.All.sln** solution.
+> If you want to work on only MAUI project, open **\*.Mobile.sln** solution. If you want to work on both of MAUI and Web projects, open **\*.All.sln** solution.
 
 Right click the **.Web.Host** project and select "**Set as StartUp project**". Then **build** the solution. It may take a longer time during the first build since all **nuget** packages will be restored.
 

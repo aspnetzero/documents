@@ -29,7 +29,7 @@ When you open the server side solution (**\*.Web.sln**) using **Visual Studio 20
 
 ![ASP.NET Core solution structure](images/aspnet-core-host-solution-4.png)
 
-> If you want to work on only MAUI project, open **\*.Maui.sln** solution. If you want to work on both of MAUI and Web projects, open **\*.All.sln** solution.
+> If you want to work on only MAUI project, open **\*.Mobile.sln** solution. If you want to work on both of MAUI and Web projects, open **\*.All.sln** solution.
 
 Right click the **.Web.Host** project and select "**Set as Startup project**". Then **build** the solution. It may take a longer time during the first build since all **nuget** packages will be restored.
 
