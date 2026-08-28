@@ -392,6 +392,10 @@
               "path": "Features-Angular-Api-Keys.md"
             },
             {
+              "text": "Email Templates",
+              "path": "Features-Angular-Email-Templates.md"
+            },
+            {
               "text": "User Delegation",
               "path": "Features-Angular-User-Delegation.md"
             },

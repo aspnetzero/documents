@@ -392,6 +392,10 @@
               "path": "Features-Mvc-Core-Api-Keys.md"
             },
             {
+              "text": "Email Templates",
+              "path": "Features-Mvc-Core-Email-Templates.md"
+            },
+            {
               "text": "User Delegation",
               "path": "Features-Mvc-Core-User-Delegation.md"
             },

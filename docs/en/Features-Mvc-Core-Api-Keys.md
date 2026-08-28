@@ -379,4 +379,4 @@ Note that `ApiKeyAuthenticationMiddleware` looks for `ApiKeyConsts.HeaderName` w
 
 ## Next
 
-- [User Delegation](Features-Mvc-Core-User-Delegation)
+- [Email Templates](Features-Mvc-Core-Email-Templates)

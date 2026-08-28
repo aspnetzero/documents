@@ -177,6 +177,10 @@
                 {
                   "text": "Passwordless Login",
                   "path": "Features-React-Passwordless-Login.md"
+                },
+                {
+                  "text": "QR Login",
+                  "path": "Features-React-Qr-Login.md"
                 }
               ]
             },
@@ -382,6 +386,10 @@
             {
               "text": "API Keys",
               "path": "Features-React-Api-Keys.md"
+            },
+            {
+              "text": "Email Templates",
+              "path": "Features-React-Email-Templates.md"
             },
             {
               "text": "User Delegation",
@@ -604,7 +612,7 @@
     {
       "text": "Migration from AutoMapper to Mapperly",
       "path": "Migrating-From-AutoMapper-To-Mapperly.md"
-    },    
+    },
     {
       "text": "Change Logs",
       "path": "Change-Logs.md"
