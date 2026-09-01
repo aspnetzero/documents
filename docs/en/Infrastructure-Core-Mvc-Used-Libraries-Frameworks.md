@@ -1,7 +1,7 @@
 # Used Library & Frameworks
 
-Many open source frameworks and libraries are used to build ASP.NET Zero project.
-Here's the list of all libraries.
+Many open source frameworks and libraries are used to build ASP.NET Zero
+project. Here's the list of the main libraries.
 
 - Server side
   - [ASP.NET Boilerplate Framework &
@@ -9,55 +9,75 @@ Here's the list of all libraries.
   - [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/)
   - [ASP.NET Identity Core (and social login
     extensions)](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity)
-  - [SignalR](http://www.asp.net/signalr)
+  - [SignalR](https://learn.microsoft.com/en-us/aspnet/core/signalr/introduction)
   - [EntityFramework
     Core](https://docs.microsoft.com/en-us/ef/core/index)
   - [Castle Windsor](http://www.castleproject.org/projects/windsor/)
   - [Mapperly](https://mapperly.riok.app/)
-  - [IdentityServer4](http://identityserver.io/)
+  - [OpenIddict](https://documentation.openiddict.com/)
   - [HangFire](http://hangfire.io/)
   - [Log4Net](https://logging.apache.org/log4net/)
-  - [PaulMiami reCAPTCHA](https://github.com/PaulMiami/reCAPTCHA)
+  - [MailKit](https://github.com/jstedfast/MailKit)
+  - [Owl.reCAPTCHA](https://github.com/stulzq/Owl.reCAPTCHA)
+  - [HtmlSanitizer](https://github.com/mganss/HtmlSanitizer)
   - [xUnit](https://xunit.net/)
-  - [Swashbuckle](https://github.com/domaindrivendev/Ahoy)
+  - [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
   - [StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
   - [System.Linq.Dynamic.Core](https://github.com/StefH/System.Linq.Dynamic.Core)
   - [MiniExcel](https://github.com/mini-software/MiniExcel)
+  - [GraphQL for .NET](https://github.com/graphql-dotnet/graphql-dotnet)
+  - [Stripe.net](https://github.com/stripe/stripe-dotnet) and [PayPal Checkout SDK](https://github.com/paypal/Checkout-NET-SDK)
+  - [Twilio](https://github.com/twilio/twilio-csharp)
+  - [QRCoder](https://github.com/codebude/QRCoder)
+  - [SkiaSharp](https://github.com/mono/SkiaSharp)
+  - [TimeZoneConverter](https://github.com/mattjohnsonpint/TimeZoneConverter)
 - Client side
-  - [Metronic Theme](http://keenthemes.com/metronic-theme/)
+  - [Metronic Theme](https://keenthemes.com/metronic/)
   - [Twitter Bootstrap](http://getbootstrap.com/)
-  - [Bootstrap Hover
-    Dropdown](https://github.com/CWSpear/bootstrap-hover-dropdown)
   - [Bootstrap Date Range
     Picker](https://github.com/dangrossman/bootstrap-daterangepicker)
-  - [Bootstrap Switch](http://www.bootstrap-switch.org/)
-  - [Bootstrap
-    Select](http://silviomoreto.github.io/bootstrap-select)
+  - [Popper.js](https://popper.js.org/) and [Tether](http://tether.io/)
   - [jQuery](http://jquery.com/)
-  - [jQuery UI](http://jqueryui.com/)
   - [jQuery BlockUI](http://malsup.com/jquery/block/)
-  - [jQuery Slimscroll](https://github.com/rochal/jQuery-slimScroll)
-  - [jQuery Sparkline](http://omnipotent.net/jquery.sparkline/)
-  - [jQuery Uniform](https://github.com/pixelmatrix/uniform)
   - [jQuery Validation](http://jqueryvalidation.org/)
+  - [jquery-serializejson](https://github.com/marioizquierdo/jquery.serializeJSON)
   - [Datatables](https://datatables.net/)
-  - [jQuery Ajax Forms](http://malsup.com/jquery/form/)
-  - [jQuery Timeago](https://github.com/rmm5t/jquery-timeago)
-  - [Json2](https://github.com/douglascrockford/JSON-js)
-  - [jquery-cropper](https://github.com/fengyuanchen/jquery-cropper)
+  - [Select2](https://select2.org/)
+  - [Dropzone](https://www.dropzone.dev/)
+  - [Inputmask](https://github.com/RobinHerbots/Inputmask)
+  - [css-toggle-switch](https://github.com/ghinda/css-toggle-switch)
+  - [Cropper.js](https://fengyuanchen.github.io/cropperjs/)
+  - [JsTree](https://www.jstree.com/)
+  - [Gridstack](https://gridstackjs.com/)
+  - [Quill](https://quilljs.com/)
+  - [Prism](https://prismjs.com/)
+  - [Chart.js](https://www.chartjs.org/), [Chartist](https://gionkunz.github.io/chartist-js/) and [D3](https://d3js.org/)
+  - [GMaps.js](https://github.com/hpneo/gmaps)
+  - [CountUp.js](https://github.com/inorganik/CountUp.js)
+  - [Pace](https://github.com/CodeByZach/pace)
+  - [Autosize](https://github.com/jackmoore/autosize)
+  - [Sticky.js](https://github.com/rgalus/sticky-js)
+  - [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
+  - [pwstrength-bootstrap](https://github.com/ablanco/jquery.pwstrength.bootstrap)
   - [LocalForage](https://github.com/localForage/localForage)
   - [Js Cookie](https://github.com/js-cookie/js-cookie)
   - [Moment.js](http://momentjs.com/)
   - [Moment.js Timezone](http://momentjs.com/timezone/)
+  - [timeago.js](https://github.com/hustcc/timeago.js)
   - [Mustache.js](https://github.com/janl/mustache.js)
   - [Underscore.js](http://underscorejs.org/)
-  - [JsTree](https://www.jstree.com/)
-  - [Morris](http://morrisjs.github.io/morris.js/)
-  - [Respondjs](https://github.com/scottjehl/Respond)
+  - [URI.js](https://github.com/medialize/URI.js) and [js-url](https://github.com/websanova/js-url)
+  - [js-beautify](https://github.com/beautifier/js-beautify)
+  - [detect-zoom](https://github.com/tombigel/detect-zoom)
+  - [push.js](https://github.com/Nickersoft/push.js)
+  - [cookieconsent](https://github.com/osano/cookieconsent)
+  - [animate.css](https://github.com/animate-css/animate.css)
   - [Font-Awesome](http://fontawesome.io/)
-  - [Famfamfam flags](http://www.famfamfam.com/lab/icons/flags/)
-  - [Simple Line
-    Icons](http://thesabbir.github.io/simple-line-icons/)
+  - [Famfamfam flags](https://github.com/legacy-icons/famfamfam-flags/)
   - [SpinJs](http://fgnass.github.io/spin.js/)
-  - [SweetAlert](http://t4t5.github.io/sweetalert/)
+  - [SweetAlert2](https://sweetalert2.github.io/)
   - [Toastr](http://codeseven.github.io/toastr/)
+
+> The authoritative list is always the `.csproj` files of the server side
+> solution and the `dependencies` section of
+> `*.Web.Mvc/package.json` in your own project.

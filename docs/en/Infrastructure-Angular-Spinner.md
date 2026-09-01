@@ -8,11 +8,6 @@ To block entire screen, you can use spinner service.
 
 ```typescript
 export class DemoUiComponentsComponent extends AppComponentBase implements OnInit {
-    constructor(
-        injector: Injector
-    ) {
-        super(injector);
-    }
     ngOnInit(): void {
         //show default spinner which cover all page
         this.spinnerService.show();
@@ -35,9 +30,9 @@ To use spinner on specific html elements you can use `busyIf` directive.
 The element which has `busyIf` directive will be blocked until input is false.
 
 ```html
- <div class="kt-portlet kt-portlet--height-fluid">   
+ <div class="card card-custom">
      ...
-     <div class="kt-portlet__body">
+     <div class="card-body">
 		<div [busyIf]="loading">
             
          </div>
@@ -48,11 +43,6 @@ The element which has `busyIf` directive will be blocked until input is false.
 
 ```typescript
 export class MyComponent extends AppComponentBase implements OnInit {
-    constructor(
-        injector: Injector
-    ) {
-        super(injector);
-    }
     loading = true;
     ngOnInit(): void {
         setTimeout(() => {

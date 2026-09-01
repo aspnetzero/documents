@@ -42,37 +42,31 @@ In this document we will create a custom input type step by step. Our input type
    *multi-select-combobox-input-type.component.html*
 
    ```typescript
-   import { Component, OnInit, Injector } from '@angular/core';
+   import { Component, OnInit } from '@angular/core';
    import { FormsModule } from '@angular/forms';
    import { NzSelectModule } from 'ng-zorro-antd/select';
    import { InputTypeComponentBase } from '../input-type-component-base';
    
    @Component({
+     selector: 'app-multi-select-combobox-input-type',
      templateUrl: './multi-select-combobox-input-type.component.html',
      imports: [NzSelectModule, FormsModule]
    })
    export class MultiSelectComboboxInputTypeComponent extends InputTypeComponentBase implements OnInit {
-     filteredValues: string[];
-   
-     constructor(
-       injector: Injector,
-     ) {
-       super(injector);
-     }
-   
+     filteredValues!: string[];
+
      ngOnInit() {
        this.filteredValues = this.allValues;
      }
    
      getSelectedValues(): string[] {
-       debugger;
        if (!this.selectedValues) {
          return [];
        }
        return this.selectedValues;
      }
    
-     filter(event) {
+     filter(event: any) {
        this.filteredValues = this.allValues
          .filter(item =>
            item.toLowerCase().includes(event.query.toLowerCase())
@@ -97,7 +91,9 @@ In this document we will create a custom input type step by step. Our input type
    </nz-select>
    ```
 
-   You must extend  `InputTypeComponentBase`. Since you extend `InputTypeComponentBase` your component will have **selectedValues**(initial stored selected values), **allValues**(all values that your component can have, if your component needs initial values.)
+   You must extend `InputTypeComponentBase`. Since you extend `InputTypeComponentBase` your component will have **selectedValues** (initial stored selected values) and **allValues** (all values that your component can have, if your component needs initial values).
+
+   `InputTypeComponentBase` resolves these with Angular's `inject()` function in its own constructor, so your component does not need a constructor at all. Inject any additional service you need as a field, for example `private _myService = inject(MyServiceProxy);`.
 
    
 
@@ -123,22 +119,10 @@ In this document we will create a custom input type step by step. Our input type
    
    ```
 
-7. Go to `angular\src\app\shared\common\app-common.module.ts` and add your component to entryComponents:
-
-   ```typescript
-   @NgModule({
-     	...
-       declarations: [
-         	...
-           MultipleSelectComboboxInputTypeComponent
-       ],
-       ...,    
-       entryComponents: [
-           ...
-           MultipleSelectComboboxInputTypeComponent
-       ]
-   })
-   ```
+That is the only place the component has to be registered. Components are standalone,
+so there is no module to declare it in: the dynamic parameter UI creates the component
+from the definition above, and the component's own `imports` array brings in everything
+its template uses.
 
 All done. Your custom input type is ready to use in dynamic parameter. Create new dynamic parameter which uses that input type, add it to an entity. Then you can go to manage page and use it. 
 

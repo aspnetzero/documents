@@ -18,17 +18,18 @@ Select **ASP.NET Core & React** as Project Type and fill other required fields. 
 
 ## Pre Requirements
 
-- [Visual Studio 2022 (v17.10+)](https://www.visualstudio.com) (for backend ASP.NET Core application)
+- [Visual Studio 2026](https://www.visualstudio.com) (or Visual Studio Code / JetBrains Rider) for the backend ASP.NET Core solution
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) (the solution targets `net10.0`)
 - [Node.js 22.22.3+, 24.15.0+ or 26+](https://nodejs.org/en/download/)
 - [pnpm 10 or newer](https://pnpm.io/installation) (the project is pinned to `pnpm@11.15.1`)
 
 ## ASP.NET Core Application
 
-When you open the server side solution (**\*.Web.sln**) using **Visual Studio 2022+**, you will see the solution structure as below:
+When you open the server side solution (**\*.Web.sln**) using **Visual Studio 2026+**, you will see the solution structure as below:
 
 ![ASP.NET Core solution structure](images/aspnet-core-host-solution-4.png)
 
-> If you want to work on only MAUI project, open **\*.Maui.sln** solution. If you want to work on both of MAUI and Web projects, open **\*.All.sln** solution.
+> If you want to work on only MAUI project, open **\*.Mobile.sln** solution. If you want to work on both of MAUI and Web projects, open **\*.All.sln** solution.
 
 Right click the **.Web.Host** project and select "**Set as Startup project**". Then **build** the solution. It may take a longer time during the first build since all **nuget** packages will be restored.
 

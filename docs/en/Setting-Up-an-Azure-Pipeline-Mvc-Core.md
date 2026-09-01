@@ -109,7 +109,7 @@ You can edit the default ***.yaml** file as specified below.
 After specifying, you can add the indicated section under `steps:`.
 
 
-Other important setting is the **Project(s) to build and restore**. The default setting is `**/*.csproj` but this will break build process because Xamarin projects don't build with `dotnet build` command but need to be built with `msbuild`. So we need to build only the `*.Web.Mvc` project. For that, change it to `**/MyPortalDemo.Web.Mvc.csproj` as seen below.
+Other important setting is the **Project(s) to build and restore**. The default setting is `**/*.csproj` but this will break build process because the MAUI project doesn't build with a plain `dotnet build` command. So we need to build only the `*.Web.Mvc` project. For that, change it to `**/MyPortalDemo.Web.Mvc.csproj` as seen below.
 
 Configure the **Restore** task as specified.
 

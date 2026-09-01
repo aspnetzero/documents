@@ -284,6 +284,10 @@
               ]
             },
             {
+              "text": "Tenant Sign Up",
+              "path": "Features-Mvc-Core-Tenant-Sign-Up.md"
+            },
+            {
               "text": "Edition Management",
               "path": "Features-Mvc-Core-Edition-Management.md"
             },
@@ -392,6 +396,10 @@
               "path": "Features-Mvc-Core-Api-Keys.md"
             },
             {
+              "text": "Email Templates",
+              "path": "Features-Mvc-Core-Email-Templates.md"
+            },
+            {
               "text": "User Delegation",
               "path": "Features-Mvc-Core-User-Delegation.md"
             },
@@ -462,7 +470,7 @@
         },
         {
           "text": "Developing Step By Step",
-          "path": "Developing-Step-By-Step-Maui.md"
+          "path": "Developing-Step-By-Step-MAUI.md"
         }
       ]
     },
@@ -558,10 +566,6 @@
           "path": "Infrastructure-Core-Mvc-OpenIddict-Integration.md"
         },
         {
-          "text": "Identity Server 4 Integration",
-          "path": "Infrastructure-Core-Mvc-Identity-Server4-Integration.md"
-        },
-        {
           "text": "Unit Testing",
           "path": "Infrastructure-Core-Mvc-Unit-Testing.md"
         },
@@ -572,6 +576,10 @@
         {
           "text": "Used Libraries & Frameworks",
           "path": "Infrastructure-Core-Mvc-Used-Libraries-Frameworks.md"
+        },
+        {
+          "text": "AI-Assisted Development",
+          "path": "AI-Assisted-Development.md"
         },
         {
           "text": "Penetration/Security Test",
@@ -652,7 +660,7 @@
     {
       "text": "Migration from AutoMapper to Mapperly",
       "path": "Migrating-From-AutoMapper-To-Mapperly.md"
-    },    
+    },
     {
       "text": "Change Logs",
       "path": "Change-Logs.md"

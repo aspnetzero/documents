@@ -377,4 +377,4 @@ Note that `ApiKeyAuthenticationMiddleware` looks for `ApiKeyConsts.HeaderName` w
 
 ## Next
 
-- [User Delegation](Features-Angular-User-Delegation)
+- [Email Templates](Features-Angular-Email-Templates)

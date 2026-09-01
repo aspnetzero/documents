@@ -31,7 +31,7 @@ tenant. We can select any user and perform operations allowed that user. See [Us
 
 #### Using Tenancy Name As Subdomain
 
-A multi-tenant application generally uses subdomain to identify current tenant. **tenant1**.mydomain.com, **tenant2**.mydomain.com and so on. ASP.NET Zero automatically identify and get tenant name from subdomain. See [Multi Tenancy](Overview-React#multi-tenancy) and [Configuration](Overview-React#configuration) sections of overview document.
+A multi-tenant application generally uses subdomain to identify current tenant. **tenant1**.mydomain.com, **tenant2**.mydomain.com and so on. ASP.NET Zero automatically identify and get tenant name from subdomain. See [Tenancy Resolvers](Infrastructure-React-Tenancy-Resolvers) for how the current tenant is resolved from the subdomain on the client side.
 
 ## Next
 
