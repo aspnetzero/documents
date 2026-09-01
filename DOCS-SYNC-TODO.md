@@ -58,7 +58,16 @@ That is roughly 7 agent definitions, ~15 commands and ~20 skill files, duplicate
 
 > **Researched and implemented.** See [AI-CONFIG-CONSOLIDATION-RESEARCH.md](AI-CONFIG-CONSOLIDATION-RESEARCH.md) for the findings. The consolidation is on the `feature/consolidate-ai-config` branch of `aspnet-zero-core` (not pushed): `.agents/` is now the single source and `scripts/sync-agent-config.mjs` generates the vendor trees, with a pre-commit drift check.
 >
-> **One thing still needs doing outside the repository:** the download system's `UI-FILTER` processing must now also cover `.agents/` — the directory was renamed from `.agent/`.
+> **What the download pipeline needs.** The generated vendor files are committed, so the pipeline does **not** have to run the sync script — rename and `UI-FILTER` stripping pass over them exactly as before. Two things must be true:
+>
+> 1. **Add `.agents/` to the `UI-FILTER` list.** The directory was renamed from `.agent/`. If it is skipped, the shipped `.claude/` etc. are filtered but `.agents/` is not, so the first time a customer runs `npm run sync-agent-config` the other project types' content comes back, and the pre-commit drift check fails permanently in their project.
+> 2. **Keep filtering the existing directories too.** Filtering only `.agents/` and letting the generator propagate is *not* enough: six hand-maintained files under `.claude/` are not generated and carry `UI-FILTER` blocks — `AGENT-INDEX.md`, `COMMAND-INDEX.md`, `KNOWLEDGE-INDEX.md`, `SKILL-INDEX.md`, `flows/crud-implementation.md` and `guidelines/artifact-standards/naming-conventions.md`.
+>
+> Verified by simulating a download: with the stripping applied to the source and the generated trees alike, `sync-agent-config --check` still exits 0 in the resulting project.
+>
+> - [ ] **Optional hardening:** run `node scripts/sync-agent-config.mjs` as the last pipeline step, after rename and filtering. It has no npm dependencies (only `node:fs`, `node:path`, `node:url`), needs no `npm install`, and takes about a second. It makes the shipped zip self-consistent even if the filtering is ever asymmetric.
+> - [ ] **Whole-file removal:** the eight UI-specific skills (`angular-*`, `react-*` under `skills/`) have to be dropped entirely rather than filtered, and they now live in two places: `.agents/skills/` and `.claude/skills/`.
+> - [ ] **Watch the filter's matching rule:** `.agents/README.md` and `scripts/sync-agent-config.mjs` mention `UI-FILTER:BEGIN:angular` inline, inside backticks, because they document the mechanism. Neither has such a marker at the start of a line, so a `^UI-FILTER:` anchored match is safe; a loose "contains" match would corrupt both files.
 
 - [x] **Investigate whether these can be reduced to a single, vendor-neutral structure** — one general `AGENTS.md` (plus a shared `skills/` or `commands/` folder) that every editor can read, instead of one copy per assistant. Check the current level of support in Claude Code, Cursor, Windsurf, GitHub Copilot and Gemini for a shared `AGENTS.md` convention, and what would still need a vendor-specific shim.
 - [x] Once the structure is settled, decide whether it deserves its own documentation section (today it is only mentioned by a single line in the 15.2.0 change log). Done: `docs/en/AI-Assisted-Development.md`, wired into all three navigations after "Used Libraries & Frameworks".
