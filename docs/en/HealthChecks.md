@@ -40,8 +40,6 @@ Besides the JSON and UI endpoints described above, ASP.NET Zero has an in-applic
 
 The page is protected by the `Pages.Administration.Host.HealthCheck` permission and is host only.
 
-> The Health Check page is available in the ASP.NET Core & jQuery and ASP.NET Core & Angular UIs. It is not implemented in the React UI yet; the `/health` and `/healthchecks-ui` endpoints work there as well.
-
 #### Adding new health check
 
 There are a lot of libraries which you can add to your health check easily. To see a full list of libraries and used package in AspNet Zero, see [https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks](https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks). Here are some sample package names:

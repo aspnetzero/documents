@@ -30,10 +30,6 @@ Because the backend is shared, everything that lives on the server side (applica
 
 Apple sign-in is registered by the `Web.Host` application, so it is available to the Angular UI and to the MAUI application, but the `Web.Mvc` application does not register it and the React UI does not implement a button for it.
 
-### Health Check UI page
-
-The health check **endpoints** (`/health` and `/healthchecks-ui`) are available in every project type. The in-application **Health Check** administration page exists in the ASP.NET Core & jQuery and ASP.NET Core & Angular UIs; it is not implemented in the React UI yet. See [Health Checks](HealthChecks).
-
 ### UI libraries
 
 | | ASP.NET Core & jQuery | ASP.NET Core & Angular | ASP.NET Core & React |
