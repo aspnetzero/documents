@@ -93,10 +93,39 @@ The in-application **Health Check** administration page exists in the MVC and An
 
 ### 4. Audit the Angular tutorial series for PrimeNG remnants
 
-The Angular UI moved from PrimeNG to ng-zorro-antd on `dev`. `Infrastructure-Angular-Used-Libraries-Frameworks.md` and the Power Tools custom code documents already reflect this, but the tutorial series was not checked.
+- [x] Go through `Developing-Step-By-Step-Angular-*.md` (and the Angular parts of the other guides) and replace any PrimeNG components, imports and screenshots with their ng-zorro equivalents.
+- [x] Same check for `Feature-Dynamic-Entity-Parameters-*-Angular.md`, `Developing-Angular-Customizable-Dashboard.md` and `Extending-Existing-Entities-Core-Angular.md`.
 
-- [ ] Go through `Developing-Step-By-Step-Angular-*.md` (and the Angular parts of the other guides) and replace any PrimeNG components, imports and screenshots with their ng-zorro equivalents.
-- [ ] Same check for `Feature-Dynamic-Entity-Parameters-*-Angular.md`, `Developing-Angular-Customizable-Dashboard.md` and `Extending-Existing-Entities-Core-Angular.md`.
+**No PrimeNG remnants existed.** The tutorial code samples already use ng-zorro
+(`nz-select`, `nz-option`) and the only literal "PrimeNG" mentions left are the
+change log and the deliberate v15.3-v15.4 note in `Power-Tools-Custom-Code-Angular.md`.
+The one apparent hit in `Power-Tools-How-It-Works.md` was a false positive on the
+substring in `Lookup-Table-modal.component.ts`.
+
+**What the audit did find** is the *other* half of the same migration: the Angular
+UI is now fully standalone (`@NgModule` appears nowhere in `angular/src/app`) and
+`AppComponentBase` / `InputTypeComponentBase` take no constructor arguments, but
+three navigation-linked documents still taught the old shape. Fixed:
+
+- `Feature-Dynamic-Entity-Parameters-Custom-Input-Types-Angular.md` — step 7 told
+  the reader to register the component in `angular/src/app/shared/common/app-common.module.ts`
+  under `declarations` and `entryComponents`. That file does not exist and
+  `entryComponents` was removed from Angular in v14; registration is the
+  `InputTypeConfigurationService` entry of step 6 alone. Also removed a
+  `constructor(injector) { super(injector) }` that no longer compiles, a stray
+  `debugger;` statement, and fixed strict-mode typing.
+- `Developing-Angular-Customizable-Dashboard.md` — same non-existent module and
+  `entryComponents` step, `WidgetComponentBase` renamed to its real
+  `WidgetComponentBaseComponent`, constructor injection converted to `inject()`
+  (including the resize-event handler), and the Metronic 5 `kt-portlet` widget
+  markup replaced with the `card` markup the real widgets use.
+- `Infrastructure-Angular-Spinner.md` — `kt-portlet` markup and two obsolete
+  constructors.
+
+Two further files carry the same legacy patterns but are **orphans** (not
+referenced by any navigation), so they were left untouched per the standing
+instruction: `Developing-Step-By-Step-Angular-Edit-Phone-Number-People.md` and
+`Converting-Create-Edit-Modal-To-Page-Angular.md`.
 
 ---
 
