@@ -224,6 +224,25 @@ credentials are stored in device. User information is being set in
 `ApplicationContext` so if current logon account information is needed
 it can be retrieved with injecting `IApplicationContext`.
 
+###### Social Logins
+
+The login page also shows the external login providers that the host has enabled. The mobile app supports a different set of providers than the web UIs, because a mobile app cannot reuse the browser based flows in the same way:
+
+| Provider | How it works on mobile |
+|----------|------------------------|
+| Google | `WebAuthenticator` opens the system browser and returns to the app through the `azgoogle` callback scheme. |
+| Facebook | Same flow, through the `azfacebook` callback scheme. |
+| Apple | Native **Sign in with Apple** (`AppleSignInAuthenticator`). Available on **iOS 13 and later only**; the button is hidden on Android and on older iOS versions. |
+
+`ExternalAuthenticationService` decides which providers to show (`IsProviderSupported`) and runs the sign-in. Both paths end the same way: `AccountService` calls `IAccessTokenManager.ExternalLoginAsync`, which posts the provider name, provider key and token to `TokenAuthController.ExternalAuthenticate` on the host.
+
+Enable and configure each provider in the `Authentication` section of the **Web.Host** `appsettings.json`, the same place the web UIs use. Apple additionally needs:
+
+- The **Sign in with Apple** capability in `Platforms/iOS/Entitlements.plist` (already present in the template).
+- An Apple Service ID configured as `Authentication:Apple:ClientId`.
+
+> "Sign in with Apple" is a native Apple-platform API, so it is offered only by the mobile application. The ASP.NET Core & jQuery, Angular and React UIs deliberately leave Apple out of their provider lists. See the **Social Logins** document of your project type for the providers the web UIs support.
+
 ##### Menu
 
 <img src="/images/maui-menu.png" width="350" alt="Application Menu">

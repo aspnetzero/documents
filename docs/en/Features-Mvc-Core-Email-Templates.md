@@ -6,7 +6,7 @@ The templates ship with the solution as **embedded resources** in the `.Core` pr
 
 The **Email Templates** page removes that round trip: a host administrator can open a template in the browser, edit its HTML, preview the result and save it. The customized body is stored in the database and used from that moment on, without a rebuild or a restart.
 
-<img src="images/email-templates-page.png" alt="Change Logs" class="img-thumbnail" />
+<img src="images/email-templates-page.png" alt="Email Templates page" class="img-thumbnail" />
 
 ## Built-in Templates
 

@@ -28,7 +28,7 @@ Because the backend is shared, everything that lives on the server side (applica
 | WS-Federation | Yes | Yes | Yes |
 | Apple | No | No | No |
 
-Apple sign-in is configured on the `Web.Host` application, but it is used only by the **MAUI** application. None of the three web UIs offer an Apple button: `Web.Mvc` does not register the provider, the Angular UI filters it out of the provider list it gets from the server (`unsupportedExternalLoginProviders` in `login.service.ts`), and the React UI does not implement it.
+> **Apple sign-in is supported by ASP.NET Zero, but in the [.NET MAUI mobile application](Development-Guide-MAUI) rather than in the web UIs.** "Sign in with Apple" is a native Apple-platform API, so it cannot be completed from a browser. The mobile app authenticates with `AppleSignInAuthenticator` and posts the resulting identity token to the API, which validates it through the `Authentication:Apple` section of `Web.Host`. The web UIs therefore leave Apple out on purpose: `Web.Mvc` does not register the provider at all, and the Angular and React login pages filter it out of the provider list returned by `GetExternalAuthenticationProviders`.
 
 ### UI libraries
 
