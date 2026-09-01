@@ -56,10 +56,12 @@ mcp.json
 
 That is roughly 7 agent definitions, ~15 commands and ~20 skill files, duplicated across five vendors.
 
-> **Researched.** See [AI-CONFIG-CONSOLIDATION-RESEARCH.md](AI-CONFIG-CONSOLIDATION-RESEARCH.md) for the findings, the defects found in the current setup, a proposed target structure and a suggested order of work.
+> **Researched and implemented.** See [AI-CONFIG-CONSOLIDATION-RESEARCH.md](AI-CONFIG-CONSOLIDATION-RESEARCH.md) for the findings. The consolidation is on the `feature/consolidate-ai-config` branch of `aspnet-zero-core` (not pushed): `.agents/` is now the single source and `scripts/sync-agent-config.mjs` generates the vendor trees, with a pre-commit drift check.
+>
+> **One thing still needs doing outside the repository:** the download system's `UI-FILTER` processing must now also cover `.agents/` — the directory was renamed from `.agent/`.
 
-- [ ] **Investigate whether these can be reduced to a single, vendor-neutral structure** — one general `AGENTS.md` (plus a shared `skills/` or `commands/` folder) that every editor can read, instead of one copy per assistant. Check the current level of support in Claude Code, Cursor, Windsurf, GitHub Copilot and Gemini for a shared `AGENTS.md` convention, and what would still need a vendor-specific shim.
-- [ ] Once the structure is settled, decide whether it deserves its own documentation section (today it is only mentioned by a single line in the 15.2.0 change log).
+- [x] **Investigate whether these can be reduced to a single, vendor-neutral structure** — one general `AGENTS.md` (plus a shared `skills/` or `commands/` folder) that every editor can read, instead of one copy per assistant. Check the current level of support in Claude Code, Cursor, Windsurf, GitHub Copilot and Gemini for a shared `AGENTS.md` convention, and what would still need a vendor-specific shim.
+- [x] Once the structure is settled, decide whether it deserves its own documentation section (today it is only mentioned by a single line in the 15.2.0 change log). Done: `docs/en/AI-Assisted-Development.md`, wired into all three navigations after "Used Libraries & Frameworks".
 
 ### 2. Missing screenshots
 

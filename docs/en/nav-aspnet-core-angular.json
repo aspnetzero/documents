@@ -522,6 +522,10 @@
           "path": "Infrastructure-Angular-Used-Libraries-Frameworks.md"
         },
         {
+          "text": "AI-Assisted Development",
+          "path": "AI-Assisted-Development.md"
+        },
+        {
           "text": "Penetration/Security Test",
           "path": "Security-Test-Angular.md"
         },
