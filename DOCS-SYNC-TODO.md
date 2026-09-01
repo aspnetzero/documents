@@ -87,7 +87,7 @@ Screenshots still needed for the newly written documents:
 
 The in-application **Health Check** administration page exists in the MVC and Angular UIs (`HealthCheckAppService`, permission `Pages.Administration.Host.HealthCheck`), but the React UI only has the generated service proxy — there is no page, route or menu item.
 
-- [x] **Implement the Health Check page in the React UI** so that all three UIs are at parity. Done on the `feature/consolidate-ai-config` branch of `aspnet-zero-core`: `react/src/pages/admin/health-check/index.tsx` plus the navigation entry and route, mirroring the Angular page (10-second auto-refresh, manual refresh, status tags, duration in ms).
+- [x] **Implement the Health Check page in the React UI** so that all three UIs are at parity. Done on the `feature/react-health-check-page` branch of `aspnet-zero-core`: `react/src/pages/admin/health-check/index.tsx` plus the navigation entry and route, mirroring the Angular page (10-second auto-refresh, manual refresh, status tags, duration in ms).
 - [x] After it ships, remove the "not implemented in the React UI yet" notes from `HealthChecks.md` and `Version-Differences.md`. Done.
 - [x] The **Health Checks** entry stays in `nav-aspnet-core-react.json`; the page now exists in the React UI too.
 
