@@ -56,6 +56,8 @@ mcp.json
 
 That is roughly 7 agent definitions, ~15 commands and ~20 skill files, duplicated across five vendors.
 
+> **Researched.** See [AI-CONFIG-CONSOLIDATION-RESEARCH.md](AI-CONFIG-CONSOLIDATION-RESEARCH.md) for the findings, the defects found in the current setup, a proposed target structure and a suggested order of work.
+
 - [ ] **Investigate whether these can be reduced to a single, vendor-neutral structure** — one general `AGENTS.md` (plus a shared `skills/` or `commands/` folder) that every editor can read, instead of one copy per assistant. Check the current level of support in Claude Code, Cursor, Windsurf, GitHub Copilot and Gemini for a shared `AGENTS.md` convention, and what would still need a vendor-specific shim.
 - [ ] Once the structure is settled, decide whether it deserves its own documentation section (today it is only mentioned by a single line in the 15.2.0 change log).
 
