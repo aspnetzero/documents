@@ -91,7 +91,7 @@
 <td><i class="fa fa-minus text-secondary"></i></td>
 <td><i class="fa fa-check text-success"></i></td></tr>
 <tr>
-<td>Identity Server 4 integration</td>
+<td>OpenIddict integration</td>
 <td><i class="fa fa-minus text-secondary"></i></td>
 <td><i class="fa fa-check text-success"></i></td></tr>
 <tr>
@@ -207,7 +207,7 @@
 <td colspan="3"><strong>Mobile Application</strong></td>
 </tr>
 <tr>
-<td>Xamarin mobile application</td>
+<td>.NET MAUI mobile application</td>
 <td><i class="fa fa-minus text-secondary"></i></td>
 <td><i class="fa fa-check text-success"></i></td></tr>
 <tr>

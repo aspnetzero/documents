@@ -8,7 +8,7 @@ This document provides step-by-step instructions for adding a new localization (
 
 ### 1. Register the New Language in the Backend
 
-To support a new language in the backend, you need to register it in the `DefaultLanguagesCreator.cs` file located in the `YourProjectName.Core` project.
+To support a new language in the backend, you need to register it in the `DefaultLanguagesCreator.cs` file located under `Migrations/Seed/Host` in the `YourProjectName.EntityFrameworkCore` project.
 
 #### Modify DefaultLanguagesCreator.cs
 
@@ -46,7 +46,7 @@ In the code above:
 #### Create the Localization XML File
 
 The localization XML file contains key-value pairs for translating text within the application. Each language has its own XML file where you define translations for UI elements, messages, and labels. 
-This file ensures that the application can display content in the selected language. Create a new localization file in the **Localization** folder of the `YourProjectName.Core` project.
+This file ensures that the application can display content in the selected language. Create a new localization file next to the existing ones, in the **Localization/YourProjectName** folder of the `YourProjectName.Core` project.
 
 **YourProjectName-pl.xml**
 ```xml

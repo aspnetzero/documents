@@ -17,6 +17,7 @@ in your assistant of choice and it picks the configuration up.
 |----------|---------|
 | `AGENTS.md` | Repository-wide instructions. The first thing every assistant reads. |
 | `CLAUDE.md` | Imports `AGENTS.md` for Claude Code, which reads `CLAUDE.md` rather than `AGENTS.md`. |
+| `GEMINI.md` | The same import for Gemini CLI, which reads `GEMINI.md`. Generated. |
 | `.agents/` | **The single source** for everything below. |
 | `mcp.json` | MCP server configuration. |
 
@@ -43,8 +44,12 @@ its own frontmatter, so the vendor-specific files are generated from `.agents/`:
 | `.agents/skills/` | `.claude/skills/` |
 | `.agents/commands/` | `.claude/commands/`, `.cursor/commands/`, `.windsurf/workflows/`, `.github/prompts/` |
 | `.agents/agents/` | `.claude/agents/`, `.cursor/agents/` |
-| `.agents/rules/` | `.claude/rules/`, `.cursor/rules/`, `.windsurf/rules/`, `.github/copilot-instructions.md` |
-| `mcp.json` | `.cursor/mcp.json`, `.vscode/mcp.json`, `.gemini/settings.json` |
+| `.agents/rules/` | `.claude/rules/`, `.cursor/rules/`, `.windsurf/rules/`, `.github/copilot-instructions.md`, `GEMINI.md` |
+| `mcp.json` | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json`, `.gemini/settings.json` |
+
+The script also writes `.claude/SKILL-INDEX.md`, `.claude/COMMAND-INDEX.md` and
+`.claude/AGENT-INDEX.md`, so Claude Code can see everything that is available at
+a glance.
 
 Every generated file starts with a `GENERATED FILE` comment naming its source.
 
@@ -65,8 +70,11 @@ npm run sync-agent-config
 A pre-commit hook runs `npm run sync-agent-config:check` and fails the commit if
 the generated files are out of date, so the copies cannot drift apart.
 
-> Never edit a file under `.claude/`, `.cursor/`, `.windsurf/` or
-> `.github/prompts/` directly. The next run of the sync script overwrites it.
+> Never edit a generated file directly — anything under `.claude/`, `.cursor/`,
+> `.windsurf/`, `.github/prompts/`, plus `.github/copilot-instructions.md`,
+> `GEMINI.md`, `.mcp.json`, `.vscode/mcp.json` and `.gemini/settings.json`. The
+> next run of the sync script overwrites it. Every one of them carries the
+> `GENERATED FILE` comment at the top as a reminder.
 
 ### Adding a Skill
 

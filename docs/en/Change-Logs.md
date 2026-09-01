@@ -1,16 +1,19 @@
 # Change Logs
 
-**Note:** Major features are only being developed for ASP.NET Core +
-jQuery and ASP.NET Core + Angular versions beginning from v4.1. See
+**Note:** Major features are only being developed for the ASP.NET Core based
+project types (ASP.NET Core & jQuery, ASP.NET Core & Angular and, since v15.1,
+ASP.NET Core & React) beginning from v4.1. See
 [version comparison table](Version-Differences.md) for more details.
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
-## 15.4.0
+## 15.4.0 (2026-07-28)
 
 * Added email template management (Administration > Email Templates)
+* Added the Power Tools global .NET tool, with a web UI and a "Regenerate All" command
 * Added OpenID Connect authorization code flow for external login and account linking
-* Role name can now be changed after a role is created
+* Added Elsa v3 integration resources
+* Role name can now be set while creating a role
 * Migrated all projects from yarn to pnpm
 * Added configurable forwarded headers support
 * Upgraded to ABP 11.3

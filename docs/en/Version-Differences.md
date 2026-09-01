@@ -26,9 +26,9 @@ Because the backend is shared, everything that lives on the server side (applica
 | Twitter | Yes | Yes | Yes |
 | OpenID Connect | Yes | Yes | Yes |
 | WS-Federation | Yes | Yes | Yes |
-| Apple | No | Yes | No |
+| Apple | No | No | No |
 
-Apple sign-in is registered by the `Web.Host` application, so it is available to the Angular UI and to the MAUI application, but the `Web.Mvc` application does not register it and the React UI does not implement a button for it.
+Apple sign-in is configured on the `Web.Host` application, but it is used only by the **MAUI** application. None of the three web UIs offer an Apple button: `Web.Mvc` does not register the provider, the Angular UI filters it out of the provider list it gets from the server (`unsupportedExternalLoginProviders` in `login.service.ts`), and the React UI does not implement it.
 
 ### UI libraries
 

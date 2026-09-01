@@ -6,7 +6,7 @@ The templates ship with the solution as **embedded resources** in the `.Core` pr
 
 The **Email Templates** page removes that round trip: a host administrator can open a template in the browser, edit its HTML, preview the result and save it. The customized body is stored in the database and used from that moment on, without a rebuild or a restart.
 
-<!-- TODO: add a screenshot of the Email Templates page, e.g. images/features-email-templates.png -->
+<img src="images/email-templates-page.png" alt="Change Logs" class="img-thumbnail" />
 
 ## Built-in Templates
 
@@ -44,7 +44,7 @@ A template is plain HTML with `{TOKEN}` placeholders. When an email is sent, the
 
 ### Base variables
 
-These are replaced for every template, and also in the preview:
+These are replaced for every template, and also in the preview. The first four are substituted by `EmailTemplateProvider` while the template is resolved and cached; the last three are filled in per email by `UserEmailer` (and by `EmailTemplateAppService` for the preview), because their values differ from one email to the next:
 
 | Variable | Value |
 |----------|-------|
@@ -76,10 +76,10 @@ All values are HTML encoded by `UserEmailer` before they are substituted.
 
 `EmailTemplateProvider.GetTemplate(templateName, tenantId)` is what `UserEmailer` calls, and it resolves a template in this order:
 
-1. **Cache.** The `AppEmailTemplateCache` cache is checked first, keyed by `templateName:tenantId` (or `templateName:host`). The cached value is the fully base-variable-substituted template, so a repeated send does no work at all.
+1. **Cache.** The `AppEmailTemplateCache` cache is checked first, keyed by `templateName:tenantId` (or `templateName:host`). The cached value already has the provider's base variables substituted, so a repeated send does no work at all.
 2. **Database.** The `AppEmailTemplates` table is queried for a row with that name and `IsActive = 1`. The query always runs with the tenant filter disabled, because templates are host level.
 3. **Embedded resource.** When there is no active row, the `.html` resource of the `.Core` assembly is read.
-4. The base variables are substituted and the result is written to the cache.
+4. `{PRODUCT_NAME}`, `{THIS_YEAR}` and the two logo URLs are substituted and the result is written to the cache. The remaining tokens are replaced by `UserEmailer` afterwards, per email.
 
 If the database cannot be reached (for example while the application is being installed and the schema does not exist yet), the provider logs a warning and falls back to the embedded resource instead of failing. Emails therefore keep working even before the email templates table is available.
 

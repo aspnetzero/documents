@@ -18,7 +18,8 @@ ASP.NET Zero uses Blazor version of MAUI with [Metronic](https://keenthemes.com/
 
 Following tools are needed in order to develop ASP.NET Zero MAUI:
 
--   [Visual Studio 2022 17.3 ](https://www.visualstudio.com)+
+-   [Visual Studio 2026](https://www.visualstudio.com) (or JetBrains Rider) with the .NET MAUI workload installed
+-   [.NET 10 SDK](https://dotnet.microsoft.com/download) (the MAUI project targets `net10.0-android` and `net10.0-ios`)
 
 ### IOS
 
