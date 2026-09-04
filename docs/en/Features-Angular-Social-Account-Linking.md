@@ -97,16 +97,20 @@ Users who registered through a social login provider (e.g., signed up via Google
 
 To set a password:
 
-1. Open **My Settings** and go to the **Profile** tab.
-2. Navigate to the **Change Password** section.
-3. Since you are an external-only user, the **Current Password** field is not required. Simply enter your **New Password** and **Confirm New Password**.
+1. Click on your username in the top bar to open the user menu, then select **Change Password**.
+2. The **Current Password** field is still displayed and cannot be left empty, but its value is not validated when your account has no existing password — you can enter anything there.
+3. Enter your **New Password** and **Confirm New Password**.
 4. Click **Save**.
+
+![Setting a password for external-only user](images/external-logins-set-password.png)
 
 Once a password is set:
 
 - The `ExternalLoginOnly` status is automatically cleared from your account.
 - You can now log in with your username/email and password.
 - You can now **unlink** any social provider, even if it is the last one linked to your account.
+
+> If you try to unlink your last remaining sign-in method from the **External Logins** tab before setting a password, the **Unlink** button is disabled with a hint directing you to **User Menu → Change Password**.
 
 ## Next
 

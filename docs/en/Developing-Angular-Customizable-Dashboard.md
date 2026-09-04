@@ -417,9 +417,13 @@ Select the page you want to use hello widget.
 
 Add hello widget to the page as described in that article: [Customizable Dashboard Usage](Features-Angular-Customizable-Dashboard.md) 
 
+Click the **Edit Mode** button to enable dashboard editing, then add your "Hello World" widget to the page.
+
+![Tenant Dashboard with Edit Mode](images/customizable-dashboard-edit-mode-2.png)
+
 After that, you will see that your widget is located on the page and works as expected.
 
-![customizable-dashboard-widget-hello-world](images/customizable-dashboard-widget-hello-world.png)
+![Customizable Dashboard](images/customizable-dashboard.png)
 
 
 
@@ -427,19 +431,18 @@ Since hello world widget needs hello world filter *(we defined it in DashboardCo
 
 As you can below, you will be able to see filters that your widgets need. Change input and click **Go**. Hello world widget will be changed by your filter.
 
-![customizable-dashboard-filter-hello-world](images/customizable-dashboard-filter-hello-world-2.png)
-
+![customizable-dashboard-filter-hello-world](images/customizable-dashboard-filter-modal.png)
 
 
 ## Changing Default Dashboard View
 
 AspNet Zero uses [angular-gridster2](https://tiberiuzuld.github.io/angular-gridster2/) grid system in dashboard and stores needed view data in [app settings](https://aspnetboilerplate.com/Pages/Documents/Setting-Management). To change default view of dashboard you should change related part of the settings located in [AppSettingProvider](https://github.com/aspnetzero/aspnet-zero-core/blob/46aac958aa330771b37a3e4d5bc220d4e1221549/aspnet-core/src/MyCompanyName.AbpZeroTemplate.Core/Configuration/AppSettingProvider.cs#L522-L541). To change default dashboard view you should open dashboard and design the dashboard by following the [document](Features-Angular-Customizable-Dashboard) . Then open browser's developer console. Click to the save button in the page and follow the request named `SavePage`. 
 
-![customizable-dashboard-angular-savePage](images/customizable-dashboard-angular-savePage.png)
+![Save Page Request](images/customizable-dashboard-angular-savePage.png)
 
 Open the request payload and get the data from there
 
-![customizable-dashboard-angular-savepage-request-payload](images/customizable-dashboard-angular-savepage-request-payload.png)
+![Save Page Request Payload](images/customizable-dashboard-angular-savepage-request-payload.png)
 
 Then go to `AppSettingProvider`'s `GetDefaultAngularDashboardViews` method and change the information with using the data you get from request payload.
 

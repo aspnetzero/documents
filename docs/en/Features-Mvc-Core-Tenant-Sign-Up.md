@@ -12,10 +12,12 @@ There are two type of editions, free and paid. Paid editions can have trial vers
 
 If user selects "Buy Now" option and pays for the edition subscription, user will be logged in directly even if the **New registered tenants are active by default** option is not enabled.
 
-For more information about subscription system, you can check [Subscription](Features-React-Subscription) document.
+**Recaptcha** (security question) is optional for tenant registration. It can be enabled with the "**Use security image question (captcha) on registration**" option under the "**Tenant Management**" tab of Host settings page.
+
+Tenant self registration can be completely disabled with the "**Allow tenants to register to the system**" option on the same settings tab. In that case, the tenant sign up link is not shown on the login page and `TenantRegistrationController` throws a user friendly exception if its pages are requested directly.
+
+For more information about subscription system, you can check [Subscription](Features-Mvc-Core-Subscription) document.
 
 ## Next
 
-- [Main Menu and Layout](Features-React-Main-Menu-Layout)
-
-
+* [Main Menu & Layout](Features-Mvc-Core-Main-Menu-Layout)
