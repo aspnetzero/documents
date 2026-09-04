@@ -19,15 +19,17 @@ Navigate to **Administration > Settings > User Management** and find the **API K
 | **Enable API key authentication** | `App.UserManagement.ApiKey.IsEnabled` | `true` | Master switch. When it is off, the **API Keys** menu item and the **My API Keys** link are hidden, the application service rejects every call with *"API key authentication is currently disabled."*, and incoming `X-API-Key` headers are ignored. |
 | **Maximum API keys per user** | `App.UserManagement.ApiKey.MaxKeyCountPerUser` | `5` | Maximum number of keys a single user can hold. Set `0` for unlimited. Expired keys still count until the cleanup worker removes them. |
 | **Maximum API key lifetime (days)** | `App.UserManagement.ApiKey.MaxExpirationInDays` | `365` | Maximum number of days a key can stay valid. When it is greater than `0`, an expiration date becomes **required** and cannot be further in the future than this limit. Set `0` to allow keys that never expire. |
+| **Require an explicit permission scope** | `App.UserManagement.ApiKey.RequirePermissionScope` | `false` | When it is on, a key has to be restricted to an explicit list of permissions. The *Permissions* switch in the create modal is locked on, and a key submitted without a permission is rejected with *"Choose the permissions this API key may use. API keys without an explicit permission list are not allowed."* Turn it on to stop users from minting keys that inherit everything they can do. See [Permission Scope](#permission-scope). |
 
-All three settings are defined with `SettingScopes.Application | SettingScopes.Tenant`, so a tenant can tighten (or relax) them for its own users independently from the host. Their initial values can also be changed in `appsettings.json` before the first run:
+All four settings are defined with `SettingScopes.Application | SettingScopes.Tenant`, so a tenant can tighten (or relax) them for its own users independently from the host. Their initial values can also be changed in `appsettings.json` before the first run:
 
 ```json
 {
   "App": {
     "App.UserManagement.ApiKey.IsEnabled": "true",
     "App.UserManagement.ApiKey.MaxKeyCountPerUser": "5",
-    "App.UserManagement.ApiKey.MaxExpirationInDays": "365"
+    "App.UserManagement.ApiKey.MaxExpirationInDays": "365",
+    "App.UserManagement.ApiKey.RequirePermissionScope": "false"
   }
 }
 ```
@@ -36,7 +38,9 @@ All three settings are defined with `SettingScopes.Application | SettingScopes.T
 
 ## My API Keys
 
-Every authenticated user can manage their own keys; no permission is required. The page is reachable from the **user menu > My API Keys**, at `/app/admin/my-api-keys`.
+Users who hold the *My API Keys* permission can manage their own keys. The page is reachable from the **user menu > My API Keys**, at `/app/admin/my-api-keys`. The menu entry, the page and the application service behind it are all closed to users who do not hold the permission.
+
+> `Pages.MyApiKeys` is a top level permission under **Pages**, granted from **Administration > Roles** like any other page permission. An authenticated session does not imply it: calling the API with an existing key needs nothing, but creating, rotating and revoking one's own keys needs this permission. See [Permissions](#permissions).
 
 <img src="images/features-api-keys-my-api-keys.png" alt="My API Keys" class="img-thumbnail" />
 
@@ -65,7 +69,7 @@ Click **Create New API Key** to open the creation modal.
 | **Key Name** | Yes | A descriptive name, up to 128 characters. Use it to identify the integration the key belongs to (for example *Nightly Import Job*). |
 | **Expiration** | Depends | Required when *Maximum API key lifetime (days)* is greater than `0`, and then the date picker only offers dates between today and the configured limit. When the limit is `0`, the field is optional and any future date is accepted; leaving it empty creates a key that never expires. The **end** of the selected day is submitted, so a key created for "today" stays valid until midnight. |
 | **Allowed IP addresses** | No | An optional allow list. One entry per line (or comma separated). Leave it empty to allow requests from any address. See [IP Allow List](#ip-allow-list). |
-| **Permissions** | No | A switch that reveals a permission tree. Leave it off to give the key every permission its owner currently holds. Turn it on to restrict the key to a subset. See [Permission Scope](#permission-scope). |
+| **Permissions** | Depends | A switch that reveals a permission tree. It is **on by default**, so a key is scoped unless the user deliberately widens it, and while it is on at least one permission has to be selected. Turning it off shows a warning that the key will be able to do everything its owner can do, including anything its owner is granted later. When *Require an explicit permission scope* is on, the switch is locked on and cannot be turned off. See [Permission Scope](#permission-scope). |
 
 Once the key is created, it is displayed **exactly once**:
 
@@ -88,7 +92,7 @@ A few things are worth knowing:
 
 ### Revoking an API Key
 
-**Revoke** deletes the key and drops it from the cache. Any request using it fails from that moment on. A user can always revoke their own keys; revoking someone else's key requires the *Revoking API keys* permission.
+**Revoke** deletes the key and drops it from the cache. Any request using it fails from that moment on. Revoking one's own key requires the *My API Keys* permission; revoking someone else's key requires the *Revoking API keys* permission.
 
 `UserApiKey` is a `FullAuditedEntity`, so revocation is a **soft delete**: the row stays in the database with `IsDeleted = 1` along with the deleting user and the deletion time, but it is filtered out of every query and no longer authenticates anything.
 
@@ -168,17 +172,18 @@ The three segments are joined with `_`. A key can be at most 128 characters long
 | `KeyHash` | The lowercase hexadecimal SHA-256 hash of the full key (64 characters), with a unique index on it. This is what lookups run against. |
 | `DisplayKey` | The visible part plus the first 6 characters of the secret and an ellipsis, for example `azk_t3_9fK2Lp...`. This is what the UI shows. |
 
-The plain key value is never written to the database, to a log or to an audit record; the validation method is marked with `[DisableAuditing]`.
+The plain key value is never written to the database, to a log or to an audit record: the validation method is marked with `[DisableAuditing]`, and so is the `Key` property of the `CreateApiKeyOutput` that hands the key back once. See [Auditing](#auditing).
 
 ## Permission Scope
 
-By default an API key inherits **all permissions of its owner, dynamically**. If the owner is later granted a new permission, the key can use it too; if a permission is taken away, the key loses it as well.
+A key that carries no permission list inherits **all permissions of its owner, dynamically**. If the owner is later granted a new permission, the key can use it too; if a permission is taken away, the key loses it as well. That is a wide grant for an integration that usually needs one or two endpoints, so the create modal turns the *Permissions* switch **on by default** and warns before an unrestricted key is created. A host or a tenant that does not want such keys at all can forbid them with the *Require an explicit permission scope* setting.
 
-A key can also be **restricted** to a subset of permissions at creation time. In that case:
+A key can be **restricted** to a subset of permissions at creation time. In that case:
 
 - The permission tree in the create modal only offers permissions **the creating user actually holds**. Attempting to grant a permission the user does not have is rejected with a validation error.
 - A key can be scoped to at most 200 permissions.
 - The scope is an *upper bound only*. It never grants anything: an operation is allowed only when it is both inside the key's scope **and** still granted to the owner.
+- When *Require an explicit permission scope* is on, an empty scope is rejected. The check lives in `UserApiKeyManager`, so it also covers keys created by calling the application service directly rather than through the UI.
 
 The scope is enforced in two places:
 
@@ -226,16 +231,35 @@ Revoking or rotating a key removes its entry from the cache immediately.
 
 > In a clustered deployment, use a distributed cache so that a revocation on one instance is visible to all of them. With the default in-process cache, other instances keep serving a revoked key from their own copy until the entry expires (up to 5 minutes). See [Deploying to a Clustered Environment](Clustered-Environment).
 
+## Auditing
+
+A request authenticated with an API key runs as the owner of the key, so on its own an audit record cannot be told apart from one the same user produced in the browser. `ApiKeyAuditInfoProvider` closes that gap. It replaces ABP's `IAuditInfoProvider` and, whenever the current request carries an API key, appends the authentication method, the key id and the key name to the `CustomData` of the audit record:
+
+```text
+AuthenticationMethod: ApiKey, ApiKeyId: 42, ApiKeyName: Nightly Import Job
+```
+
+The value is shown in the **Custom Data** section of the audit log detail dialog under **Administration > Audit Logs**, and can be queried directly on the `AbpAuditLogs.CustomData` column.
+
+- `CustomData` that another provider already wrote is preserved; the API key information is appended after a ` | ` separator.
+- The key name comes from the `api_key_name` claim that `ApiKeyAuthenticationHandler` adds next to `api_key_id`. The id is always written; the name only when that claim is present.
+- The plain key is not available at this point and is never recorded.
+
+The one-time key returned by `CreateApiKey` and `RotateApiKey` is protected separately: `CreateApiKeyOutput.Key` is marked with `[DisableAuditing]`, so the secret stays out of the audit log even in an application that turns on return value auditing.
+
+See [Audit Logs](Features-Angular-Audit-Logs) for the audit log page itself.
+
 ## Permissions
 
-API key administration is controlled by the following permissions under **Administration > API Keys**:
+The feature is controlled by the following permissions:
 
 | Permission | Name | Description |
 |------------|------|-------------|
+| My API Keys | `Pages.MyApiKeys` | Manage one's **own** keys on the **My API Keys** page: list, create, rotate and revoke them. A top level permission under **Pages**, next to *Demo UI Components*. |
 | API Keys | `Pages.Administration.ApiKeys` | Access to the **Administration > API Keys** page, which lists the keys of all users. |
 | Revoking API keys | `Pages.Administration.ApiKeys.Revoke` | Revoke a key that belongs to another user. Shown as a child permission of *API Keys*. |
 
-Managing one's own keys (**My API Keys**: create, rotate, revoke, list) requires **no permission**; an authenticated session is enough.
+*My API Keys* is kept separate from the administration permissions on purpose: creating a key means handing out a long lived credential, so an organization may want to keep that in the hands of a few roles even though everyone can log in interactively. Keep in mind that a key can only ever be created and rotated by the user it belongs to, so the account an integration runs as has to hold this permission at least while its key is created or rotated.
 
 ## Application Service
 
@@ -243,10 +267,10 @@ All operations go through `IUserApiKeyAppService`, which is exposed as a dynamic
 
 | Method | Endpoint | Authorization |
 |--------|----------|---------------|
-| `GetMyApiKeys()` | `GET /api/services/app/UserApiKey/GetMyApiKeys` | Authenticated user. Also returns the grantable permissions, the configured limits and the header name, so the UI needs no second call. |
-| `CreateApiKey(CreateApiKeyInput)` | `POST /api/services/app/UserApiKey/CreateApiKey` | Authenticated user; rejected when the request itself uses an API key. |
-| `RotateApiKey(RotateApiKeyInput)` | `POST /api/services/app/UserApiKey/RotateApiKey` | Owner of the key only; rejected when the request itself uses an API key. |
-| `RevokeApiKey(EntityDto<long>)` | `POST /api/services/app/UserApiKey/RevokeApiKey` | Owner of the key, or `Pages.Administration.ApiKeys.Revoke` for someone else's key; rejected when the request itself uses an API key. |
+| `GetMyApiKeys()` | `GET /api/services/app/UserApiKey/GetMyApiKeys` | `Pages.MyApiKeys`. Also returns the grantable permissions, the configured limits, whether a permission scope is required and the header name, so the UI needs no second call. |
+| `CreateApiKey(CreateApiKeyInput)` | `POST /api/services/app/UserApiKey/CreateApiKey` | `Pages.MyApiKeys`; rejected when the request itself uses an API key. |
+| `RotateApiKey(RotateApiKeyInput)` | `POST /api/services/app/UserApiKey/RotateApiKey` | `Pages.MyApiKeys`, and the owner of the key only; rejected when the request itself uses an API key. |
+| `RevokeApiKey(EntityDto<long>)` | `POST /api/services/app/UserApiKey/RevokeApiKey` | `Pages.MyApiKeys` for one's own key, `Pages.Administration.ApiKeys.Revoke` for someone else's; rejected when the request itself uses an API key. |
 | `GetApiKeys(GetApiKeysInput)` | `POST /api/services/app/UserApiKey/GetApiKeys` | `Pages.Administration.ApiKeys`. Paged, sorted and filtered list of every key. |
 
 Validation failures (limit reached, invalid IP entry, unknown or ungranted permission, expiration out of range, feature disabled) are thrown as `UserFriendlyBadRequestException`, which returns HTTP `400` with a localized message instead of the default `500`.
@@ -278,7 +302,7 @@ app.UseApiKeyAuthentication();
 5. **Check expiration and the IP allow list.**
 6. **Check the user.** The owner must exist, be active and not be locked out.
 7. **Update the last used time** (at most once every 5 minutes). If the key row has disappeared in the meantime, authentication fails and the cache entry is dropped.
-8. **Build the principal** with `AbpUserClaimsPrincipalFactory`, exactly as a normal login would, then add an `api_key_id` claim and one `api_key_permission` claim per permission in the scope.
+8. **Build the principal** with `AbpUserClaimsPrincipalFactory`, exactly as a normal login would, then add an `api_key_id` claim, an `api_key_name` claim and one `api_key_permission` claim per permission in the scope. The name claim is what makes the key recognizable in the [audit log](#auditing).
 
 Every failure returns the same generic *"Invalid API key."* result, so a caller cannot tell an unknown key apart from an expired one, a disabled user or a blocked IP address.
 
@@ -300,7 +324,8 @@ public class MyAppService : AbpZeroTemplateAppServiceBase
     {
         if (_currentApiKey.IsAvailable)
         {
-            //The request is authenticated with the API key _currentApiKey.Id
+            //The request is authenticated with the API key _currentApiKey.Id,
+            //created under the name _currentApiKey.Name
         }
 
         if (_currentApiKey.HasPermissionScope)
@@ -311,7 +336,7 @@ public class MyAppService : AbpZeroTemplateAppServiceBase
 }
 ```
 
-Use this, for example, to keep a sensitive operation out of reach of API keys, or to write the key id into your own audit records.
+Use this, for example, to keep a sensitive operation out of reach of API keys, or to write the key id into your own records. The framework's own audit records are already marked; see [Auditing](#auditing).
 
 ## Database Tables
 
@@ -368,12 +393,14 @@ Note that `ApiKeyAuthenticationMiddleware` looks for `ApiKeyConsts.HeaderName` w
 ## Security Considerations
 
 - **Treat a key like a password.** Anyone holding it can act as its owner. Store it in a secret manager, never in source control.
-- **Prefer scoped keys.** Grant an integration only the permissions it actually needs, instead of handing it everything its owner can do.
+- **Prefer scoped keys.** Grant an integration only the permissions it actually needs, instead of handing it everything its owner can do. The create modal scopes a key by default; turn on *Require an explicit permission scope* to make it mandatory.
+- **Restrict who can create keys.** *My API Keys* is a permission of its own, so key creation can be limited to the roles that really need it.
 - **Prefer short lifetimes and rotate regularly.** Keep *Maximum API key lifetime (days)* at a value that forces periodic rotation.
 - **Use the IP allow list** whenever the integration calls from a known, stable address.
 - **Always use HTTPS.** The key travels in a plain header.
 - **Combine it with rate limiting.** Rate limit policies can partition requests *By API Key*, so a single key cannot exhaust your API. See [Rate Limiting](Features-Rate-Limiting).
 - **Watch the Last Used column.** A key that has never been used, or has not been used in a long time, is a good candidate for revocation.
+- **Review the audit log.** Every request made with a key is tagged with the key's id and name, so key traffic can be told apart from interactive use. See [Auditing](#auditing).
 
 ## Next
 
