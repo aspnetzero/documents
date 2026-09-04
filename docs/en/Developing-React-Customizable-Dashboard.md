@@ -405,24 +405,23 @@ export default WidgetWithResize;
 
 Since we created a tenant-side widget, open the tenant dashboard.
 
-1. Login as a tenant admin
-2. Navigate to the Dashboard page
-3. Click **Edit Mode** to enable dashboard editing
-4. Click **Add Widget** button to open the widget selection modal
-5. Select your "Hello World" widget and add it to the page
+Select the page you want to use hello widget.
 
-![Tenant Dashboard with Edit Mode](images/customizable-dashboard-edit-mode.png)
+Add hello widget to the page as described in that article: [Customizable Dashboard Usage](Features-React-Customizable-Dashboard.md)
 
-Since the Hello World widget uses the Hello World filter (we defined it in `DashboardConfiguration`), the filter will be loaded automatically.
+Click the **Edit Mode** button to enable dashboard editing, then add your "Hello World" widget to the page.
 
-To use the filter:
+![Tenant Dashboard with Edit Mode](images/customizable-dashboard-edit-mode-2.png)
 
-1. Click the **Filters** button next to the **Edit Mode** button
-2. The filter modal will open showing available filters
-3. Enter a value in the Hello World filter input and click **Go**
-4. The Hello World widget will update with your filtered value
+After that, you will see that your widget is located on the page and works as expected.
 
-![Dashboard Filter Modal](images/customizable-dashboard-filters.png)
+![Customizable Dashboard](images/customizable-dashboard.png)
+
+Since hello world widget needs hello world filter *(we defined it in DashboardConfiguration)* hello world filter will be loaded to the page. To use it. Click the filter button next to the **Edit Mode** button. It will open the filter modal.
+
+As you can below, you will be able to see filters that your widgets need. Change input and click **Go**. Hello world widget will be changed by your filter.
+
+![Dashboard Filter Modal](images/customizable-dashboard-filter-modal.png)
 
 ---
 
@@ -437,11 +436,11 @@ To change the default view of the dashboard:
 3. Click the **Save** button on the page
 4. In the Network tab, find the `SavePage` request
 
-![Save Page Request](images/customizable-dashboard-save-page-request.png)
+![Save Page Request](images/customizable-dashboard-mvc-save-page-request.png)
 
 5. Open the request payload and copy the data
 
-![Save Page Request Payload](images/customizable-dashboard-save-page-payload.png)
+![Save Page Request Payload](images/customizable-dashboard-mvc-save-page-payload.png)
 
 6. Go to `AppSettingProvider.cs` in your `*.Core` project and find the `GetDefaultReactDashboardViews` method
 7. Update the default layout data with the data you copied from the request payload

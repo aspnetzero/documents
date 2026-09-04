@@ -8,4 +8,4 @@ Again, Tenancy name input is not shown for a single-tenant application or tenant
 
 ## Next
 
-* [Main Menu & Layout](Features-Mvc-Core-Main-Menu-Layout)
+* [Tenant Sign Up](Features-Mvc-Core-Tenant-Sign-Up)

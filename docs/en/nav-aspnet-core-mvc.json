@@ -284,6 +284,10 @@
               ]
             },
             {
+              "text": "Tenant Sign Up",
+              "path": "Features-Mvc-Core-Tenant-Sign-Up.md"
+            },
+            {
               "text": "Edition Management",
               "path": "Features-Mvc-Core-Edition-Management.md"
             },
