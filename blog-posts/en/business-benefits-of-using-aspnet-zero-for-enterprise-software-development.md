@@ -250,8 +250,10 @@ User management, roles and permissions, an administration panel, multi-tenancy, 
 
 For a new enterprise application, internal business system, customer portal, SaaS product, or legacy modernization initiative, this can mean a faster route to business value, lower delivery risk, more predictable use of budget, and a more maintainable product over time.
 
-## Build or Modernize Your Enterprise Software
+## Choose the Right Plan for Your Project
 
-We can help you build or modernize your enterprise software with an ASP.NET Zero-based architecture. We can evaluate your requirements, define the right application and multi-tenancy model, plan legacy integration or data migration, and deliver the business capabilities your users need on top of a maintainable foundation.
+If you already know the direction of your project and want to start with a ready enterprise foundation, the next step is selecting a license that matches your team size and the number of applications you plan to build.
 
-[Contact us to discuss your enterprise software project](https://aspnetzero.com/contact).
+Every ASP.NET Zero plan includes full source code, a perpetual license, and one year of updates, with support allowances and product and developer limits varying by plan.
+
+[View ASP.NET Zero pricing plans](https://aspnetzero.com/pricing)
