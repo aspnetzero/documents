@@ -92,7 +92,7 @@ A few things are worth knowing:
 
 ### Revoking an API Key
 
-**Revoke** deletes the key and drops it from the cache. Any request using it fails from that moment on. Revoking one's own key requires the *My API Keys* permission; revoking someone else's key requires the *Revoking API keys* permission.
+**Revoke** deletes the key and drops it from the cache. Any request using it fails from that moment on. Revoking one's own key requires either the *My API Keys* or the *Revoking API keys* permission; revoking someone else's key requires *Revoking API keys*.
 
 `UserApiKey` is a `FullAuditedEntity`, so revocation is a **soft delete**: the row stays in the database with `IsDeleted = 1` along with the deleting user and the deletion time, but it is filtered out of every query and no longer authenticates anything.
 
@@ -183,7 +183,7 @@ A key can be **restricted** to a subset of permissions at creation time. In that
 - The permission tree in the create modal only offers permissions **the creating user actually holds**. Attempting to grant a permission the user does not have is rejected with a validation error.
 - A key can be scoped to at most 200 permissions.
 - The scope is an *upper bound only*. It never grants anything: an operation is allowed only when it is both inside the key's scope **and** still granted to the owner.
-- When *Require an explicit permission scope* is on, an empty scope is rejected. The check lives in `UserApiKeyManager`, so it also covers keys created by calling the application service directly rather than through the UI.
+- When *Require an explicit permission scope* is on, an empty scope is rejected. The check runs in `UserApiKeyManager.CreateAsync`, so it also covers keys created by calling the application service directly rather than through the UI. Rotation is deliberately exempt: refusing to rotate a key that predates the setting would only keep its old secret alive, so a scope-less key stays scope-less across rotations. Revoke such keys and create scoped ones to retire them.
 
 The scope is enforced in two places:
 
@@ -257,7 +257,7 @@ The feature is controlled by the following permissions:
 |------------|------|-------------|
 | My API Keys | `Pages.MyApiKeys` | Manage one's **own** keys on the **My API Keys** page: list, create, rotate and revoke them. A top level permission under **Pages**, next to *Demo UI Components*. |
 | API Keys | `Pages.Administration.ApiKeys` | Access to the **Administration > API Keys** page, which lists the keys of all users. |
-| Revoking API keys | `Pages.Administration.ApiKeys.Revoke` | Revoke a key that belongs to another user. Shown as a child permission of *API Keys*. |
+| Revoking API keys | `Pages.Administration.ApiKeys.Revoke` | Revoke any key listed on the **Administration > API Keys** page, including one's own. Shown as a child permission of *API Keys*. |
 
 *My API Keys* is kept separate from the administration permissions on purpose: creating a key means handing out a long lived credential, so an organization may want to keep that in the hands of a few roles even though everyone can log in interactively. Keep in mind that a key can only ever be created and rotated by the user it belongs to, so the account an integration runs as has to hold this permission at least while its key is created or rotated.
 
@@ -270,7 +270,7 @@ All operations go through `IUserApiKeyAppService`, which is exposed as a dynamic
 | `GetMyApiKeys()` | `GET /api/services/app/UserApiKey/GetMyApiKeys` | `Pages.MyApiKeys`. Also returns the grantable permissions, the configured limits, whether a permission scope is required and the header name, so the UI needs no second call. |
 | `CreateApiKey(CreateApiKeyInput)` | `POST /api/services/app/UserApiKey/CreateApiKey` | `Pages.MyApiKeys`; rejected when the request itself uses an API key. |
 | `RotateApiKey(RotateApiKeyInput)` | `POST /api/services/app/UserApiKey/RotateApiKey` | `Pages.MyApiKeys`, and the owner of the key only; rejected when the request itself uses an API key. |
-| `RevokeApiKey(EntityDto<long>)` | `POST /api/services/app/UserApiKey/RevokeApiKey` | `Pages.MyApiKeys` for one's own key, `Pages.Administration.ApiKeys.Revoke` for someone else's; rejected when the request itself uses an API key. |
+| `RevokeApiKey(EntityDto<long>)` | `POST /api/services/app/UserApiKey/RevokeApiKey` | `Pages.MyApiKeys` or `Pages.Administration.ApiKeys.Revoke` for one's own key, `Pages.Administration.ApiKeys.Revoke` for someone else's; rejected when the request itself uses an API key. |
 | `GetApiKeys(GetApiKeysInput)` | `POST /api/services/app/UserApiKey/GetApiKeys` | `Pages.Administration.ApiKeys`. Paged, sorted and filtered list of every key. |
 
 Validation failures (limit reached, invalid IP entry, unknown or ungranted permission, expiration out of range, feature disabled) are thrown as `UserFriendlyBadRequestException`, which returns HTTP `400` with a localized message instead of the default `500`.
