@@ -176,7 +176,7 @@ ASP.NET Zero offers Angular, React, and ASP.NET Core MVC frontend options. This 
 
 The options share the same ASP.NET Zero backend foundation, so the organization can choose according to team capability and product needs rather than accepting a single mandatory frontend stack. The selected UI and its included features should be confirmed when generating or purchasing the project.
 
-For teams building data-centric modules, [ASP.NET Zero Power Tools](https://aspnetzero.com/power-tools) can generate entities, DTOs, application services, permissions, database migrations, tests, and user interface pages from an entity definition. This can reduce repetitive CRUD development further while leaving generated code available for customization. Complex workflows, integrations, and domain rules still require normal software engineering.
+For teams building data-centric modules, [ASP.NET Zero Power Tools](https://aspnetzero.com/PowerTools) can generate entities, DTOs, application services, permissions, database migrations, tests, and user interface pages from an entity definition. This can reduce repetitive CRUD development further while leaving generated code available for customization. Complex workflows, integrations, and domain rules still require normal software engineering.
 
 ## A Practical Foundation for Legacy System Modernization
 
