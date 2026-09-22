@@ -12,6 +12,10 @@
           "path": "Solution-Structure-React.md"
         },
         {
+          "text": "Debugging ABP Packages",
+          "path": "Debugging-Abp-Packages.md"
+        },
+        {
           "text": "ASP.NET Boilerplate",
           "path": "https://aspnetboilerplate.com/Pages/Documents"
         },

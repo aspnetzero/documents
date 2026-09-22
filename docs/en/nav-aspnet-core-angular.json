@@ -12,6 +12,10 @@
           "path": "Solution-Structure-Angular.md"
         },
         {
+          "text": "Debugging ABP Packages",
+          "path": "Debugging-Abp-Packages.md"
+        },
+        {
           "text": "For MacOS",
           "path": "Getting-Started-MacOSX.md"
         },

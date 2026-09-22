@@ -23,6 +23,10 @@
       ]
     },
     {
+      "text": "Debugging ABP Packages",
+      "path": "Debugging-Abp-Packages.md"
+    },
+    {
       "text": "Power Tools",
       "items":[
         {
