@@ -29,7 +29,7 @@ The page header shows the workflow name and its state, for example **Draft · v3
 | Save as template | Saves the current design as a template others can start from. |
 | **Validate** | Runs the full publish check and lists every problem. |
 | **Save draft** | Saves the draft. Requires the **Editing workflow definitions** permission. |
-| **Publish** | Publishes the draft as the active version. Requires **Publishing workflow definitions**. Disabled while there are unsaved changes. |
+| **Publish** | Publishes the draft as the active version. Requires **Publishing workflow definitions**. While there are unsaved changes, the button reads **Save and publish** and saves the draft first. |
 
 The designer has four tabs: **Flow**, **Form**, **Trigger** and **Simulation**.
 
@@ -48,12 +48,12 @@ The form is what the requester fills in. The tab has three panes: **Field types*
 
 Short text, Long text, Number, Money, Date, Time, Date and time, Yes / No, Single select, Multi select, User, Role, Organization unit, Attachment, Static text, Repeating rows and Calculated.
 
-- **Attachment** is only available when attachments are allowed by the host.
+- **Attachment** is only offered for workflows that have a public form, and only when attachments are allowed by the host. Signed-in requesters attach files in the **Workflow attachments** section of the request page instead.
 - **Static text** shows text to the requester without asking for input.
 - **Repeating rows** lets the requester add several rows, each with its own **Row fields**, for example the lines of an expense claim.
 - **Calculated** computes a value from other fields with an **Operation** (Sum, Subtract, Multiply, Average, Smallest, Largest, Count) over **Source fields**.
 
-> In this version, the request page cannot yet be filled in for **User**, **Role**, **Organization unit**, **Attachment** and **Repeating rows** fields. They can be designed, but the request page shows **This field type cannot be edited here yet.** for them. Until this is supported, use the request page's **Workflow attachments** section for files, and the other field types for the remaining data.
+> In this version, the request page cannot yet be filled in for **User**, **Role**, **Organization unit** and **Repeating rows** fields. They can be designed, but the request page shows **This field type cannot be edited here yet.** for them. Until this is supported, use the request page's **Workflow attachments** section for files, and the other field types for the remaining data.
 
 ### Field properties
 
@@ -153,9 +153,9 @@ On the **Assignment** tab, choose an **Assignee type**, pick the user, role or o
 | **User** | A specific user. |
 | **Role** | Every user in the role. |
 | **Organization unit** | Every user in the organization unit and its child units. |
-| **Fallback role** | Used only when the other assignees resolve to nobody. |
+| **Fallback role** | Every user in the role, added as approvers along with the other assignees. Operators can also bring it in with **Activate Fallback Assignee** on the **Workflow Operations** page. |
 
-> **Requester's manager** resolves from manager relationships stored for the tenant's users. This version does not include a screen for maintaining them, so populate them from your own code or integration, or add a **Fallback role** so the task is never left without an approver. Use **Simulation** to check who each step resolves to.
+> **Requester's manager** resolves from manager relationships stored for the tenant's users. This version does not include a screen for maintaining them, so populate them from your own code or integration, or also add a **Role** or **Fallback role** assignee so the task always has someone who can decide. Use **Simulation** to check who each step resolves to.
 
 #### Behaviour
 
@@ -180,8 +180,8 @@ Form and Approval steps have a **Service level** tab:
 |---|---|
 | **Due in (minutes)** | When the task becomes overdue. |
 | **Use the business calendar** | Counts only working hours and days from the tenant's business calendar. |
-| **Reminder every (minutes)** | Sends reminders until the task is completed. |
-| **Escalate when overdue**, **Escalate after (minutes)**, **Escalate to** | Moves the task to other assignees when it is overdue. |
+| **Reminder every (minutes)** | Sends a reminder this many minutes after the task starts, if that is before the due time. |
+| **Escalate when overdue**, **Escalate after (minutes)**, **Escalate to** | Adds the **Escalate to** assignees to the task **Escalate after** minutes after it becomes overdue. The original assignees keep the task, and the new assignees are notified. |
 
 ### Condition
 
@@ -318,9 +318,9 @@ The **Actions** menu on the **Workflow Definitions** page offers, depending on y
 
 ## Templates
 
-Click **Save as template** in the designer to save a design as a template. Templates are listed in **Workflows > Workflow Administration > Workflow Templates**, where they can be previewed, used with **Use this template**, or deleted. They are also offered in the **Start from a template** option of the **New workflow** dialog.
+Click **Save as template** in the designer to save a design as a template. Templates are listed in **Workflows > Workflow Administration > Workflow Templates**, where they can be previewed, used with **Use this template**, or deleted (templates saved by your tenant only). They are also offered in the **Start from a template** option of the **New workflow** dialog.
 
-A new tenant has no templates until someone saves one.
+Every tenant starts with the product templates **Leave request**, **Expense claim** and **Purchase request**. They can be used but not deleted. Their approval steps have no approvers until you assign them.
 
 ## Next
 

@@ -185,7 +185,7 @@ Drag the steps to arrange the diagram, or click **Auto layout** in the canvas to
    - **Sample form values**: **Number of days** = `7`
    - Click **Run simulation**. The result shows the path **Team lead approval → HR approval → Notify the requester → Approved**, with the assignees of each step. Run it again with `3` days and the HR approval is skipped.
 3. Click **Save draft**.
-4. Click **Publish** and confirm. **Publish** is only enabled when there are no unsaved changes, so always save first.
+4. Click **Publish** and confirm. If there are unsaved changes, the button reads **Save and publish** and saves the draft before publishing.
 
 The workflow now appears in **Workflow Definitions** with the status **Active** and version **v1**. It is listed in the **Request Catalog** for everyone who can start requests.
 
