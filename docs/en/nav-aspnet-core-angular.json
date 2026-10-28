@@ -392,6 +392,14 @@
               "path": "Features-Rate-Limiting.md"
             },
             {
+              "text": "API Keys",
+              "path": "Features-Angular-Api-Keys.md"
+            },
+            {
+              "text": "Email Templates",
+              "path": "Features-Angular-Email-Templates.md"
+            },
+            {
               "text": "Workflows",
               "items": [
                 {
@@ -543,6 +551,10 @@
           "path": "Infrastructure-Angular-Used-Libraries-Frameworks.md"
         },
         {
+          "text": "AI-Assisted Development",
+          "path": "AI-Assisted-Development.md"
+        },
+        {
           "text": "Penetration/Security Test",
           "path": "Security-Test-Angular.md"
         },
@@ -553,10 +565,6 @@
         {
           "text": "OpenIddict Integration",
           "path": "Infrastructure-Core-Angular-OpenIddict-Integration.md"
-        },
-        {
-          "text": "Identity Server 4 Integration",
-          "path": "Infrastructure-Core-Angular-Identity-Server4-Integration.md"
         },
         {
           "text": "Spinner service",
@@ -611,6 +619,14 @@
               "path": "Power-Tools-Master-Detail-Tables.md"
             },
             {
+              "text": "Custom Code",
+              "path": "Power-Tools-Custom-Code-Angular.md"
+            },
+            {
+              "text": "Custom Code - MAUI",
+              "path": "Power-Tools-Custom-Code-Maui.md"
+            },
+            {
               "text": "How to Create & Edit Power Tools Templates",
               "path": "How-To-Create-Edit-Power-Tools-Templates.md"
             },
@@ -633,7 +649,7 @@
     {
       "text": "Migration from AutoMapper to Mapperly",
       "path": "Migrating-From-AutoMapper-To-Mapperly.md"
-    },    
+    },
     {
       "text": "Change Logs",
       "path": "Change-Logs.md"
