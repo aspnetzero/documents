@@ -396,6 +396,31 @@
               "path": "Features-React-Email-Templates.md"
             },
             {
+              "text": "Workflows",
+              "items": [
+                {
+                  "text": "Overview",
+                  "path": "Features-Workflows.md"
+                },
+                {
+                  "text": "Create Your First Workflow",
+                  "path": "Features-Workflows-Create-Your-First-Workflow.md"
+                },
+                {
+                  "text": "Workflow Designer",
+                  "path": "Features-Workflows-Designer.md"
+                },
+                {
+                  "text": "Requests and Approvals",
+                  "path": "Features-Workflows-Requests-And-Approvals.md"
+                },
+                {
+                  "text": "Workflow Administration",
+                  "path": "Features-Workflows-Administration.md"
+                }
+              ]
+            },
+            {
               "text": "User Delegation",
               "path": "Features-React-User-Delegation.md"
             },
