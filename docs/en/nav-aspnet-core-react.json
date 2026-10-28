@@ -181,6 +181,10 @@
                 {
                   "text": "Passwordless Login",
                   "path": "Features-React-Passwordless-Login.md"
+                },
+                {
+                  "text": "QR Login",
+                  "path": "Features-React-Qr-Login.md"
                 }
               ]
             },
@@ -384,6 +388,14 @@
               "path": "Features-Rate-Limiting.md"
             },
             {
+              "text": "API Keys",
+              "path": "Features-React-Api-Keys.md"
+            },
+            {
+              "text": "Email Templates",
+              "path": "Features-React-Email-Templates.md"
+            },
+            {
               "text": "User Delegation",
               "path": "Features-React-User-Delegation.md"
             },
@@ -510,6 +522,10 @@
           "path": "Infrastructure-React-Used-Libraries-Frameworks.md"
         },
         {
+          "text": "AI-Assisted Development",
+          "path": "AI-Assisted-Development.md"
+        },
+        {
           "text": "Penetration/Security Test",
           "path": "Security-Test-React.md"
         },
@@ -574,6 +590,14 @@
               "path": "Power-Tools-Master-Detail-Tables.md"
             },
             {
+              "text": "Custom Code",
+              "path": "Power-Tools-Custom-Code-React.md"
+            },
+            {
+              "text": "Custom Code - MAUI",
+              "path": "Power-Tools-Custom-Code-Maui.md"
+            },
+            {
               "text": "How to Create & Edit Power Tools Templates",
               "path": "How-To-Create-Edit-Power-Tools-Templates.md"
             },
@@ -596,7 +620,7 @@
     {
       "text": "Migration from AutoMapper to Mapperly",
       "path": "Migrating-From-AutoMapper-To-Mapperly.md"
-    },    
+    },
     {
       "text": "Change Logs",
       "path": "Change-Logs.md"

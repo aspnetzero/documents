@@ -23,7 +23,7 @@ The following topics will be covered in this section:
 - [CSRF / XSRF Protection](Infrastructure-Core-Mvc-CSRF)
 - [Versioning](Infrastructure-Core-Mvc-Versioning)
 - [Token Based Authentication](Infrastructure-Core-Mvc-Token-Based-Authentication)
-- [Identity Server 4 Integration](Infrastructure-Core-Mvc-Identity-Server4-Integration)
+- [OpenIddict Integration](Infrastructure-Core-Mvc-OpenIddict-Integration)
 - [Unit Testing](Infrastructure-Core-Mvc-Unit-Testing)
 - [Configuration](Infrastructure-Core-Mvc-Configuration)
 - [Used Libraries & Frameworks](Infrastructure-Core-Mvc-Used-Libraries-Frameworks)

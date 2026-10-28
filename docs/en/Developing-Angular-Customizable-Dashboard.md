@@ -44,7 +44,7 @@ Our widget filter name will be `FilterHelloWorld` . It will have one input and b
 *filter-hello-world-component.ts*
 
 ```typescript
-import { Component, Injector } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
@@ -53,10 +53,6 @@ import { AppComponentBase } from '@shared/common/app-component-base';
   styleUrls: ['./filter-hello-world.component.css']
 })
 export class FilterHelloWorldComponent extends AppComponentBase {
-
-  constructor(injector: Injector) {
-    super(injector)
-  }
 
   publishName(name: string): void {
     abp.event.trigger('app.dashboardFilters.helloFilter.onNameChange', name);
@@ -197,15 +193,13 @@ public class TenantDashboardAppService ...
 *widget-hello-world-component.html*
 
 ```html
-<div class="kt-portlet kt-portlet--height-fluid">
-    <div class="kt-portlet__head">
-        <div class="kt-portlet__head-label">
-            <h3 class="kt-portlet__head-title">
-                Hello World
-            </h3>
-        </div>
+<div class="card card-custom">
+    <div class="card-header align-items-center border-0">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="fw-bolder text-gray-900">Hello World</span>
+        </h3>
     </div>
-    <div class="kt-portlet__body">
+    <div class="card-body">
         Hello World Works! <br/>
         Response: {{helloResponse}}
     </div>
@@ -215,21 +209,19 @@ public class TenantDashboardAppService ...
 *widget-hello-world-component.ts*
 
 ```typescript
-import { Component, Injector } from '@angular/core';
-import { AppComponentBase } from '@shared/common/app-component-base';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { TenantDashboardServiceProxy } from '@shared/service-proxies/service-proxies';
+import { WidgetComponentBaseComponent } from '../widget-component-base';
 
 @Component({
   selector: 'app-widget-hello-world',
   templateUrl: './widget-hello-world.component.html',
   styleUrls: ['./widget-hello-world.component.css']
 })
-export class WidgetHelloWorldComponent extends WidgetComponentBase implements OnInit, OnDestroy {
-  helloResponse: string;
-  constructor(injector: Injector,
-    private _tenantDashboardService: TenantDashboardServiceProxy) {
-    super(injector);    
-  }
+export class WidgetHelloWorldComponent extends WidgetComponentBaseComponent implements OnInit, OnDestroy {
+  private _tenantDashboardService = inject(TenantDashboardServiceProxy);
+
+  helloResponse!: string;
 
   ngOnInit(): void {
     this.subHelloWorldFilter();
@@ -352,31 +344,7 @@ var defaultTenantDashboard = new DashboardDefinition(
 
 
 
-Since we create component with ng generate command our component will be automatically added to `app-common.module.ts`  declarations. Customizable dashboard loads component dynamically, that's why we also add our components to entryComponents.
-
-Go to **app-common-module.ts** and add `FilterHelloWorldComponent` and `WidgetHelloWorldComponent` 
-
-```typescript
-@NgModule({
-   ...     
-    entryComponents: [
-       ...
-        FilterHelloWorldComponent,//add filter
-        WidgetHelloWorldComponent//add widget
-    ]
-})
-export class AppCommonModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: AppCommonModule,
-            providers: [
-                AppAuthService,
-                AppRouteGuard
-            ]
-        };
-    }
-}
-```
+Components are standalone, so the view definitions above are the only place the widget and the filter have to be registered. The customizable dashboard creates them dynamically from those definitions, and each component's own `imports` array brings in everything its template uses.
 
 
 
@@ -387,17 +355,17 @@ After that you will be able to use your new widget.
 You can subscribe to resize event of a widget. This event is triggered when a widget is resized. You can use this event to update your widget's content.
 
 ```typescript
-import { Inject } from '@angular/core'; //import inject
+import { inject } from '@angular/core'; //import inject
 import { WidgetOnResizeEventHandler, WIDGETONRESIZEEVENTHANDLERTOKEN } from '../../customizable-dashboard.component'; // import WidgetOnResizeEventHandler and WIDGETONRESIZEEVENTHANDLERTOKEN from customizable-dashboard.component
 
 @Component({
     //...
 })
 export class YOURCOMPONENT extends WidgetComponentBaseComponent {
+    private _widgetOnResizeEventHandler = inject<WidgetOnResizeEventHandler>(WIDGETONRESIZEEVENTHANDLERTOKEN); //inject resize event handler
     //...
     constructor(
         //...
-        @Inject(WIDGETONRESIZEEVENTHANDLERTOKEN) private _widgetOnResizeEventHandler: WidgetOnResizeEventHandler //inject resize event handler
     ) {
         //...
        //It will be triggered for the one which was resized even if you have multiple YOURCOMPONENT in your page.

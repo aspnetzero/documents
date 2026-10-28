@@ -91,30 +91,26 @@ Open **src\app\admin\users\users.component.html** file and add Address column ri
 
 ```html
           //....
-          <th style="width: 200px" pSortableColumn="creationTime">
+          <th nzWidth="200px" nzColumnKey="creationTime" [nzSortFn]="true">
                {{'CreationTime' | localize}}
-               <p-sortIcon field="creationTime"></p-sortIcon>
           </th>
-          <th style="width: 200px" pSortableColumn="address">
+          <th nzWidth="200px" nzColumnKey="address" [nzSortFn]="true">
                {{'Address' | localize}}
-               <p-sortIcon field="address"></p-sortIcon>
           </th>
       </tr>
-</ng-template>
+</thead>
 
 //...
 //...
 
            <td style="width: 200px">
-                 <span class="ui-column-title"> {{'CreationTime' | localize}}</span>
-                 {{record.creationTime | luxonFormat:\'F\'}}
+                 {{record.creationTime | luxonFormat:'F'}}
            </td>
            <td style="width: 200px">
-                  <span class="ui-column-title"> {{'address' | localize}}</span>
                   {{record.address}}
             </td>
         </tr>
-</ng-template>
+</tbody>
 ```
 
 That's all. Now we can start the Angular application and open the **users page**:
@@ -207,15 +203,17 @@ public class EditionListDto : EntityDto
 
 **Auto mapping from MyEdition** is already added. No need to change **EditionAppService.GetEditions** method by the help of auto mapping. Now, you can go to UI side to see how AnnualPrice property is used in the **editions** table in **src\app\admin\editions\editions.component.html**:
 
-```javascript
+```html
 <td>
-  <span class="ui-column-title">{{'Price' | localize}}</span>
-   <span *ngIf="record.monthlyPrice || record.annualPrice">
-     $ {{record.monthlyPrice}} {{"Monthly" | localize }} / $ {{record.annualPrice}} {{"Annual" | localize }}
-   </span>
-   <span *ngIf="!record.monthlyPrice && !record.annualPrice">
-     {{"Free" | localize}}
-   </span>
+    @if (record.monthlyPrice || record.annualPrice) {
+        <span>
+            {{ appSession.application.currencySign }}{{ record.monthlyPrice }} {{ 'Monthly' | localize }}
+            / {{ appSession.application.currencySign }}{{ record.annualPrice }} {{ 'Annual' | localize }}
+        </span>
+    }
+    @if (!record.monthlyPrice && !record.annualPrice) {
+        <span>{{ 'Free' | localize }}</span>
+    }
 </td>
 ```
 
