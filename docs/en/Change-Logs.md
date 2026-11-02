@@ -7,7 +7,7 @@ ASP.NET Core & React) beginning from v4.1. See
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
-## 15.4.0 (2026-07-28)
+## 15.4.0 (2026-07-28)[Link]https://aspnetzero.com/blog/introducing-asp.net-zero-v15.4
 
 * Added email template management (Administration > Email Templates)
 * Added the Power Tools global .NET tool, with a web UI and a "Regenerate All" command
@@ -20,7 +20,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgraded NPM and NuGet packages
 * Enhancements and bug fixes
 
-## 15.3.0 (2026-05-12)
+## 15.3.0 (2026-05-12)[Link](https://aspnetzero.com/blog/introducing-aspnet-zero-v15.3)
 
 * Added Rate limiting feature
 * Added external login linking feature
@@ -29,7 +29,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgraded to ABP 11.2
 * Enhancements and bug fixes 
 
-## 15.2.0 (2026-03-16)
+## 15.2.0 (2026-03-16)[Link](https://aspnetzero.com/blog/introducing-aspnetzero-v15.2)
 
 * Added AI Skills, Rules and Workflows
 * Implemented Health Check UI
@@ -46,10 +46,11 @@ The change logs in this page are just a summary of major changes. Detailed relea
 
 * [Introduced React UI](https://aspnetzero.com/react)
 
-## 15.0.0 (2025-12-05)
+## 15.0.0 (2025-12-05) [Link](https://aspnetzero.com/blog/introducing-aspnetzero-v15)
 
 * Upgraded to .NET 10
 * Upgraded to ABP 11.0
+* Migrated from AutoMapper to Mapperly
 * Multi Tenancy Support for Account Link Modal
 * Enhancements and bug fixes 
 
