@@ -2,12 +2,13 @@
 
 **Note:** Major features are only being developed for the ASP.NET Core based
 project types (ASP.NET Core & jQuery, ASP.NET Core & Angular and, since v15.1,
-ASP.NET Core & React) beginning from v4.1. See
-[version comparison table](Version-Differences.md) for more details.
+ASP.NET Core & React) beginning from v4.1.
+
+See [version comparison table](Version-Differences.md) for more details.
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
-## 15.4.0 (2026-07-28)
+## 15.4.0 (2026-07-28) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v15.4)
 
 * Added email template management (Administration > Email Templates)
 * Added the Power Tools global .NET tool, with a web UI and a "Regenerate All" command
@@ -20,7 +21,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgraded NPM and NuGet packages
 * Enhancements and bug fixes
 
-## 15.3.0 (2026-05-12)
+## 15.3.0 (2026-05-12) [Release Announcement](https://aspnetzero.com/blog/introducing-aspnet-zero-v15.3)
 
 * Added Rate limiting feature
 * Added external login linking feature
@@ -29,7 +30,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgraded to ABP 11.2
 * Enhancements and bug fixes 
 
-## 15.2.0 (2026-03-16)
+## 15.2.0 (2026-03-16) [Release Announcement](https://aspnetzero.com/blog/introducing-aspnet-zero-v15.2)
 
 * Added AI Skills, Rules and Workflows
 * Implemented Health Check UI
@@ -42,25 +43,26 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Customizable dashboard drag & drop for React UI
 * Added social login option for React UI
 
-## 15.1.0 (2026-01-20)
+## 15.1.0 (2026-01-20) [Release Announcement](https://aspnetzero.com/blog/react-ui-has-arrived-in-aspnet-zero)
 
 * [Introduced React UI](https://aspnetzero.com/react)
 
-## 15.0.0 (2025-12-05)
+## 15.0.0 (2025-12-05) [Release Announcement](https://aspnetzero.com/blog/introducing-aspnetzero-v15)
 
 * Upgraded to .NET 10
 * Upgraded to ABP 11.0
+* Migrated from AutoMapper to Mapperly
 * Multi Tenancy Support for Account Link Modal
 * Enhancements and bug fixes 
 
-## 14.3.0 (2025-08-21)
+## 14.3.0 (2025-08-21) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v14.3)
 
 * Upgraded to ABP 10.3
 * Upgrade Public Website to Bootstrap 5
 * Created Azure Functions sample
 * Enhancements and bug fixes 
 
-## 14.2.0 (2025-06-11)
+## 14.2.0 (2025-06-11) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v14.2)
 
 * Upgraded to ABP 10.2
 * Upgraded to Angular 20
@@ -69,7 +71,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Implemented File Validators for Excel, Word
 * Enhancements and bug fixes 
 
-## 14.1.0 (2025-03-18)
+## 14.1.0 (2025-03-18) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v14.1)
 
 * QR Login from MAUI application
 * Migrated to standalone components in Angular
@@ -79,7 +81,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgraded to PrimeNg 19
 * Enhancements and bug fixes 
 
-## 14.0.0 (2024-12-03)
+## 14.0.0 (2024-12-03) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v14)
 
 * Upgraded to .NET 9
 * Upgraded to Angular 19
@@ -88,14 +90,14 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * New design for public website template
 * Power Tools: Beauty console logs
 
-## 13.4.0 (2024-09-24)
+## 13.4.0 (2024-09-24) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v13.4)
 
 * Upgraded to ABP 9.4.2
 * Power Tools: MAUI Code Generation
 * Remove Unused Libraries
 * Enhancements and bug fixes
 
-## 13.3.0 (2024-08-01)
+## 13.3.0 (2024-08-01) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v.13.3)
 
 * Upgraded to ABP 9.3
 * Upgraded to Angular 18
@@ -104,7 +106,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Detailed Entity Changes UI
 * Enhancements and bug fixes
 
-## 13.2.0 (2024-05-14)
+## 13.2.0 (2024-05-14) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v13.2)
 
 * Passwordless login.
 * Power Tools: Custom menu position for page generation.
@@ -114,7 +116,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgraded to DataTables 2.0.
 * Upgraded Flurl to 4.x.
 
-## 13.1.0 (2024-02-27)
+## 13.1.0 (2024-02-27) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v.13.1)
 
 * Power Tools: Excel Import for generated Entities.
 * Common Payment System
@@ -123,7 +125,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgade to ABP 9.1
 * Enhancements and bug fixes
 
-## 13.0.0 (2023-12-11)
+## 13.0.0 (2023-12-11) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v.13.0)
 
 * Power Tools: Multi-lingual entity support.
 * Upgraded to .NET 8.
@@ -132,13 +134,13 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgraded to Metronic 8.2.0.
 * Upgraded to GraphQL 7.x.
 
-## 12.4.0 (2023-10-16)
+## 12.4.0 (2023-10-16) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v.12.4)
 
 * Power Tools: Autocomplete option for selecting navigation properties.
 * Upgrade to Abp 8.4.
 * Enhancements and bug fixes.
 
-## 12.3.0 (2023-08-10)
+## 12.3.0 (2023-08-10) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v12.3)
 
 * Added OpenIddict integration
 * Power Tools: Load entities from Oracle database
@@ -146,7 +148,7 @@ The change logs in this page are just a summary of major changes. Detailed relea
 * Upgraded to ABP 8.3
 * Enhancements & Bug fixes
 
-## 12.2.0 (2023-05-30)
+## 12.2.0 (2023-05-30) [Release Announcement](https://aspnetzero.com/blog/introducing-aspnet-zero-v122)
 
 * Create UI Test for entities generated by PowerTools
 * Create Unit Test for entities generated by PowerTools
