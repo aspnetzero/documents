@@ -81,6 +81,8 @@ Passkey login is opt-in. Turn on **Allow users to sign in with passkeys** in the
 
 Failed passkey logins are recorded in the login attempts, and a forced password change is still enforced for users who sign in with a passkey.
 
+[Passkeys Document](https://docs.aspnetzero.com/aspnet-core-angular/latest/Features-Angular-Passkeys)
+
 ## 📱 Social Logins in the Mobile App
 
 The .NET MAUI mobile app now supports **Google, Facebook and Apple** logins.
@@ -115,6 +117,7 @@ You can read more here:
 
 - [Power Tools Custom Code - Angular](https://docs.aspnetzero.com/aspnet-core-angular/latest/Power-Tools-Custom-Code-Angular)
 - [Power Tools Configuration](https://docs.aspnetzero.com/aspnet-core-angular/latest/Power-Tools-Configuration)
+- [Power Tools Bulk Operations](https://docs.aspnetzero.com/aspnet-core-angular/latest/Power-Tools-Bulk-Operations)
 
 ## 🅰️ Breaking Change: PrimeNG Replaced with ng-zorro in Angular
 
