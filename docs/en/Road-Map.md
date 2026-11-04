@@ -4,7 +4,6 @@ We are constantly getting feedbacks from our customers to improve ASP.NET Zero. 
 
 
 -   AI Code generation via ABP Studio
--   Power Tools: Bulk operations
 -   Power Tools: New page templates
 -   Tenant login page customization
 -   Orderable menu items

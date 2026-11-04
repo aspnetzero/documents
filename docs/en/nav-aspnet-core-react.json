@@ -392,6 +392,10 @@
               "path": "Features-React-Api-Keys.md"
             },
             {
+              "text": "Passkeys",
+              "path": "Features-React-Passkeys.md"
+            },
+            {
               "text": "Email Templates",
               "path": "Features-React-Email-Templates.md"
             },
@@ -613,6 +617,10 @@
             {
               "text": "Master Detail Tables",
               "path": "Power-Tools-Master-Detail-Tables.md"
+            },
+            {
+              "text": "Bulk Operations",
+              "path": "Power-Tools-Bulk-Operations.md"
             },
             {
               "text": "Custom Code",

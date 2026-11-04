@@ -171,7 +171,7 @@ ASP.NET Zero v15.5 upgrades the underlying ASP.NET Boilerplate packages to **ABP
 - **Inactive tenants:** `AbpSignInManager` now denies sign-in for users of inactive tenants, including sign-in flows that bypass `AbpLogInManager`.
 - **Webhook and OpenIddict fixes:** Webhook subscriptions gained tenant isolation fixes, and the OpenIddict stores now save entities immediately on create.
 
-[ABP v11.4 Full Changelog](https://github.com/aspnetzero/aspnetboilerplate/compare/v11.3.2...v11.4.0)
+[ABP v11.4 Full Changelog](https://github.com/aspnetzero/aspnetboilerplate/releases/tag/v11.4.0)
 
 ## 🛡️ Security and Session Improvements
 

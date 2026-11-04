@@ -404,4 +404,4 @@ Note that `ApiKeyAuthenticationMiddleware` looks for `ApiKeyConsts.HeaderName` w
 
 ## Next
 
-- [Email Templates](Features-Angular-Email-Templates)
+- [Passkeys](Features-Angular-Passkeys)

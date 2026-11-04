@@ -400,6 +400,10 @@
               "path": "Features-Mvc-Core-Api-Keys.md"
             },
             {
+              "text": "Passkeys",
+              "path": "Features-Mvc-Core-Passkeys.md"
+            },
+            {
               "text": "Email Templates",
               "path": "Features-Mvc-Core-Email-Templates.md"
             },
@@ -657,6 +661,10 @@
             {
               "text": "Master Detail Tables",
               "path": "Power-Tools-Master-Detail-Tables.md"
+            },
+            {
+              "text": "Bulk Operations",
+              "path": "Power-Tools-Bulk-Operations.md"
             },
             {
               "text": "Custom Code",
