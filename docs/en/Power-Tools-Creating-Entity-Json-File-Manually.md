@@ -42,6 +42,12 @@ JSON fields are case sensitive.
 | CreateViewOnly | Set `true` to generate a detail/view page. |
 | CreateExcelExport | Set `true` to generate Excel export support. |
 | CreateExcelImport | Set `true` to generate Excel import support. |
+| CreateBulkDelete | Set `true` to generate the **Delete selected** bulk operation. See [Bulk Operations](Power-Tools-Bulk-Operations.md). |
+| CreateBulkExcelExport | Set `true` to generate the **Export selected** bulk operation. Requires `CreateExcelExport`. |
+| CreateBulkUpdateBoolean | Set `true` to generate the **Boolean update** bulk operation. |
+| CreateBulkUpdateEnum | Set `true` to generate the **Enum update** bulk operation. |
+| CreateBulkAssignLookup | Set `true` to generate the **Assign lookup** bulk operation. |
+| CreateBulkCustomAction | Set `true` to generate the **Custom action stub** bulk operation. |
 | IsNonModalCRUDPage | Set `true` when create/edit pages are full-page instead of modal-based. |
 | IsMasterDetailPage | Set `true` for master-detail pages. |
 | GenerateOverridableEntity | Set `true` to create extension classes that are not overwritten during re-generation. |

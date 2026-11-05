@@ -404,4 +404,4 @@ Note that `ApiKeyAuthenticationMiddleware` looks for `ApiKeyConsts.HeaderName` w
 
 ## Next
 
-- [Email Templates](Features-React-Email-Templates)
+- [Passkeys](Features-React-Passkeys)

@@ -69,6 +69,7 @@ The Entity Information step defines the entity-level settings:
 15. **Unit Test:** Generates server-side unit tests for the application service.
 16. **UI Test:** Generates Playwright UI tests for the generated pages.
 17. **Mobile:** Generates .NET MAUI files for the entity.
+18. **Bulk Operations:** Generates actions that work on many records at once. See [Bulk Operations](Power-Tools-Bulk-Operations.md).
 
 > If you select both Host and Tenant, the generated entity is available in both sides.
 

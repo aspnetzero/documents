@@ -88,14 +88,14 @@ const UsersPage: React.FC = () => {
 
 ### Using DynamicPropertyValueManager Component Directly
 
-You can also use the `DynamicPropertyValueManager` component directly in a modal or inline. The component is located at [DynamicPropertyValueManager.tsx](../src/pages/admin/dynamic-properties/dynami-entity-property-values/components/DynamicPropertyValueManager.tsx):
+You can also use the `DynamicPropertyValueManager` component directly in a modal or inline. The component is located at [DynamicPropertyValueManager.tsx](../src/pages/admin/dynamic-properties/dynamic-entity-property-values/components/DynamicPropertyValueManager.tsx):
 
 ```tsx
 import { useRef } from "react";
 import { Modal } from "antd";
 import DynamicPropertyValueManager, {
   type DynamicPropertyValueManagerRef,
-} from "@/pages/admin/dynamic-properties/dynami-entity-property-values/components/DynamicPropertyValueManager";
+} from "@/pages/admin/dynamic-properties/dynamic-entity-property-values/components/DynamicPropertyValueManager";
 import L from "@/lib/L";
 
 interface Props {
@@ -113,9 +113,11 @@ const DynamicPropertiesModal: React.FC<Props> = ({
 }) => {
   const managerRef = useRef<DynamicPropertyValueManagerRef>(null);
 
-  const handleSave = () => {
-    managerRef.current?.saveAll();
-    onClose();
+  const handleSave = async () => {
+    const saved = await managerRef.current?.saveAll();
+    if (saved) {
+      onClose();
+    }
   };
 
   return (
@@ -138,6 +140,20 @@ const DynamicPropertiesModal: React.FC<Props> = ({
 
 <img src="images/managing-dynamic-property-of-entity.gif" alt="dynamic-property-of-entity" class="img-thumbnail" />
 
+### Mandatory Dynamic Properties
+
+Select **Mandatory** while adding or editing a dynamic property to require a value for it.
+
+<img src="images/feature-dynamic-property-mandatory.png" alt="mandatory-dynamic-property" class="img-thumbnail" />
+
+When you manage the dynamic property values of an entity, mandatory properties follow these rules:
+
+* **Saving fails when a mandatory value is missing.** A warning lists the empty properties, `saveAll` returns `false` and nothing is saved. `InsertOrUpdateAllValues` applies the same check on the server, so API requests with a missing value are rejected too.
+
+* **Values of a mandatory property can't be deleted.** The **Delete** button isn't shown for these properties, and `CleanValues` rejects the request. You can still replace a value with a new one.
+
+These rules apply only when dynamic property values are saved or deleted. Creating the entity itself doesn't require a value, so a new entity has no value for a mandatory property until one is saved.
+
 _____
 
 <table>
@@ -155,6 +171,10 @@ _____
          <tr>
             <td>Input Type*</td>
             <td>Input type name of the dynamic property</td>
+        </tr>
+         <tr>
+            <td>Mandatory</td>
+            <td>Requires a value for the property when the dynamic property values of an entity are saved, and prevents those values from being deleted</td>
         </tr>  
          <tr>
             <td>Permission</td>

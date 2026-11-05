@@ -8,6 +8,20 @@ See [version comparison table](Version-Differences.md) for more details.
 
 The change logs in this page are just a summary of major changes. Detailed release notes are shared on the GitHub repository (only available to the customers).
 
+## 15.5.0 (2026-11-04) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v15.5)
+
+* Added workflow and approval builder
+* Added API key authentication
+* Added passkey login
+* Added Facebook, Google and Apple social logins to the MAUI mobile app
+* Added mandatory dynamic properties
+* Added bulk operations, lookup creation, multiple lookups to the same entity and JSON property types to Power Tools
+* Replaced PrimeNG with ng-zorro in the Angular UI (breaking change)
+* Upgraded to Metronic 8.3.3
+* Upgraded to ABP 11.4
+* Upgraded NPM and NuGet packages
+* Enhancements and bug fixes
+
 ## 15.4.0 (2026-07-28) [Release Announcement](https://aspnetzero.com/blog/introducing-asp.net-zero-v15.4)
 
 * Added email template management (Administration > Email Templates)

@@ -396,6 +396,10 @@
               "path": "Features-Angular-Api-Keys.md"
             },
             {
+              "text": "Passkeys",
+              "path": "Features-Angular-Passkeys.md"
+            },
+            {
               "text": "Email Templates",
               "path": "Features-Angular-Email-Templates.md"
             },
@@ -617,6 +621,10 @@
             {
               "text": "Master Detail Tables",
               "path": "Power-Tools-Master-Detail-Tables.md"
+            },
+            {
+              "text": "Bulk Operations",
+              "path": "Power-Tools-Bulk-Operations.md"
             },
             {
               "text": "Custom Code",

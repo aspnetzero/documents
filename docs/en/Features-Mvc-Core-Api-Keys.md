@@ -406,4 +406,4 @@ Note that `ApiKeyAuthenticationMiddleware` looks for `ApiKeyConsts.HeaderName` w
 
 ## Next
 
-- [Email Templates](Features-Mvc-Core-Email-Templates)
+- [Passkeys](Features-Mvc-Core-Passkeys)
