@@ -21,6 +21,10 @@ for **v15.5+** projects. On v15.3-v15.4 (PrimeNG templates) and older (module-ba
 still generates the server-side extension files, but no `.component.base.ts` split and no `az:begin` slots in
 the HTML.
 
+**Forms.** On **v16.0+** projects the generated create/edit components use Angular Signal Forms. On v15.5
+they use template-driven forms (`ngModel`). This changes how you add a custom form field, see the
+**Adding a Custom Form Field** example below.
+
 ### Limitations
 
 **Master-detail child entities.** The switch has no effect on the server layer of a child entity in a
@@ -99,10 +103,16 @@ products.component.ts                               ← yours (extends ProductsC
 
 create-or-edit-product-modal.component.base.ts      ← regenerated
 create-or-edit-product-modal.component.ts            ← yours
+create-or-edit-product-modal.custom-fields.ts        ← yours (v16.0+, custom form fields)
 
 view-product-modal.component.base.ts                ← regenerated
 view-product-modal.component.ts                      ← yours
 ```
+
+On **v16.0+** projects the create/edit component also gets a `.custom-fields.ts` file (named
+`create-or-edit-product.custom-fields.ts` for the full page variant). It is generated once and never
+overwritten, and it holds the form fields and validation rules that you add to the generated form. See the
+**Adding a Custom Form Field** example below. Multi-lingual entities do not get this file.
 
 ### Customizing in the Subclass
 
@@ -202,6 +212,56 @@ Angular HTML templates contain named `az:begin` / `az:end` markers. You can plac
 ```
 
 After regeneration, your `<div>` stays in place while the rest of the template is updated with any new entity properties.
+
+### Example - Adding a Custom Form Field
+
+1. Add the property to your input DTO (`CreateOrEditProductDto.Extended.cs`), run the `*.Web.Host` project
+   and refresh the service proxies with [NSwag](Infrastructure-Angular-NSwag.md).
+
+2. Add the field and its rules to `create-or-edit-product-modal.custom-fields.ts`. Power Tools generates
+   this file with two empty functions: the generated form adds what `toProductCustomFields` returns to its
+   model, and calls `applyProductCustomFieldRules` from its validation schema.
+
+   ```typescript
+   import { maxLength, SchemaPathTree } from '@angular/forms/signals';
+   import { CreateOrEditProductDto } from '@shared/service-proxies/service-proxies';
+   import type { CreateOrEditProductFormModel } from './create-or-edit-product-modal.component.base';
+
+   export function toProductCustomFields(dto: CreateOrEditProductDto) {
+     return {
+       customCode: dto.customCode ?? '',
+     };
+   }
+
+   export function applyProductCustomFieldRules(product: SchemaPathTree<CreateOrEditProductFormModel>): void {
+     maxLength(product.customCode, 32);
+   }
+   ```
+
+   Every property of `CreateOrEditProductDto` is already a field of the generated form. List a property here
+   when a text input edits it, so that it starts as an empty string: a text input bound to `null` parses the
+   typed text as a number. Fields that number inputs, checkboxes, `nz-select` or date pickers edit do not
+   need to be listed.
+
+3. Bind the field in the `form-fields` slot:
+
+   ```html
+   <!-- az:begin(form-fields) -->
+   <div class="my-3">
+     <label class="form-label" for="Product_CustomCode">Custom Code</label>
+     <input id="Product_CustomCode" type="text" class="form-control"
+            [formField]="productForm.customCode" />
+     <validation-messages [field]="productForm.customCode" />
+   </div>
+   <!-- az:end(form-fields) -->
+   ```
+
+The generated form loads the field when the modal opens, validates it with your rules and sends it to the
+server when it is saved. To read the value in your code, use `this.product().customCode`; to change it, use
+`this.productForm.customCode().value.set(...)`.
+
+On a v15.5 project the create/edit template is template-driven and there is no `.custom-fields.ts` file:
+bind the field with `[(ngModel)]="product.customCode"` and a `name` attribute instead.
 
 ### Example - Adding a Custom Table Column
 

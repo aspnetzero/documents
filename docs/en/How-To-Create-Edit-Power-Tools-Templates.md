@@ -42,6 +42,23 @@ To revert a customized template file, select its tab in the template editor and 
 
 You can also revert manually by deleting the related `.custom.txt` file from the template folder.
 
+## Templates for Older Project Versions
+
+The Angular templates directly under `Client/Angular` are used for the current project versions. Power Tools keeps the templates of older Angular project versions in sub folders and chooses them by the version of your project:
+
+| Folder | Used for |
+|---|---|
+| `Client/Angular` | v15.5 and later. On v16.0 and later, the create/edit templates use Signal Forms. |
+| `Client/Angular/NgModelForms` | The template-driven (`ngModel`) `CreateEditTemplate`, `CreateEditTemplate.FullPage`, `CreateEditTemplate.Offcanvas`, `MasterDetailChildPage/CreateEditTemplate` and `LookupCreateModalTemplate` of v15.5 projects. They replace the templates with the same names in `Client/Angular`. |
+| `Client/Angular/PrimeNg` | v15.3 and v15.4 (PrimeNG based pages) |
+| `Client/Angular/Legacy` | Versions before v15.3 (module based pages) |
+
+Customize the template in the folder that your project version uses. A `.custom.txt` file in another folder has no effect.
+
+On a v15.5 project, the **Templates** page lists the `NgModelForms` templates under their usual names, such as `CreateEditTemplate`, so your customizations are saved to the folder that generation uses. Customizations that you made before `NgModelForms` existed are moved there automatically when Power Tools opens the project, or when you change the project version in the settings. Power Tools does not overwrite a customization that already exists in `NgModelForms`.
+
+Customizations are stored per file. When a new Power Tools version changes the default templates, a customized `MainTemplate.custom.txt` is combined with the new default `PartialTemplates.txt`. After you upgrade your project, review your customized templates and re-create them from the new defaults. This applies to the create/edit templates when you upgrade an Angular project to v16.0, because they move from `ngModel` to Signal Forms. See [Migrating to Signal Forms](Migrating-To-Signal-Forms-Angular.md).
+
 ## Create New Templates
 
 Choose a folder under `FileTemplates` based on where the generated file belongs:

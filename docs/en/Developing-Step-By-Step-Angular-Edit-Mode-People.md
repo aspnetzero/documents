@@ -86,7 +86,7 @@ Create edit-person-modal.component.html:
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             @if(active()){
-                <form #editPersonForm="ngForm" novalidate (ngSubmit)="save()">
+                <form [formRoot]="personForm">
                     <div class="modal-header">
                         <h4 class="modal-title">{{ 'EditPerson' | localize }}</h4>
                         <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
@@ -100,10 +100,8 @@ Create edit-person-modal.component.html:
                                 id="name"
                                 type="text"
                                 class="form-control"
-                                name="name"
-                                [(ngModel)]="person().name"
-                                required
-                                maxlength="32" />
+                                [formField]="personForm.name" />
+                            <validation-messages [field]="personForm.name" />
                         </div>
 
                         <div class="mb-3">
@@ -112,10 +110,8 @@ Create edit-person-modal.component.html:
                                 id="surname"
                                 type="text"
                                 class="form-control"
-                                name="surname"
-                                [(ngModel)]="person().surname"
-                                required
-                                maxlength="32" />
+                                [formField]="personForm.surname" />
+                            <validation-messages [field]="personForm.surname" />
                         </div>
 
                         <div class="mb-3">
@@ -124,11 +120,8 @@ Create edit-person-modal.component.html:
                                 id="emailAddress"
                                 type="email"
                                 class="form-control"
-                                name="emailAddress"
-                                [(ngModel)]="person().emailAddress"
-                                required
-                                maxlength="255"
-                                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" />
+                                [formField]="personForm.emailAddress" />
+                            <validation-messages [field]="personForm.emailAddress" />
                         </div>
                     </div>
 
@@ -139,7 +132,7 @@ Create edit-person-modal.component.html:
                         <button
                             type="submit"
                             class="btn btn-primary"
-                            [disabled]="!editPersonForm.form.valid || saving()"
+                            [disabled]="!personForm().valid() || saving()"
                             [buttonBusy]="saving()"
                             [busyText]="l('SavingWithThreeDot')">
                             <i class="fa fa-save"></i>
@@ -202,20 +195,24 @@ Create edit-person-modal.component.ts:
 
 ```typescript
 import { Component, ElementRef, inject, signal, viewChild, output } from '@angular/core';
+import { email, form, FormField, FormRoot, maxLength, required } from '@angular/forms/signals';
 import { ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
 import { PersonServiceProxy, GetPersonForEditOutput, EditPersonInput } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { finalize } from 'rxjs/operators';
-import { FormsModule } from '@angular/forms';
 import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
 import { ButtonBusyDirective } from '@shared/utils/button-busy.directive';
-import { CommonModule } from '@angular/common';
+import { ValidationMessagesComponent } from '@shared/utils/validation-messages.component';
+import { toFormModel } from '@shared/utils/forms/form-model';
+
+const toPersonFormModel = (person: GetPersonForEditOutput) =>
+    toFormModel(person, { name: '', surname: '', emailAddress: '' });
 
 @Component({
     selector: 'editPersonModal',
     templateUrl: './edit-person-modal.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule, ModalModule, LocalizePipe, ButtonBusyDirective],
+    imports: [FormField, FormRoot, ModalModule, LocalizePipe, ButtonBusyDirective, ValidationMessagesComponent],
 })
 export class EditPersonModalComponent extends AppComponentBase {
     private readonly _personService = inject(PersonServiceProxy);
@@ -225,9 +222,23 @@ export class EditPersonModalComponent extends AppComponentBase {
     modal = viewChild.required<ModalDirective>('modal');
     nameInput = viewChild<ElementRef>('nameInput');
 
-    person = signal(new GetPersonForEditOutput());
+    person = signal(toPersonFormModel(new GetPersonForEditOutput()));
     active = signal(false);
     saving = signal(false);
+
+    personForm = form(
+        this.person,
+        (person) => {
+            required(person.name);
+            maxLength(person.name, 32);
+            required(person.surname);
+            maxLength(person.surname, 32);
+            required(person.emailAddress);
+            maxLength(person.emailAddress, 255);
+            email(person.emailAddress);
+        },
+        { submission: { action: async () => this.save() } }
+    );
 
     constructor() {
         super();
@@ -235,7 +246,7 @@ export class EditPersonModalComponent extends AppComponentBase {
 
     show(id: number): void {
         this._personService.getPersonForEdit(id).subscribe((result) => {
-            this.person.set(result);
+            this.personForm().reset(toPersonFormModel(result));
             this.active.set(true);
             this.modal().show();
         });
@@ -248,12 +259,7 @@ export class EditPersonModalComponent extends AppComponentBase {
     save(): void {
         this.saving.set(true);
 
-        const input = new EditPersonInput();
-        const currentPerson = this.person();
-        input.id = currentPerson.id;
-        input.name = currentPerson.name;
-        input.surname = currentPerson.surname;
-        input.emailAddress = currentPerson.emailAddress;
+        const input = EditPersonInput.fromJS(this.person());
 
         this._personService
             .editPerson(input)
@@ -271,6 +277,12 @@ export class EditPersonModalComponent extends AppComponentBase {
     }
 }
 ```
+
+The edit modal uses the same Signal Forms structure as the create modal.
+`show()` loads the person and resets the form with the loaded values, and
+`save()` creates the `EditPersonInput` from the form model with `fromJS`.
+The `id` of the person is part of the form model, so it is sent back to
+the server without a separate field.
 
 ## Next
 
