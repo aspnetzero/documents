@@ -42,7 +42,7 @@ Many open source frameworks and libraries are used to build the ASP.NET Zero Rea
 - [Lodash](https://lodash.com/) - Utility functions
 - [LocalForage](https://github.com/localForage/localForage) - Offline storage
 - [SweetAlert2](https://sweetalert2.github.io/) - Alerts and modals
-- [Push.js](https://github.com/Nickersoft/push.js) - Desktop notifications
+- [vanilla-cookieconsent](https://github.com/orestbida/cookieconsent) - Cookie consent banner (see [Cookie Consent](Features-React-Cookie-Consent))
 - [React Grid Layout](https://github.com/react-grid-layout/react-grid-layout) - Draggable grid
 
 ### Icons

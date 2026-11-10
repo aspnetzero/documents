@@ -228,6 +228,10 @@
                 {
                   "text": "Google Authenticator",
                   "path": "Google-Authenticator-Usage.md"
+                },
+                {
+                  "text": "Cookie Consent",
+                  "path": "Features-Angular-Cookie-Consent.md"
                 }
               ]
             },
@@ -515,7 +519,7 @@
           "path": "Infrastructure-Angular-Npm-Packages.md"
         },
         {
-          "text": "Angular CLI & WebPack",
+          "text": "Angular CLI",
           "path": "Infrastructure-Angular-Angular-CLI-WebPack.md"
         },
         {

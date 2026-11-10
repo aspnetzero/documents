@@ -228,6 +228,10 @@
                 {
                   "text": "Google Authenticator",
                   "path": "Google-Authenticator-Usage.md"
+                },
+                {
+                  "text": "Cookie Consent",
+                  "path": "Features-Mvc-Core-Cookie-Consent.md"
                 }
               ]
             },
