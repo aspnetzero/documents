@@ -405,11 +405,12 @@ export class BooksComponent extends AppComponentBase {
     templateUrl: './create-or-edit-book-modal.component.html',
     standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
+        FormField,
+        FormRoot,
         ModalModule,
         LocalizePipe,
         ButtonBusyDirective,
+        ValidationMessagesComponent,
     ],
 })
 export class CreateOrEditBookModalComponent extends AppComponentBase {
@@ -417,6 +418,11 @@ export class CreateOrEditBookModalComponent extends AppComponentBase {
 
     modalSave = output<any>();
     modal = viewChild.required<ModalDirective>('modal');
+
+    book = signal(toFormModel(new BookEditDto(), { name: '', description: '' }));
+    bookForm = form(this.book, (book) => {
+        required(book.name);
+    });
 
     // Modal logic here
 }
@@ -428,6 +434,7 @@ export class CreateOrEditBookModalComponent extends AppComponentBase {
 - **imports array:** Declare all dependencies (modules, components, pipes, directives) directly in the component
 - **Dependency injection:** Use `inject()` function for cleaner dependency injection
 - **Modern Angular patterns:** Use `signal()`, `viewChild()`, and `output()` for reactive state management
+- **Signal Forms:** Create and edit dialogs use Angular Signal Forms (`form()`, `[formField]`) instead of `ngModel`. See [Migrating to Signal Forms](Migrating-To-Signal-Forms-Angular.md).
 
 In ASP.NET Zero, create and edit modals are typically managed in a single modal component (`CreateOrEditBookModalComponent`), unlike ASP.NET Boilerplate which often has separate components for create and edit operations.
 
@@ -437,6 +444,7 @@ The approach and features exhibited in ASP.NET Boilerplate `books.component.ts` 
 
 - **ASP.NET Boilerplate:** 
     - Uses NgModules with `declarations` array for components
+    - Uses template-driven forms (`ngModel`) in dialogs
     - Manages modals using BsModalService (with BsModalRef)
     - Angular uses HTML table
     - Service connections are made more manually
@@ -447,6 +455,7 @@ The approach and features exhibited in ASP.NET Boilerplate `books.component.ts` 
     - Uses **standalone components** with `standalone: true` flag
     - Components declare their own dependencies in `imports` array
     - Uses modern Angular patterns: `inject()`, `signal()`, `viewChild()`, `output()`
+    - Builds create and edit forms with Angular **Signal Forms**, with the validation rules declared in the component
     - Manages modals using Angular's **viewChild** mechanism
     - Uses the **Table** component (with built-in pagination) from the ng-zorro (Ant Design) library
     - More automated and structured, additional libraries such as **ng-zorro-antd** are used

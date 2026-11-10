@@ -659,6 +659,10 @@
       "path": "Migrating-From-AutoMapper-To-Mapperly.md"
     },
     {
+      "text": "Migration to Signal Forms",
+      "path": "Migrating-To-Signal-Forms-Angular.md"
+    },
+    {
       "text": "Change Logs",
       "path": "Change-Logs.md"
     },
