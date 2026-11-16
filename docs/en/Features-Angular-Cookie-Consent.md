@@ -40,7 +40,7 @@ When cookie consent is on, a user who has not made a choice yet sees the consent
 
 The choice is saved in the `cc_cookie` cookie of the browser, so the banner is not shown again on that browser.
 
-Users can change their choice at any time with the **Cookie preferences** link. The link is shown in the footer of the application and next to the language selection on the account pages. It is only shown when cookie consent is enabled.
+Users can change their choice at any time with the **Cookie preferences** link. The link is shown in the footer of the application and next to the language selection on the account pages. It is only shown when cookie consent is enabled and the banner has started. If the banner cannot be started, an error is written to the browser console and the link stays hidden.
 
 ## Cookie Categories
 
@@ -77,14 +77,16 @@ ASP.NET Zero can load a Google tag for you, either Google Analytics 4 or a Googl
 
 The value is exposed to the client as the `App.CookieConsent.GoogleTagId` setting. It is an application-level setting, so the host and all tenants use the same tag. It cannot be changed on the settings page.
 
-When cookie consent is on, the Google tag is loaded with Consent Mode as follows:
+The Google tag is always loaded with Consent Mode, whether cookie consent is on or off. When the application starts:
 
-1. Before the banner is shown, all Google consent types are set to `denied`, except the types of the strictly necessary category. `wait_for_update` is set to `500` milliseconds.
-2. If the user has already made a choice, the consent types of the accepted categories are updated to `granted`.
+1. All Google consent types are set to `denied`, except the types of the strictly necessary category. `wait_for_update` is set to `500` milliseconds.
+2. The banner is started. If the user has already made a choice, the consent types of the accepted categories are updated to `granted`.
 3. The Google tag is loaded.
 4. Every time the user accepts, rejects or changes a choice, the consent types are updated again.
 
-> **Important:** If cookie consent is off but a Google tag id is set, the Google tag is loaded without Consent Mode, so it sets its cookies without asking the user. Since the tag is shared by all tenants but a tenant can turn cookie consent off for its own users, keep cookie consent on wherever your users have to give consent, for example in the EU, the EEA and the UK.
+Steps 2 and 4 need the banner, so they only happen when cookie consent is on.
+
+> **Important:** If cookie consent is off but a Google tag id is set, the Google tag is still loaded, but the user has no way to accept a category. So every optional consent type stays `denied` and only `functionality_storage` and `security_storage` are granted. A warning is written to the browser console in this case. The tag is shared by all tenants, but each tenant can turn cookie consent off for its own users. For the users of a tenant that turns the banner off, analytics and ad storage are never granted, so the tag sets no analytics or advertising cookies for them. Keep cookie consent on for the tenants whose users should be able to allow these cookies.
 
 Use `CookieConsent:GoogleTagId` instead of adding the Google tag snippet to `index.html` yourself. A tag added to `index.html` runs before the Consent Mode defaults are set.
 
@@ -97,7 +99,8 @@ The cookie consent files of the Angular application are in the `src/shared/commo
 | File | Purpose |
 |------|---------|
 | `cookie-consent.config.ts` | The configuration of the banner: categories, layout and revision. This is the file to change in most cases. |
-| `cookie-consent.service.ts` | `CookieConsentService`. Its `init` method starts the banner and loads the Google tag when the application starts. Its `showPreferences` method opens the preferences dialog. |
+| `cookie-consent.service.ts` | `CookieConsentService`. Its `init` method calls `startCookieConsent` when the application starts. Its `isReady` signal tells whether the banner has started, and its `showPreferences` method opens the preferences dialog. |
+| `start-cookie-consent.ts` | `startCookieConsent` sets the Consent Mode defaults, starts the banner and loads the Google tag, in this order. It returns whether the banner has started. |
 | `create-cookie-consent-config.ts` | Converts the configuration and the localized texts to the configuration of vanilla-cookieconsent. |
 | `google-consent-mode.ts` | Sets and updates the Consent Mode state and loads the Google tag. |
 | `cookie-preferences-link.component.ts` | The **Cookie preferences** link (`<cookie-preferences-link />`). Its `buttonClass` input sets the CSS classes of the link. |
@@ -182,6 +185,8 @@ The texts of the banner come from the localization source of the application, so
 | `CookieConsent_NecessaryTitle`, `CookieConsent_NecessaryDescription` | Title and description of the strictly necessary category. |
 | `CookieConsent_AnalyticsTitle`, `CookieConsent_AnalyticsDescription` | Title and description of the analytics category. |
 | `CookieConsent_MarketingTitle`, `CookieConsent_MarketingDescription` | Title and description of the marketing category. |
+
+`CookieConsent_Description`, `CookieConsent_PreferencesDescription` and the descriptions of the categories can contain HTML, such as a link to your cookie policy. This HTML is sanitized with the `DomSanitizer` of Angular before it is shown. The other texts are shown as plain text.
 
 Change these texts in the localization files, or from the **Languages** page, if you need a different wording. For example, if your application does not use marketing cookies, remove the `marketing` category and update `CookieConsent_Description`.
 

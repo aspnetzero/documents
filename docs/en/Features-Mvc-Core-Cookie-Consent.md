@@ -40,7 +40,7 @@ When cookie consent is on, a user who has not made a choice yet sees the consent
 
 The choice is saved in the `cc_cookie` cookie of the browser, so the banner is not shown again on that browser.
 
-Users can change their choice at any time with the **Cookie preferences** link. The link is shown in the footer of the application and next to the language selection on the account pages. It is only shown when cookie consent is enabled.
+Users can change their choice at any time with the **Cookie preferences** link. The link is shown in the footer of the application and next to the language selection on the account pages. It is only shown when cookie consent is enabled and the banner has started. If the banner cannot be started, an error is written to the browser console and the link stays hidden.
 
 ## Cookie Categories
 
@@ -77,14 +77,16 @@ ASP.NET Zero can load a Google tag for you, either Google Analytics 4 or a Googl
 
 The value is exposed to the client as the `App.CookieConsent.GoogleTagId` setting. It is an application-level setting, so the host and all tenants use the same tag. It cannot be changed on the settings page.
 
-When cookie consent is on, the Google tag is loaded with Consent Mode as follows:
+The Google tag is always loaded with Consent Mode, whether cookie consent is on or off. When a page is loaded:
 
-1. Before the banner is shown, all Google consent types are set to `denied`, except the types of the strictly necessary category. `wait_for_update` is set to `500` milliseconds.
-2. If the user has already made a choice, the consent types of the accepted categories are updated to `granted`.
+1. All Google consent types are set to `denied`, except the types of the strictly necessary category. `wait_for_update` is set to `500` milliseconds.
+2. The banner is started. If the user has already made a choice, the consent types of the accepted categories are updated to `granted`.
 3. The Google tag is loaded.
 4. Every time the user accepts, rejects or changes a choice, the consent types are updated again.
 
-> **Important:** If cookie consent is off but a Google tag id is set, the Google tag is loaded without Consent Mode, so it sets its cookies without asking the user. Since the tag is shared by all tenants but a tenant can turn cookie consent off for its own users, keep cookie consent on wherever your users have to give consent, for example in the EU, the EEA and the UK.
+Steps 2 and 4 need the banner, so they only happen when cookie consent is on.
+
+> **Important:** If cookie consent is off but a Google tag id is set, the Google tag is still loaded, but the user has no way to accept a category. So every optional consent type stays `denied` and only `functionality_storage` and `security_storage` are granted. A warning is written to the browser console in this case. The tag is shared by all tenants, but each tenant can turn cookie consent off for its own users. For the users of a tenant that turns the banner off, analytics and ad storage are never granted, so the tag sets no analytics or advertising cookies for them. Keep cookie consent on for the tenants whose users should be able to allow these cookies.
 
 Use `CookieConsent:GoogleTagId` instead of adding the Google tag snippet to a layout yourself. A tag added to a layout runs before the Consent Mode defaults are set.
 
@@ -100,17 +102,17 @@ The cookie consent of the MVC application consists of the following files in the
 | `Views/Shared/_CookiePreferencesLink.cshtml` | The **Cookie preferences** link. It is rendered by the footer view component of each theme and by `Views/Account/_Layout.cshtml`. |
 | `wwwroot/Common/Styles/Themes/cookie-consent.less` | The colors of the banner. It is part of the `account-layout-libs` and `app-layout-libs` style bundles. |
 
-The vanilla-cookieconsent library itself is loaded from `node_modules/vanilla-cookieconsent/dist/cookieconsent.umd.js` in the layout script bundles and is available as `window.CookieConsent`.
+The vanilla-cookieconsent library itself is loaded from `node_modules/vanilla-cookieconsent/dist/cookieconsent.umd.js` in the layout script bundles and is available as `window.CookieConsent`. [DOMPurify](https://github.com/cure53/DOMPurify), which sanitizes the HTML in the banner texts, is loaded from `node_modules/dompurify/dist/purify.min.js` in the same bundles.
 
 `cookieConsent.js` also defines the `app.cookieConsent` object:
 
 | Member | Description |
 |--------|-------------|
 | `configuration` | The configuration of the banner. |
-| `isEnabled()` | Returns `true` if cookie consent is enabled for the current tenant (or the host). |
+| `isEnabled()` | Returns `true` if cookie consent is enabled for the current tenant (or the host). It returns the value of the setting, not whether the banner has started. |
 | `showPreferences()` | Opens the preferences dialog. |
 
-The **Cookie preferences** link opens the dialog with the `data-cc="show-preferencesModal"` attribute of vanilla-cookieconsent. You can add this attribute to any other button or link to open the dialog from there.
+The **Cookie preferences** link opens the dialog with the `data-cc="show-preferencesModal"` attribute of vanilla-cookieconsent. You can add this attribute to any other button or link to open the dialog from there. The default link has the `d-none` class, and `cookieConsent.js` removes this class from every element with the `data-cc="show-preferencesModal"` attribute once the banner has started. Add the `d-none` class to your own element too if it should stay hidden until then.
 
 All of these files are part of the bundles that are defined in `bundles.json`, so the bundles have to be updated after you change them. See [Bundling & Minifying](Infrastructure-Core-Mvc-Bundling-Minifying-Compiling).
 
@@ -192,13 +194,16 @@ The texts of the banner come from the localization source of the application, so
 | `CookieConsent_AnalyticsTitle`, `CookieConsent_AnalyticsDescription` | Title and description of the analytics category. |
 | `CookieConsent_MarketingTitle`, `CookieConsent_MarketingDescription` | Title and description of the marketing category. |
 
+`CookieConsent_Description`, `CookieConsent_PreferencesDescription` and the descriptions of the categories can contain HTML, such as a link to your cookie policy. This HTML is sanitized with DOMPurify before it is shown, and only the tags and attributes in `allowedHtml` in `cookieConsent.js` are kept. The other texts are shown as plain text.
+
 Change these texts in the localization files, or from the **Languages** page, if you need a different wording. For example, if your application does not use marketing cookies, remove the `marketing` category and update `CookieConsent_Description`.
 
 ## Upgrading from an Earlier Version
 
 Earlier versions used the [cookieconsent](https://github.com/osano/cookieconsent) package, which only showed a message with a **Got it!** button. If you upgrade an existing project, note the following changes:
 
-- The `cookieconsent` package is replaced by `vanilla-cookieconsent` in `package.json`. In `bundles.json`, `cookieconsent/build/cookieconsent.min.js` is replaced by `vanilla-cookieconsent/dist/cookieconsent.umd.js`, and `cookieconsent/build/cookieconsent.min.css` is replaced by `vanilla-cookieconsent/dist/cookieconsent.css`. `cookie-consent.less` is also added to the `app-layout-libs` style bundle.
+- The `cookieconsent` package is replaced by `vanilla-cookieconsent` in `package.json`. In `bundles.json`, `cookieconsent/build/cookieconsent.min.js` is replaced by `vanilla-cookieconsent/dist/cookieconsent.umd.js`, and `cookieconsent/build/cookieconsent.min.css` is replaced by `vanilla-cookieconsent/dist/cookieconsent.css`. `cookie-consent.less` is also added to the `app-layout-libs` style bundle, and `cookieConsent.js` is removed from the `install-page-scripts` bundle.
+- `dompurify` is added to `package.json`, and `node_modules/dompurify/dist/purify.min.js` is added after `cookieconsent.umd.js` to the `account-layout-libs` and `app-layout-libs` script bundles in `bundles.json`. It sanitizes the HTML in the banner texts. Without it, the HTML in these texts, such as a link, is shown as escaped text.
 - `wwwroot/Common/Scripts/cookieConsent.js` is rewritten. If you changed the old file, apply your changes to the new `configuration` object.
 - The `.cc-window`, `.cc-btn` and `.cc-message` styles in `cookie-consent.less` are replaced by the variables of vanilla-cookieconsent.
 - `Views/Shared/_CookiePreferencesLink.cshtml` is new and is added to the footers of all themes and to `Views/Account/_Layout.cshtml`. If you changed these views, add the partial to them.

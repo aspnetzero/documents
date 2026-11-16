@@ -53,9 +53,11 @@ The browser shows a desktop notification only if the user has allowed notificati
 | Blocked | *"Desktop notifications are blocked for this browser. You can allow them from the browser's site settings."* |
 | Not supported | *"This browser does not support desktop notifications."* |
 
-The permission belongs to the browser, not to the user account. It is not saved to the server, so the user allows desktop notifications separately on each browser and device. If the user has blocked notifications, the browser does not show the prompt again. The user has to allow notifications from the site settings of the browser.
+The permission belongs to the browser, not to the user account. It is not saved to the server, so the user allows desktop notifications separately on each browser. If the user has blocked notifications, the browser does not show the prompt again. The user has to allow notifications from the site settings of the browser.
 
-> Browsers only allow notifications on secure (HTTPS) pages. `localhost` is treated as secure, so desktop notifications also work during local development.
+Desktop notifications are supported on desktop browsers only. Mobile browsers, such as Chrome for Android, only show notifications that come from a service worker. ASP.NET Zero does not use a service worker for desktop notifications, so on these browsers the dialog can show desktop notifications as enabled, but no notification appears.
+
+> Browsers only allow notifications on secure (HTTPS) pages. `localhost` is treated as secure, so desktop notifications also work during local development. On a page that is not secure, the dialog shows desktop notifications as blocked or not supported, depending on the browser, and allowing them from the site settings of the browser does not help.
 
 ### How desktop notifications work
 
