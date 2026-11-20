@@ -90,6 +90,19 @@ All notifications of the user are listed in this page. We can delete and mark a 
 
 <img src="images/notifications-list-core-4.png" alt="Notification list" class="img-thumbnail" />
 
+## Upgrading from an Earlier Version
+
+Earlier versions showed desktop notifications with the [Push.js](https://github.com/Nickersoft/push.js) package, which is archived and no longer maintained. If you upgrade an existing project, make the following changes:
+
+- In `angular.json`, remove `node_modules/push.js/bin/push.js` from the `scripts` of the `build` target. If your `test` target still uses Karma, remove it from the `scripts` of the `test` target too. Also remove `push.js` from `allowedCommonJsDependencies`.
+- Remove the `push.js` package from `package.json` and run `pnpm install`.
+- Add `src/shared/helpers/DesktopNotificationHelper.ts`.
+- In `src/app/shared/layout/notifications/UserNotificationHelper.ts`, remove the `push.js` import and replace the `Push.default.create` call in the `show` method with a `DesktopNotificationHelper.show` call. If you changed the options of the old call, apply your changes to the new call. The `timeout` option is replaced by `autoCloseDelay`, and the click behaviour is in the `show` method of `DesktopNotificationHelper`.
+- Add the **Desktop Notifications** section to `notification-settings-modal.component.html` and `notification-settings-modal.component.ts` in the same folder.
+- Add the `DesktopNotifications`, `DesktopNotifications_Definition`, `DesktopNotifications_Enable`, `DesktopNotifications_Granted`, `DesktopNotifications_Denied` and `DesktopNotifications_NotSupported` localization keys to the localization files in the `Localization/AbpZeroTemplate` folder of the `*.Core` project. ASP.NET Zero only adds them to the English file, `AbpZeroTemplate.xml`, so other languages show the English texts until you translate them.
+
+Earlier versions showed a desktop notification only if the permission was already granted, and had no way to ask for it. Now users can allow desktop notifications from the notification settings dialog. Users who already allowed notifications for your site do not need to do anything.
+
 ## Next
 
 - [Chat](Features-Angular-Chat)

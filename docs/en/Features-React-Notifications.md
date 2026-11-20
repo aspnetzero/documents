@@ -90,6 +90,18 @@ All notifications of the user are listed in this page. We can delete and mark a 
 
 <img src="images/notifications-list-core-4.png" alt="Notification list" class="img-thumbnail" />
 
+## Upgrading from an Earlier Version
+
+Earlier versions showed desktop notifications with the [Push.js](https://github.com/Nickersoft/push.js) package, which is archived and no longer maintained. If you upgrade an existing project, make the following changes:
+
+- Remove the `push.js` package from `package.json` and run `pnpm install`.
+- Add `src/lib/desktop-notification.ts`.
+- In `src/pages/admin/notifications/utils.ts`, remove the `push.js` import and replace the `Push.create` call in the `showUiAndDesktopNotification` function with a `showDesktopNotification` call. If you changed the options of the old call, apply your changes to the new call. The `timeout` option is replaced by `DESKTOP_NOTIFICATION_AUTO_CLOSE_DELAY`, and the click behaviour is in the `showDesktopNotification` function.
+- Add the **Desktop Notifications** section to `src/pages/admin/notifications/NotificationSettingsModal.tsx`.
+- Add the `DesktopNotifications`, `DesktopNotifications_Definition`, `DesktopNotifications_Enable`, `DesktopNotifications_Granted`, `DesktopNotifications_Denied` and `DesktopNotifications_NotSupported` localization keys to the localization files in the `Localization/AbpZeroTemplate` folder of the `*.Core` project. ASP.NET Zero only adds them to the English file, `AbpZeroTemplate.xml`, so other languages show the English texts until you translate them.
+
+Earlier versions showed a desktop notification only if the permission was already granted, and had no way to ask for it. Now users can allow desktop notifications from the notification settings dialog. Users who already allowed notifications for your site do not need to do anything.
+
 ## Next
 
 - [Chat](Features-React-Chat)

@@ -90,6 +90,20 @@ All notifications of user are listed in this page.
 
 <img src="images/notifications-list-core-3.png" alt="Notification list" class="img-thumbnail" />
 
+## Upgrading from an Earlier Version
+
+Earlier versions showed desktop notifications with the [Push.js](https://github.com/Nickersoft/push.js) package, which is archived and no longer maintained. If you upgrade an existing project, make the following changes:
+
+- In `bundles.json`, remove `node_modules/push.js/bin/push.js` from the `app-layout-libs` script bundle, and add `wwwroot/Common/Scripts/desktopNotification.js` to the `common-scripts` and `install-page-scripts` bundles.
+- Remove the `push.js` package from `package.json`.
+- Add `wwwroot/Common/Scripts/desktopNotification.js`.
+- In `wwwroot/Common/Scripts/appUserNotificationHelper.js`, replace the `Push.create` call in the `show` function with an `app.desktopNotification.show` call. If you changed the options of the old call, apply your changes to the new call. The `timeout` option is replaced by the `autoCloseDelay` variable of `desktopNotification.js`, and the click behaviour is in its `show` function.
+- Add the **Desktop Notifications** section to `Areas/AppAreaName/Views/Notifications/_SettingsModal.cshtml` and `wwwroot/view-resources/Areas/AppAreaName/Views/Notifications/_SettingsModal.js`.
+- Add the `DesktopNotifications`, `DesktopNotifications_Definition`, `DesktopNotifications_Enable`, `DesktopNotifications_Granted`, `DesktopNotifications_Denied` and `DesktopNotifications_NotSupported` localization keys to the localization files in the `Localization/AbpZeroTemplate` folder of the `*.Core` project. ASP.NET Zero only adds them to the English file, `AbpZeroTemplate.xml`, so other languages show the English texts until you translate them.
+- Re-create the bundles with `npm run create-bundles`, or with `npm run build` before you publish. Both commands also run `pnpm install`, so the `push.js` package is removed from `node_modules`. See [Bundling & Minifying](Infrastructure-Core-Mvc-Bundling-Minifying-Compiling).
+
+Earlier versions asked for the permission of the browser when the first notification was received. Now the permission is asked only when the user clicks **Enable desktop notifications** in the notification settings dialog. Users who already allowed notifications for your site do not need to do anything.
+
 ## Next
 
 - [Chat](Features-Mvc-Core-Chat)

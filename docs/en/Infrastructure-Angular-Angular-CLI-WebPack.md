@@ -34,7 +34,7 @@ The unit tests of the Angular application run with [Vitest](https://vitest.dev/)
 pnpm test
 ```
 
-All files that end with `.spec.ts` or `.test.ts` are tests. When you run the command in a terminal, Vitest keeps watching the files and runs the tests again after every change. You can pass the following options to the command:
+All files that end with `.spec.ts` are tests. When you run the command in a terminal, Vitest keeps watching the files and runs the tests again after every change. You can pass the following options to the command:
 
 | Command | Description |
 |---------|-------------|
@@ -50,9 +50,11 @@ See the [testing guide](https://angular.dev/guide/testing) of Angular for the ot
 |------|-------------|
 | `angular.json` | The `test` target uses the `@angular/build:unit-test` builder with the `vitest` runner. It builds the tests with the `testing` build configuration, which does not include the global `styles`, `scripts` and `assets` of the application. |
 | `src/test-setup.ts` | Runs before the tests. It loads the global `abp.js` script, so the `abp` APIs (such as `abp.setting` and `abp.localization`) can be used in tests. |
-| `src/tsconfig.spec.json` | The TypeScript configuration of the tests. It includes the global functions of Vitest, so `describe`, `it`, `expect` and `vi` can be used without importing them. |
+| `src/tsconfig.spec.json` | The TypeScript configuration of the tests. It includes the `.spec.ts` files and the global functions of Vitest, so `describe`, `it`, `expect` and `vi` can be used without importing them. |
 
 The global `scripts` of `angular.json` are not loaded in tests. If the code that you test uses another global script, add its path to the `globalScripts` array in `src/test-setup.ts`.
+
+> The `@angular/build:unit-test` builder also finds the files that end with `.test.ts`, but `src/tsconfig.spec.json` only includes `**/*.spec.ts`. So a `.test.ts` file is not type-checked, and if it imports from `@angular/core`, for example to use `TestBed`, the tests fail to build with a *File '...' not found in TypeScript compilation* error. To use the `.test.ts` extension, add `"**/*.test.ts"` to the `include` array of `src/tsconfig.spec.json`.
 
 ### Migrating tests from Jasmine
 
