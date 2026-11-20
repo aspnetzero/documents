@@ -112,7 +112,18 @@ view-product-modal.component.ts                      ← yours
 On **v16.0+** projects the create/edit component also gets a `.custom-fields.ts` file (named
 `create-or-edit-product.custom-fields.ts` for the full page variant). It is generated once and never
 overwritten, and it holds the form fields and validation rules that you add to the generated form. See the
-**Adding a Custom Form Field** example below. Multi-lingual entities do not get this file.
+**Adding a Custom Form Field** example below.
+
+Two create/edit components do not get this file:
+
+- **Multi-lingual entities.** Their create/edit component keeps Reactive Forms.
+- **Master-detail child entities.** The create or edit modal that the master page opens
+  (`master-detail-child-<master>-create-or-edit-<child>-modal.component.ts`, generated in the master entity's
+  folder) is regenerated in full: it has no `.custom-fields.ts` file, no `.component.base.ts` split and no
+  `az:begin` slots. To add a field to it, add the property to the child entity in Power Tools, regenerate the
+  child entity, and then regenerate the master entity. The modal is then generated with the new field and its
+  validation rules. If the child entity also has its own page, the create or edit modal of that page is a normal
+  one and gets the file, but the fields you add there do not appear in the modal of the master page.
 
 ### Customizing in the Subclass
 

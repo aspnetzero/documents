@@ -16,7 +16,7 @@ The solution contains these shared helpers for Signal Forms:
 
 | File | Contents |
 |---|---|
-| `src/shared/utils/forms/form-model.ts` | `toFormModel` builds a form model from an NSwag DTO. `fromFormModel` removes the empty values from a form model. |
+| `src/shared/utils/forms/form-model.ts` | `toFormModel` builds a form model from an NSwag DTO. `fromFormModel` removes the empty values (`null`, `undefined` and `''`) from a form model, so that the server receives `null` for them. |
 | `src/shared/utils/validation/signal-form-validators.ts` | The `passwordComplexity` and `mustMatch` rules, and `passwordComplexityErrorDefs` for their messages. |
 | `src/shared/utils/validation-messages.component.ts` | `<validation-messages>` shows the errors of a Signal Forms field with `[field]`. `[formCtrl]` still works for `ngModel`. |
 
@@ -124,7 +124,7 @@ To migrate a form:
 2. **Declare the form and its rules.** Call `form(model, schema, { submission })` and move every validation attribute of the template into the schema. See [Rules Instead of Attributes](#rules-instead-of-attributes).
 3. **Bind the template.** Connect the `form` element with `[formRoot]`, and bind each input with `[formField]`. Remove the `name`, `required`, `maxlength`, `pattern` and `[disabled]` attributes and the `#x="ngModel"` references: `[formField]` writes the matching native attributes for you.
 4. **Show the messages.** Replace `<validation-messages [formCtrl]="...">` with `<validation-messages [field]="productForm.name" />`.
-5. **Load and save.** Call `productForm().reset(...)` in `show()` before the form is displayed, so every open starts without validation messages. In `save()`, create the DTO with `ProductEditDto.fromJS(this.product())`. Never send the plain form model to a service proxy.
+5. **Load and save.** Call `productForm().reset(...)` in `show()` before the form is displayed, so every open starts without validation messages. In `save()`, create the DTO with `ProductEditDto.fromJS(this.product())`. Never send the plain form model to a service proxy. Because text fields start as `''`, plain `fromJS` sends an optional text field that is left empty as `''`, while a template-driven form sent `null` for a field that the user never touched. When the server must receive `null` for an empty optional field, create the DTO with `ProductEditDto.fromJS(fromFormModel(this.product()))`. For example, a property with `[EmailAddress]` rejects `''` but accepts `null`. The code that Power Tools generates always saves this way.
 6. **Update the imports.** Import `FormField`, `FormRoot` and `ValidationMessagesComponent`, and remove `FormsModule` when nothing else in the component uses `ngModel`.
 
 A nested DTO needs its own `toFormModel` call, because `toFormModel` normalizes one level:
@@ -198,7 +198,7 @@ Power Tools chooses the form style by the version of your project:
 
 Pages that you generated before the upgrade keep working. When you regenerate an entity, its create and edit components move to Signal Forms, and the code in your `.component.ts` subclasses and in the `az:begin` / `az:end` regions is preserved. Update that code for the new form:
 
-- Markup in a `form-fields` region that uses `[(ngModel)]` must use `[formField]`, because the regenerated component no longer imports `FormsModule`. Add each custom field and its rules to the `.custom-fields.ts` file that Power Tools generates next to the component. See [Custom Code - Angular](Power-Tools-Custom-Code-Angular.md).
+- Markup in a `form-fields` region that uses `[(ngModel)]` must use `[formField]`, because the regenerated component no longer imports `FormsModule`. Add each custom field and its rules to the `.custom-fields.ts` file that Power Tools generates next to the component. Multi-lingual entities and the create or edit modal of a master-detail child entity do not get this file. The master-detail child modal has no `form-fields` region either, because Power Tools regenerates it in full: add the field to the child entity in Power Tools and regenerate the child entity and then the master entity. See [Custom Code - Angular](Power-Tools-Custom-Code-Angular.md).
 - Code that reads or writes the entity object, such as `this.product.name`, must read `this.product().name` and write `this.productForm.name().value.set(...)`.
 
 If you customized the `CreateEditTemplate` or `LookupCreateModalTemplate` templates, your `.custom.txt` files were written for template-driven forms. Re-create them from the new default templates after the upgrade. See [How to Create & Edit Power Tools Templates](How-To-Create-Edit-Power-Tools-Templates.md).
