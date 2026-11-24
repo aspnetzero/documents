@@ -18,25 +18,30 @@ We are starting from creating a new component, named
 
 ```typescript
 import { Component, ElementRef, inject, signal, viewChild, output } from '@angular/core';
+import { email, form, FormField, FormRoot, maxLength, required } from '@angular/forms/signals';
 import { ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
 import { PersonServiceProxy, CreatePersonInput } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { finalize } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
 import { ButtonBusyDirective } from '@shared/utils/button-busy.directive';
+import { ValidationMessagesComponent } from '@shared/utils/validation-messages.component';
+import { toFormModel } from '@shared/utils/forms/form-model';
+
+const toPersonFormModel = (person: CreatePersonInput) =>
+    toFormModel(person, { name: '', surname: '', emailAddress: '' });
 
 @Component({
     selector: 'createPersonModal',
     templateUrl: './create-person-modal.component.html',
     standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
+        FormField,
+        FormRoot,
         ModalModule,
         LocalizePipe,
         ButtonBusyDirective,
+        ValidationMessagesComponent,
     ],
 })
 export class CreatePersonModalComponent extends AppComponentBase {
@@ -47,17 +52,31 @@ export class CreatePersonModalComponent extends AppComponentBase {
     modal = viewChild.required<ModalDirective>('modal');
     nameInput = viewChild<ElementRef>('nameInput');
 
-    person = signal(new CreatePersonInput());
+    person = signal(toPersonFormModel(new CreatePersonInput()));
     active = signal(false);
     saving = signal(false);
+
+    personForm = form(
+        this.person,
+        (person) => {
+            required(person.name);
+            maxLength(person.name, 32);
+            required(person.surname);
+            maxLength(person.surname, 32);
+            required(person.emailAddress);
+            maxLength(person.emailAddress, 255);
+            email(person.emailAddress);
+        },
+        { submission: { action: async () => this.save() } }
+    );
 
     constructor() {
         super();
     }
 
     show(): void {
+        this.personForm().reset(toPersonFormModel(new CreatePersonInput()));
         this.active.set(true);
-        this.person.set(new CreatePersonInput());
         this.modal().show();
     }
 
@@ -66,14 +85,16 @@ export class CreatePersonModalComponent extends AppComponentBase {
     }
 
     save(): void {
+        const input = CreatePersonInput.fromJS(this.person());
+
         this.saving.set(true);
         this._personService
-            .createPerson(this.person())
+            .createPerson(input)
             .pipe(finalize(() => this.saving.set(false)))
             .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
-                this.modalSave.emit(this.person());
+                this.modalSave.emit(input);
             });
     }
 
@@ -99,10 +120,21 @@ Let me explain some parts of this class:
   creating the person.
 - It focuses to **name** input when modal is shown.
 
-The code is simple and easy to understand except a small hack: an active
-flag is used to reset validation for Angular view (explained in
-angular's
-[documentation](https://angular.io/docs/ts/latest/cookbook/form-validation.html)).
+The form is built with Angular
+[Signal Forms](https://angular.dev/guide/forms/signals/overview):
+
+- **person** is a signal that holds the form model. `toFormModel` turns
+  the `CreatePersonInput` DTO into a plain object and gives the text
+  fields an empty string as their initial value.
+- **personForm** declares the validation rules (`required`, `maxLength`,
+  `email`) in the component instead of in the HTML. The `submission`
+  option calls `save()` when the form is submitted.
+- **show()** resets the form, so the modal always opens with empty
+  fields and no validation messages.
+- **save()** creates a `CreatePersonInput` from the form model with
+  `fromJS` and sends it to the server.
+- The **active** flag removes the form from the page while the modal
+  is closed.
 
 As declared in the component, we are creating the
 **create-person-modal.component.html** file in the same folder as shown
@@ -122,7 +154,7 @@ below:
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             @if(active()){
-                <form #personForm="ngForm" novalidate (ngSubmit)="save()">
+                <form [formRoot]="personForm">
                     <div class="modal-header">
                         <h4 class="modal-title">
                             <span>{{ 'CreateNewPerson' | localize }}</span>
@@ -137,10 +169,8 @@ below:
                                 id="name"
                                 class="form-control"
                                 type="text"
-                                name="name"
-                                [(ngModel)]="person().name"
-                                required
-                                maxlength="32" />
+                                [formField]="personForm.name" />
+                            <validation-messages [field]="personForm.name" />
                         </div>
 
                         <div class="mb-3">
@@ -149,10 +179,8 @@ below:
                                 id="surname"
                                 class="form-control"
                                 type="text"
-                                name="surname"
-                                [(ngModel)]="person().surname"
-                                required
-                                maxlength="32" />
+                                [formField]="personForm.surname" />
+                            <validation-messages [field]="personForm.surname" />
                         </div>
 
                         <div class="mb-3">
@@ -161,11 +189,8 @@ below:
                                 id="emailAddress"
                                 class="form-control"
                                 type="email"
-                                name="emailAddress"
-                                [(ngModel)]="person().emailAddress"
-                                required
-                                maxlength="255"
-                                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" />
+                                [formField]="personForm.emailAddress" />
+                            <validation-messages [field]="personForm.emailAddress" />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -175,7 +200,7 @@ below:
                         <button
                             type="submit"
                             class="btn btn-primary"
-                            [disabled]="!personForm.form.valid || saving()"
+                            [disabled]="!personForm().valid() || saving()"
                             [buttonBusy]="saving()"
                             [busyText]="l('SavingWithThreeDot')">
                             <i class="fa fa-save"></i>
@@ -196,7 +221,11 @@ Open PhoneBookDemo.xml (the **default**, **English** localization dictionary) an
 ```
 
 Most of this code is similar for all modals. The important part is how
-we binded model to the view using the ngModel directive. As like all
+we bound the model to the view: the `form` element is connected to
+**personForm** with `[formRoot]`, each input is bound to its field with
+`[formField]`, and `<validation-messages>` shows the errors of that
+field. The validation rules are declared in the component, so the inputs
+do not need `name`, `required` or `maxlength` attributes. As like all
 components, Angular requires to relate it to a module. We should update it to
 **imports** array of **phonebook.component.ts** as like shown below:
 

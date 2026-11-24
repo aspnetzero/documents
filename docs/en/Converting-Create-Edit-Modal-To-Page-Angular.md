@@ -1,864 +1,516 @@
 # Converting Create/Edit Modal to Page
 
-In this document we will explain how to convert AspNet Zero's tenant create & edit modals to regular Angular pages.
+This document explains how to turn the tenant create and edit modals of the ASP.NET Zero Angular UI into regular pages. You can apply the same steps to any other create or edit modal.
+
+> This document is written for v16.0 and later, where the Angular forms use Signal Forms. In v15.5 and earlier, the tenant modals use template-driven forms (`ngModel`) with the `validateEqual` and password complexity directives. The steps are the same for those versions: keep the form of your modal as it is and change only the modal-specific parts. To move a form to Signal Forms, see [Migrating to Signal Forms](Migrating-To-Signal-Forms-Angular.md).
 
 ## Create Tenant
 
-### Create tenant page html
+### Create Tenant Page HTML
 
-First, create a new html page named **create-tenant.component.html** with the content below. This is an empty page template for AspNet Zero's Angular pages.
+Create a file named **create-tenant.component.html** in the `src/app/admin/tenants` folder, next to **create-tenant-modal.component.html**, with the content below. This is the layout of an ASP.NET Zero page: a `sub-header` with the page title and breadcrumbs, and a card for the content.
 
-````html
+```html
 <div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"CreateNewTenant" | localize}}</span>
-                    </h3>
-                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                    <span class="kt-subheader__desc">
-                        {{"CreateTenantHeaderInfo" | localize}}
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                    <p>PHONE BOOK CONTENT COMES HERE!</p>
-                </div>
-            </div>
+    <sub-header [title]="'CreateNewTenant' | localize" [breadcrumbs]="breadcrumbs" />
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
         </div>
     </div>
 </div>
-````
+```
 
-After doing that, copy the form element from **create-tenant-modal.component.html** into div with "**kt-portlet__body**" class. Now, there are still modal related html code in our file, so we need to remove them.
+Copy the `form` element of **create-tenant-modal.component.html** into the `card` element. Then change the parts that belong to the modal:
 
-First, remove the html item with **modal-header** class since we don't need it anymore.
+1. Remove the `@if (active())` block around the form. A page shows its form as soon as it opens.
+2. Remove the element with the `modal-header` class. The `sub-header` shows the title now.
+3. Change the `modal-body` class to `card-body`.
+4. Change the `modal-footer` class to `card-footer d-flex justify-content-end gap-3`.
 
-Now, move all content of the div with class **modal-body** into the **form** tag. After that, we can remove the div with class **modal-body**. 
+Leave the fields as they are. They are bound with `[formField]`, and the rules of the form are declared in the component, including `passwordComplexity` and `mustMatch` for the admin password. The template needs no validation attributes.
 
-Finally, change the class of the div which contains Save and Cancel buttons from **modal-footer** to **kt-margin-t-40**.
+Here is the final version of **create-tenant.component.html**:
 
-Here is final version of **create-tenant.component.html**:
-
-````html
+```html
 <div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"CreateNewTenant" | localize}}</span>
-                    </h3>
-                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                    <span class="kt-subheader__desc">
-                        {{"CreateTenantHeaderInfo" | localize}}
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                    <form #tenantCreateForm="ngForm" role="form" novalidate class="form-validation" *ngIf="active"
-                        (submit)="save()">
-                        <div class="form-group">
-                            <label for="TenancyName">{{"TenancyName" | localize}} *</label>
-                            <input id="TenancyName" #tenancyNameInput="ngModel" class="form-control" type="text"
-                                [ngClass]="{'edited':tenant.tenancyName}" name="tenancyName"
-                                [(ngModel)]="tenant.tenancyName" #tenancyName="ngModel" required maxlength="64"
-                                pattern="^[a-zA-Z][a-zA-Z0-9_-]{1,}$">
-                            <validation-messages [formCtrl]="tenancyNameInput"></validation-messages>
-                        </div>
-                        <div>
-                            <span class="help-block text-danger"
-                                *ngIf="!tenancyName.valid && !tenancyName.pristine">{{"TenantName_Regex_Description" | localize}}</span>
-                        </div>
+    <sub-header [title]="'CreateNewTenant' | localize" [breadcrumbs]="breadcrumbs" />
 
-                        <div class="form-group">
-                            <label for="Name">{{"TenantName" | localize}} *</label>
-                            <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control"
-                                [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
-                            <validation-messages [formCtrl]="nameInput"></validation-messages>
-                        </div>
-
-                        <div class="kt-checkbox-list">
-                            <label class="kt-checkbox">
-                                <input id="CreateTenant_UseHostDb" type="checkbox" name="UseHostDb"
-                                    [(ngModel)]="useHostDb">
-                                {{"UseHostDatabase" | localize}}
-                                <span></span>
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <form [formRoot]="tenantForm" role="form" class="form-validation">
+                <div class="card-body">
+                    <div class="mb-5">
+                        <label class="form-label required" for="TenancyName">{{ 'TenancyName' | localize }}</label>
+                        <input
+                            id="TenancyName"
+                            class="form-control"
+                            type="text"
+                            [ngClass]="{ edited: tenant().tenancyName }"
+                            [formField]="tenantForm.tenancyName" />
+                        <validation-messages
+                            [field]="tenantForm.tenancyName"
+                            [customMessages]="{ pattern: 'TenancyName_Regex_Description' }" />
+                    </div>
+                    <div class="mb-5">
+                        <label class="form-label required" for="Name">{{ 'Name' | localize }}</label>
+                        <i
+                            class="flaticon2-information icon-md text-muted ms-1"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            [title]="'TenantNameTooltip' | localize"></i>
+                        <input
+                            id="Name"
+                            type="text"
+                            class="form-control"
+                            [ngClass]="{ edited: tenant().name }"
+                            [formField]="tenantForm.name" />
+                        <validation-messages
+                            [field]="tenantForm.name"
+                            [customMessages]="{ pattern: 'Name_Regex_Description' }" />
+                    </div>
+                    <label class="form-check form-check-custom form-check-solid py-1 mb-5">
+                        <input
+                            #useHostDbInput
+                            id="CreateTenant_UseHostDb"
+                            type="checkbox"
+                            [checked]="useHostDb()"
+                            (change)="useHostDb.set(useHostDbInput.checked)"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{ 'UseHostDatabase' | localize }}
+                        </span>
+                    </label>
+                    @if (!useHostDb()) {
+                        <div class="mb-5">
+                            <label class="form-label required" for="DatabaseConnectionString">
+                                {{ 'DatabaseConnectionString' | localize }}
                             </label>
+                            <input
+                                id="DatabaseConnectionString"
+                                type="text"
+                                class="form-control"
+                                [formField]="tenantForm.connectionString"
+                                [ngClass]="{ edited: tenant().connectionString }" />
+                            <validation-messages [field]="tenantForm.connectionString" />
                         </div>
-
-                        <div class="form-group" *ngIf="!useHostDb">
-                            <label for="DatabaseConnectionString">{{"DatabaseConnectionString" | localize}} *</label>
-                            <input id="DatabaseConnectionString" #connectionStringInput="ngModel" type="text"
-                                name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString"
-                                [ngClass]="{'edited':tenant.connectionString}" required maxlength="1024">
-                            <validation-messages [formCtrl]="connectionStringInput"></validation-messages>
+                    }
+                    <div class="mb-5">
+                        <label class="form-label required" for="AdminName">{{ 'AdminName' | localize }}</label>
+                        <input
+                            id="AdminName"
+                            type="text"
+                            class="form-control"
+                            [formField]="tenantForm.adminName"
+                            [ngClass]="{ edited: tenant().adminName }" />
+                        <validation-messages
+                            [field]="tenantForm.adminName"
+                            [customMessages]="{ pattern: 'AdminName_Regex_Description' }" />
+                    </div>
+                    <div class="mb-5">
+                        <label class="form-label required" for="AdminSurname">
+                            {{ 'AdminSurname' | localize }}
+                        </label>
+                        <input
+                            id="AdminSurname"
+                            type="text"
+                            class="form-control"
+                            [formField]="tenantForm.adminSurname"
+                            [ngClass]="{ edited: tenant().adminSurname }" />
+                        <validation-messages
+                            [field]="tenantForm.adminSurname"
+                            [customMessages]="{ pattern: 'AdminSurname_Regex_Description' }" />
+                    </div>
+                    <div class="mb-5">
+                        <label class="form-label required" for="AdminEmailAddress">
+                            {{ 'AdminEmailAddress' | localize }}
+                        </label>
+                        <input
+                            id="AdminEmailAddress"
+                            type="email"
+                            class="form-control"
+                            [formField]="tenantForm.adminEmailAddress"
+                            [ngClass]="{ edited: tenant().adminEmailAddress }" />
+                        <validation-messages
+                            [field]="tenantForm.adminEmailAddress"
+                            [customMessages]="{
+                                pattern: 'AdminEmailAddress_Regex_Description',
+                            }" />
+                    </div>
+                    <label class="form-check form-check-custom form-check-solid py-1 mb-5">
+                        <input
+                            #setRandomPasswordInput
+                            id="CreateTenant_SetRandomPassword"
+                            type="checkbox"
+                            [checked]="setRandomPassword()"
+                            (change)="setRandomPassword.set(setRandomPasswordInput.checked)"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{ 'SetRandomPassword' | localize }}
+                        </span>
+                    </label>
+                    @if (!setRandomPassword()) {
+                        <div class="mb-5">
+                            <label class="form-label" for="adminPassword">{{ 'AdminPassword' | localize }}</label>
+                            <input
+                                id="adminPassword"
+                                type="password"
+                                class="form-control"
+                                [formField]="tenantForm.adminPassword"
+                                [ngClass]="{ edited: tenant().adminPassword }" />
+                            <validation-messages
+                                [field]="tenantForm.adminPassword"
+                                [errorDefs]="passwordComplexityErrorDefs" />
                         </div>
-
-                        <div class="form-group">
-                            <label for="AdminEmailAddress">{{"AdminEmailAddress" | localize}} *</label>
-                            <input id="AdminEmailAddress" #adminEmailAddressInput="ngModel" type="email"
-                                name="AdminEmailAddress" class="form-control" [(ngModel)]="tenant.adminEmailAddress"
-                                [ngClass]="{'edited':tenant.adminEmailAddress}" required
-                                pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" maxlength="256">
-                            <validation-messages [formCtrl]="adminEmailAddressInput"></validation-messages>
+                        <div class="mb-5">
+                            <label for="AdminPasswordRepeat">{{ 'AdminPasswordRepeat' | localize }}</label>
+                            <input
+                                id="AdminPasswordRepeat"
+                                type="password"
+                                class="form-control"
+                                [formField]="tenantForm.adminPasswordRepeat"
+                                [ngClass]="{ edited: tenant().adminPasswordRepeat }" />
+                            <validation-messages
+                                [field]="tenantForm.adminPasswordRepeat"
+                                [errorDefs]="passwordComplexityErrorDefs"
+                                [customMessages]="{ mustMatch: 'PasswordsDontMatch' }" />
                         </div>
-
-                        <div class="kt-checkbox-list">
-                            <label class="kt-checkbox">
-                                <input id="CreateTenant_SetRandomPassword" type="checkbox" name="SetRandomPassword"
-                                    [(ngModel)]="setRandomPassword">
-                                {{"SetRandomPassword" | localize}}
-                                <span></span>
-                            </label>
-                        </div>
-
-                        <div class="form-group" *ngIf="!setRandomPassword">
-                            <label for="AdminPassword">{{"AdminPassword" | localize}}</label>
-                            <input id="AdminPassword" type="password" name="adminPassword" class="form-control"
-                                id="adminPassword" [(ngModel)]="tenant.adminPassword"
-                                [ngClass]="{'edited':tenant.adminPassword}" [required]="!setRandomPassword"
-                                #adminPassword="ngModel" validateEqual="adminPasswordRepeat" reverse="true"
-                                maxlength="32" [requireDigit]="passwordComplexitySetting.requireDigit"
-                                [requireLowercase]="passwordComplexitySetting.requireLowercase"
-                                [requireUppercase]="passwordComplexitySetting.requireUppercase"
-                                [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
-                                [requiredLength]="passwordComplexitySetting.requiredLength">
-                        </div>
-
-                        <div [hidden]="tenantCreateForm.form.valid || tenantCreateForm.form.pristine">
-                            <ul class="help-block text-danger"
-                                *ngIf="tenantCreateForm.controls['adminPassword'] && tenantCreateForm.controls['adminPassword'].errors">
-                                <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireDigit">
-                                    {{"PasswordComplexity_RequireDigit_Hint" | localize}}</li>
-                                <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireLowercase">
-                                    {{"PasswordComplexity_RequireLowercase_Hint" | localize}}</li>
-                                <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireUppercase">
-                                    {{"PasswordComplexity_RequireUppercase_Hint" | localize}}</li>
-                                <li
-                                    [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requireNonAlphanumeric">
-                                    {{"PasswordComplexity_RequireNonAlphanumeric_Hint" | localize}}</li>
-                                <li [hidden]="!tenantCreateForm.controls['adminPassword'].errors.requiredLength">
-                                    {{"PasswordComplexity_RequiredLength_Hint" | localize:passwordComplexitySetting.requiredLength}}
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="form-group" *ngIf="!setRandomPassword">
-                            <label for="AdminPasswordRepeat">{{"AdminPasswordRepeat" | localize}}</label>
-                            <input id="AdminPasswordRepeat" type="password" name="adminPasswordRepeat"
-                                class="form-control" [(ngModel)]="tenant.adminPasswordRepeat"
-                                [ngClass]="{'edited':tenant.adminPasswordRepeat}" [required]="!setRandomPassword"
-                                #adminPasswordRepeat="ngModel" [requireDigit]="passwordComplexitySetting.requireDigit"
-                                [requireLowercase]="passwordComplexitySetting.requireLowercase"
-                                [requireUppercase]="passwordComplexitySetting.requireUppercase"
-                                [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
-                                [requiredLength]="passwordComplexitySetting.requiredLength"
-                                validateEqual="adminPassword" maxlength="32">
-                        </div>
-
-                        <div [hidden]="tenantCreateForm.form.valid || tenantCreateForm.form.pristine">
-                            <ul class="help-block text-danger"
-                                *ngIf="tenantCreateForm.controls['adminPasswordRepeat'] && tenantCreateForm.controls['adminPasswordRepeat'].errors">
-                                <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireDigit">
-                                    {{"PasswordComplexity_RequireDigit_Hint" | localize}}</li>
-                                <li
-                                    [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireLowercase">
-                                    {{"PasswordComplexity_RequireLowercase_Hint" | localize}}</li>
-                                <li
-                                    [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireUppercase">
-                                    {{"PasswordComplexity_RequireUppercase_Hint" | localize}}</li>
-                                <li
-                                    [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requireNonAlphanumeric">
-                                    {{"PasswordComplexity_RequireNonAlphanumeric_Hint" | localize}}</li>
-                                <li [hidden]="!tenantCreateForm.controls['adminPasswordRepeat'].errors.requiredLength">
-                                    {{"PasswordComplexity_RequiredLength_Hint" | localize:passwordComplexitySetting.requiredLength}}
-                                </li>
-                                <li [hidden]="tenantCreateForm.controls['adminPasswordRepeat'].valid">
-                                    {{"PasswordsDontMatch" | localize}}</li>
-                            </ul>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edition">{{"Edition" | localize}}</label>
-                            <select id="edition" name="edition" class="form-control" [(ngModel)]="tenant.editionId"
-                                (change)="onEditionChange($event)">
-                                <option *ngFor="let edition of editions" [value]="edition.value">{{edition.displayText}}
+                    }
+                    <div class="mb-5">
+                        <label class="form-label" for="edition">{{ 'Edition' | localize }}</label>
+                        <select
+                            #editionSelect
+                            id="edition"
+                            class="form-select"
+                            (change)="selectEdition(editionSelect.value)">
+                            @for (edition of editions(); track edition.value) {
+                                <option [value]="edition.value" [selected]="isEditionSelected(edition)">
+                                    {{ edition.displayText }}
                                 </option>
-                            </select>
-                        </div>
-
-                        <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
-                            <label for="CreateTenant_IsUnlimited" class="kt-checkbox">
-                                <input id="CreateTenant_IsUnlimited" type="checkbox" name="IsUnlimited"
-                                    [(ngModel)]="isUnlimited" />
-                                {{"UnlimitedTimeSubscription" | localize}}
-                                <span></span>
-                            </label>
-                        </div>
-
-                        <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group"
-                            [ngClass]="{'has-error': !subscriptionEndDateIsValid()}">
-                            <label for="SubscriptionEndDate">{{"SubscriptionEndDate" | localize}}</label>
-                            <nz-date-picker nzId="SubscriptionEndDate" name="SubscriptionEndDateUtc"
-                                datePickerLuxonModifier
-                                [date]="tenant.subscriptionEndDateUtc ?? null"
-                                (dateChange)="tenant.subscriptionEndDateUtc = $event ?? undefined"
-                                [isUtc]="true" class="w-100" />
-                        </div>
-
-                        <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
-                            <label for="CreateTenant_IsInTrialPeriod" class="kt-checkbox">
-                                <input id="CreateTenant_IsInTrialPeriod" type="checkbox" name="IsInTrialPeriod"
-                                    [disabled]="isSelectedEditionFree" [(ngModel)]="tenant.isInTrialPeriod">
-                                {{"IsInTrialPeriod" | localize}}
-                                <span></span>
-                            </label>
-                        </div>
-
-                        <div class="kt-checkbox-list">
-                            <label for="CreateTenant_ShouldChangePasswordOnNextLogin" class="kt-checkbox">
-                                <input id="CreateTenant_ShouldChangePasswordOnNextLogin" type="checkbox"
-                                    name="ShouldChangePasswordOnNextLogin"
-                                    [(ngModel)]="tenant.shouldChangePasswordOnNextLogin">
-                                {{"ShouldChangePasswordOnNextLogin" | localize}}
-                                <span></span>
-                            </label>
-                            <label for="CreateTenant_SendActivationEmail" class="kt-checkbox">
-                                <input id="CreateTenant_SendActivationEmail" type="checkbox" name="SendActivationEmail"
-                                    [(ngModel)]="tenant.sendActivationEmail">
-                                {{"SendActivationEmail" | localize}}
-                                <span></span>
-                            </label>
-                            <label for="CreateTenant_IsActive" class="kt-checkbox">
-                                <input id="CreateTenant_IsActive" type="checkbox" name="IsActive"
-                                    [(ngModel)]="tenant.isActive">
-                                {{"Active" | localize}}
-                                <span></span>
-                            </label>
-                        </div>
-                        <div class="kt-margin-t-40">
-                            <button type="button" [disabled]="saving" class="btn btn-secondary"
-                                (click)="close()">{{"Cancel" | localize}}</button>
-                            <button type="submit" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"
-                                class="btn btn-primary"
-                                [disabled]="!tenantCreateForm.form.valid || saving || !subscriptionEndDateIsValid()"><i
-                                    class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
-                        </div>
-                    </form>
+                            }
+                        </select>
+                    </div>
+                    <label
+                        class="form-check form-check-custom form-check-solid py-1"
+                        [hidden]="!isSubscriptionFieldsVisible()">
+                        <input
+                            #isUnlimitedInput
+                            id="CreateTenant_IsUnlimited"
+                            type="checkbox"
+                            [checked]="isUnlimited()"
+                            (change)="changeIsUnlimited(isUnlimitedInput.checked)"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{ 'UnlimitedTimeSubscription' | localize }}
+                        </span>
+                    </label>
+                    <div
+                        [hidden]="isUnlimited() || !isSubscriptionFieldsVisible()"
+                        class="mb-5 mt-5"
+                        [ngClass]="{ 'has-error': tenantForm.subscriptionEndDateUtc().invalid() }">
+                        <label for="SubscriptionEndDate">{{ 'SubscriptionEndDate' | localize }}</label>
+                        <nz-date-picker
+                            nzId="SubscriptionEndDate"
+                            datePickerLuxonModifier
+                            [date]="tenant().subscriptionEndDateUtc"
+                            (dateChange)="tenantForm.subscriptionEndDateUtc().value.set($event)"
+                            [isUtc]="true"
+                            class="w-100" />
+                    </div>
+                    <label
+                        class="form-check form-check-custom form-check-solid py-1"
+                        [hidden]="isUnlimited() || !isSubscriptionFieldsVisible()">
+                        <input
+                            id="CreateTenant_IsInTrialPeriod"
+                            type="checkbox"
+                            [formField]="tenantForm.isInTrialPeriod"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{ 'IsInTrialPeriod' | localize }}
+                        </span>
+                    </label>
+                    <label class="form-check form-check-custom form-check-solid py-1">
+                        <input
+                            id="CreateTenant_ShouldChangePasswordOnNextLogin"
+                            type="checkbox"
+                            [formField]="tenantForm.shouldChangePasswordOnNextLogin"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{ 'ShouldChangePasswordOnNextLogin' | localize }}
+                        </span>
+                    </label>
+                    <label class="form-check form-check-custom form-check-solid py-1">
+                        <input
+                            id="CreateTenant_SendActivationEmail"
+                            type="checkbox"
+                            [formField]="tenantForm.sendActivationEmail"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{ 'SendActivationEmail' | localize }}
+                        </span>
+                    </label>
+                    <label class="form-check form-check-custom form-check-solid py-1">
+                        <input
+                            id="CreateTenant_IsActive"
+                            type="checkbox"
+                            [formField]="tenantForm.isActive"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{ 'Active' | localize }}
+                        </span>
+                    </label>
                 </div>
-            </div>
+                <div class="card-footer d-flex justify-content-end gap-3">
+                    <button type="button" [disabled]="saving()" class="btn btn-light-primary fw-bold" (click)="close()">
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button
+                        type="submit"
+                        [buttonBusy]="saving()"
+                        [busyText]="l('SavingWithThreeDot')"
+                        class="btn btn-primary fw-bold"
+                        [disabled]="!tenantForm().valid() || saving()">
+                        <i class="fa fa-save"></i>
+                        <span>{{ 'Save' | localize }}</span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-````
+```
 
-### Create tenant page ts
+### Create Tenant Page TypeScript
 
-Create a new file next to html file we have just created using the name **create-tenant.component.ts**. Copy the content of **create-tenant-modal.component.ts** to newly created file. Change the component name from `CreateTenantModalComponent` to `CreateTenantComponent`.
+Copy **create-tenant-modal.component.ts** to a new file named **create-tenant.component.ts** in the same folder, and rename the class from `CreateTenantModalComponent` to `CreateTenantComponent`. Then make these changes:
 
-Modal page uses two methods named `show` and `onShown` which are not available in regular pages. So, we will implement `OnInit` and `AfterViewInit` in our Angular component and move the code of show method into `ngOnInit` and move the code of `onShown` into `ngAfterViewInit`. After doing that, we can delete empty `show` and `onShown` methods.
+1. **Component metadata:** Remove `selector`, because a routed page does not need one. Change `templateUrl` to `./create-tenant.component.html`, add `animations: [appModuleAnimation()]` for the router animation, and replace `AppBsModalDirective` with `SubHeaderComponent` in `imports`.
+2. **Modal members:** Remove the `modal` view child, the `modalSave` output and the `active` signal. Remove the `ModalDirective` and `AppBsModalDirective` imports.
+3. **Lifecycle:** A page has no `show` and `onShown` methods. Implement `OnInit` and `AfterViewInit`. Move the code of `show` into `ngOnInit` without the `this.modal()!.show()` call, and move the code of `onShown` into `ngAfterViewInit`. Then delete `show` and `onShown`.
+4. **Initial values:** In `init`, remove the lines that reset the form and the signals. Every time the page opens, a new component instance is created with the initial values.
+5. **Closing:** Inject `Router`, and change `close` to navigate back to the tenant list. In `save`, remove the `this.modalSave.emit(null)` call.
+6. **Breadcrumbs:** Add the `breadcrumbs` property that the `sub-header` uses.
 
-Import `OnInit` and `AfterViewInit` and move lines from `show` to `ngOnInit` and move lines from `onShown` to `ngAfterViewInit`.
+The form model, the form, its rules and the other methods stay as they are.
 
-Then, change the value of `templateUrl` from **./create-tenant-modal.component.html** to **./create-tenant.component.html**. You can also delete selector property of component definition since it is not mandatory. 
+Here is the final version of **create-tenant.component.ts**:
 
-Since we are using animation when routing to create tenant page, import `appModuleAnimation` into the component and use it as the value for `animations` of the component definition.
-
-````ts
-// other imports.
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-
-@Component({
-    templateUrl: './create-tenant.component.html',
-    animations: [appModuleAnimation()]
-})
-// component definition.
-````
-
-
-Also delete **modal** and **modalSave** properties since we don't need them anymore. Also, delete their usages in the component.
-
-When the tenant is created, instead of closing the modal, we need to redirect user to tenant list. In order to do that, inject `Router` into our component and add below line into the close method of the component.
-
-`this._router.navigate(['app/admin/tenants']);`
-
-After all, you can delete **create-tenant-modal.component.ts** from your project.
-
-Here is final version of **create-tenant.component.ts**:
-
-````ts
-import { Component, EventEmitter, Injector, Output, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+```typescript
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { disabled, form, FormField, FormRoot, hidden, maxLength, pattern, required } from '@angular/forms/signals';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
-    CommonLookupServiceProxy, CreateTenantInput,
-    PasswordComplexitySetting, ProfileServiceProxy,
-    TenantServiceProxy, SubscribableEditionComboboxItemDto
+    CommonLookupServiceProxy,
+    CreateTenantInput,
+    PasswordComplexitySetting,
+    ProfileServiceProxy,
+    TenantServiceProxy,
+    SubscribableEditionComboboxItemDto,
 } from '@shared/service-proxies/service-proxies';
 import { filter as _filter } from 'lodash-es';
-import { ModalDirective } from 'ngx-bootstrap';
 import { finalize } from 'rxjs/operators';
+import { NgClass } from '@angular/common';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { Router } from '@angular/router';
+import { BreadcrumbItem, SubHeaderComponent } from '@app/shared/common/sub-header/sub-header.component';
+import { ValidationMessagesComponent } from '../../../shared/utils/validation-messages.component';
+import {
+    mustMatch,
+    passwordComplexity,
+    passwordComplexityErrorDefs,
+} from '../../../shared/utils/validation/signal-form-validators';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerLuxonModifierDirective } from '../../../shared/utils/date-time/nz-date-picker-luxon-modifier.directive';
+import { ButtonBusyDirective } from '../../../shared/utils/button-busy.directive';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { toFormModel } from '@shared/utils/forms/form-model';
+
+const namePattern = /^[a-zA-Z][a-zA-Z0-9_-]{1,}$/;
+const emailPattern = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+const emptyTenantModel = () => ({
+    ...toFormModel(new CreateTenantInput(), {
+        tenancyName: '',
+        name: '',
+        adminName: '',
+        adminSurname: '',
+        adminEmailAddress: '',
+        adminPassword: '',
+        connectionString: '',
+    }),
+    isActive: true,
+    shouldChangePasswordOnNextLogin: true,
+    sendActivationEmail: true,
+    isInTrialPeriod: false,
+    adminPasswordRepeat: '',
+});
+
+const hasEdition = (editionId: number | null | undefined) => !!editionId && editionId > 0;
 
 @Component({
     templateUrl: './create-tenant.component.html',
-    animations: [appModuleAnimation()]
+    animations: [appModuleAnimation()],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [
+        SubHeaderComponent,
+        FormField,
+        FormRoot,
+        NgClass,
+        ValidationMessagesComponent,
+        NzDatePickerModule,
+        NzDatePickerLuxonModifierDirective,
+        ButtonBusyDirective,
+        LocalizePipe,
+    ],
 })
 export class CreateTenantComponent extends AppComponentBase implements OnInit, AfterViewInit {
+    private _tenantService = inject(TenantServiceProxy);
+    private _commonLookupService = inject(CommonLookupServiceProxy);
+    private _profileService = inject(ProfileServiceProxy);
+    private _router = inject(Router);
 
-    active = false;
-    saving = false;
-    setRandomPassword = true;
-    useHostDb = true;
-    editions: SubscribableEditionComboboxItemDto[] = [];
-    tenant: CreateTenantInput;
-    passwordComplexitySetting: PasswordComplexitySetting = new PasswordComplexitySetting();
-    isUnlimited = false;
-    isSubscriptionFieldsVisible = false;
-    isSelectedEditionFree = false;
+    readonly breadcrumbs = [
+        new BreadcrumbItem(this.l('Tenants'), '/app/admin/tenants'),
+        new BreadcrumbItem(this.l('CreateNewTenant')),
+    ];
 
-    constructor(
-        injector: Injector,
-        private _tenantService: TenantServiceProxy,
-        private _commonLookupService: CommonLookupServiceProxy,
-        private _profileService: ProfileServiceProxy,
-        private _router: Router
-    ) {
-        super(injector);
+    readonly saving = signal(false);
+    readonly setRandomPassword = signal(true);
+    readonly useHostDb = signal(true);
+    readonly editions = signal<SubscribableEditionComboboxItemDto[]>([]);
+    readonly passwordComplexitySetting = signal<PasswordComplexitySetting>(new PasswordComplexitySetting());
+    readonly passwordComplexityErrorDefs = passwordComplexityErrorDefs;
+    readonly isUnlimited = signal(false);
+    readonly isSubscriptionFieldsVisible = signal(false);
+    readonly isSelectedEditionFree = signal(false);
+
+    readonly tenant = signal(emptyTenantModel());
+
+    readonly needsSubscriptionEndDate = computed(
+        () => hasEdition(this.tenant().editionId) && this.isSubscriptionFieldsVisible() && !this.isUnlimited()
+    );
+
+    readonly tenantForm = form(
+        this.tenant,
+        (tenant) => {
+            required(tenant.tenancyName);
+            maxLength(tenant.tenancyName, 64);
+            pattern(tenant.tenancyName, namePattern);
+
+            required(tenant.name);
+            maxLength(tenant.name, 128);
+            pattern(tenant.name, namePattern);
+
+            hidden(tenant.connectionString, () => this.useHostDb());
+            required(tenant.connectionString);
+            maxLength(tenant.connectionString, 1024);
+
+            required(tenant.adminName);
+            maxLength(tenant.adminName, 64);
+            pattern(tenant.adminName, namePattern);
+
+            required(tenant.adminSurname);
+            maxLength(tenant.adminSurname, 64);
+            pattern(tenant.adminSurname, namePattern);
+
+            required(tenant.adminEmailAddress);
+            maxLength(tenant.adminEmailAddress, 256);
+            pattern(tenant.adminEmailAddress, emailPattern);
+
+            hidden(tenant.adminPassword, () => this.setRandomPassword());
+            required(tenant.adminPassword);
+            maxLength(tenant.adminPassword, 32);
+            passwordComplexity(tenant.adminPassword, () => this.passwordComplexitySetting());
+
+            hidden(tenant.adminPasswordRepeat, () => this.setRandomPassword());
+            required(tenant.adminPasswordRepeat);
+            maxLength(tenant.adminPasswordRepeat, 32);
+            passwordComplexity(tenant.adminPasswordRepeat, () => this.passwordComplexitySetting());
+            mustMatch(tenant.adminPasswordRepeat, tenant.adminPassword);
+
+            required(tenant.subscriptionEndDateUtc, { when: () => this.needsSubscriptionEndDate() });
+            disabled(tenant.isInTrialPeriod, () => this.isSelectedEditionFree());
+        },
+        { submission: { action: async () => this.save() } }
+    );
+
+    ngOnInit(): void {
+        this.init();
+
+        this._profileService.getPasswordComplexitySetting().subscribe((result) => {
+            this.passwordComplexitySetting.set(result.setting);
+        });
     }
 
     ngAfterViewInit(): void {
-        document.getElementById('TenancyName').focus();
-    }
-
-    ngOnInit(): void {
-        this.active = true;
-        this.init();
-
-        this._profileService.getPasswordComplexitySetting().subscribe(result => {
-            this.passwordComplexitySetting = result.setting;
-        });
+        document.getElementById('TenancyName')!.focus();
     }
 
     init(): void {
-        this.tenant = new CreateTenantInput();
-        this.tenant.isActive = true;
-        this.tenant.shouldChangePasswordOnNextLogin = true;
-        this.tenant.sendActivationEmail = true;
-        this.tenant.editionId = 0;
-        this.tenant.isInTrialPeriod = false;
-
-        this._commonLookupService.getEditionsForCombobox(false)
-            .subscribe((result) => {
-                this.editions = result.items;
-
-                let notAssignedItem = new SubscribableEditionComboboxItemDto();
-                notAssignedItem.value = '';
-                notAssignedItem.displayText = this.l('NotAssigned');
-
-                this.editions.unshift(notAssignedItem);
-
-                this._commonLookupService.getDefaultEditionName().subscribe((getDefaultEditionResult) => {
-                    let defaultEdition = _filter(this.editions, { 'displayText': getDefaultEditionResult.name });
-                    if (defaultEdition && defaultEdition[0]) {
-                        this.tenant.editionId = parseInt(defaultEdition[0].value);
-                        this.toggleSubscriptionFields();
-                    }
-                });
-            });
-    }
-
-    getEditionValue(item): number {
-        return parseInt(item.value);
-    }
-
-    selectedEditionIsFree(): boolean {
-        let selectedEditions = _filter(this.editions, { 'value': this.tenant.editionId.toString() })
-            .map(u => Object.assign(new SubscribableEditionComboboxItemDto(), u));
-
-        if (selectedEditions.length !== 1) {
-            this.isSelectedEditionFree = true;
-        }
-
-        let selectedEdition = selectedEditions[0];
-        this.isSelectedEditionFree = selectedEdition.isFree;
-        return this.isSelectedEditionFree;
-    }
-
-    subscriptionEndDateIsValid(): boolean {
-        if (this.tenant.editionId <= 0) {
-            return true;
-        }
-
-        if (this.isUnlimited) {
-            return true;
-        }
-
-        if (!this.tenant.subscriptionEndDateUtc) {
-            return false;
-        }
-
-        return this.tenant.subscriptionEndDateUtc !== undefined;
-    }
-
-    save(): void {
-        this.saving = true;
-
-        if (this.setRandomPassword) {
-            this.tenant.adminPassword = null;
-        }
-
-        if (this.tenant.editionId === 0) {
-            this.tenant.editionId = null;
-        }
-
-        if (this.isUnlimited || this.tenant.editionId <= 0) {
-            this.tenant.subscriptionEndDateUtc = null;
-        }
-
-        this._tenantService.createTenant(this.tenant)
-            .pipe(finalize(() => this.saving = false))
-            .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-            });
-    }
-
-    close(): void {
-        this.active = false;
-        this._router.navigate(['app/admin/tenants']);
-    }
-
-    onEditionChange(): void {
-        this.tenant.isInTrialPeriod = this.tenant.editionId > 0 && !this.selectedEditionIsFree();
-        this.toggleSubscriptionFields();
-    }
-
-    toggleSubscriptionFields() {
-        this.isSelectedEditionFree = this.selectedEditionIsFree();
-        if (this.tenant.editionId <= 0 || this.isSelectedEditionFree) {
-            this.isSubscriptionFieldsVisible = false;
-
-            if (this.isSelectedEditionFree) {
-                this.isUnlimited = true;
-            } else {
-                this.isUnlimited = false;
-            }
-        } else {
-            this.isSubscriptionFieldsVisible = true;
-        }
-    }
-}
-````
-
-### Add route for tenant creation page
-
-In order to navigate to create page, we need to add route to our route config. Add following path to `admin-routing.module.ts` for create tenant page.
-
-````ts
-
-...
-
-import { CreateTenantComponent } from './tenants/create-tenant.component';
-
-...
-
-@NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: '',
-                children: [
-
-                    ...
-
-                    { path: 'tenants/create-tenant', component: CreateTenantComponent, data: { permission: 'Pages.Tenants.Create' } },
-
-                    ...
-
-                ]
-            }
-        ])
-    ],
-    exports: [
-        RouterModule
-    ]
-})
-...
-````
-
-### Remove createTenantModal component
-
-Remove following line from `tenants.component.html`.
-
-````html
-<createTenantModal #createTenantModal (modalSave)="getTenants()"></createTenantModal>
-````
-
-And following lines from `tenants.component.ts`
-
-````ts
-@ViewChild('createTenantModal') createTenantModal: CreateTenantModalComponent;
-````
-
-### Add CreateTenantComponent to AdminModule
-
-In order to uses newly created CreateTenantComponent, we need to add it to our AdminModule.
-
-Replace
-
-`import { CreateTenantModalComponent } from './tenants/create-tenant-modal.component';`
-
-with
-
-`import { CreateTenantComponent } from './tenants/create-tenant.component';`
-
-and use `CreateTenantComponent` instead of `CreateTenantModalComponent` in the imports list of AdminModule.
-
-### Navigate to the tenant creation page
-
-Import router into `tenants.component.ts`;
-
-````ts
-import { ActivatedRoute, Router } from '@angular/router';
-
-constructor(
-        ...
-        private _router: Router,
-        ...
-    ) {
-        ...
-    }
-````
-
-And navigate to tenant creation page.
-
-````ts
-createTenant(): void {
-        this._router.navigate(['app/admin/tenants/create-tenant']);
-}
-````
-
-## Edit Tenant
-
-### Edit tenant page html
-
-First, create a new html page named **edit-tenant.component.html** with the content below. 
-
-````html
-<div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"EditTenant" | localize}}: {{tenant.tenancyName}}</span>
-                    </h3>
-                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                    <span class="kt-subheader__desc">
-                        {{"EditTenantHeaderInfo" | localize}}
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-````
-
-After doing that, copy the form element from **edit-tenant-modal.component.html** into div with "**kt-portlet__body**" class. Now, there are still modal related html code in our file, so we need to remove them.
-
-First, remove the html item with **modal-header** class since we don't need it anymore.
-
-Now, move all content of the div with class **modal-body** into the **form** tag. After that, we can remove the div with class **modal-body**. 
-
-Finally, change the class of the div which contains Save and Cancel buttons from **modal-footer** to **kt-margin-t-40**.
-
-Here is final version of **edit-tenant.component.html**:
-
-`````html
-<div [@routerTransition]>
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-subheader kt-grid__item">
-            <div class="kt-container ">
-                <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        <span>{{"EditTenant" | localize}}: {{tenant.tenancyName}}</span>
-                    </h3>
-                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                    <span class="kt-subheader__desc">
-                        {{"EditTenantHeaderInfo" | localize}}
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="kt-container kt-grid__item kt-grid__item--fluid">
-            <div class="kt-portlet kt-portlet--mobile">
-                <div class="kt-portlet__body  kt-portlet__body--fit">
-                    <form #tenantEditForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()"
-                        *ngIf="tenant && active">
-                        <div class="form-group">
-                            <label for="Name">{{"TenantName" | localize}} *</label>
-                            <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control"
-                                [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
-                            <validation-messages [formCtrl]="nameInput"></validation-messages>
-                        </div>
-                        <div class="form-group" *ngIf="currentConnectionString">
-                            <label for="DatabaseConnectionString">{{"DatabaseConnectionString" | localize}} *</label>
-                            <input id="DatabaseConnectionString" #connectionStringInput="ngModel" type="text"
-                                name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString"
-                                required maxlength="1024">
-                            <validation-messages [formCtrl]="connectionStringInput"></validation-messages>
-                        </div>
-                        <div *ngIf="currentConnectionString">
-                            <span
-                                class="help-block text-warning">{{"TenantDatabaseConnectionStringChangeWarningMessage" | localize}}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="edition">{{"Edition" | localize}}</label>
-                            <select id="edition" name="edition" class="form-control" [(ngModel)]="tenant.editionId"
-                                (change)="onEditionChange($event)">
-                                <option *ngFor="let edition of editions" [value]="edition.value">{{edition.displayText}}
-                                </option>
-                            </select>
-                        </div>
-                        <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
-                            <label class="kt-checkbox">
-                                <input id="CreateTenant_IsUnlimited" type="checkbox" name="IsUnlimited"
-                                    [(ngModel)]="isUnlimited" (ngModelChange)="onUnlimitedChange()" />
-                                {{"UnlimitedTimeSubscription" | localize}}
-                                <span></span>
-                            </label>
-                        </div>
-                        <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group"
-                            [ngClass]="{'has-error': !subscriptionEndDateUtcIsValid }">
-                            <label for="SubscriptionEndDateUtc">{{"SubscriptionEndDateUtc" | localize}}</label>
-                            <nz-date-picker nzId="SubscriptionEndDateUtc" name="SubscriptionEndDateUtc"
-                                datePickerLuxonModifier
-                                [date]="$any(tenant.subscriptionEndDateUtc)"
-                                (dateChange)="subscriptionEndDateChange($event)"
-                                [isUtc]="true" class="w-100" />
-                        </div>
-                        <div [hidden]="!isSubscriptionFieldsVisible" class="kt-checkbox-list">
-                            <label class="kt-checkbox">
-                                <input id="CreateTenant_IsInTrialPeriod" type="checkbox" name="IsInTrialPeriod"
-                                    [disabled]="selectedEditionIsFree()" [(ngModel)]="tenant.isInTrialPeriod">
-                                {{"IsInTrialPeriod" | localize}}
-                                <span></span>
-                            </label>
-                        </div>
-                        <div class="kt-checkbox-list">
-                            <label class="kt-checkbox">
-                                <input id="EditTenant_IsActive" type="checkbox" name="IsActive"
-                                    [(ngModel)]="tenant.isActive">
-                                {{"Active" | localize}}
-                                <span></span>
-                            </label>
-                        </div>
-                        <div class="kt-margin-t-40">
-                            <button type="button" [disabled]="saving" class="btn btn-secondary"
-                                (click)="close()">{{"Cancel" | localize}}</button>
-                            <button type="submit" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"
-                                class="btn btn-primary"
-                                [disabled]="!tenantEditForm.form.valid || saving || !subscriptionEndDateUtcIsValid"><i
-                                    class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-`````
-
-### Edit tenant page ts
-
-Create a new file next to html file we have just created using the name **edit-tenant.component.ts**. Copy the content of **edit-tenant-modal.component.ts** to newly created file. Change the component name from `EditTenantModalComponent` to `EditTenantComponent`.
-
-Modal page uses two methods named `show` and `onShown` which are not available in regular pages. So, we will implement `OnInit` and `AfterViewInit` in our Angular component and move the code of show method into `ngOnInit` and move the code of `onShown` into `ngAfterViewInit`. After doing that, we can delete empty `show` and `onShown` methods.
-
-Import `OnInit` and `AfterViewInit` and move lines from `show` to `ngOnInit` and move lines from `onShown` to `ngAfterViewInit`.
-
-Then, change the value of `templateUrl` from **./edit-tenant-modal.component.html** to **./edit-tenant.component.html**. You can also delete selector property of component definition since it is not mandatory. 
-
-Since we are using animation when routing to create tenant page, import `appModuleAnimation` into the component and use it as the value for `animations` of the component definition.
-
-````ts
-// other imports.
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-
-@Component({
-    templateUrl: './create-tenant.component.html',
-    animations: [appModuleAnimation()]
-})
-// component definition.
-````
-
-`EditTenantModalComponent` was getting tenantId as a parameter of it's show method. We will be getting tenantId parameter from query string. In order to do this, first inject `ActivatedRoute` into `EditTenantComponent` like below;
-
-````typescript
-// other imports
-import { ActivatedRoute } from '@angular/router';
-
-@Component({
-    templateUrl: './edit-tenant-modal.component.html',
-    animations: [appModuleAnimation()]
-})
-export class EditTenantComponent extends AppComponentBase implements OnInit, AfterViewInit {
-
-	// other code blocks...
-    
-    constructor(
-        injector: Injector,
-        private _tenantService: TenantServiceProxy,
-        private _commonLookupService: CommonLookupServiceProxy,
-        private _activatedRoute: ActivatedRoute
-    ) {
-        super(injector);
-    }
-	
-	// other code blocks...
-}	
-````
-
-and get it's value from query string in the ngOnInit like below;
-
-````ts
-var tenantId = this._activatedRoute.snapshot.queryParams['tenantId'];
-````
-
-Also delete tenantId parameter from ngOnInit method since we are now getting it from query parameters.
-
-Also delete **modal** and **modalSave** properties since we don't need them anymore. Also, delete their usages in the component.
-
-When the tenant is edited, instead of closing the modal, we need to redirect user to tenant list. In order to do that, inject `Router` into our component and add below line into the close method of the component.
-
-`this._router.navigate(['app/admin/tenants']);`
-
-After all, you can delete **edit-tenant-modal.component.ts** from your project.
-
-Here is final version of **edit-tenant.component.ts**:
-
-````ts
-import { Component, ElementRef, EventEmitter, Injector, Output, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { AppComponentBase } from '@shared/common/app-component-base';
-import { CommonLookupServiceProxy, SubscribableEditionComboboxItemDto, TenantEditDto, TenantServiceProxy } from '@shared/service-proxies/service-proxies';
-import { filter as _filter } from 'lodash-es';;
-import { DateTime } from 'luxon';
-import { ModalDirective } from 'ngx-bootstrap';
-import { finalize } from 'rxjs/operators';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DateTimeService } from '@app/shared/common/timing/date-time.service';
-
-@Component({
-    templateUrl: './edit-tenant.component.html',
-    animations: [appModuleAnimation()]
-})
-export class EditTenantComponent extends AppComponentBase implements OnInit, AfterViewInit {
-
-    @ViewChild('nameInput') nameInput: ElementRef;
-    @ViewChild('SubscriptionEndDateUtc') subscriptionEndDateUtc: ElementRef;
-
-    active = false;
-    saving = false;
-    isUnlimited = false;
-    subscriptionEndDateUtcIsValid = false;
-    subscriptionEndDateUtcx: DateTime;
-
-    tenant: TenantEditDto = undefined;
-    currentConnectionString: string;
-    editions: SubscribableEditionComboboxItemDto[] = [];
-    isSubscriptionFieldsVisible = false;
-
-    constructor(
-        injector: Injector,
-        private _tenantService: TenantServiceProxy,
-        private _commonLookupService: CommonLookupServiceProxy,
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
-        private _dateTimeService: DateTimeService
-    ) {
-        super(injector);
-    }
-
-    ngOnInit(): void {
-        this.subscriptionEndDateUtcx = _dateTimeService.getStartOfDay();
-        
-        this.active = true;
-
-        var tenantId = this._activatedRoute.snapshot.queryParams['tenantId'];
-        this._commonLookupService.getEditionsForCombobox(false).subscribe(editionsResult => {
-            this.editions = editionsResult.items;
-            let notSelectedEdition = new SubscribableEditionComboboxItemDto();
-            notSelectedEdition.displayText = this.l('NotAssigned');
-            notSelectedEdition.value = '';
-            this.editions.unshift(notSelectedEdition);
-
-            this._tenantService.getTenantForEdit(tenantId).subscribe((tenantResult) => {
-                this.tenant = tenantResult;
-                this.currentConnectionString = tenantResult.connectionString;
-                this.tenant.editionId = this.tenant.editionId || 0;
-                this.isUnlimited = !this.tenant.subscriptionEndDateUtc;
-                this.subscriptionEndDateUtcIsValid = this.isUnlimited || this.tenant.subscriptionEndDateUtc !== undefined;
-                this.toggleSubscriptionFields();
+        this._commonLookupService.getEditionsForCombobox(false).subscribe((result) => {
+            const notAssignedItem = new SubscribableEditionComboboxItemDto();
+            notAssignedItem.value = '';
+            notAssignedItem.displayText = this.l('NotAssigned');
+            this.editions.set([notAssignedItem, ...result.items!]);
+
+            this._commonLookupService.getDefaultEditionName().subscribe((getDefaultEditionResult) => {
+                const defaultEdition = _filter(this.editions(), { displayText: getDefaultEditionResult.name });
+                if (defaultEdition && defaultEdition[0]) {
+                    this.tenantForm.editionId().value.set(parseInt(defaultEdition[0].value!));
+                    this.toggleSubscriptionFields();
+                }
             });
         });
     }
 
-    ngAfterViewInit(): void {
-        document.getElementById('Name').focus();
-
-        if (this.tenant.subscriptionEndDateUtc) {
-            (this.subscriptionEndDateUtc.nativeElement as any).value = this.tenant.subscriptionEndDateUtc.format('L');
-        }
+    isEditionSelected(edition: SubscribableEditionComboboxItemDto): boolean {
+        const editionId = this.tenant().editionId;
+        return hasEdition(editionId) ? edition.value === editionId!.toString() : !edition.value;
     }
 
-    subscriptionEndDateChange(e): void {
-        this.subscriptionEndDateUtcIsValid = e && e.date !== false || this.isUnlimited;
+    selectEdition(value: string): void {
+        this.tenantForm.editionId().value.set(value ? parseInt(value, 10) : null);
+        this.onEditionChange();
     }
 
     selectedEditionIsFree(): boolean {
-        if (!this.tenant.editionId) {
-            return true;
-        }
-
-        let selectedEditions = _filter(this.editions, { value: this.tenant.editionId + '' });
-        if (selectedEditions.length !== 1) {
-            return true;
-        }
-
-        let selectedEdition = selectedEditions[0];
-        return selectedEdition.isFree;
+        const editionId = this.tenant().editionId;
+        const selectedEditions = _filter(this.editions(), {
+            value: hasEdition(editionId) ? editionId!.toString() : '',
+        });
+        return selectedEditions.length !== 1 || !!selectedEditions[0].isFree;
     }
 
     save(): void {
-        this.saving = true;
-        if (this.tenant.editionId === 0) {
-            this.tenant.editionId = null;
+        const model = this.tenant();
+        const editionSelected = hasEdition(model.editionId);
+        const input = CreateTenantInput.fromJS(model);
+        input.subscriptionEndDateUtc = model.subscriptionEndDateUtc ?? undefined;
+
+        if (this.setRandomPassword()) {
+            input.adminPassword = null!;
         }
 
-        //take selected date as UTC
-        if (this.isUnlimited || !this.tenant.editionId) {
-            this.tenant.subscriptionEndDateUtc = null;
+        if (this.useHostDb()) {
+            input.connectionString = null!;
         }
 
-        this._tenantService.updateTenant(this.tenant)
-            .pipe(finalize(() => this.saving = false))
+        if (!editionSelected) {
+            input.editionId = null!;
+        }
+
+        if (this.isUnlimited()) {
+            input.isInTrialPeriod = false;
+        }
+
+        if (this.isUnlimited() || !editionSelected) {
+            input.subscriptionEndDateUtc = null!;
+        }
+
+        this.saving.set(true);
+        this._tenantService
+            .createTenant(input)
+            .pipe(finalize(() => this.saving.set(false)))
             .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
@@ -866,123 +518,462 @@ export class EditTenantComponent extends AppComponentBase implements OnInit, Aft
     }
 
     close(): void {
-        this.active = false;
-        this._router.navigate(['app/admin/tenants']);
+        this._router.navigate(['/app/admin/tenants']);
     }
 
     onEditionChange(): void {
-        if (this.selectedEditionIsFree()) {
-            this.tenant.isInTrialPeriod = false;
-        }
-
+        this.tenantForm
+            .isInTrialPeriod()
+            .value.set(hasEdition(this.tenant().editionId) && !this.selectedEditionIsFree());
         this.toggleSubscriptionFields();
     }
 
-    onUnlimitedChange(): void {
-        if (this.isUnlimited) {
-            this.tenant.subscriptionEndDateUtc = null;
-            this.subscriptionEndDateUtcIsValid = true;
+    toggleSubscriptionFields() {
+        const isFree = this.selectedEditionIsFree();
+        this.isSelectedEditionFree.set(isFree);
+
+        if (!hasEdition(this.tenant().editionId) || isFree) {
+            this.isSubscriptionFieldsVisible.set(false);
+            this.isUnlimited.set(isFree);
         } else {
-            if (!this.tenant.subscriptionEndDateUtc) {
-                this.subscriptionEndDateUtcIsValid = false;
-            }
+            this.isSubscriptionFieldsVisible.set(true);
         }
     }
 
-    toggleSubscriptionFields() {
-        if (this.tenant.editionId > 0) {
-            this.isSubscriptionFieldsVisible = true;
-        } else {
-            this.isSubscriptionFieldsVisible = false;
+    changeIsUnlimited(isUnlimited: boolean) {
+        this.isUnlimited.set(isUnlimited);
+        if (isUnlimited) {
+            this.tenantForm.isInTrialPeriod().value.set(false);
         }
     }
 }
-````
+```
 
+### Add a Route for the Create Page
 
-### Add route for tenant edit page
+Add a route for the page to the `admin` routes in **src/app/app.routes.ts**, after the `tenants` route:
 
-Add following path to `admin-routing.module.ts` for edit tenant page.
+```typescript
+{
+    path: 'tenants/create-tenant',
+    loadComponent: () =>
+        import('./admin/tenants/create-tenant.component').then((m) => m.CreateTenantComponent),
+    data: { permission: 'Pages.Tenants.Create' },
+},
+```
 
-````ts
+The page is a standalone component that the route loads, so you do not register it in a module.
 
-...
+### Open the Create Page from the Tenant List
 
-import { EditTenantComponent } from './tenants/edit-tenant.component';
+Remove the following line from **tenants.component.html**:
 
-...
+```html
+<createTenantModal #createTenantModal (modalSave)="getTenants()" />
+```
 
-@NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: '',
-                children: [
+In **tenants.component.ts**, remove the `CreateTenantModalComponent` import, its entry in the `imports` of the component and the `createTenantModal` view child. `TenantsComponent` already injects `Router`, so change `createTenant` to navigate to the new page:
 
-                    ...
+```typescript
+createTenant(): void {
+    this._router.navigate(['/app/admin/tenants/create-tenant']);
+}
+```
 
-                    { path: 'tenants/edit-tenant', component: EditTenantComponent, data: { permission: 'Pages.Tenants.Edit' } },
+The tenant list loads its data in `ngOnInit`, so it shows the new tenant when the page navigates back to it.
 
-                    ...
+Finally, delete **create-tenant-modal.component.ts**, **create-tenant-modal.component.html** and **create-tenant-modal.component.spec.ts**. If you move the tests of the modal to the page, add `provideNoopAnimations()` to the test providers and set a theme on `AppSessionService`, because the page uses the router animation and the `sub-header` reads the theme settings. **host-settings.component.spec.ts** shows how to set the theme.
 
-                ]
+## Edit Tenant
+
+### Edit Tenant Page HTML
+
+Create **edit-tenant.component.html** next to **edit-tenant-modal.component.html**, and copy the `form` element of the modal into the card in the same way as for the create page. Keep an `@if (loaded())` block around the form, because the form can be shown only after the tenant is loaded, and remove `active()` from its condition. The `sub-header` shows the tenancy name as its description.
+
+Here is the final version of **edit-tenant.component.html**:
+
+```html
+<div [@routerTransition]>
+    <sub-header
+        [title]="'EditTenant' | localize"
+        [description]="tenant().tenancyName"
+        [breadcrumbs]="breadcrumbs" />
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            @if (loaded()) {
+                <form [formRoot]="tenantForm" role="form" class="form-validation">
+                    <div class="card-body">
+                        <div class="mb-5">
+                            <label class="form-label required" for="Name">{{ 'TenantName' | localize }}</label>
+                            <input
+                                id="Name"
+                                #nameInput
+                                type="text"
+                                class="form-control"
+                                [ngClass]="{ edited: tenant().name }"
+                                [formField]="tenantForm.name" />
+                            <validation-messages
+                                [field]="tenantForm.name"
+                                [customMessages]="{ pattern: 'Name_Regex_Description' }" />
+                        </div>
+                        @if (currentConnectionString()) {
+                            <div class="mb-5">
+                                <label class="form-label required" for="DatabaseConnectionString">
+                                    {{ 'DatabaseConnectionString' | localize }}
+                                </label>
+                                <input
+                                    id="DatabaseConnectionString"
+                                    type="text"
+                                    class="form-control"
+                                    [formField]="tenantForm.connectionString" />
+                                <validation-messages [field]="tenantForm.connectionString" />
+                            </div>
+                            <div>
+                                <span class="help-block text-warning">
+                                    {{ 'TenantDatabaseConnectionStringChangeWarningMessage' | localize }}
+                                </span>
+                            </div>
+                        }
+                        <div class="mb-5">
+                            <label class="form-label" for="edition">{{ 'Edition' | localize }}</label>
+                            <select
+                                #editionSelect
+                                id="edition"
+                                class="form-select"
+                                (change)="selectEdition(editionSelect.value)">
+                                @for (edition of editions(); track edition.value) {
+                                    <option [value]="edition.value" [selected]="isEditionSelected(edition)">
+                                        {{ edition.displayText }}
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <label
+                            class="form-check form-check-custom form-check-solid py-1"
+                            [hidden]="!isSubscriptionFieldsVisible()">
+                            <input
+                                #isUnlimitedInput
+                                id="CreateTenant_IsUnlimited"
+                                type="checkbox"
+                                [checked]="isUnlimited()"
+                                (change)="changeIsUnlimited(isUnlimitedInput.checked)"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ 'UnlimitedTimeSubscription' | localize }}
+                            </span>
+                        </label>
+                        <div
+                            [hidden]="isUnlimited() || !isSubscriptionFieldsVisible()"
+                            class="mb-5 mt-5"
+                            [ngClass]="{ 'has-error': tenantForm.subscriptionEndDateUtc().invalid() }">
+                            <label class="form-label" for="SubscriptionEndDateUtc">
+                                {{ 'SubscriptionEndDateUtc' | localize }}
+                            </label>
+                            <nz-date-picker
+                                nzId="SubscriptionEndDateUtc"
+                                datePickerLuxonModifier
+                                [date]="tenant().subscriptionEndDateUtc"
+                                (dateChange)="tenantForm.subscriptionEndDateUtc().value.set($event)"
+                                [isUtc]="true"
+                                class="w-100" />
+                        </div>
+                        <label
+                            class="form-check form-check-custom form-check-solid py-1"
+                            [hidden]="isUnlimited() || !isSubscriptionFieldsVisible()">
+                            <input
+                                id="CreateTenant_IsInTrialPeriod"
+                                type="checkbox"
+                                [formField]="tenantForm.isInTrialPeriod"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ 'IsInTrialPeriod' | localize }}
+                            </span>
+                        </label>
+                        <label class="form-check form-check-custom form-check-solid py-1">
+                            <input
+                                id="EditTenant_IsActive"
+                                type="checkbox"
+                                [formField]="tenantForm.isActive"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ 'Active' | localize }}
+                            </span>
+                        </label>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end gap-3">
+                        <button
+                            type="button"
+                            [disabled]="saving()"
+                            class="btn btn-light-primary fw-bold"
+                            (click)="close()">
+                            {{ 'Cancel' | localize }}
+                        </button>
+                        <button
+                            type="submit"
+                            [buttonBusy]="saving()"
+                            [busyText]="l('SavingWithThreeDot')"
+                            class="btn btn-primary fw-bold"
+                            [disabled]="!tenantForm().valid() || saving()">
+                            <i class="fa fa-save"></i>
+                            <span>{{ 'Save' | localize }}</span>
+                        </button>
+                    </div>
+                </form>
             }
-        ])
+        </div>
+    </div>
+</div>
+```
+
+### Edit Tenant Page TypeScript
+
+Copy **edit-tenant-modal.component.ts** to **edit-tenant.component.ts**, and rename the class from `EditTenantModalComponent` to `EditTenantComponent`. Make the same changes as for the create page to the component metadata, the modal members, `close`, `save` and the breadcrumbs. Remove `active`, but keep `loaded`.
+
+Two parts are different. First, `show` received the tenant id as a parameter, and the page reads it from the `tenantId` query string parameter instead. Inject `ActivatedRoute`, move the code of `show` into `ngOnInit`, and read the id at the start of it:
+
+```typescript
+const tenantId = Number(this._activatedRoute.snapshot.queryParams['tenantId']);
+```
+
+Remove the `this.loaded.set(false)`, `this.active.set(true)` and `this.modal()!.show()` lines that you moved from `show`.
+
+Second, the name input is rendered only after the tenant is loaded, so it does not exist yet when `ngAfterViewInit` runs. Inject `Injector`, and focus the input with `afterNextRender` after the `this.loaded.set(true)` line. Then delete `onShown`.
+
+```typescript
+afterNextRender(() => this.nameInput()?.nativeElement.focus(), { injector: this._injector });
+```
+
+Here is the final version of **edit-tenant.component.ts**:
+
+```typescript
+import {
+    afterNextRender,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    ElementRef,
+    inject,
+    Injector,
+    OnInit,
+    signal,
+    viewChild,
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { disabled, form, FormField, FormRoot, hidden, maxLength, pattern, required } from '@angular/forms/signals';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import {
+    CommonLookupServiceProxy,
+    SubscribableEditionComboboxItemDto,
+    TenantEditDto,
+    TenantServiceProxy,
+} from '@shared/service-proxies/service-proxies';
+import { filter as _filter } from 'lodash-es';
+import { finalize, switchMap } from 'rxjs/operators';
+import { NgClass } from '@angular/common';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { BreadcrumbItem, SubHeaderComponent } from '@app/shared/common/sub-header/sub-header.component';
+import { ValidationMessagesComponent } from '../../../shared/utils/validation-messages.component';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerLuxonModifierDirective } from '../../../shared/utils/date-time/nz-date-picker-luxon-modifier.directive';
+import { ButtonBusyDirective } from '../../../shared/utils/button-busy.directive';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { toFormModel } from '@shared/utils/forms/form-model';
+
+const namePattern = /^[a-zA-Z][a-zA-Z0-9_-]{1,}$/;
+
+const toTenantFormModel = (tenant: TenantEditDto) => toFormModel(tenant, { name: '', connectionString: '' });
+
+const hasEdition = (editionId: number | null | undefined) => !!editionId && editionId > 0;
+
+@Component({
+    templateUrl: './edit-tenant.component.html',
+    animations: [appModuleAnimation()],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [
+        SubHeaderComponent,
+        FormField,
+        FormRoot,
+        NgClass,
+        ValidationMessagesComponent,
+        NzDatePickerModule,
+        NzDatePickerLuxonModifierDirective,
+        ButtonBusyDirective,
+        LocalizePipe,
     ],
-    exports: [
-        RouterModule
-    ]
 })
-...
-````
+export class EditTenantComponent extends AppComponentBase implements OnInit {
+    private _tenantService = inject(TenantServiceProxy);
+    private _commonLookupService = inject(CommonLookupServiceProxy);
+    private _activatedRoute = inject(ActivatedRoute);
+    private _router = inject(Router);
+    private _injector = inject(Injector);
 
-### Remove editTenantModal component
+    readonly nameInput = viewChild<ElementRef>('nameInput');
 
-Remove following line `tenants.component.html`.
+    readonly breadcrumbs = [
+        new BreadcrumbItem(this.l('Tenants'), '/app/admin/tenants'),
+        new BreadcrumbItem(this.l('EditTenant')),
+    ];
 
-````html
-<editTenantModal #editTenantModal (modalSave)="getTenants()"></editTenantModal>
-````
+    readonly saving = signal(false);
+    readonly loaded = signal(false);
+    readonly isUnlimited = signal(false);
+    readonly currentConnectionString = signal<string | undefined>(undefined);
+    readonly editions = signal<SubscribableEditionComboboxItemDto[]>([]);
 
-Remove following lines from `tenants.component.ts`;
+    readonly tenant = signal(toTenantFormModel(new TenantEditDto()));
 
-````typescript
-import { EditTenantModalComponent } from './edit-tenant-modal.component';
-````
+    readonly isSubscriptionFieldsVisible = computed(() => hasEdition(this.tenant().editionId));
 
-````typescript
-@ViewChild('editTenantModal') editTenantModal: EditTenantModalComponent;
-````
+    readonly tenantForm = form(
+        this.tenant,
+        (tenant) => {
+            required(tenant.name);
+            maxLength(tenant.name, 128);
+            pattern(tenant.name, namePattern);
 
-### Add CreateTenantComponent to AdminModule
+            hidden(tenant.connectionString, () => !this.currentConnectionString());
+            required(tenant.connectionString);
+            maxLength(tenant.connectionString, 1024);
 
-In order to uses newly created EditTenantComponent, we need to add it to our AdminModule.
+            required(tenant.subscriptionEndDateUtc, {
+                when: () => this.isSubscriptionFieldsVisible() && !this.isUnlimited(),
+            });
+            disabled(tenant.isInTrialPeriod, () => this.selectedEditionIsFree());
+        },
+        { submission: { action: async () => this.save() } }
+    );
 
-Replace
+    ngOnInit(): void {
+        const tenantId = Number(this._activatedRoute.snapshot.queryParams['tenantId']);
 
-`import { EditTenantModalComponent } from './tenants/edit-tenant-modal.component';`
-
-with
-
-`import { EditTenantComponent } from './tenants/edit-tenant.component';`
-
-and use `EditTenantComponent` instead of `EditTenantModalComponent` in the imports list of AdminModule.
-
-### Navigate to the tenant edit page
-
-Router was already injected into TenantsComponent when converting create modal to a page. We can use it to navigate to tenant edit page. In order to do that, create a new method named `editTenant` in tenants.component.ts like below;
-
-````ts
-editTenant(tenantId): void {
-        this._router.navigate(['app/admin/tenants/edit-tenant'], { queryParams: { tenantId: tenantId } });
+        this._commonLookupService
+            .getEditionsForCombobox(false)
+            .pipe(
+                switchMap((editionsResult) => {
+                    const notSelectedEdition = new SubscribableEditionComboboxItemDto();
+                    notSelectedEdition.displayText = this.l('NotAssigned');
+                    notSelectedEdition.value = '';
+                    this.editions.set([notSelectedEdition, ...editionsResult.items!]);
+                    return this._tenantService.getTenantForEdit(tenantId);
+                })
+            )
+            .subscribe((tenantResult) => {
+                this.currentConnectionString.set(tenantResult.connectionString);
+                this.isUnlimited.set(!tenantResult.subscriptionEndDateUtc);
+                this.tenantForm().reset(toTenantFormModel(tenantResult));
+                this.loaded.set(true);
+                afterNextRender(() => this.nameInput()?.nativeElement.focus(), { injector: this._injector });
+            });
     }
-````
 
-And use it in tenants.component.html like below instead of `editTenantModal.show(record.id)`;
+    isEditionSelected(edition: SubscribableEditionComboboxItemDto): boolean {
+        const editionId = this.tenant().editionId;
+        return hasEdition(editionId) ? edition.value === editionId!.toString() : !edition.value;
+    }
 
-````typescript
- <a href="javascript:;" *ngIf="permission.isGranted('Pages.Tenants.Edit')"
-                                                       (click)="editTenant(record.id)">{{'Edit' | localize}}</a>
-````
+    selectEdition(value: string): void {
+        this.tenantForm.editionId().value.set(value ? parseInt(value, 10) : null);
+        if (this.selectedEditionIsFree()) {
+            this.tenantForm.isInTrialPeriod().value.set(false);
+        }
+    }
 
-That's all. Now we can run the project, open tenant list and create a new tenant or edit an existing tenant in a new page instead of modal window.
+    selectedEditionIsFree(): boolean {
+        const editionId = this.tenant().editionId;
+        if (!hasEdition(editionId)) {
+            return true;
+        }
+
+        const selectedEditions = _filter(this.editions(), { value: editionId + '' });
+        if (selectedEditions.length !== 1) {
+            return true;
+        }
+
+        return !!selectedEditions[0].isFree;
+    }
+
+    changeIsUnlimited(isUnlimited: boolean): void {
+        this.isUnlimited.set(isUnlimited);
+        if (isUnlimited) {
+            this.tenantForm.subscriptionEndDateUtc().value.set(null);
+            this.tenantForm.isInTrialPeriod().value.set(false);
+        }
+    }
+
+    save(): void {
+        const model = this.tenant();
+        const editionSelected = hasEdition(model.editionId);
+        const input = TenantEditDto.fromJS(model);
+        input.connectionString = model.connectionString || undefined;
+
+        if (!editionSelected) {
+            input.editionId = null!;
+        }
+
+        if (this.isUnlimited()) {
+            input.isInTrialPeriod = false;
+        }
+
+        if (this.isUnlimited() || !editionSelected) {
+            input.subscriptionEndDateUtc = null!;
+        } else if (model.subscriptionEndDateUtc) {
+            input.subscriptionEndDateUtc = model.subscriptionEndDateUtc.toLocal();
+        }
+
+        this.saving.set(true);
+        this._tenantService
+            .updateTenant(input)
+            .pipe(finalize(() => this.saving.set(false)))
+            .subscribe(() => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+            });
+    }
+
+    close(): void {
+        this._router.navigate(['/app/admin/tenants']);
+    }
+}
+```
+
+### Add a Route for the Edit Page
+
+Add the following route to the `admin` routes in **src/app/app.routes.ts**:
+
+```typescript
+{
+    path: 'tenants/edit-tenant',
+    loadComponent: () =>
+        import('./admin/tenants/edit-tenant.component').then((m) => m.EditTenantComponent),
+    data: { permission: 'Pages.Tenants.Edit' },
+},
+```
+
+### Open the Edit Page from the Tenant List
+
+Remove the following line from **tenants.component.html**:
+
+```html
+<editTenantModal #editTenantModal (modalSave)="getTenants()" />
+```
+
+In **tenants.component.ts**, remove the `EditTenantModalComponent` import, its entry in the `imports` of the component and the `editTenantModal` view child. The **Edit** action of a tenant is an item of the actions menu that **tenants.component.ts** builds. Change its `command` to navigate to the edit page with the id of the tenant:
+
+```typescript
+if (this.permission.isGranted('Pages.Tenants.Edit')) {
+    items.push({
+        label: this.l('Edit'),
+        icon: 'fa fa-pencil-alt',
+        command: () =>
+            this._router.navigate(['/app/admin/tenants/edit-tenant'], {
+                queryParams: { tenantId: tenant.id },
+            }),
+    });
+}
+```
+
+Finally, delete **edit-tenant-modal.component.ts**, **edit-tenant-modal.component.html** and **edit-tenant-modal.component.spec.ts**.
+
+Now you can open the tenant list and create or edit a tenant on its own page instead of in a modal.

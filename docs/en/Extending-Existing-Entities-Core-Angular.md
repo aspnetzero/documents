@@ -133,16 +133,31 @@ public class UserEditDto : IPassivable
 }
 ```
 
-Since **UserAppService** use **auto mapping**, no need to manually map Address to the User entity. So, server side code is just that. We can go to UI side to add an Address field to the form:
+Since **UserAppService** use **auto mapping**, no need to manually map Address to the User entity. So, server side code is just that. Run the ***.Host** project and [NSwag](Infrastructure-Angular-NSwag.md) again, so the `UserEditDto` proxy gets the `address` property.
+
+The user modal is built with Angular Signal Forms. Its form model is created by the `toUserFormModel` function at the top of **src\app\admin\users\create-or-edit-user-modal.component.ts**, and every property of `UserEditDto` becomes a field of the form automatically. Add an empty string default for the new field, because a text input bound to a `null` value treats the typed text as a number:
+
+```typescript
+const toUserFormModel = (user: UserEditDto) => ({
+    ...toFormModel(user, {
+        //...existing defaults
+        address: '',
+    }),
+    passwordRepeat: '',
+});
+```
+
+Then add the Address field to the form in **src\app\admin\users\create-or-edit-user-modal.component.html**:
 
 ```html
-<div class="form-group">
-     <label for="Address">{{"Address" | localize}}</label>
-     <input id="Address" #addressInput="ngModel" type="text" name="Address" class="form-control" [(ngModel)]="user.address">
+<div class="mb-5">
+    <label class="form-label" for="Address">{{ 'Address' | localize }}</label>
+    <input id="Address" type="text" class="form-control" [formField]="userForm.address" />
+    <validation-messages [field]="userForm.address" />
 </div>
 ```
 
-This code is written to **src\app\admin\users\create-or-edit-user-modal.component.html**. After adding, new Address field is shown on the create/edit form as shown below:
+Validation rules are declared in the `userForm` schema of the same component, not as attributes on the input. For example, add `maxLength(user.address, 256);` next to the other rules to limit the length of the address. After adding, new Address field is shown on the create/edit form as shown below:
 
 <img src="images/extend-entities-user-address-in-edit-form.png" alt="Address on user edit form" class="img-thumbnail" width="614" height="906" />
 
