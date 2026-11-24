@@ -30,7 +30,7 @@ Each tenant can also enable or disable email restriction for their own account. 
 
 Each tenant can also enable/disable session timeout control for tenant users. If it is enable and the user does not provide any input to the site during the timeout period, a countdown modal will be displayed to user. If the user still does not provide any input to the site during the modal countdown period, user will be log out.
 
-Also, each tenant can enable/disable cookie consent so ASP.NET Zero shows a cookie consent bar for the users of that tenant to accept cookie policy of the application.
+Also, each tenant can enable/disable cookie consent for the users of that tenant. When it is enabled, ASP.NET Zero shows a cookie consent banner where users can accept or reject the optional cookies of the application. See [Cookie Consent](Features-Angular-Cookie-Consent) for details.
 
 Each tenant can force email confirmation for login.
 

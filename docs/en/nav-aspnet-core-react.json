@@ -224,6 +224,10 @@
                 {
                   "text": "Google Authenticator",
                   "path": "Google-Authenticator-Usage.md"
+                },
+                {
+                  "text": "Cookie Consent",
+                  "path": "Features-React-Cookie-Consent.md"
                 }
               ]
             },

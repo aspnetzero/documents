@@ -123,11 +123,13 @@ Run the following command in the command line:
 pnpm start
 ```
 
-Once the application compiled, you can browse <http://localhost:4200> in your browser. ASP.NET Zero also has also **HMR** (Hot Module Replacement)  enabled. You can use the following command (instead of `pnpm start`) to enable HMR on development time:
+Once the application compiled, you can browse <http://localhost:4200> in your browser. `pnpm start` runs the development server with **HMR** (Hot Module Replacement) turned off. To use the built-in HMR support of Angular CLI on development time, use the following command instead of `pnpm start`:
 
 ```bash
 pnpm run hmr
 ```
+
+With HMR, changes to the templates and styles of components are applied without reloading the page. See [Angular CLI](Infrastructure-Angular-Angular-CLI-WebPack) for details.
 
 ### Troubleshooting
 

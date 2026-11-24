@@ -35,7 +35,7 @@ You can also select a default edition, so a newly registered tenant will be assi
 
 ![User Management Settings](images/host-settings-user-management-6.png)
 
-User related settings can be configured under this tab. You can force email confirmation for login. You can enable phone number verification. Also, you can enable cookie consent so ASP.NET Zero shows a cookie consent bar for the users to accept cookie policy of your application.
+User related settings can be configured under this tab. You can force email confirmation for login. You can enable phone number verification. Also, you can enable cookie consent so ASP.NET Zero shows a cookie consent banner where users can accept or reject the optional cookies of your application. See [Cookie Consent](Features-Mvc-Core-Cookie-Consent) for details.
 
 You can enable/disable captcha on login page.
 

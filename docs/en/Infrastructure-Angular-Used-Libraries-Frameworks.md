@@ -54,9 +54,8 @@ project. Here's the list of the main libraries used by the Angular UI:
 - [Luxon](https://moment.github.io/luxon/)
 - [Lodash-es](https://lodash.com/)
 - [js-cookie](https://github.com/js-cookie/js-cookie)
-- [push.js](https://github.com/Nickersoft/push.js)
 - [rtl-detect](https://github.com/shadiabuhilal/rtl-detect)
-- [cookieconsent](https://github.com/osano/cookieconsent)
+- [vanilla-cookieconsent](https://github.com/orestbida/cookieconsent) (see [Cookie Consent](Features-Angular-Cookie-Consent))
 - [aspnetzero-web-resources](https://www.npmjs.com/package/aspnetzero-web-resources)
 
 ### Build & Test
@@ -65,7 +64,7 @@ project. Here's the list of the main libraries used by the Angular UI:
 - [Gulp](https://gulpjs.com/) (dynamic asset bundling)
 - [NSwag](https://github.com/RicoSuter/NSwag) (service proxy generation)
 - [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/)
-- [Karma](https://karma-runner.github.io/) and [Jasmine](https://jasmine.github.io/)
+- [Vitest](https://vitest.dev/) and [jsdom](https://github.com/jsdom/jsdom) (unit tests, see [Running Unit Tests](Infrastructure-Angular-Angular-CLI-WebPack#running-unit-tests))
 - [Playwright](https://playwright.dev/) (see [UI Testing](Playwright-UI-Testing-Angular))
 
 > The authoritative list is always the `dependencies` and `devDependencies` sections of `angular/package.json` in your own project.
