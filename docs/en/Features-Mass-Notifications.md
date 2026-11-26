@@ -7,7 +7,7 @@ In order to create a mass notification, go to `Administration -> Notifications -
 <img src="images/create-new-mass-notification.png" alt="notifications" class="img-thumbnail" />
 
 
-From the window that opens, you can choose who you want to send mass notification to. You can choose users and/or organization units. If you select organization unit, notification will be sent to all users connected to the organization unit you selected. Then you can set severity of the notification, target notifier and message. 
+From the window that opens, you can choose who you want to send mass notification to. You can choose any combination of users, organization units and roles. If you select organization unit, notification will be sent to all users connected to the organization unit you selected. If you select a role, notification will be sent to all users who have that role, whether it is assigned to them directly or through one of their organization units. A user who matches more than one selection receives the notification only once. Then you can set severity of the notification, target notifier and message. 
 You have 3 built-in target notifier. You can use them to notify user's in different ways.
 
 SMS: Sends sms to selected users (which has phone number defined)
